@@ -1,0 +1,12 @@
+{
+  "name": "@compose/depd-vite",
+  "version": "1.0.1",
+  "author": "TrueNine",
+  "license": "ISC",
+  "scripts": {
+    "build": "echo \"not required build\""
+  },
+  "dependencies": {
+    "vite": "^4.3.9"
+  }
+}

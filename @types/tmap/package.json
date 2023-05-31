@@ -1,0 +1,14 @@
+{
+  "name": "@compose/tmap",
+  "version": "1.1.7",
+  "description": "typeof tencent tmap web basic gl sdk type",
+  "main": "index.d.ts",
+  "author": "TrueNine",
+  "license": "ISC",
+  "scripts": {
+    "build": "echo \"not required build\""
+  },
+  "dependencies": {
+    "@compose/api-model": "workspace:*"
+  }
+}

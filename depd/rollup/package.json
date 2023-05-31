@@ -1,0 +1,24 @@
+{
+  "name": "@compose/depd-rollup",
+  "version": "1.0.1",
+  "author": "TrueNine",
+  "license": "ISC",
+  "scripts": {
+    "build": "echo \"not required build\""
+  },
+  "dependencies": {
+    "@rollup/plugin-multi-entry": "^6.0.0",
+    "@rollup/plugin-terser": "^0.4.3",
+    "@rollup/plugin-json": "^6.0.0",
+    "@types/qs": "^6.9.7",
+    "rollup": "^3.23.0",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-copy": "^3.4.0",
+    "rollup-plugin-delete": "^2.0.0",
+    "rollup-plugin-dts": "^5.3.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-typescript": "^1.0.1",
+    "tslib": "^2.5.2",
+    "typescript": "^5.0.4"
+  }
+}

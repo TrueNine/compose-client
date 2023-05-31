@@ -1,0 +1,22 @@
+{
+  "name": "@compose/uni-mp-adk",
+  "version": "1.0.4",
+  "type": "module",
+  "author": "TrueNine",
+  "license": "ISC",
+  "description": "uni-app miniProgram auxiliary development kit",
+  "main": "es/index.js",
+  "types": "es/index.d.ts",
+  "scripts": {
+    "build": "rollup -c"
+  },
+  "devDependencies": {},
+  "dependencies": {
+    "vue": "^3.3.4",
+    "@vue/runtime-dom": "^3.3.4",
+    "@dcloudio/types": "^3.3.3",
+    "mini-types": "^0.1.7",
+    "miniprogram-api-typings": "^3.9.1",
+    "uni-app-types": "^0.1.7"
+  }
+}

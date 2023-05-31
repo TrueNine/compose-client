@@ -1,0 +1,22 @@
+# Log files
+npm-debug.log*
+yarn.lock*
+package-lock.json*
+yarn-debug.log*
+yarn-error.log*
+pnpm-lock.yaml*
+
+# Editor directories and files
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+.vscode/
+
+# node
+node_modules/
+
+# unplugin-auto-imports vite plugin
+*auto-import.json
+*auto-imports.d.ts

@@ -1,0 +1,19 @@
+{
+  "name": "@compose/api-model",
+  "version": "0.1.16",
+  "description": "后端接口统一定义",
+  "type": "module",
+  "main": "es/index.js",
+  "types": "es/index.d.ts",
+  "author": "TrueNine",
+  "license": "ISC",
+  "scripts": {
+    "build": "pnpm rollup -c"
+  },
+  "devDependencies": {
+    "@compose/depd-rollup": "workspace:*"
+  },
+  "dependencies": {
+    "@compose/depd-moment": "workspace:*"
+  }
+}

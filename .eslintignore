@@ -1,0 +1,6 @@
+dist/**/**
+node_modules/**/**
+es/
+
+*.svg
+*.d.ts

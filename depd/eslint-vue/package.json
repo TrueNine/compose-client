@@ -1,0 +1,16 @@
+{
+  "name": "@compose/depd-eslint-vue",
+  "version": "1.0.1",
+  "author": "TrueNine",
+  "license": "ISC",
+  "scripts": {
+    "build": "echo \"not required build\""
+  },
+  "dependencies": {
+    "vue-eslint-parser": "^9.3.0",
+    "@compose/depd-eslint": "workspace:^",
+    "@vue/eslint-config-prettier": "^7.1.0",
+    "@vue/eslint-config-typescript": "^11.0.3",
+    "eslint-plugin-vue": "^9.14.1"
+  }
+}
