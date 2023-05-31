@@ -13,7 +13,7 @@
     "lint": "eslint . --fix --ext .js,.ts,.jsx,.tsx,.vue && prettier --write --ignore-unknown .",
     "depd": "pnpm -r i",
     "build": "pnpm -r build",
-    "pub": "pnpm build && pnpm publish -r packages"
+    "pub": "pnpm lint && pnpm build && pnpm publish -r packages"
   },
   "devDependencies": {
     "@changesets/cli": "^2.26.1",
