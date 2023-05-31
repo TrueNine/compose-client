@@ -4,7 +4,6 @@
   "author": "TrueNine",
   "type": "module",
   "main": "index.js",
-  "private": true,
   "license": "ISC",
   "scripts": {
     "build": "echo \"not required build\""
