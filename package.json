@@ -15,9 +15,14 @@
     "build": "pnpm -r build",
     "pub": "pnpm lint && pnpm build && pnpm publish -r packages"
   },
-  "devDependencies": {
+  "dependencies": {
     "@changesets/cli": "^2.26.1",
     "@compose/depd-eslint": "workspace:^",
+    "@compose/depd-eslint-vue": "workspace:^",
+    "@compose/depd-moment": "workspace:^",
+    "@compose/depd-node": "workspace:^",
+    "@compose/depd-rollup": "workspace:^",
+    "@compose/depd-vite": "workspace:^",
     "@dcloudio/types": "^3.3.3",
     "@rollup/plugin-json": "^6.0.0",
     "@rollup/plugin-multi-entry": "^6.0.0",
