@@ -1,7 +1,10 @@
 {
   "name": "@compose/depd-node",
-  "version": "1.0.1",
+  "version": "1.0.3",
+  "main": "index.js",
   "author": "TrueNine",
+  "type": "module",
+  "private": true,
   "license": "ISC",
   "scripts": {
     "build": "echo \"not required build\""

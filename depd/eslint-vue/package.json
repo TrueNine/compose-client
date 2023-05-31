@@ -1,8 +1,11 @@
 {
   "name": "@compose/depd-eslint-vue",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "author": "TrueNine",
+  "type": "module",
+  "main": "index.js",
   "license": "ISC",
+  "private": true,
   "scripts": {
     "build": "echo \"not required build\""
   },

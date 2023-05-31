@@ -1,0 +1,7 @@
+export * from '@typescript-eslint/eslint-plugin'
+export * from '@typescript-eslint/parser'
+export * from 'eslint'
+export * from 'eslint-config-prettier'
+export * from 'eslint-define-config'
+export * from 'eslint-plugin-prettier'
+export * from 'prettier'

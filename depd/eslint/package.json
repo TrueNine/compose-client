@@ -1,7 +1,9 @@
 {
   "name": "@compose/depd-eslint",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "author": "TrueNine",
+  "type": "module",
+  "main": "index.js",
   "private": true,
   "license": "ISC",
   "scripts": {

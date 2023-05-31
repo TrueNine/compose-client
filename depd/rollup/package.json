@@ -1,6 +1,7 @@
 {
   "name": "@compose/depd-rollup",
   "version": "1.0.1",
+  "main": "index.js",
   "author": "TrueNine",
   "license": "ISC",
   "scripts": {

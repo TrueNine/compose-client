@@ -1,6 +1,9 @@
 {
   "name": "@compose/depd-moment",
-  "version": "1.0.1",
+  "version": "1.0.3",
+  "main": "index.js",
+  "type": "module",
+  "private": true,
   "author": "TrueNine",
   "license": "ISC",
   "scripts": {
