@@ -1,6 +1,6 @@
 {
   "name": "@compose/depd-node",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "main": "index.js",
   "author": "TrueNine",
   "type": "module",
