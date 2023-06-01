@@ -1,5 +1,4 @@
 packages:
   - '@types/**'
-  - depd/**
   - uni-app/**
   - api-model
