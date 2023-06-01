@@ -4,11 +4,12 @@
   "author": "TrueNine",
   "type": "module",
   "main": "index.js",
+  "flat": true,
   "license": "ISC",
   "scripts": {
     "build": "echo \"not required build\""
   },
-  "dependencies": {
+  "peerDependencies": {
     "vue-eslint-parser": "^9.3.0",
     "@compose/depd-eslint": "workspace:^",
     "@vue/eslint-config-prettier": "^7.1.0",

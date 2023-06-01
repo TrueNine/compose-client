@@ -5,10 +5,11 @@
   "type": "module",
   "author": "TrueNine",
   "license": "ISC",
+  "flat": true,
   "scripts": {
     "build": "echo \"not required build\""
   },
-  "dependencies": {
+  "peerDependencies": {
     "autoprefixer": "^10.4.14",
     "sass": "^1.62.1",
     "vite": "^4.3.9",

@@ -5,10 +5,11 @@
   "type": "module",
   "main": "index.js",
   "license": "ISC",
+  "flat": true,
   "scripts": {
     "build": "echo \"not required build\""
   },
-  "dependencies": {
+  "peerDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.59.8",
     "@typescript-eslint/parser": "^5.59.8",
     "eslint": "^8.41.0",

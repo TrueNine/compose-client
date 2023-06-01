@@ -5,10 +5,11 @@
   "author": "TrueNine",
   "type": "module",
   "license": "ISC",
+  "flat": true,
   "scripts": {
     "build": "echo \"not required build\""
   },
-  "dependencies": {
+  "peerDependencies": {
     "@types/node": "^20.2.5"
   }
 }

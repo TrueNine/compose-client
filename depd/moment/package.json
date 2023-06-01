@@ -5,10 +5,11 @@
   "type": "module",
   "author": "TrueNine",
   "license": "ISC",
+  "flat": true,
   "scripts": {
     "build": "echo \"not required build\""
   },
-  "dependencies": {
+  "peerDependencies": {
     "@types/moment": "^2.13.0",
     "moment": "^2.29.4"
   }
