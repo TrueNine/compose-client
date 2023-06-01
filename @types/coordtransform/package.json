@@ -1,6 +1,6 @@
 {
   "name": "@compose/coordtransform",
-  "version": "2.1.3",
+  "version": "2.1.4",
   "description": "地图坐标转换器",
   "main": "index.d.ts",
   "author": "TrueNine",
