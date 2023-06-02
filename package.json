@@ -15,6 +15,12 @@
     "build": "pnpm -r build",
     "pub": "pnpm lint && pnpm build && pnpm publish -r packages"
   },
+  "lint-staged": {
+    "*.{.js,.ts,.d.ts,.vue}": [
+      "eslint . --fix --ext .js,.ts,.d.ts,.vue",
+      "prettier --write --ignore-unknown --config .prettierrc.cjs ."
+    ]
+  },
   "devDependencies": {
     "@rollup/plugin-json": "^6.0.0",
     "@rollup/plugin-multi-entry": "^6.0.0",
