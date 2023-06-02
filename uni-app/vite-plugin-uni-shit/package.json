@@ -1,9 +1,9 @@
 {
   "name": "@compose/vite-plugin-uni-shit",
-  "version": "1.2.20",
+  "version": "1.2.21",
   "description": "uni app shit",
   "type": "commonjs",
-  "main": "es/index.js",
+  "main": "es/index.cjs",
   "types": "es/index.d.ts",
   "author": "TrueNine",
   "license": "ISC",
