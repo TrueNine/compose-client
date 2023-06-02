@@ -14,7 +14,7 @@ export default defineConfig([
     external: ['node', 'fs', 'path', 'process'],
     output: {
       dir: 'es',
-      format: 'es'
+      format: 'commonjs'
     },
     plugins: [
       del({

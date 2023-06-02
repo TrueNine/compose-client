@@ -1,9 +1,13 @@
 import type {PluginOption} from 'vite'
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import process from 'process'
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import pkg from '../package.json'
 import {RubbishPluginConfig, parseConfig} from './Def'
 import {userConfigFactory} from './flow'
 import {optiz} from './resolve'
-import process from 'process'
 
 export * from './Def'
 export * from './EmptyCreate'
@@ -11,7 +15,7 @@ export * from './EmptyCreate'
 /**
  * # 让 uniapp 配置更友好
  *
- * @param config 插件配置
+ * @param viteCfg 插件配置
  * @returns vite 插件
  */
 export const vitePluginRubbishUniApp = (viteCfg?: RubbishPluginConfig): PluginOption => {
@@ -30,5 +34,3 @@ export const vitePluginRubbishUniApp = (viteCfg?: RubbishPluginConfig): PluginOp
   if (viteCfg?.debugMode) console.log(viteCfg)
   return ret
 }
-
-export default vitePluginRubbishUniApp
