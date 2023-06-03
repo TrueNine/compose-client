@@ -1,4 +1,5 @@
 import {ref, shallowRef, Ref} from 'vue'
+import {Headers as ComposeHeader, MediaTypes} from '@compose/api-model'
 
 type Headers = {
   [k in string]: string | number
@@ -109,6 +110,12 @@ export function combinationCallback<T = unknown>(
   }
 }
 
+function hasJson<T>(headers: Headers, data: T): T {
+  const hasHeader = headers[ComposeHeader.contentType].toString() === MediaTypes.json
+  if (typeof data === 'string' && hasHeader) return JSON.parse(data)
+  else return data
+}
+
 /**
  * ## 类 vueuse 设计的一个请求器
  *
@@ -196,6 +203,7 @@ export function useRequest<T = unknown>(
           enableCache: true,
           success: async uniAppResp => {
             let metaResult = uniAppResp.data as unknown as T
+            metaResult = hasJson(uniAppResp.header, metaResult) // 将字符串转换为 json
             if (requestOptions?.afterRequest) {
               const __afterResultCtx = await requestOptions.afterRequest({
                 response: {
@@ -230,7 +238,6 @@ export function useRequest<T = unknown>(
               }
             }
           },
-
           // TODO 此函数的返回值存疑
           fail: async uniAppError => {
             const newErr = new Error(uniAppError.errMsg, {cause: uniAppError})

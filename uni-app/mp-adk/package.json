@@ -1,6 +1,6 @@
 {
   "name": "@compose/uni-mp-adk",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "type": "module",
   "author": "TrueNine",
   "license": "private",
@@ -11,8 +11,9 @@
     "build": "rollup -c"
   },
   "devDependencies": {
+    "@compose/api-model": "workspace:*",
     "@dcloudio/types": "^3.3.3",
-    "@dcloudio/uni-app": "3.0.0-alpha-3080320230523001",
+    "@dcloudio/uni-app": "3.0.0-alpha-3080420230602001",
     "@vue/compiler-dom": "^3.3.4",
     "@vue/runtime-core": "^3.3.4",
     "@vue/runtime-dom": "^3.3.4",
