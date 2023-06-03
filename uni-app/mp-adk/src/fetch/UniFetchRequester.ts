@@ -1,21 +1,21 @@
 import {ref, shallowRef, Ref} from 'vue'
 import {Headers as ComposeHeader, MediaTypes} from '@compose/api-model'
 
-type Headers = {
+export type Headers = {
   [k in string]: string | number
 }
-type RequestMethods = 'GET' | 'POST' | 'DELETE' | 'PUT' | 'OPTIONS' | 'HEAD' | 'TRACE' | 'CONNECT'
+export type RequestMethods = 'GET' | 'POST' | 'DELETE' | 'PUT' | 'OPTIONS' | 'HEAD' | 'TRACE' | 'CONNECT'
 
-interface RequestInit {
+export interface RequestInit {
   headers?: Headers
 }
 
-interface RequestDataOptions extends RequestInit {
+export interface RequestDataOptions extends RequestInit {
   body?: unknown
   method?: RequestMethods
 }
 
-interface UseRequestReturn<T> {
+export interface UseRequestReturn<T> {
   error: Ref<Error | null>
   data: Ref<T | null>
   statusCode: Ref<number | null>
@@ -38,16 +38,16 @@ interface UseRequestReturn<T> {
   delete(payload?: unknown, type?: string): UseRequestReturn<T> & PromiseLike<UseRequestReturn<T>>
 }
 
-interface ResponseInit {
+export interface ResponseInit {
   readonly headers: Headers
   readonly ok: boolean
   readonly status: number
   readonly url: string
 }
 
-type Combination = 'overwrite' | 'chain'
+export type Combination = 'overwrite' | 'chain'
 
-interface CreateRequestOptions {
+export interface CreateRequestOptions {
   /**
    * Determine the inherit behavior for beforeFetch, afterFetch, onFetchError
    * @default 'chain'
@@ -58,17 +58,17 @@ interface CreateRequestOptions {
   requestOptions?: RequestInit
 }
 
-interface BeforeRequestContext {
+export interface BeforeRequestContext {
   url?: string
   options: RequestInit
 }
 
-interface AfterRequestContext<T> {
+export interface AfterRequestContext<T> {
   response: ResponseInit
   data: T | null
 }
 
-interface UseRequestOptions<T = unknown> {
+export interface UseRequestOptions<T = unknown> {
   /**
    * 是否立即执行
    *
@@ -110,7 +110,7 @@ export function combinationCallback<T = unknown>(
   }
 }
 
-function hasJson<T>(headers: Headers, data: T): T {
+export function hasJson<T>(headers: Headers, data: T): T {
   const hasHeader = headers[ComposeHeader.contentType].toString() === MediaTypes.json
   if (typeof data === 'string' && hasHeader) return JSON.parse(data)
   else return data

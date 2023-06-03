@@ -1,0 +1,17 @@
+{
+  "name": "@compose/uni-mp-request",
+  "version": "1.0.1",
+  "type": "module",
+  "author": "TrueNine",
+  "license": "private",
+  "description": "uni-app 请求器",
+  "main": "es/index.js",
+  "types": "es/index.d.ts",
+  "scripts": {
+    "build": "rollup -c"
+  },
+  "peerDependencies": {
+    "@compose/api-model": "workspace:^",
+    "@compose/uni-mp-adk": "workspace:^"
+  }
+}
