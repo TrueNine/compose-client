@@ -14,7 +14,7 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "lib": ["ESNext"],
+    "lib": ["ESNext", "DOM"],
     "skipLibCheck": true,
     "noEmit": true
   },

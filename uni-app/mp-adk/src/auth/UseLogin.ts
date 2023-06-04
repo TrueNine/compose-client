@@ -6,7 +6,7 @@ export interface LoginInfo {
   meta: Ref<unknown | null>
 }
 
-export async function login(): Promise<LoginInfo> {
+export async function useLogin(): Promise<LoginInfo> {
   const code = ref(null)
   const authProvider = ref(null)
   const meta = shallowRef(null)
