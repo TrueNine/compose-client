@@ -1,6 +1,6 @@
 {
   "name": "@compose/uni-mp-adk",
-  "version": "1.0.11",
+  "version": "1.0.15",
   "type": "module",
   "author": "TrueNine",
   "license": "private",
@@ -10,5 +10,8 @@
   "scripts": {
     "build": "pnpm rollup -c",
     "pub": "pnpm build && pnpm publish --no-git-checks"
+  },
+  "peerDependencies": {
+    "@compose/api-model": "workspace:^"
   }
 }

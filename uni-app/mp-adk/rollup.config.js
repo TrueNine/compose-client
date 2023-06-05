@@ -26,7 +26,7 @@ export default defineConfig([
         ie8: false
       })
     ],
-    external: ['vue', '@vue/runtime-core']
+    external: ['vue', '@vue/runtime-core', '@compose/api-model']
   },
   {
     preserveModules: false,
