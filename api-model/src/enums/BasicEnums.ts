@@ -9,7 +9,7 @@ export enum AttachmentTyping {
   /**
    * 根路径
    */
-  NATIVE = 1
+  BASE_URL = 1
 }
 
 /**

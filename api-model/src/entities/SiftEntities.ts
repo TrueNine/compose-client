@@ -1,9 +1,9 @@
-import {AnyEntity} from './BaiscEntities'
+import {BaseEntity} from './BaiscEntities'
 
 /**
  * 品牌
  */
-export interface BrandEntity extends AnyEntity {
+export interface Brand extends BaseEntity {
   ordered: number
   logoImgId?: string
   title: string
@@ -13,7 +13,7 @@ export interface BrandEntity extends AnyEntity {
 /**
  * 分类
  */
-export interface CategoryEntity extends AnyEntity {
+export interface Category extends BaseEntity {
   ordered: number
   title: string
   doc?: string
@@ -22,6 +22,6 @@ export interface CategoryEntity extends AnyEntity {
 /**
  * 所有级联品牌
  */
-export interface AllCategoryEntity extends CategoryEntity {
-  children?: AllCategoryEntity[]
+export interface FullCategory extends Category {
+  children?: FullCategory[]
 }

@@ -1,17 +1,17 @@
-import {AnyEntity} from './BaiscEntities'
+import {BaseEntity} from './BaiscEntities'
 import {GoodsTyping} from '../enums'
 
 /**
  * 渠道全局配
  */
-export interface ChannelGlobalConfigEntity extends AnyEntity {
+export interface ChannelGlobalConfig extends BaseEntity {
   allowMirrorPenetration?: string
 }
 
 /**
  * 渠道
  */
-export interface ChannelsEntity extends AnyEntity {
+export interface Channels extends BaseEntity {
   pid?: string
   leadId?: string
   brandId?: string
@@ -25,7 +25,7 @@ export interface ChannelsEntity extends AnyEntity {
 /**
  * 渠道商品组镜像
  */
-export interface ChannelMirrorGoodsEntity extends AnyEntity {
+export interface ChannelMirrorGoods extends BaseEntity {
   channelId: string
   mirrorType: number
   goodsType: GoodsTyping
@@ -56,7 +56,7 @@ export interface ChannelMirrorGoodsEntity extends AnyEntity {
 /**
  * 渠道结算记录
  */
-export interface ChannelCommissionRecordEntity extends AnyEntity {
+export interface ChannelCommissionRecord extends BaseEntity {
   ordersId?: string
   ordersGoodsId?: string
   goodsUnitOldTitle?: string

@@ -1,3 +1,5 @@
+import {SearchParam} from './Http'
+
 /**
  * # 笛卡尔乘积，用于解包类型数组
  *
@@ -165,11 +167,9 @@ export function around<T>(supplier: () => T, before?: () => void, after?: () => 
  * # 将多个对象转换为 URLSearchParams 格式的字符串
  * @param cards 需转换对象
  */
-export function encodeQueryParam(...cards: (Record<string, unknown> | null | undefined)[]): string {
-  const params = new URLSearchParams()
-  if (!cards) {
-    return ''
-  }
+export function encodeQueryParam(...cards: (object | null | undefined)[]): string {
+  const params = new SearchParam()
+  if (!cards) return ''
   cards.filter(isNonEmpty).forEach(c => {
     Object.entries(c as Record<string, unknown>)
       .filter(([, v]) => isNonEmpty(v))
@@ -181,10 +181,8 @@ export function encodeQueryParam(...cards: (Record<string, unknown> | null | und
 }
 
 export function queryParam(...cards: (Record<string, unknown> | null | undefined)[]): string {
-  const params = new URLSearchParams()
-  if (!cards) {
-    return ''
-  }
+  const params = new SearchParam()
+  if (!cards) return ''
   cards.filter(isNonEmpty).forEach(c => {
     Object.entries(c as Record<string, unknown>)
       .filter(([, v]) => isNonEmpty(v))

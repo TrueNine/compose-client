@@ -1,12 +1,12 @@
-import {AnyEntity} from './BaiscEntities'
+import {BaseEntity as BaseEntity} from './BaiscEntities'
 import {GoodsChangeRecordTyping, GoodsInfoTyping, GoodsTyping} from '../enums'
 import {Duration} from 'moment'
-import {BrandEntity} from './SiftEntities'
+import {Brand as Brand} from './SiftEntities'
 
 /**
  * 商品信息
  */
-export interface GoodsInfoEntity extends AnyEntity {
+export interface GoodsInfo extends BaseEntity {
   title?: string
   secondaryTitle?: string
   brandId?: string
@@ -38,17 +38,17 @@ export interface GoodsInfoEntity extends AnyEntity {
 /**
  * 全商品信息返回
  */
-export interface AllGoodsInfoEntity extends GoodsInfoEntity {
-  goodsParams?: GoodsParamsEntity[]
-  detailsImages?: GoodsInfoDetailsImagesEntity[]
-  goodsUnits?: GoodsUnitEntity[]
-  brand?: BrandEntity
+export interface FullGoodsInfo extends GoodsInfo {
+  goodsParams?: GoodsParams[]
+  detailsImages?: GoodsInfoDetailsImages[]
+  goodsUnits?: GoodsUnit[]
+  brand?: Brand
 }
 
 /**
  * 商品单位
  */
-export interface GoodsUnitEntity extends AnyEntity {
+export interface GoodsUnit extends BaseEntity {
   extendsGoodsInfoId?: string
   goodsInfoId?: string
   forever?: boolean
@@ -60,17 +60,17 @@ export interface GoodsUnitEntity extends AnyEntity {
 /**
  * 全部商品单位信息
  */
-export interface AllGoodsUnitEntity extends GoodsUnitEntity {
-  extendsGoodsInfo?: GoodsInfoEntity
-  info?: GoodsInfoEntity
-  specifications: GoodsUnitSpecificationEntity[]
-  changeRecords: GoodsUnitChangeRecordEntity[]
+export interface FullGoodsUnit extends GoodsUnit {
+  extendsGoodsInfo?: GoodsInfo
+  info?: GoodsInfo
+  specifications: GoodsUnitSpecification[]
+  changeRecords: GoodsUnitChangeRecord[]
 }
 
 /**
  * 商品规格
  */
-export interface GoodsUnitSpecificationEntity extends AnyEntity {
+export interface GoodsUnitSpecification extends BaseEntity {
   specName?: string
   specValue?: string
   specCode?: string
@@ -79,7 +79,7 @@ export interface GoodsUnitSpecificationEntity extends AnyEntity {
 /**
  * 商品参数
  */
-export interface GoodsParamsEntity extends AnyEntity {
+export interface GoodsParams extends BaseEntity {
   paramName?: string
   paramValue?: string
 }
@@ -87,7 +87,7 @@ export interface GoodsParamsEntity extends AnyEntity {
 /**
  * 商品详情图
  */
-export interface GoodsInfoDetailsImagesEntity extends AnyEntity {
+export interface GoodsInfoDetailsImages extends BaseEntity {
   imgId?: number
   ordered?: number
   goodsInfoId?: number
@@ -96,7 +96,7 @@ export interface GoodsInfoDetailsImagesEntity extends AnyEntity {
 /**
  * 商品单位变动记录
  */
-export interface GoodsUnitChangeRecordEntity extends AnyEntity {
+export interface GoodsUnitChangeRecord extends BaseEntity {
   goodsUnitId?: number
   modifierUserId?: number
   newPrice?: number
@@ -109,7 +109,7 @@ export interface GoodsUnitChangeRecordEntity extends AnyEntity {
 /**
  * 商品组
  */
-export interface GoodsGroupEntity extends AnyEntity {
+export interface GoodsGroup extends BaseEntity {
   goodsInfoId?: number
   title?: string
   doc?: string

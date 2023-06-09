@@ -1,12 +1,12 @@
-import {GoodsInfoEntity, GoodsParamsEntity, GoodsUnitEntity, GoodsUnitSpecificationEntity} from '../../../entities'
+import {GoodsInfo, GoodsParams, GoodsUnit, GoodsUnitSpecification} from '../../../entities'
 import {GoodsInfoTyping, GoodsTyping} from '../../../enums'
 
 /**
  * 保存实体商品
  */
 export interface PostUnActivatedGoodsRequestParam {
-  info: GoodsInfoEntity
-  params: GoodsParamsEntity[]
+  info: GoodsInfo
+  params: GoodsParams[]
   goodsUnits: PostGoodsUnitRequestParam[]
 }
 
@@ -14,9 +14,9 @@ export interface PostUnActivatedGoodsRequestParam {
  * 商品单位
  */
 export interface PostGoodsUnitRequestParam {
-  unit: GoodsUnitEntity
-  info?: GoodsInfoEntity
-  specs?: GoodsUnitSpecificationEntity[]
+  unit: GoodsUnit
+  info?: GoodsInfo
+  specs?: GoodsUnitSpecification[]
 }
 
 export interface GetAllGoodsInfoRequestParam {
