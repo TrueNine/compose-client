@@ -111,9 +111,12 @@ export function combinationCallback<T = unknown>(
 }
 
 export function hasJson<T>(headers: Headers, data: T): T {
-  const hasHeader = headers[ComposeHeader.contentType].toString() === MediaTypes.json
-  if (typeof data === 'string' && hasHeader) return JSON.parse(data)
-  else return data
+  const typ = headers[ComposeHeader.contentType]
+  if (typ) {
+    const hasJson = typ === MediaTypes.json
+    if (typeof data === 'string' && hasJson) return JSON.parse(data)
+    else return data
+  } else return data
 }
 
 /**

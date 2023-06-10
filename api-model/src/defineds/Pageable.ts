@@ -72,20 +72,21 @@ export const PageablePageSizes = [
 ]
 
 /**
- * ## 循环遍历分页 API 返回的所有数据，并将所有数据作为数组返回。
- * @param pq 初始的分页请求参数。
- * @param pageableCallback 一个回调函数，接受一个分页请求参数并返回一个 PagedResponseResult 或一个解析为 PagedResponseResult 的 Promise。
+ * # 遍历分页
+ * - API 返回的所有数据，并将所有数据作为数组返回。
+ * @param initPageParam 初始分页请求参数。
+ * @param loopFn 回调函数，接受一个分页请求参数并返回一个 PagedResponseResult 或一个解析为 PagedResponseResult 的 Promise。
  * @returns 所有分页 API 返回的数据的数组。
  */
-export async function loopPageAll<T>(pq: Pq, pageableCallback: (pq: Pq) => Pr<T> | Promise<Pr<T>>) {
-  const {pageSize: initPageSize = 0, dataList: initDataList = [], total: initTotal = 0} = await pageableCallback(pq)
+export async function loopPageAll<T>(initPageParam: Pq, loopFn: (loopPageParam: Pq) => Pr<T> | Promise<Pr<T>>) {
+  const {pageSize: initPageSize = 0, dataList: initDataList = [], total: initTotal = 0} = await loopFn(initPageParam)
   if (isEmpty(initDataList) || initPageSize === 0 || !initDataList || initTotal === 0) {
     return initDataList
   }
   const resultDataList: T[] = [...initDataList]
-  let nextPq: Pq | null = {...pq, offset: pq.offset + 1}
+  let nextPq: Pq | null = {...initPageParam, offset: initPageParam.offset + 1}
   while (nextPq !== null) {
-    const {dataList = []} = await pageableCallback(nextPq)
+    const {dataList = []} = await loopFn(nextPq)
     resultDataList.push(...dataList)
     nextPq = (nextPq.offset + 1) * nextPq.pageSize < initTotal ? {...nextPq, offset: nextPq.offset + 1} : null
   }

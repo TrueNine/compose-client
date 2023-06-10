@@ -180,7 +180,7 @@ export function encodeQueryParam(...cards: (object | null | undefined)[]): strin
   return params.toString() && `?${params.toString()}`
 }
 
-export function queryParam(...cards: (Record<string, unknown> | null | undefined)[]): string {
+export function queryParam(...cards: (object | null | undefined)[]): string {
   const params = new SearchParam()
   if (!cards) return ''
   cards.filter(isNonEmpty).forEach(c => {
