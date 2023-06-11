@@ -61,3 +61,8 @@ export const ContentTypes = {
     [Headers.contentType]: MediaTypes.json
   }
 }
+/**
+ * ## 表示一个可以为 异步的类型
+ * @example string | Promise<string>
+ */
+export type Asyncable<T> = T | Promise<T>

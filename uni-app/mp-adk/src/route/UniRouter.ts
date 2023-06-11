@@ -1,9 +1,23 @@
 /**
- * uni app 页面路由
- * @param path 省掉 / 的 path
+ * ## 路由到指定路径
+ * @param path 路径，不需要 /
  */
-export function route(path: string) {
+function push(path: string) {
   uni.navigateTo({
     url: `/${path}`
   })
+}
+
+/**
+ * ## 向后退回路由
+ */
+function back() {
+  uni.navigateBack()
+}
+
+/**
+ * uni app 页面路由
+ */
+export function useRouter() {
+  return {push, back}
 }

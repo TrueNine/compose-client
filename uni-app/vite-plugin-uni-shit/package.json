@@ -1,6 +1,6 @@
 {
   "name": "@compose/vite-plugin-uni-shit",
-  "version": "1.2.21",
+  "version": "1.2.22",
   "description": "uni app shit",
   "type": "commonjs",
   "main": "es/index.cjs",
@@ -8,6 +8,7 @@
   "author": "TrueNine",
   "license": "ISC",
   "scripts": {
-    "build": "rollup -c"
+    "build": "pnpm rollup -c",
+    "pub": "pnpm build && pnpm publish --no-git-checks"
   }
 }

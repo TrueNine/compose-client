@@ -19,17 +19,17 @@ $u-type-primary: #2196F3;
 $u-type-primary-disabled: #64B5F6;
 $u-type-primary-dark: #1565C0;
 
-$u-type-warning: #FFC107;
-$u-type-warning-disabled: #FFD54F;
-$u-type-warning-dark: #FFA000;
+$u-type-warning: #ef6c00;
+$u-type-warning-disabled: #f57c00;
+$u-type-warning-dark: #e65100;
 
 $u-type-success: #4CAF50;
 $u-type-success-disabled: #81C784;
 $u-type-success-dark: #388E3C;
 
-$u-type-error: #FF5722;
-$u-type-error-disabled: #FF8A65;
-$u-type-error-dark: #E64A19;`
+$u-type-error: #c62828;
+$u-type-error-disabled: #d32f2f;
+$u-type-error-dark: #b71c1c;`
 
 export function fillVkUview(theme?: ThemeDef): ScssVariableDefs {
   const defaultScss = parseScssVariables(vkUviewScss)

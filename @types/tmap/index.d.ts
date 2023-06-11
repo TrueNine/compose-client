@@ -1,4 +1,5 @@
-import {PointModel} from 'compose-api-model'
+import {WGS84} from '@compose/api-model'
+
 /**
  * # 腾讯地图 SDK挂载
  * 他妈的邪了门，居然就他妈挂载在 window 上
@@ -39,7 +40,7 @@ export declare namespace TMap {
     duration?: number
   }
 
-  type PointDataTyping = PointModel
+  type PointDataTyping = WGS84
 
   /**
    * ## x y 标记
@@ -203,7 +204,7 @@ export declare namespace TMap {
     content?: string
     enableCustom?: boolean
     zIndex?: number
-    offset?: PointModel
+    offset?: WGS84
   }
 
   // ====================================
@@ -320,7 +321,7 @@ export declare namespace TMap {
   export interface MapEvent<K extends string> extends AbstractTencetnEvent<K, Event, EventTarget> {
     latLng: LatLng
     poi: string | null
-    point: PointModel | null
+    point: WGS84 | null
   }
 
   /**
