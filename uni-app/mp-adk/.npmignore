@@ -1,6 +1,11 @@
-.eslintrc.cjs
-.prettierrc.cjs
 pnpm.lock.yaml
 
 /node_models
 src/
+
+README.md
+rollup.config.js
+tsconfig.json
+uni.d.ts
+
+.gitignore

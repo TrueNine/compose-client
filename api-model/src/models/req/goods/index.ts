@@ -1,25 +1,31 @@
+import type {KPair} from '../../../defineds'
 import {GoodsInfo, GoodsParams, GoodsUnit, GoodsUnitSpecification} from '../../../entities'
 import {GoodsInfoTyping, GoodsTyping} from '../../../enums'
 
 /**
  * 保存实体商品
  */
-export interface PostUnActivatedGoodsRequestParam {
+export interface PostUnActivatedGoodsReq {
   info: GoodsInfo
+  bannerImgId?: string
   params: GoodsParams[]
-  goodsUnits: PostGoodsUnitRequestParam[]
+  /**
+   * 所有详情图片
+   */
+  images?: KPair<string, number>[]
+  goodsUnits: PostGoodsUnitReq[]
 }
 
 /**
  * 商品单位
  */
-export interface PostGoodsUnitRequestParam {
+export interface PostGoodsUnitReq {
   unit: GoodsUnit
   info?: GoodsInfo
   specs?: GoodsUnitSpecification[]
 }
 
-export interface GetAllGoodsInfoRequestParam {
+export interface GetAllGoodsInfoReq {
   goodsType?: GoodsTyping
   infoType?: GoodsInfoTyping
   goodsName?: string

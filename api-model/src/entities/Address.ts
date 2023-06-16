@@ -4,7 +4,7 @@ import {BaseEntity} from '../entities/BaiscEntities'
 /**
  * 五级联动省市区地址
  */
-export interface Address {
+export interface Address extends BaseEntity {
   code: string
   name: string
   level: number
@@ -13,10 +13,28 @@ export interface Address {
 }
 
 /**
- * 用户地址详情
+ * # 用户地址详情
  */
-export interface AddressDetauls extends BaseEntity {
-  addressId: number
+export interface AddressDetails extends BaseEntity {
+  addressId: string
+  addressCode?: string
+  name?: string
+  phone?: string
+  userId?: string
   addressDetails: string
   center?: WGS84
+}
+
+/**
+ * # 全地址
+ */
+export interface FullAddress extends Address {
+  details: AddressDetails[]
+}
+
+/**
+ * # 全用户地址详情
+ */
+export interface FullAddressDetails extends AddressDetails {
+  address: Address
 }

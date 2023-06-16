@@ -1,7 +1,8 @@
 import {BaseEntity as BaseEntity} from './BaiscEntities'
 import {GoodsChangeRecordTyping, GoodsInfoTyping, GoodsTyping} from '../enums'
 import {Duration} from 'moment'
-import {Brand as Brand} from './SiftEntities'
+import {Brand as Brand, Category} from './SiftEntities'
+import {LinkedAttachment} from './Attachment'
 
 /**
  * 商品信息
@@ -10,6 +11,7 @@ export interface GoodsInfo extends BaseEntity {
   title?: string
   secondaryTitle?: string
   brandId?: string
+  bannerImgId?: string
   categoryId?: string
   weightG?: number
   unit?: string
@@ -40,9 +42,11 @@ export interface GoodsInfo extends BaseEntity {
  */
 export interface FullGoodsInfo extends GoodsInfo {
   goodsParams?: GoodsParams[]
-  detailsImages?: GoodsInfoDetailsImages[]
-  goodsUnits?: GoodsUnit[]
+  detailsImages?: FullGoodsInfoDetailsImages[]
+  goodsUnits?: FullGoodsUnit[]
   brand?: Brand
+  category?: Category
+  bannerImg?: LinkedAttachment
 }
 
 /**
@@ -64,7 +68,6 @@ export interface FullGoodsUnit extends GoodsUnit {
   extendsGoodsInfo?: GoodsInfo
   info?: GoodsInfo
   specifications: GoodsUnitSpecification[]
-  changeRecords: GoodsUnitChangeRecord[]
 }
 
 /**
@@ -91,6 +94,10 @@ export interface GoodsInfoDetailsImages extends BaseEntity {
   imgId?: number
   ordered?: number
   goodsInfoId?: number
+}
+
+export interface FullGoodsInfoDetailsImages extends GoodsInfoDetailsImages {
+  image: LinkedAttachment
 }
 
 /**

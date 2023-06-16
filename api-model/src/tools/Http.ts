@@ -1,0 +1,46 @@
+import {BasicType, NullablePartial} from '../defineds'
+import {isNonEmpty, isNonEmptyString} from './Values'
+
+export class SearchParam {
+  private _root: Map<string, BasicType> = new Map()
+
+  toString(): string {
+    return Array.from(this._root)
+      .map(([k, v]) => `${k.toString()}=${v.toString()}`)
+      .join(`&`)
+  }
+
+  append(name: string, value: BasicType) {
+    this._root.set(name, value)
+  }
+}
+
+/**
+ * # 将多个对象转换为 URLSearchParams 格式的字符串
+ * @param cards 需转换对象
+ */
+export function encodeQueryParam(...cards: NullablePartial<object>[]): string {
+  const params = new SearchParam()
+  if (!cards) return ''
+  cards.filter(isNonEmpty).forEach(c => {
+    Object.entries(c as Record<string, unknown>)
+      .filter(([, v]) => isNonEmpty(v))
+      .map(([k, v]) => [k, isNonEmptyString(v) ? encodeURIComponent(v as string) : v])
+      .map(([k, v]) => [k, Array.isArray(v) ? v.join(',') : v])
+      .forEach(([k, v]) => params.append(encodeURIComponent(k as string), v as string))
+  })
+  return params.toString() && `?${params.toString()}`
+}
+
+export function queryParam(...cards: NullablePartial<object>[]): string {
+  const params = new SearchParam()
+  if (!cards) return ''
+  cards.filter(isNonEmpty).forEach(c => {
+    Object.entries(c as Record<string, unknown>)
+      .filter(([, v]) => isNonEmpty(v))
+      .map(([k, v]) => [k, v])
+      .map(([k, v]) => [k, Array.isArray(v) ? v.join(',') : v])
+      .forEach(([k, v]) => params.append(k as string, v as string))
+  })
+  return params.toString() && `?${params.toString()}`
+}

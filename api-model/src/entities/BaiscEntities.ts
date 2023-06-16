@@ -1,5 +1,5 @@
 import {GenderTyping} from '../enums'
-import {AddressDetauls} from './Address'
+import {AddressDetails} from './Address'
 
 export interface BaseEntity {
   id?: string
@@ -41,7 +41,7 @@ export interface UserInfo extends BaseEntity {
   email?: string
   birthday?: Date
   addressDetailsId?: number
-  addressDetails?: AddressDetauls
+  addressDetails?: AddressDetails
   phone?: string
   idCard?: string
   gender: GenderTyping

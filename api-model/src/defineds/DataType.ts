@@ -1,7 +1,17 @@
 /**
+ * # 基元类型
+ */
+export type BasicType = string | number | boolean
+
+/**
+ * # 可空，可选，不稳定
+ */
+export type NullablePartial<T = unknown> = T | Partial<T> | null | never | undefined | void
+
+export /**
  * 错误消息统一返回格式
  */
-export interface ErrorMessage {
+interface ErrorMessage {
   msg?: string
   code: number
 }
