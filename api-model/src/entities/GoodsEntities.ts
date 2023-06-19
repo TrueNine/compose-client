@@ -1,4 +1,4 @@
-import {BaseEntity as BaseEntity} from './BaiscEntities'
+import {BaseEntity} from './BaiscEntities'
 import {GoodsChangeRecordTyping, GoodsInfoTyping, GoodsTyping} from '../enums'
 import {Duration} from 'moment'
 import {Brand as Brand, Category} from './SiftEntities'

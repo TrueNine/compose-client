@@ -32,3 +32,11 @@ export interface GetAllGoodsInfoReq {
   categoryId?: string
   brandId?: string
 }
+
+/**
+ * # 商品单位修改参数
+ */
+export interface ModifyGoodsUnitReq {
+  goodsUnit: GoodsUnit
+  unitInfo?: GoodsInfo
+}

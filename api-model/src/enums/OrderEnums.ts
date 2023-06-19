@@ -9,6 +9,7 @@ export enum OrderStatusTyping {
   PAID = 2001,
   CANCEL = 2002,
   REFUNDED = 2003,
+  PAY_SUCCESS_BIZ_FAILED = 5002,
   COMPLETED = 2023,
   PRE_REFUND = 4001
 }
@@ -41,6 +42,10 @@ export const OrderStatusTypingPairs: Pair<string, number>[] = [
   {
     k: '预退款',
     v: OrderStatusTyping.PRE_REFUND.valueOf()
+  },
+  {
+    k: '支付成功，业务处理失败',
+    v: OrderStatusTyping.PAY_SUCCESS_BIZ_FAILED.valueOf()
   }
 ]
 
@@ -70,6 +75,7 @@ export enum PaymentTyping {
   PRE_PAY = 1001,
   PAID = 2001,
   PRE_REFUND = 4001,
+  PAY_SUCCESS__BIZ_FAILED = 5002,
   REFUNDED = 2002
 }
 
@@ -89,5 +95,9 @@ export const PaymentTypingPairs: Pair<string, number>[] = [
   {
     k: '已退款',
     v: PaymentTyping.REFUNDED.valueOf()
+  },
+  {
+    k: '支付成功，业务异常',
+    v: PaymentTyping.PAY_SUCCESS__BIZ_FAILED.valueOf()
   }
 ]

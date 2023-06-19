@@ -1,7 +1,10 @@
+import {ISO8601DateFormat} from '../../../defineds/DataType'
+import {OrderStatusTyping} from '../../../enums'
+
 export {}
 
 /**
- * # 创建订单
+ * # 微信小程序创建订单
  */
 export interface CreateWechatSingleProductOrderReq {
   unitId: string
@@ -11,4 +14,18 @@ export interface CreateWechatSingleProductOrderReq {
   customerName?: string
   customerPhone?: string
   customerAddressDetailsId?: string
+  userId?: string
+}
+
+/**
+ * # 订单动态查询接口参数
+ */
+export interface QueryOrderReq {
+  userId?: string
+  customerPhone?: string
+  status?: OrderStatusTyping
+  startTimeBeginDate?: ISO8601DateFormat
+  startTimeAndDate?: ISO8601DateFormat
+  createTimeBeginDate?: ISO8601DateFormat
+  createTimeAndDate?: ISO8601DateFormat
 }

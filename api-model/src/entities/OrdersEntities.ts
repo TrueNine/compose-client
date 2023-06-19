@@ -1,5 +1,8 @@
-import {OrderStatusTyping, PayChannelTyping, PaymentTyping} from '../enums'
+import {ISO8601DatetimeFormat} from '../defineds/DataType'
+import {GoodsTyping, OrderStatusTyping, PayChannelTyping, PaymentTyping} from '../enums'
+import {FullAddressDetails} from './Address'
 import {BaseEntity} from './BaiscEntities'
+import {FullGoodsUnit} from './GoodsEntities'
 
 export {}
 
@@ -11,13 +14,41 @@ export interface Orders extends BaseEntity {
   customerPhone?: string
   deliveryAddressDetailsId?: string
   orderRemark?: string
-  requireTime?: Date
-  delayedTime?: Date
-  startTime?: Date
-  endTime?: Date
+  requireTime?: ISO8601DatetimeFormat
+  delayedTime?: ISO8601DatetimeFormat
+  startTime?: ISO8601DatetimeFormat
+  endTime?: ISO8601DatetimeFormat
   status?: OrderStatusTyping
   totalPrice?: number
   ordersPayRecordId?: string
+  userId?: string
+  createTime?: ISO8601DatetimeFormat
+}
+
+export interface FullOrders extends Orders {
+  orderPayRecord?: OrdersPayRecord
+  deliveryAddressDetails?: FullAddressDetails
+  orderGoods?: FullOrdersGoods[]
+}
+
+export interface OrdersGoods extends BaseEntity {
+  subtotal?: number
+  quantity?: number
+  goodsGroupOldPrice?: number
+  goodsGroupOldTitle?: string
+  goodsGroupId?: string
+  deliveryTotalWeightG?: number
+  deliveryOldTitle?: string
+  deliveryId?: string
+  providerOldPhone?: string
+  providerOldTitle?: string
+  providerId?: string
+  goodsUnitOldPrice?: number
+  goodsUnitOldTitle?: string
+  goodsWeightG?: number
+  goodsUnitId?: string
+  ordersId?: string
+  goodsType?: GoodsTyping
 }
 
 export interface OrdersPayRecord extends BaseEntity {
@@ -27,6 +58,10 @@ export interface OrdersPayRecord extends BaseEntity {
   payCode?: string
   refundAmount?: number
   payAmount?: number
-  payMetaData?: string
+  payMetaData?: unknown
   prePayCode?: string
+}
+
+export interface FullOrdersGoods extends OrdersGoods {
+  goodsUnit?: FullGoodsUnit
 }
