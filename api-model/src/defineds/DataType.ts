@@ -4,6 +4,16 @@
 export type BasicType = string | number | boolean
 
 /**
+ * # 数值或字符串
+ */
+export type StrOrNum = string | number
+
+/**
+ * # 元素可为 null
+ */
+export type Nullable<T = unknown> = T | null
+
+/**
  * # 可空，可选，不稳定
  */
 export type NullablePartial<T = unknown> = T | Partial<T> | null | never | undefined | void
