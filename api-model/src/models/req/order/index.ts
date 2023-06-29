@@ -28,4 +28,6 @@ export interface QueryOrderReq {
   startTimeAndDate?: ISO8601DateFormat
   createTimeBeginDate?: ISO8601DateFormat
   createTimeAndDate?: ISO8601DateFormat
+  createTimeDesc?: boolean
+  startTimeDesc?: boolean
 }

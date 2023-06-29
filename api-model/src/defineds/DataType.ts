@@ -14,6 +14,16 @@ export type StrOrNum = string | number
 export type Nullable<T = unknown> = T | null
 
 /**
+ * # InstanceType 的简写
+ *
+ * ```typescript
+ * type InstanceType<T extends abstract new (...args: any) => any> = T extends abstract new (...args: any) => infer R ? R : any;
+ * ```
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type Inst<T extends abstract new (...args: any) => any> = InstanceType<T>
+
+/**
  * # 可空，可选，不稳定
  */
 export type NullablePartial<T = unknown> = T | Partial<T> | null | never | undefined | void

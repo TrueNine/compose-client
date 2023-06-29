@@ -1,4 +1,4 @@
-import {Asyncable} from './DataType'
+import {Asyncable, Nullable} from './DataType'
 import {isEmpty} from '../tools'
 
 /**
@@ -79,15 +79,13 @@ export const PageablePageSizes = [
  * @param loopPq 初始分页请求参数。
  * @returns 所有分页 API 返回的数据的数组。
  */
-export async function loopPageAll<T>(loopFn: (loopPq: Pq) => Asyncable<Pr<T>>, initPageParam: Pq = Pw.DEFAULT_MAX) {
-  const {pageSize: initPageSize = 0, dataList: initDataList = [], total: initTotal = 0} = await loopFn(initPageParam)
-  if (isEmpty(initDataList) || initPageSize <= 1 || !initDataList || initTotal === 0 || initTotal <= initPageParam.pageSize) {
-    return initDataList
-  }
+export async function loopPageAll<T>(loopFn: (loopPq: Pq) => Asyncable<Nullable<Pr<T>>>, initPageParam: Pq = Pw.DEFAULT_MAX) {
+  const {pageSize: initPageSize = 0, dataList: initDataList = [], total: initTotal = 0} = (await loopFn(initPageParam)) ?? {pageSize: 0, dataList: [], total: 0}
+  if (isEmpty(initDataList) || initPageSize <= 1 || !initDataList || initTotal === 0 || initTotal <= initPageParam.pageSize) return initDataList
   const resultDataList: T[] = [...initDataList]
   let nextPq: Pq | null = {...initPageParam, offset: initPageParam.offset + 1}
   while (nextPq !== null) {
-    const {dataList = []} = await loopFn(nextPq)
+    const {dataList = []} = (await loopFn(nextPq)) ?? {dataList: []}
     resultDataList.push(...dataList)
     nextPq = (nextPq.offset + 1) * nextPq.pageSize < initTotal ? {...nextPq, offset: nextPq.offset + 1} : null
   }
