@@ -1,6 +1,6 @@
 {
   "name": "@compose/api-model",
-  "version": "0.1.71",
+  "version": "0.1.74",
   "description": "接口定义工具包",
   "type": "module",
   "main": "es/index.js",

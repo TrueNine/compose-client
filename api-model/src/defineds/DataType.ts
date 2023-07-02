@@ -24,14 +24,19 @@ export type Nullable<T = unknown> = T | null
 export type Inst<T extends abstract new (...args: any) => any> = InstanceType<T>
 
 /**
+ * 颜色值
+ */
+export type HexColor = `#${string}`
+
+/**
  * # 可空，可选，不稳定
  */
 export type NullablePartial<T = unknown> = T | Partial<T> | null | never | undefined | void
 
-export /**
+/**
  * 错误消息统一返回格式
  */
-interface ErrorMessage {
+export interface ErrorMessage {
   msg?: string
   code: number
 }
