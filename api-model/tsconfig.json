@@ -14,7 +14,7 @@
     "isolatedModules": true,
     "esModuleInterop": true,
     "lib": ["ESNext", "DOM"],
-    "skipLibCheck": true,
+    "skipLibCheck": false,
     "noEmit": true
   },
   "exclude": ["node_modules", "dist", "es"]

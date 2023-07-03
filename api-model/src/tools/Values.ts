@@ -58,3 +58,15 @@ export function mapRecord<T, U>(record: Record<string, T>, callback: (val: T) =>
     return result
   }, {} as Record<string, U>)
 }
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function dlv(obj: any, key: string | string[], def: any, p = 0, undef: any): any {
+  if (typeof key === 'string') {
+    key = key.split('.')
+  }
+  for (p = 0; p < key.length; p++) {
+    const path = key[p]
+    obj = obj ? obj[path] : undef
+  }
+  return obj === undef ? def : obj
+}
