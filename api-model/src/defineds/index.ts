@@ -1,3 +1,3 @@
 export * from './DataType'
-export * from './MenuRoutes'
+export * from './RouteOptions'
 export * from './Pageable'
