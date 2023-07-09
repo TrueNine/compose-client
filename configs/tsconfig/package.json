@@ -1,0 +1,12 @@
+{
+  "name": "@compose/tsconfig",
+  "version": "0.0.1",
+  "main": "tsconfig.json",
+  "scripts": {
+    "pub": "pnpm publish --no-git-checks"
+  },
+  "dependencies": {
+    "@tsconfig/node18": "^18.2.0",
+    "@vue/tsconfig": "^0.4.0"
+  }
+}

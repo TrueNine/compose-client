@@ -29,7 +29,14 @@ export interface RouteOption {
   hasPermissions?: string[][]
   requireLogin?: boolean
   tags?: string[]
+  /**
+   * ### 当前路由是否被禁用
+   */
   disabled?: true
+  /**
+   * ### 是否隐藏当前路由选项，通常用于菜单
+   */
+  hidden?: true
   sub?: RouteOption[]
 }
 
@@ -38,15 +45,23 @@ export interface RouteOption {
  * @param routeOptions 需操作的路由选项
  * @returns 操作函数
  */
-export function routeOptionStream(routeOptions: readonly RouteOption[] = []) {
-  function _getArr(paths: string[] | string = [], sep = '/') {
-    return Array.isArray(paths) ? paths : paths?.split(sep)
+export function routeOptionStream(routeOptions: readonly RouteOption[] = [], routeRootPath = '/') {
+  function _pathToRoot(path: string[]) {
+    return path.reduce((acc, cur) => acc && (cur === routeRootPath || cur === ''), true)
+  }
+  function _isRootPath(path: string[]): string[] {
+    if ((path.length === 1 || path.length === 2) && _pathToRoot(path)) return ['/']
+    else return path
+  }
+  function _pathToArray(paths: string[] | string = [], sep = '/'): string[] {
+    const metaPath = Array.isArray(paths) ? paths : paths.split('?')[0].split(sep)
+    return _isRootPath(metaPath)
   }
   function _filterPaths(paths: string[] | string = []): string[] {
-    return _getArr(paths).filter(r => r !== '')
+    return _pathToArray(paths).filter(r => r !== '')
   }
   function _getLinkedUri(rootPath: string, uri?: string): string | undefined {
-    return uri ? `${rootPath}${rootPath !== '' ? '/' : ''}${uri || ''}` : uri
+    return uri ? `${rootPath}${rootPath !== '' ? routeRootPath : ''}${uri || ''}` : uri
   }
 
   /**
@@ -56,17 +71,54 @@ export function routeOptionStream(routeOptions: readonly RouteOption[] = []) {
    * @returns 父节点路径
    */
   function findRouteOptionPath(paths?: string[] | string, subPath: readonly RouteOption[] = routeOptions, findedPaths: RouteOption[] = []): RouteOption[] {
-    if (!paths) return findedPaths
+    if (paths?.length === 0) return findedPaths
     const pathArray = _filterPaths(paths)
     if (pathArray.length === 0) return findedPaths
-    const currentPath = pathArray[0].replace('/', '')
+    const currentPath = pathArray[0]
     for (const itOption of subPath) {
-      if (itOption.uri?.replace('/', '') === currentPath) {
-        const subPath = findRouteOptionPath(pathArray.slice(1), itOption.sub, [...findedPaths, itOption])
-        if (subPath) return subPath
+      if (itOption.uri === currentPath) return findRouteOptionPath(pathArray.slice(1), itOption.sub ?? [], [...findedPaths, itOption])
+    }
+    return findedPaths
+  }
+
+  function isRequireLogin(path: string[] | string) {
+    const current = [...findRouteOptionPath(path)].reverse()
+    console.log({
+      current
+    })
+    for (const r of current) {
+      if (r.requireLogin) return true
+      const hasPermissions = (r.hasPermissions?.length ?? 0) > 0
+      const reqPermissions = (r.requirePermissions?.length ?? 0) > 0
+      if (hasPermissions || reqPermissions) return true
+    }
+    return false
+  }
+
+  const _hasPermissionsGroup = (require: string[] = [], user: string[] = []) => require.reduce((acc, cur) => acc && user.includes(cur), true)
+  /**
+   * ## 判断用户是否拥有足够的权限
+   * @param fullPath 匹配路由的全路径
+   * @param permissions 权限
+   * @param defaultAllow 默认规则
+   * @returns 是否拥有足够的权限
+   */
+  function isAllowPermissions(fullPath: string[] | string = [], permissions: string[] = [], defaultAllow = true): boolean {
+    const optionPath = [...findRouteOptionPath(fullPath, routeOptions ?? [])]
+    if (optionPath.length === 0) return defaultAllow
+    for (let i = optionPath.length; i > 0; i--) {
+      const option = optionPath[i - 1]
+      if (option.requirePermissions) return _hasPermissionsGroup(option.requirePermissions, permissions)
+      if (option.hasPermissions) {
+        const r = option.hasPermissions
+        for (let j = 0; j < r.length; j++) {
+          const require = r[j]
+          if (_hasPermissionsGroup(require, permissions)) return true
+        }
+        return false
       }
     }
-    return []
+    return defaultAllow
   }
 
   /**
@@ -92,6 +144,26 @@ export function routeOptionStream(routeOptions: readonly RouteOption[] = []) {
   }
 
   /**
+   * @returns 返回所有不带 hidden 属性的路由
+   */
+  function toShow(): RouteOption[] {
+    const _newRouteOption = [...routeOptions]
+    function _deep(sub: RouteOption[] = _newRouteOption) {
+      return sub
+        .filter(r => {
+          if (r.hidden) return false
+          return true
+        })
+        .map(r => {
+          const _n = {...r}
+          if (r.sub) _n.sub = _deep(r.sub)
+          return _n
+        })
+    }
+    return _deep(_newRouteOption)
+  }
+
+  /**
    * ## 以 uri 查找匹配的路由选项
    * @param paths 路径 或路径组
    * @param deep 递归层级
@@ -99,7 +171,7 @@ export function routeOptionStream(routeOptions: readonly RouteOption[] = []) {
    * @returns 查找到的菜单节点
    */
   function deepfindRouteOptionByUriPath(
-    paths: string[] | string,
+    paths: string[] | string = [],
     options: readonly RouteOption[] = routeOptions,
     deep = 0,
     root: RouteOption | null = null
@@ -110,8 +182,7 @@ export function routeOptionStream(routeOptions: readonly RouteOption[] = []) {
     let result: Nullable<RouteOption> = null
     for (let i = 0; i < options.length; i++) {
       const option = options[i]
-      const optionUri = option.uri?.replace('/', '')
-      if (optionUri === currentPath) {
+      if (option.uri === currentPath) {
         result = deepfindRouteOptionByUriPath(pathArray, [...(option.sub ?? [])], deep + 1, option)
         break
       }
@@ -122,6 +193,9 @@ export function routeOptionStream(routeOptions: readonly RouteOption[] = []) {
   return {
     findRouteOptionPath,
     deepfindRouteOptionByUriPath,
-    flatRouteOptions
+    flatRouteOptions,
+    isAllowPermissions,
+    isRequireLogin,
+    toShow
   }
 }
