@@ -1,6 +1,6 @@
-import {GenderTyping} from '../enums/BasicEnums'
-import {AddressDetails} from './Address'
-import {BaseEntity} from './BaiscEntities'
+import {GenderTyping} from '@/enums'
+import type {AddressDetails} from './Address'
+import type {BaseEntity} from './BaiscEntities'
 
 export {}
 

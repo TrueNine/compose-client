@@ -2,4 +2,5 @@ packages:
   - '@types/**'
   - api-model
   - uni-app/**
+  - 'ext/**/**'
   - 'configs/**'

@@ -1,4 +1,4 @@
-import {Pair} from './../defineds'
+import type {Pair} from '@/defineds'
 
 /**
  * 订单状态

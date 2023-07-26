@@ -1,6 +1,6 @@
-import type {KPair} from '../../../defineds'
-import {GoodsInfo, GoodsParams, GoodsUnit, GoodsUnitSpecification} from '../../../entities'
-import {GoodsInfoTyping, GoodsTyping} from '../../../enums'
+import type {KPair} from '@/defineds'
+import type {GoodsInfo, GoodsParams, GoodsUnit, GoodsUnitSpecification} from '@/entities'
+import {GoodsInfoTyping, GoodsTyping} from '@/enums'
 
 /**
  * 保存实体商品

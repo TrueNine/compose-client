@@ -1,5 +1,5 @@
-import {AttachmentTyping} from '../enums/BasicEnums'
-import {BaseEntity} from './BaiscEntities'
+import {AttachmentTyping} from '@/enums'
+import type {BaseEntity} from './BaiscEntities'
 
 /**
  * ## 可查询的轻量文件列表

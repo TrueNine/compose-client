@@ -26,7 +26,7 @@ export default defineConfig([
         ie8: false
       })
     ],
-    external: ['qs', 'moment']
+    external: ['moment', '@vueuse/core']
   },
   {
     preserveModules: false,

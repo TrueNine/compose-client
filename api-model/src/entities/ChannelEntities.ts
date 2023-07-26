@@ -1,5 +1,5 @@
-import {BaseEntity} from './BaiscEntities'
-import {GoodsTyping} from '../enums'
+import type {BaseEntity} from './BaiscEntities'
+import {GoodsTyping} from '@/enums'
 
 /**
  * 渠道全局配

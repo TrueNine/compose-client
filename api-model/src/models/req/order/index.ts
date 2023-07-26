@@ -1,5 +1,5 @@
-import {ISO8601DateFormat} from '../../../defineds/DataType'
-import {OrderStatusTyping} from '../../../enums'
+import type {ISO8601DateFormat} from '@/defineds'
+import type {OrderStatusTyping} from '@/enums'
 
 export {}
 

@@ -1,4 +1,4 @@
-import {NullablePartial} from '../defineds'
+import type {NullablePartial} from '@/defineds'
 
 /**
  * ## 判断一个字符串是否为空，返回本身或空字符串，排除 null | undefined
@@ -53,10 +53,13 @@ export function isNonEmptyString(obj: NullablePartial): boolean {
  * @param callback 转换回调
  */
 export function mapRecord<T, U>(record: Record<string, T>, callback: (val: T) => U): Record<string, U> {
-  return Object.entries(record).reduce((result, [key, value]) => {
-    result[key] = callback(value)
-    return result
-  }, {} as Record<string, U>)
+  return Object.entries(record).reduce(
+    (result, [key, value]) => {
+      result[key] = callback(value)
+      return result
+    },
+    {} as Record<string, U>
+  )
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

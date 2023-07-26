@@ -1,21 +1,10 @@
 {
+  "extends": "@compose/tsconfig/tsconfig.json",
   "compilerOptions": {
-    "typeRoots": ["node_modules/@types"],
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
-    },
-    "strict": true,
-    "target": "ESNext",
-    "useDefineForClassFields": true,
-    "module": "ESNext",
-    "moduleResolution": "Node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "esModuleInterop": true,
-    "lib": ["ESNext", "DOM"],
-    "skipLibCheck": false,
-    "noEmit": true
+    }
   },
   "exclude": ["node_modules", "dist", "es"]
 }

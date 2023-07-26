@@ -1,4 +1,4 @@
-import {BaseEntity} from './BaiscEntities'
+import type {BaseEntity} from './BaiscEntities'
 
 export {}
 
