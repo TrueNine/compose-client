@@ -1,0 +1,22 @@
+{
+  "name": "@compose/api-model",
+  "version": "0.1.108",
+  "description": "接口定义工具包",
+  "type": "module",
+  "main": "es/index.js",
+  "types": "es/index.d.ts",
+  "author": "TrueNine",
+  "license": "private",
+  "scripts": {
+    "test": "jest",
+    "build": "pnpm rollup -c",
+    "pub": "pnpm build && pnpm publish --no-git-checks"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.2"
+  },
+  "peerDependencies": {
+    "moment": "^2.29.4",
+    "@vueuse/core": "^10.2.1"
+  }
+}
