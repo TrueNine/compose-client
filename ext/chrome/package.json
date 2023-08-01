@@ -1,6 +1,6 @@
 {
   "name": "@compose/ext-chrome",
-  "version": "0.0.1",
+  "version": "0.0.7",
   "description": "chrome 扩展程序 开发库",
   "type": "module",
   "main": "es/index.js",
