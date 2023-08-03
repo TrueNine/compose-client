@@ -10,10 +10,18 @@ export default defineConfig([
   {
     preserveModules: false,
     input: 'src/index.ts',
-    output: {
-      dir: 'es',
-      format: 'esm'
-    },
+    output: [
+      {
+        dir: 'es',
+        format: 'esm',
+        entryFileNames: '[name].mjs'
+      },
+      {
+        dir: 'lib',
+        format: 'cjs',
+        entryFileNames: '[name].cjs'
+      }
+    ],
     plugins: [
       del({
         targets: ['es/*']
@@ -26,15 +34,19 @@ export default defineConfig([
         ie8: false
       })
     ],
-    external: ['moment', '@vueuse/core']
+    external: ['moment', '@vueuse/core', 'vue']
   },
   {
     preserveModules: false,
     input: 'src/index.ts',
     plugins: [dts()],
-    output: {
-      format: 'esm',
-      dir: 'es'
-    }
+    output: [
+      {
+        dir: 'es'
+      },
+      {
+        dir: 'lib'
+      }
+    ]
   }
 ])

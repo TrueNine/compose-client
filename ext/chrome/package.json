@@ -1,6 +1,6 @@
 {
   "name": "@compose/ext-chrome",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "chrome 扩展程序 开发库",
   "type": "module",
   "main": "es/index.js",
@@ -13,12 +13,12 @@
     "pub": "pnpm build && pnpm publish --no-git-checks"
   },
   "devDependencies": {
-    "@types/chrome": "^0.0.241",
-    "@vueuse/core": "^10.2.1",
+    "@types/chrome": "^0.0.243",
+    "@vueuse/core": "^10.3.0",
     "moment": "^2.29.4"
   },
   "peerDependencies": {
-    "@types/chrome": "^0.0.241",
+    "@types/chrome": "^0.0.243",
     "@vueuse/core": "^10.2.1",
     "moment": "^2.29.4"
   }

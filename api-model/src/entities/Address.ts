@@ -1,4 +1,4 @@
-import type {WGS84} from '@/defineds'
+import type {WGS84} from '@/defineds/DataType'
 import type {BaseEntity} from '@/entities/BaiscEntities'
 
 /**

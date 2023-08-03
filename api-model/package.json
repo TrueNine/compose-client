@@ -1,10 +1,27 @@
 {
   "name": "@compose/api-model",
-  "version": "0.1.109",
-  "description": "接口定义工具包",
+  "version": "0.1.112",
+  "description": "yan100 client ui kit",
   "type": "module",
-  "main": "es/index.js",
+  "main": "es/index.mjs",
+  "module": "es/index.mjs",
   "types": "es/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./es/index.d.ts",
+      "import": "./es/index.mjs",
+      "require": "./lib/index.cjs"
+    },
+    "./es": {
+      "types": "./es/index.d.ts",
+      "import": "./es/index.mjs"
+    },
+    "./lib": {
+      "types": "./lib/index.d.ts",
+      "require": "./lib/index.cjs"
+    },
+    "./*": "./*"
+  },
   "author": "TrueNine",
   "license": "private",
   "scripts": {
@@ -13,10 +30,10 @@
     "pub": "pnpm build && pnpm publish --no-git-checks"
   },
   "devDependencies": {
-    "@types/jest": "^29.5.2"
+    "@types/jest": "^29.5.3"
   },
   "peerDependencies": {
-    "moment": "^2.29.4",
-    "@vueuse/core": "^10.2.1"
+    "@vueuse/core": "^10.2.1",
+    "moment": "^2.29.4"
   }
 }
