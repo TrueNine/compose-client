@@ -1,9 +1,9 @@
 {
   "name": "@compose/api-model",
-  "version": "0.1.112",
+  "version": "0.1.113",
   "description": "yan100 client ui kit",
   "type": "module",
-  "main": "es/index.mjs",
+  "main": "lib/index.cjs",
   "module": "es/index.mjs",
   "types": "es/index.d.ts",
   "exports": {
