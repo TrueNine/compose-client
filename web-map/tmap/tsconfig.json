@@ -9,9 +9,8 @@
     }
   },
   "exclude": [
-    "node_modules",
-    "dist",
     "es",
-    "lib"
+    "lib",
+    "node_modules"
   ]
 }

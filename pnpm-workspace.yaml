@@ -1,5 +1,6 @@
 packages:
   - '@types/**'
+  - web-map/tmap/**/**
   - api-model
   - uni-app/**
   - 'ext/**/**'

@@ -1,7 +1,7 @@
 {
-  "name": "@compose/api-model",
-  "version": "0.1.115",
-  "description": "yan100 client ui kit",
+  "name": "@compose/tmap",
+  "version": "0.0.3",
+  "description": "腾讯地图 SDK",
   "type": "module",
   "main": "lib/index.cjs",
   "module": "es/index.mjs",
@@ -30,10 +30,10 @@
     "pub": "pnpm build && pnpm publish --no-git-checks"
   },
   "devDependencies": {
-    "@types/jest": "^29.5.3"
+    "@compose/tsconfig": "workspace:^",
+    "@types/compose-tmap": "workspace:^"
   },
   "peerDependencies": {
-    "@vueuse/core": "^10.2.1",
-    "moment": "^2.29.4"
+    "@compose/api-model": "workspace:^"
   }
 }
