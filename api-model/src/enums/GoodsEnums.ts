@@ -1,4 +1,4 @@
-import type {Pair} from '@/defineds'
+import type {Pair} from '../defineds'
 
 /**
  * 商品类型

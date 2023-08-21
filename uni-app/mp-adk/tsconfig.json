@@ -1,24 +1,12 @@
 {
+  "extends": "@compose/tsconfig/tsconfig.json",
   "compilerOptions": {
-    "typeRoots": ["node_modules/@types"],
     "baseUrl": ".",
-    "strict": true,
-    "target": "ESNext",
-    "useDefineForClassFields": true,
-    "module": "ESNext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "esModuleInterop": true,
-    "preserveSymlinks": true,
     "paths": {
       "@/*": ["./src/*"]
     },
-    "lib": ["ESNext", "DOM"],
-    "skipLibCheck": true,
-    "noEmit": true
   },
   "types": ["@dcloudio/types", "uni-app-types", "uni-ui-types", "miniprogram-api-typings", "mini-types", "uni.d.ts"],
-  "include": ["**.d.ts", "src/**/*.ts", "src/**/*.d.ts", "src/**/*.vue"],
+  "include": ["**.d.ts", "src/**/*.ts", "src/**/*.d.ts"],
   "exclude": ["es"]
 }

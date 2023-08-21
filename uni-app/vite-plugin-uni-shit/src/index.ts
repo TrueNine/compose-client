@@ -5,7 +5,7 @@ import process from 'process'
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import pkg from '../package.json'
-import {RubbishPluginConfig, parseConfig} from './Def'
+import {type RubbishPluginConfig, parseConfig} from './Def'
 import {userConfigFactory} from './flow'
 import {optiz} from './resolve'
 

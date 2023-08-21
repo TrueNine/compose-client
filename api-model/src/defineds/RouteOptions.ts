@@ -43,23 +43,28 @@ export interface RouteOption {
 /**
  * # 对指定的路由选项进行操作
  * @param routeOptions 需操作的路由选项
+ * @param routeRootPath 路由根路径
  * @returns 操作函数
  */
 export function routeOptionStream(routeOptions: readonly RouteOption[] = [], routeRootPath = '/') {
   function _pathToRoot(path: string[]) {
     return path.reduce((acc, cur) => acc && (cur === routeRootPath || cur === ''), true)
   }
+
   function _isRootPath(path: string[]): string[] {
     if ((path.length === 1 || path.length === 2) && _pathToRoot(path)) return ['/']
     else return path
   }
+
   function _pathToArray(paths: string[] | string = [], sep = '/'): string[] {
     const metaPath = Array.isArray(paths) ? paths : paths.split('?')[0].split(sep)
     return _isRootPath(metaPath)
   }
+
   function _filterPaths(paths: string[] | string = []): string[] {
     return _pathToArray(paths).filter(r => r !== '')
   }
+
   function _getLinkedUri(rootPath: string, uri?: string): string | undefined {
     return uri ? `${rootPath}${rootPath !== '' ? routeRootPath : ''}${uri || ''}` : uri
   }
@@ -96,6 +101,7 @@ export function routeOptionStream(routeOptions: readonly RouteOption[] = [], rou
   }
 
   const _hasPermissionsGroup = (require: string[] = [], user: string[] = []) => require.reduce((acc, cur) => acc && user.includes(cur), true)
+
   /**
    * ## 判断用户是否拥有足够的权限
    * @param fullPath 匹配路由的全路径
@@ -148,6 +154,7 @@ export function routeOptionStream(routeOptions: readonly RouteOption[] = [], rou
    */
   function toShow(): RouteOption[] {
     const _newRouteOption = [...routeOptions]
+
     function _deep(sub: RouteOption[] = _newRouteOption) {
       return sub
         .filter(r => {
@@ -160,6 +167,7 @@ export function routeOptionStream(routeOptions: readonly RouteOption[] = [], rou
           return _n
         })
     }
+
     return _deep(_newRouteOption)
   }
 
