@@ -1,6 +1,8 @@
 import {TMap} from 'compose-tmap'
 import {Dom, queryParam, type WGS84} from '@compose/api-model'
 
+export * from './Constants'
+
 export const WEBGL_JS_URL = 'https://map.qq.com/api/gljs'
 
 /**
