@@ -1,17 +1,34 @@
 {
   "name": "@compose/uni-mp-adk",
-  "version": "1.0.27",
-  "type": "module",
+  "version": "1.0.29",
   "author": "TrueNine",
   "license": "private",
   "description": "uni-app miniProgram auxiliary development kit",
-  "main": "es/index.js",
-  "types": "es/index.d.ts",
   "scripts": {
     "build": "pnpm rollup -c",
     "pub": "pnpm build && pnpm publish --no-git-checks"
   },
   "peerDependencies": {
     "@compose/api-model": "workspace:^"
+  },
+  "type": "module",
+  "main": "lib/index.cjs",
+  "module": "es/index.mjs",
+  "types": "es/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./es/index.d.ts",
+      "import": "./es/index.mjs",
+      "require": "./lib/index.cjs"
+    },
+    "./es": {
+      "types": "./es/index.d.ts",
+      "import": "./es/index.mjs"
+    },
+    "./lib": {
+      "types": "./lib/index.d.ts",
+      "require": "./lib/index.cjs"
+    },
+    "./*": "./*"
   }
 }

@@ -1,17 +1,35 @@
 {
   "name": "@compose/uni-mp-request",
-  "version": "1.0.2",
-  "type": "module",
+  "version": "1.0.4",
   "author": "TrueNine",
   "license": "private",
   "description": "uni-app 请求器",
-  "main": "es/index.js",
-  "types": "es/index.d.ts",
   "scripts": {
-    "build": "rollup -c"
+    "build": "rollup -c",
+    "pub": "pnpm build && pnpm publish --no-git-checks"
   },
   "peerDependencies": {
     "@compose/api-model": "workspace:^",
     "@compose/uni-mp-adk": "workspace:^"
+  },
+  "type": "module",
+  "main": "lib/index.cjs",
+  "module": "es/index.mjs",
+  "types": "es/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./es/index.d.ts",
+      "import": "./es/index.mjs",
+      "require": "./lib/index.cjs"
+    },
+    "./es": {
+      "types": "./es/index.d.ts",
+      "import": "./es/index.mjs"
+    },
+    "./lib": {
+      "types": "./lib/index.d.ts",
+      "require": "./lib/index.cjs"
+    },
+    "./*": "./*"
   }
 }

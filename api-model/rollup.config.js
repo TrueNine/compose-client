@@ -24,7 +24,7 @@ export default defineConfig([
     ],
     plugins: [
       del({
-        targets: ['es/*']
+        targets: ['es/*', 'lib/*']
       }),
       resolve(),
       commonjs(),

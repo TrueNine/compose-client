@@ -1,24 +1,31 @@
-const resolve = require('rollup-plugin-node-resolve')
-const commonjs = require('rollup-plugin-commonjs')
-const typescript = require('rollup-plugin-typescript')
-const {defineConfig} = require('rollup')
-const dts = require('rollup-plugin-dts')
-const del = require('rollup-plugin-delete')
-const tserver = require('@rollup/plugin-terser')
-const resolverJson = require('@rollup/plugin-json')
-console.log(dts)
-module.exports = defineConfig([
+import resolve from 'rollup-plugin-node-resolve'
+import commonjs from 'rollup-plugin-commonjs'
+import typescript from 'rollup-plugin-typescript'
+import {defineConfig} from 'rollup'
+import dts from 'rollup-plugin-dts'
+import del from 'rollup-plugin-delete'
+import tserver from '@rollup/plugin-terser'
+import resolverJson from '@rollup/plugin-json'
+
+export default defineConfig([
   {
-    preserveModules: false,
     input: ['src/index.ts'],
     external: ['node', 'fs', 'path', 'process'],
-    output: {
-      file: 'es/index.cjs',
-      format: 'commonjs'
-    },
+    output: [
+      {
+        dir: 'es',
+        format: 'esm',
+        entryFileNames: '[name].mjs'
+      },
+      {
+        dir: 'lib',
+        format: 'cjs',
+        entryFileNames: '[name].cjs'
+      }
+    ],
     plugins: [
       del({
-        targets: ['es/*']
+        targets: ['es/*', 'lib/*']
       }),
       resolverJson(),
       resolve(),
@@ -32,10 +39,14 @@ module.exports = defineConfig([
   },
   {
     input: 'src/index.ts',
-    plugins: [dts.default({})],
-    output: {
-      format: 'es',
-      file: 'es/index.d.ts'
-    }
+    plugins: [dts()],
+    output: [
+      {
+        dir: 'es'
+      },
+      {
+        dir: 'lib'
+      }
+    ]
   }
 ])

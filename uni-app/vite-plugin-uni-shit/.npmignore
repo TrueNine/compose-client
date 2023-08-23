@@ -1,9 +1,9 @@
-node_modules/
-
-# config
+node_modules
+src
 rollup.config.js
 tsconfig.json
-vite.config.ts
 
-# code
-src/
+.idea
+.vscode
+
+vite.config.ts

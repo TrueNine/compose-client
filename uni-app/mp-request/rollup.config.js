@@ -11,16 +11,22 @@ export default defineConfig([
   {
     preserveModules: false,
     input: 'src/index.ts',
-    output: {
-      dir: 'es',
-      format: 'esm'
-    },
+
+    output: [
+      {
+        dir: 'es',
+        format: 'esm',
+        entryFileNames: '[name].mjs'
+      },
+      {
+        dir: 'lib',
+        format: 'cjs',
+        entryFileNames: '[name].cjs'
+      }
+    ],
     plugins: [
       del({
-        targets: ['es/*']
-      }),
-      copy({
-        targets: [{src: 'src/GlobalBase.d.ts', dest: 'es'}]
+        targets: ['es/*', 'lib/*']
       }),
       resolve(),
       commonjs(),
@@ -28,6 +34,9 @@ export default defineConfig([
       tserver({
         ecma: 2016,
         ie8: false
+      }),
+      copy({
+        targets: [{src: 'src/GlobalBase.d.ts', dest: ['es', 'lib']}]
       })
     ],
     external: ['@compose/api-model', '@compose/uni-mp-adk']
@@ -35,11 +44,14 @@ export default defineConfig([
   {
     preserveModules: false,
     input: 'src/index.ts',
-    external: ['vue'],
     plugins: [dts()],
-    output: {
-      format: 'es',
-      dir: 'es'
-    }
+    output: [
+      {
+        dir: 'es'
+      },
+      {
+        dir: 'lib'
+      }
+    ]
   }
 ])

@@ -1,4 +1,4 @@
-import {ref, shallowRef, Ref} from 'vue'
+import {type Ref, ref, shallowRef} from 'vue'
 import {Headers as ComposeHeader, MediaTypes} from '@compose/api-model'
 
 export type Headers = {
@@ -219,8 +219,6 @@ export function useRequest<T = unknown>(
                 },
                 data: metaResult
               })
-
-              metaResult = __afterResultCtx?.data as T
 
               if (__afterResultCtx.response) {
                 if (__afterResultCtx.response.ok) {
