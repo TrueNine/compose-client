@@ -10,13 +10,13 @@ interface _InstallInvoke {
 /**
  * ## 针对 vue 封装的一些工具函数
  */
-export class withComponent {
+export class Vue {
   /**
-   * ## 安装一个组件
+   * ## 准备一个安装的组件
    * @param component 组件
    * @returns 封装后的组件
    */
-  static withInstall<T>(component: T): T & Plugin & _InstallInvoke {
+  static componentInstallToPlugin<T>(component: T): T & Plugin & _InstallInvoke {
     const _p = component as T & Plugin
     _p.install = app => {
       const {name, __name = undefined} = _p as unknown as T & Plugin & _InstallInvoke
