@@ -21,7 +21,7 @@ export class LazyGetMapZoomType {
    * @param zoomType 缩放参数
    * @return 腾讯地图的缩放级别
    */
-  static getTencentMapZoomType(zoomType: BasicMapZoomType): typeof TMap.constants.MAP_ZOOM_TYPE {
+  static getTencentMapZoomType(zoomType: BasicMapZoomType): TMap.constants.MAP_ZOOM_TYPE {
     switch (zoomType) {
       case BasicMapZoomType.CENTER:
         return window.TMap.constants.MAP_ZOOM_TYPE.CENTER
