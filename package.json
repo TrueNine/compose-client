@@ -10,7 +10,7 @@
     "api-model"
   ],
   "scripts": {
-    "lint": "eslint . --fix --ext .js,.ts,.jsx,.tsx,.vue && pnpm fmt",
+    "lint": "eslint . --fix --ext .js,.d.ts,.ts,.jsx,.tsx,.vue && pnpm fmt",
     "fmt": "prettier --write --ignore-unknown .",
     "depd": "pnpm -r i",
     "build:model": "pnpm build --dir api-model",

@@ -1,9 +1,9 @@
-import {TMap} from "./index";
-import LatLngDataTyping = TMap.LatLngDataTyping;
-import Map = TMap.Map;
-import {WGS84} from "../../api-model";
-import InfoWindowOptions = TMap.InfoWindowOptions;
-import InfoWindowEvents = TMap.InfoWindowEvents;
+import {TMap} from './index'
+import LatLngDataTyping = TMap.LatLngDataTyping
+import Map = TMap.Map
+import {WGS84} from '../../api-model'
+import InfoWindowOptions = TMap.InfoWindowOptions
+import InfoWindowEvents = TMap.InfoWindowEvents
 
 interface _InfoWindowOptions {
   map: Map

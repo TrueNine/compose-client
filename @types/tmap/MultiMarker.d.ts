@@ -1,8 +1,8 @@
-import {TMap} from "./index";
-import MultiMarkerOptions = TMap.MultiMarkerOptions;
-import PointGeometry = TMap.PointGeometry;
-import Map = TMap.Map;
-import MultiMarkerEvents = TMap.MultiMarkerEvents;
+import {TMap} from './index'
+import MultiMarkerOptions = TMap.MultiMarkerOptions
+import PointGeometry = TMap.PointGeometry
+import Map = TMap.Map
+import MultiMarkerEvents = TMap.MultiMarkerEvents
 
 /**
  * # MultiMarker的配置参数
@@ -23,7 +23,6 @@ export interface _MultiMarkerOptions {
   enableCollision?: boolean
   geometries?: unknown[]
 }
-
 
 /**
  * # 多 maker 图层

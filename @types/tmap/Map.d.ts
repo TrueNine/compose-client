@@ -1,13 +1,13 @@
-import {TMap} from "./index";
-import LatLngDataTyping = TMap.LatLngDataTyping;
-import PointDataTyping = TMap.PointDataTyping;
-import ViewMode = TMap.ViewMode;
-import MapStyleIds = TMap.MapStyleIds;
-import constants = TMap.constants;
-import MapOptions = TMap.MapOptions;
-import EaseOptions = TMap.EaseOptions;
-import MapEvents = TMap.MapEvents;
-import LatLng = TMap.LatLng;
+import {TMap} from './index'
+import LatLngDataTyping = TMap.LatLngDataTyping
+import PointDataTyping = TMap.PointDataTyping
+import ViewMode = TMap.ViewMode
+import MapStyleIds = TMap.MapStyleIds
+import constants = TMap.constants
+import MapOptions = TMap.MapOptions
+import EaseOptions = TMap.EaseOptions
+import MapEvents = TMap.MapEvents
+import LatLng = TMap.LatLng
 
 /**
  * # 地图配置参数
@@ -88,7 +88,6 @@ export interface _MapOptions {
    */
   mapZoomType?: constants.MAP_ZOOM_TYPE
 }
-
 
 export class _Map {
   constructor(html: string | HTMLElement, mode: MapOptions)

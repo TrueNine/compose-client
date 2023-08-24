@@ -1,6 +1,6 @@
-import {TMap} from "./index";
-import LatLngDataTyping = TMap.LatLngDataTyping;
-import MapStyleIds = TMap.MapStyleIds;
+import {TMap} from './index'
+import LatLngDataTyping = TMap.LatLngDataTyping
+import MapStyleIds = TMap.MapStyleIds
 
 /**
  * # 点图形数据

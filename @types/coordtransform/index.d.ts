@@ -1,4 +1,4 @@
-declare module "coordtransform" {
+declare module 'coordtransform' {
   /**
    * 百度坐标系 (BD-09) 与 火星坐标系 (GCJ-02) 的转换
    * 即 百度 转 谷歌、高德
