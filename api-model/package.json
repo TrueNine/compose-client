@@ -1,6 +1,6 @@
 {
   "name": "@compose/api-model",
-  "version": "0.1.120",
+  "version": "0.1.121",
   "description": "yan100 client ui kit",
   "author": "TrueNine",
   "license": "private",
@@ -10,7 +10,7 @@
     "pub": "pnpm build && pnpm publish --no-git-checks"
   },
   "devDependencies": {
-    "@types/jest": "^29.5.3"
+    "@types/jest": "^29.5.4"
   },
   "peerDependencies": {
     "@vueuse/core": "^10.2.1",

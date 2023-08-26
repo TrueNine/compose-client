@@ -1,6 +1,6 @@
 {
   "name": "@compose/ext-chrome",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "chrome 扩展程序 开发库",
   "author": "TrueNine",
   "license": "private",
@@ -10,7 +10,7 @@
     "pub": "pnpm build && pnpm publish --no-git-checks"
   },
   "devDependencies": {
-    "@types/chrome": "^0.0.243"
+    "@types/chrome": "^0.0.244"
   },
   "peerDependencies": {
     "@types/chrome": "^0.0.243",
