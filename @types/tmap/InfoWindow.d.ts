@@ -26,19 +26,19 @@ interface _InfoWindowOptions {
 export class _InfoWindow {
   constructor(options: InfoWindowOptions)
 
-  setPosition(position: LatLngDataTyping): void
+  setPosition(position: LatLngDataTyping): TMap.InfoWindow
 
-  setContent(content: string): void
+  setContent(content: string): TMap.InfoWindow
 
-  setMap(map: Map): void
+  setMap(map: Map): TMap.InfoWindow
 
   getMap(): Map
 
-  open(): void
+  open(): TMap.InfoWindow
 
-  close(): void
+  close(): TMap.InfoWindow
 
-  destroy(): void
+  destroy(): TMap.InfoWindow
 
-  on<K extends keyof InfoWindowEvents>(name: K, listener: (ev: InfoWindowEvents[K]) => void): this
+  on<K extends keyof InfoWindowEvents>(name: K, listener: (ev: InfoWindowEvents[K]) => void): TMap.InfoWindow
 }
