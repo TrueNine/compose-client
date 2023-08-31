@@ -6,6 +6,11 @@ export * from './Constants'
 export const WEBGL_JS_URL = 'https://map.qq.com/api/gljs'
 
 /**
+ * [附加库加载类型](https://lbs.qq.com/webApi/javascriptGL/glGuide/glBasic#3)
+ */
+export type TencentLibraries = 'visualization' | 'tools' | 'geometry' | 'model' | 'view' | 'service'
+
+/**
  * ## 腾讯地图初始化参数
  */
 export interface CreateTencentMapOptions {
@@ -14,6 +19,7 @@ export interface CreateTencentMapOptions {
   containerTag?: keyof HTMLElementTagNameMap
   mapContainerId?: string
   asyncFunName?: string
+  libraries?: TencentLibraries[]
 }
 
 const _default = {
@@ -38,8 +44,9 @@ export function initTencentMapWebGlScript(
   const section = document.querySelector(options.loadQuery!)
   const src = Dom.loadRemoteScriptTag(
     `${WEBGL_JS_URL}${queryParam({
-      v: 1,
-      key
+      v: '1.exp',
+      key,
+      libraries: options.libraries
     })}`
   )
   // 创建一个id容器

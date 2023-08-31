@@ -96,7 +96,7 @@ export const Headers = {
   userAgent: 'User-Agent',
   xDeviceId: 'X-Device-Id',
   authorization: 'Authorization',
-  xReFlushToken: 'X-Re-Flush'
+  xReFlushToken: 'X-Refresh'
 }
 
 /**

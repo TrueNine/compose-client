@@ -5,11 +5,23 @@ import {_LatLng, _LatLngDataTyping, _Point} from './Ladlngs'
 import {_Map, _MapOptions} from './Map'
 import {_InfoWindow, _InfoWindowOptions} from './InfoWindow'
 import {_MultiMarker, _MultiMarkerOptions} from './MultiMarker'
+import {_Search, _SearchNearbyParams, _SearchOptions, _SearchRegionParams, _SearchResult} from './service/Search'
+import {_ErrorResult} from './service/Service'
 
 /**
  * # 全局地图操作句柄
  */
 export declare namespace TMap {
+  export namespace service {
+    export type ErrorResult = _ErrorResult
+    export type SearchResult = _SearchResult
+    export type SearchNearbyParams = _SearchNearbyParams
+    export type SearchOptions = _SearchOptions
+    export type SearchRegionParams = _SearchRegionParams
+
+    export class Search extends _Search {}
+  }
+
   /**
    * # 地图缓动变化配置参数
    * 可控制动画时长等。
