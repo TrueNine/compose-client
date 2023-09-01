@@ -2,7 +2,7 @@ import {type Plugin} from 'vue'
 
 export {}
 
-interface _InstallInvoke {
+export interface VueComponentInstanceMapping {
   name?: string
   __name?: string
 }
@@ -16,10 +16,10 @@ export class Vue {
    * @param component 组件
    * @returns 封装后的组件
    */
-  static componentInstallToPlugin<T>(component: T): T & Plugin & _InstallInvoke {
+  static componentInstallToPlugin<T>(component: T): T & Plugin & VueComponentInstanceMapping {
     const _p = component as T & Plugin
     _p.install = app => {
-      const {name, __name = undefined} = _p as unknown as T & Plugin & _InstallInvoke
+      const {name, __name = undefined} = _p as unknown as T & Plugin & VueComponentInstanceMapping
       if (name) app.component(name, _p)
       else app.component(__name ?? 'NameUndefined', _p)
     }
