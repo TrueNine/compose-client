@@ -7,3 +7,4 @@ packages:
   - 'ui-kit/**/**'
   - 'ui-kit/ykit-ui/**/**'
   - 'configs/**'
+  - 'req'
