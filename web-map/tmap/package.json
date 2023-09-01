@@ -1,37 +1,36 @@
 {
   "name": "@compose/tmap",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "腾讯地图 SDK",
   "author": "TrueNine",
   "license": "private",
   "scripts": {
-    "test": "jest",
     "build": "pnpm rollup -c",
     "pub": "pnpm build && pnpm publish --no-git-checks"
   },
   "devDependencies": {
-    "@compose/tsconfig": "workspace:^",
-    "@types/compose-tmap": "workspace:^"
+    "@compose/tsconfig": "workspace:^"
   },
   "peerDependencies": {
+    "@types/compose-tmap": "workspace:^",
     "@compose/api-model": "workspace:^"
   },
   "type": "module",
+  "types": "types/index.d.ts",
   "main": "lib/index.cjs",
   "module": "es/index.mjs",
-  "types": "es/index.d.ts",
   "exports": {
     ".": {
-      "types": "./es/index.d.ts",
+      "types": "./types/index.d.ts",
       "import": "./es/index.mjs",
       "require": "./lib/index.cjs"
     },
     "./es": {
-      "types": "./es/index.d.ts",
+      "types": "./types/index.d.ts",
       "import": "./es/index.mjs"
     },
     "./lib": {
-      "types": "./lib/index.d.ts",
+      "types": "./types/index.d.ts",
       "require": "./lib/index.cjs"
     },
     "./*": "./*"

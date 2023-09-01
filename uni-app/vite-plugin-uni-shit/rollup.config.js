@@ -10,14 +10,18 @@ import resolverJson from '@rollup/plugin-json'
 export default defineConfig([
   {
     input: ['src/index.ts'],
-    external: ['node', 'fs', 'path', 'process'],
+    external: ['node', 'fs', 'path', 'process', 'tslib'],
     output: [
       {
+        preserveModulesRoot: 'src',
+        preserveModules: true,
         dir: 'es',
         format: 'esm',
         entryFileNames: '[name].mjs'
       },
       {
+        preserveModulesRoot: 'src',
+        preserveModules: true,
         dir: 'lib',
         format: 'cjs',
         entryFileNames: '[name].cjs'
@@ -25,15 +29,14 @@ export default defineConfig([
     ],
     plugins: [
       del({
-        targets: ['es/*', 'lib/*']
+        targets: ['es/*', 'lib/*', 'types/*']
       }),
       resolverJson(),
       resolve(),
       commonjs(),
       typescript(),
       tserver({
-        ecma: 2016,
-        ie8: false
+        ecma: 2020
       })
     ]
   },
@@ -42,10 +45,8 @@ export default defineConfig([
     plugins: [dts()],
     output: [
       {
-        dir: 'es'
-      },
-      {
-        dir: 'lib'
+        preserveModules: true,
+        dir: 'types'
       }
     ]
   }

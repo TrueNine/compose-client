@@ -1,6 +1,6 @@
 {
   "name": "@compose/vite-plugin-uni-shit",
-  "version": "1.2.26",
+  "version": "1.2.30",
   "description": "uni app shit",
   "author": "TrueNine",
   "license": "private",
@@ -11,19 +11,19 @@
   "type": "module",
   "main": "lib/index.cjs",
   "module": "es/index.mjs",
-  "types": "es/index.d.ts",
+  "types": "types/index.d.ts",
   "exports": {
     ".": {
-      "types": "./es/index.d.ts",
+      "types": "./types/index.d.ts",
       "import": "./es/index.mjs",
       "require": "./lib/index.cjs"
     },
     "./es": {
-      "types": "./es/index.d.ts",
+      "types": "./types/index.d.ts",
       "import": "./es/index.mjs"
     },
     "./lib": {
-      "types": "./lib/index.d.ts",
+      "types": "./types/index.d.ts",
       "require": "./lib/index.cjs"
     },
     "./*": "./*"

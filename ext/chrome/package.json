@@ -1,16 +1,12 @@
 {
   "name": "@compose/ext-chrome",
-  "version": "0.0.12",
+  "version": "0.0.15",
   "description": "chrome 扩展程序 开发库",
   "author": "TrueNine",
   "license": "private",
   "scripts": {
-    "test": "jest",
     "build": "pnpm rollup -c",
     "pub": "pnpm build && pnpm publish --no-git-checks"
-  },
-  "devDependencies": {
-    "@types/chrome": "^0.0.244"
   },
   "peerDependencies": {
     "@types/chrome": "^0.0.243",
@@ -20,19 +16,19 @@
   "type": "module",
   "main": "lib/index.cjs",
   "module": "es/index.mjs",
-  "types": "es/index.d.ts",
+  "types": "types/index.d.ts",
   "exports": {
     ".": {
-      "types": "./es/index.d.ts",
+      "types": "./types/index.d.ts",
       "import": "./es/index.mjs",
       "require": "./lib/index.cjs"
     },
     "./es": {
-      "types": "./es/index.d.ts",
+      "types": "./types/index.d.ts",
       "import": "./es/index.mjs"
     },
     "./lib": {
-      "types": "./lib/index.d.ts",
+      "types": "./types/index.d.ts",
       "require": "./lib/index.cjs"
     },
     "./*": "./*"

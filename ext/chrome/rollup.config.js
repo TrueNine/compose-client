@@ -8,15 +8,18 @@ import tserver from '@rollup/plugin-terser'
 
 export default defineConfig([
   {
-    preserveModules: false,
     input: 'src/index.ts',
     output: [
       {
+        preserveModules: true,
+        preserveModulesRoot: 'src',
         dir: 'es',
         format: 'esm',
         entryFileNames: '[name].mjs'
       },
       {
+        preserveModules: true,
+        preserveModulesRoot: 'src',
         dir: 'lib',
         format: 'cjs',
         entryFileNames: '[name].cjs'
@@ -24,22 +27,21 @@ export default defineConfig([
     ],
     plugins: [
       del({
-        targets: ['es/*', 'lib/*']
+        targets: ['es/*', 'lib/*', 'types/*']
       }),
       resolve(),
       commonjs(),
       typescript(),
       tserver({
-        ecma: 2016,
+        ecma: 2020,
         ie8: false
       })
     ],
-    external: ['moment', '@vueuse/core']
+    external: ['moment', '@vueuse/core', 'tslib']
   },
   {
-    preserveModules: false,
     input: 'src/index.ts',
     plugins: [dts()],
-    output: [{dir: 'es'}, {dir: 'lib'}]
+    output: [{dir: 'types', preserveModules: true}]
   }
 ])

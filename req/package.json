@@ -1,6 +1,6 @@
 {
   "name": "@compose/req",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "requester",
   "author": "TrueNine",
   "license": "private",
@@ -17,21 +17,21 @@
     "stompjs": "^2.3.3"
   },
   "type": "module",
+  "types": "types/index.d.ts",
   "main": "lib/index.cjs",
   "module": "es/index.mjs",
-  "types": "es/index.d.ts",
   "exports": {
     ".": {
-      "types": "./es/index.d.ts",
+      "types": "./types/index.d.ts",
       "import": "./es/index.mjs",
       "require": "./lib/index.cjs"
     },
     "./es": {
-      "types": "./es/index.d.ts",
+      "types": "./types/index.d.ts",
       "import": "./es/index.mjs"
     },
     "./lib": {
-      "types": "./lib/index.d.ts",
+      "types": "./types/index.d.ts",
       "require": "./lib/index.cjs"
     },
     "./*": "./*"

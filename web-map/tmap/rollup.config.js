@@ -8,15 +8,18 @@ import tserver from '@rollup/plugin-terser'
 
 export default defineConfig([
   {
-    preserveModules: false,
     input: 'src/index.ts',
     output: [
       {
+        preserveModulesRoot: 'src',
+        preserveModules: true,
         dir: 'es',
         format: 'esm',
         entryFileNames: '[name].mjs'
       },
       {
+        preserveModulesRoot: 'src',
+        preserveModules: true,
         dir: 'lib',
         format: 'cjs',
         entryFileNames: '[name].cjs'
@@ -24,7 +27,7 @@ export default defineConfig([
     ],
     plugins: [
       del({
-        targets: ['es/*', 'lib/*']
+        targets: ['es/*', 'lib/*', 'types/*']
       }),
       resolve(),
       commonjs(),
@@ -37,15 +40,12 @@ export default defineConfig([
     external: ['@compose/api-model']
   },
   {
-    preserveModules: false,
     input: 'src/index.ts',
     plugins: [dts()],
     output: [
       {
-        dir: 'es'
-      },
-      {
-        dir: 'lib'
+        preserveModules: true,
+        dir: 'types'
       }
     ]
   }

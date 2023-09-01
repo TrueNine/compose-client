@@ -1,6 +1,6 @@
 {
   "name": "@compose/uni-mp-adk",
-  "version": "1.0.31",
+  "version": "1.0.32",
   "author": "TrueNine",
   "license": "private",
   "description": "uni-app miniProgram auxiliary development kit",
@@ -14,19 +14,19 @@
   "type": "module",
   "main": "lib/index.cjs",
   "module": "es/index.mjs",
-  "types": "es/index.d.ts",
+  "types": "types/index.d.ts",
   "exports": {
     ".": {
-      "types": "./es/index.d.ts",
+      "types": "./types/index.d.ts",
       "import": "./es/index.mjs",
       "require": "./lib/index.cjs"
     },
     "./es": {
-      "types": "./es/index.d.ts",
+      "types": "./types/index.d.ts",
       "import": "./es/index.mjs"
     },
     "./lib": {
-      "types": "./lib/index.d.ts",
+      "types": "./types/index.d.ts",
       "require": "./lib/index.cjs"
     },
     "./*": "./*"
