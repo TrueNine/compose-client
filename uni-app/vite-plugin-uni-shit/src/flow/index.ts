@@ -1,13 +1,13 @@
-import {readPackageJson as readJson} from '@/resolve'
-import type {RubbishPluginConfig, UniAppManifestJson, UniAppPagesJson, ScssVariableDefs} from '../Def'
-import {fillVkUview, fillUniScss, vkUviewImport} from '@/Snippets'
-import fs from 'fs'
+import {readPackageJson as readJson} from '../resolve'
+import type {PluginConfig, UniAppManifestJson, UniAppPagesJson, ScssVariableDefs} from '../Def'
+import {fillVkUview, fillUniScss, vkUviewImport} from '../Snippets'
+import fs from 'node:fs'
 import {debug} from '../util'
 
 /**
  * @param configOptions 处理用户配置
  */
-export function userConfigFactory(configOptions: Required<RubbishPluginConfig>): void {
+export function userConfigFactory(configOptions: Required<PluginConfig>): void {
   const config = configOptions.config
   const packageJson = readJson<Record<string, string>>(configOptions.packageJson)
   const useUniComponents = configOptions.config.root?.useUni ?? false

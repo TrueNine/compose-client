@@ -1,4 +1,4 @@
-import {AttachmentTyping} from '@/enums'
+import {AttachmentTyping} from '../enums'
 import type {BaseEntity} from './BaiscEntities'
 
 /**

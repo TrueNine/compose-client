@@ -1,4 +1,2 @@
 export {}
-export function a() {
-  return 'hello world'
-}
+export * from './ws/StompClient'

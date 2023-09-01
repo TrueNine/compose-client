@@ -1,5 +1,9 @@
-import {ScssVariableDefs} from '@/Def'
+import type {ScssVariableDefs} from '../Def'
 import fs from 'fs'
+import type {UserConfig, DepOptimizationOptions} from 'vite'
+import type {PluginConfig} from '../Def'
+import {debug} from '../util'
+import path from 'path'
 
 /**
  * @param fullPath 项目根目录
@@ -36,18 +40,13 @@ export function readScssVariables(fullFileName: string) {
   return parseScssVariables(fs.readFileSync(fullFileName, {encoding: 'utf-8'}))
 }
 
-import type {UserConfig, DepOptimizationOptions} from 'vite'
-import type {RubbishPluginConfig} from '@/Def'
-import {debug} from '@/util'
-import path from 'path'
-
 /**
  * 优化一些见不得人的配置
  *
  * @param cfg 用户配置
  * @returns 拦截后的配置
  */
-export function optiz(cfg: UserConfig, ucfg?: RubbishPluginConfig): UserConfig {
+export function optiz(cfg: UserConfig, ucfg?: PluginConfig): UserConfig {
   const isUseTerser = ucfg?.config.optimization?.useTerser === true
   function mix(): DepOptimizationOptions {
     const de = cfg.optimizeDeps?.include

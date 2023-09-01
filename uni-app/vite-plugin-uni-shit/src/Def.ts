@@ -226,7 +226,7 @@ export interface UniAppPagesJson {
 /**
  * 插件配置信息
  */
-export interface RubbishPluginConfig {
+export interface PluginConfig {
   /**
    * 全局 uniapp配置
    */
@@ -269,10 +269,11 @@ export interface RubbishPluginConfig {
 }
 
 /**
+ * @param root 加载根路径
  * @param c 用户配置
  * @returns 全部不为空的配置
  */
-export function parseConfig(root: string, c?: RubbishPluginConfig): Required<RubbishPluginConfig> {
+export function parseConfig(root: string, c?: PluginConfig): Required<PluginConfig> {
   const r = (def: string, r: string = root) => path.resolve(r, def)
   return {
     rootDir: c?.rootDir ?? process.cwd(),

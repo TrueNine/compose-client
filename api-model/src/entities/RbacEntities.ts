@@ -1,7 +1,5 @@
 import type {BaseEntity} from './BaiscEntities'
 
-export {}
-
 export interface RoleGroup extends BaseEntity {
   name: string
   doc?: string

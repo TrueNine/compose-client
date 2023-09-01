@@ -1,7 +1,5 @@
 import {type Plugin} from 'vue'
 
-export {}
-
 export interface VueComponentInstanceMapping {
   name?: string
   __name?: string

@@ -1,5 +1,5 @@
-import type {WGS84} from '@/defineds/DataType'
-import type {BaseEntity} from '@/entities/BaiscEntities'
+import type {WGS84} from '../defineds'
+import type {BaseEntity} from './BaiscEntities'
 
 /**
  * 五级联动省市区地址

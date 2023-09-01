@@ -6,5 +6,5 @@
       "@/*": ["./src/*"]
     }
   },
-  "exclude": ["es", "lib", "node_modules"]
+  "exclude": ["es", "types", "lib", "node_modules"]
 }

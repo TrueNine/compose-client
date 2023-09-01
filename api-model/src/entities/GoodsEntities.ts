@@ -1,7 +1,7 @@
 import type {BaseEntity} from './BaiscEntities'
-import {GoodsChangeRecordTyping, GoodsInfoTyping, GoodsTyping} from '@/enums/GoodsEnums'
+import {GoodsChangeRecordTyping, GoodsInfoTyping, GoodsTyping} from '../enums'
 import type {Duration} from 'moment'
-import type {Brand as Brand, Category} from './SiftEntities'
+import type {Brand, Category} from './SiftEntities'
 import type {LinkedAttachment} from './Attachment'
 
 /**

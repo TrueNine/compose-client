@@ -12,6 +12,20 @@ export type StrOrNum = string | number
  * # 元素可为 null
  */
 export type Nullable<T = unknown> = T | null
+/**
+ * # 一条标准的 http 链接
+ */
+export type HttpUrl = `${'http' | 'https'}://${string}`
+
+/**
+ * scss变量名
+ */
+export type ScssVariableDefs = Record<`$${string}`, `${string | number};`>
+
+/**
+ * # 一条标准的 websocket 链接
+ */
+export type WebSocketUrl = `${'ws' | 'wss'}://${string}`
 
 /**
  * # InstanceType 的简写

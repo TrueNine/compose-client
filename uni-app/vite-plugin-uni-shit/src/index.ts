@@ -1,11 +1,6 @@
-import type {PluginOption} from 'vite'
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import process from 'process'
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import pkg from '../package.json'
-import {type RubbishPluginConfig, parseConfig} from './Def'
+import type {Plugin} from 'vite'
+import process from 'node:process'
+import {type PluginConfig, parseConfig} from './Def'
 import {userConfigFactory} from './flow'
 import {optiz} from './resolve'
 
@@ -18,11 +13,11 @@ export * from './EmptyCreate'
  * @param viteCfg 插件配置
  * @returns vite 插件
  */
-export const vitePluginRubbishUniApp = (viteCfg?: RubbishPluginConfig): PluginOption => {
+export const vitePluginRubbishUniApp = (viteCfg: PluginConfig): Plugin => {
   const rootDir = process.cwd()
   const ret = {
-    name: pkg.name,
-    version: pkg.version,
+    name: 'abc',
+    version: '0.0.1',
     enforce: 'pre' as 'pre' | 'post',
     apply: () => true,
     config: projectConfig => {
@@ -30,7 +25,7 @@ export const vitePluginRubbishUniApp = (viteCfg?: RubbishPluginConfig): PluginOp
       userConfigFactory(requiredConfig)
       return optiz(projectConfig, viteCfg)
     }
-  } as PluginOption
+  } as Plugin
   if (viteCfg?.debugMode) console.log(viteCfg)
   return ret
 }

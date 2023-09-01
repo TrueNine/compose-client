@@ -1,7 +1,5 @@
 import type {UseFetchReturn} from '@vueuse/core'
 
-export {}
-
 /**
  * ## 将 vueuse 的请求，进行一次立即请求
  *

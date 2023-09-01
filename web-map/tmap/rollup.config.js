@@ -1,10 +1,10 @@
-import resolve from 'rollup-plugin-node-resolve'
-import commonjs from 'rollup-plugin-commonjs'
-import typescript from 'rollup-plugin-typescript'
+import resolve from '@rollup/plugin-node-resolve'
+import commonjs from '@rollup/plugin-commonjs'
+import typescript from '@rollup/plugin-typescript'
+import terser from '@rollup/plugin-terser'
 import {defineConfig} from 'rollup'
 import dts from 'rollup-plugin-dts'
 import del from 'rollup-plugin-delete'
-import tserver from '@rollup/plugin-terser'
 
 export default defineConfig([
   {
@@ -32,7 +32,7 @@ export default defineConfig([
       resolve(),
       commonjs(),
       typescript(),
-      tserver({
+      terser({
         ecma: 2016,
         ie8: false
       })

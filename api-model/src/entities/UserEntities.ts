@@ -1,4 +1,4 @@
-import {GenderTyping} from '@/enums'
+import {GenderTyping} from '../enums'
 import type {AddressDetails} from './Address'
 import type {BaseEntity} from './BaiscEntities'
 

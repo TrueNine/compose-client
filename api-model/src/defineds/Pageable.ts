@@ -1,5 +1,5 @@
 import {type Asyncable, type Nullable} from './DataType'
-import {isEmpty} from '@/tools'
+import {isEmpty} from '../tools'
 
 /**
  * 分页参数入参请求
