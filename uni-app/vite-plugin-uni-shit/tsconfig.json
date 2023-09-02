@@ -3,9 +3,5 @@
   "compilerOptions": {
     "baseUrl": "."
   },
-  "include": [
-    "src/*/**.ts",
-    "modules.d.ts",
-    "@types/node"
-  ]
+  "include": ["src/*/**.ts", "modules.d.ts", "@types/node"]
 }

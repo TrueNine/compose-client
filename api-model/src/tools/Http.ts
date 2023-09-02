@@ -1,4 +1,5 @@
 import type {BasicType, NullablePartial} from '../defineds'
+
 import {isNonEmpty, isNonEmptyString} from './Values'
 
 export class SearchParam {

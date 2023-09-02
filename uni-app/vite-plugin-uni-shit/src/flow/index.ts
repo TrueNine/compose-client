@@ -1,7 +1,8 @@
+import fs from 'node:fs'
+
 import {readPackageJson as readJson} from '../resolve'
 import type {PluginConfig, UniAppManifestJson, UniAppPagesJson, ScssVariableDefs} from '../Def'
 import {fillVkUview, fillUniScss, vkUviewImport} from '../Snippets'
-import fs from 'node:fs'
 import {debug} from '../util'
 
 /**

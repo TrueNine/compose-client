@@ -1,9 +1,11 @@
-import type {ScssVariableDefs} from '../Def'
 import fs from 'fs'
+import path from 'path'
+
 import type {UserConfig, DepOptimizationOptions} from 'vite'
+
+import type {ScssVariableDefs} from '../Def'
 import type {PluginConfig} from '../Def'
 import {debug} from '../util'
-import path from 'path'
 
 /**
  * @param fullPath 项目根目录

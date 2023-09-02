@@ -22,9 +22,9 @@ export function switchTo<T>(fn: () => T, switchBy: () => void): T {
   switchBy()
   const r = fn()
   if (r instanceof Promise) {
-    r.then(r => {
+    r.then(er => {
       switchBy()
-      return r
+      return er
     })
   } else switchBy()
 

@@ -1,4 +1,5 @@
 import {WGS84} from '@compose/api-model'
+
 import {_GeometryOverlayEvent, _InfoWindowEvents, _MapEvent, _MapEvents, _MultiMarkerEvents} from './Events'
 import {_PointGeometry} from './PointGeometies'
 import {_LatLng, _LatLngDataTyping, _Point} from './Ladlngs'

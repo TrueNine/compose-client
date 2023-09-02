@@ -1,4 +1,5 @@
 import type {WGS84} from '../defineds'
+
 import type {BaseEntity} from './BaiscEntities'
 
 /**

@@ -1,4 +1,5 @@
 import {TMap} from './index'
+
 import MultiMarkerOptions = TMap.MultiMarkerOptions
 import PointGeometry = TMap.PointGeometry
 import Map = TMap.Map

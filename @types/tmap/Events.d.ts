@@ -1,8 +1,10 @@
+import type {WGS84} from '@compose/api-model'
+
 import {TMap} from './index'
+
 import LatLngDataTyping = TMap.LatLngDataTyping
 import PointDataTyping = TMap.PointDataTyping
 import LatLng = TMap.LatLng
-import {WGS84} from '../../api-model'
 import MapEvent = TMap.MapEvent
 import GeometryOverlayEvent = TMap.GeometryOverlayEvent
 

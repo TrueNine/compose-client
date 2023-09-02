@@ -274,7 +274,7 @@ export interface PluginConfig {
  * @returns 全部不为空的配置
  */
 export function parseConfig(root: string, c?: PluginConfig): Required<PluginConfig> {
-  const r = (def: string, r: string = root) => path.resolve(r, def)
+  const r = (def: string, e: string = root) => path.resolve(e, def)
   return {
     rootDir: c?.rootDir ?? process.cwd(),
     debugMode: c?.debugMode === true,

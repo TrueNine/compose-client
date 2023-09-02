@@ -1,5 +1,6 @@
-import type {ChannelTypedMessage} from '../typ/Chrome'
 import type {Asyncable, Nullable} from '@compose/api-model'
+
+import type {ChannelTypedMessage} from '../typ/Chrome'
 export {}
 
 /**

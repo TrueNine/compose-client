@@ -9,6 +9,7 @@ module.exports = defineConfig({
     parser: '@typescript-eslint/parser',
     sourceType: 'module'
   },
+  plugins: ['import'],
   env: {
     browser: true,
     es2022: true,
@@ -26,12 +27,45 @@ module.exports = defineConfig({
     'plugin:prettier/recommended'
   ],
   rules: {
+    'no-empty': 'off', //不允许空代码块
     'prettier/prettier': 'error',
+    // import排序
+    'import/order': [
+      'error',
+      {
+        groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
+        'newlines-between': 'always'
+      }
+    ],
+    'no-await-in-loop': 'off', // 禁止在循环中出现 await
+    //禁止变量声明与外层作用域的变量同名
+    // "no-shadow": ["error", { "builtinGlobals": false, "hoist": "functions", "allow": [], "ignoreOnInitialization": false }],
+    // vue 属性排序
+    'vue/attributes-order': [
+      'error',
+      {
+        order: [
+          'DEFINITION',
+          'LIST_RENDERING',
+          'CONDITIONALS',
+          'RENDER_MODIFIERS',
+          'GLOBAL',
+          'UNIQUE',
+          'TWO_WAY_BINDING',
+          'OTHER_DIRECTIVES',
+          'OTHER_ATTR',
+          'EVENTS',
+          'CONTENT'
+        ]
+      }
+    ],
     'no-var': 'error',
     semi: 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',
     '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
     '@typescript-eslint/no-explicit-any': 'error', // TODO 不可以使用 any 类型
+    '@typescript-eslint/no-empty-function': 'off', // 不允许空函数
+    '@typescript-eslint/no-namespace': 'off', //禁止使用命名空间
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-var-requires': 0,
     '@typescript-eslint/ban-types': [

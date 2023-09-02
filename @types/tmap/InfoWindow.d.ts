@@ -1,7 +1,9 @@
+import {WGS84} from '@compose/api-model'
+
 import {TMap} from './index'
+
 import LatLngDataTyping = TMap.LatLngDataTyping
 import Map = TMap.Map
-import {WGS84} from '../../api-model'
 import InfoWindowOptions = TMap.InfoWindowOptions
 import InfoWindowEvents = TMap.InfoWindowEvents
 

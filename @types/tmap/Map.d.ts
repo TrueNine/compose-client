@@ -1,4 +1,5 @@
 import {TMap} from './index'
+
 import LatLngDataTyping = TMap.LatLngDataTyping
 import PointDataTyping = TMap.PointDataTyping
 import ViewMode = TMap.ViewMode

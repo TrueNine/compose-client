@@ -1,5 +1,6 @@
-import {TMap} from '../index'
 import {Nullable} from '@compose/api-model'
+
+import {TMap} from '../index'
 
 export interface _SearchOptions {
   pageSize: number

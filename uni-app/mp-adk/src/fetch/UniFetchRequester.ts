@@ -115,8 +115,8 @@ export function hasJson<T>(headers: Headers, data: T): T {
   const minTyp = headers[ComposeHeader.contentType.toLowerCase()]
   const j = typ || minTyp
   if (j) {
-    const hasJson = j === MediaTypes.json
-    if (typeof data === 'string' && hasJson) return JSON.parse(data)
+    const has = j === MediaTypes.json
+    if (typeof data === 'string' && has) return JSON.parse(data)
     else return data
   } else return data
 }
