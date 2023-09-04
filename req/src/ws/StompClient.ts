@@ -1,4 +1,4 @@
-import StompJS from 'stompjs'
+import StompJS, {type Frame} from 'stompjs'
 import type {HttpUrl} from '@compose/api-model'
 
 /**
@@ -34,5 +34,28 @@ export class StompClient {
     const sockjs = await import('sockjs-client')
     const sock = new sockjs.default(url)
     return StompJS.over(sock)
+  }
+
+  /**
+   * ## 获得 stomp 客户端后，并开启连续
+   * @param url 链接
+   * @param connectCallback 连接后的回调
+   * @param headers 携带的请求头
+   * @param errorCallback 错误回调
+   */
+  public static async connectTo(
+    url: HttpUrl,
+    connectCallback: (stompClient: StompJS.Client, frame?: Frame) => unknown,
+    headers: Record<string, string> = {},
+    errorCallback?: (error: Frame | string) => unknown
+  ) {
+    const client = await this.getClient(url)
+    client.connect(
+      headers,
+      f => {
+        return connectCallback(client, f)
+      },
+      errorCallback
+    )
   }
 }
