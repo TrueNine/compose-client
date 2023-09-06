@@ -1,0 +1,9 @@
+node_modules
+src
+rollup.config.js
+tsconfig.json
+
+.idea
+.vscode
+
+/docs/.vitepress/cache/

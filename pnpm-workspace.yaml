@@ -8,3 +8,5 @@ packages:
   - 'ui-kit/ykit-ui/**/**'
   - 'configs/**'
   - 'req'
+  - 'cli/**'
+  - 'doc'
