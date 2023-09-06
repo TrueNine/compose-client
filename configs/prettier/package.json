@@ -1,6 +1,6 @@
 {
   "name": "@compose/prettier-config",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "main": ".prettierrc.cjs",
   "scripts": {
     "pub": "pnpm publish --no-git-checks"

@@ -4,8 +4,6 @@ packages:
   - api-model
   - uni-app/**
   - 'ext/**/**'
-  - 'ui-kit/**/**'
-  - 'ui-kit/ykit-ui/**/**'
   - 'configs/**'
   - 'req'
   - 'cli/**'

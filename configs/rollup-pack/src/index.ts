@@ -3,81 +3,59 @@ import resolve from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
 import typescript from '@rollup/plugin-typescript'
 import jsonResolve from '@rollup/plugin-json'
-import type {ExternalOption, RollupOptions} from 'rollup'
+import type {RollupOptions} from 'rollup'
 import del from 'rollup-plugin-delete'
-import type {Options as TerserOption} from '@rollup/plugin-terser'
 import dts from 'rollup-plugin-dts'
 import copyPlugin from 'rollup-plugin-copy'
-import type {CopyOptions} from 'rollup-plugin-copy'
 
-export interface CustomRollupConfig {
-  copy?: CopyOptions
-  sourceDir: string
-  indexName: string
-  esModuleBuildDistDirName: string
-  esModuleBuildFileSuffix: string
-  commonjsBuildDistDirName: string
-  commonjsBuildFileSuffix: string
-  dtsBuildDistDirName: string
-  singlePack: boolean
-  externals: ExternalOption[]
-  terserOption?: TerserOption
-}
+import type {CustomRollupConfig} from './CustomRollupConfig'
+import {defaultConfig, mergeDefaultConfig} from './DefaultVars'
 
-export const rollupExternals: string[] = [
-  'rollup',
-  '@rollup/plugin-terser',
-  '@rollup/plugin-node-resolve',
-  '@rollup/plugin-commonjs',
-  '@rollup/plugin-typescript',
-  '@rollup/plugin-json',
-  'rollup-plugin-dts',
-  'rollup-plugin-delete',
-  'tslib',
-  'typescript'
-]
-export const composeExternals: string[] = ['@compose/api-model']
-export const vueExternals: string[] = ['vue', 'vue-router', 'pinia', 'vuex', '@vue/runtime-core', '@vueuse/core', '@vueuse/integration']
-export const toolsExternals: string[] = ['lodash', 'lodash-es', 'moment', 'dayjs', 'sockjs-client', 'stompjs']
+export * from './CustomRollupConfig'
+export * from './DefaultVars'
 
-const defaultConfig: CustomRollupConfig = {
-  sourceDir: 'src',
-  indexName: 'index.ts',
-  esModuleBuildDistDirName: 'es',
-  esModuleBuildFileSuffix: 'mjs',
-  commonjsBuildDistDirName: 'lib',
-  commonjsBuildFileSuffix: 'cjs',
-  dtsBuildDistDirName: 'types',
-  singlePack: false,
-  externals: [...rollupExternals, ...vueExternals, ...composeExternals, ...toolsExternals]
-}
-
-function mergeDefaultConfig(externalConfig: CustomRollupConfig) {
-  const config = {...defaultConfig, ...externalConfig}
-  config.externals = [...defaultConfig.externals, ...config.externals]
-
-  return config
-}
-
+/**
+ * # 默认的 typescript 入口配置
+ * @param config 需合并的配置
+ */
 export function typescriptEntry(config: CustomRollupConfig = defaultConfig): RollupOptions {
   config = mergeDefaultConfig(config)
-  const input = `${config.sourceDir}/${config.indexName}`
-
   return {
     external: config.externals,
-    input,
+    input: config.entry,
     output: [
       {
+        generatedCode: {
+          objectShorthand: true,
+          constBindings: true,
+          arrowFunctions: true
+        },
         preserveModules: !config.singlePack,
-        preserveModulesRoot: config.sourceDir,
+        preserveModulesRoot: config.entryRoot,
+        globals: config.globals,
         dir: config.esModuleBuildDistDirName,
+        strict: true,
+        esModule: true,
+        compact: true,
+        minifyInternalExports: true,
         format: 'esm',
+        sourcemap: config.sourceMap,
         entryFileNames: `[name].${config.esModuleBuildFileSuffix}`
       },
       {
+        generatedCode: {
+          objectShorthand: true,
+          constBindings: true,
+          arrowFunctions: true
+        },
         preserveModules: !config.singlePack,
-        preserveModulesRoot: config.sourceDir,
+        preserveModulesRoot: config.entryRoot,
         dir: config.commonjsBuildDistDirName,
+        sourcemap: config.sourceMap,
+        dynamicImportInCjs: true,
+        compact: true,
+        minifyInternalExports: true,
+        strict: true,
         format: 'cjs',
         entryFileNames: `[name].${config.commonjsBuildFileSuffix}`
       }
@@ -99,22 +77,37 @@ export function typescriptEntry(config: CustomRollupConfig = defaultConfig): Rol
   } as RollupOptions
 }
 
+/**
+ * # 导出 dts 的配置
+ * @param config 需合并的配置
+ */
 export function declaredTypescriptFileEntry(config: CustomRollupConfig = defaultConfig): RollupOptions {
   config = mergeDefaultConfig(config)
-  const input = `${config.sourceDir}/${config.indexName}`
 
   return {
-    input: input,
+    input: config.entry,
     plugins: [dts()],
     output: [
       {
+        generatedCode: {
+          objectShorthand: true,
+          constBindings: true,
+          arrowFunctions: true
+        },
+        globals: config.globals,
         preserveModules: !config.singlePack,
-        dir: config.dtsBuildDistDirName
+        dir: config.dtsBuildDistDirName,
+        compact: true,
+        minifyInternalExports: true
       }
     ]
   } as RollupOptions
 }
 
+/**
+ * # 标准 ts 项目打包配置
+ * @param config 需合并的配置
+ */
 export function recommendedRollupConfig(config: CustomRollupConfig = defaultConfig): RollupOptions[] {
   return [typescriptEntry(config), declaredTypescriptFileEntry(config)]
 }

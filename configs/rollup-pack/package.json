@@ -1,6 +1,6 @@
 {
   "name": "@compose/rollup-pack-config",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "scripts": {
     "build": "pnpm rollup -c",
     "pub": "run-s build pub-c",

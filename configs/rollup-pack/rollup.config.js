@@ -27,6 +27,15 @@ export default defineConfig([
       {
         preserveModules: true,
         preserveModulesRoot: 'src',
+        generatedCode: {
+          objectShorthand: true,
+          constBindings: true,
+          arrowFunctions: true
+        },
+        strict: true,
+        esModule: true,
+        compact: true,
+        minifyInternalExports: true,
         dir: 'es',
         format: 'esm',
         entryFileNames: '[name].mjs'
@@ -34,6 +43,14 @@ export default defineConfig([
       {
         preserveModules: true,
         preserveModulesRoot: 'src',
+        generatedCode: {
+          objectShorthand: true,
+          constBindings: true,
+          arrowFunctions: true
+        },
+        strict: true,
+        compact: true,
+        minifyInternalExports: true,
         dir: 'lib',
         format: 'cjs',
         entryFileNames: '[name].cjs'

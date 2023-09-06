@@ -1,6 +1,6 @@
 {
   "name": "@types/compose-coordtransform",
-  "version": "2.1.7",
+  "version": "2.1.8",
   "description": "地图坐标转换器定义包",
   "main": "index.d.ts",
   "types": "index.d.ts",
