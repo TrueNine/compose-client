@@ -1,6 +1,6 @@
 {
   "name": "@types/compose-tmap",
-  "version": "1.1.19",
+  "version": "1.1.20",
   "description": "typeof tencent tmap web basic gl sdk type",
   "main": "index.d.ts",
   "author": "TrueNine",
