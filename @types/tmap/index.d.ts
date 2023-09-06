@@ -19,7 +19,8 @@ export declare namespace TMap {
     export type SearchNearbyParams = _SearchNearbyParams
     export type SearchOptions = _SearchOptions
     export type SearchRegionParams = _SearchRegionParams
-    export type Search = _Search
+
+    export class Search extends _Search {}
   }
 
   /**
@@ -34,18 +35,27 @@ export declare namespace TMap {
   }
 
   export type PointDataTyping = WGS84
-  export type Point = _Point
+
+  export class Point extends _Point {}
+
   export type MultiMarkerOptions = _MultiMarkerOptions
-  export type MultiMarker = _MultiMarker
+
+  export class MultiMarker extends _MultiMarker {}
+
   export type PointGeometry = _PointGeometry
   export type GeometryOverlayEvent<K extends string> = _GeometryOverlayEvent<K>
   export type MultiMarkerEvents = _MultiMarkerEvents
-  export type InfoWindow = _InfoWindow
+
+  export class InfoWindow extends _InfoWindow {}
+
   export type InfoWindowEvents = _InfoWindowEvents
   export type InfoWindowOptions = _InfoWindowOptions
   export type LatLngDataTyping = _LatLngDataTyping
-  export type LatLng = _LatLng
-  export type Map = _Map
+
+  export class LatLng extends _LatLng {}
+
+  export class Map extends _Map {}
+
   export type MapEvent<K extends string> = _MapEvent<K>
   export type MapEvents = _MapEvents
   export type MapOptions = _MapOptions
