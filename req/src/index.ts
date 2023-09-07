@@ -1,2 +1,2 @@
 export {}
-export * from './ws/StompClient'
+export * from './ws'

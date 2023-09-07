@@ -374,7 +374,7 @@ module.exports = {
       'animation',
       '-webkit-animation-name',
       '-moz-animation-name',
-      '-ms-animation-name',
+      '-ms-animation-globalVarName',
       '-o-animation-name',
       'animation-name',
       '-webkit-animation-duration',

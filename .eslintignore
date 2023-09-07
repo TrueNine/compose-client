@@ -1,8 +1,11 @@
-dist/**/**
 node_modules/**/**
-es/
-lib/
-types/
+
+es/**/**
+lib/**/**
+types/**/**
+umd/**/**
+dist/**/**
+
 
 *.svg
 

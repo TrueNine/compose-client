@@ -16,8 +16,11 @@
     "module": "ESNext",
     "jsx": "preserve",
     "jsxImportSource": "vue",
-    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "lib": ["ESNext", "DOM", "DOM.Iterable", "WebWorker"],
     "skipLibCheck": true,
-    "noEmit": true
+    "noEmit": true,
+    "noImplicitOverride": true,
+    "noUnusedLocals": true,
+    "useUnknownInCatchVariables": false
   }
 }

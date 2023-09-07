@@ -58,7 +58,7 @@ export interface ThemeDef {
  *
  * 不要问我为什么这里不能配什么什么
  *
- * 1. 诸如：name version description 配在 package.json 它不香么？
+ * 1. 诸如：globalVarName version description 配在 package.json 它不香么？
  * 2. 有些配置是默认的最优配置，如果不服请提 issue 我肯定改
  * 3. 这个插件我只想兼容小程序，App用别的技术栈不好么？
  */

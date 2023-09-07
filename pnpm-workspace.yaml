@@ -1,10 +1,10 @@
 packages:
-  - '@types/**'
-  - web-map/tmap/**/**
-  - api-model
-  - uni-app/**
-  - 'ext/**/**'
-  - 'configs/**'
+  - '@types/*'
+  - 'web-map/*'
+  - 'api-model'
+  - 'uni-app/*'
+  - 'ext/*'
+  - 'configs/*'
   - 'req'
-  - 'cli/**'
+  - 'cli/*'
   - 'doc'

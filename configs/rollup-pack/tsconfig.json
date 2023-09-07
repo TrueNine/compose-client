@@ -3,5 +3,10 @@
   "compilerOptions": {
     "baseUrl": "."
   },
-  "exclude": ["types"]
+  "exclude": [
+    "types",
+    "umd",
+    "es",
+    "lib"
+  ]
 }

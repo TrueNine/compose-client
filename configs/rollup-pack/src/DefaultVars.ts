@@ -1,37 +1,12 @@
-import type {CustomRollupConfig} from './CustomRollupConfig'
+import type {GeneratedCodeOptions} from 'rollup'
 
-/**
- * ## rollup 常见 外部库
- */
-export const rollupExternals: string[] = [
-  'rollup',
-  '@rollup/plugin-terser',
-  '@rollup/plugin-node-resolve',
-  '@rollup/plugin-commonjs',
-  '@rollup/plugin-typescript',
-  '@rollup/plugin-json',
-  'rollup-plugin-dts',
-  'rollup-plugin-delete',
-  'tslib',
-  'typescript'
-]
-/**
- * ## vue 常见 外部库
- */
-export const vueExternals: string[] = ['vue', 'vue-router', 'pinia', 'vuex', '@vue/runtime-core', '@vueuse/core', '@vueuse/integration']
-/**
- * ## 常见 工具 外部库
- */
-export const toolsExternals: string[] = ['lodash', 'lodash-es', 'qs', 'axios', 'moment', 'dayjs', 'sockjs-client', 'stompjs']
-/**
- * ## 内部项目自身常见外部库
- */
-export const composeExternals: string[] = ['@compose/api-model']
+import type {CustomRollupConfig, InternalConfigProperties} from './CustomRollupConfig'
+import {allDefaultGlobalVars, allExternals} from './Excludes'
 
 /**
  * # 默认 rollup 配置
  */
-export const defaultConfig: CustomRollupConfig = {
+export const defaultConfig: CustomRollupConfig & InternalConfigProperties = {
   entryRoot: 'src',
   entryFileName: 'index.ts',
   sourceMap: false,
@@ -39,24 +14,31 @@ export const defaultConfig: CustomRollupConfig = {
   esModuleBuildFileSuffix: 'mjs',
   commonjsBuildDistDirName: 'lib',
   commonjsBuildFileSuffix: 'cjs',
+  umdBuildDistDirName: 'umd',
+  umdBuildFileSuffix: 'min.js',
   dtsBuildDistDirName: 'types',
+  distRoot: 'dist',
   singlePack: false,
-  externals: [rollupExternals, vueExternals, composeExternals, toolsExternals].flat()
+  globals: allDefaultGlobalVars,
+  umd: {
+    globalVarName: '$$',
+    fileName: 'umd-model',
+    dtsIndexName: 'index',
+    dts: true
+  },
+  pub: {
+    packageJsonPath: 'package.json',
+    readmePath: 'README.md'
+  },
+  buildChain: {
+    buildTool: 'pnpm'
+  },
+  externals: allExternals,
+  _enabledUmd: true
 }
 
-/**
- * # 默认 rollup 配置入口文件
- */
-export const input = `${defaultConfig.entryRoot}/${defaultConfig.entryFileName}`
-
-/**
- * ## 合并外部配置和默认配置
- * @param externalConfig 外部依赖
- */
-export function mergeDefaultConfig(externalConfig: CustomRollupConfig): CustomRollupConfig {
-  const config = {...defaultConfig, ...externalConfig}
-  config.externals = [...defaultConfig.externals, ...config.externals]
-  if (!config.entry) config.entry = `${config.entryRoot}/${config.entryFileName}`
-
-  return config
+export const rollupDefaultGenerateCode: GeneratedCodeOptions = {
+  objectShorthand: true,
+  constBindings: true,
+  arrowFunctions: true
 }

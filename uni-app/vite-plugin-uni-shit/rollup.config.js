@@ -16,14 +16,14 @@ export default defineConfig([
         preserveModules: true,
         dir: 'es',
         format: 'esm',
-        entryFileNames: '[name].mjs'
+        entryFileNames: '[globalVarName].mjs'
       },
       {
         preserveModulesRoot: 'src',
         preserveModules: true,
         dir: 'lib',
         format: 'cjs',
-        entryFileNames: '[name].cjs'
+        entryFileNames: '[globalVarName].cjs'
       }
     ],
     plugins: [
