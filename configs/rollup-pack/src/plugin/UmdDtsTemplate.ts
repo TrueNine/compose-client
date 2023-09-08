@@ -14,9 +14,13 @@ declare global {
   var ${vName}: typeof ${lvName} = ${lvName}
 }
 
+
 // eslint-disable-next-line no-var
 declare var ${vName} = ${lvName}
 export * from './${fName}'
+
+// eslint-disable-next-line
+// ts-ignore
 export = ${vName}
 `
     .trim()

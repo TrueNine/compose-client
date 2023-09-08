@@ -1,12 +1,13 @@
 {
   "name": "@compose/uni-mp-adk",
-  "version": "1.0.34",
+  "version": "1.0.35",
   "author": "TrueNine",
   "license": "private",
   "description": "uni-app miniProgram auxiliary development kit",
   "scripts": {
-    "build": "pnpm rollup -c",
-    "pub": "pnpm build && pnpm publish --no-git-checks"
+    "build": "pnpm rollup --config rollup.config.ts --configPlugin typescript",
+    "pub": "run-s build pub-c",
+    "pub-c": "pnpm -C dist pub"
   },
   "peerDependencies": {
     "@compose/api-model": "workspace:^"

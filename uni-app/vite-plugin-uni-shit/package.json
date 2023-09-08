@@ -1,17 +1,18 @@
 {
   "name": "@compose/vite-plugin-uni-shit",
-  "version": "1.2.31",
+  "version": "1.2.32",
   "description": "uni app shit",
   "author": "TrueNine",
   "license": "private",
   "scripts": {
-    "build": "pnpm rollup -c",
-    "pub": "pnpm build && pnpm publish --no-git-checks"
+    "build": "pnpm rollup --config rollup.config.ts --configPlugin typescript",
+    "pub": "run-s build pub-c",
+    "pub-c": "pnpm -C dist pub"
   },
   "type": "module",
-  "main": "lib/index.cjs",
-  "module": "es/index.mjs",
-  "types": "types/index.d.ts",
+  "main": "dist/lib/index.cjs",
+  "module": "dist/es/index.mjs",
+  "types": "dist/types/index.d.ts",
   "exports": {
     ".": {
       "types": "./types/index.d.ts",

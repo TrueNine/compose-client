@@ -1,6 +1,9 @@
 import type {Plugin} from 'rollup'
+import type {KnownAny} from '@compose/api-model/src'
+import {Node} from '@compose/api-model'
 
 import type {CustomRollupConfig} from '../CustomRollupConfig'
+import {findWorkspaceVersions} from '../pnpm'
 
 export function publishHandlePlugin(config: CustomRollupConfig): Plugin {
   return {
@@ -8,32 +11,37 @@ export function publishHandlePlugin(config: CustomRollupConfig): Plugin {
     async buildEnd() {
       const p = await import('path')
       const f = await import('fs')
+      const rootDirPath = p.resolve('./')
+      const distPath = p.resolve(rootDirPath, config.distRoot)
+      const packageJsonPath = p.resolve(rootDirPath, config.pub.packageJsonPath!)
 
-      const rootDir = p.resolve('./')
-      const dist = p.resolve(rootDir, config.distRoot)
+      if (f.existsSync(packageJsonPath)) {
+        const jsonText = f.readFileSync(packageJsonPath, {encoding: 'utf-8'})
+        const json = JSON.parse(jsonText) as KnownAny
 
-      const json = p.resolve(rootDir, config.pub.packageJsonPath!)
-      if (f.existsSync(json)) {
-        const jsonText = f.readFileSync(json).toString('utf-8')
-        const outPath = p.resolve(dist, 'package.json')
-        if (!f.existsSync(p.dirname(outPath))) f.mkdirSync(p.dirname(outPath))
-        f.writeFileSync(outPath, producePackageJson(jsonText, config))
+        let result = cleanPackageJson(json)
+        result = producePackageJson(json, config)
+
+        result = await parsePnpmWorkspaceVersion(result, rootDirPath)
+        result = await parsePnpmWorkspaceVersion(result, rootDirPath)
+
+        const distJsonPath = p.resolve(distPath, 'package.json')
+        await Node.writeContentToFile(distJsonPath, JSON.stringify(result, null, 2))
       }
 
-      const readme = p.resolve(rootDir, config.pub.readmePath!)
-      if (f.existsSync(readme)) f.copyFileSync(readme, p.resolve(dist, `${config.pub.readmePath}`))
+      const readme = p.resolve(rootDirPath, config.pub.readmePath!)
+      if (f.existsSync(readme)) f.copyFileSync(readme, p.resolve(distPath, `${config.pub.readmePath}`))
     }
   }
 }
 
-export function producePackageJson(json: string, cfg: CustomRollupConfig): string {
-  const a = cleanPackageJson(JSON.parse(json))
-  const info = getPackageFileInfo(cfg)
-  return JSON.stringify(Object.assign(a, info), null, 2)
+export function producePackageJson(json: KnownAny, cfg: CustomRollupConfig): KnownAny {
+  const info = generatePackagePublishInfo(cfg)
+  return Object.assign(json, info)
 }
 
-export function cleanPackageJson(json: object) {
-  const j = json as never
+export function cleanPackageJson(json: KnownAny): KnownAny {
+  const j = json as KnownAny
 
   delete j['scripts']
 
@@ -48,7 +56,7 @@ export function cleanPackageJson(json: object) {
   return j
 }
 
-export function getPackageFileInfo(cfg: CustomRollupConfig) {
+export function generatePackagePublishInfo(cfg: CustomRollupConfig): KnownAny {
   const entryName = cfg.entryFileName.split('.')[0]
   const dts = `./${cfg.dtsBuildDistDirName}/${entryName}.d.ts`
   const im = `./${cfg.esModuleBuildDistDirName}/${entryName}.${cfg.esModuleBuildFileSuffix}`
@@ -56,7 +64,7 @@ export function getPackageFileInfo(cfg: CustomRollupConfig) {
 
   return {
     scripts: {
-      pub: 'pnpm publish --no-git-checks'
+      pub: 'pnpm i && pnpm publish --no-git-checks'
     },
     type: 'module',
     main: `${cfg.commonjsBuildDistDirName}/${entryName}.${cfg.commonjsBuildFileSuffix}`,
@@ -84,4 +92,25 @@ export function getPackageFileInfo(cfg: CustomRollupConfig) {
       './*': './*'
     }
   }
+}
+
+export async function parsePnpmWorkspaceVersion(json: KnownAny, rootDir: string): Promise<KnownAny> {
+  const versions = await findWorkspaceVersions(rootDir)
+  function _replaceWorkspaceVersion(dependenciesKey: string) {
+    if (json[dependenciesKey]) {
+      const dependencies = json[dependenciesKey] as Record<string, string>
+      for (const [key, value] of Object.entries(dependencies)) {
+        if (value.includes('workspace') && versions[key]) {
+          dependencies[key] = `^${versions[key].version}`
+        }
+      }
+      json[dependenciesKey] = dependencies
+    }
+  }
+
+  _replaceWorkspaceVersion('dependencies')
+  _replaceWorkspaceVersion('devDependencies')
+  _replaceWorkspaceVersion('peerDependencies')
+
+  return json
 }

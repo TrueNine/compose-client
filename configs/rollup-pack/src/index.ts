@@ -10,12 +10,14 @@ import copyPlugin from 'rollup-plugin-copy'
 
 import type {CustomRollupConfig} from './CustomRollupConfig'
 import {defaultConfig, rollupDefaultGenerateCode} from './DefaultVars'
-import {umdDtsPlugin} from './plugin/UmdDtsPlugin'
+import {umdDtsPlugin} from './plugin'
 import {getAllOutputDir, mergeDefaultConfig} from './Utils'
-import {publishHandlePlugin} from './plugin/PublishHandlePlugin'
+import {publishHandlePlugin} from './plugin'
 
 export * from './CustomRollupConfig'
 export * from './DefaultVars'
+export * from './plugin'
+export * from './pnpm'
 
 /**
  * # 默认的 typescript 入口配置
@@ -67,7 +69,17 @@ export function typescriptEntry(config: Partial<CustomRollupConfig> = defaultCon
       }),
       terser({
         ...cfg.terserOption,
-        ecma: 2020
+        ecma: 2020,
+        compress: {
+          // eslint-disable-next-line camelcase
+          drop_console: cfg.terserDropLog,
+          // eslint-disable-next-line camelcase
+          drop_debugger: cfg.terserDropLog,
+          arguments: true,
+          module: true,
+          // eslint-disable-next-line camelcase
+          booleans_as_integers: true
+        }
       }),
       copyPlugin(cfg.copy)
     ]
@@ -119,7 +131,17 @@ export function umdPackConfig(config: Partial<CustomRollupConfig>): RollupOption
       }),
       terser({
         ...cfg.terserOption,
-        ecma: 2020
+        ecma: 2020,
+        compress: {
+          // eslint-disable-next-line camelcase
+          drop_console: cfg.terserDropLog,
+          // eslint-disable-next-line camelcase
+          drop_debugger: cfg.terserDropLog,
+          arguments: true,
+          module: true,
+          // eslint-disable-next-line camelcase
+          booleans_as_integers: true
+        }
       }),
       copyPlugin(cfg.copy)
     ]

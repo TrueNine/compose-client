@@ -11,6 +11,11 @@ export interface CustomRollupConfig {
    */
   copy?: CopyOptions
   /**
+   * terser 打包时是否删除 console log debug
+   * @default true
+   */
+  terserDropLog: boolean
+  /**
    * src
    * @default 'src'
    */

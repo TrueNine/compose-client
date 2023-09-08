@@ -3,5 +3,7 @@
   "compilerOptions": {
     "baseUrl": "."
   },
-  "include": ["src/*/**.ts", "modules.d.ts", "@types/node"]
+  "exclude": [
+    "dist"
+  ]
 }

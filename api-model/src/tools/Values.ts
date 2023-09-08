@@ -73,20 +73,3 @@ export function dlv(obj: any, key: string | string[], def: any, p = 0, undef: an
   }
   return obj === undef ? def : obj
 }
-
-/**
- *
- * @param o obj
- * @return Required<T>
- */
-export function asRequire<T>(o: T): Required<T> {
-  return o as unknown as Required<T>
-}
-
-/**
- * @param o obj
- * @return Partial<T>
- */
-export function asPartial<T>(o: T): Partial<T> {
-  return o as unknown as Partial<T>
-}

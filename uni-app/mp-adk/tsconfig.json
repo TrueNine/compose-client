@@ -3,10 +3,25 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": [
+        "./src/*"
+      ]
     }
   },
-  "types": ["@dcloudio/types", "uni-app-types", "uni-ui-types", "miniprogram-api-typings", "mini-types", "uni.d.ts"],
-  "include": ["**.d.ts", "src/**/*.ts", "src/**/*.d.ts"],
-  "exclude": ["es"]
+  "types": [
+    "@dcloudio/types",
+    "uni-app-types",
+    "uni-ui-types",
+    "miniprogram-api-typings",
+    "mini-types",
+    "uni.d.ts"
+  ],
+  "include": [
+    "**.d.ts",
+    "src/**/**.ts",
+    "src/**/**.d.ts"
+  ],
+  "exclude": [
+    "dist"
+  ]
 }

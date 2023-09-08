@@ -1,13 +1,13 @@
 {
   "name": "@compose/req",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "requester",
   "author": "TrueNine",
   "license": "private",
   "scripts": {
-    "build": "pnpm rollup -c",
+    "build": "pnpm rollup --config rollup.config.ts --configPlugin typescript",
     "pub": "run-s build pub-c",
-    "pub-c": "pnpm publish --no-git-checks"
+    "pub-c": "pnpm -C dist pub"
   },
   "peerDependencies": {
     "@compose/api-model": "workspace:^",
