@@ -1,5 +1,5 @@
 import type {Plugin} from 'rollup'
-import type {KnownAny} from '@compose/api-model/src'
+import type {KnownAny} from '@compose/api-model'
 import {Node} from '@compose/api-model'
 
 import type {CustomRollupConfig} from '../CustomRollupConfig'
@@ -96,6 +96,7 @@ export function generatePackagePublishInfo(cfg: CustomRollupConfig): KnownAny {
 
 export async function parsePnpmWorkspaceVersion(json: KnownAny, rootDir: string): Promise<KnownAny> {
   const versions = await findWorkspaceVersions(rootDir)
+
   function _replaceWorkspaceVersion(dependenciesKey: string) {
     if (json[dependenciesKey]) {
       const dependencies = json[dependenciesKey] as Record<string, string>

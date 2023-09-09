@@ -40,7 +40,7 @@ export function typescriptEntry(config: Partial<CustomRollupConfig> = defaultCon
         esModule: true,
         compact: true,
         minifyInternalExports: true,
-        format: 'esm',
+        format: 'es',
         sourcemap: cfg.sourceMap,
         entryFileNames: `[name].${cfg.esModuleBuildFileSuffix}`
       },
@@ -60,10 +60,14 @@ export function typescriptEntry(config: Partial<CustomRollupConfig> = defaultCon
     ],
     plugins: [
       del({targets: getAllOutputDir(cfg).map(e => `${e}/**`)}),
-      resolve(),
+      resolve({
+        extensions: ['.js', '.cjs', '.mjs', '.json', '.node']
+      }),
       publishHandlePlugin(cfg),
       jsonResolve(),
-      commonjs(),
+      commonjs({
+        extensions: ['.js', '.cjs', '.mjs', '.json', '.node']
+      }),
       typescript({
         exclude: getAllOutputDir(cfg).map(e => `${e}/**`)
       }),
