@@ -1,4 +1,7 @@
-dist/
-node_modulds/
-es/
-lib/
+**/node_modules/**/**
+**/dist/**/**
+
+*.svg
+
+**/.idea/
+**/.vscode/

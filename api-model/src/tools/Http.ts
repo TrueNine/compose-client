@@ -1,4 +1,4 @@
-import type {BasicType, NullablePartial} from '../defineds'
+import type {BasicType, NullablePartial} from '@compose/compose-types'
 
 import {isNonEmpty, isNonEmptyString} from './Values'
 

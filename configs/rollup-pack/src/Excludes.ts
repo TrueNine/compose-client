@@ -34,11 +34,28 @@ export const toolsExternals: string[] = ['lodash-es', 'moment', 'sockjs-client',
 /**
  * ## 内部项目自身常见外部库
  */
-export const composeExternals: string[] = ['@compose/api-model', '@compose/req']
+export const composeExternals: string[] = ['@compose-types/api-model', '@compose-types/req', '@compose/compose-types']
 
+/**
+ * ## node 外部库
+ */
 export const nodeExternals: string[] = ['node', 'fs', 'node:fs']
 
-export const allExternals: string[] = [rollupExternals, vueExternals, composeExternals, toolsExternals, oldExternals, nodeExternals].flat()
+/**
+ * ## css 的 常见 外部库
+ */
+export const cssExternals: string[] = [
+  'sass',
+  'node-sass',
+  'less',
+  'unocss',
+  '@unocss/transformer-compile-class',
+  'transformer-directives',
+  'unocss-preset-weapp',
+  'postcss'
+]
+
+export const allExternals: string[] = [rollupExternals, vueExternals, composeExternals, toolsExternals, oldExternals, nodeExternals, cssExternals].flat()
 
 export const allDefaultGlobalVars: GlobalsOption = allExternals
   .map(name => {

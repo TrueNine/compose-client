@@ -1,4 +1,4 @@
-import type {BaseEntity} from './BaiscEntities'
+import type {BaseEntity} from '@compose/compose-types'
 
 export interface RoleGroup extends BaseEntity {
   name: string

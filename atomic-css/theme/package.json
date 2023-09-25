@@ -1,0 +1,33 @@
+{
+  "name": "@compose/atomic-css-theme",
+  "version": "0.1.1",
+  "description": "stylesheet abstract",
+  "author": "TrueNine",
+  "license": "private",
+  "scripts": {
+    "build": "pnpm rollup --config rollup.config.ts --configPlugin typescript",
+    "pub": "run-s build pub-c",
+    "pub-c": "pnpm -C dist pub"
+  },
+  "peerDependencies": {},
+  "type": "module",
+  "main": "dist/lib/index.js",
+  "module": "dist/es/index.js",
+  "types": "dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/es/index.js",
+      "require": "./dist/lib/index.js"
+    },
+    "./es": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/es/index.js"
+    },
+    "./lib": {
+      "types": "./dist/types/index.d.ts",
+      "require": "./dist/lib/index.js"
+    },
+    "./*": "./*"
+  }
+}

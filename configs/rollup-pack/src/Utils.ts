@@ -2,9 +2,7 @@ import type {CustomRollupConfig, InternalConfigProperties} from './CustomRollupC
 import {defaultConfig} from './DefaultVars'
 
 export function getAllOutputDir(config: CustomRollupConfig) {
-  return [`${config.esModuleBuildDistDirName}`, `${config.commonjsBuildDistDirName}`, `${config.umdBuildDistDirName}`, `${config.dtsBuildDistDirName}`].map(
-    e => `${config.distRoot}/${e}`
-  )
+  return [`${config.esDistDir}`, `${config.cjsDistDir}`, `${config.umdBuildDistDirName}`, `${config.dtsDistDir}`].map(e => `${config.distRoot}/${e}`)
 }
 
 /**
@@ -25,6 +23,5 @@ export function mergeDefaultConfig(externalConfig: CustomRollupConfig): CustomRo
     cfg.umd!.dtsIndexName = cfg.umd!.dtsIndexName ?? defaultConfig.umd!.dtsIndexName!
   }
   if (cfg.globals) cfg.globals = Object.assign(defaultConfig.globals!, cfg.globals)
-
   return cfg
 }

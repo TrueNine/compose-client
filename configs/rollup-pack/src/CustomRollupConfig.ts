@@ -40,17 +40,17 @@ export interface CustomRollupConfig {
    * es 构建输出路径
    * @default 'es'
    */
-  esModuleBuildDistDirName: string
+  esDistDir: string
   /**
    * es 构建输出文件后缀
    * @default 'mjs'
    */
-  esModuleBuildFileSuffix: string
+  esExtension: string
   /**
    * commonjs 构建输出路径
    * @default 'lib'
    */
-  commonjsBuildDistDirName: string
+  cjsDistDir: string
 
   /**
    * umd 构建输出路径
@@ -68,12 +68,12 @@ export interface CustomRollupConfig {
    *  commonjs 构建输出文件后缀
    *   @default 'cjs'
    */
-  commonjsBuildFileSuffix: string
+  cjsExtension: string
   /**
    * d.ts 输出路径
    * @default 'types'
    */
-  dtsBuildDistDirName: string
+  dtsDistDir: string
   /**
    * 单文件打包方式
    * @default false

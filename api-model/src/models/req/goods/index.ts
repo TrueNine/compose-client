@@ -1,4 +1,5 @@
-import type {KPair} from '../../../defineds'
+import type {KPair} from '@compose/compose-types'
+
 import {GoodsInfoTyping, GoodsTyping} from '../../../enums'
 import type {GoodsInfo, GoodsParams, GoodsUnit, GoodsUnitSpecification} from '../../../entities'
 

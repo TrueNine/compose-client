@@ -1,13 +1,7 @@
-node_modules/**/**
-
-es/**/**
-lib/**/**
-types/**/**
-umd/**/**
-dist/**/**
-
+**/node_modules/**/**
+**/dist/**/**
 
 *.svg
 
-.idea/
-.vscode/
+**/.idea/
+**/.vscode/

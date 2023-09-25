@@ -1,5 +1,4 @@
-import type {Nullable} from './DataType'
-import type {HexColor} from './DataType'
+import type {HexColor, Nullable} from '@compose/compose-types'
 
 /**
  * # 路由选项
@@ -174,6 +173,7 @@ export function routeOptionStream(routeOptions: readonly RouteOption[] = [], rou
   /**
    * ## 以 uri 查找匹配的路由选项
    * @param paths 路径 或路径组
+   * @param options 路由选项
    * @param deep 递归层级
    * @param root 根元素
    * @returns 查找到的菜单节点

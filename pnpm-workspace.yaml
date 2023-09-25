@@ -8,3 +8,5 @@ packages:
   - 'req'
   - 'cli/*'
   - 'doc'
+  - 'atomic-css/*'
+  - 'compose-types'

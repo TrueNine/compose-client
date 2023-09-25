@@ -10,7 +10,7 @@
     "build": "echo \"not required build\"",
     "pub": "pnpm build && pnpm publish --no-git-checks"
   },
-  "dependencies": {
+  "peerDependencies": {
     "coordtransform": "^2.1.2"
   }
 }

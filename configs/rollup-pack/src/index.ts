@@ -35,27 +35,27 @@ export function typescriptEntry(config: Partial<CustomRollupConfig> = defaultCon
         preserveModules: !cfg.singlePack,
         preserveModulesRoot: cfg.entryRoot,
         globals: cfg.globals,
-        dir: `${cfg.distRoot}/${cfg.esModuleBuildDistDirName}`,
+        dir: `${cfg.distRoot}/${cfg.esDistDir}`,
         strict: true,
         esModule: true,
         compact: true,
         minifyInternalExports: true,
         format: 'es',
         sourcemap: cfg.sourceMap,
-        entryFileNames: `[name].${cfg.esModuleBuildFileSuffix}`
+        entryFileNames: `[name].${cfg.esExtension}`
       },
       {
         generatedCode: rollupDefaultGenerateCode,
         preserveModules: !cfg.singlePack,
         preserveModulesRoot: cfg.entryRoot,
-        dir: `${cfg.distRoot}/${cfg.commonjsBuildDistDirName}`,
+        dir: `${cfg.distRoot}/${cfg.cjsDistDir}`,
         sourcemap: cfg.sourceMap,
         dynamicImportInCjs: true,
         compact: true,
         minifyInternalExports: true,
         strict: true,
         format: 'cjs',
-        entryFileNames: `[name].${cfg.commonjsBuildFileSuffix}`
+        entryFileNames: `[name].${cfg.cjsExtension}`
       }
     ],
     plugins: [
@@ -104,7 +104,7 @@ export function declaredTypescriptFileEntry(config: Partial<CustomRollupConfig> 
     output: {
       globals: cfg.globals,
       preserveModules: !cfg.singlePack,
-      dir: `${cfg.distRoot}/${cfg.dtsBuildDistDirName}`
+      dir: `${cfg.distRoot}/${cfg.dtsDistDir}`
     }
   }
 }

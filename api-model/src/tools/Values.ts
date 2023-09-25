@@ -1,4 +1,4 @@
-import type {NullablePartial} from '../defineds'
+import type {NullablePartial} from '@compose/compose-types'
 
 /**
  * ## 判断一个字符串是否为空，返回本身或空字符串，排除 null | undefined

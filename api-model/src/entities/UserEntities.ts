@@ -1,9 +1,8 @@
+import type {BaseEntity} from '@compose/compose-types'
+
 import {GenderTyping} from '../enums'
 
 import type {AddressDetails} from './Address'
-import type {BaseEntity} from './BaiscEntities'
-
-export {}
 
 export interface User extends BaseEntity {
   account: string

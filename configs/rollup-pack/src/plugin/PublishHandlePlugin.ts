@@ -1,7 +1,7 @@
 import type {Plugin} from 'rollup'
-import type {KnownAny} from '@compose/api-model'
-import {Node} from '@compose/api-model'
 
+import {Node} from '../adaptors/PackageAdaptor'
+import type {KnownAny} from '../adaptors/PackageAdaptor'
 import type {CustomRollupConfig} from '../CustomRollupConfig'
 import {findWorkspaceVersions} from '../pnpm'
 
@@ -58,31 +58,47 @@ export function cleanPackageJson(json: KnownAny): KnownAny {
 
 export function generatePackagePublishInfo(cfg: CustomRollupConfig): KnownAny {
   const entryName = cfg.entryFileName.split('.')[0]
-  const dts = `./${cfg.dtsBuildDistDirName}/${entryName}.d.ts`
-  const im = `./${cfg.esModuleBuildDistDirName}/${entryName}.${cfg.esModuleBuildFileSuffix}`
-  const re = `./${cfg.commonjsBuildDistDirName}/${entryName}.${cfg.commonjsBuildFileSuffix}`
+  const dts = `./${cfg.dtsDistDir}/${entryName}.d.ts`
+  const im = `./${cfg.esDistDir}/${entryName}.${cfg.esExtension}`
+  const re = `./${cfg.cjsDistDir}/${entryName}.${cfg.cjsExtension}`
 
   return {
     scripts: {
       pub: 'pnpm i && pnpm publish --no-git-checks'
     },
     type: 'module',
-    main: `${cfg.commonjsBuildDistDirName}/${entryName}.${cfg.commonjsBuildFileSuffix}`,
-    module: `${cfg.esModuleBuildDistDirName}/${entryName}.${cfg.esModuleBuildFileSuffix}`,
-    types: `${cfg.dtsBuildDistDirName}/${entryName}.d.ts`,
+    main: `${cfg.cjsDistDir}/${entryName}.${cfg.cjsExtension}`,
+    module: `${cfg.esDistDir}/${entryName}.${cfg.esExtension}`,
+    types: `${cfg.dtsDistDir}/${entryName}.d.ts`,
     exports: {
       '.': {
         types: dts,
         import: im,
         require: re
       },
-      [`./${cfg.esModuleBuildDistDirName}`]: {
+      [`./${cfg.esDistDir}`]: {
         types: dts,
         import: im
       },
-      [`./${cfg.commonjsBuildDistDirName}`]: {
+      [`./${cfg.esDistDir}/*.${cfg.esExtension}`]: {
+        types: `./${cfg.esDistDir}/*.d.ts`,
+        import: `./${cfg.esDistDir}/*.${cfg.esExtension}`
+      },
+      [`./${cfg.esDistDir}/*`]: {
+        types: [`./${cfg.dtsDistDir}/*.d.ts`, `./${cfg.dtsDistDir}/*/${entryName}.d.ts`],
+        import: `./${cfg.esDistDir}/*.${cfg.esExtension}`
+      },
+      [`./${cfg.cjsDistDir}`]: {
         types: dts,
-        require: re
+        import: re
+      },
+      [`./${cfg.cjsDistDir}/*.${cfg.cjsExtension}`]: {
+        types: `./${cfg.dtsDistDir}/*.d.ts`,
+        import: `./${cfg.cjsDistDir}/*.${cfg.cjsExtension}`
+      },
+      [`./${cfg.cjsDistDir}/*`]: {
+        types: [`./${cfg.dtsDistDir}/*.d.ts`, `./${cfg.dtsDistDir}/*/${entryName}.d.ts`],
+        import: `./${cfg.cjsDistDir}/*.${cfg.cjsExtension}`
       },
       [`./${cfg.umdBuildDistDirName}`]: {
         types: `./${cfg.umdBuildDistDirName}/${cfg.umd.dtsIndexName}.d.ts`,
@@ -90,7 +106,9 @@ export function generatePackagePublishInfo(cfg: CustomRollupConfig): KnownAny {
         require: `./${cfg.umdBuildDistDirName}/${cfg.umd.fileName}.${cfg.umdBuildFileSuffix}`
       },
       './*': './*'
-    }
+    },
+    unpkg: `${cfg.umdBuildDistDirName}/${cfg.umd?.fileName}.${cfg.umdBuildFileSuffix}`,
+    jsdelivr: `${cfg.umdBuildDistDirName}/${cfg.umd?.fileName}.${cfg.umdBuildFileSuffix}`
   }
 }
 

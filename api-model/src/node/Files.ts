@@ -2,8 +2,10 @@ import type fsType from 'node:fs'
 import type pathType from 'node:path'
 import type childProcessType from 'node:child_process'
 
-import type {Nullable} from '../defineds'
+import type {Nullable} from '@compose/compose-types'
+
 import type {KnownAny} from '../tools'
+
 export class Node {
   static async executeJson<T = KnownAny>(cmd: string, cwd?: string): Promise<Nullable<T>> {
     const a = await this.execute(cmd, cwd)

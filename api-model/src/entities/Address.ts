@@ -1,6 +1,4 @@
-import type {WGS84} from '../defineds'
-
-import type {BaseEntity} from './BaiscEntities'
+import type {WGS84, BaseEntity} from '@compose/compose-types'
 
 /**
  * 五级联动省市区地址

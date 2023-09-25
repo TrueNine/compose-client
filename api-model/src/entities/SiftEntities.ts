@@ -1,4 +1,4 @@
-import type {BaseEntity} from './BaiscEntities'
+import type {BaseEntity} from '@compose/compose-types'
 
 /**
  * 品牌

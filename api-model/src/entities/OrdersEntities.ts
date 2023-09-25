@@ -1,8 +1,8 @@
-import type {ISO8601DatetimeFormat} from '../defineds'
+import type {ISO8601DatetimeFormat, BaseEntity} from '@compose/compose-types'
+
 import {GoodsTyping, OrderStatusTyping, PayChannelTyping, PaymentTyping} from '../enums'
 
 import type {FullAddressDetails} from './Address'
-import type {BaseEntity} from './BaiscEntities'
 import type {FullGoodsUnit} from './GoodsEntities'
 
 export interface Orders extends BaseEntity {

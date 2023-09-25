@@ -1,4 +1,4 @@
-import {Node} from '@compose/api-model'
+import {Node} from '../adaptors/PackageAdaptor'
 
 export async function findWorkspaceVersions(rootDir: string) {
   const p = await import('path')
