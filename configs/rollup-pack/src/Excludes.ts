@@ -39,7 +39,7 @@ export const composeExternals: string[] = ['@compose-types/api-model', '@compose
 /**
  * ## node 外部库
  */
-export const nodeExternals: string[] = ['node', 'fs', 'node:fs']
+export const nodeExternals: string[] = ['node', 'fs', 'node:fs', 'path', 'node:path', 'child_process', 'node:child_process', 'process', 'node:process']
 
 /**
  * ## css 的 常见 外部库

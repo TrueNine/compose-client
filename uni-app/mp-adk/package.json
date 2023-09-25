@@ -1,6 +1,6 @@
 {
   "name": "@compose/uni-mp-adk",
-  "version": "1.0.35",
+  "version": "1.0.36",
   "author": "TrueNine",
   "license": "private",
   "description": "uni-app miniProgram auxiliary development kit",
@@ -10,7 +10,9 @@
     "pub-c": "pnpm -C dist pub"
   },
   "peerDependencies": {
-    "@compose/api-model": "workspace:^"
+    "@compose/compose-types": "workspace:^",
+    "@dcloudio/types": "^3.3.3",
+    "@dcloudio/uni-app": "^3.0.0-alpha-3090120230923001"
   },
   "type": "module",
   "main": "lib/index.cjs",

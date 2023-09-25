@@ -9,6 +9,10 @@
     "pub": "run-s build pub-c",
     "pub-c": "pnpm -C dist pub"
   },
+  "peerDependencies": {
+    "@dcloudio/types": "^3.3.3",
+    "@dcloudio/uni-app": "^3.0.0-alpha-3090120230923001"
+  },
   "type": "module",
   "main": "dist/lib/index.cjs",
   "module": "dist/es/index.mjs",
