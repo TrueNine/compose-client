@@ -3,21 +3,10 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
+      "@/*": ["./src/*"]
     }
   },
-  "types": [
-    "@dcloudio/types",
-    "uni.d.ts"
-  ],
-  "include": [
-    "**.d.ts",
-    "src/**/**.ts",
-    "src/**/**.d.ts"
-  ],
-  "exclude": [
-    "dist"
-  ]
+  "types": ["@dcloudio/types", "uni.d.ts"],
+  "include": ["**.d.ts", "src/**/**.ts", "src/**/**.d.ts"],
+  "exclude": ["dist"]
 }
