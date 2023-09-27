@@ -1,6 +1,6 @@
 {
   "name": "@compose/atomic-css-theme",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "stylesheet abstract",
   "author": "TrueNine",
   "license": "private",

@@ -90,15 +90,15 @@ export function generatePackagePublishInfo(cfg: CustomRollupConfig): KnownAny {
       },
       [`./${cfg.cjsDistDir}`]: {
         types: dts,
-        import: re
+        require: re
       },
       [`./${cfg.cjsDistDir}/*.${cfg.cjsExtension}`]: {
         types: `./${cfg.dtsDistDir}/*.d.ts`,
-        import: `./${cfg.cjsDistDir}/*.${cfg.cjsExtension}`
+        require: `./${cfg.cjsDistDir}/*.${cfg.cjsExtension}`
       },
       [`./${cfg.cjsDistDir}/*`]: {
         types: [`./${cfg.dtsDistDir}/*.d.ts`, `./${cfg.dtsDistDir}/*/${entryName}.d.ts`],
-        import: `./${cfg.cjsDistDir}/*.${cfg.cjsExtension}`
+        require: `./${cfg.cjsDistDir}/*.${cfg.cjsExtension}`
       },
       [`./${cfg.umdBuildDistDirName}`]: {
         types: `./${cfg.umdBuildDistDirName}/${cfg.umd.dtsIndexName}.d.ts`,

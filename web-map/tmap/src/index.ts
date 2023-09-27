@@ -1,5 +1,6 @@
 import type {TMap} from 'compose-tmap'
-import {Dom, queryParam, type WGS84} from '@compose/api-model'
+import {Dom, queryParam} from '@compose/api-model'
+import type {WGS84} from '@compose/compose-types'
 
 export * from './Constants'
 

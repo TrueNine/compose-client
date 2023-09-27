@@ -1,4 +1,4 @@
-import type {HttpUrl, WebSocketUrl} from '@compose/api-model'
+import type {HttpUrl, WebSocketUrl} from '@compose/compose-types'
 import {Client} from '@stomp/stompjs'
 
 import {AbstractStompClient} from './AbstractStompClient'

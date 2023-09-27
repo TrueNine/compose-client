@@ -1,5 +1,5 @@
 import StompJS, {type Frame} from 'stompjs'
-import type {HttpUrl} from '@compose/api-model'
+import type {HttpUrl} from '@compose/compose-types'
 
 /**
  * # StompJS 库的简单封装

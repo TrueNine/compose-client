@@ -1,6 +1,6 @@
 {
   "name": "@compose/tmap",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "腾讯地图 SDK",
   "author": "TrueNine",
   "license": "private",
@@ -11,7 +11,8 @@
   },
   "peerDependencies": {
     "@types/compose-tmap": "workspace:^",
-    "@compose/api-model": "workspace:^"
+    "@compose/api-model": "workspace:^",
+    "@compose/compose-types": "workspace:^"
   },
   "type": "module",
   "types": "types/index.d.ts",

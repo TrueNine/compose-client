@@ -2,9 +2,6 @@
   "extends": "@compose/tsconfig/tsconfig.json",
   "compilerOptions": {
     "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"]
-    }
   },
-  "exclude": ["node_modules", "dist", "es", "types"]
+  "exclude": ["node_modules", "dist"]
 }
