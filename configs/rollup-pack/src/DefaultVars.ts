@@ -14,7 +14,7 @@ export const defaultConfig: CustomRollupConfig & InternalConfigProperties = {
   esDistDir: 'es',
   esExtension: 'js',
   cjsDistDir: 'lib',
-  cjsExtension: 'js',
+  cjsExtension: 'cjs',
   umdBuildDistDirName: 'umd',
   umdBuildFileSuffix: 'js',
   dtsDistDir: 'types',
