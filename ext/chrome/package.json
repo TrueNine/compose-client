@@ -1,6 +1,6 @@
 {
   "name": "@compose/ext-chrome",
-  "version": "0.0.22",
+  "version": "0.0.23",
   "description": "chrome 扩展程序 开发库",
   "author": "TrueNine",
   "license": "private",

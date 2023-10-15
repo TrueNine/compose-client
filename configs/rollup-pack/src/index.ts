@@ -146,8 +146,7 @@ export function umdPackConfig(config: Partial<CustomRollupConfig>): RollupOption
           // eslint-disable-next-line camelcase
           booleans_as_integers: true
         }
-      }),
-      copyPlugin(cfg.copy)
+      })
     ]
   }
 }

@@ -8,6 +8,7 @@ import type {Options as TerserOption} from '@rollup/plugin-terser'
 export interface CustomRollupConfig {
   /**
    *  copy 插件配置
+   *  @deprecated 该接口目前暂未更新
    */
   copy?: CopyOptions
   /**
