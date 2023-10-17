@@ -24,6 +24,12 @@ export type Nullable<T = unknown> = T | null
 export type Inst<T extends abstract new (...args: any) => any> = InstanceType<T>
 
 /**
+ * 已知的任意类型，用于某些时候骗过编译器
+ */
+// eslint-disable-next-line
+export type SafeAny = any
+
+/**
  * # 可空，可选，不稳定
  */
 export type NullablePartial<T = unknown> = T | Partial<T> | null | never | undefined | void

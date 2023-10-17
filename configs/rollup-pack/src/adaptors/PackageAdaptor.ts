@@ -2,7 +2,7 @@
  * 已知的任意类型，用于某些时候骗过编译器
  */
 // eslint-disable-next-line
-export type KnownAny = any
+export type SafeAny = any
 
 /**
  * # 元素可为 null
@@ -14,7 +14,7 @@ import type pathType from 'node:path'
 import type childProcessType from 'node:child_process'
 
 export class Node {
-  static async executeJson<T = KnownAny>(cmd: string, cwd?: string): Promise<Nullable<T>> {
+  static async executeJson<T = SafeAny>(cmd: string, cwd?: string): Promise<Nullable<T>> {
     const a = await this.execute(cmd, cwd)
     return a == null ? null : JSON.parse(a)
   }

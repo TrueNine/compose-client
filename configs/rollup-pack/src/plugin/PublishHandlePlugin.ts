@@ -1,7 +1,7 @@
 import type {Plugin} from 'rollup'
 
 import {Node} from '../adaptors/PackageAdaptor'
-import type {KnownAny} from '../adaptors/PackageAdaptor'
+import type {SafeAny} from '../adaptors/PackageAdaptor'
 import type {CustomRollupConfig} from '../CustomRollupConfig'
 import {findWorkspaceVersions} from '../pnpm'
 
@@ -17,7 +17,7 @@ export function publishHandlePlugin(config: CustomRollupConfig): Plugin {
 
       if (f.existsSync(packageJsonPath)) {
         const jsonText = f.readFileSync(packageJsonPath, {encoding: 'utf-8'})
-        const json = JSON.parse(jsonText) as KnownAny
+        const json = JSON.parse(jsonText) as SafeAny
 
         let result = cleanPackageJson(json)
         result = producePackageJson(json, config)
@@ -35,13 +35,13 @@ export function publishHandlePlugin(config: CustomRollupConfig): Plugin {
   }
 }
 
-export function producePackageJson(json: KnownAny, cfg: CustomRollupConfig): KnownAny {
+export function producePackageJson(json: SafeAny, cfg: CustomRollupConfig): SafeAny {
   const info = generatePackagePublishInfo(cfg)
   return Object.assign(json, info)
 }
 
-export function cleanPackageJson(json: KnownAny): KnownAny {
-  const j = json as KnownAny
+export function cleanPackageJson(json: SafeAny): SafeAny {
+  const j = json as SafeAny
 
   delete j['scripts']
 
@@ -56,7 +56,7 @@ export function cleanPackageJson(json: KnownAny): KnownAny {
   return j
 }
 
-export function generatePackagePublishInfo(cfg: CustomRollupConfig): KnownAny {
+export function generatePackagePublishInfo(cfg: CustomRollupConfig): SafeAny {
   const entryName = cfg.entryFileName.split('.')[0]
   const dts = `./${cfg.dtsDistDir}/${entryName}.d.ts`
   const im = `./${cfg.esDistDir}/${entryName}.${cfg.esExtension}`
@@ -114,7 +114,7 @@ export function generatePackagePublishInfo(cfg: CustomRollupConfig): KnownAny {
   }
 }
 
-export async function parsePnpmWorkspaceVersion(json: KnownAny, rootDir: string): Promise<KnownAny> {
+export async function parsePnpmWorkspaceVersion(json: SafeAny, rootDir: string): Promise<SafeAny> {
   const versions = await findWorkspaceVersions(rootDir)
 
   function _replaceWorkspaceVersion(dependenciesKey: string) {
