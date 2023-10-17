@@ -1,6 +1,7 @@
 import {recommendedRollupConfig} from './src'
 
 export default recommendedRollupConfig({
+  enableUmd: false,
   copy: {
     targets: [{src: 'src/Modules.d.ts', dest: 'dist/types'}]
   },

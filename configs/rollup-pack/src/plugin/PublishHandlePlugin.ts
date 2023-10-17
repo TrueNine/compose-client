@@ -100,11 +100,13 @@ export function generatePackagePublishInfo(cfg: CustomRollupConfig): KnownAny {
         types: [`./${cfg.dtsDistDir}/*.d.ts`, `./${cfg.dtsDistDir}/*/${entryName}.d.ts`],
         require: `./${cfg.cjsDistDir}/*.${cfg.cjsExtension}`
       },
-      [`./${cfg.umdBuildDistDirName}`]: {
-        types: `./${cfg.umdBuildDistDirName}/${cfg.umd.dtsIndexName}.d.ts`,
-        import: `./${cfg.umdBuildDistDirName}/${cfg.umd.fileName}.${cfg.umdBuildFileSuffix}`,
-        require: `./${cfg.umdBuildDistDirName}/${cfg.umd.fileName}.${cfg.umdBuildFileSuffix}`
-      },
+      [`./${cfg.umdBuildDistDirName}`]: cfg.enableUmd
+        ? {
+            types: `./${cfg.umdBuildDistDirName}/${cfg?.umd?.dtsIndexName}.d.ts`,
+            import: `./${cfg.umdBuildDistDirName}/${cfg.umd?.fileName}.${cfg.umdBuildFileSuffix}`,
+            require: `./${cfg.umdBuildDistDirName}/${cfg.umd?.fileName}.${cfg.umdBuildFileSuffix}`
+          }
+        : undefined,
       './*': './*'
     },
     unpkg: `${cfg.umdBuildDistDirName}/${cfg.umd?.fileName}.${cfg.umdBuildFileSuffix}`,

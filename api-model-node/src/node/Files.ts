@@ -3,8 +3,7 @@ import type pathType from 'node:path'
 import type childProcessType from 'node:child_process'
 
 import type {Nullable} from '@compose/compose-types'
-
-import type {KnownAny} from '../tools'
+import type {KnownAny} from '@compose/api-model'
 
 export class Node {
   static async executeJson<T = KnownAny>(cmd: string, cwd?: string): Promise<Nullable<T>> {

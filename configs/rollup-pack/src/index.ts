@@ -115,7 +115,7 @@ export function umdPackConfig(config: Partial<CustomRollupConfig>): RollupOption
     external: cfg.externals,
     input: cfg._entry,
     output: {
-      name: `${cfg.umd!.globalVarName}`,
+      name: `${cfg.umd?.globalVarName}`,
       entryFileNames: `${cfg.umd!.fileName}.${cfg.umdBuildFileSuffix}`,
       format: 'umd',
       globals: cfg.globals!,

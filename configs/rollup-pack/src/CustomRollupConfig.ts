@@ -2,6 +2,8 @@ import type {CopyOptions} from 'rollup-plugin-copy'
 import type {ExternalOption, GlobalsOption, RollupOptions} from 'rollup'
 import type {Options as TerserOption} from '@rollup/plugin-terser'
 
+import type {Nullable} from './adaptors/PackageAdaptor'
+
 /**
  * # rollup 收缩的打包配置
  */
@@ -81,6 +83,11 @@ export interface CustomRollupConfig {
    */
   singlePack: boolean
   /**
+   * 开启 umd 打包方式
+   * @default true
+   */
+  enableUmd: boolean
+  /**
    * rollup 声明的一些全局变量
    * @default []
    */
@@ -98,7 +105,7 @@ export interface CustomRollupConfig {
   /**
    * umd 打包配置
    */
-  umd: UmdConfig
+  umd: Nullable<UmdConfig>
   /**
    * 其他的一些打包配置，会混合进其他配置
    *

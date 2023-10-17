@@ -15,12 +15,17 @@ export function mergeDefaultConfig(externalConfig: CustomRollupConfig): CustomRo
 
   if (!cfg._entry) cfg._entry = defaultConfig._entry
   if (!cfg._entry) cfg._entry = `${cfg.entryRoot}/${cfg.entryFileName}`
-  if (cfg.umd?.globalVarName || cfg.umd || cfg._enabledUmd) {
+
+  if (!cfg.enableUmd) {
+    cfg.umd = null
+    cfg._enabledUmd = false
+  }
+  if (cfg.umd !== null && cfg.umd !== undefined) {
     cfg._enabledUmd = true
-    cfg.umd!.dts = cfg.umd!.dts ?? defaultConfig.umd!.dts!
-    cfg.umd!.fileName = cfg.umd!.fileName ?? defaultConfig.umd!.fileName!
-    cfg.umd!.globalVarName = cfg.umd!.globalVarName ?? defaultConfig.umd!.globalVarName!
-    cfg.umd!.dtsIndexName = cfg.umd!.dtsIndexName ?? defaultConfig.umd!.dtsIndexName!
+    cfg.umd.dts = cfg?.umd?.dts ?? defaultConfig.umd!.dts!
+    cfg.umd.fileName = cfg?.umd?.fileName ?? defaultConfig.umd!.fileName!
+    cfg.umd.globalVarName = cfg?.umd?.globalVarName ?? defaultConfig.umd!.globalVarName!
+    cfg.umd.dtsIndexName = cfg?.umd?.dtsIndexName ?? defaultConfig.umd!.dtsIndexName!
   }
   if (cfg.globals) cfg.globals = Object.assign(defaultConfig.globals!, cfg.globals)
   return cfg

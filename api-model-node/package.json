@@ -1,7 +1,7 @@
 {
-  "name": "@compose/api-model",
-  "version": "0.1.139",
-  "description": "yan100 client ui kit",
+  "name": "@compose/api-model-node",
+  "version": "1.1.1",
+  "description": "yan100 client nodejs kit",
   "author": "TrueNine",
   "license": "private",
   "scripts": {
@@ -12,10 +12,13 @@
   "devDependencies": {
     "@compose/compose-types": "workspace:^"
   },
+  "dependencies": {
+    "@compose/compose-types": "workspace:^",
+    "@compose/api-model": "workspace:^"
+  },
   "peerDependencies": {
     "@compose/compose-types": "workspace:^",
-    "@vueuse/core": "^10.2.1",
-    "moment": "^2.29.4"
+    "@compose/api-model": "workspace:^"
   },
   "type": "module",
   "main": "dist/lib/index.js",

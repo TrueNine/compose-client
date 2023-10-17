@@ -20,6 +20,7 @@ export const defaultConfig: CustomRollupConfig & InternalConfigProperties = {
   dtsDistDir: 'types',
   distRoot: 'dist',
   singlePack: false,
+  enableUmd: true,
   globals: allDefaultGlobalVars,
   umd: {
     globalVarName: '$$',

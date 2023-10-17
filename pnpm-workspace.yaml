@@ -2,6 +2,7 @@ packages:
   - '@types/*'
   - 'web-map/*'
   - 'api-model'
+  - 'api-model-node'
   - 'uni-app/*'
   - 'ext/*'
   - 'configs/*'
