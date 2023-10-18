@@ -7,7 +7,8 @@ import type {UseFetchReturn} from '@vueuse/core'
  * @returns 进行的直接请求
  */
 export async function eagerFetch<T>(fetchWith: UseFetchReturn<T>): Promise<T | null> {
-  const {data, execute} = fetchWith
+  const {data, execute, error} = fetchWith
   await execute()
+  if (error.value) return await Promise.reject(error.value)
   return data.value
 }
