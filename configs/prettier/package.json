@@ -1,9 +1,14 @@
 {
   "name": "@compose/prettier-config",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "main": ".prettierrc.cjs",
   "scripts": {
     "pub": "pnpm publish --no-git-checks"
+  },
+  "dependencies": {
+    "eslint-plugin-prettier": "^5.0.0",
+    "@vue/eslint-config-prettier": "^8.0.0",
+    "prettier": "^3.0.3"
   },
   "peerDependencies": {
     "eslint-plugin-prettier": "^5.0.0",
