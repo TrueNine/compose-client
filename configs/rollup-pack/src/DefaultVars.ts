@@ -10,7 +10,7 @@ export const defaultConfig: CustomRollupConfig & InternalConfigProperties = {
   entryRoot: 'src',
   entryFileName: 'index.ts',
   sourceMap: false,
-  terserDropLog: true,
+  terserDropLog: false,
   esDistDir: 'es',
   esExtension: 'js',
   cjsDistDir: 'lib',

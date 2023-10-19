@@ -1,6 +1,6 @@
 {
   "name": "@compose/api-model",
-  "version": "0.1.140",
+  "version": "0.1.144",
   "description": "yan100 client ui kit",
   "author": "TrueNine",
   "license": "private",
@@ -10,12 +10,16 @@
     "pub-c": "pnpm -C dist pub"
   },
   "devDependencies": {
-    "@compose/compose-types": "workspace:^"
+    "@compose/compose-types": "workspace:^",
+    "@types/lodash": "^4.14.200",
+    "@types/lodash-es": "^4.17.10"
   },
   "peerDependencies": {
     "@compose/compose-types": "workspace:^",
     "@vueuse/core": "^10.2.1",
-    "moment": "^2.29.4"
+    "moment": "^2.29.4",
+    "lodash": "^4.17.21",
+    "lodash-es": "^4.17.21"
   },
   "type": "module",
   "main": "dist/lib/index.js",

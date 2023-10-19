@@ -1,5 +1,7 @@
 import type {HexColor, Nullable} from '@compose/compose-types'
 
+import {cloneDeep} from '../references'
+
 /**
  * # 路由选项
  */
@@ -26,6 +28,8 @@ export interface RouteOption {
    * 其内部配置的权限，只要包含其中任意一组即可
    */
   hasPermissions?: string[][]
+  requireRoles?: string[]
+  hasRoles?: string[][]
   requireLogin?: boolean
   tags?: string[]
   /**
@@ -37,6 +41,15 @@ export interface RouteOption {
    */
   hidden?: true
   sub?: RouteOption[]
+}
+
+interface MatchConfig {
+  hidden?: boolean
+  roles?: string[]
+  permissions?: string[]
+  matchRole?: boolean
+  matchPermissions?: boolean
+  login?: boolean
 }
 
 /**
@@ -71,22 +84,23 @@ export function routeOptionStream(routeOptions: readonly RouteOption[] = [], rou
   /**
    * ## 查找指定节点的路由路径
    * @param paths 查找路径
-   * @param findedPaths 路由父路径
+   * @param subPath 无需传递
+   * @param foundPaths 路由父路径
    * @returns 父节点路径
    */
-  function findRouteOptionPath(paths?: string[] | string, subPath: readonly RouteOption[] = routeOptions, findedPaths: RouteOption[] = []): RouteOption[] {
-    if (paths?.length === 0) return findedPaths
+  function findRouteOptionPath(paths?: string[] | string, subPath: readonly RouteOption[] = routeOptions, foundPaths: RouteOption[] = []): RouteOption[] {
+    if (paths?.length === 0) return foundPaths
     const pathArray = _filterPaths(paths)
-    if (pathArray.length === 0) return findedPaths
+    if (pathArray.length === 0) return foundPaths
     const currentPath = pathArray[0]
     for (const itOption of subPath) {
-      if (itOption.uri === currentPath) return findRouteOptionPath(pathArray.slice(1), itOption.sub ?? [], [...findedPaths, itOption])
+      if (itOption.uri === currentPath) return findRouteOptionPath(pathArray.slice(1), itOption.sub ?? [], [...foundPaths, itOption])
     }
-    return findedPaths
+    return foundPaths
   }
 
   function isRequireLogin(path: string[] | string) {
-    const current = [...findRouteOptionPath(path)].reverse()
+    const current = cloneDeep(findRouteOptionPath(path)).reverse()
     console.log({
       current
     })
@@ -109,7 +123,7 @@ export function routeOptionStream(routeOptions: readonly RouteOption[] = [], rou
    * @returns 是否拥有足够的权限
    */
   function isAllowPermissions(fullPath: string[] | string = [], permissions: string[] = [], defaultAllow = true): boolean {
-    const optionPath = [...findRouteOptionPath(fullPath, routeOptions ?? [])]
+    const optionPath = cloneDeep(findRouteOptionPath(fullPath, routeOptions ?? []))
     if (optionPath.length === 0) return defaultAllow
     for (let i = optionPath.length; i > 0; i--) {
       const option = optionPath[i - 1]
@@ -129,15 +143,16 @@ export function routeOptionStream(routeOptions: readonly RouteOption[] = [], rou
   /**
    * ## 将所有路由选项展开，并去除 sub
    * @param rootPath 起始路径
+   * @param subPath 无需填写
    * @returns 被摊平的 sub
    */
   function flatRouteOptions(rootPath = '', subPath: readonly RouteOption[] = routeOptions): Omit<RouteOption, 'sub'>[] {
     const maybeResult: RouteOption[] = []
-    const stack: RouteOption[] = [...subPath]
+    const stack: RouteOption[] = cloneDeep([...subPath])
     while (stack.length > 0) {
       const r = stack.pop()!
       if (r.sub) stack.push(...flatRouteOptions(_getLinkedUri(rootPath, r.uri) ?? '', r.sub).map(e => ({...e})))
-      else maybeResult.push({...r})
+      else maybeResult.push(cloneDeep(r))
     }
     return maybeResult.map(r => {
       delete r.sub
@@ -149,19 +164,55 @@ export function routeOptionStream(routeOptions: readonly RouteOption[] = [], rou
   }
 
   /**
+   * ### 递归裁剪不需要的菜单选项
+   * @param config 匹配配置
+   * @param deep 无需传递
+   */
+  function matchClip(config: MatchConfig, deep: readonly RouteOption[] = routeOptions) {
+    const r = config.roles ?? []
+    const p = config.permissions ?? []
+    let _deep = cloneDeep([...deep]).filter(d => d !== null) as (RouteOption | null)[]
+    console.log({deep: _deep, r, p})
+    for (let i = 0; i < _deep.length; i++) {
+      const a = _deep[i]
+      if (a) {
+        if (a.requireLogin && !config.login) {
+          _deep[i] = null // 需要登录
+        } else if (a.requirePermissions && config.permissions && config.matchPermissions) {
+          if (!a.requirePermissions.every(e => p.includes(e))) {
+            _deep[i] = null
+          }
+        } else if (a.requireRoles && config.roles && config.matchRole) {
+          if (!a.requireRoles.every(e => r.includes(e))) {
+            _deep[i] = null
+          }
+        } else if (a.hidden) {
+        }
+        _deep[i] = null
+        console.log(_deep)
+        if (a.sub) {
+          a.sub = matchClip(config, a.sub)
+        }
+      }
+    }
+
+    _deep = _deep.filter(d => d !== null) as RouteOption[]
+    return _deep as RouteOption[]
+  }
+
+  /**
    * @returns 返回所有不带 hidden 属性的路由
    */
   function toShow(): RouteOption[] {
-    const _newRouteOption = [...routeOptions]
+    const _newRouteOption = cloneDeep([...routeOptions])
 
     function _deep(sub: RouteOption[] = _newRouteOption) {
       return sub
         .filter(r => {
-          if (r.hidden) return false
-          return true
+          return !r.hidden
         })
         .map(r => {
-          const _n = {...r}
+          const _n = cloneDeep(r)
           if (r.sub) _n.sub = _deep(r.sub)
           return _n
         })
@@ -178,7 +229,7 @@ export function routeOptionStream(routeOptions: readonly RouteOption[] = [], rou
    * @param root 根元素
    * @returns 查找到的菜单节点
    */
-  function deepfindRouteOptionByUriPath(
+  function deepFindRouteOptionByUriPath(
     paths: string[] | string = [],
     options: readonly RouteOption[] = routeOptions,
     deep = 0,
@@ -191,7 +242,7 @@ export function routeOptionStream(routeOptions: readonly RouteOption[] = [], rou
     for (let i = 0; i < options.length; i++) {
       const option = options[i]
       if (option.uri === currentPath) {
-        result = deepfindRouteOptionByUriPath(pathArray, [...(option.sub ?? [])], deep + 1, option)
+        result = deepFindRouteOptionByUriPath(pathArray, [...(option.sub ?? [])], deep + 1, option)
         break
       }
     }
@@ -200,10 +251,11 @@ export function routeOptionStream(routeOptions: readonly RouteOption[] = [], rou
 
   return {
     findRouteOptionPath,
-    deepfindRouteOptionByUriPath,
     flatRouteOptions,
     isAllowPermissions,
     isRequireLogin,
-    toShow
+    deepFindRouteOptionByUriPath,
+    toShow,
+    matchClip
   }
 }
