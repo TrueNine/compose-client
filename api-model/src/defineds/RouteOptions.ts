@@ -179,7 +179,6 @@ export function routeOptionStream(routeOptions: readonly RouteOption[] = [], rou
     const p = config.permissions ?? []
 
     let _deep = cloneDeep([...deep]).filter(d => d !== null) as (RouteOption | null)[]
-    console.log({deep: _deep, r, p})
     for (let i = 0; i < _deep.length; i++) {
       const a = _deep[i]
       if (a) {
@@ -195,7 +194,6 @@ export function routeOptionStream(routeOptions: readonly RouteOption[] = [], rou
           }
         } else if (a.hidden) {
         }
-        console.log(_deep)
         if (a.sub) a.sub = matchClip(c, a.sub)
       }
     }
