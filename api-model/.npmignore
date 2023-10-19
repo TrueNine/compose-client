@@ -5,3 +5,4 @@ tsconfig.json
 
 .idea
 .vscode
+__test__

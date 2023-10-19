@@ -163,36 +163,40 @@ export function routeOptionStream(routeOptions: readonly RouteOption[] = [], rou
     })
   }
 
+  const defaultClipConfig: MatchConfig = {
+    matchRole: true,
+    matchPermissions: true
+  }
+
   /**
    * ### 递归裁剪不需要的菜单选项
    * @param config 匹配配置
    * @param deep 无需传递
    */
   function matchClip(config: MatchConfig, deep: readonly RouteOption[] = routeOptions) {
+    const c = Object.assign(config, defaultClipConfig)
     const r = config.roles ?? []
     const p = config.permissions ?? []
+
     let _deep = cloneDeep([...deep]).filter(d => d !== null) as (RouteOption | null)[]
     console.log({deep: _deep, r, p})
     for (let i = 0; i < _deep.length; i++) {
       const a = _deep[i]
       if (a) {
-        if (a.requireLogin && !config.login) {
+        if (a.requireLogin && !c.login) {
           _deep[i] = null // 需要登录
-        } else if (a.requirePermissions && config.permissions && config.matchPermissions) {
+        } else if (a.requirePermissions && c.permissions && c.matchPermissions) {
           if (!a.requirePermissions.every(e => p.includes(e))) {
             _deep[i] = null
           }
-        } else if (a.requireRoles && config.roles && config.matchRole) {
+        } else if (a.requireRoles && config.roles && c.matchRole) {
           if (!a.requireRoles.every(e => r.includes(e))) {
             _deep[i] = null
           }
         } else if (a.hidden) {
         }
-        _deep[i] = null
         console.log(_deep)
-        if (a.sub) {
-          a.sub = matchClip(config, a.sub)
-        }
+        if (a.sub) a.sub = matchClip(c, a.sub)
       }
     }
 
