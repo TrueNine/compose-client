@@ -165,7 +165,8 @@ export function routeOptionStream(routeOptions: readonly RouteOption[] = [], rou
 
   const defaultClipConfig: MatchConfig = {
     matchRole: true,
-    matchPermissions: true
+    matchPermissions: true,
+    hidden: true
   }
 
   /**
@@ -173,10 +174,10 @@ export function routeOptionStream(routeOptions: readonly RouteOption[] = [], rou
    * @param config 匹配配置
    * @param deep 无需传递
    */
-  function matchClip(config: MatchConfig, deep: readonly RouteOption[] = routeOptions) {
-    const c = Object.assign(config, defaultClipConfig)
-    const r = config.roles ?? []
-    const p = config.permissions ?? []
+  function matchClip(config?: Nullable<MatchConfig>, deep: readonly RouteOption[] = routeOptions) {
+    const c = Object.assign(config ?? {}, defaultClipConfig)
+    const r = config?.roles ?? []
+    const p = config?.permissions ?? []
 
     let _deep = cloneDeep([...deep]).filter(d => d !== null) as (RouteOption | null)[]
     for (let i = 0; i < _deep.length; i++) {
@@ -184,15 +185,20 @@ export function routeOptionStream(routeOptions: readonly RouteOption[] = [], rou
       if (a) {
         if (a.requireLogin && !c.login) {
           _deep[i] = null // 需要登录
-        } else if (a.requirePermissions && c.permissions && c.matchPermissions) {
-          if (!a.requirePermissions.every(e => p.includes(e))) {
+          continue
+        } else if (a.requirePermissions && c.matchPermissions) {
+          if (!a.requirePermissions.every(e => p.includes(e)) || !c.permissions) {
             _deep[i] = null
+            continue
           }
-        } else if (a.requireRoles && config.roles && c.matchRole) {
-          if (!a.requireRoles.every(e => r.includes(e))) {
+        } else if (a.requireRoles && c.roles && c.matchRole) {
+          if (!a.requireRoles.every(e => r.includes(e)) || !c.roles) {
             _deep[i] = null
+            continue
           }
-        } else if (a.hidden) {
+        } else if (a.hidden && c.hidden) {
+          _deep[i] = null
+          continue
         }
         if (a.sub) a.sub = matchClip(c, a.sub)
       }

@@ -16,4 +16,12 @@ test('routeOptionStream.matchClip', () => {
     a.every(e => e.hasPermissions || e.requirePermissions),
     '残留有权限菜单选项'
   ).toBe(false)
+
+  const matchedNone = stream.matchClip()
+  const b = routeOptionStream(matchedNone).flatRouteOptions()
+  console.log(b)
+  expect(
+    b.every(e => e.hasPermissions || e.requirePermissions),
+    '残留有权限菜单选项'
+  ).toBe(false)
 })
