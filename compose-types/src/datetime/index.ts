@@ -21,3 +21,10 @@ export const ISO8601Format = {
   time: 'HH:mm:ss',
   datetime: 'yyyy-MM-dd HH:mm:ss'
 }
+
+/**
+ * 用以表示自 1970年起的时间戳，通常由服务器返回
+ */
+export type TimeStamp = string | number
+
+export * from './RouteTable'

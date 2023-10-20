@@ -1,3 +1,5 @@
+import type {Maybe, SafeAny} from '@compose/compose-types/src'
+
 /**
  * # 对数组进行去重
  * @param arr 数组
@@ -76,4 +78,20 @@ export function combineToMap<T, K, V>(arr: T[], keyHandle: (t: T) => K, valueHan
     else result.set(_k, [valueHandle(item)])
   })
   return result
+}
+
+/**
+ * 将 maybe 类型转换为 array
+ * @param maybe T | Array<T>
+ */
+export function maybeArray<T = SafeAny>(maybe: Maybe<T>) {
+  return Array.isArray(maybe) ? maybe : ([maybe] as T[])
+}
+
+/**
+ * 将 maybe 类型转换为 readonly array
+ * @param maybe T | Array<T>
+ */
+export function maybeReadonlyArray<T = SafeAny>(maybe: Maybe<T>): readonly T[] {
+  return Array.isArray(maybe) ? maybe : ([maybe] as readonly T[])
 }

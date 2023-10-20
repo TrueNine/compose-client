@@ -1,47 +1,8 @@
-import type {HexColor, Nullable} from '@compose/compose-types'
+import type {MaybeReadonlyArray, Nullable, RouteOption} from '@compose/compose-types'
+import {EMPTY_STR} from '@compose/compose-types'
 
 import {cloneDeep} from '../references'
-
-/**
- * # 路由选项
- */
-export interface RouteOption {
-  name: string
-  uri?: string
-  href?: string
-  /**
-   * ## 图标的全类名
-   */
-  iconName?: string
-  iconColor?: HexColor
-  /**
-   * ### 图标使用的类
-   */
-  iconClass?: string
-  /**
-   * ### 必须拥有的权限
-   * 优先级最大，配置此项，其必须包含
-   */
-  requirePermissions?: string[]
-  /**
-   * ### 需要的任意一组权限
-   * 其内部配置的权限，只要包含其中任意一组即可
-   */
-  hasPermissions?: string[][]
-  requireRoles?: string[]
-  hasRoles?: string[][]
-  requireLogin?: boolean
-  tags?: string[]
-  /**
-   * ### 当前路由是否被禁用
-   */
-  disabled?: true
-  /**
-   * ### 是否隐藏当前路由选项，通常用于菜单
-   */
-  hidden?: true
-  sub?: RouteOption[]
-}
+import {maybeReadonlyArray} from '../tools'
 
 interface MatchConfig {
   hidden?: boolean
@@ -56,7 +17,7 @@ interface MatchConfig {
  * # 对指定的路由选项进行操作
  * @param routeOptions 需操作的路由选项
  * @param routeRootPath 路由根路径
- * @returns 操作函数
+ * @deprecated 改使用类的方式调用
  */
 export function routeOptionStream(routeOptions: readonly RouteOption[] = [], routeRootPath = '/') {
   function _pathToRoot(path: string[]) {
@@ -74,7 +35,7 @@ export function routeOptionStream(routeOptions: readonly RouteOption[] = [], rou
   }
 
   function _filterPaths(paths: string[] | string = []): string[] {
-    return _pathToArray(paths).filter(r => r !== '')
+    return _pathToArray(paths).filter(r => r !== EMPTY_STR)
   }
 
   function _getLinkedUri(rootPath: string, uri?: string): string | undefined {
@@ -84,16 +45,21 @@ export function routeOptionStream(routeOptions: readonly RouteOption[] = [], rou
   /**
    * ## 查找指定节点的路由路径
    * @param paths 查找路径
-   * @param subPath 无需传递
+   * @param subPaths 无需传递
    * @param foundPaths 路由父路径
    * @returns 父节点路径
    */
-  function findRouteOptionPath(paths?: string[] | string, subPath: readonly RouteOption[] = routeOptions, foundPaths: RouteOption[] = []): RouteOption[] {
+  function findRouteOptionPath(
+    paths?: string[] | string,
+    subPaths: MaybeReadonlyArray<RouteOption> = routeOptions,
+    foundPaths: RouteOption[] = []
+  ): RouteOption[] {
+    const _sub = maybeReadonlyArray(subPaths)
     if (paths?.length === 0) return foundPaths
     const pathArray = _filterPaths(paths)
     if (pathArray.length === 0) return foundPaths
     const currentPath = pathArray[0]
-    for (const itOption of subPath) {
+    for (const itOption of _sub) {
       if (itOption.uri === currentPath) return findRouteOptionPath(pathArray.slice(1), itOption.sub ?? [], [...foundPaths, itOption])
     }
     return foundPaths

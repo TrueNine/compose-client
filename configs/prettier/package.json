@@ -6,13 +6,13 @@
     "pub": "pnpm publish --no-git-checks"
   },
   "dependencies": {
-    "eslint-plugin-prettier": "^5.0.0",
     "@vue/eslint-config-prettier": "^8.0.0",
+    "eslint-plugin-prettier": "^5.0.1",
     "prettier": "^3.0.3"
   },
   "peerDependencies": {
-    "eslint-plugin-prettier": "^5.0.0",
     "@vue/eslint-config-prettier": "^8.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
     "prettier": "^3.0.3"
   }
 }

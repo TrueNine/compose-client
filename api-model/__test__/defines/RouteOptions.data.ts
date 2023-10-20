@@ -1,4 +1,4 @@
-import type {RouteOption} from 'src/defineds/RouteOptions'
+import type {RouteOption} from '@compose/compose-types'
 
 // @unocss-include
 export const RouteTable: RouteOption[] = [
@@ -196,6 +196,7 @@ export const RouteTable: RouteOption[] = [
       {
         name: '商品添加',
         uri: 'addPhysical',
+        requirePermissions: ['ADMIN'],
         iconName: 'i-mdi-store-plus',
         tags: ['开发中']
       },
