@@ -14,6 +14,11 @@ export interface CustomRollupConfig {
    */
   copy?: CopyOptions
   /**
+   * 开启 terser
+   * @default false
+   */
+  terser: boolean
+  /**
    * terser 打包时是否删除 console log debug
    * @default false
    */
@@ -31,7 +36,7 @@ export interface CustomRollupConfig {
 
   /**
    * 开启 sourcemap
-   * @default false
+   * @default true
    */
   sourceMap: boolean | 'inline' | 'hidden'
   /**

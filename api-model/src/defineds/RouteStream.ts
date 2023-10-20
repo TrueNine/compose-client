@@ -31,6 +31,8 @@ export class RouteStream {
   }
 
   constructor(routeTable: Maybe<RouteOption>, matchConfig: MatchConfig = RouteStream._defaultClipConfig, rootPath: string = RouteStream._SLASH) {
+    routeTable = cloneDeep(routeTable)
+    matchConfig = cloneDeep(matchConfig)
     this._routeTable = maybeArray(routeTable)
     this._allowUndefined = matchConfig.allowUndefined ?? true
     this._permissions = maybeReadonlyArray(matchConfig.permissions ?? [])
@@ -68,12 +70,12 @@ export class RouteStream {
           _deepResult[i] = null // 需要登录
           continue
         } else if (currentRoute.requirePermissions && c.matchPermissions) {
-          if (!currentRoute.requirePermissions.every(e => p.includes(e)) || !c.permissions) {
+          if (!currentRoute.requirePermissions.every(e => maybeArray(p).includes(e)) || !c.permissions) {
             _deepResult[i] = null
             continue
           }
         } else if (currentRoute.requireRoles && c.roles && c.matchRole) {
-          if (!currentRoute.requireRoles.every(e => r.includes(e)) || !c.roles) {
+          if (!currentRoute.requireRoles.every(e => maybeArray(r).includes(e)) || !c.roles) {
             _deepResult[i] = null
             continue
           }

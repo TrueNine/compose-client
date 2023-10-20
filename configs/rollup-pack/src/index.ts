@@ -71,20 +71,22 @@ export function typescriptEntry(config: Partial<CustomRollupConfig> = defaultCon
       typescript({
         exclude: getAllOutputDir(cfg).map(e => `${e}/**`)
       }),
-      terser({
-        ...cfg.terserOption,
-        ecma: 2020,
-        compress: {
-          // eslint-disable-next-line camelcase
-          drop_console: cfg.terserDropLog,
-          // eslint-disable-next-line camelcase
-          drop_debugger: cfg.terserDropLog,
-          arguments: true,
-          module: true,
-          // eslint-disable-next-line camelcase
-          booleans_as_integers: true
-        }
-      }),
+      cfg.terser
+        ? terser({
+            ...cfg.terserOption,
+            ecma: 2020,
+            compress: {
+              // eslint-disable-next-line camelcase
+              drop_console: cfg.terserDropLog,
+              // eslint-disable-next-line camelcase
+              drop_debugger: cfg.terserDropLog,
+              arguments: true,
+              module: true,
+              // eslint-disable-next-line camelcase
+              booleans_as_integers: true
+            }
+          })
+        : undefined,
       copyPlugin(cfg.copy)
     ]
   } as RollupOptions

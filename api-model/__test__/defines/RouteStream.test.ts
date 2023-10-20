@@ -16,5 +16,5 @@ test('RouteStream.isAllowPermissions', async () => {
 
 test('RouteStream.matchClip', async () => {
   const stream = new RouteStream(RouteTable)
-  stream.matchClip({})
+  console.log(stream.matchClip({}))
 })
