@@ -59,7 +59,7 @@ export class RouteStream {
     const c = Object.assign(config ?? {}, RouteStream._defaultClipConfig)
     const r = config?.roles ?? []
     const p = config?.permissions ?? []
-    let _deepResult = cloneDeep(maybeReadonlyArray(deep)).filter(d => d !== null) as (RouteOption | null)[]
+    let _deepResult = maybeReadonlyArray(deep).filter(d => d !== null) as (RouteOption | null)[]
 
     for (let i = 0; i < _deepResult.length; i++) {
       const currentRoute = _deepResult[i]
@@ -193,6 +193,7 @@ export class RouteStream {
       .map(p => p.split(RouteStream._SLASH))
       .flat()
       .filter(e => e !== EMPTY_STR)
+      .map(p => p.split('?')[0])
     if ((p.length === 1 || p.length === 2) && this._isRootPath(p)) return [RouteStream._SLASH]
     else return p
   }
