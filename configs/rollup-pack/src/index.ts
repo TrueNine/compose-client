@@ -1,4 +1,3 @@
-import terser from '@rollup/plugin-terser'
 import resolve from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
 import typescript from '@rollup/plugin-typescript'
@@ -13,6 +12,7 @@ import {defaultConfig, rollupDefaultGenerateCode} from './DefaultVars'
 import {umdDtsPlugin} from './plugin'
 import {getAllOutputDir, mergeDefaultConfig} from './Utils'
 import {publishHandlePlugin} from './plugin'
+import {terserPlugin} from './plugin'
 
 export * from './CustomRollupConfig'
 export * from './DefaultVars'
@@ -59,6 +59,7 @@ export function typescriptEntry(config: Partial<CustomRollupConfig> = defaultCon
       }
     ],
     plugins: [
+      cfg.rollupPlugins ? cfg.rollupPlugins : undefined,
       del({targets: getAllOutputDir(cfg).map(e => `${e}/**`)}),
       resolve({
         extensions: ['.js', '.cjs', '.mjs', '.json', '.node']
@@ -71,22 +72,7 @@ export function typescriptEntry(config: Partial<CustomRollupConfig> = defaultCon
       typescript({
         exclude: getAllOutputDir(cfg).map(e => `${e}/**`)
       }),
-      cfg.terser
-        ? terser({
-            ...cfg.terserOption,
-            ecma: 2020,
-            compress: {
-              // eslint-disable-next-line camelcase
-              drop_console: cfg.terserDropLog,
-              // eslint-disable-next-line camelcase
-              drop_debugger: cfg.terserDropLog,
-              arguments: true,
-              module: true,
-              // eslint-disable-next-line camelcase
-              booleans_as_integers: true
-            }
-          })
-        : undefined,
+      terserPlugin(cfg.terser, cfg),
       copyPlugin(cfg.copy)
     ]
   } as RollupOptions
@@ -102,7 +88,7 @@ export function declaredTypescriptFileEntry(config: Partial<CustomRollupConfig> 
   const cfg = mergeDefaultConfig(config as CustomRollupConfig)
   return {
     input: cfg._entry,
-    plugins: [dts()],
+    plugins: [dts(), cfg.rollupPlugins ? cfg.rollupPlugins : undefined],
     output: {
       globals: cfg.globals,
       preserveModules: !cfg.singlePack,
@@ -129,26 +115,14 @@ export function umdPackConfig(config: Partial<CustomRollupConfig>): RollupOption
       minifyInternalExports: true
     },
     plugins: [
+      cfg.rollupPlugins ? cfg.rollupPlugins : undefined,
       resolve(),
       commonjs(),
       jsonResolve(),
       typescript({
         exclude: getAllOutputDir(cfg).map(e => `${e}/**`)
       }),
-      terser({
-        ...cfg.terserOption,
-        ecma: 2020,
-        compress: {
-          // eslint-disable-next-line camelcase
-          drop_console: cfg.terserDropLog,
-          // eslint-disable-next-line camelcase
-          drop_debugger: cfg.terserDropLog,
-          arguments: true,
-          module: true,
-          // eslint-disable-next-line camelcase
-          booleans_as_integers: true
-        }
-      })
+      terserPlugin(cfg.terser, cfg)
     ]
   }
 }
@@ -157,7 +131,7 @@ export function umdDtsPack(config: Partial<CustomRollupConfig> = defaultConfig):
   const cfg = mergeDefaultConfig(config as CustomRollupConfig)
   return {
     input: cfg._entry,
-    plugins: [dts(), umdDtsPlugin(cfg)],
+    plugins: [dts(), umdDtsPlugin(cfg), cfg.rollupPlugins ? cfg.rollupPlugins : undefined],
     output: {
       entryFileNames: `${cfg.umd?.fileName}.d.ts`,
       globals: cfg.globals,

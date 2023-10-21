@@ -1,6 +1,6 @@
 {
   "name": "@compose/eslint-config",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "main": ".eslintrc.cjs",
   "scripts": {
     "pub": "pnpm publish --no-git-checks"
@@ -10,7 +10,7 @@
     "@typescript-eslint/parser": "^6.8.0",
     "@vue/eslint-config-prettier": "^8.0.0",
     "@vue/eslint-config-typescript": "^12.0.0",
-    "eslint": "^8.51.0",
+    "eslint": "^8.52.0",
     "eslint-define-config": "^1.24.1",
     "eslint-plugin-import": "^2.28.1",
     "eslint-plugin-prettier": "^5.0.1",

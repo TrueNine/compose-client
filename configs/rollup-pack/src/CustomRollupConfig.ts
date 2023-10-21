@@ -1,5 +1,5 @@
 import type {CopyOptions} from 'rollup-plugin-copy'
-import type {ExternalOption, GlobalsOption, RollupOptions} from 'rollup'
+import type {ExternalOption, GlobalsOption, InputPluginOption, RollupOptions} from 'rollup'
 import type {Options as TerserOption} from '@rollup/plugin-terser'
 
 import type {Nullable} from './adaptors/PackageAdaptor'
@@ -60,6 +60,7 @@ export interface CustomRollupConfig {
    */
   cjsDistDir: string
 
+  rollupPlugins?: InputPluginOption
   /**
    * umd 构建输出路径
    * @default 'umd'
@@ -151,6 +152,8 @@ export interface InternalConfigProperties {
   _entry?: string
   _enabledUmd?: boolean
 }
+
+export type InternalConfig = CustomRollupConfig & InternalConfigProperties
 
 export interface UmdConfig {
   /**
