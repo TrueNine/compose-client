@@ -1,0 +1,48 @@
+<script lang="ts" setup>
+import type {RouteOption} from '@compose/compose-types'
+import {isNonEmpty} from '@compose/api-model'
+import {ElMenuItem, ElSubMenu} from 'element-plus'
+
+import 'element-plus/es/components/menu-item/style/css'
+import 'element-plus/es/components/sub-menu/style/css'
+
+import SiderMenuItem from './YSiderMenuItem.vue'
+
+import type {Props} from './index'
+
+withDefaults(defineProps<Props>(), {
+  collapsed: false,
+  iconName: 'i-mdi-menu',
+  idxKey: undefined
+})
+
+function isSub(opt: RouteOption): boolean {
+  return isNonEmpty(opt?.sub)
+}
+</script>
+<template>
+  <ElSubMenu v-if="isSub(item)" :index="'' + idxKey?.toString()">
+    <template #title>
+      <div>
+        <slot name="icon" :item="item" />
+      </div>
+      <slot name="title" :item="item" />
+    </template>
+    <!-- 递归自身 -->
+    <SiderMenuItem v-for="(it, idx) in item.sub" :key="idx" :idx-key="idxKey + '/' + (it.uri ?? it.href)" :item="it" :disabled="it.disabled">
+      <template #icon="{item: subItem}">
+        <slot name="icon" :item="subItem" />
+      </template>
+      <template #title="{item: subItem}">
+        <span><slot name="title" :item="subItem" /></span>
+      </template>
+    </SiderMenuItem>
+  </ElSubMenu>
+  <!-- 自定义 icon 以div方式渲染，非 Block 元素无高度 -->
+  <ElMenuItem v-else :index="`/${idxKey}`" :disabled="item.disabled">
+    <slot name="icon" :item="item" />
+    <template #title>
+      <span><slot name="title" :item="item" /></span>
+    </template>
+  </ElMenuItem>
+</template>

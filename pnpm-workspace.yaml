@@ -11,3 +11,5 @@ packages:
   - 'doc'
   - 'atomic-css/*'
   - 'compose-types'
+  - 'meta-ui-web'
+  - meta-ui-web-test

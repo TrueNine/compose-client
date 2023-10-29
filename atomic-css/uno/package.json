@@ -1,6 +1,6 @@
 {
   "name": "@compose/atomic-css-uno",
-  "version": "0.1.137",
+  "version": "0.1.140",
   "description": "uno css code snippets",
   "author": "TrueNine",
   "license": "private",
@@ -11,11 +11,11 @@
   },
   "peerDependencies": {
     "@compose/atomic-css-theme": "workspace:^",
-    "@unocss/core": "^0.55.7",
-    "@unocss/transformer-compile-class": "^0.55.7",
-    "@unocss/transformer-directives": "^0.55.7",
-    "unocss": "^0.55.7",
-    "unocss-preset-weapp": "^0.53.7"
+    "@unocss/core": "^0.57.1",
+    "@unocss/transformer-compile-class": "^0.57.1",
+    "@unocss/transformer-directives": "^0.57.1",
+    "unocss": "^0.57.1",
+    "unocss-preset-weapp": "^0.56.1"
   },
   "type": "module",
   "main": "dist/lib/index.js",

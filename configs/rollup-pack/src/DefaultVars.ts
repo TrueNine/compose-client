@@ -8,7 +8,7 @@ import {allDefaultGlobalVars, allExternals} from './Excludes'
  */
 export const defaultConfig: CustomRollupConfig & InternalConfigProperties = {
   entryRoot: 'src',
-  entryFileName: 'index.ts',
+  entryFileName: '403.page.ts',
   sourceMap: true,
   terser: false,
   terserDropLog: false,
