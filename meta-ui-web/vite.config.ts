@@ -12,7 +12,7 @@ export default defineConfig({
     lib: {
       name: 'MetaUI',
       fileName: '[name]',
-      entry: '403.page.ts',
+      entry: 'index.ts',
       formats: ['es']
     },
     rollupOptions: {

@@ -3,13 +3,7 @@
   "name": "@compose/meta-ui-web-test",
   "type": "module",
   "scripts": {
-    "prepare": "pnpm -C ../meta-ui-web build",
     "dev": "vite",
     "build": "vite build"
-  },
-  "dependencies": {
-    "@compose/meta-ui-web": "workspace:^",
-    "@compose/api-model": "workspace:^",
-    "@compose/compose-types": "workspace:^"
   }
 }

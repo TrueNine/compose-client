@@ -1,6 +1,6 @@
 {
   "name": "@compose/atomic-css-uno",
-  "version": "0.1.140",
+  "version": "0.1.141",
   "description": "uno css code snippets",
   "author": "TrueNine",
   "license": "private",
@@ -8,14 +8,6 @@
     "build": "pnpm rollup --config rollup.config.ts --configPlugin typescript",
     "pub": "run-s build pub-c",
     "pub-c": "pnpm -C dist pub"
-  },
-  "peerDependencies": {
-    "@compose/atomic-css-theme": "workspace:^",
-    "@unocss/core": "^0.57.1",
-    "@unocss/transformer-compile-class": "^0.57.1",
-    "@unocss/transformer-directives": "^0.57.1",
-    "unocss": "^0.57.1",
-    "unocss-preset-weapp": "^0.56.1"
   },
   "type": "module",
   "main": "dist/lib/index.js",

@@ -1,3 +1,5 @@
 import {recommendedRollupConfig} from '@compose/rollup-pack-config'
 
-export default recommendedRollupConfig()
+export default recommendedRollupConfig({
+  enableUmd: false
+})

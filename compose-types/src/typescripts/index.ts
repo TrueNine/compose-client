@@ -63,3 +63,11 @@ export type Maybe<T = SafeAny> = MaybeArray<T> | MaybeReadonlyArray<T>
  * 空的字符串
  */
 export const EMPTY_STR: string = ''
+/**
+ * 可选熟属性的简写
+ */
+export type Pt<T> = Partial<T>
+/**
+ * 非可选属性简写
+ */
+export type Rq<T> = Required<T>

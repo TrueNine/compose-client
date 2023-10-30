@@ -41,7 +41,7 @@ export interface CustomRollupConfig {
   sourceMap: boolean | 'inline' | 'hidden'
   /**
    * 默认的入口文件名
-   * @default '403.page.ts'
+   * @default 'index.ts'
    */
   entryFileName: string
   /**

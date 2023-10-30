@@ -13,9 +13,12 @@ const menus: RouteOption[] = [
     name: 'cd'
   }
 ]
+const router = useRouter()
 </script>
 
 <template>
+  <button @click="router.push(`details`)">details</button>
+  <button @click="router.push(`/`)">home</button>
   <RouterView />
   <YSiderMenu :collapsed="false" :route-table="menus" :permissions="[]" :roles="[]"></YSiderMenu>
 </template>
@@ -24,8 +27,8 @@ const menus: RouteOption[] = [
 html,
 :root,
 body {
-  border: 0;
-  padding: 0;
   margin: 0;
+  padding: 0;
+  border: 0;
 }
 </style>

@@ -6,5 +6,3 @@ console.log(route)
 <template>
   <div>category/news</div>
 </template>
-
-<style scoped lang="scss"></style>

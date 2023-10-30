@@ -9,11 +9,6 @@
     "pub": "run-s build pub-c",
     "pub-c": "pnpm -C dist pub"
   },
-  "peerDependencies": {
-    "@types/compose-tmap": "workspace:^",
-    "@compose/api-model": "workspace:^",
-    "@compose/compose-types": "workspace:^"
-  },
   "type": "module",
   "types": "types/index.d.ts",
   "main": "lib/index.cjs",

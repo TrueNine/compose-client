@@ -1,13 +1,27 @@
 {
   "name": "@compose/stylelint-config",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "type": "commonjs",
   "main": ".stylelintrc.cjs",
   "scripts": {
     "pub": "pnpm publish --no-git-checks",
     "slint": "stylelint \"./**/*.{css,sass,scss,less,vue,html}\" --fix"
   },
+  "dependencies": {
+    "postcss-html": "^1.5.0",
+    "postcss-less": "^6.0.0",
+    "postcss-scss": "^4.0.9",
+    "stylelint": "^15.11.0",
+    "stylelint-config-recommended-less": "^2.0.0",
+    "stylelint-config-recommended-scss": "^13.0.0",
+    "stylelint-config-standard": "^34.0.0",
+    "stylelint-config-standard-vue": "^1.0.0",
+    "stylelint-less": "^2.0.0",
+    "stylelint-order": "^6.0.3",
+    "stylelint-scss": "^5.3.0"
+  },
   "peerDependencies": {
+    "postcss-html": "^1.5.0",
     "postcss-less": "^6.0.0",
     "postcss-scss": "^4.0.8",
     "stylelint": "^15.10.3",
@@ -17,7 +31,6 @@
     "stylelint-config-standard-vue": "^1.0.0",
     "stylelint-less": "^2.0.0",
     "stylelint-order": "^6.0.3",
-    "stylelint-scss": "^5.2.1",
-    "postcss-html": "^1.5.0"
+    "stylelint-scss": "^5.2.1"
   }
 }

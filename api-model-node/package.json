@@ -1,6 +1,6 @@
 {
   "name": "@compose/api-model-node",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "description": "yan100 client nodejs kit",
   "author": "TrueNine",
   "license": "private",
@@ -8,17 +8,6 @@
     "build": "pnpm rollup --config rollup.config.ts --configPlugin typescript",
     "pub": "run-s build pub-c",
     "pub-c": "pnpm -C dist pub"
-  },
-  "devDependencies": {
-    "@compose/compose-types": "workspace:^"
-  },
-  "dependencies": {
-    "@compose/compose-types": "workspace:^",
-    "@compose/api-model": "workspace:^"
-  },
-  "peerDependencies": {
-    "@compose/compose-types": "workspace:^",
-    "@compose/api-model": "workspace:^"
   },
   "type": "module",
   "main": "dist/lib/index.js",

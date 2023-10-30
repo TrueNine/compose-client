@@ -1,7 +1,7 @@
 {
   "extends": "@compose/tsconfig/tsconfig.json",
   "compilerOptions": {
-    "baseUrl": ".",
+    "baseUrl": "."
   },
   "exclude": ["node_modules", "dist"]
 }
