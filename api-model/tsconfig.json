@@ -2,7 +2,7 @@
   "extends": "@compose/tsconfig/tsconfig.json",
   "compilerOptions": {
     "baseUrl": ".",
-    "types": ["./src/env.d.ts"]
+    "types": ["./env.d.ts"]
   },
   "exclude": ["node_modules", "dist"]
 }

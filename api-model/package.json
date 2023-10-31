@@ -1,13 +1,13 @@
 {
   "name": "@compose/api-model",
-  "version": "0.1.165",
+  "version": "0.1.166",
   "description": "yan100 client ui kit",
   "author": "TrueNine",
   "license": "private",
   "scripts": {
-    "build": "pnpm rollup --config rollup.config.ts --configPlugin typescript",
+    "build": "vite build",
     "pub": "run-s build pub-c",
-    "pub-c": "pnpm -C dist pub",
+    "pub-c": "pnpm publish --no-git-checks",
     "test": "vitest"
   },
   "type": "module",
@@ -16,17 +16,17 @@
   "types": "dist/types/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/types/index.d.ts",
-      "import": "./dist/es/index.js",
-      "require": "./dist/lib/index.js"
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
     },
     "./es": {
-      "types": "./dist/types/index.d.ts",
-      "import": "./dist/es/index.js"
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
     },
     "./lib": {
-      "types": "./dist/types/index.d.ts",
-      "require": "./dist/lib/index.js"
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.cjs"
     },
     "./*": "./*"
   }
