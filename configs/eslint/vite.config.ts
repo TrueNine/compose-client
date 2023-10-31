@@ -14,7 +14,7 @@ export default defineConfig({
         preserveModulesRoot: '.',
         preserveModules: true
       },
-      external: ['vue', '@compose/api-model', '@compose/compose-types']
+      external: ['eslint-define-config', '@rushstack/eslint-patch/modern-module-resolution']
     }
   },
   plugins: [

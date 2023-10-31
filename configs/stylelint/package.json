@@ -1,11 +1,23 @@
 {
   "name": "@compose/stylelint-config",
-  "version": "1.1.6",
-  "type": "commonjs",
-  "main": ".stylelintrc.cjs",
+  "version": "1.1.7",
   "scripts": {
-    "pub": "pnpm publish --no-git-checks",
-    "slint": "stylelint \"./**/*.{css,sass,scss,less,vue,html}\" --fix"
+    "prepare": "pnpm build",
+    "build": "vite build",
+    "pub": "run-s build pub-c",
+    "pub-c": "pnpm publish --no-git-checks"
+  },
+  "type": "module",
+  "module": "dist/index.js",
+  "main": "dist/index.cjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./*": "./*"
   },
   "dependencies": {
     "postcss-html": "^1.5.0",

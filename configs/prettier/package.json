@@ -1,9 +1,23 @@
 {
   "name": "@compose/prettier-config",
-  "version": "0.0.11",
-  "main": ".prettierrc.cjs",
+  "version": "0.0.12",
   "scripts": {
-    "pub": "pnpm publish --no-git-checks"
+    "prepare": "pnpm build",
+    "build": "vite build",
+    "pub": "run-s build pub-c",
+    "pub-c": "pnpm publish --no-git-checks"
+  },
+  "type": "module",
+  "module": "dist/index.js",
+  "main": "dist/index.cjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./*": "./*"
   },
   "dependencies": {
     "@vue/eslint-config-prettier": "^8.0.0",

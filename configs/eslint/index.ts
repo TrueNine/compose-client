@@ -1,6 +1,7 @@
 // 需要安装依赖:  npm i eslint-define-config
-const {defineConfig} = require('eslint-define-config')
-require('@rushstack/eslint-patch/modern-module-resolution')
+import {defineConfig} from 'eslint-define-config'
+
+import '@rushstack/eslint-patch/modern-module-resolution'
 
 module.exports = defineConfig({
   parser: 'vue-eslint-parser',

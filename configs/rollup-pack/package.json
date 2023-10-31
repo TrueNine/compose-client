@@ -1,31 +1,22 @@
 {
   "name": "@compose/rollup-pack-config",
-  "version": "0.0.33",
+  "version": "0.0.34",
   "author": "TrueNine",
   "license": "private",
   "scripts": {
-    "prepare": "pnpm build",
-    "build": "pnpm rollup --config rollup.config.ts --configPlugin typescript",
+    "build": "vite build",
     "pub": "run-s build pub-c",
-    "pub-c": "pnpm -C dist pub"
+    "pub-c": "pnpm publish --no-git-checks"
   },
   "type": "module",
-  "main": "dist/lib/index.js",
-  "module": "dist/es/index.js",
-  "types": "dist/types/index.d.ts",
+  "module": "dist/index.js",
+  "main": "dist/index.cjs",
+  "types": "dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/types/index.d.ts",
-      "import": "./dist/es/index.js",
-      "require": "./dist/lib/index.js"
-    },
-    "./es": {
-      "types": "./dist/types/index.d.ts",
-      "import": "./dist/es/index.js"
-    },
-    "./lib": {
-      "types": "./dist/types/index.d.ts",
-      "require": "./dist/lib/index.js"
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
     },
     "./*": "./*"
   }

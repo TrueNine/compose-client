@@ -1,6 +1,7 @@
 import {STR_SLASH, type Late} from '@compose/compose-types'
-import {camelTo} from '../tools/Strings'
 import type {RouteRecordRaw} from 'vue-router'
+
+import {camelTo} from '../tools/Strings'
 import {cloneDeep} from '../references/LodashEs'
 
 // 定义路由处理选项的接口
@@ -70,13 +71,13 @@ export function resolveImport(tp: [string, ImportMeta]): HandleRouteOption {
 
 // 解析子路径
 export function resolveSubPath(pathRouteOption: HandledRouteOptions): RouteRecordRaw[] {
-  let all: HandleRouteOption[] = []
+  const all: HandleRouteOption[] = []
   const view: HandleRouteOption[] = []
 
   // 将路由选项分为普通页面和视图页面
-  Object.entries(pathRouteOption).forEach(([_, opt]) => {
-    if (opt.isView) view.push(opt)
-    else all.push(opt)
+  Object.entries(pathRouteOption).forEach(x => {
+    if (x[1].isView) view.push(x[1])
+    else all.push(x[1])
   })
 
   // 处理普通页面的路由
@@ -88,7 +89,7 @@ export function resolveSubPath(pathRouteOption: HandledRouteOptions): RouteRecor
         default: e.source
       },
       children: [],
-      meta: (e.cfg?.source as {}) ?? {}
+      meta: (e.cfg?.source as object) ?? {}
     } as RouteRecordRaw
   })
 

@@ -1,0 +1,8 @@
+{
+  "extends": "@compose/tsconfig/tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "target": "ESNext"
+  },
+  "exclude": ["dist"]
+}

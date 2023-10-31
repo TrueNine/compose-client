@@ -11,26 +11,6 @@
     "dev": "vitepress dev docs",
     "preview": "vitepress preview docs"
   },
-  "type": "module",
-  "main": "lib/index.cjs",
-  "module": "es/index.mjs",
-  "types": "types/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./types/index.d.ts",
-      "import": "./es/index.mjs",
-      "require": "./lib/index.cjs"
-    },
-    "./es": {
-      "types": "./types/index.d.ts",
-      "import": "./es/index.mjs"
-    },
-    "./lib": {
-      "types": "./types/index.d.ts",
-      "require": "./lib/index.cjs"
-    },
-    "./*": "./*"
-  },
   "devDependencies": {
     "vitepress": "1.0.0-rc.24",
     "vue": "^3.3.7"

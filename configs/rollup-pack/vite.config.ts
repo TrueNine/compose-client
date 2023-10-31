@@ -1,6 +1,8 @@
 import {defineConfig} from 'vite'
 import dts from 'vite-plugin-dts'
 
+import {allExternals} from './Excludes'
+
 export default defineConfig({
   build: {
     sourcemap: true,
@@ -14,7 +16,7 @@ export default defineConfig({
         preserveModulesRoot: '.',
         preserveModules: true
       },
-      external: ['vue', '@compose/api-model', '@compose/compose-types']
+      external: allExternals
     }
   },
   plugins: [

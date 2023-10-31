@@ -6,7 +6,7 @@ export default defineConfig({
     sourcemap: true,
     lib: {
       fileName: '[name]',
-      entry: 'index.ts',
+      entry: 'index.cjs',
       formats: ['es', 'cjs']
     },
     rollupOptions: {
@@ -14,7 +14,7 @@ export default defineConfig({
         preserveModulesRoot: '.',
         preserveModules: true
       },
-      external: ['vue', '@compose/api-model', '@compose/compose-types']
+      external: ['eslint-define-config', '@rushstack/eslint-patch/modern-module-resolution']
     }
   },
   plugins: [
