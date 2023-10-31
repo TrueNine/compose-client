@@ -3,6 +3,7 @@ import {camelTo} from '../tools/Strings'
 import type {RouteRecordRaw} from 'vue-router'
 import {cloneDeep} from '../references/LodashEs'
 
+// 定义路由处理选项的接口
 export interface HandleRouteOption {
   metaUrl: string
   url: string
@@ -18,29 +19,42 @@ export interface HandleRouteOption {
   fullUrl: string
 }
 
+// 定义已处理的路由选项
 export type HandledRouteOptions = Record<string, HandleRouteOption>
 
+// 页面路径常量
 export const PAGE = 'pages'
 export const SUB_PAGE = 'SubPage'
 export const NAME_LINK = '___'
 export const VIEW_PAGE = 'View'
 
+// 解析导入路径
 export function resolveImport(tp: [string, ImportMeta]): HandleRouteOption {
   const metaUrl = tp[0]
   const source = tp[1]
-
   const paths = metaUrl.split(PAGE).filter(Boolean).slice(1).join('').split('/').filter(Boolean)
   const fileName = paths.pop()!
-
   const isFn = typeof source === 'function'
   const isSubPage = fileName.includes(SUB_PAGE)
   const isView = fileName.includes(VIEW_PAGE)
+  const url = `/${paths.join(STR_SLASH)}`
 
-  const url = `/${paths.join('/')}`
-  if (paths.length === 0) paths.push('/')
-  const name = url.replaceAll('/', '-').slice(1) || '-'
+  if (paths.length === 0) paths.push(STR_SLASH)
 
-  const result: HandleRouteOption = {url, isView, isSubPage, metaUrl, source, isFn, paths, fileName, name, fullUrl: 'undefined'}
+  const name = url.replaceAll(STR_SLASH, '-').slice(1) || '-'
+  const result: HandleRouteOption = {
+    url,
+    isView,
+    isSubPage,
+    metaUrl,
+    source,
+    isFn,
+    paths,
+    fileName,
+    name,
+    fullUrl: 'undefined'
+  }
+
   if (isSubPage || isView) {
     if (isSubPage) result.url = camelTo(fileName.split(SUB_PAGE)[0], STR_SLASH)
     if (isView) result.url = camelTo(fileName.split(VIEW_PAGE)[0], STR_SLASH)
@@ -48,20 +62,24 @@ export function resolveImport(tp: [string, ImportMeta]): HandleRouteOption {
     result.paths.push(result.url)
     result.name = `${result.parentUrl.slice(1).replaceAll(STR_SLASH, '-') || '-'}${NAME_LINK}${result.url.replaceAll(STR_SLASH, '-') || '-'}`
   }
+
   result.fullUrl = isSubPage ? `${result.parentUrl}${STR_SLASH}${result.url}` : result.url
 
   return result
 }
 
+// 解析子路径
 export function resolveSubPath(pathRouteOption: HandledRouteOptions): RouteRecordRaw[] {
   let all: HandleRouteOption[] = []
   const view: HandleRouteOption[] = []
 
+  // 将路由选项分为普通页面和视图页面
   Object.entries(pathRouteOption).forEach(([_, opt]) => {
     if (opt.isView) view.push(opt)
     else all.push(opt)
   })
 
+  // 处理普通页面的路由
   const allRoutes: Late<RouteRecordRaw>[] = all.map(e => {
     return {
       path: e.url,
@@ -73,7 +91,9 @@ export function resolveSubPath(pathRouteOption: HandledRouteOptions): RouteRecor
       meta: (e.cfg?.source as {}) ?? {}
     } as RouteRecordRaw
   })
+
   const result: RouteRecordRaw[] = []
+
   for (let i = 0; i < allRoutes.length; i++) {
     const e = allRoutes[i]
     if (!e) continue
@@ -85,42 +105,34 @@ export function resolveSubPath(pathRouteOption: HandledRouteOptions): RouteRecor
       result.push(e)
     }
   }
+
+  // 处理视图页面的路由
   view.forEach(e => {
     const finded = result.find(r => r.path === e.parentUrl)
     if (finded && finded.components) {
       finded.components[e.name] = e.source
-      console.log(result)
     }
   })
 
   return result
 }
 
+// 解析路由
 export function resolveRouters(): RouteRecordRaw[] {
   const cfgSources = import.meta.glob([`/**/pages/**/**.page.ts`, `/**/pages/**/**.page.js`], {eager: true, import: 'default'})
   const vueSources = import.meta.glob([`/**/pages/**/**.vue`, `/**/pages/**/**.jsx`, `/**/pages/**/**.tsx`])
 
+  // 解析配置文件
   const cfg = Object.entries(cfgSources)
     .map(e => resolveImport(e as unknown as [string, ImportMeta]))
     .map(e => ({[e.fullUrl]: e}))
     .reduce((acc, cur) => ({...acc, ...cur}), {} as HandledRouteOptions)
 
+  // 解析页面文件
   const paths = Object.entries(vueSources)
     .map(v => resolveImport(v as unknown as [string, ImportMeta]))
     .map(e => ({[e.fullUrl]: {...e, cfg: cfg[e.fullUrl]}}))
     .reduce((acc, cur) => ({...acc, ...cur}), {} as HandledRouteOptions)
 
-  resolveSubPath(paths)
-
-  return Object.entries(paths).map(([k, v]) => {
-    let meta = undefined
-    const path = k
-    if (v?.cfg?.source) meta = v.cfg.source
-    return {
-      path,
-      name: v.name,
-      component: v.source,
-      meta
-    } as RouteRecordRaw
-  })
+  return resolveSubPath(paths)
 }
