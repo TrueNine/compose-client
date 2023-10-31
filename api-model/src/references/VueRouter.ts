@@ -1,8 +1,13 @@
+<<<<<<< HEAD
 import {STR_SLASH, type Late} from '@compose/compose-types'
 import {camelTo} from '../tools/Strings'
+=======
+import {STR_EMPTY} from '@compose/compose-types'
+>>>>>>> 684886cfd3da4fbc8e9fa9793ab0e276d88ee918
 import type {RouteRecordRaw} from 'vue-router'
 import {cloneDeep} from '../references/LodashEs'
 
+<<<<<<< HEAD
 // 定义路由处理选项的接口
 export interface HandleRouteOption {
   metaUrl: string
@@ -17,6 +22,30 @@ export interface HandleRouteOption {
   cfg?: HandleRouteOption
   parentUrl?: string
   fullUrl: string
+=======
+export const PAGE = 'pages'
+export const SUB_PAGE = 'SubPage'
+
+export function resolveImport(tp: [string, ImportMeta]) {
+  const __metaUrl = tp[0]
+  const source = tp[1]
+  const isFn = typeof source === 'function'
+  const eer = __metaUrl.split(PAGE).filter(Boolean)
+  eer.shift()
+  const paths = eer.join('').split('/').filter(Boolean)
+  const fileName = paths[paths.length - 1]
+  paths.pop()
+
+  const url = `/${paths.join('/')}`
+  const name = url.replaceAll('/', '-') || '-'
+
+  const isChildren = url.includes(STR_EMPTY)
+  if (paths.length === 0) paths.push('/')
+
+  const isSubPage = __metaUrl.includes(SUB_PAGE)
+
+  return {url, isChildren, isSubPage, __metaUrl, source, isFn, paths, fileName, name}
+>>>>>>> 684886cfd3da4fbc8e9fa9793ab0e276d88ee918
 }
 
 // 定义已处理的路由选项

@@ -78,7 +78,11 @@
     "npm-run-all": "^4.1.5",
     "postcss": "^8.4.31",
     "release-it": "^16.2.1",
+<<<<<<< HEAD
     "rollup": "^4.2.0",
+=======
+    "rollup": "^4.1.6",
+>>>>>>> 684886cfd3da4fbc8e9fa9793ab0e276d88ee918
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-copy": "^3.5.0",
     "rollup-plugin-delete": "^2.0.0",
