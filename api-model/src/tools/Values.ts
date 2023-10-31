@@ -1,4 +1,4 @@
-import type {NullablePartial} from '@compose/compose-types'
+import type {NullPt} from '@compose/compose-types'
 
 /**
  * ## 判断一个字符串是否为空，返回本身或空字符串，排除 null | undefined
@@ -13,7 +13,7 @@ export function withEmpty(str?: string): string {
  * # 判断一个对象是否为 null 或 undefined，以减少语义负担
  * @param obj 对象
  */
-export function isEmpty(obj: NullablePartial<unknown>): boolean {
+export function isEmpty(obj: NullPt<unknown>): boolean {
   if (obj === undefined) return true
   if (obj === null) return true
   if (typeof obj === 'string' && !isNonEmptyString(obj)) return true
@@ -43,7 +43,7 @@ export function nullCoalesce<T>(aib: T, replaced: T = aib): NonNullable<T> {
  * # 判断一个对象是否为非空字符串
  * @param obj 对象
  */
-export function isNonEmptyString(obj: NullablePartial): boolean {
+export function isNonEmptyString(obj: NullPt): boolean {
   return typeof obj === 'string' && obj.trim().length > 0
 }
 

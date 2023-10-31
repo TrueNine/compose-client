@@ -1,4 +1,4 @@
-import type {BasicType, NullablePartial} from '@compose/compose-types'
+import type {BasicType, NullPt} from '@compose/compose-types'
 
 import {isNonEmpty, isNonEmptyString} from './Values'
 
@@ -20,7 +20,7 @@ export class SearchParam {
  * # 将多个对象转换为 URLSearchParams 格式的字符串
  * @param cards 需转换对象
  */
-export function encodeQueryParam(...cards: NullablePartial<object>[]): string {
+export function encodeQueryParam(...cards: NullPt<object>[]): string {
   const params = new SearchParam()
   if (!cards) return ''
   cards.filter(isNonEmpty).forEach(c => {
@@ -33,7 +33,7 @@ export function encodeQueryParam(...cards: NullablePartial<object>[]): string {
   return params.toString() && `?${params.toString()}`
 }
 
-export function queryParam(...cards: NullablePartial<object>[]): string {
+export function queryParam(...cards: NullPt<object>[]): string {
   const params = new SearchParam()
   if (!cards) return ''
   cards.filter(isNonEmpty).forEach(c => {

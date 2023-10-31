@@ -1,5 +1,5 @@
 import type {Maybe, MaybeReadonlyArray, Nullable, RouteOption} from '@compose/compose-types'
-import {EMPTY_STR} from '@compose/compose-types'
+import {STR_EMPTY} from '@compose/compose-types'
 
 import {maybeArray, maybeReadonlyArray} from '../tools'
 import {cloneDeep} from '../references'
@@ -91,12 +91,12 @@ export class RouteStream {
     return _deepResult as RouteOption[]
   }
 
-  flat(rootPath = EMPTY_STR, subPath: MaybeReadonlyArray<RouteOption> = this._routeTable): Omit<RouteOption, 'sub'>[] {
+  flat(rootPath = STR_EMPTY, subPath: MaybeReadonlyArray<RouteOption> = this._routeTable): Omit<RouteOption, 'sub'>[] {
     const maybeResult: RouteOption[] = []
     const stack: RouteOption[] = cloneDeep(maybeArray(subPath))
     while (stack.length > 0) {
       const r = stack.pop()!
-      if (r.sub) stack.push(...this.flat(this._getLinkedUri(rootPath, r.uri) ?? EMPTY_STR, r.sub).map(e => cloneDeep(e))) // TODO 测试 clone 机制
+      if (r.sub) stack.push(...this.flat(this._getLinkedUri(rootPath, r.uri) ?? STR_EMPTY, r.sub).map(e => cloneDeep(e))) // TODO 测试 clone 机制
       else maybeResult.push(r)
     }
     return maybeResult.map(r => {
@@ -116,7 +116,7 @@ export class RouteStream {
   ): Nullable<RouteOption> {
     const pathArray = this._cleanPaths(paths)
     if (pathArray.length === deepLevel || pathArray.length === 0) return root
-    const currentPath = pathArray[deepLevel].replace(RouteStream._SLASH, EMPTY_STR)
+    const currentPath = pathArray[deepLevel].replace(RouteStream._SLASH, STR_EMPTY)
     let result: Nullable<RouteOption> = null
     for (let i = 0; i < options.length; i++) {
       const option = options[i]
@@ -183,18 +183,18 @@ export class RouteStream {
   }
 
   private _getLinkedUri(rootPath: string, uri?: string): string | undefined {
-    return uri ? `${rootPath}${rootPath !== EMPTY_STR ? RouteStream._SLASH : EMPTY_STR}${uri || EMPTY_STR}` : uri
+    return uri ? `${rootPath}${rootPath !== STR_EMPTY ? RouteStream._SLASH : STR_EMPTY}${uri || STR_EMPTY}` : uri
   }
 
   private _isRootPath(paths: Maybe<string>): boolean {
-    return maybeReadonlyArray(paths).every(p => p === this._rootPath || p === EMPTY_STR)
+    return maybeReadonlyArray(paths).every(p => p === this._rootPath || p === STR_EMPTY)
   }
 
   private _cleanPaths(paths: MaybeReadonlyArray<string>): readonly string[] {
     const p = maybeArray(paths)
       .map(p => p.split(RouteStream._SLASH))
       .flat()
-      .filter(e => e !== EMPTY_STR)
+      .filter(e => e !== STR_EMPTY)
       .map(p => p.split('?')[0])
     if ((p.length === 1 || p.length === 2) && this._isRootPath(p)) return [RouteStream._SLASH]
     else return p
