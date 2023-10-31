@@ -1,7 +1,7 @@
 /**
  * # 网络标记库
  */
-export * from './networks'
+export * from './request'
 /**
  * 日期时间相关定义
  */

@@ -37,7 +37,6 @@
     "@types/gulp-autoprefixer": "^0.0.36",
     "@types/gulp-postcss": "^8.0.5",
     "@types/gulp-sass": "^5.0.3",
-    "@types/jest": "^29.5.6",
     "@types/lodash": "^4.14.200",
     "@types/lodash-es": "^4.17.10",
     "@types/moment": "^2.13.0",

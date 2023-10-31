@@ -4,7 +4,6 @@
   "author": "TrueNine",
   "license": "private",
   "scripts": {
-    "prepare": "pnpm build",
     "build": "pnpm rollup --config rollup.config.ts --configPlugin typescript",
     "pub": "run-s build pub-c",
     "pub-c": "pnpm -C dist pub"
