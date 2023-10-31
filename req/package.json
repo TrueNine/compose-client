@@ -1,35 +1,24 @@
 {
   "name": "@compose/req",
-  "version": "0.0.20",
+  "version": "0.0.21",
   "description": "requester",
   "author": "TrueNine",
   "license": "private",
   "scripts": {
-    "build": "pnpm rollup --config rollup.config.ts --configPlugin typescript",
+    "build": "vite build",
     "pub": "run-s build pub-c",
-    "pub-c": "pnpm -C dist pub"
+    "pub-c": "pnpm publish --no-git-checks"
   },
   "type": "module",
-  "types": "types/index.d.ts",
-  "main": "lib/index.cjs",
-  "module": "es/index.mjs",
+  "module": "dist/index.js",
+  "main": "dist/index.cjs",
+  "types": "dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./types/index.d.ts",
-      "import": "./es/index.mjs",
-      "require": "./lib/index.cjs"
-    },
-    "./es": {
-      "types": "./types/index.d.ts",
-      "import": "./es/index.mjs"
-    },
-    "./lib": {
-      "types": "./types/index.d.ts",
-      "require": "./lib/index.cjs"
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
     },
     "./*": "./*"
-  },
-  "devDependencies": {
-    "@types/ws": "^8.5.8"
   }
 }

@@ -5,7 +5,6 @@ export default defineConfig({
   build: {
     sourcemap: true,
     lib: {
-      name: 'MetaUI',
       fileName: '[name]',
       entry: 'index.ts',
       formats: ['es', 'cjs']
@@ -17,7 +16,11 @@ export default defineConfig({
       },
       external: [
         'vue',
+        'node:module',
+        'node:fs',
+        'node:child_process',
         'element-plus',
+        'node:path',
         /\.(scss|sass|less|css)/,
         'lodash-es',
         'lodash-es/cloneDeep',

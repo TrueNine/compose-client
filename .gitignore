@@ -23,3 +23,5 @@ node_modules/
 
 # vscode check depd files
 target/
+
+dist

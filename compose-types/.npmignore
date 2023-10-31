@@ -1,9 +1,2 @@
-node_modules
-src
-rollup.config.ts
-tsconfig.json
-
 .idea
 .vscode
-
-.gitignore

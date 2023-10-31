@@ -5,7 +5,6 @@ export default defineConfig({
   build: {
     sourcemap: true,
     lib: {
-      name: 'MetaUI',
       fileName: '[name]',
       entry: 'index.ts',
       formats: ['es', 'cjs']
@@ -15,17 +14,7 @@ export default defineConfig({
         preserveModulesRoot: '.',
         preserveModules: true
       },
-      external: [
-        'vue',
-        'element-plus',
-        /\.(scss|sass|less|css)/,
-        'lodash-es',
-        'lodash-es/cloneDeep',
-        'vue-router',
-        '@compose/api-model',
-        '@compose/compose-types',
-        'dayjs'
-      ]
+      external: ['net', '@stomp/stompjs', 'stompjs', '@compose/compose-types', 'sockjs-client']
     }
   },
   plugins: [

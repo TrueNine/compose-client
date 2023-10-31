@@ -6,7 +6,7 @@
       "@/*": ["./src/*"]
     }
   },
-  "types": ["@dcloudio/types", "uni.d.ts"],
-  "include": ["**.d.ts", "src/**/**.ts", "src/**/**.d.ts"],
+  "types": ["@dcloudio/types", "./uni.d.ts"],
+  "include": ["**.d.ts", "**/**.ts", "**/**.d.ts"],
   "exclude": ["dist"]
 }
