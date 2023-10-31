@@ -1,5 +1,5 @@
 import type {MaybeReadonlyArray, Nullable, RouteOption} from '@compose/compose-types'
-import {EMPTY_STR} from '@compose/compose-types'
+import {STR_EMPTY} from '@compose/compose-types'
 
 import {cloneDeep} from '../references'
 import {maybeReadonlyArray} from '../tools'
@@ -35,7 +35,7 @@ export function routeOptionStream(routeOptions: readonly RouteOption[] = [], rou
   }
 
   function _filterPaths(paths: string[] | string = []): string[] {
-    return _pathToArray(paths).filter(r => r !== EMPTY_STR)
+    return _pathToArray(paths).filter(r => r !== STR_EMPTY)
   }
 
   function _getLinkedUri(rootPath: string, uri?: string): string | undefined {

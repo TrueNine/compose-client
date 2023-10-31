@@ -1,6 +1,6 @@
 {
   "name": "@compose/uni-mp-adk",
-  "version": "1.0.38",
+  "version": "1.0.39",
   "author": "TrueNine",
   "license": "private",
   "description": "uni-app miniProgram auxiliary development kit",

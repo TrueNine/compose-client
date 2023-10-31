@@ -1,6 +1,6 @@
 {
   "name": "@compose/eslint-config",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "main": ".eslintrc.cjs",
   "scripts": {
     "pub": "pnpm publish --no-git-checks"

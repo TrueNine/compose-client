@@ -1,4 +1,4 @@
-import {EMPTY_STR} from '@compose/compose-types'
+import {STR_EMPTY} from '@compose/compose-types'
 import type {RouteRecordRaw} from 'vue-router'
 
 export const PAGE = 'pages'
@@ -17,7 +17,7 @@ export function resolveImport(tp: [string, ImportMeta]) {
   const url = `/${paths.join('/')}`
   const name = url.replaceAll('/', '-') || '-'
 
-  const isChildren = url.includes(EMPTY_STR)
+  const isChildren = url.includes(STR_EMPTY)
   if (paths.length === 0) paths.push('/')
 
   const isSubPage = __metaUrl.includes(SUB_PAGE)
