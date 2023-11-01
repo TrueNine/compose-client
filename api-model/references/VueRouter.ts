@@ -110,7 +110,7 @@ export function resolveSubPath(pathRouteOption: HandledRouteOptions): RouteRecor
   // 处理视图页面的路由
   view.forEach(e => {
     const root = result.find(r => r.path === e.parentUrl)
-    if (root && root.children) {
+    if (root && root.children !== undefined) {
       const child = root.children
       /*
        * 找到 根路由
@@ -118,7 +118,7 @@ export function resolveSubPath(pathRouteOption: HandledRouteOptions): RouteRecor
        * */
       const initPath = child.find(e => e.path === STR_EMPTY)
       if (initPath) initPath.components![e.name] = e.source
-      else child.push({path: STR_EMPTY, components: {[e.name]: e.source}})
+      else child.push({path: STR_EMPTY, name: e.name, components: {[e.name]: e.source}})
     }
   })
 
