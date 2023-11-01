@@ -1,5 +1,5 @@
 import {Vue} from '@compose/api-model'
-import type {RouteOption} from '@compose/compose-types/src'
+import type {RouteOption} from '@compose/compose-types'
 
 import YSiderMenuItem from '../sider-menu-item'
 

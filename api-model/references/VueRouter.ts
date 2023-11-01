@@ -1,4 +1,4 @@
-import {type Late, STR_SLASH} from '@compose/compose-types'
+import {type Late, STR_EMPTY, STR_SLASH} from '@compose/compose-types'
 import type {RouteRecordRaw} from 'vue-router'
 
 import {camelTo} from '../tools/Strings'
@@ -109,14 +109,22 @@ export function resolveSubPath(pathRouteOption: HandledRouteOptions): RouteRecor
 
   // 处理视图页面的路由
   view.forEach(e => {
-    const finded = result.find(r => r.path === e.parentUrl)
-    if (finded && finded.components) {
-      finded.components[e.name] = e.source
+    const root = result.find(r => r.path === e.parentUrl)
+    if (root && root.children) {
+      const child = root.children
+      /*
+       * 找到 根路由
+       * 将子路
+       * */
+      const initPath = child.find(e => e.path === STR_EMPTY)
+      if (initPath) initPath.components![e.name] = e.source
+      else child.push({path: STR_EMPTY, components: {[e.name]: e.source}})
     }
   })
 
   return result
 }
+
 // 解析路由
 export function resolveRouters(): RouteRecordRaw[] {
   const cfgSources = import.meta.glob([`/**/pages/**/**.page.ts`, `/**/pages/**/**.page.js`], {eager: true, import: 'default'})

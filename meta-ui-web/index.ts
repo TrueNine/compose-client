@@ -1,7 +1,16 @@
+import type {App} from 'vue'
+
 import YSiderMenu from './sider-menu/index'
 import YSiderMenuItem from './sider-menu-item/index'
+import YConfigProvider from './config-provider'
+import YMapTencent from './map-tencent'
 
-export {YSiderMenu, YSiderMenuItem}
+export * from './common/NaiveUICommon'
+const components = [YConfigProvider, YMapTencent, YSiderMenuItem, YSiderMenu]
+export {YSiderMenu, YSiderMenuItem, YConfigProvider, YMapTencent}
+
 export default {
-  install: () => {}
+  install: (app: App) => {
+    components.forEach(app.use)
+  }
 }

@@ -18,7 +18,7 @@ export class Vue {
    * @param otherComponent
    * @returns 封装后的组件
    */
-  static componentInstallToPlugin<T>(component: T, otherComponent?: Record<string, T>): T & Plugin & VueComponentInstanceMapping {
+  static componentInstallToPlugin<T = SafeAny, E = SafeAny>(component: T, otherComponent?: Record<string, E>): T & Plugin & VueComponentInstanceMapping {
     let _p = component as unknown as T & Plugin & VueComponentInstanceMapping
     const _r = otherComponent as unknown as Record<string, T & Plugin & VueComponentInstanceMapping>
     if (!_p.name) _p = {..._p, name: _p.__name}
