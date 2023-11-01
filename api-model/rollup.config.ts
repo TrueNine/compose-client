@@ -41,7 +41,7 @@ export default defineConfig([
   },
   {
     input: 'index.ts',
-    plugins: [dts()],
+    plugins: [dts({})],
     output: {
       dir: 'dist',
       preserveModules: true
