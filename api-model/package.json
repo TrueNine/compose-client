@@ -1,12 +1,13 @@
 {
   "name": "@compose/api-model",
-  "version": "0.1.170",
+  "version": "0.1.172",
   "description": "yan100 client ui kit",
   "author": "TrueNine",
   "license": "private",
   "scripts": {
+    "build-c": "rollup --config rollup.config.ts --configPlugin typescript",
     "build": "vite build",
-    "pub": "run-s build pub-c",
+    "pub": "run-s build-c pub-c",
     "pub-c": "pnpm publish --no-git-checks",
     "test": "vitest"
   },

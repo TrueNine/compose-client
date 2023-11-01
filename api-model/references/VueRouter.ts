@@ -1,4 +1,4 @@
-import {STR_SLASH, type Late} from '@compose/compose-types'
+import {type Late, STR_SLASH} from '@compose/compose-types'
 import type {RouteRecordRaw} from 'vue-router'
 
 import {camelTo} from '../tools/Strings'
@@ -117,7 +117,6 @@ export function resolveSubPath(pathRouteOption: HandledRouteOptions): RouteRecor
 
   return result
 }
-
 // 解析路由
 export function resolveRouters(): RouteRecordRaw[] {
   const cfgSources = import.meta.glob([`/**/pages/**/**.page.ts`, `/**/pages/**/**.page.js`], {eager: true, import: 'default'})

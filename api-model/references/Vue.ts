@@ -1,5 +1,5 @@
 import {type Plugin} from 'vue'
-import type {SafeAny} from '@compose/rollup-pack-config/src/adaptors/PackageAdaptor'
+import type {SafeAny} from '@compose/compose-types'
 
 export interface VueComponentInstanceMapping {
   name?: string

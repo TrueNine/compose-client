@@ -2,7 +2,11 @@ import {defineConfig} from 'vite'
 import dts from 'vite-plugin-dts'
 
 export default defineConfig({
+  optimizeDeps: {
+    exclude: ['import.meta']
+  },
   build: {
+    minify: 'terser',
     sourcemap: true,
     lib: {
       name: 'MetaUI',

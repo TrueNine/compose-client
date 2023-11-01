@@ -6,6 +6,7 @@
   "main": "dist/meta-ui-web.cjs",
   "types": "dist/index.d.ts",
   "scripts": {
+    "dev": "vite",
     "build-gulp": "gulp -f ./__build-src__/index.ts",
     "build-vite": "vite build",
     "build": "run-s build-vite build-gulp",

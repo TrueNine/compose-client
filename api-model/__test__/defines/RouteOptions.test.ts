@@ -1,6 +1,6 @@
 import {expect, test} from 'vitest'
 
-import {routeOptionStream} from '../../src'
+import {routeOptionStream} from '../../'
 
 import {RouteTable} from './RouteOptions.data'
 
