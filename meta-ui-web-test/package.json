@@ -1,9 +1,0 @@
-{
-  "private": true,
-  "name": "@compose/meta-ui-web-test",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build"
-  }
-}

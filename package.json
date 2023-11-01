@@ -20,6 +20,7 @@
     "@compose/meta-ui-web": "workspace:^",
     "@compose/prettier-config": "workspace:^",
     "@compose/rollup-pack-config": "workspace:^",
+    "vitepress": "1.0.0-rc.24",
     "@compose/stylelint-config": "workspace:^",
     "@compose/tsconfig": "workspace:^",
     "@dcloudio/types": "^3.4.1",
