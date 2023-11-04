@@ -2,6 +2,8 @@
  * 已知的任意类型，用于某些时候骗过编译器
  */
 // eslint-disable-next-line
+// @ts-ignore
+// eslint-disable-next-line
 export type SafeAny = any
 
 /**

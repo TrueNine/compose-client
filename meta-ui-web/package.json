@@ -9,7 +9,8 @@
     "dev": "vite",
     "build-gulp": "gulp -f ./__build-src__/index.ts",
     "build-vite": "vite build",
-    "build": "run-s build-vite build-gulp",
+    "type-check": "vue-tsc --noEmit",
+    "build": "run-s type-check build-vite build-gulp",
     "pub": "run-s build pub-c",
     "pub-c": "pnpm publish --no-git-checks"
   },

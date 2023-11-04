@@ -1,5 +1,5 @@
 import {resolve} from 'node:path'
-import {spawn} from 'child_process'
+import {spawn} from 'node:child_process'
 
 import {dest, parallel, series, src} from 'gulp'
 import gulpSass from 'gulp-sass'

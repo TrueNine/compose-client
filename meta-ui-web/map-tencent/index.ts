@@ -14,8 +14,9 @@ export interface Props {
   multiPoint?: boolean
   showCopyright?: boolean
   viewMode?: TMap.ViewMode
-  initCenter?: TMap.LatLng
+  initCenter?: TMap.LatLngDataTyping
   doubleClickZoom?: boolean
+  serviceKey?: string
   styleId?: TMap.MapStyleIds
   mapZoomType?: BasicMapZoomType
 }

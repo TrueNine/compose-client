@@ -12,7 +12,8 @@ let singleInfoWindow: TMap.InfoWindow | null = null
 
 const props = withDefaults(defineProps<Props>(), {
   containerId: 'YMapTencent_Container_Wrapper',
-  viewMode: '2D',
+  viewMode: '3D',
+  serviceKey: undefined,
   zoom: 13,
   multiPoint: false,
   styleId: undefined,
@@ -54,12 +55,11 @@ const mapInitFn = (container: HTMLElement, t: typeof TMap) => {
   })
 
   mapHandle.on('click', ev => {
-    console.log(ev)
-
     if (!singleInfoWindow)
       singleInfoWindow = new t.InfoWindow({
         map: mapHandle!,
         position: new t.LatLng(0, 0),
+        enableCustom: true,
         offset: {x: 0, y: -32}
       })
     if (!props.multiPoint) multiMarkerLayer?.remove(multiMarkerLayer?.getGeometries().map(r => r.id!))?.updateGeometries([])
@@ -68,7 +68,7 @@ const mapInitFn = (container: HTMLElement, t: typeof TMap) => {
       styleId: props.styleId
     })
     mapHandle?.panTo(ev.latLng)
-    if (ev.poi && !props.multiPoint) singleInfoWindow.setContent(ev.poi.name).setPosition(ev.latLng).open()
+    if (ev.poi && !props.multiPoint) singleInfoWindow.setContent(`<div class="c-black">${ev.poi.name}</div>`).setPosition(ev.latLng).open()
     else singleInfoWindow.close()
   })
 }
@@ -81,9 +81,7 @@ onMounted(() => {
   })
 })
 
-onUnmounted(() => {
-  mapHandle?.destroy()
-})
+onUnmounted(() => mapHandle?.destroy())
 
 function to2d() {
   mapHandle?.setViewMode('2D')
@@ -95,21 +93,33 @@ function to3d() {
 }
 
 const searchWord = ref<string>('')
-const a = () => {
-  console.log(lazyTMap)
-  const b = new lazyTMap!.service.Search({
-    pageSize: 10
-  })
-  console.log(b)
-  b.searchNearby({
-    center: new window.TMap.LatLng(43.99753168905096, 88.06493709486676),
-    keyword: '医院',
-    radius: 1000,
-    servicesk: 'FXE9aQAFkeaHmzdYdue9THN5lmycBN6'
-  })
-    .then(console.log)
-    .catch(console.error)
-  console.log(b)
+const searchResults = ref<TMap.service.SearchResult['data']>([])
+const search = () => {
+  if (props.serviceKey) {
+    const b = new lazyTMap!.service.Search({
+      pageSize: 10
+    })
+    const center = mapHandle!.getCenter()
+    console.log(b)
+    b.searchNearby({
+      center: center,
+      keyword: searchWord.value,
+      radius: 1000,
+      servicesk: props.serviceKey
+    })
+      .then(e => {
+        searchResults.value = e.data
+        console.log(e.data)
+      })
+      .catch(e => {
+        console.error(e)
+      })
+    console.log(b)
+  }
+}
+
+const toCenter = (latLng: TMap.LatLngDataTyping) => {
+  mapHandle?.panTo(latLng)
 }
 </script>
 
@@ -117,23 +127,27 @@ const a = () => {
   <nav class="flex flex-col items-center">
     <section :id="containerId" ref="wrapperContainerHandle" class="w-full h-full" />
     <div class="w-full h-full p-2 border-box flex">
-      <slot name="viewBox">
+      <slot name="view-box">
         <ElButtonGroup class="flex flex-row">
           <ElButton type="primary" @click="to3d">3D</ElButton>
           <ElButton type="primary" @click="to2d">2D</ElButton>
         </ElButtonGroup>
       </slot>
       <div class="w-full pl-2">
-        <slot name="searchBox">
+        <slot name="search-box">
           <div class="flex flex-row">
             <ElButtonGroup class="flex flex-row w-full">
               <ElInput v-model="searchWord" />
-              <ElButton>搜索</ElButton>
+              <ElButton type="primary" @click="search">search</ElButton>
             </ElButtonGroup>
+          </div>
+          <!-- 搜索 -->
+          <div @click="toCenter(it.location)" v-for="it in searchResults">
+            <span>{{ it.address }}</span>
+            <span>{{ it.title }}</span>
           </div>
         </slot>
       </div>
     </div>
-    <ElButton type="primary" @click="a">search</ElButton>
   </nav>
 </template>

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import 'dayjs/locale/zh-cn'
 import 'dayjs/locale/en'
-import elementZhCn from 'element-plus/dist/locale/zh-cn'
-import elementEnUs from 'element-plus/dist/locale/en'
+import {zhCn as elementZhCn, enUs as elementEnUs} from '../common/ElementPlusCommon'
+
 import {dayjs} from 'element-plus'
 import {darkTheme, dateEnUS as naiveDateEnUs, dateZhCN as naiveDateZhCn, enUS as naiveEnUs, lightTheme, NConfigProvider, zhCN as naiveZhCn} from 'naive-ui'
 import 'element-plus/theme-chalk/dark/css-vars.css'

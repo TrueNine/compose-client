@@ -13,7 +13,9 @@ import GeometryOverlayEvent = TMap.GeometryOverlayEvent
  */
 export interface _MapEvent<K extends string> extends AbstractTencetnEvent<K, Event, EventTarget> {
   latLng: LatLng
-  poi: string | null
+  poi: {
+    name: string
+  }
   point: WGS84 | null
 }
 

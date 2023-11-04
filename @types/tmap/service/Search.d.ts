@@ -54,7 +54,7 @@ export interface _SearchResult {
      * 距离，单位： 米，在周边搜索、城市范围搜索传入定位点时返回
      */
     _distance?: number
-    ad_info?: {
+    ad_info: {
       /**
        * 行政区划代码，详见：[行政区划码说明](https://lbs.qq.com/service/webService/webServiceGuide/webServiceDistrict#6)
        */
@@ -145,7 +145,7 @@ export class _Search {
    * reject状态下返回 {@link _ErrorResult}
    * @param param 搜索入参
    */
-  searchNearby(param: TMap.service.SearchNearbyParams): Promise<TMap.service.SearchResult | TMap.service.ErrorResult | undefined>
+  searchNearby(param: TMap.service.SearchNearbyParams): Promise<TMap.service.SearchResult>
 
   /**
    * 搜索某地区cityName附近符合给定关键字的地点；

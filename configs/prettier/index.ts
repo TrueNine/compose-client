@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   semi: false, // 是否在句末使用分号 ;
   singleQuote: true, // 是否单引号
   bracketSpacing: false, // true:{ var } false:{var}

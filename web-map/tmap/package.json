@@ -1,10 +1,11 @@
 {
   "name": "@compose/tmap",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "description": "腾讯地图 SDK",
   "author": "TrueNine",
   "license": "private",
   "scripts": {
+    "prepare": "pnpm build",
     "build": "vite build",
     "pub": "run-s build pub-c",
     "pub-c": "pnpm publish --no-git-checks"

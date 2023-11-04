@@ -4,7 +4,7 @@ import {naiveStyleAdaptor} from '../index'
 
 import App from './App.vue'
 import Router from './router'
-import 'virtual:uno.css'
+import 'uno.css'
 
 async function setupApp() {
   naiveStyleAdaptor()

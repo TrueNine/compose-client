@@ -16,7 +16,7 @@ export default defineConfig({
       name: 'MetaUI',
       fileName: '[name]',
       entry: 'index.ts',
-      formats: ['es']
+      formats: ['es', 'cjs']
     },
     rollupOptions: {
       output: {
