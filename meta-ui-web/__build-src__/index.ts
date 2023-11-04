@@ -3,7 +3,6 @@ import {spawn} from 'node:child_process'
 
 import {dest, parallel, series, src} from 'gulp'
 import gulpSass from 'gulp-sass'
-import gulpAutoprefixer from 'gulp-autoprefixer'
 import sass from 'sass'
 import gulpPostcss from 'gulp-postcss'
 import autoprefixer from 'autoprefixer'
@@ -25,7 +24,6 @@ export const buildStyle = () => {
         includePaths: [nodeModulesPath]
       })
     )
-    .pipe(gulpAutoprefixer())
     .pipe(gulpPostcss([unocssPostcss(), autoprefixer(), cssnano()]))
     .pipe(dest(distPath))
 }
