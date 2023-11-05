@@ -1,6 +1,6 @@
 import type {BaseEntity} from '@compose/compose-types'
 
-import {AttachmentTyping} from '../enums'
+import {AttachmentTyping} from '../enums/BasicEnums'
 
 /**
  * ## 可查询的轻量文件列表

@@ -1,8 +1,8 @@
 import type {MaybeReadonlyArray, Nullable, RouteOption} from '@compose/compose-types'
 import {STR_EMPTY} from '@compose/compose-types'
 
-import {cloneDeep} from '../references'
-import {maybeReadonlyArray} from '../tools'
+import {cloneDeep} from '../references/LodashEs'
+import {maybeReadonlyArray} from '../tools/Array'
 
 interface MatchConfig {
   hidden?: boolean

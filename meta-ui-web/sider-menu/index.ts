@@ -6,7 +6,7 @@ import YSiderMenuItem from '../sider-menu-item'
 import _c from './YSiderMenu.vue'
 
 export interface Props {
-  collapsed: boolean
+  collapsed?: boolean
   routeTable: RouteOption[]
   permissions: string[]
   roles: string[]

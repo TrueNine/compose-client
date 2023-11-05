@@ -9,7 +9,9 @@ import YSiderMenuItem from '../sider-menu-item'
 
 import type {Props} from './index'
 
-const props = withDefaults(defineProps<Props>(), {})
+const props = withDefaults(defineProps<Props>(), {
+  collapsed: false
+})
 
 const menus = ref<RouteOption[]>(props.routeTable)
 

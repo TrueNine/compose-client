@@ -6,8 +6,10 @@ import dts from 'vite-plugin-dts'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
-import {ElementPlusResolver, NaiveUiResolver} from 'unplugin-vue-components/resolvers'
+import {ElementPlusResolver, NaiveUiResolver, Vuetify3Resolver} from 'unplugin-vue-components/resolvers'
 import unocss from 'unocss/vite'
+import ViteFonts from 'unplugin-fonts/vite'
+import vuetify from 'vite-plugin-vuetify'
 
 export default defineConfig({
   build: {
@@ -25,22 +27,14 @@ export default defineConfig({
       },
       external: [
         'vue',
-        '@vueuse/core',
-        'naive-ui',
-        'element-plus',
-        'element-plus/es',
-        'element-plus/dist',
-        'element-plus/dist/locale',
-        'element-plus/dist/locale/zh-cn',
-        'element-plus/dist/locale/en',
+        /(@vueuse|@vueuse\/)/,
+        /(naive-ui|naive-ui\/)/,
+        /(vuetify|vuetify\/)/,
+        /(element-plus|element-plus\/)/,
         /\.(scss|sass|less|css)/,
-        'lodash-es',
-        'vue-router',
-        '@compose/api-model',
-        '@compose/compose-types',
-        'dayjs',
-        'dayjs/locale/zh-cn',
-        'dayjs/locale/en'
+        /(lodash-es|lodash-es\/)/,
+        /(dayjs|dayjs\/)/,
+        /(@compose|@compose\/)/
       ]
     }
   },
@@ -49,9 +43,9 @@ export default defineConfig({
     vueJsx(),
     unocss(),
     dts({
-      staticImport: true,
       exclude: ['dist/**', '__build-src__/**', 'vite.config.ts', '**/__test__/**', 'vitest.config.ts', 'playground']
     }),
+    vuetify({}),
     AutoImport({
       imports: [
         'vue',
@@ -75,9 +69,20 @@ export default defineConfig({
       dts: 'component-auto-imports.d.ts',
       deep: true,
       dirs: '.',
-      resolvers: [ElementPlusResolver(), NaiveUiResolver()]
+      resolvers: [ElementPlusResolver(), NaiveUiResolver(), Vuetify3Resolver()]
+    }),
+    ViteFonts({
+      google: {
+        families: [
+          {
+            name: 'Roboto',
+            styles: 'wght@100;300;400;500;700;900'
+          }
+        ]
+      }
     })
   ],
+  define: {'process.env': {}},
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   extends: ['stylelint-config-standard', 'stylelint-config-recommended-less', 'stylelint-config-recommended-scss', 'stylelint-config-standard-vue'],
   plugins: ['stylelint-order'],
   overrides: [

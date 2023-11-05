@@ -6,7 +6,7 @@ export default defineConfig({
     sourcemap: true,
     lib: {
       fileName: '[name]',
-      entry: 'index.cjs',
+      entry: 'index.ts',
       formats: ['es', 'cjs']
     },
     rollupOptions: {

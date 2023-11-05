@@ -1,57 +1,77 @@
 <script setup lang="ts">
 import 'dayjs/locale/zh-cn'
 import 'dayjs/locale/en'
-import {zhCn as elementZhCn, enUs as elementEnUs} from '../common/ElementPlusCommon'
-
-import {dayjs} from 'element-plus'
-import {darkTheme, dateEnUS as naiveDateEnUs, dateZhCN as naiveDateZhCn, enUS as naiveEnUs, lightTheme, NConfigProvider, zhCN as naiveZhCn} from 'naive-ui'
+import 'vuetify/styles'
 import 'element-plus/theme-chalk/dark/css-vars.css'
+
+import {NConfigProvider} from 'naive-ui'
+import {useTheme} from 'vuetify'
+
+import {
+  ElementPlusDayjs as dayjs,
+  ElementPlusEn,
+  ElementPlusZhCn,
+  NaiveEnUs,
+  NaiveZhCn,
+  NaiveDarkTheme,
+  NaiveLightTheme,
+  NaiveDateEnUs,
+  NaiveDateZhCN
+} from '../common'
 
 import type {Props} from './index'
 
+const vuetifyUseTheme = useTheme()
 const darkUse = useDark()
 
 const props = withDefaults(defineProps<Props>(), {
-  locale: 'en-us',
+  locale: 'en',
   dark: true
 })
 
-dayjs.locale((props.locale ?? 'en').toLowerCase())
-const naiveThemeHandle = ref(null)
-const elLocale = computed(() => {
-  switch (props.locale) {
-    case 'zh-cn':
-      return elementZhCn
-    default:
-      return elementEnUs
-  }
-})
+const darkLight = computed(() => (props.dark ? 'dark' : 'light'))
 
 watch(
   () => props.dark,
   v => {
     darkUse.value = v
+    vuetifyUseTheme.global.name.value = darkLight.value
   }
 )
-const naiveDarkTheme = computed(() => {
-  return props.dark ? darkTheme : lightTheme
+watch(
+  () => props.locale,
+  v => {
+    dayjs.locale((v ?? 'en').toLowerCase())
+  }
+)
+
+const naiveThemeHandle = ref(null)
+const elLocale = computed(() => {
+  switch (props.locale) {
+    case 'zh-CN':
+      return ElementPlusZhCn
+    default:
+      return ElementPlusEn
+  }
 })
+
+const naiveDarkTheme = computed(() => (props.dark ? NaiveDarkTheme : NaiveLightTheme))
 
 const naiveLocale = computed(() => {
   switch (props.locale) {
-    case 'zh-cn':
-      return naiveZhCn
+    case 'zh-CN':
+      return NaiveZhCn
     default:
-      return naiveEnUs
+      return NaiveEnUs
   }
 })
 
 const naiveDateLocale = computed(() => {
   switch (props.locale) {
-    case 'zh-cn':
-      return naiveDateZhCn
+    case 'zh-CN':
+      return NaiveDateZhCN
     default:
-      return naiveDateEnUs
+      return NaiveDateEnUs
   }
 })
 </script>
@@ -60,7 +80,13 @@ const naiveDateLocale = computed(() => {
   <NConfigProvider ref="naiveThemeHandle" :theme="naiveDarkTheme" :locale="naiveLocale" :date-locale="naiveDateLocale">
     <NGlobalStyle />
     <ElConfigProvider :locale="elLocale">
-      <slot />
+      <VDefaultsProvider :defaults="{}">
+        <VLocaleProvider :locale="props.locale">
+          <VThemeProvider :theme="darkLight">
+            <slot />
+          </VThemeProvider>
+        </VLocaleProvider>
+      </VDefaultsProvider>
     </ElConfigProvider>
   </NConfigProvider>
 </template>

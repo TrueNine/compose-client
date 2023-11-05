@@ -2,21 +2,17 @@ import {defineConfig} from 'rollup'
 import ts from '@rollup/plugin-typescript'
 import res from '@rollup/plugin-node-resolve'
 import cjs from '@rollup/plugin-commonjs'
-import del from 'rollup-plugin-delete'
 import dts from 'rollup-plugin-dts'
 
 export default defineConfig([
   {
     input: 'index.ts',
     plugins: [
-      del({
-        targets: ['dist/**.d.ts', 'dist/**']
-      }),
       res(),
       cjs(),
       ts({
         tsconfig: './tsconfig.json',
-        exclude: ['./__test__/**', 'rollup.config.ts', 'vite.config.ts', 'vitest.config.ts']
+        exclude: ['./__test__/**', 'rollup.config.ts', 'vite.config.ts', 'vitest.config.ts', 'dist']
       })
     ],
     output: [
@@ -41,7 +37,7 @@ export default defineConfig([
   },
   {
     input: 'index.ts',
-    plugins: [dts({})],
+    plugins: [dts({tsconfig: './tsconfig.json'})],
     output: {
       dir: 'dist',
       preserveModules: true

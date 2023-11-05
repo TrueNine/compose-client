@@ -9,6 +9,6 @@ export default defineConfig({
     pipeline: {
       exclude: ['node_modules/**', 'dist/**']
     },
-    filesystem: ['**/*.{scss,css,less,sass,html,js,ts,jsx,tsx,vue,svelte,astro}']
+    filesystem: ['**/*.{scss,css,less,sass,html,js,jsx,ts,jsx,tsx,vue,svelte,astro}']
   }
 })

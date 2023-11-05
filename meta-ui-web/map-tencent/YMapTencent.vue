@@ -2,16 +2,22 @@
 import {BasicMapZoomType, initTencentMapWebGlScript, LazyGetMapZoomType} from '@compose/tmap'
 import type {TMap} from 'compose-tmap'
 
-import type {Props} from './index'
+import {type Props} from './index'
+const mapDefaultContainerId: string = 'YMapTencent_Container_Wrapper'
+
+defineOptions({
+  name: 'YMapTencent'
+})
 
 const wrapperContainerHandle = ref<HTMLElement | null>(null)
+
 let lazyTMap: typeof TMap | null = null
 let mapHandle: TMap.Map | null = null
 let multiMarkerLayer: TMap.MultiMarker | null = null
 let singleInfoWindow: TMap.InfoWindow | null = null
 
 const props = withDefaults(defineProps<Props>(), {
-  containerId: 'YMapTencent_Container_Wrapper',
+  containerId: mapDefaultContainerId,
   viewMode: '3D',
   serviceKey: undefined,
   zoom: 13,
@@ -20,20 +26,15 @@ const props = withDefaults(defineProps<Props>(), {
   doubleClickZoom: true,
   controlBtn: false,
   showCopyright: false,
-  initCenter: () => {
-    return {
-      lat: 0,
-      lng: 0
-    } as TMap.LatLng
-  },
+  initCenter: () => ({lat: 0, lng: 0}) as TMap.LatLng,
   mapZoomType: () => BasicMapZoomType.DEFAULT
 })
 
-defineOptions({
-  name: 'YMapTencent'
-})
+const to2d = () => mapHandle?.setViewMode('2D')
+const to3d = () => mapHandle?.setViewMode('3D').setPitch(55)
+const toCenter = (latLng: TMap.LatLngDataTyping) => mapHandle?.panTo(latLng)
 
-const mapInitFn = (container: HTMLElement, t: typeof TMap) => {
+const mapInitFn = (_: HTMLElement, t: typeof TMap) => {
   lazyTMap = t
   mapHandle = new t.Map(wrapperContainerHandle.value!, {
     center: props.initCenter,
@@ -44,15 +45,12 @@ const mapInitFn = (container: HTMLElement, t: typeof TMap) => {
     mapZoomType: LazyGetMapZoomType.getTencentMapZoomType(props.mapZoomType!),
     rotation: 0
   })
+  multiMarkerLayer = new t.MultiMarker({map: mapHandle!})
 
   if (!props.showCopyright && wrapperContainerHandle.value) {
     const re = wrapperContainerHandle.value!.querySelector('div div div div div div') as HTMLElement
     re.style.display = 'none'
   }
-
-  multiMarkerLayer = new t.MultiMarker({
-    map: mapHandle!
-  })
 
   mapHandle.on('click', ev => {
     if (!singleInfoWindow)
@@ -63,34 +61,22 @@ const mapInitFn = (container: HTMLElement, t: typeof TMap) => {
         offset: {x: 0, y: -32}
       })
     if (!props.multiPoint) multiMarkerLayer?.remove(multiMarkerLayer?.getGeometries().map(r => r.id!))?.updateGeometries([])
-    multiMarkerLayer?.add({
-      position: ev.latLng,
-      styleId: props.styleId
-    })
-    mapHandle?.panTo(ev.latLng)
-    if (ev.poi && !props.multiPoint) singleInfoWindow.setContent(`<div class="c-black">${ev.poi.name}</div>`).setPosition(ev.latLng).open()
+    multiMarkerLayer?.add({position: ev.latLng, styleId: props.styleId})
+    toCenter(ev.latLng)
+    if (ev.poi && !props.multiPoint) singleInfoWindow.setContent(`<div c-black>${ev.poi.name}</div>`).setPosition(ev.latLng).open()
     else singleInfoWindow.close()
   })
 }
 
 onMounted(() => {
   initTencentMapWebGlScript(props.apiKey, mapInitFn, {
-    containerTag: 'section',
+    containerTag: 'map',
     libraries: ['service'],
     mapContainerId: props.containerId
   })
 })
 
 onUnmounted(() => mapHandle?.destroy())
-
-function to2d() {
-  mapHandle?.setViewMode('2D')
-}
-
-function to3d() {
-  mapHandle?.setViewMode('3D')
-  mapHandle?.setPitch(55)
-}
 
 const searchWord = ref<string>('')
 const searchResults = ref<TMap.service.SearchResult['data']>([])
@@ -117,18 +103,15 @@ const search = () => {
     console.log(b)
   }
 }
-
-const toCenter = (latLng: TMap.LatLngDataTyping) => {
-  mapHandle?.panTo(latLng)
-}
 </script>
 
 <template>
-  <nav class="flex flex-col items-center">
-    <section :id="containerId" ref="wrapperContainerHandle" class="w-full h-full" />
-    <div class="w-full h-full p-2 border-box flex">
+  <nav flex flex-col items-center>
+    <section :id="props.containerId" ref="wrapperContainerHandle" wh-full />
+    <!-- 操作句柄 -->
+    <div wh-full p-2 border-box flex>
       <slot name="view-box">
-        <ElButtonGroup class="flex flex-row">
+        <ElButtonGroup flex flex-row>
           <ElButton type="primary" @click="to3d">3D</ElButton>
           <ElButton type="primary" @click="to2d">2D</ElButton>
         </ElButtonGroup>
@@ -142,7 +125,7 @@ const toCenter = (latLng: TMap.LatLngDataTyping) => {
             </ElButtonGroup>
           </div>
           <!-- 搜索 -->
-          <div @click="toCenter(it.location)" v-for="it in searchResults">
+          <div v-for="(it, idx) in searchResults" :key="idx" @click="toCenter(it.location)">
             <span>{{ it.address }}</span>
             <span>{{ it.title }}</span>
           </div>

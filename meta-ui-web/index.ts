@@ -5,7 +5,6 @@ import YSiderMenuItem from './sider-menu-item/index'
 import YConfigProvider from './config-provider'
 import YMapTencent from './map-tencent'
 
-export * from './common/NaiveUICommon'
 const components = [YConfigProvider, YMapTencent, YSiderMenuItem, YSiderMenu]
 export {YSiderMenu, YSiderMenuItem, YConfigProvider, YMapTencent}
 
@@ -14,3 +13,5 @@ export default {
     components.forEach(app.use)
   }
 }
+
+export * from './common'

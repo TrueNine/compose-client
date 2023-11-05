@@ -5,6 +5,7 @@
   "author": "TrueNine",
   "license": "private",
   "scripts": {
+    "prepare": "pnpm build",
     "build": "vite build",
     "pub": "run-s build pub-c",
     "pub-c": "pnpm publish --no-git-checks"

@@ -1,6 +1,6 @@
 import type {BaseEntity} from '@compose/compose-types'
 
-import {GoodsTyping} from '../enums'
+import {GoodsTyping} from '../enums/GoodsEnums'
 
 /**
  * 渠道全局配

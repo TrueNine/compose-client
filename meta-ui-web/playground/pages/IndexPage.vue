@@ -2,4 +2,5 @@
 
 <template>
   <div>index</div>
+  <VBtn>123</VBtn>
 </template>

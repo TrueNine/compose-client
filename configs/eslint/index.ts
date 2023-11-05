@@ -3,7 +3,7 @@ import {defineConfig} from 'eslint-define-config'
 
 import '@rushstack/eslint-patch/modern-module-resolution'
 
-module.exports = defineConfig({
+export default defineConfig({
   parser: 'vue-eslint-parser',
   parserOptions: {
     ecmaVersion: 'latest',

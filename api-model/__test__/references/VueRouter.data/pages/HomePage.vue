@@ -16,6 +16,6 @@ const menus: RouteOption[] = [
 </script>
 
 <template>
-  <YSiderMenu :route-table="menus" :permissions="[]" :roles="[]"></YSiderMenu>
+  <YSiderMenu :route-table="menus" :permissions="[]" :roles="[]"/>
   <RouterView />
 </template>

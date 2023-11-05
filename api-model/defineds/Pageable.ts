@@ -1,7 +1,7 @@
 import type {Asyncable, Nullable, Pq, Pr} from '@compose/compose-types'
 import {Pw} from '@compose/compose-types'
 
-import {isEmpty} from '../tools'
+import {isEmpty} from '../tools/Values'
 
 /**
  * # 遍历分页

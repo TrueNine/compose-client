@@ -5,9 +5,10 @@
   "author": "TrueNine",
   "license": "private",
   "scripts": {
-    "build-c": "rollup --config rollup.config.ts --configPlugin typescript",
-    "build": "vite build",
-    "pub": "run-s build-c pub-c",
+    "prepare": "pnpm build",
+    "build": "rollup --config rollup.config.ts --configPlugin typescript",
+    "build-v": "vite build",
+    "pub": "run-s build pub-c",
     "pub-c": "pnpm publish --no-git-checks",
     "test": "vitest"
   },
