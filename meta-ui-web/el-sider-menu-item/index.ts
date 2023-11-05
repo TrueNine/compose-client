@@ -1,7 +1,7 @@
 import {Vue} from '@compose/api-model'
 import type {RouteOption, StrOrNum} from '@compose/compose-types'
 
-import _c from './YSiderMenuItem.vue'
+import _c from './YElSiderMenuItem.vue'
 
 export interface Props {
   item: RouteOption

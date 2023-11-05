@@ -47,6 +47,9 @@ export default defineConfig({
     vueJsx(),
     unocss(),
     dts({
+      staticImport: true,
+      strictOutput: true,
+      clearPureImport: false,
       exclude: ['dist/**', '__build-src__/**', 'vite.config.ts', '**/__test__/**', 'vitest.config.ts', 'playground']
     }),
     vuetify({}),
@@ -54,7 +57,8 @@ export default defineConfig({
       imports: [
         'vue',
         {
-          'naive-ui': ['useDialog', 'useMessage', 'useNotification', 'useLoadingBar']
+          'naive-ui': ['useDialog', 'useMessage', 'useNotification', 'useLoadingBar'],
+          vuetify: ['useTheme']
         },
         'pinia',
         'quasar',
@@ -62,18 +66,35 @@ export default defineConfig({
         'vue-i18n',
         '@vueuse/core'
       ],
-      dts: 'unplugin-auto-imports.d.ts',
+      dts: 'imports-auto.d.ts',
       eslintrc: {
         enabled: true,
-        filepath: './.eslintrc-auto-import.json',
+        filepath: './imports-eslint.json',
         globalsPropValue: true
       }
     }),
     Components({
-      dts: 'component-auto-imports.d.ts',
+      dts: 'imports-comp.d.ts',
       deep: true,
       dirs: '.',
-      resolvers: [ElementPlusResolver(), NaiveUiResolver(), Vuetify3Resolver()]
+      resolvers: [
+        ElementPlusResolver(),
+        NaiveUiResolver(),
+        Vuetify3Resolver(),
+        [
+          {
+            type: 'component',
+            resolve: (name: string) => {
+              if (name.match(/^(N[A-Z]|n-[a-z])/)) {
+                return {
+                  name,
+                  from: '@compose/meta-ui-web'
+                }
+              }
+            }
+          }
+        ]
+      ]
     }),
     ViteFonts({
       google: {

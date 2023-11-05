@@ -5,7 +5,6 @@ import 'vuetify/styles'
 import 'element-plus/theme-chalk/dark/css-vars.css'
 
 import {NConfigProvider} from 'naive-ui'
-import {useTheme} from 'vuetify'
 
 import {
   ElementPlusDayjs as dayjs,
@@ -56,7 +55,6 @@ const elLocale = computed(() => {
 })
 
 const naiveDarkTheme = computed(() => (props.dark ? NaiveDarkTheme : NaiveLightTheme))
-
 const naiveLocale = computed(() => {
   switch (props.locale) {
     case 'zh-CN':
@@ -77,9 +75,9 @@ const naiveDateLocale = computed(() => {
 </script>
 
 <template>
-  <NConfigProvider ref="naiveThemeHandle" :theme="naiveDarkTheme" :locale="naiveLocale" :date-locale="naiveDateLocale">
-    <NGlobalStyle />
-    <ElConfigProvider :locale="elLocale">
+  <ElConfigProvider :locale="elLocale">
+    <NConfigProvider ref="naiveThemeHandle" :theme="naiveDarkTheme" :locale="naiveLocale" :date-locale="naiveDateLocale">
+      <NGlobalStyle />
       <VDefaultsProvider :defaults="{}">
         <VLocaleProvider :locale="props.locale">
           <VThemeProvider :theme="darkLight">
@@ -87,6 +85,6 @@ const naiveDateLocale = computed(() => {
           </VThemeProvider>
         </VLocaleProvider>
       </VDefaultsProvider>
-    </ElConfigProvider>
-  </NConfigProvider>
+    </NConfigProvider>
+  </ElConfigProvider>
 </template>

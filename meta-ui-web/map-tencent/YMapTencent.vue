@@ -5,10 +5,6 @@ import type {TMap} from 'compose-tmap'
 import {type Props} from './index'
 const mapDefaultContainerId: string = 'YMapTencent_Container_Wrapper'
 
-defineOptions({
-  name: 'YMapTencent'
-})
-
 const wrapperContainerHandle = ref<HTMLElement | null>(null)
 
 let lazyTMap: typeof TMap | null = null

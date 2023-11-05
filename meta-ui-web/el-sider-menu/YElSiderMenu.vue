@@ -5,7 +5,7 @@ import {ref, watch} from 'vue'
 import {ElMenu} from 'element-plus'
 
 import 'element-plus/es/components/menu/style/css'
-import YSiderMenuItem from '../sider-menu-item'
+import YSiderMenuItem from '../el-sider-menu-item'
 
 import type {Props} from './index'
 
@@ -31,7 +31,7 @@ watch(
 </script>
 
 <template>
-  <ElMenu router :collapse="collapsed">
+  <ElMenu router :collapse="!collapsed">
     <YSiderMenuItem v-for="(it, idx) in menus" :key="idx" :collapsed="collapsed" :item="it" :idx-key="it.uri">
       <template #icon="{item}">
         <div :class="[item.iconName ?? 'i-mdi-menu', item.iconClass ? item.iconClass : 'c-p', `text-2xl`]" />
@@ -42,3 +42,4 @@ watch(
     </YSiderMenuItem>
   </ElMenu>
 </template>
+../el-sider-menu-item

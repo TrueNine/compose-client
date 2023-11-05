@@ -1,6 +1,6 @@
 import {createApp} from 'vue'
 
-import {createVuetifyMount} from '../common/VuetifyCommon'
+import {createVuetifyMount} from '../common'
 import {naiveStyleAdaptor} from '../index'
 
 import App from './App.vue'

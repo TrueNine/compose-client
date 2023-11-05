@@ -18,8 +18,8 @@ pnpm-lock.yaml*
 node_modules/
 
 # unplugin-auto-imports vite plugin
-*auto-import.json
-*auto-imports.d.ts
+*imports*.json
+*imports*.d.ts
 
 # vscode check depd files
 target/
