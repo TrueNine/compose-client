@@ -9,7 +9,7 @@ import Components from 'unplugin-vue-components/vite'
 import {ElementPlusResolver, NaiveUiResolver, Vuetify3Resolver} from 'unplugin-vue-components/resolvers'
 import unocss from 'unocss/vite'
 import ViteFonts from 'unplugin-fonts/vite'
-import vuetify from 'vite-plugin-vuetify'
+import vuetify, {transformAssetUrls} from 'vite-plugin-vuetify'
 
 export default defineConfig({
   build: {
@@ -39,7 +39,11 @@ export default defineConfig({
     }
   },
   plugins: [
-    vue(),
+    vue({
+      template: {
+        transformAssetUrls
+      }
+    }),
     vueJsx(),
     unocss(),
     dts({
