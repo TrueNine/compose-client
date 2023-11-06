@@ -10,15 +10,30 @@ import {ElementPlusResolver, NaiveUiResolver, Vuetify3Resolver} from 'unplugin-v
 import unocss from 'unocss/vite'
 import ViteFonts from 'unplugin-fonts/vite'
 import vuetify, {transformAssetUrls} from 'vite-plugin-vuetify'
+import type {ModuleFormat} from 'rollup'
 
 export default defineConfig({
   build: {
     sourcemap: true,
     lib: {
       name: 'MetaUI',
-      fileName: '[name]',
-      entry: 'index.ts',
-      formats: ['es', 'cjs']
+      entry: ['index.ts', 'unplugin/index.ts'],
+      formats: ['es', 'cjs'],
+      fileName: (format: ModuleFormat) => {
+        let a: string
+        switch (format) {
+          case 'commonjs':
+          case 'cjs':
+            a = 'cjs'
+            break
+          case 'iife':
+          case 'es':
+          case 'esm':
+          default:
+            a = 'js'
+        }
+        return `[name].${a}`
+      }
     },
     rollupOptions: {
       output: {

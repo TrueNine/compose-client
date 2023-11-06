@@ -1,24 +1,24 @@
 <script lang="ts" setup>
 import {RouteStream} from '@compose/api-model'
-import type {RouteOption} from '@compose/compose-types'
-import {ref, watch} from 'vue'
-import {ElMenu} from 'element-plus'
 
-import 'element-plus/es/components/menu/style/css'
 import YSiderMenuItem from '../el-sider-menu-item'
 
-import type {Props} from './index'
+import type {Emits, Props} from './index'
 
 const props = withDefaults(defineProps<Props>(), {
   collapsed: false
 })
+const emits = defineEmits<Emits>()
 
-const menus = ref<RouteOption[]>(props.routeTable)
+const menus = computed({
+  get: () => props.routeTable,
+  set: v => emits('update:routeTable', v)
+})
 
 watch(
-  () => props.routeTable,
+  () => menus,
   v => {
-    const stream = new RouteStream(v, {
+    const stream = new RouteStream(v.value, {
       permissions: props.permissions,
       roles: props.roles
     })
@@ -42,4 +42,3 @@ watch(
     </YSiderMenuItem>
   </ElMenu>
 </template>
-../el-sider-menu-item

@@ -1,35 +1,55 @@
-// 需要安装依赖:  npm i eslint-define-config
+import '@rushstack/eslint-patch/modern-module-resolution'
+// @ts-ignore
+import typescriptEslintParser from '@typescript-eslint/parser'
 import {defineConfig} from 'eslint-define-config'
 
-import '@rushstack/eslint-patch/modern-module-resolution'
-
 export default defineConfig({
-  parser: 'vue-eslint-parser',
+  plugins: ['import', '@typescript-eslint'],
+  extends: [
+    'plugin:vue/vue3-essential',
+    'eslint:recommended',
+    '@vue/eslint-config-typescript',
+    'plugin:@typescript-eslint/eslint-recommended',
+    '@vue/eslint-config-prettier/skip-formatting',
+    'plugin:vue/vue3-recommended'
+  ],
   parserOptions: {
+    // @ts-ignore
+    parser: {
+      js: 'espree',
+      jsx: 'espree',
+      cjs: 'espree',
+      mjs: 'espree',
+      ts: typescriptEslintParser,
+      tsx: typescriptEslintParser,
+      cts: typescriptEslintParser,
+      mts: typescriptEslintParser
+    },
+    extraFileExtensions: ['.vue'],
+    ecmaFeatures: {
+      jsx: true
+    },
     ecmaVersion: 'latest',
-    parser: '@typescript-eslint/parser',
     sourceType: 'module'
   },
-  plugins: ['import'],
+  overrides: [
+    {
+      files: ['*.ts', '*.cts', '*.mts', '*.tsx', '*.vue'],
+      rules: {
+        'no-unused-vars': 'off',
+        '@typescript-eslint/no-unused-vars': 'off'
+      }
+    }
+  ],
   env: {
     browser: true,
-    es2022: true,
+    es2023: true,
     node: true,
     'vue/setup-compiler-macros': true
   },
-  extends: [
-    'plugin:vue/vue3-essential',
-    '@vue/eslint-config-typescript',
-    '@vue/eslint-config-prettier/skip-formatting',
-    'plugin:vue/vue3-recommended',
-    'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
-    'prettier',
-    'plugin:prettier/recommended'
-  ],
   rules: {
     'no-empty': 'off', //不允许空代码块
-    'prettier/prettier': 'error',
+    'prettier/prettier': 'off',
     // import排序
     'import/order': [
       'error',
@@ -93,14 +113,15 @@ export default defineConfig({
         ignoreRestSiblings: false
       }
     ],
+    'vue/singleline-html-element-content-newline': 'off',
     'vue/html-indent': 'off', // 关闭此规则 使用 prettier 的格式化规则，
     'vue/max-attributes-per-line': ['off'],
-    'vue/no-setup-props-destructure': 'off', // 优先使用驼峰
+    'vue/no-setup-props-reactivity-loss': 'error',
     'vue/component-name-in-template-casing': [
       'error',
       'PascalCase',
       {
-        ignores: [],
+        ignores: ['router-view', 'router-link', 'scroll-view'],
         registeredComponentsOnly: false
       }
     ],

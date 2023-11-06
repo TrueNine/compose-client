@@ -11,7 +11,7 @@ const settingsDrawer = ref(false)
       </VAppBarNavIcon>
       <!-- app 名称插槽 -->
       <VAppBarTitle>
-        <slot name="app-title">Application</slot>
+        <slot name="app-title"> Application </slot>
       </VAppBarTitle>
       <VSpacer />
       <!-- 各种右侧的设置按钮 -->

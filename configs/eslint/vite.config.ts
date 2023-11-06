@@ -14,7 +14,7 @@ export default defineConfig({
         preserveModulesRoot: '.',
         preserveModules: true
       },
-      external: ['eslint-define-config', '@rushstack/eslint-patch/modern-module-resolution']
+      external: ['eslint-define-config', '@rushstack/eslint-patch/modern-module-resolution', '@typescript-eslint/parser']
     }
   },
   plugins: [

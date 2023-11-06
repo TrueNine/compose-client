@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import 'dayjs/locale/zh-cn'
 import 'dayjs/locale/en'
-import 'vuetify/styles'
+import 'vuetify/lib/styles/main.css'
 import 'element-plus/theme-chalk/dark/css-vars.css'
 
 import {NConfigProvider} from 'naive-ui'

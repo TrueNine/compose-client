@@ -11,5 +11,8 @@ export interface Props {
   permissions: string[]
   roles: string[]
 }
+export interface Emits {
+  (e: 'update:routeTable', v: RouteOption[]): void
+}
 
 export default Vue.componentInstallToPlugin(_c, {YSiderMenuItem})

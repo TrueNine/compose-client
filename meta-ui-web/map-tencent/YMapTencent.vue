@@ -3,6 +3,7 @@ import {BasicMapZoomType, initTencentMapWebGlScript, LazyGetMapZoomType} from '@
 import type {TMap} from 'compose-tmap'
 
 import {type Props} from './index'
+
 const mapDefaultContainerId: string = 'YMapTencent_Container_Wrapper'
 
 const wrapperContainerHandle = ref<HTMLElement | null>(null)
@@ -108,8 +109,8 @@ const search = () => {
     <div wh-full p-2 border-box flex>
       <slot name="view-box">
         <ElButtonGroup flex flex-row>
-          <ElButton type="primary" @click="to3d">3D</ElButton>
-          <ElButton type="primary" @click="to2d">2D</ElButton>
+          <ElButton type="primary" @click="to3d"> 3D </ElButton>
+          <ElButton type="primary" @click="to2d"> 2D </ElButton>
         </ElButtonGroup>
       </slot>
       <div class="w-full pl-2">
@@ -117,7 +118,7 @@ const search = () => {
           <div class="flex flex-row">
             <ElButtonGroup class="flex flex-row w-full">
               <ElInput v-model="searchWord" />
-              <ElButton type="primary" @click="search">search</ElButton>
+              <ElButton type="primary" @click="search"> search </ElButton>
             </ElButtonGroup>
           </div>
           <!-- 搜索 -->
