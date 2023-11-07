@@ -3,11 +3,12 @@ import dts from 'vite-plugin-dts'
 
 export default defineConfig({
   build: {
+    minify: 'esbuild',
     sourcemap: true,
     lib: {
       fileName: '[name]',
       entry: 'index.ts',
-      formats: ['es', 'cjs']
+      formats: ['cjs', 'es']
     },
     rollupOptions: {
       output: {

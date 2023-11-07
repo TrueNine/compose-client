@@ -3,9 +3,9 @@
 <template>
   Auth
   <div>
-    <RouterView />
+    <RouterView name="auth-register" />
   </div>
   <div>
-    <RouterView name="auth___login" />
+    <RouterView name="auth-login" />
   </div>
 </template>

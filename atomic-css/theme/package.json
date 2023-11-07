@@ -1,11 +1,13 @@
 {
   "name": "@compose/atomic-css-theme",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "stylesheet abstract",
   "author": "TrueNine",
   "license": "private",
   "scripts": {
-    "build": "vite build",
+    "build-c": "vite build",
+    "build": "run-s type-check build-c",
+    "type-check": "vue-tsc --noEmit",
     "pub": "run-s build pub-c",
     "pub-c": "pnpm publish --no-git-checks"
   },

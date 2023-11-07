@@ -1,5 +1,5 @@
 import {Vue} from '@compose/api-model'
-import type {TMap} from 'compose-tmap'
+import type {TMap} from '@compose/tmap'
 import type {BasicMapZoomType} from '@compose/tmap'
 
 import _c from './YMapTencent.vue'
@@ -17,6 +17,9 @@ export interface Props {
   initCenter?: TMap.LatLngDataTyping
   doubleClickZoom?: boolean
   serviceKey?: string
-  styleId?: TMap.MapStyleIds
+  styleId?: number
   mapZoomType?: BasicMapZoomType
+}
+export interface Emits {
+  (e: 'update:viewMode', v: TMap.ViewMode): void
 }

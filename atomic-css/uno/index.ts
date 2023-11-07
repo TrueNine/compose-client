@@ -1,4 +1,4 @@
-import type {StaticShortcut, StaticRule} from 'unocss'
+import type {StaticRule, StaticShortcut} from 'unocss'
 import type {ThemeConfig} from '@compose/atomic-css-theme'
 
 export function unocssRules(cfg: ThemeConfig): StaticRule[] {
@@ -9,6 +9,8 @@ export function unocssRules(cfg: ThemeConfig): StaticRule[] {
     ['bg-s', {'background-color': cfg.secondaryColor}],
     ['c-w', {color: cfg.warningColor}],
     ['bg-w', {'background-color': cfg.warningColor}],
+    ['w-fit', {width: 'fit-content'}],
+    ['h-fit', {height: 'fit-content'}],
     ['c-e', {color: cfg.errorColor}],
     ['bg-e', {'background-color': cfg.errorColor}]
   ]

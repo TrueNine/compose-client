@@ -1,9 +1,10 @@
 {
   "name": "@compose/stylelint-config",
-  "version": "1.1.9",
+  "version": "1.1.10",
   "scripts": {
-    "prepare": "pnpm build",
-    "build": "vite build",
+    "build-c": "vite build",
+    "type-check": "vue-tsc --noEmit",
+    "build": "run-s type-check build-c",
     "pub": "run-s build pub-c",
     "pub-c": "pnpm publish --no-git-checks"
   },
@@ -30,7 +31,7 @@
     "stylelint-config-standard-vue": "^1.0.0",
     "stylelint-less": "^2.0.0",
     "stylelint-order": "^6.0.3",
-    "stylelint-scss": "^5.3.0"
+    "stylelint-scss": "^5.3.1"
   },
   "peerDependencies": {
     "postcss-html": "^1.5.0",

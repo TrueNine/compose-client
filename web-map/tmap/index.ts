@@ -1,67 +1,73 @@
-import type {TMap} from 'compose-tmap'
-import {Dom, queryParam} from '@compose/api-model'
-import type {WGS84} from '@compose/compose-types'
+import {LatLng as ExLatLng, type LatLngDataTyping as ExLatLngDataTyping, Point as ExPoint, type PointDataTyping as ExPointDataTyping} from './LatLng'
+import type {MapStyleIds as ExMapStyleIds, ViewMode as ExViewMode} from './Constants'
+import type {
+  EaseOptions as ExEaseOptions,
+  InfoWindowOptions as ExInfoWindowOptions,
+  MapOptions as ExMapOptions,
+  MultiMarkerOptions as ExMultiMarkerOptions,
+  PointGeometry as ExPointGeometry
+} from './options'
+import {InfoWindow as ExInfoWindow} from './infowindow'
+import {Map as ExMap} from './map'
+import type {MapEvents as ExMapEvents, MultiMarkerEvents as ExMultiMarkerEvents} from './events'
+import {MultiMarker as ExMultiMarker} from './multimarker'
+import type {
+  SearchErrorResult as ExSearchErrorResult,
+  SearchNearbyOptions as ExSearchNearbyOptions,
+  SearchRegionOptions as ExSearchRegionOptions,
+  SearchOptions as ExISearchOptions,
+  SearchResult as ExSearchResult
+} from './options/service'
+import {Search as ExSearch} from './services'
 
 export * from './Constants'
+export * from './common'
 
-export const WEBGL_JS_URL = 'https://map.qq.com/api/gljs'
+export declare namespace TMap {
+  export namespace service {
+    export type SearchErrorResult = ExSearchErrorResult
+    export type SearchResult = ExSearchResult
+    export type SearchNearbyOptions = ExSearchNearbyOptions
+    export type SearchOptions = ExISearchOptions
+    export type SearchRegionOptions = ExSearchRegionOptions
+    export class Search extends ExSearch {}
+  }
 
-/**
- * [附加库加载类型](https://lbs.qq.com/webApi/javascriptGL/glGuide/glBasic#3)
- */
-export type TencentLibraries = 'visualization' | 'tools' | 'geometry' | 'model' | 'view' | 'service'
+  export type LatLngDataTyping = ExLatLngDataTyping
+  export type PointDataTyping = ExPointDataTyping
+  export type ViewMode = ExViewMode
+  export type MultiMarkerEvents = ExMultiMarkerEvents
+  export type MapStyleIds = ExMapStyleIds
+  export type MapOptions = ExMapOptions
+  export type EaseOptions = ExEaseOptions
+  export type InfoWindowOptions = ExInfoWindowOptions
+  export type PointGeometry = ExPointGeometry
+  export type MapEvents = ExMapEvents
+  export type MultiMarkerOptions = ExMultiMarkerOptions
 
-/**
- * ## 腾讯地图初始化参数
- */
-export interface CreateTencentMapOptions {
-  loadQuery?: string
-  isAsync?: boolean
-  containerTag?: keyof HTMLElementTagNameMap
-  mapContainerId?: string
-  asyncFunName?: string
-  libraries?: TencentLibraries[]
+  export class LatLng extends ExLatLng {}
+
+  export class InfoWindow extends ExInfoWindow {}
+
+  export class Point extends ExPoint {}
+
+  export class MultiMarker extends ExMultiMarker {}
+
+  export class Map extends ExMap {}
+
+  export namespace constants {
+    export enum MAP_ZOOM_TYPE {
+      DEFAULT,
+      CENTER
+    }
+  }
 }
 
-const _default = {
-  loadQuery: '#tencent_map_basic_sdk_container_id',
-  isAsync: false,
-  asyncFunName: 'initTencentFromAsync',
-  containerTag: 'section' as keyof HTMLElementTagNameMap,
-  mapContainerId: 'tencent-tmap-webgl'
-}
-
-/**
- * ## 初始化腾讯地图
- * @param key sdk key
- * @param callback 加载脚本后的回调函数
- * @param options 加载选项
- */
-export function initTencentMapWebGlScript(
-  key: string,
-  callback: (container: HTMLElement, mapHandle: typeof TMap, ev?: Event) => void,
-  options: CreateTencentMapOptions = _default
-) {
-  const section = document.querySelector(options.loadQuery!)
-  const src = Dom.loadRemoteScriptTag(
-    `${WEBGL_JS_URL}${queryParam({
-      v: '1.exp',
-      key,
-      libraries: options.libraries
-    })}`
-  )
-  // 创建一个id容器
-  const mapContainer: HTMLElement = document.createElement(options.containerTag!)
-  mapContainer.id = options.mapContainerId!
-  section?.appendChild(mapContainer)
-  if (callback)
-    src.addEventListener('load', (ev: Event) => {
-      const handle = window.TMap as typeof TMap
-      callback(mapContainer, handle, ev)
-    })
-  return {src, mapContainer}
-}
-
-export function toWgs84(latLng: TMap.LatLng): WGS84 {
-  return latLng as WGS84
+declare global {
+  export interface Window {
+    TMap: typeof TMap & {
+      constants: typeof TMap.constants
+      service: typeof TMap.service
+    }
+  }
 }

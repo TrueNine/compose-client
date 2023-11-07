@@ -1,42 +1,53 @@
 <script lang="ts" setup>
+import type {TMap} from '@compose/tmap'
 import {BasicMapZoomType, initTencentMapWebGlScript, LazyGetMapZoomType} from '@compose/tmap'
-import type {TMap} from 'compose-tmap'
+import type {Nullable} from '@compose/compose-types'
 
-import {type Props} from './index'
+import type {Props} from './index'
 
 const mapDefaultContainerId: string = 'YMapTencent_Container_Wrapper'
-
 const wrapperContainerHandle = ref<HTMLElement | null>(null)
-
-let lazyTMap: typeof TMap | null = null
-let mapHandle: TMap.Map | null = null
-let multiMarkerLayer: TMap.MultiMarker | null = null
-let singleInfoWindow: TMap.InfoWindow | null = null
-
+let mapHandle: Nullable<TMap.Map> = null
+let multiMarkerLayer: Nullable<TMap.MultiMarker> = null
+let singleInfoWindow: Nullable<TMap.InfoWindow> = null
+let search: Nullable<TMap.service.Search> = null
 const props = withDefaults(defineProps<Props>(), {
   containerId: mapDefaultContainerId,
-  viewMode: '3D',
+  viewMode: '2D',
   serviceKey: undefined,
   zoom: 13,
   multiPoint: false,
-  styleId: undefined,
+  styleId: 1,
   doubleClickZoom: true,
   controlBtn: false,
   showCopyright: false,
-  initCenter: () => ({lat: 0, lng: 0}) as TMap.LatLng,
+  initCenter: () => ({lat: 0, lng: 0}),
   mapZoomType: () => BasicMapZoomType.DEFAULT
 })
+const is3dMode = ref(props.viewMode.toUpperCase() === '3D')
 
-const to2d = () => mapHandle?.setViewMode('2D')
-const to3d = () => mapHandle?.setViewMode('3D').setPitch(55)
-const toCenter = (latLng: TMap.LatLngDataTyping) => mapHandle?.panTo(latLng)
+const to2d = () => {
+  is3dMode.value = false
+  mapHandle?.setViewMode('2D')
+}
+const to3d = () => {
+  is3dMode.value = true
+  mapHandle?.setViewMode('3D').setPitch(55)
+}
+
+const toCenter = (latLng: TMap.LatLngDataTyping, zoom: boolean = false) => {
+  if (zoom) mapHandle?.setZoom(20)
+  mapHandle?.panTo(latLng)
+}
 
 const mapInitFn = (_: HTMLElement, t: typeof TMap) => {
-  lazyTMap = t
-  mapHandle = new t.Map(wrapperContainerHandle.value!, {
+  search = new window.TMap.service.Search({
+    pageSize: 20
+  })
+  mapHandle = new window.TMap.Map(wrapperContainerHandle.value!, {
     center: props.initCenter,
     viewMode: props.viewMode,
-    mapStyleId: props.styleId,
+    mapStyleId: `style${props.styleId}`,
     doubleClickZoom: props.doubleClickZoom,
     showControl: props.controlBtn,
     mapZoomType: LazyGetMapZoomType.getTencentMapZoomType(props.mapZoomType!),
@@ -45,7 +56,7 @@ const mapInitFn = (_: HTMLElement, t: typeof TMap) => {
   multiMarkerLayer = new t.MultiMarker({map: mapHandle!})
 
   if (!props.showCopyright && wrapperContainerHandle.value) {
-    const re = wrapperContainerHandle.value!.querySelector('div div div div div div') as HTMLElement
+    const re = wrapperContainerHandle.value!.querySelector('map div div div') as HTMLElement
     re.style.display = 'none'
   }
 
@@ -58,7 +69,10 @@ const mapInitFn = (_: HTMLElement, t: typeof TMap) => {
         offset: {x: 0, y: -32}
       })
     if (!props.multiPoint) multiMarkerLayer?.remove(multiMarkerLayer?.getGeometries().map(r => r.id!))?.updateGeometries([])
-    multiMarkerLayer?.add({position: ev.latLng, styleId: props.styleId})
+    multiMarkerLayer?.add({position: ev.latLng, styleId: `style${props.styleId}`})
+    multiMarkerLayer?.on('click', () => {
+      if (!props.multiPoint) multiMarkerLayer?.remove(multiMarkerLayer?.getGeometries().map(r => r.id!))?.updateGeometries([])
+    })
     toCenter(ev.latLng)
     if (ev.poi && !props.multiPoint) singleInfoWindow.setContent(`<div c-black>${ev.poi.name}</div>`).setPosition(ev.latLng).open()
     else singleInfoWindow.close()
@@ -75,59 +89,83 @@ onMounted(() => {
 
 onUnmounted(() => mapHandle?.destroy())
 
+const searchAddressCode = ref<string>('')
 const searchWord = ref<string>('')
 const searchResults = ref<TMap.service.SearchResult['data']>([])
-const search = () => {
+const searchNearby = () => {
   if (props.serviceKey) {
-    const b = new lazyTMap!.service.Search({
-      pageSize: 10
-    })
     const center = mapHandle!.getCenter()
-    console.log(b)
-    b.searchNearby({
-      center: center,
-      keyword: searchWord.value,
-      radius: 1000,
-      servicesk: props.serviceKey
-    })
-      .then(e => {
+    search
+      ?.searchNearby({
+        center: center,
+        keyword: searchWord.value,
+        radius: 1000,
+        servicesk: props.serviceKey
+      })
+      ?.then(e => {
         searchResults.value = e.data
         console.log(e.data)
       })
-      .catch(e => {
+      ?.catch(e => {
         console.error(e)
       })
-    console.log(b)
+  }
+}
+
+const searchRegion = () => {
+  if (props.serviceKey) {
+    search
+      ?.searchRegion({
+        cityName: searchAddressCode.value,
+        keyword: searchWord.value,
+        servicesk: props.serviceKey
+      })
+      ?.then(e => {
+        searchResults.value = e.data
+        console.log(e.data)
+      })
+      ?.catch(e => {
+        console.error(e)
+      })
   }
 }
 </script>
 
 <template>
-  <nav flex flex-col items-center>
-    <section :id="props.containerId" ref="wrapperContainerHandle" wh-full />
-    <!-- 操作句柄 -->
-    <div wh-full p-2 border-box flex>
-      <slot name="view-box">
-        <ElButtonGroup flex flex-row>
-          <ElButton type="primary" @click="to3d"> 3D </ElButton>
-          <ElButton type="primary" @click="to2d"> 2D </ElButton>
-        </ElButtonGroup>
+  <section relative flex-col transition-all-500>
+    <map :id="props.containerId" ref="wrapperContainerHandle" flex />
+    <!-- 自定义操作句柄 -->
+    <nav absolute top-2 left-2 z-1000>
+      <slot name="view-box" :view-mode="is3dMode" :to-2d="to2d" :to-3d="to3d">
+        <VBtnGroup>
+          <VBtn size="small" :disabled="is3dMode" color="primary" @click="to3d">3D</VBtn>
+          <VBtn size="small" :disabled="!is3dMode" color="primary" @click="to2d">2D</VBtn>
+        </VBtnGroup>
       </slot>
-      <div class="w-full pl-2">
-        <slot name="search-box">
-          <div class="flex flex-row">
-            <ElButtonGroup class="flex flex-row w-full">
-              <ElInput v-model="searchWord" />
-              <ElButton type="primary" @click="search"> search </ElButton>
-            </ElButtonGroup>
-          </div>
-          <!-- 搜索 -->
-          <div v-for="(it, idx) in searchResults" :key="idx" @click="toCenter(it.location)">
-            <span>{{ it.address }}</span>
-            <span>{{ it.title }}</span>
-          </div>
-        </slot>
+    </nav>
+
+    <!-- 操作句柄 -->
+    <div flex w-full min-w-full>
+      <slot name="search-box">
+        <div class="flex flex-row w-full">
+          <ElInput v-model="searchWord" />
+          <VBtn color="primary" @click="searchNearby">search</VBtn>
+        </div>
+        <div class="flex flex-row w-full">
+          <ElInput v-model="searchAddressCode" />
+          <ElInput v-model="searchWord" />
+          <VBtn color="primary" @click="searchRegion">search</VBtn>
+        </div>
+      </slot>
+    </div>
+    <!-- 搜索结果 -->
+    <div>
+      <div v-for="(it, idx) in searchResults" :key="idx" cursor-pointer py-1 @click="toCenter(it.location, true)">
+        <VChip>{{ it.title }}</VChip>
+        <span>{{ it.address }}</span>
+        <VChip>{{ it.ad_info.adcode }}</VChip>
+        <VDivider />
       </div>
     </div>
-  </nav>
+  </section>
 </template>

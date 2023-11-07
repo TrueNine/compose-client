@@ -1,8 +1,7 @@
 import {type Late, STR_EMPTY, STR_SLASH} from '@compose/compose-types'
 import type {RouteRecordRaw} from 'vue-router'
 
-import {camelTo} from '../tools/Strings'
-import {cloneDeep} from '../references/LodashEs'
+import {camelTo} from '../tools/Strings' // 定义路由处理选项的接口
 
 // 定义路由处理选项的接口
 export interface HandleRouteOption {
@@ -14,6 +13,7 @@ export interface HandleRouteOption {
   isFn: boolean
   isView: boolean
   isSubPage: boolean
+  isFolderSubPage: boolean
   source: ImportMeta
   cfg?: HandleRouteOption
   parentUrl?: string
@@ -33,44 +33,60 @@ export const VIEW_PAGE = 'View'
 export function resolveImport(tp: [string, ImportMeta]): HandleRouteOption {
   const metaUrl = tp[0]
   const source = tp[1]
+
   const paths = metaUrl.split(PAGE).filter(Boolean).slice(1).join('').split('/').filter(Boolean)
   const fileName = paths.pop()!
-  const isFn = typeof source === 'function'
-  const isSubPage = fileName.includes(SUB_PAGE)
-  const isView = fileName.includes(VIEW_PAGE)
-  const url = `/${paths.join(STR_SLASH)}`
-
   if (paths.length === 0) paths.push(STR_SLASH)
+  if (paths[0] !== STR_SLASH) paths.unshift(STR_SLASH)
 
-  const name = url.replaceAll(STR_SLASH, '-').slice(1) || '-'
+  const isFn = typeof source === 'function'
+  const isView = fileName.includes(VIEW_PAGE)
+  const isFolderSubPage = paths.length > 1
+  const isSubPage = fileName.includes(SUB_PAGE)
+
+  const url = paths.join(STR_SLASH).replace(`${STR_SLASH}${STR_SLASH}`, STR_SLASH)
+
+  const name = url.slice(1).replaceAll(STR_SLASH, '-') || '-'
   const result: HandleRouteOption = {
     url,
     isView,
     isSubPage,
+    isFolderSubPage,
     metaUrl,
     source,
     isFn,
     paths,
     fileName,
     name,
-    fullUrl: 'undefined'
+    fullUrl: url
+  }
+  if (isFolderSubPage && !(isSubPage || isView)) {
+    result.url = paths[paths.length - 1]
+    result.parentUrl = paths.slice(0, -1).join(STR_EMPTY)
   }
 
+  if (isSubPage) {
+    result.url = camelTo(fileName.split(SUB_PAGE)[0], STR_SLASH)
+    result.name = result.name + '-' + camelTo(fileName.split(SUB_PAGE)[0], STR_SLASH)
+  }
+  if (isView) {
+    result.url = camelTo(fileName.split(VIEW_PAGE)[0], STR_SLASH)
+    result.name = result.name + '-' + camelTo(fileName.split(VIEW_PAGE)[0], STR_SLASH)
+  }
   if (isSubPage || isView) {
-    if (isSubPage) result.url = camelTo(fileName.split(SUB_PAGE)[0], STR_SLASH)
-    if (isView) result.url = camelTo(fileName.split(VIEW_PAGE)[0], STR_SLASH)
     result.parentUrl = url
     result.paths.push(result.url)
-    result.name = `${result.parentUrl.slice(1).replaceAll(STR_SLASH, '-') || '-'}${NAME_LINK}${result.url.replaceAll(STR_SLASH, '-') || '-'}`
+    result.fullUrl = `${result.parentUrl}${STR_SLASH}${result.url}`
   }
-
-  result.fullUrl = isSubPage ? `${result.parentUrl}${STR_SLASH}${result.url}` : result.url
-
   return result
 }
 
+export type CustomRouteRecordRaw = RouteRecordRaw & {
+  fullPath: string
+}
+
 // 解析子路径
-export function resolveSubPath(pathRouteOption: HandledRouteOptions): RouteRecordRaw[] {
+export function resolveSubPath(pathRouteOption: HandledRouteOptions): CustomRouteRecordRaw[] {
   const all: HandleRouteOption[] = []
   const view: HandleRouteOption[] = []
 
@@ -81,7 +97,7 @@ export function resolveSubPath(pathRouteOption: HandledRouteOptions): RouteRecor
   })
 
   // 处理普通页面的路由
-  const allRoutes: Late<RouteRecordRaw>[] = all.map(e => {
+  const allRoutes: Late<CustomRouteRecordRaw>[] = all.map(e => {
     return {
       path: e.url,
       name: e.name,
@@ -89,36 +105,54 @@ export function resolveSubPath(pathRouteOption: HandledRouteOptions): RouteRecor
         default: e.source
       },
       children: [],
-      meta: (e.cfg?.source as object) ?? {}
-    } as RouteRecordRaw
+      meta: (e.cfg?.source as object) ?? {},
+      fullPath: e.fullUrl
+    } as CustomRouteRecordRaw
   })
 
-  const result: RouteRecordRaw[] = []
+  const result: CustomRouteRecordRaw[] = []
 
   for (let i = 0; i < allRoutes.length; i++) {
     const e = allRoutes[i]
     if (!e) continue
-    const opt = all.find(r => r.url === e?.path)!
-    if (opt.isSubPage) {
-      allRoutes.find(r => r?.path === opt.parentUrl)?.children?.push(cloneDeep(e))
-      allRoutes[i] = undefined
-    } else {
-      result.push(e)
+    const opt = all.find(r => r.name === e?.name)!
+    if (opt.isSubPage || opt.isFolderSubPage) {
+      allRoutes.find(r => r?.fullPath === opt?.parentUrl)?.children?.push(e)
+      //allRoutes[i] = undefined
+    } else result.push(e)
+  }
+
+  function cleanFirstSlash(path: string): string {
+    if (path === STR_SLASH) return STR_SLASH
+    return path[0] === STR_SLASH ? path.replace(STR_SLASH, STR_EMPTY) : path
+  }
+
+  function deepFind(
+    routes: RouteRecordRaw[],
+    paths: Late<string[]> = undefined,
+    startLength = 0,
+    last: Late<RouteRecordRaw> = undefined
+  ): Late<RouteRecordRaw> {
+    if (!paths || paths.length === 0) return undefined
+    if (routes.length === 0 && startLength === 0) return undefined
+    if (paths.length === startLength) return last
+    const currentPath = paths[startLength]
+    for (let i = 0; i < routes.length; i++) {
+      if (cleanFirstSlash(currentPath) === cleanFirstSlash(routes[i].path)) {
+        return deepFind(routes[i].children!, paths, startLength + 1, routes[i])
+      }
     }
+    return undefined
   }
 
   // 处理视图页面的路由
   view.forEach(e => {
-    const root = result.find(r => r.path === e.parentUrl)
+    const root = deepFind(result, e.paths.slice(0, -1))
     if (root && root.children !== undefined) {
       const child = root.children
-      /*
-       * 找到 根路由
-       * 将子路
-       * */
       const initPath = child.find(e => e.path === STR_EMPTY)
       if (initPath) initPath.components![e.name] = e.source
-      else child.push({path: STR_EMPTY, name: e.name, components: {[e.name]: e.source}})
+      else child.push({path: STR_EMPTY, name: root.name, components: {[e.name]: e.source}})
     }
   })
 

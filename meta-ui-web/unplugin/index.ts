@@ -3,17 +3,12 @@ function camelTo(str: string, sep: string = '-') {
 }
 export type ResolverType = 'component' | 'directive'
 function resolveComponent(name: string) {
-  if (name.match(/^Y[A-Z]/)) return {name, from: '@compose/meta-ui-web'}
-}
-
-function resolveStyle(name: string) {
-  if (name.match(/^Y[A-Z]/)) {
-    const packageName = camelTo(name, '-')
+  if (name.match(/^Y[A-Z]/))
     return {
-      name: name,
-      from: `@compose/meta-ui-web/dist/${packageName}/index.css`
+      name,
+      from: '@compose/meta-ui-web',
+      satisfies: [`@compose/meta-ui-web/dist/${camelTo(name)}/index.css`]
     }
-  }
 }
 
 export const MetaUiWebResolver = () => {
@@ -21,10 +16,6 @@ export const MetaUiWebResolver = () => {
     {
       type: 'component' as ResolverType,
       resolve: resolveComponent
-    },
-    {
-      type: 'directive' as ResolverType,
-      resolve: resolveStyle
     }
   ]
 }

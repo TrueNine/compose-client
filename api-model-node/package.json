@@ -1,11 +1,13 @@
 {
   "name": "@compose/api-model-node",
-  "version": "1.1.8",
+  "version": "1.1.9",
   "description": "yan100 client nodejs kit",
   "author": "TrueNine",
   "license": "private",
   "scripts": {
-    "build": "vite build",
+    "build-c": "vite build",
+    "build": "run-s type-check build-c",
+    "type-check": "vue-tsc --noEmit",
     "pub": "run-s build pub-c",
     "pub-c": "pnpm publish --no-git-checks"
   },

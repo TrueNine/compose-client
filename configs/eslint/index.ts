@@ -1,5 +1,4 @@
-import '@rushstack/eslint-patch/modern-module-resolution'
-// @ts-ignore
+import '@rushstack/eslint-patch/modern-module-resolution' // @ts-ignore
 import typescriptEslintParser from '@typescript-eslint/parser'
 import {defineConfig} from 'eslint-define-config'
 
@@ -114,9 +113,9 @@ export default defineConfig({
       }
     ],
     'vue/singleline-html-element-content-newline': 'off',
-    'vue/html-indent': 'off', // 关闭此规则 使用 prettier 的格式化规则，
+    'vue/html-indent': 'off',
     'vue/max-attributes-per-line': ['off'],
-    'vue/no-setup-props-reactivity-loss': 'error',
+    'vue/no-setup-props-reactivity-loss': 'off',
     'vue/component-name-in-template-casing': [
       'error',
       'PascalCase',

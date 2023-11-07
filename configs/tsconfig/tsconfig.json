@@ -21,7 +21,7 @@
     "noEmit": true,
     "noImplicitOverride": true,
     "noUnusedLocals": true,
-    "useUnknownInCatchVariables": false,
+    "useUnknownInCatchVariables": true,
     // 不允许使用 any
     "noImplicitAny": true
   }

@@ -1,7 +1,10 @@
 {
   "extends": "@compose/tsconfig/tsconfig.json",
   "compilerOptions": {
-    "baseUrl": "."
+    "baseUrl": ".",
+    "declaration": true,
+    "declarationMap": true,
+    "declarationDir": "dist"
   },
   "exclude": ["dist"]
 }

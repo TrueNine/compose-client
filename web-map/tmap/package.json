@@ -1,12 +1,13 @@
 {
   "name": "@compose/tmap",
-  "version": "0.0.18",
+  "version": "0.0.28",
   "description": "腾讯地图 SDK",
   "author": "TrueNine",
   "license": "private",
   "scripts": {
     "build": "vite build",
-    "pub": "run-s build pub-c",
+    "pub": "run-s type-check build pub-c",
+    "type-check": "vue-tsc --noEmit",
     "pub-c": "pnpm publish --no-git-checks"
   },
   "type": "module",

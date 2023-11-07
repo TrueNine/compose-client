@@ -1,6 +1,6 @@
 {
   "name": "@compose/tsconfig",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "main": "tsconfig.json",
   "scripts": {
     "pub": "pnpm publish --no-git-checks"
