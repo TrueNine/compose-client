@@ -4,11 +4,18 @@ import {RouteStream} from '@compose/api-model'
 import YSiderMenuItem from '../el-sider-menu-item'
 
 import type {Emits, Props} from './index'
+import {STR_EMPTY, STR_SLASH} from '@compose/compose-types'
 
 const props = withDefaults(defineProps<Props>(), {
-  collapsed: false
+  collapsed: false,
+  routeMode: true,
+  pathPrefix: '',
+  roles: () => [],
+  permissions: () => []
 })
+
 const emits = defineEmits<Emits>()
+const prefix = computed(() => (props.pathPrefix ? props.pathPrefix + STR_SLASH : STR_EMPTY))
 
 const menus = computed({
   get: () => props.routeTable,
@@ -31,14 +38,12 @@ watch(
 </script>
 
 <template>
-  <ElMenu router :collapse="!collapsed">
-    <YSiderMenuItem v-for="(it, idx) in menus" :key="idx" :collapsed="collapsed" :item="it" :idx-key="it.uri">
+  <ElMenu :router="routeMode" :collapse="!collapsed">
+    <YSiderMenuItem v-for="(it, idx) in menus" :key="idx" :collapsed="collapsed" :item="it" :idx-key="prefix + it.uri">
       <template #icon="{item}">
         <div :class="[item.iconName ?? 'i-mdi-menu', item.iconClass ? item.iconClass : 'c-p', `text-2xl`]" />
       </template>
-      <template #title="{item}">
-        <span>{{ item.name }}</span>
-      </template>
+      <template #title="{item}">{{ item.name }}</template>
     </YSiderMenuItem>
   </ElMenu>
 </template>

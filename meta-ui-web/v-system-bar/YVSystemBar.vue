@@ -1,6 +1,9 @@
 <script setup lang="ts">
+import type {Slots} from './index'
+
 const drawer = ref(false)
 const settingsDrawer = ref(false)
+defineSlots<Slots>()
 </script>
 <template>
   <VApp>
@@ -32,7 +35,7 @@ const settingsDrawer = ref(false)
     <!-- 显示主区域 -->
     <VMain>
       <VContainer>
-        <slot name="container" />
+        <slot />
       </VContainer>
     </VMain>
   </VApp>

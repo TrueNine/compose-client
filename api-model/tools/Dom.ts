@@ -37,4 +37,17 @@ export class Dom {
     window.URL.revokeObjectURL(a.href)
     document.body.removeChild(a)
   }
+
+  /**
+   * ## 使用 a 标签进行下载
+   * @param url 下载链接
+   * @param downloadName 下载的文件名称
+   */
+  public static download(url: string, downloadName = 'noneFile') {
+    const a = document.createElement('a')
+    a.href = url
+    a.download = downloadName
+    document.body.appendChild(a).click()
+    document.body.removeChild(a)
+  }
 }

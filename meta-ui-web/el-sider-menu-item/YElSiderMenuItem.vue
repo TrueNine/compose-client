@@ -1,10 +1,6 @@
 <script lang="ts" setup>
-import type {RouteOption} from '@compose/compose-types'
+import {type RouteOption, type SafeAny} from '@compose/compose-types'
 import {isNonEmpty} from '@compose/api-model'
-import {ElMenuItem, ElSubMenu} from 'element-plus'
-
-import 'element-plus/es/components/menu-item/style/css'
-import 'element-plus/es/components/sub-menu/style/css'
 
 import YElSiderMenuItem from './YElSiderMenuItem.vue'
 
@@ -13,8 +9,14 @@ import type {Props} from './index'
 withDefaults(defineProps<Props>(), {
   collapsed: false,
   iconName: 'i-mdi-menu',
-  idxKey: undefined
+  idxKey: undefined,
+  parentIndex: ''
 })
+
+defineSlots<{
+  icon(props: {item: RouteOption}): SafeAny
+  title(props: {item: RouteOption}): SafeAny
+}>()
 
 function isSub(opt: RouteOption): boolean {
   return isNonEmpty(opt?.sub)
