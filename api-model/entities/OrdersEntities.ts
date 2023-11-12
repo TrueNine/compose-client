@@ -1,27 +1,26 @@
-import type {ISO8601DatetimeFormat, BaseEntity} from '@compose/compose-types'
+import type {Decimal, FullAddressDetails, IEntity, Int, ReferenceId, Timestamp} from '@compose/compose-types'
 
 import {GoodsTyping, OrderStatusTyping, PayChannelTyping, PaymentTyping} from '../enums'
 
-import type {FullAddressDetails} from './Address'
 import type {FullGoodsUnit} from './GoodsEntities'
 
-export interface Orders extends BaseEntity {
-  type?: number
+export interface Orders extends IEntity {
+  type?: Int
   orderCode?: string
   customerName?: string
   customerLandline?: string
   customerPhone?: string
   deliveryAddressDetailsId?: string
   orderRemark?: string
-  requireTime?: ISO8601DatetimeFormat
-  delayedTime?: ISO8601DatetimeFormat
-  startTime?: ISO8601DatetimeFormat
-  endTime?: ISO8601DatetimeFormat
+  requireTime?: Timestamp
+  delayedTime?: Timestamp
+  startTime?: Timestamp
+  endTime?: Timestamp
   status?: OrderStatusTyping
-  totalPrice?: number
+  totalPrice?: Decimal
   ordersPayRecordId?: string
-  userId?: string
-  createTime?: ISO8601DatetimeFormat
+  userId?: ReferenceId
+  createTime?: Timestamp
 }
 
 export interface FullOrders extends Orders {
@@ -30,7 +29,7 @@ export interface FullOrders extends Orders {
   orderGoods?: FullOrdersGoods[]
 }
 
-export interface OrdersGoods extends BaseEntity {
+export interface OrdersGoods extends IEntity {
   subtotal?: number
   quantity?: number
   goodsGroupOldPrice?: number
@@ -50,7 +49,7 @@ export interface OrdersGoods extends BaseEntity {
   goodsType?: GoodsTyping
 }
 
-export interface OrdersPayRecord extends BaseEntity {
+export interface OrdersPayRecord extends IEntity {
   payChannelType?: PayChannelTyping
   payType?: PaymentTyping
   orderCode?: string

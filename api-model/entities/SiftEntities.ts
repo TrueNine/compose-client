@@ -1,9 +1,9 @@
-import type {BaseEntity} from '@compose/compose-types'
+import type {IEntity} from '@compose/compose-types'
 
 /**
  * 品牌
  */
-export interface Brand extends BaseEntity {
+export interface Brand extends IEntity {
   ordered: number
   logoImgId?: string
   title: string
@@ -13,7 +13,7 @@ export interface Brand extends BaseEntity {
 /**
  * 分类
  */
-export interface Category extends BaseEntity {
+export interface Category extends IEntity {
   ordered: number
   title: string
   doc?: string

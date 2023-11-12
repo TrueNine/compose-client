@@ -1,18 +1,4 @@
 /**
- * 附件存储类别
- */
-export enum AttachmentTyping {
-  /**
-   * 文件
-   */
-  ATTACHMENT = 0,
-  /**
-   * 根路径
-   */
-  BASE_URL = 1
-}
-
-/**
  * 性别枚举
  */
 export enum GenderTyping {

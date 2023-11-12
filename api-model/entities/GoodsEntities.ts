@@ -1,15 +1,15 @@
 import type {Duration} from 'moment'
-import type {BaseEntity} from '@compose/compose-types'
+import type {IEntity} from '@compose/compose-types'
+import type {LinkedAttachment} from '@compose/compose-types'
 
 import {GoodsChangeRecordTyping, GoodsInfoTyping, GoodsTyping} from '../enums'
 
 import type {Brand, Category} from './SiftEntities'
-import type {LinkedAttachment} from './Attachment'
 
 /**
  * 商品信息
  */
-export interface GoodsInfo extends BaseEntity {
+export interface GoodsInfo extends IEntity {
   title?: string
   secondaryTitle?: string
   brandId?: string
@@ -54,7 +54,7 @@ export interface FullGoodsInfo extends GoodsInfo {
 /**
  * 商品单位
  */
-export interface GoodsUnit extends BaseEntity {
+export interface GoodsUnit extends IEntity {
   extendsGoodsInfoId?: string
   goodsInfoId?: string
   forever?: boolean
@@ -75,7 +75,7 @@ export interface FullGoodsUnit extends GoodsUnit {
 /**
  * 商品规格
  */
-export interface GoodsUnitSpecification extends BaseEntity {
+export interface GoodsUnitSpecification extends IEntity {
   specName?: string
   specValue?: string
   specCode?: string
@@ -84,7 +84,7 @@ export interface GoodsUnitSpecification extends BaseEntity {
 /**
  * 商品参数
  */
-export interface GoodsParams extends BaseEntity {
+export interface GoodsParams extends IEntity {
   paramName?: string
   paramValue?: string
 }
@@ -92,7 +92,7 @@ export interface GoodsParams extends BaseEntity {
 /**
  * 商品详情图
  */
-export interface GoodsInfoDetailsImages extends BaseEntity {
+export interface GoodsInfoDetailsImages extends IEntity {
   imgId?: number
   ordered?: number
   goodsInfoId?: number
@@ -105,7 +105,7 @@ export interface FullGoodsInfoDetailsImages extends GoodsInfoDetailsImages {
 /**
  * 商品单位变动记录
  */
-export interface GoodsUnitChangeRecord extends BaseEntity {
+export interface GoodsUnitChangeRecord extends IEntity {
   goodsUnitId?: number
   modifierUserId?: number
   newPrice?: number
@@ -118,7 +118,7 @@ export interface GoodsUnitChangeRecord extends BaseEntity {
 /**
  * 商品组
  */
-export interface GoodsGroup extends BaseEntity {
+export interface GoodsGroup extends IEntity {
   goodsInfoId?: number
   title?: string
   doc?: string

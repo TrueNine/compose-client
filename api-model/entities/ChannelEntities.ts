@@ -1,18 +1,18 @@
-import type {BaseEntity} from '@compose/compose-types'
+import type {IEntity} from '@compose/compose-types'
 
 import {GoodsTyping} from '../enums/GoodsEnums'
 
 /**
  * 渠道全局配
  */
-export interface ChannelGlobalConfig extends BaseEntity {
+export interface ChannelGlobalConfig extends IEntity {
   allowMirrorPenetration?: string
 }
 
 /**
  * 渠道
  */
-export interface Channels extends BaseEntity {
+export interface Channels extends IEntity {
   pid?: string
   leadId?: string
   brandId?: string
@@ -26,7 +26,7 @@ export interface Channels extends BaseEntity {
 /**
  * 渠道商品组镜像
  */
-export interface ChannelMirrorGoods extends BaseEntity {
+export interface ChannelMirrorGoods extends IEntity {
   channelId: string
   mirrorType: number
   goodsType: GoodsTyping
@@ -57,7 +57,7 @@ export interface ChannelMirrorGoods extends BaseEntity {
 /**
  * 渠道结算记录
  */
-export interface ChannelCommissionRecord extends BaseEntity {
+export interface ChannelCommissionRecord extends IEntity {
   ordersId?: string
   ordersGoodsId?: string
   goodsUnitOldTitle?: string
