@@ -6,11 +6,5 @@
     "declarationMap": true,
     "declarationDir": "dist"
   },
-  "exclude": [
-    "node_modules",
-    "dist",
-    "es",
-    "lib",
-    "types"
-  ]
+  "exclude": ["node_modules", "dist", "es", "lib", "types"]
 }

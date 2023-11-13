@@ -4,11 +4,7 @@
     "baseUrl": ".",
     "declaration": true,
     "declarationMap": true,
-    "emitDeclarationOnly": true,
-    "emitDecoratorMetadata": true,
     "declarationDir": "dist"
   },
-  "exclude": [
-    "dist"
-  ]
+  "exclude": ["dist"]
 }

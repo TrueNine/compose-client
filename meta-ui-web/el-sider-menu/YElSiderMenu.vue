@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import {RouteStream} from '@compose/api-model'
+import {STR_EMPTY, STR_SLASH} from '@compose/compose-types'
 
 import YSiderMenuItem from '../el-sider-menu-item'
 
 import type {Emits, Props} from './index'
-import {STR_EMPTY, STR_SLASH} from '@compose/compose-types'
 
 const props = withDefaults(defineProps<Props>(), {
   collapsed: false,
