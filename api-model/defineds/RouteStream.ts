@@ -1,5 +1,5 @@
 import type {Maybe, MaybeReadonlyArray, Nullable, RouteOption} from '@compose/compose-types'
-import {STR_EMPTY} from '@compose/compose-types'
+import {STR_EMPTY, STR_SLASH} from '@compose/compose-types'
 
 import {maybeArray, maybeReadonlyArray} from '../tools/Array'
 import {cloneDeep} from '../references/LodashEs'
@@ -18,12 +18,13 @@ interface MatchConfig {
  * ## 路由选项流式操作API
  */
 export class RouteStream {
-  private static readonly _SLASH = '/'
+  private static readonly _SLASH = STR_SLASH
   private readonly _routeTable: readonly RouteOption[]
   private _roles: readonly string[]
   private _permissions: readonly string[]
   private _rootPath: string
   private _allowUndefined: boolean
+
   private static _defaultClipConfig: MatchConfig = {
     matchRole: true,
     matchPermissions: true,
@@ -42,11 +43,10 @@ export class RouteStream {
 
   getVisible(): readonly RouteOption[] {
     const _newRouteOption = cloneDeep(this._routeTable)
+
     function _deep(sub = _newRouteOption) {
       return sub
-        .filter(r => {
-          return !r.hidden
-        })
+        .filter(r => Boolean(!r))
         .map(r => {
           const _n = cloneDeep(r)
           if (r.sub) _n.sub = _deep(r.sub)

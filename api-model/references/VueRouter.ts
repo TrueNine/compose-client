@@ -1,7 +1,8 @@
-import {type Late, STR_EMPTY, STR_SLASH} from '@compose/compose-types'
+import {type Late, type SafeAny, STR_EMPTY, STR_SLASH} from '@compose/compose-types'
 import type {RouteRecordRaw} from 'vue-router'
+import type {RouteRecordRedirectOption} from 'vue-router'
 
-import {camelTo} from '../tools/Strings' // 定义路由处理选项的接口
+import {camelTo} from '../tools'
 
 // 定义路由处理选项的接口
 export interface HandleRouteOption {
@@ -85,6 +86,14 @@ export type CustomRouteRecordRaw = RouteRecordRaw & {
   fullPath: string
 }
 
+function resolvePageConfigToConfig(importMeta?: HandleRouteOption) {
+  if (importMeta) {
+    const cfg = importMeta.source as unknown as Late<PageConfig>
+    if (cfg) return cfg
+  }
+  return undefined
+}
+
 // 解析子路径
 export function resolveSubPath(pathRouteOption: HandledRouteOptions): CustomRouteRecordRaw[] {
   const all: HandleRouteOption[] = []
@@ -98,14 +107,17 @@ export function resolveSubPath(pathRouteOption: HandledRouteOptions): CustomRout
 
   // 处理普通页面的路由
   const allRoutes: Late<CustomRouteRecordRaw>[] = all.map(e => {
+    const cfg = resolvePageConfigToConfig(e.cfg)
+
     return {
       path: e.url,
+      redirect: cfg?.redirect,
       name: e.name,
       components: {
         default: e.source
       },
       children: [],
-      meta: (e.cfg?.source as object) ?? {},
+      meta: cfg?.meta ?? {},
       fullPath: e.fullUrl
     } as CustomRouteRecordRaw
   })
@@ -177,4 +189,16 @@ export function resolveRouters(): RouteRecordRaw[] {
     .reduce((acc, cur) => ({...acc, ...cur}), {} as HandledRouteOptions)
 
   return resolveSubPath(paths)
+}
+
+export interface PageConfig {
+  redirect?: RouteRecordRedirectOption
+  meta?: Record<string, SafeAny>
+}
+
+/**
+ * ## 用来定义 page.ts page.js 的配置文件
+ */
+export function defineAutoRoute(cfg?: PageConfig): Late<PageConfig> {
+  return cfg
 }

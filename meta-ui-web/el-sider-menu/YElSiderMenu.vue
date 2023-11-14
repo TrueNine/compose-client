@@ -35,13 +35,16 @@ watch(
     deep: true
   }
 )
+// @unocss-include
 </script>
 
 <template>
   <ElMenu :router="routeMode" :collapse="!collapsed">
     <YSiderMenuItem v-for="(it, idx) in menus" :key="idx" :collapsed="collapsed" :item="it" :idx-key="prefix + it.uri">
       <template #icon="{item}">
-        <div :class="[item.iconName ?? 'i-mdi-menu', item.iconClass ? item.iconClass : 'c-p', `text-2xl`]" />
+        <div :class="[item.iconClass ? item.iconClass : 'c-p']" text-2xl>
+          <div :class="[item.iconName ?? 'i-mdi-menu']" />
+        </div>
       </template>
       <template #title="{item}">{{ item.name }}</template>
     </YSiderMenuItem>
