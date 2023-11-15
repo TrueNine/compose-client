@@ -49,7 +49,8 @@ export default defineConfig({
         /\.(scss|sass|less|css)/,
         /(lodash-es|lodash-es\/)/,
         /(dayjs|dayjs\/)/,
-        /(@compose|@compose\/)/
+        /(@compose|@compose\/)/,
+        /@mdi\/font/
       ]
     }
   },

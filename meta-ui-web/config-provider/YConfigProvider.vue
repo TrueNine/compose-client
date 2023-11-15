@@ -3,19 +3,19 @@ import 'dayjs/locale/zh-cn'
 import 'dayjs/locale/en'
 import 'vuetify/lib/styles/main.css'
 import 'element-plus/theme-chalk/dark/css-vars.css'
-
+import '@mdi/font/css/materialdesignicons.css'
 import {NConfigProvider} from 'naive-ui'
 
 import {
   ElementPlusDayjs as dayjs,
   ElementPlusEn,
   ElementPlusZhCn,
-  NaiveEnUs,
-  NaiveZhCn,
   NaiveDarkTheme,
-  NaiveLightTheme,
   NaiveDateEnUs,
-  NaiveDateZhCN
+  NaiveDateZhCN,
+  NaiveEnUs,
+  NaiveLightTheme,
+  NaiveZhCn
 } from '../common'
 
 import type {Props} from './index'
@@ -28,6 +28,7 @@ const props = withDefaults(defineProps<Props>(), {
   dark: true
 })
 
+darkUse.value = props.dark
 const darkLight = computed(() => (props.dark ? 'dark' : 'light'))
 
 watch(
