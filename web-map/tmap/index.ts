@@ -65,6 +65,8 @@ export declare namespace TMap {
 
 declare global {
   export interface Window {
+    // eslint-disable-next-line
+    // @ts-ignore
     TMap: typeof TMap & {
       constants: typeof TMap.constants
       service: typeof TMap.service

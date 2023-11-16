@@ -5,10 +5,11 @@ import YElSiderMenu from './el-sider-menu/index'
 import YElSiderMenuItem from './el-sider-menu-item/index'
 import YConfigProvider from './config-provider'
 import YMapTencent from './map-tencent'
+import YVAddressSelect from './v-address-select'
 
-const components = {YConfigProvider, YMapTencent, YElSiderMenuItem, YElSiderMenu, YVSystemBar}
+const components = {YConfigProvider, YVAddressSelect, YMapTencent, YElSiderMenuItem, YElSiderMenu, YVSystemBar}
 
-export {YElSiderMenu, YElSiderMenuItem, YConfigProvider, YMapTencent, YVSystemBar}
+export {YElSiderMenu, YVAddressSelect, YElSiderMenuItem, YConfigProvider, YMapTencent, YVSystemBar}
 
 export default {
   install: (app: App) => {

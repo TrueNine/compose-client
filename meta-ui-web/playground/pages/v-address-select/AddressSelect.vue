@@ -1,0 +1,33 @@
+<script setup lang="ts">
+import {AddressApi} from '../../api/AddressApi'
+import type {IComponentAddr} from '../../../v-address-select'
+
+const {data, execute} = AddressApi.findProvinces()
+const findProvinces = async () => {
+  await execute()
+  return data.value
+}
+
+const findCities = async (code: IComponentAddr) => {
+  const {data, execute} = AddressApi.findDirectChildrenByCode(code.code)
+  await execute()
+  return data.value
+}
+const code = ref<string>('')
+const path = ref<string>('')
+const level = ref<number>()
+</script>
+<template>
+  {{ code }}
+  {{ path }}
+  {{ level }}
+  <YVAddressSelect
+    v-model:ad-code="code"
+    v-model:full-path="path"
+    v-model:selected-level="level"
+    level="district"
+    :find-districts="findCities"
+    :find-cities="findCities"
+    :find-provinces="findProvinces"
+  />
+</template>

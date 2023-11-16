@@ -73,3 +73,19 @@ export function dlv(obj: any, key: string | string[], def: any, p = 0, undef: an
   }
   return obj === undef ? def : obj
 }
+
+/**
+ * ## 对对象进行解包操作
+ * @param obj 操作对象
+ */
+export function des<T>(obj: T): T {
+  return {...obj}
+}
+
+/**
+ * ## 对数组进行解构操作
+ * @param arr 操作数组
+ */
+export function aDes<T>(arr: T[] | readonly T[]): T[] {
+  return arr.map(e => ({...e}))
+}

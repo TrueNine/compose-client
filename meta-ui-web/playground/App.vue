@@ -1,5 +1,5 @@
 <template>
-  <YConfigProvider>
+  <YConfigProvider locale="zh-CN">
     <RouterView />
   </YConfigProvider>
 </template>
