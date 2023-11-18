@@ -1,2 +1,6 @@
 .idea
 .vscode
+vite.config.ts
+tsconfig.json
+
+__test__

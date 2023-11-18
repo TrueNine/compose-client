@@ -6,11 +6,12 @@ import dts from 'vite-plugin-dts'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
-import {ElementPlusResolver, NaiveUiResolver, Vuetify3Resolver} from 'unplugin-vue-components/resolvers'
+import {ElementPlusResolver, NaiveUiResolver, QuasarResolver, Vuetify3Resolver} from 'unplugin-vue-components/resolvers'
 import unocss from 'unocss/vite'
 import ViteFonts from 'unplugin-fonts/vite'
 import vuetify, {transformAssetUrls} from 'vite-plugin-vuetify'
 import type {ModuleFormat} from 'rollup'
+import {quasar, transformAssetUrls as quasarTransformAssetUrls} from '@quasar/vite-plugin'
 
 export default defineConfig({
   build: {
@@ -50,25 +51,28 @@ export default defineConfig({
         /(lodash-es|lodash-es\/)/,
         /(dayjs|dayjs\/)/,
         /(@compose|@compose\/)/,
-        /@mdi\/font/
+        /@mdi\/font/,
+        /@quasar\/|quasar\/|quasar/
       ]
     }
   },
   plugins: [
     vue({
       template: {
-        transformAssetUrls
+        transformAssetUrls: {
+          ...transformAssetUrls,
+          ...quasarTransformAssetUrls
+        }
       }
     }),
     vueJsx(),
     unocss(),
+    vuetify({}),
+    quasar(),
     dts({
-      staticImport: true,
-      strictOutput: true,
       clearPureImport: false,
       exclude: ['dist/**', '__build-src__/**', 'vite.config.ts', '**/__test__/**', 'vitest.config.ts', 'playground']
     }),
-    vuetify({}),
     AutoImport({
       imports: [
         'vue',
@@ -93,24 +97,7 @@ export default defineConfig({
       dts: 'imports-comp.d.ts',
       deep: true,
       dirs: '.',
-      resolvers: [
-        ElementPlusResolver(),
-        NaiveUiResolver(),
-        Vuetify3Resolver(),
-        [
-          {
-            type: 'component',
-            resolve: (name: string) => {
-              if (name.match(/^(N[A-Z]|n-[a-z])/)) {
-                return {
-                  name,
-                  from: '@compose/meta-ui-web'
-                }
-              }
-            }
-          }
-        ]
-      ]
+      resolvers: [ElementPlusResolver(), NaiveUiResolver(), Vuetify3Resolver(), QuasarResolver()]
     }),
     ViteFonts({
       google: {

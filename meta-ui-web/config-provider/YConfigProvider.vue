@@ -15,26 +15,40 @@ import {
   NaiveDateZhCN,
   NaiveEnUs,
   NaiveLightTheme,
-  NaiveZhCn
+  NaiveZhCn,
+  QuasarEnUs,
+  QuasarZhCn
 } from '../common'
 
 import type {Props} from './index'
 
 const vuetifyUseTheme = useTheme()
-const darkUse = useDark()
 
+const darkUse = useDark()
+const q = useQuasar()
 const props = withDefaults(defineProps<Props>(), {
-  locale: 'en',
+  locale: 'zh-CN',
   dark: true
+})
+const darkLight = computed(() => (props.dark ? 'dark' : 'light'))
+const quasarLocale = computed(() => {
+  switch (props.locale) {
+    case 'zh-CN':
+      return QuasarZhCn
+    default:
+      return QuasarEnUs
+  }
 })
 
 darkUse.value = props.dark
-const darkLight = computed(() => (props.dark ? 'dark' : 'light'))
+q.dark.set(props?.dark ?? true)
+q.lang.set(quasarLocale.value)
 
 watch(
   () => props.dark,
   v => {
     darkUse.value = v
+    q.dark.set(v)
     vuetifyUseTheme.global.name.value = darkLight.value
   }
 )
@@ -42,6 +56,7 @@ watch(
   () => props.locale,
   v => {
     dayjs.locale((v ?? 'en').toLowerCase())
+    q.lang.set(quasarLocale.value)
   }
 )
 
