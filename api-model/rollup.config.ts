@@ -40,7 +40,7 @@ export default defineConfig([
         dir: 'dist'
       }
     ],
-    external: ['@compose/api-model', 'vue', 'tsLib', 'vue-router', '@compose/compose-types', 'compose-types', 'lodash-es/cloneDeep']
+    external: ['vue', 'tsLib', 'vue-router', /(@compose|@compose\/)/, 'compose-types', /(lodash|lodash\/)/, /(dayjs|dayjs\/)/]
   },
   {
     input: 'index.ts',
