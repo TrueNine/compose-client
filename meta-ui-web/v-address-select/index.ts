@@ -21,12 +21,12 @@ export interface Props {
   adCode?: SerialCode
   showAdCode?: boolean
   showFullPath?: boolean
-  findProvinces?: () => Asyncable<LateNull<IComponentAddr[]>>
-  notFoundProvinces?: () => Asyncable<LateNull<IComponentAddr[]>>
-  findCities?: (addr: IComponentAddr) => Asyncable<LateNull<IComponentAddr[]>>
-  findDistricts?: (addr: IComponentAddr) => Asyncable<LateNull<IComponentAddr[]>>
-  findTowns?: (addr: IComponentAddr) => Asyncable<LateNull<IComponentAddr[]>>
-  findVillages?: (addr: IComponentAddr) => Asyncable<LateNull<IComponentAddr[]>>
+  findProvinces?: () => Asyncable<LateNull<LateNull<IComponentAddr>[]>>
+  notFoundProvinces?: () => Asyncable<LateNull<LateNull<IComponentAddr>[]>>
+  findCities?: (addr: LateNull<IComponentAddr>) => Asyncable<LateNull<LateNull<IComponentAddr>[]>>
+  findDistricts?: (addr: LateNull<IComponentAddr>) => Asyncable<LateNull<LateNull<IComponentAddr>[]>>
+  findTowns?: (addr: LateNull<IComponentAddr>) => Asyncable<LateNull<LateNull<IComponentAddr>[]>>
+  findVillages?: (addr: LateNull<IComponentAddr>) => Asyncable<LateNull<LateNull<IComponentAddr>[]>>
 }
 
 export interface Emits {

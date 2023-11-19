@@ -95,3 +95,14 @@ export function maybeArray<T = SafeAny>(maybe: Maybe<T>) {
 export function maybeReadonlyArray<T = SafeAny>(maybe: Maybe<T>): readonly T[] {
   return Array.isArray(maybe) ? maybe : ([maybe] as readonly T[])
 }
+
+/**
+ * ## range
+ * @param start 开始
+ * @param end 结束
+ */
+export function* range(start: number, end: number) {
+  for (let i = start; i <= end; i++) {
+    yield i
+  }
+}

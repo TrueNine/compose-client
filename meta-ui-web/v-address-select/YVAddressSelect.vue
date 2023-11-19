@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type {Int, SerialCode} from '@compose/compose-types'
+import type {Int, LateNull, SerialCode} from '@compose/compose-types'
 import {des} from '@compose/api-model'
 
 import {defaultSelects, type Emits, type IComponentAddr, type Props, type SelectValue} from './index'
@@ -42,11 +42,11 @@ const addressCache = ref<Record<SerialCode, IComponentAddr[]>>({})
 const saveCache = (code: SerialCode, data: IComponentAddr[]) => (addressCache.value[code] = data)
 const getCache = (code?: SerialCode) => (code ? addressCache.value[code] : undefined)
 
-const provinces = ref<IComponentAddr[]>([])
-const cities = ref<IComponentAddr[]>([])
-const districts = ref<IComponentAddr[]>([])
-const towns = ref<IComponentAddr[]>([])
-const villages = ref<IComponentAddr[]>([])
+const provinces = ref<LateNull<IComponentAddr>[]>([])
+const cities = ref<LateNull<IComponentAddr>[]>([])
+const districts = ref<LateNull<IComponentAddr>[]>([])
+const towns = ref<LateNull<IComponentAddr>[]>([])
+const villages = ref<LateNull<IComponentAddr>[]>([])
 
 const defaultSelected = des(defaultSelects)
 const selected = ref<SelectValue>(des(defaultSelects))
@@ -65,9 +65,9 @@ const emitsLevel = computed({
   set: v => emits('update:selectedLevel', v)
 })
 
-const sortFn = (a: IComponentAddr, b: IComponentAddr) => {
-  if (a.code < b.code) return -1
-  if (a.code > b.code) return 1
+const sortFn = (a: LateNull<IComponentAddr>, b: LateNull<IComponentAddr>) => {
+  if (a!.code < b!.code) return -1
+  if (a!.code > b!.code) return 1
   return 0
 }
 
@@ -79,7 +79,10 @@ watch(
       if (cacheable) cities.value = cacheable
       else {
         cities.value = (await props.findCities(v))?.sort(sortFn) ?? []
-        saveCache(v.code, cities.value)
+        saveCache(
+          v.code,
+          cities.value.map(e => e!)
+        )
       }
       emitsLevel.value = 1
       emitsAdCode.value = clipCode(v.code, 1)
@@ -97,7 +100,10 @@ watch(
       if (cacheable) districts.value = cacheable
       else {
         districts.value = (await props.findDistricts(v))?.sort(sortFn) ?? []
-        saveCache(v.code, districts.value)
+        saveCache(
+          v.code,
+          districts.value.map(e => e!)
+        )
       }
       emitsLevel.value = 2
       emitsAdCode.value = clipCode(v.code, 2)
@@ -115,7 +121,10 @@ watch(
       if (cacheable) towns.value = cacheable
       else {
         towns.value = (await props.findTowns(v))?.sort(sortFn) ?? []
-        saveCache(v.code, towns.value)
+        saveCache(
+          v.code,
+          towns.value.map(e => e!)
+        )
       }
       emitsLevel.value = 3
       emitsAdCode.value = clipCode(v.code, 3)
@@ -133,7 +142,10 @@ watch(
       if (cacheable) villages.value = cacheable
       else {
         villages.value = (await props.findVillages(v))?.sort(sortFn) ?? []
-        saveCache(v.code, villages.value)
+        saveCache(
+          v.code,
+          villages.value.map(e => e!)
+        )
       }
       emitsLevel.value = 4
       emitsAdCode.value = clipCode(v.code, 4)
@@ -166,7 +178,7 @@ const isSelectVillage = computed(() => selected.value.town?.code !== '' && level
 onMounted(async () => {
   provinces.value = (await props.findProvinces()) ?? []
   provinces.value.sort((a, b) => {
-    return a.code.localeCompare(b.code)
+    return a!.code.localeCompare(b!.code)
   })
 })
 
@@ -214,7 +226,7 @@ const copyFullPath = () => copy(props.fullPath!)
         <slot name="default" :selected="selected">
           <VRow :dense="true">
             <slot name="select-province" :selected-province="selected.province" :provinces="provinces">
-              <VCol cols="6" sm="6" md="3" xl="1">
+              <VCol cols="6" sm="6" md="3">
                 <VSelect
                   v-model="selected.province"
                   :return-object="true"
@@ -228,7 +240,7 @@ const copyFullPath = () => copy(props.fullPath!)
             </slot>
 
             <slot v-if="isSelectCity" name="select-cities" :selected-city="selected.city" :cities="cities">
-              <VCol cols="6" sm="6" md="3" xl="1">
+              <VCol cols="6" sm="6" md="3">
                 <VSelect
                   v-model="selected.city"
                   :return-object="true"
@@ -242,7 +254,7 @@ const copyFullPath = () => copy(props.fullPath!)
             </slot>
 
             <slot v-if="isSelectDistrict" name="select-district" :selected-district="selected.district" :districts="districts">
-              <VCol cols="6" sm="6" md="3" xl="1">
+              <VCol cols="6" sm="6" md="3">
                 <VSelect
                   v-model="selected.district"
                   :return-object="true"
@@ -256,7 +268,7 @@ const copyFullPath = () => copy(props.fullPath!)
             </slot>
 
             <slot v-if="isSelectTown" name="select-town" :selected-town="selected.town" :towns="towns">
-              <VCol cols="6" sm="6" md="3" xl="1">
+              <VCol cols="6" sm="6" md="3">
                 <VSelect
                   v-model="selected.town"
                   :return-object="true"
@@ -270,7 +282,7 @@ const copyFullPath = () => copy(props.fullPath!)
             </slot>
 
             <slot v-if="isSelectVillage" name="select-village" :selected-village="selected.village" :villages="villages">
-              <VCol cols="6" sm="6" md="4" xl="1">
+              <VCol cols="6" sm="6" md="4">
                 <VSelect
                   v-model="selected.village"
                   :return-object="true"

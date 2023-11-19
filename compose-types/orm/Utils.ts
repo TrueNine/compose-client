@@ -1,4 +1,5 @@
 import type {PagedRequestParam} from '../request'
+import type {Int} from '../typescripts'
 
 export const PagedWrapper = {
   DEFAULT_MAX: {
@@ -32,3 +33,11 @@ export type SerialCode = string
  * 比较大的字符串，比如：文章内容，个人简介等等
  */
 export type BigText = string
+/**
+ * 类型数字
+ */
+export type TypeInt = Int
+/**
+ * 字符串类型序列号
+ */
+export type TypeSerial = SerialCode

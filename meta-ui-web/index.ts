@@ -1,7 +1,7 @@
 import type {App} from 'vue'
 
 import YVSystemBar from './v-system-bar'
-import YElSiderMenu from './el-sider-menu/index'
+import YElSiderMenu from './el-sider-menu'
 import YElSiderMenuItem from './el-sider-menu-item/index'
 import YConfigProvider from './config-provider'
 import YMapTencent from './map-tencent'

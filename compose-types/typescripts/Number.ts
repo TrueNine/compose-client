@@ -4,6 +4,11 @@
 export type Int = number
 
 /**
+ * 表示一个很小的数值
+ */
+export type Byte = number
+
+/**
  * ## 小数的别名
  */
 export type Float = number
