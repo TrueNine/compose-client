@@ -4,6 +4,8 @@
 export interface ErrorMessage {
   msg?: string
   code: number
+  alert?: string
+  errMap?: Record<string, string>
 }
 
 /**
