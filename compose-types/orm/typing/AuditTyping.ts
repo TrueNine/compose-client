@@ -7,3 +7,21 @@ export enum AuditTyping {
   EXPIRED = 5,
   REJECT = 6
 }
+export const AuditTypingComment = {
+  [AuditTyping.NONE]: '未审核',
+  [AuditTyping.ASSIGNED]: '已分配',
+  [AuditTyping.PASS]: '通过',
+  [AuditTyping.FAIL]: '不通过',
+  [AuditTyping.CANCEL]: '取消',
+  [AuditTyping.EXPIRED]: '已过期',
+  [AuditTyping.REJECT]: '已驳回'
+}
+export const AuditTypingReverseMap = {
+  0: [AuditTyping.NONE],
+  1: [AuditTyping.ASSIGNED],
+  2: [AuditTyping.PASS],
+  3: [AuditTyping.FAIL],
+  4: [AuditTyping.CANCEL],
+  5: [AuditTyping.EXPIRED],
+  6: [AuditTyping.REJECT]
+}
