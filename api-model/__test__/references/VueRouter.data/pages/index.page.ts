@@ -1,3 +1,3 @@
 export default {
-  redirect: '/add'
+  redirect: '/i'
 }

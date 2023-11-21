@@ -1,6 +1,4 @@
 <script setup lang="ts"></script>
-
 <template>
-  <div>123</div>
-  <RouterView name="auto-router-a" />
+  <RouterView />
 </template>

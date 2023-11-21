@@ -1,6 +1,5 @@
 import {type Late, type SafeAny, STR_EMPTY, STR_SLASH} from '@compose/compose-types'
-import type {RouteRecordRaw} from 'vue-router'
-import type {RouteRecordRedirectOption} from 'vue-router'
+import type {RouteRecordRaw, RouteRecordRedirectOption} from 'vue-router'
 
 import {camelTo} from '../tools'
 
@@ -63,7 +62,7 @@ export function resolveImport(tp: [string, ImportMeta]): HandleRouteOption {
   }
   if (isFolderSubPage && !(isSubPage || isView)) {
     result.url = paths[paths.length - 1]
-    result.parentUrl = paths.slice(0, -1).join(STR_EMPTY)
+    result.parentUrl = paths.slice(0, -1).join(STR_SLASH).replace(`${STR_SLASH}${STR_SLASH}`, STR_SLASH)
   }
 
   if (isSubPage) {
