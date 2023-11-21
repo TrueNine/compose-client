@@ -1,4 +1,4 @@
-import type {NullPt} from '@compose/compose-types'
+import {type NullPt, type SafeAny, STR_EMPTY} from '@compose/compose-types'
 
 /**
  * ## 判断一个字符串是否为空，返回本身或空字符串，排除 null | undefined
@@ -6,7 +6,7 @@ import type {NullPt} from '@compose/compose-types'
  * @returns 本身 或者 ""
  */
 export function withEmpty(str?: string): string {
-  return isNonEmpty(str) ? str! : ''
+  return isNonEmpty(str) ? str! : STR_EMPTY
 }
 
 /**
@@ -25,7 +25,7 @@ export function isEmpty(obj: NullPt<unknown>): boolean {
  * # 对 [isEmpty] 的反向调用
  * @param obj 对象
  */
-export function isNonEmpty(obj: unknown) {
+export function isNonEmpty<T = unknown>(obj: T) {
   return !isEmpty(obj)
 }
 
@@ -62,11 +62,8 @@ export function mapRecord<T, U>(record: Record<string, T>, callback: (val: T) =>
   )
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function dlv(obj: any, key: string | string[], def: any, p = 0, undef: any): any {
-  if (typeof key === 'string') {
-    key = key.split('.')
-  }
+export function dlv(obj: SafeAny, key: string | string[], def: SafeAny, p: number, undef: SafeAny): any {
+  if (typeof key === 'string') key = key.split('.')
   for (p = 0; p < key.length; p++) {
     const path = key[p]
     obj = obj ? obj[path] : undef

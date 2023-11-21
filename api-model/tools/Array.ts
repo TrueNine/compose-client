@@ -9,30 +9,18 @@ export function arrayDistinct<T>(arr: T[]): T[] {
 }
 
 /**
- * # 二维数组扁平化
- * @param array 数组
- */
-export function arrayFlatten<T>(array: T[][]): T[] {
-  return array.reduce((flat, next) => {
-    return [...flat, ...next]
-  }, [])
-}
-
-/**
  * # 笛卡尔乘积，用于解包类型数组
  *
  * @param spec {@link Record} {@link string},{@link string[]}  需处理对象
  * @param currentIndex 当前索引 默认 0
  * @param currentCombination 当前穷举组合
  */
-export function cartesianProduct(spec: Record<string, string[]>, currentIndex = 0, currentCombination: Record<string, string> = {}): Record<string, string>[] {
-  if (currentIndex === Object.keys(spec).length) {
-    return [currentCombination]
-  }
+export function cartesianProduct<T = unknown>(spec: Record<string, T[]>, currentIndex = 0, currentCombination: Record<string, T> = {}): Record<string, T>[] {
+  if (currentIndex === Object.keys(spec).length) return [currentCombination]
+
   const currentKey = Object.keys(spec)[currentIndex]
   const currentValues = spec[currentKey]
-
-  const result: Record<string, string>[] = []
+  const result: Record<string, T>[] = []
   for (let i = 0; i < currentValues.length; i++) {
     const nextCombination = {...currentCombination}
     nextCombination[currentKey] = currentValues[i]
