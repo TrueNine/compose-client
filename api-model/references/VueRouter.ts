@@ -20,33 +20,26 @@ export interface HandleRouteOption {
   fullUrl: string
 }
 
-// 定义已处理的路由选项
 export type HandledRouteOptions = Record<string, HandleRouteOption>
 
-// 页面路径常量
 export const PAGE = 'pages'
 export const SUB_PAGE = 'SubPage'
 export const NAME_LINK = '___'
 export const VIEW_PAGE = 'View'
 
-// 解析导入路径
 export function resolveImport(tp: [string, ImportMeta]): HandleRouteOption {
   const metaUrl = tp[0]
   const source = tp[1]
-
   const paths = metaUrl.split(PAGE).filter(Boolean).slice(1).join('').split('/').filter(Boolean)
   const fileName = paths.pop()!
   if (paths.length === 0) paths.push(STR_SLASH)
   if (paths[0] !== STR_SLASH) paths.unshift(STR_SLASH)
-
   const isFn = typeof source === 'function'
   const isView = fileName.includes(VIEW_PAGE)
   const isFolderSubPage = paths.length > 1
   const isSubPage = fileName.includes(SUB_PAGE)
-
   const url = paths.join(STR_SLASH).replace(`${STR_SLASH}${STR_SLASH}`, STR_SLASH)
-
-  const name = url.slice(1).replaceAll(STR_SLASH, '-') || '-'
+  const name = url.slice(1).replace(new RegExp(STR_SLASH, 'g'), '-') || '-'
   const result: HandleRouteOption = {
     url,
     isView,
@@ -64,7 +57,6 @@ export function resolveImport(tp: [string, ImportMeta]): HandleRouteOption {
     result.url = paths[paths.length - 1]
     result.parentUrl = paths.slice(0, -1).join(STR_SLASH).replace(`${STR_SLASH}${STR_SLASH}`, STR_SLASH)
   }
-
   if (isSubPage) {
     result.url = camelTo(fileName.split(SUB_PAGE)[0], STR_SLASH)
     result.name = result.name + '-' + camelTo(fileName.split(SUB_PAGE)[0], STR_SLASH)
@@ -93,21 +85,18 @@ function resolvePageConfigToConfig(importMeta?: HandleRouteOption) {
   return undefined
 }
 
-// 解析子路径
 export function resolveSubPath(pathRouteOption: HandledRouteOptions): CustomRouteRecordRaw[] {
   const all: HandleRouteOption[] = []
   const view: HandleRouteOption[] = []
 
-  // 将路由选项分为普通页面和视图页面
-  Object.entries(pathRouteOption).forEach(x => {
-    if (x[1].isView) view.push(x[1])
-    else all.push(x[1])
-  })
+  for (const key in pathRouteOption) {
+    const option = pathRouteOption[key]
+    if (option.isView) view.push(option)
+    else all.push(option)
+  }
 
-  // 处理普通页面的路由
   const allRoutes: Late<CustomRouteRecordRaw>[] = all.map(e => {
     const cfg = resolvePageConfigToConfig(e.cfg)
-
     return {
       path: e.url,
       redirect: cfg?.redirect,
@@ -122,20 +111,19 @@ export function resolveSubPath(pathRouteOption: HandledRouteOptions): CustomRout
   })
 
   const result: CustomRouteRecordRaw[] = []
-
   for (let i = 0; i < allRoutes.length; i++) {
     const e = allRoutes[i]
     if (!e) continue
     const opt = all.find(r => r.name === e?.name)!
     if (opt.isSubPage || opt.isFolderSubPage) {
-      allRoutes.find(r => r?.fullPath === opt?.parentUrl)?.children?.push(e)
-      //allRoutes[i] = undefined
+      const parent = allRoutes.find(r => r?.fullPath === opt?.parentUrl)
+      if (parent) parent.children?.push(e)
     } else result.push(e)
   }
 
   function cleanFirstSlash(path: string): string {
     if (path === STR_SLASH) return STR_SLASH
-    return path[0] === STR_SLASH ? path.replace(STR_SLASH, STR_EMPTY) : path
+    return path[0] === STR_SLASH ? path.substring(1) : path
   }
 
   function deepFind(
@@ -156,7 +144,6 @@ export function resolveSubPath(pathRouteOption: HandledRouteOptions): CustomRout
     return undefined
   }
 
-  // 处理视图页面的路由
   view.forEach(e => {
     const root = deepFind(result, e.paths.slice(0, -1))
     if (root && root.children !== undefined) {
@@ -170,22 +157,24 @@ export function resolveSubPath(pathRouteOption: HandledRouteOptions): CustomRout
   return result
 }
 
-// 解析路由
 export function resolveRouters(): RouteRecordRaw[] {
   const cfgSources = import.meta.glob([`/**/pages/**/**.page.ts`, `/**/pages/**/**.page.js`], {eager: true, import: 'default'})
   const vueSources = import.meta.glob([`/**/pages/**/**.vue`, `/**/pages/**/**.jsx`, `/**/pages/**/**.tsx`])
 
-  // 解析配置文件
-  const cfg = Object.entries(cfgSources)
-    .map(e => resolveImport(e as unknown as [string, ImportMeta]))
-    .map(e => ({[e.fullUrl]: e}))
-    .reduce((acc, cur) => ({...acc, ...cur}), {} as HandledRouteOptions)
+  const cfg: HandledRouteOptions = {}
+  for (const key in cfgSources) {
+    const source = cfgSources[key]
+    const option = resolveImport([key, source as unknown as ImportMeta])
+    cfg[option.fullUrl] = option
+  }
 
-  // 解析页面文件
-  const paths = Object.entries(vueSources)
-    .map(v => resolveImport(v as unknown as [string, ImportMeta]))
-    .map(e => ({[e.fullUrl]: {...e, cfg: cfg[e.fullUrl]}}))
-    .reduce((acc, cur) => ({...acc, ...cur}), {} as HandledRouteOptions)
+  const paths: HandledRouteOptions = {}
+  for (const key in vueSources) {
+    const source = vueSources[key]
+    const option = resolveImport([key, source as unknown as ImportMeta])
+    option.cfg = cfg[option.fullUrl]
+    paths[option.fullUrl] = option
+  }
 
   return resolveSubPath(paths)
 }
@@ -195,9 +184,6 @@ export interface PageConfig {
   meta?: Record<string, SafeAny>
 }
 
-/**
- * ## 用来定义 page.ts page.js 的配置文件
- */
 export function defineAutoRoute(cfg?: PageConfig): Late<PageConfig> {
   return cfg
 }
