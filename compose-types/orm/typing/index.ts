@@ -5,3 +5,5 @@ export * from './BloodTyping'
 export * from './AuditTyping'
 export * from './DisabilityTyping'
 export * from './RuleTyping'
+
+export * from './documents'
