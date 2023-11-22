@@ -7,3 +7,4 @@ export * from './DisabilityTyping'
 export * from './RuleTyping'
 
 export * from './documents'
+export * from './MuDocument'
