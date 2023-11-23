@@ -30,12 +30,12 @@ export const DocumentContentTypingMap = {
   [DocumentContentTyping.REMAKE_IMAGE]: 7
 }
 export const DocumentContentTypingReverseMap = {
-  0: DocumentContentTyping.NONE,
-  1: DocumentContentTyping.IMAGE,
-  2: DocumentContentTyping.SCANNED_IMAGE,
-  3: DocumentContentTyping.SCREEN_SHOT,
-  4: DocumentContentTyping.VIDEO,
-  5: DocumentContentTyping.RECORDING,
-  6: DocumentContentTyping.COPYFILE_IMAGE,
-  7: DocumentContentTyping.REMAKE_IMAGE
+  [0]: DocumentContentTyping.NONE,
+  [1]: DocumentContentTyping.IMAGE,
+  [2]: DocumentContentTyping.SCANNED_IMAGE,
+  [3]: DocumentContentTyping.SCREEN_SHOT,
+  [4]: DocumentContentTyping.VIDEO,
+  [5]: DocumentContentTyping.RECORDING,
+  [6]: DocumentContentTyping.COPYFILE_IMAGE,
+  [7]: DocumentContentTyping.REMAKE_IMAGE
 }

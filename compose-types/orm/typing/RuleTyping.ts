@@ -15,7 +15,7 @@ export const RuleTypingMap = {
   [RuleTyping.FIXED]: 2
 }
 export const RuleTypingReverseMap = {
-  0: RuleTyping.EXCLUDE,
-  1: RuleTyping.INCLUDE,
-  2: RuleTyping.FIXED
+  [0]: RuleTyping.EXCLUDE,
+  [1]: RuleTyping.INCLUDE,
+  [2]: RuleTyping.FIXED
 }

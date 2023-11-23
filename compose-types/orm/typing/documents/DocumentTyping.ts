@@ -36,14 +36,14 @@ export const DocumentTypingMap = {
   [DocumentTyping.BIZ_LICENSE]: 9
 }
 export const DocumentTypingReverseMap = {
-  0: DocumentTyping.NONE,
-  1: DocumentTyping.ID_CARD,
-  2: DocumentTyping.IC_CARD2,
-  3: DocumentTyping.DISABILITY_CARD,
-  4: DocumentTyping.DISABILITY_CARD2,
-  5: DocumentTyping.DISABILITY_CARD3,
-  6: DocumentTyping.HOUSEHOLD_CARD,
-  7: DocumentTyping.BANK_CARD,
-  8: DocumentTyping.CONTRACT,
-  9: DocumentTyping.BIZ_LICENSE
+  [0]: DocumentTyping.NONE,
+  [1]: DocumentTyping.ID_CARD,
+  [2]: DocumentTyping.IC_CARD2,
+  [3]: DocumentTyping.DISABILITY_CARD,
+  [4]: DocumentTyping.DISABILITY_CARD2,
+  [5]: DocumentTyping.DISABILITY_CARD3,
+  [6]: DocumentTyping.HOUSEHOLD_CARD,
+  [7]: DocumentTyping.BANK_CARD,
+  [8]: DocumentTyping.CONTRACT,
+  [9]: DocumentTyping.BIZ_LICENSE
 }

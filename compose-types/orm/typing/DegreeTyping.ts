@@ -33,13 +33,13 @@ export const DegreeTypingMap = {
   [DegreeTyping.OTHER]: 9999
 }
 export const DegreeTypingReverseMap = {
-  0: DegreeTyping.NONE,
-  1: DegreeTyping.MIN,
-  2: DegreeTyping.HALF,
-  3: DegreeTyping.HEIGHT,
-  4: DegreeTyping.BIG,
-  5: DegreeTyping.DISCOVERY,
-  6: DegreeTyping.EXPERT,
-  7: DegreeTyping.AFTER_EXPERT,
-  9999: DegreeTyping.OTHER
+  [0]: DegreeTyping.NONE,
+  [1]: DegreeTyping.MIN,
+  [2]: DegreeTyping.HALF,
+  [3]: DegreeTyping.HEIGHT,
+  [4]: DegreeTyping.BIG,
+  [5]: DegreeTyping.DISCOVERY,
+  [6]: DegreeTyping.EXPERT,
+  [7]: DegreeTyping.AFTER_EXPERT,
+  [9999]: DegreeTyping.OTHER
 }

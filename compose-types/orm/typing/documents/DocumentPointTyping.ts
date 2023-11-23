@@ -24,10 +24,10 @@ export const DocumentPointTypingMap = {
   [DocumentPointTyping.ALL_CONTENT]: 5
 }
 export const DocumentPointTypingReverseMap = {
-  0: DocumentPointTyping.NONE,
-  1: DocumentPointTyping.HEADS,
-  2: DocumentPointTyping.TAILS,
-  3: DocumentPointTyping.DOUBLE,
-  4: DocumentPointTyping.ALL,
-  5: DocumentPointTyping.ALL_CONTENT
+  [0]: DocumentPointTyping.NONE,
+  [1]: DocumentPointTyping.HEADS,
+  [2]: DocumentPointTyping.TAILS,
+  [3]: DocumentPointTyping.DOUBLE,
+  [4]: DocumentPointTyping.ALL,
+  [5]: DocumentPointTyping.ALL_CONTENT
 }

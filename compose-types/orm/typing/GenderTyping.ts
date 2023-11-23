@@ -27,7 +27,7 @@ export const GenderTypingMap = {
   [GenderTyping.UNKNOWN]: 2
 }
 export const GenderTypingReverseMap = {
-  1: GenderTyping.MAN,
-  0: GenderTyping.WOMAN,
-  2: GenderTyping.UNKNOWN
+  [1]: GenderTyping.MAN,
+  [0]: GenderTyping.WOMAN,
+  [2]: GenderTyping.UNKNOWN
 }

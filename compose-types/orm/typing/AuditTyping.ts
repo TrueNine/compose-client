@@ -17,11 +17,11 @@ export const AuditTypingComment = {
   [AuditTyping.REJECT]: '已驳回'
 }
 export const AuditTypingReverseMap = {
-  0: [AuditTyping.NONE],
-  1: [AuditTyping.ASSIGNED],
-  2: [AuditTyping.PASS],
-  3: [AuditTyping.FAIL],
-  4: [AuditTyping.CANCEL],
-  5: [AuditTyping.EXPIRED],
-  6: [AuditTyping.REJECT]
+  [0]: [AuditTyping.NONE],
+  [1]: [AuditTyping.ASSIGNED],
+  [2]: [AuditTyping.PASS],
+  [3]: [AuditTyping.FAIL],
+  [4]: [AuditTyping.CANCEL],
+  [5]: [AuditTyping.EXPIRED],
+  [6]: [AuditTyping.REJECT]
 }
