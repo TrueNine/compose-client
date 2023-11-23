@@ -7,7 +7,8 @@ export enum DocumentTyping {
   DISABILITY_CARD3 = 5,
   HOUSEHOLD_CARD = 6,
   BANK_CARD = 7,
-  CONTRACT = 8
+  CONTRACT = 8,
+  BIZ_LICENSE = 9
 }
 
 export const DocumentTypingComment = {
@@ -19,7 +20,8 @@ export const DocumentTypingComment = {
   [DocumentTyping.DISABILITY_CARD3]: '残疾证3代',
   [DocumentTyping.HOUSEHOLD_CARD]: ' 户口',
   [DocumentTyping.BANK_CARD]: '银行卡',
-  [DocumentTyping.CONTRACT]: '合同'
+  [DocumentTyping.CONTRACT]: '合同',
+  [DocumentTyping.BIZ_LICENSE]: '营业执照'
 }
 export const DocumentTypingMap = {
   [DocumentTyping.NONE]: 0,
@@ -30,7 +32,8 @@ export const DocumentTypingMap = {
   [DocumentTyping.DISABILITY_CARD3]: 5,
   [DocumentTyping.HOUSEHOLD_CARD]: 6,
   [DocumentTyping.BANK_CARD]: 7,
-  [DocumentTyping.CONTRACT]: 8
+  [DocumentTyping.CONTRACT]: 8,
+  [DocumentTyping.BIZ_LICENSE]: 9
 }
 export const DocumentTypingReverseMap = {
   0: DocumentTyping.NONE,
@@ -41,5 +44,6 @@ export const DocumentTypingReverseMap = {
   5: DocumentTyping.DISABILITY_CARD3,
   6: DocumentTyping.HOUSEHOLD_CARD,
   7: DocumentTyping.BANK_CARD,
-  8: DocumentTyping.CONTRACT
+  8: DocumentTyping.CONTRACT,
+  9: DocumentTyping.BIZ_LICENSE
 }
