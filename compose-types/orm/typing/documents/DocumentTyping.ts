@@ -1,3 +1,5 @@
+import type {TypeInt} from '../../Utils'
+
 export enum DocumentTyping {
   NONE = 0,
   ID_CARD = 1,
@@ -11,7 +13,7 @@ export enum DocumentTyping {
   BIZ_LICENSE = 9
 }
 
-export const DocumentTypingComment = {
+export const DocumentTypingComment: Record<string, string> = {
   [DocumentTyping.NONE]: '无要求',
   [DocumentTyping.ID_CARD]: '身份证',
   [DocumentTyping.IC_CARD2]: '二代身份证',
@@ -23,7 +25,7 @@ export const DocumentTypingComment = {
   [DocumentTyping.CONTRACT]: '合同',
   [DocumentTyping.BIZ_LICENSE]: '营业执照'
 }
-export const DocumentTypingMap = {
+export const DocumentTypingMap: Record<string, TypeInt> = {
   [DocumentTyping.NONE]: 0,
   [DocumentTyping.ID_CARD]: 1,
   [DocumentTyping.IC_CARD2]: 2,
@@ -35,7 +37,7 @@ export const DocumentTypingMap = {
   [DocumentTyping.CONTRACT]: 8,
   [DocumentTyping.BIZ_LICENSE]: 9
 }
-export const DocumentTypingReverseMap = {
+export const DocumentTypingReverseMap: Record<string, DocumentTyping> = {
   [0]: DocumentTyping.NONE,
   [1]: DocumentTyping.ID_CARD,
   [2]: DocumentTyping.IC_CARD2,
