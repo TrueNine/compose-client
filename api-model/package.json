@@ -1,6 +1,6 @@
 {
   "name": "@compose/api-model",
-  "version": "1.1.14",
+  "version": "1.1.15",
   "description": "yan100 client ui kit",
   "author": "TrueNine",
   "license": "private",
@@ -24,6 +24,7 @@
     },
     "./*": "./*",
     "./**": "./**",
+    "./dist/*": "./dist/*",
     "./dist/**": "./dist/**"
   }
 }

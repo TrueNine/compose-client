@@ -1,14 +1,15 @@
-import type {Timestamp} from '../datetime'
+import type {LocalDateTime} from '../datetime'
 
 import type {IEntity} from './Entities'
-import type {SerialCode} from './Utils'
+import type {BigText, ReferenceId, SerialCode} from './Utils'
 
 export interface User extends IEntity {
-  account: SerialCode
-  nickName: string
-  doc?: string
-  pwdEnc?: string
-  lastLoginTime?: Timestamp
-  band: boolean
-  banTime?: Timestamp
+  createUserId?: ReferenceId
+  account?: SerialCode
+  nickName?: string
+  doc?: BigText
+  pwdEnc?: BigText
+  lastLoginTime?: LocalDateTime
+  band?: boolean
+  banTime?: LocalDateTime
 }

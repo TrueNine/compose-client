@@ -1,21 +1,27 @@
-import type {Timestamp} from '../datetime'
+import type {LocalDate} from '../datetime'
 
 import {GenderTyping} from './typing'
 import type {IEntity} from './Entities'
-import type {Id, ReferenceId} from './Utils'
+import type {ReferenceId, SerialCode} from './Utils'
 
 export interface UserInfo extends IEntity {
   userId: ReferenceId
+  pri?: boolean
+  addressId?: ReferenceId
+  addressCode?: SerialCode
+  wechatAccount?: SerialCode
+  qqAccount?: SerialCode
+  qqOpenid?: SerialCode
   avatarImgId?: ReferenceId
-  avatarImage?: string
   firstName: string
   lastName: string
   email?: string
-  birthday?: Timestamp
-  addressDetailsId?: Id
-  phone?: string
-  idCard?: string
+  birthday?: LocalDate
+  addressDetailsId?: ReferenceId
+  phone?: SerialCode
+  sparePhone?: SerialCode
+  idCard?: SerialCode
   gender: GenderTyping
-  wechatOpenId?: string
-  wechatOauth2Id?: string
+  wechatOpenid?: SerialCode
+  wechatAuthid?: SerialCode
 }
