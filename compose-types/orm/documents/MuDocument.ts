@@ -1,18 +1,16 @@
 import type {IEntity} from '../Entities'
 import type {BigText, ReferenceId, SerialCode} from '../Utils'
 import type {LocalDateTime} from '../../datetime'
-
-import type {AuditTyping} from './AuditTyping'
-import {DocumentContentTyping, DocumentPointTyping, DocumentTyping} from './documents'
+import {AuditTyping, DocumentContentTyping, DocumentPointTyping, DocumentTyping} from '../typing'
 
 export interface MuDocument extends IEntity {
+  wmAttId?: ReferenceId
   attId?: ReferenceId
   createUserId?: ReferenceId
-  createDeviceId?: SerialCode
+  createDeviceId?: ReferenceId
   createIp?: SerialCode
   createDatetime?: LocalDateTime
   remark?: BigText
-  auditStatus?: AuditTyping
   doc?: BigText
   name?: string
   markUserId?: ReferenceId
@@ -20,4 +18,5 @@ export interface MuDocument extends IEntity {
   pType?: DocumentPointTyping
   cType?: DocumentContentTyping
   dType?: DocumentTyping
+  auditStatus?: AuditTyping
 }

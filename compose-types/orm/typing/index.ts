@@ -11,7 +11,6 @@ export * from './DisabilityTyping'
 export * from './RuleTyping'
 
 export * from './documents'
-export * from './MuDocument'
 
 export function eKeyNum<M extends object = SafeAny>(reverseMap: M, enumValue: SafeAny = undefined): Late<TypeInt> {
   if (reverseMap || enumValue === undefined) return undefined
