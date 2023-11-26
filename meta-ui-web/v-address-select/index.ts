@@ -31,7 +31,9 @@ export interface Props {
 
 export interface Emits {
   (e: 'update:adCode', v: string): void
+
   (e: 'update:fullPath', v: string): void
+
   (e: 'update:selectedLevel', v: Int): void
 }
 
@@ -73,5 +75,39 @@ export const defaultSelects = {
     code: '',
     leaf: false,
     level: 5
+  }
+}
+
+export function getAdCodeLevel(code: string) {
+  const padCode = code.padEnd(12, '0')
+  const obj = {
+    province: padCode.slice(0, 2),
+    city: padCode.slice(2, 4),
+    district: padCode.slice(4, 6),
+    town: padCode.slice(6, 9),
+    village: padCode.slice(9, 12)
+  }
+  let level = 0
+  if (obj.province !== '00') level = 2
+  if (obj.city !== '00') level = 3
+  if (obj.district !== '00') level = 4
+  if (obj.town !== '000') level = 5
+  else if (obj.village !== '000') level = 5
+  return level
+}
+export const clipCode = (code: string, level: Int) => {
+  switch (level) {
+    case 1:
+      return code.slice(0, 2)
+    case 2:
+      return code.slice(0, 4)
+    case 3:
+      return code.slice(0, 6)
+    case 4:
+      return code.slice(0, 9)
+    case 5:
+      return code.slice(0, 12)
+    default:
+      return code
   }
 }

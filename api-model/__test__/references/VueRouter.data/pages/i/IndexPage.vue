@@ -13,7 +13,7 @@ const routeTo = (path?: string) => {
     <VRow transition-all duration-300>
       <template v-for="(it, idx) in group.children" :key="idx">
         <VCol cols="12" sm="6" md="3" xl="1">
-          <VCard @click="routeTo(it.link)" min-h-10>
+          <VCard min-h-10 @click="routeTo(it.link)">
             <div v-ripple f-c flex-col>
               <div rounded c-p text-16 :class="it.icon" />
               <div text-4>{{ it.title }}</div>

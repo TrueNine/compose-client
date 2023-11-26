@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import type {Job} from '@compose/apidoc-dts-maliang-tnmaster'
-import {JobApi} from '@/api/JobApi'
-import DisabilityRuleCheckboxComp from '@/components/disability/DisabilityRuleCheckboxComp.vue'
 import {GenderTypingMap, GenderTypingReverseMap, type Inst} from '@compose/compose-types'
 import {VForm} from 'vuetify/components'
 import {DayJs, des} from '@compose/api-model'
+
+import DisabilityRuleCheckboxComp from '@/components/disability/DisabilityRuleCheckboxComp.vue'
+import {JobApi} from '@/api/JobApi'
 
 const initJob = {
   title: '',
@@ -40,25 +41,25 @@ const submit = async () => {
     <VCardTitle>添加职位</VCardTitle>
     <VCardText>
       <VForm ref="form" fast-fail @submit.prevent>
-        <VTextField :rules="[v => Boolean(v) || '职位名称不能为空']" label="公司名称" v-model="pubJob.title" />
-        <VTextField label="联系电话（求职者将会通过此号码联系到您）" v-model="pubJob.phone" />
-        <VTextField label="公司联系座机（备用联系方式）" v-model="pubJob.landline" />
-        <VTextarea label="职位描述" v-model="pubJob.doc" />
-        <VTextarea label="岗位职责" v-model="pubJob.postResp" />
-        <VTextarea label="任职要求" v-model="pubJob.qualification" />
+        <VTextField v-model="pubJob.title" :rules="[v => Boolean(v) || '职位名称不能为空']" label="公司名称" />
+        <VTextField v-model="pubJob.phone" label="联系电话（求职者将会通过此号码联系到您）" />
+        <VTextField v-model="pubJob.landline" label="公司联系座机（备用联系方式）" />
+        <VTextarea v-model="pubJob.doc" label="职位描述" />
+        <VTextarea v-model="pubJob.postResp" label="岗位职责" />
+        <VTextarea v-model="pubJob.qualification" label="任职要求" />
 
         <VRow :dense="true" align="center">
           <VCol cols="12" md="6" sm="12">
             <VDialog flex>
               <template #activator="{props}">
-                <VBtn v-bind="props" v-if="pubJob.startDate && pubJob.endDate">重新选择招聘时间</VBtn>
+                <VBtn v-if="pubJob.startDate && pubJob.endDate" v-bind="props">重新选择招聘时间</VBtn>
                 <span v-if="pubJob.startDate && pubJob.endDate">{{ DayJs.formatDate(pubJob.startDate) }} - {{ DayJs.formatDate(pubJob.endDate) }}</span>
                 <VBtn v-else v-bind="props" color="primary">选择招聘时间</VBtn>
               </template>
               <template #default="{isActive}">
                 <div w-fit>
-                  <YQDatePicker range v-model:range-start-value="pubJob.startDate" v-model:range-end-value="pubJob.endDate" />
-                  <VBtn :block="true" @click="isActive.value = false" color="primary">确定</VBtn>
+                  <YQDatePicker v-model:range-start-value="pubJob.startDate" v-model:range-end-value="pubJob.endDate" range />
+                  <VBtn :block="true" color="primary" @click="isActive.value = false">确定</VBtn>
                 </div>
               </template>
             </VDialog>
@@ -67,18 +68,18 @@ const submit = async () => {
             <AddressSelectDialogComp v-model:full-path="_fullPath" v-model:code="pubJob.addressCode" v-model:active="showAddr" />
           </VCol>
           <VCol cols="11" md="5" sm="11">
-            <VSwitch label="加急" color="primary" v-model="pubJob.eagerFetch" />
+            <VSwitch v-model="pubJob.eagerFetch" label="加急" color="primary" />
           </VCol>
         </VRow>
 
-        <VTextField type="number" label="需要人数" v-model="pubJob.rqCount" />
+        <VTextField v-model="pubJob.rqCount" type="number" label="需要人数" />
 
         <VRow :dense="true" justify="space-around" align="center">
           <VCol cols="12" md="6" sm="12">
-            <VTextField type="number" label="需要经验年限" v-model="pubJob.exYear" />
+            <VTextField v-model="pubJob.exYear" type="number" label="需要经验年限" />
           </VCol>
           <VCol cols="12" md="6" sm="12">
-            <VSwitch label="接受应届毕业生" color="primary" v-model="pubJob.student" />
+            <VSwitch v-model="pubJob.student" label="接受应届毕业生" color="primary" />
           </VCol>
         </VRow>
 
@@ -95,8 +96,8 @@ const submit = async () => {
     </VCardText>
 
     <VCardActions>
-      <VBtn @click="submit" color="primary">提交</VBtn>
-      <VBtn @click="clear" color="error">清空</VBtn>
+      <VBtn color="primary" @click="submit">提交</VBtn>
+      <VBtn color="error" @click="clear">清空</VBtn>
       <VSpacer />
     </VCardActions>
   </VCard>

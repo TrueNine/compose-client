@@ -23,12 +23,15 @@ const level = ref<number>()
   {{ code }}
   {{ path }}
   {{ level }}
+  <VTextField v-model="code" label="地址" />
   <YVAddressSelect
     v-model:ad-code="code"
     v-model:full-path="path"
     v-model:selected-level="level"
-    level="district"
+    level="village"
     :find-districts="findCities"
+    :find-towns="findCities"
+    :find-villages="findCities"
     :find-cities="findCities"
     :find-provinces="findProvinces"
   />

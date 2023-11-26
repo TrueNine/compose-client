@@ -1,24 +1,11 @@
 <script lang="ts" setup>
-import type {Int, LateNull, SerialCode} from '@compose/compose-types'
+import type {LateNull, SerialCode} from '@compose/compose-types'
 import {des} from '@compose/api-model'
 
-import {defaultSelects, type Emits, type IComponentAddr, type Props, type SelectValue} from './index'
+import {clipCode, defaultSelects, type Emits, getAdCodeLevel, type IComponentAddr, type Props, type SelectValue} from './index'
 
-const clipCode = (code: string, level: Int) => {
-  switch (level) {
-    case 1:
-      return code.slice(0, 2)
-    case 2:
-      return code.slice(0, 4)
-    case 3:
-      return code.slice(0, 6)
-    case 4:
-      return code.slice(0, 9)
-    case 5:
-      return code.slice(0, 12)
-    default:
-      return code
-  }
+const pad = (code: string) => {
+  return code.padEnd(12, '0')
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -42,11 +29,13 @@ const addressCache = ref<Record<SerialCode, IComponentAddr[]>>({})
 const saveCache = (code: SerialCode, data: IComponentAddr[]) => (addressCache.value[code] = data)
 const getCache = (code?: SerialCode) => (code ? addressCache.value[code] : undefined)
 
-const provinces = ref<LateNull<IComponentAddr>[]>([])
-const cities = ref<LateNull<IComponentAddr>[]>([])
-const districts = ref<LateNull<IComponentAddr>[]>([])
-const towns = ref<LateNull<IComponentAddr>[]>([])
-const villages = ref<LateNull<IComponentAddr>[]>([])
+const datas = reactive<Record<string, IComponentAddr[]>>({
+  province: [],
+  city: [],
+  district: [],
+  town: [],
+  village: []
+})
 
 const defaultSelected = des(defaultSelects)
 const selected = ref<SelectValue>(des(defaultSelects))
@@ -71,87 +60,77 @@ const sortFn = (a: LateNull<IComponentAddr>, b: LateNull<IComponentAddr>) => {
   return 0
 }
 
+const checkList = [2, 4, 6, 9, 12]
+const keyNames: (keyof SelectValue)[] = ['province', 'city', 'district', 'town', 'village']
+const fnNames = ['findProvinces', 'findCities', 'findDistricts', 'findTowns', 'findVillages']
+async function cacheAndUpdate(code: string) {
+  if (code.length < 2 || code.length > 12) return
+  if (!checkList.includes(code.length)) return
+  const padCode = pad(code)
+
+  const level = getAdCodeLevel(code)
+  const max = level - 1
+  const curIdx = max - 1
+  const currentFnKey = fnNames[max] as 'findProvinces' | 'findCities' | 'findDistricts' | 'findTowns' | 'findVillages'
+  const currentKey = keyNames[max]
+  const prevKey = keyNames[curIdx]
+  const cache = getCache(padCode)
+
+  const pt = datas[prevKey].find(e => pad(e!.code) === padCode)
+
+  // ready next addresses
+  datas[currentKey] =
+    cache ??
+    (await props[currentFnKey](pt))
+      ?.sort(sortFn)
+      .filter(e => e != null)
+      .map(e => e!) ??
+    []
+  saveCache(
+    padCode,
+    datas[currentKey].map(e => e!)
+  )
+
+  let fullPath = ''
+  for (let i = 0; i < max; i++) {
+    const key = keyNames[i]
+    const item = selected.value[key]
+    if (item && item.name) fullPath += item.name
+  }
+
+  selected.value[prevKey] = datas[prevKey].find(e => pad(e.code) === padCode)
+  selected.value[currentKey] = defaultSelected[currentKey]
+
+  emitsFullPath.value = fullPath
+  emitsLevel.value = level
+  emitsAdCode.value = clipCode(code, level - 1)
+}
+
 watch(
   () => selected.value.province,
   async v => {
-    if (v && v.code !== '') {
-      const cacheable = getCache(v?.code)
-      if (cacheable) cities.value = cacheable
-      else {
-        cities.value = (await props.findCities(v))?.sort(sortFn) ?? []
-        saveCache(
-          v.code,
-          cities.value.map(e => e!)
-        )
-      }
-      emitsLevel.value = 1
-      emitsAdCode.value = clipCode(v.code, 1)
-      emitsFullPath.value = v.name
-    }
-    selected.value.city = defaultSelected.city
+    if (v && v.code !== '') await cacheAndUpdate(v.code)
   }
 )
 
 watch(
   () => selected.value.city,
   async v => {
-    if (v && v.code !== '') {
-      const cacheable = getCache(v?.code)
-      if (cacheable) districts.value = cacheable
-      else {
-        districts.value = (await props.findDistricts(v))?.sort(sortFn) ?? []
-        saveCache(
-          v.code,
-          districts.value.map(e => e!)
-        )
-      }
-      emitsLevel.value = 2
-      emitsAdCode.value = clipCode(v.code, 2)
-      emitsFullPath.value = selected.value.province!.name + v.name
-    }
-    selected.value.district = defaultSelected.district
+    if (v && v.code !== '') await cacheAndUpdate(v!.code)
   }
 )
 
 watch(
   () => selected.value.district,
   async v => {
-    if (v && v.code !== '') {
-      const cacheable = getCache(v?.code)
-      if (cacheable) towns.value = cacheable
-      else {
-        towns.value = (await props.findTowns(v))?.sort(sortFn) ?? []
-        saveCache(
-          v.code,
-          towns.value.map(e => e!)
-        )
-      }
-      emitsLevel.value = 3
-      emitsAdCode.value = clipCode(v.code, 3)
-      emitsFullPath.value = selected.value.province!.name + selected.value.city!.name + v.name
-    }
-    selected.value.town = defaultSelected.town
+    if (v && v.code !== '') await cacheAndUpdate(v!.code)
   }
 )
 
 watch(
   () => selected.value.town,
   async v => {
-    if (v && v.code !== '') {
-      const cacheable = getCache(v?.code)
-      if (cacheable) villages.value = cacheable
-      else {
-        villages.value = (await props.findVillages(v))?.sort(sortFn) ?? []
-        saveCache(
-          v.code,
-          villages.value.map(e => e!)
-        )
-      }
-      emitsLevel.value = 4
-      emitsAdCode.value = clipCode(v.code, 4)
-      emitsFullPath.value = selected.value.province!.name + selected.value.city!.name + selected.value.district!.name + v.name
-    }
-    selected.value.village = defaultSelected.village
+    if (v && v.code !== '') await cacheAndUpdate(v!.code)
   }
 )
 
@@ -166,18 +145,9 @@ watch(
   }
 )
 
-const levelSerial = computed(() => {
-  return props.level === 'province' ? 1 : props.level === 'city' ? 2 : props.level === 'town' ? 4 : props.level === 'village' ? 5 : 3
-})
-
-const isSelectCity = computed(() => selected.value.province?.code !== '' && levelSerial.value >= 2 && !selected.value.province?.leaf)
-const isSelectDistrict = computed(() => selected.value.city?.code !== '' && levelSerial.value >= 3 && !selected.value.city?.leaf)
-const isSelectTown = computed(() => selected.value.district?.code !== '' && levelSerial.value >= 4 && !selected.value.district?.leaf)
-const isSelectVillage = computed(() => selected.value.town?.code !== '' && levelSerial.value >= 5 && !selected.value.town?.leaf)
-
 onMounted(async () => {
-  provinces.value = (await props.findProvinces()) ?? []
-  provinces.value.sort((a, b) => {
+  datas['province'] = ((await props.findProvinces()) ?? []).map(e => e!)
+  datas.province.sort((a, b) => {
     return a!.code.localeCompare(b!.code)
   })
 })
@@ -186,6 +156,16 @@ const copy = (str: string) => {
   const clip = window.navigator.clipboard
   clip.writeText(str)
 }
+
+watch(
+  () => emitsAdCode.value,
+  v => {
+    if (v) {
+      console.log(v)
+      cacheAndUpdate(v)
+    }
+  }
+)
 
 const copyAdCode = () => copy(props.adCode!)
 const copyFullPath = () => copy(props.fullPath!)
@@ -225,75 +205,82 @@ const copyFullPath = () => copy(props.fullPath!)
       <section>
         <slot name="default" :selected="selected">
           <VRow :dense="true">
-            <slot name="select-province" :selected-province="selected.province" :provinces="provinces">
+            <slot name="select-province" :selected-province="selected.province" :provinces="datas.province">
               <VCol cols="6" sm="6" md="3">
                 <VSelect
                   v-model="selected.province"
                   :return-object="true"
                   :persistent-hint="true"
                   :label="defaultSelected.province.name"
-                  :items="provinces"
+                  :items="datas.province"
                   item-title="name"
                   item-value="code"
                 />
               </VCol>
             </slot>
 
-            <slot v-if="isSelectCity" name="select-cities" :selected-city="selected.city" :cities="cities">
-              <VCol cols="6" sm="6" md="3">
-                <VSelect
-                  v-model="selected.city"
-                  :return-object="true"
-                  :persistent-hint="true"
-                  :label="defaultSelected.city.name"
-                  :items="cities"
-                  item-title="name"
-                  item-value="code"
-                />
-              </VCol>
-            </slot>
+            <Transition name="el-fade-in-linear">
+              <slot v-if="emitsLevel > 1" name="select-cities" :selected-city="selected.city" :cities="datas.city">
+                <VCol cols="6" sm="6" md="3">
+                  <VSelect
+                    v-model="selected.city"
+                    :return-object="true"
+                    :persistent-hint="true"
+                    :label="defaultSelected.city.name"
+                    :items="datas.city"
+                    item-title="name"
+                    item-value="code"
+                  />
+                </VCol>
+              </slot>
+            </Transition>
+            <Transition name="el-fade-in-linear">
+              <slot v-if="emitsLevel > 2" name="select-district" :selected-district="selected.district" :districts="datas.district">
+                <VCol cols="6" sm="6" md="3">
+                  <VSelect
+                    v-model="selected.district"
+                    :return-object="true"
+                    :persistent-hint="true"
+                    :label="defaultSelected.district.name"
+                    :items="datas.district"
+                    item-title="name"
+                    item-value="code"
+                  />
+                </VCol>
+              </slot>
+            </Transition>
 
-            <slot v-if="isSelectDistrict" name="select-district" :selected-district="selected.district" :districts="districts">
-              <VCol cols="6" sm="6" md="3">
-                <VSelect
-                  v-model="selected.district"
-                  :return-object="true"
-                  :persistent-hint="true"
-                  :label="defaultSelected.district.name"
-                  :items="districts"
-                  item-title="name"
-                  item-value="code"
-                />
-              </VCol>
-            </slot>
+            <Transition name="el-fade-in-linear">
+              <slot v-if="emitsLevel > 3" name="select-town" :selected-town="selected.town" :towns="datas.town">
+                <VCol cols="6" sm="6" md="3">
+                  <VSelect
+                    v-model="selected.town"
+                    :return-object="true"
+                    :persistent-hint="true"
+                    :label="defaultSelected.town.name"
+                    :items="datas.town"
+                    item-title="name"
+                    item-value="code"
+                  />
+                </VCol>
+              </slot>
+            </Transition>
 
-            <slot v-if="isSelectTown" name="select-town" :selected-town="selected.town" :towns="towns">
-              <VCol cols="6" sm="6" md="3">
-                <VSelect
-                  v-model="selected.town"
-                  :return-object="true"
-                  :persistent-hint="true"
-                  :label="defaultSelected.town.name"
-                  :items="towns"
-                  item-title="name"
-                  item-value="code"
-                />
-              </VCol>
-            </slot>
-
-            <slot v-if="isSelectVillage" name="select-village" :selected-village="selected.village" :villages="villages">
-              <VCol cols="6" sm="6" md="4">
-                <VSelect
-                  v-model="selected.village"
-                  :return-object="true"
-                  :persistent-hint="true"
-                  :label="defaultSelected.village.name"
-                  :items="villages"
-                  item-title="name"
-                  item-value="code"
-                />
-              </VCol>
-            </slot>
+            <Transition name="el-fade-in-linear">
+              <slot v-if="emitsLevel > 4" name="select-village" :selected-village="selected.village" :villages="datas.village">
+                <VCol cols="6" sm="6" md="4">
+                  <VSelect
+                    v-model="selected.village"
+                    :return-object="true"
+                    :persistent-hint="true"
+                    :label="defaultSelected.village.name"
+                    :items="datas.village"
+                    item-title="name"
+                    item-value="code"
+                  />
+                </VCol>
+              </slot>
+            </Transition>
           </VRow>
         </slot>
       </section>

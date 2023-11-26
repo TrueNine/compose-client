@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import {JobApi} from '@/api/JobApi'
-import {AddressApi} from '@/api/AddressApi'
 import type {Nullable, Pq, Pr} from '@compose/compose-types'
 import type {AddressFullPathResp, Job} from '@compose/apidoc-dts-maliang-tnmaster'
 import {DayJs, eagerFetch} from '@compose/api-model'
+
+import {AddressApi} from '@/api/AddressApi'
+import {JobApi} from '@/api/JobApi'
 
 const router = useRouter()
 
@@ -34,7 +35,7 @@ const disResult = (a: number[]) => {
 <template>
   <nav flex justify-between>
     <div text-8>所有职位</div>
-    <VBtn @click="router.push(`/a/job/add`)" color="primary"><i i-mdi-plus /> 添加职位</VBtn>
+    <VBtn color="primary" @click="router.push(`/a/job/add`)"><i i-mdi-plus /> 添加职位</VBtn>
   </nav>
   <div f-x-c>
     <PaginatorComp v-model:pq="page" :pr="data" @change="changeRequest" />
@@ -76,7 +77,7 @@ const disResult = (a: number[]) => {
       </template>
     </ElTableColumn>
 
-    <ElTableColumn prop="title" label="职位名称"></ElTableColumn>
+    <ElTableColumn prop="title" label="职位名称" />
 
     <ElTableColumn prop="auditStatus" label="审核状态">
       <template #default="{row}">
@@ -117,7 +118,7 @@ const disResult = (a: number[]) => {
       <template #default="{row}">{{ DayJs.formatDate(row.endDate) }}</template>
     </ElTableColumn>
 
-    <ElTableColumn prop="orderedWight" label="职位排序权重"></ElTableColumn>
+    <ElTableColumn prop="orderedWight" label="职位排序权重" />
 
     <ElTableColumn prop="createDatetime" label="创建时间">
       <template #default="{row}">

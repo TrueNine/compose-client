@@ -62,7 +62,7 @@ export function mapRecord<T, U>(record: Record<string, T>, callback: (val: T) =>
   )
 }
 
-export function dlv(obj: SafeAny, key: string | string[], def: SafeAny, p: number, undef: SafeAny): any {
+export function dlv(obj: SafeAny, key: string | string[], def: SafeAny, p: number, undef: SafeAny): SafeAny {
   if (typeof key === 'string') key = key.split('.')
   for (p = 0; p < key.length; p++) {
     const path = key[p]
