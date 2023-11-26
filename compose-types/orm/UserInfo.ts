@@ -5,7 +5,7 @@ import type {IEntity} from './Entities'
 import type {ReferenceId, SerialCode} from './Utils'
 
 export interface UserInfo extends IEntity {
-  userId: ReferenceId
+  userId?: ReferenceId
   pri?: boolean
   addressId?: ReferenceId
   addressCode?: SerialCode
@@ -13,15 +13,15 @@ export interface UserInfo extends IEntity {
   qqAccount?: SerialCode
   qqOpenid?: SerialCode
   avatarImgId?: ReferenceId
-  firstName: string
-  lastName: string
+  firstName?: string
+  lastName?: string
   email?: string
   birthday?: LocalDate
   addressDetailsId?: ReferenceId
   phone?: SerialCode
   sparePhone?: SerialCode
   idCard?: SerialCode
-  gender: GenderTyping
+  gender?: GenderTyping
   wechatOpenid?: SerialCode
   wechatAuthid?: SerialCode
 }

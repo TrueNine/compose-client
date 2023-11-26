@@ -16,13 +16,10 @@ export interface IComponentAddr {
 
 export interface Props {
   level?: ISelectLevel
-  selectedLevel?: Int
-  fullPath?: string
   adCode?: SerialCode
   showAdCode?: boolean
   showFullPath?: boolean
   findProvinces?: () => Asyncable<LateNull<LateNull<IComponentAddr>[]>>
-  notFoundProvinces?: () => Asyncable<LateNull<LateNull<IComponentAddr>[]>>
   findCities?: (addr: LateNull<IComponentAddr>) => Asyncable<LateNull<LateNull<IComponentAddr>[]>>
   findDistricts?: (addr: LateNull<IComponentAddr>) => Asyncable<LateNull<LateNull<IComponentAddr>[]>>
   findTowns?: (addr: LateNull<IComponentAddr>) => Asyncable<LateNull<LateNull<IComponentAddr>[]>>

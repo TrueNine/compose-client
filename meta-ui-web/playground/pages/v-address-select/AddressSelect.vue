@@ -16,23 +16,18 @@ const findCities = async (code: LateNull<IComponentAddr>) => {
   return data.value
 }
 const code = ref<string>('')
-const path = ref<string>('')
-const level = ref<number>()
+const aab = ref('')
 </script>
 <template>
-  {{ code }}
-  {{ path }}
-  {{ level }}
   <VTextField v-model="code" label="地址" />
   <YVAddressSelect
     v-model:ad-code="code"
-    v-model:full-path="path"
-    v-model:selected-level="level"
-    level="village"
+    level="district"
     :find-districts="findCities"
     :find-towns="findCities"
     :find-villages="findCities"
     :find-cities="findCities"
     :find-provinces="findProvinces"
+    @update:full-path="e => (aab = e)"
   />
 </template>
