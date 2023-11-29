@@ -11,7 +11,7 @@ export enum DisabilityTyping {
   MULTIPLE = 7
 }
 
-export const DisabilityTypingComment = {
+export const DisabilityTypingComment: Record<string, string> = {
   [DisabilityTyping.EYE]: '视力',
   [DisabilityTyping.EAR]: '听力',
   [DisabilityTyping.MOUTH]: '言语',
@@ -20,7 +20,7 @@ export const DisabilityTypingComment = {
   [DisabilityTyping.NERVE]: '精神',
   [DisabilityTyping.MULTIPLE]: '多重'
 }
-export const DisabilityTypingMap = {
+export const DisabilityTypingMap: Record<string, number> = {
   [DisabilityTyping.EYE]: 1,
   [DisabilityTyping.EAR]: 2,
   [DisabilityTyping.MOUTH]: 3,
@@ -30,7 +30,7 @@ export const DisabilityTypingMap = {
   [DisabilityTyping.MULTIPLE]: 7
 }
 
-export const DisabilityTypingReverseMap = {
+export const DisabilityTypingReverseMap: Record<string, DisabilityTyping> = {
   [1]: DisabilityTyping.EYE,
   [2]: DisabilityTyping.EAR,
   [3]: DisabilityTyping.MOUTH,

@@ -44,3 +44,8 @@ export type Nullable<T = SafeAny> = T | null
  * # 元素可为 undefined，可能需要后初始化，也可能为 null
  */
 export type LateNull<T> = T | Late<T> | Nullable<T>
+
+/**
+ * 裁剪对象内的字段为可选属性
+ */
+export type Clip<T extends object, K extends keyof T> = Omit<T, K> & Pt<Pick<T, K>>
