@@ -15,11 +15,11 @@ const props = withDefaults(defineProps<Props>(), {
   showAdCode: false,
   showFullPath: false,
   level: 'district',
-  findProvinces: () => [],
-  findCities: () => [],
-  findDistricts: () => [],
-  findTowns: () => [],
-  findVillages: () => []
+  findProvinces: undefined,
+  findCities: undefined,
+  findDistricts: undefined,
+  findTowns: undefined,
+  findVillages: undefined
 })
 const emits = defineEmits<Emits>()
 
@@ -111,7 +111,7 @@ async function cacheAndUpdate(code: string) {
   if (level < emitsDeepLevel.value) {
     datas[currentKey] =
       cache ??
-      (await props[currentFnKey](pt))
+      (await props[currentFnKey]!(pt))
         ?.sort(sortFn)
         .filter(e => e != null)
         .map(e => e!) ??
@@ -169,7 +169,7 @@ watch(
 )
 
 onMounted(async () => {
-  datas['province'] = ((await props.findProvinces()) ?? []).map(e => e!)
+  datas['province'] = ((await props.findProvinces!()) ?? []).map(e => e!)
   datas.province.sort((a, b) => {
     return a!.code.localeCompare(b!.code)
   })
@@ -193,7 +193,7 @@ const copyFullPath = () => copy(emitsFullPath.value!)
 
 <template>
   <VCard>
-    <VCardText>
+    <VCardText v-if="props.showAdCode || props.showFullPath">
       <div min-h-10 p-1>
         <slot v-if="showAdCode && emitsAdCode" name="ad-code" :ad-code="emitsAdCode">
           <div v-if="emitsAdCode" flex items-center>

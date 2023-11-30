@@ -19,6 +19,7 @@ export interface Props {
   adCode?: SerialCode
   showAdCode?: boolean
   showFullPath?: boolean
+  findByCode?: (addr: LateNull<IComponentAddr>) => Asyncable<LateNull<LateNull<IComponentAddr>[]>>
   findProvinces?: () => Asyncable<LateNull<LateNull<IComponentAddr>[]>>
   findCities?: (addr: LateNull<IComponentAddr>) => Asyncable<LateNull<LateNull<IComponentAddr>[]>>
   findDistricts?: (addr: LateNull<IComponentAddr>) => Asyncable<LateNull<LateNull<IComponentAddr>[]>>
