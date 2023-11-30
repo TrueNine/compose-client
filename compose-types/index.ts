@@ -33,3 +33,8 @@ export * from './orm'
  * 语言 国际化
  */
 export * from './language'
+
+/**
+ * 各种 api 的标准
+ */
+export * from './api'

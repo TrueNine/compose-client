@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type {LateNull, SerialCode} from '@compose/compose-types'
-import {des} from '@compose/api-model'
+import {CnDistrict, des} from '@compose/api-model'
 import {reactive} from 'vue'
 
 import {clipCode, defaultSelects, type Emits, getAdCodeLevel, type IComponentAddr, type Props, type SelectValue} from './index'
@@ -19,7 +19,8 @@ const props = withDefaults(defineProps<Props>(), {
   findCities: undefined,
   findDistricts: undefined,
   findTowns: undefined,
-  findVillages: undefined
+  findVillages: undefined,
+  findByCode: undefined
 })
 const emits = defineEmits<Emits>()
 
@@ -90,7 +91,7 @@ const sortFn = (a: LateNull<IComponentAddr>, b: LateNull<IComponentAddr>) => {
 
 const checkList = [2, 4, 6, 9, 12]
 const keyNames: (keyof SelectValue)[] = ['province', 'city', 'district', 'town', 'village']
-const fnNames = ['findProvinces', 'findCities', 'findDistricts', 'findTowns', 'findVillages']
+const fnNames = ['findProvinces', 'findCities', 'findDistricts', 'findTowns', 'findVillages', 'findByCode']
 
 async function cacheAndUpdate(code: string) {
   if (code.length < 2 || code.length > 12) return
@@ -100,7 +101,7 @@ async function cacheAndUpdate(code: string) {
 
   const max = level - 1
   const curIdx = max - 1
-  const currentFnKey = fnNames[max] as 'findProvinces' | 'findCities' | 'findDistricts' | 'findTowns' | 'findVillages'
+  const currentFnKey = (fnNames[max] ?? fnNames[5]) as 'findProvinces' | 'findCities' | 'findDistricts' | 'findTowns' | 'findVillages' | 'findByCode'
   const currentKey = keyNames[max]
   const prevKey = keyNames[curIdx]
   const cache = getCache(padCode)
@@ -130,7 +131,7 @@ async function cacheAndUpdate(code: string) {
   selected.value[currentKey] = defaultSelected[currentKey]
   emitsFullPath.value = fullPath
   emitsLevel.value = level
-  emitsAdCode.value = clipCode(code, level - 1)
+  emits('update:adCode', clipCode(code, level - 1))
 }
 
 watch(
@@ -180,10 +181,24 @@ const copy = (str: string) => {
   clip.writeText(str)
 }
 
+// loading 开始，
+const loading = ref<boolean>(false)
+async function load(code: string) {
+  loading.value = true
+  let appendCode = ''
+  for (const e of new CnDistrict(code).serialArray) {
+    appendCode += e
+    await cacheAndUpdate(appendCode)
+  }
+  loading.value = false
+}
+
 watch(
   () => props.adCode,
   v => {
-    if (v) cacheAndUpdate(v)
+    if (v && !loading.value) {
+      load(v)
+    }
   }
 )
 
