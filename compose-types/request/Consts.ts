@@ -12,7 +12,7 @@ export const MediaTypes = {
 export const Headers = {
   contentType: 'Content-Type',
   contentLength: 'Content-Length',
-  userAgent: 'User-Agent',
+  userAgent: 'Usr-Agent',
   xDeviceId: 'X-Device-Id',
   authorization: 'Authorization',
   xRefreshToken: 'X-Refresh'

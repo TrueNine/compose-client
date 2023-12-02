@@ -4,7 +4,7 @@ export * from './address'
 export * from './documents'
 export * from './typing'
 
-export * from './User'
+export * from './Usr'
 
 export * from './UserInfo'
 export * from './Role'
