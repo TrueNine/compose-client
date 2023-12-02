@@ -20,13 +20,13 @@ import {
   QuasarZhCn
 } from '../common'
 
-import type {Props} from './index'
+import type {YConfigProviderProps} from './index'
 
 const vuetifyUseTheme = useTheme()
 
 const darkUse = useDark()
 const q = useQuasar()
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<YConfigProviderProps>(), {
   locale: 'zh-CN',
   dark: true
 })

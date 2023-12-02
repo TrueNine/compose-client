@@ -3,7 +3,7 @@ import type {TMap} from '@compose/tmap'
 import {BasicMapZoomType, initTencentMapWebGlScript, LazyGetMapZoomType} from '@compose/tmap'
 import type {Nullable} from '@compose/compose-types'
 
-import type {Props} from './index'
+import type {YMapTencentProps} from './index'
 
 const mapDefaultContainerId: string = 'YMapTencent_Container_Wrapper'
 const wrapperContainerHandle = ref<HTMLElement | null>(null)
@@ -11,7 +11,7 @@ let mapHandle: Nullable<TMap.Map> = null
 let multiMarkerLayer: Nullable<TMap.MultiMarker> = null
 let singleInfoWindow: Nullable<TMap.InfoWindow> = null
 let search: Nullable<TMap.service.Search> = null
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<YMapTencentProps>(), {
   containerId: mapDefaultContainerId,
   viewMode: '2D',
   serviceKey: undefined,

@@ -3,26 +3,34 @@ import type {LateNull, SerialCode} from '@compose/compose-types'
 import {CnDistrict, des} from '@compose/api-model'
 import {reactive} from 'vue'
 
-import {clipCode, defaultSelects, type Emits, getAdCodeLevel, type IComponentAddr, type Props, type SelectValue} from './index'
+import {
+  clipCode,
+  YVAddressSelectDefaultSelects,
+  type YAddressSelectEmits,
+  getAdCodeLevel,
+  type IComponentAddr,
+  type YVAddressSelectProps,
+  type YVAddressSelectSelectValue
+} from './index'
 
 const pad = (code: string) => {
   return code.padEnd(12, '0')
 }
 
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<YVAddressSelectProps>(), {
   fullPath: '',
   adCode: '',
   showAdCode: false,
   showFullPath: false,
   level: 'district',
-  findProvinces: undefined,
   findCities: undefined,
-  findDistricts: undefined,
   findTowns: undefined,
+  findProvinces: undefined,
+  findDistricts: undefined,
   findVillages: undefined,
   findByCode: undefined
 })
-const emits = defineEmits<Emits>()
+const emits = defineEmits<YAddressSelectEmits>()
 
 const emitsDeepLevel = computed(() => {
   switch (props.level) {
@@ -53,8 +61,8 @@ const datas = reactive<Record<string, IComponentAddr[]>>({
   village: []
 })
 
-const defaultSelected = des(defaultSelects)
-const selected = ref<SelectValue>(des(defaultSelects))
+const defaultSelected = des(YVAddressSelectDefaultSelects)
+const selected = ref<YVAddressSelectSelectValue>(des(YVAddressSelectDefaultSelects))
 
 const _fullPath = ref<string>('')
 const emitsFullPath = computed({
@@ -90,7 +98,7 @@ const sortFn = (a: LateNull<IComponentAddr>, b: LateNull<IComponentAddr>) => {
 }
 
 const checkList = [2, 4, 6, 9, 12]
-const keyNames: (keyof SelectValue)[] = ['province', 'city', 'district', 'town', 'village']
+const keyNames: (keyof YVAddressSelectSelectValue)[] = ['province', 'city', 'district', 'town', 'village']
 const fnNames = ['findProvinces', 'findCities', 'findDistricts', 'findTowns', 'findVillages', 'findByCode']
 
 async function cacheAndUpdate(code: string) {

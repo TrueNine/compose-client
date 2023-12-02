@@ -5,7 +5,7 @@ import YSiderMenuItem from '../el-sider-menu-item'
 
 import _c from './YElSiderMenu.vue'
 
-export interface Props {
+export interface YElSiderMenuProps {
   collapsed?: boolean
   pathPrefix?: string
   routeTable: RouteOption[]
@@ -13,7 +13,7 @@ export interface Props {
   roles?: string[]
   routeMode?: boolean
 }
-export interface Emits {
+export interface YElSiderMenuEmits {
   (e: 'update:routeTable', v: RouteOption[]): void
 }
 

@@ -4,9 +4,9 @@ import {STR_EMPTY, STR_SLASH} from '@compose/compose-types'
 
 import YSiderMenuItem from '../el-sider-menu-item'
 
-import type {Emits, Props} from './index'
+import type {YElSiderMenuEmits, YElSiderMenuProps} from './index'
 
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<YElSiderMenuProps>(), {
   collapsed: false,
   routeMode: true,
   pathPrefix: '',
@@ -14,7 +14,7 @@ const props = withDefaults(defineProps<Props>(), {
   permissions: () => []
 })
 
-const emits = defineEmits<Emits>()
+const emits = defineEmits<YElSiderMenuEmits>()
 const prefix = computed(() => (props.pathPrefix ? props.pathPrefix + STR_SLASH : STR_EMPTY))
 
 const menus = computed({

@@ -3,7 +3,7 @@ import type {RouteOption, StrOrNum} from '@compose/compose-types'
 
 import _c from './YElSiderMenuItem.vue'
 
-export interface Props {
+export interface YElSiderMenuItemProps {
   item: RouteOption
   collapsed?: boolean
   iconName?: string

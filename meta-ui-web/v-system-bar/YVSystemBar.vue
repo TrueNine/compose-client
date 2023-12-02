@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type {Slots} from './index'
+import type {YVSystemBarSlots} from './index'
 
 const drawer = ref(false)
 const settingsDrawer = ref(false)
-defineSlots<Slots>()
+defineSlots<YVSystemBarSlots>()
 </script>
 <template>
   <VApp>

@@ -5,7 +5,7 @@ import _c from './YVSystemBar.vue'
 
 export default Vue.componentInstallToPlugin(_c)
 
-export interface Slots {
+export interface YVSystemBarSlots {
   default(): SafeAny
   'app-title'(): SafeAny
   'app-settings'(): SafeAny

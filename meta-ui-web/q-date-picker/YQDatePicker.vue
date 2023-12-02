@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import type {Emits, Props} from './index'
+import type {YQDatePickerEmits, YQDatePickerProps} from './index'
 
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<YQDatePickerProps>(), {
   modelValue: undefined,
   range: false,
   mini: false
 })
-const emits = defineEmits<Emits>()
+const emits = defineEmits<YQDatePickerEmits>()
 
 const _title = computed(() => {
   if (!props.title) {

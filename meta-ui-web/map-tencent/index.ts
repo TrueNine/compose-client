@@ -6,7 +6,7 @@ import _c from './YMapTencent.vue'
 
 export default Vue.componentInstallToPlugin(_c)
 
-export interface Props {
+export interface YMapTencentProps {
   zoom?: number
   apiKey: string
   containerId?: string
@@ -20,6 +20,6 @@ export interface Props {
   styleId?: number
   mapZoomType?: BasicMapZoomType
 }
-export interface Emits {
+export interface YMapTencentEmits {
   (e: 'update:viewMode', v: TMap.ViewMode): void
 }

@@ -6,7 +6,7 @@ import _c from './YQDatePicker.vue'
 
 export default Vue.componentInstallToPlugin(_c)
 
-export interface Props extends Omit<QDateProps, 'modelValue'> {
+export interface YQDatePickerProps extends Omit<QDateProps, 'modelValue'> {
   value?: Timestamp
   rangeValue?: [Late<Timestamp>, Late<Timestamp>]
   rangeStartValue?: Timestamp
@@ -18,7 +18,7 @@ export interface Props extends Omit<QDateProps, 'modelValue'> {
   subtitle?: string
 }
 
-export interface Emits {
+export interface YQDatePickerEmits {
   (e: 'update:value', v: Timestamp): void
   (e: 'update:rangeStartValue', v: Timestamp): void
   (e: 'update:rangeEndValue', v: Timestamp): void

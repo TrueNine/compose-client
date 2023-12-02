@@ -14,7 +14,7 @@ export interface IComponentAddr {
   level: BigSerial
 }
 
-export interface Props {
+export interface YVAddressSelectProps {
   level?: ISelectLevel
   adCode?: SerialCode
   showAdCode?: boolean
@@ -27,7 +27,7 @@ export interface Props {
   findByCode?: (addr: LateNull<IComponentAddr>) => Asyncable<LateNull<LateNull<IComponentAddr>[]>>
 }
 
-export interface Emits {
+export interface YAddressSelectEmits {
   (e: 'update:adCode', v: string): void
 
   (e: 'update:fullPath', v: string): void
@@ -35,7 +35,7 @@ export interface Emits {
   (e: 'update:selectedLevel', v: Int): void
 }
 
-export interface SelectValue {
+export interface YVAddressSelectSelectValue {
   province?: Late<IComponentAddr>
   city?: Late<IComponentAddr>
   district?: Late<IComponentAddr>
@@ -43,7 +43,7 @@ export interface SelectValue {
   village?: Late<IComponentAddr>
 }
 
-export const defaultSelects = {
+export const YVAddressSelectDefaultSelects = {
   province: {
     name: '选择省份',
     code: '',

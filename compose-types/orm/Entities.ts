@@ -1,3 +1,5 @@
+import type {LocalDateTime} from '../datetime'
+
 import type {BigSerial, Id, ReferenceId, SerialCode} from './Utils'
 
 /**
@@ -11,6 +13,8 @@ export interface IAnyEntity {
  * 实体类基类
  */
 export interface IEntity extends IAnyEntity {
+  crd?: LocalDateTime
+  mrd?: LocalDateTime
   rlv?: BigSerial
   ldf?: boolean
 }

@@ -3,7 +3,7 @@ import type {BCP47} from '@compose/compose-types'
 
 import _c from './YConfigProvider.vue'
 
-export interface Props {
+export interface YConfigProviderProps {
   locale?: BCP47
   dark?: boolean
 }

@@ -4,9 +4,9 @@ import {isNonEmpty} from '@compose/api-model'
 
 import YElSiderMenuItem from './YElSiderMenuItem.vue'
 
-import type {Props} from './index'
+import type {YElSiderMenuItemProps} from './index'
 
-withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<YElSiderMenuItemProps>(), {
   collapsed: false,
   iconName: 'i-mdi-menu',
   idxKey: undefined,
