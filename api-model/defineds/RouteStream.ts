@@ -237,22 +237,25 @@ export class RouteStream {
 
 function _toRouteTable(raw: RouteRecordRaw[], parent?: RouteOption) {
   //
-  return raw.map(e => {
-    const meta = e.meta as unknown as PageConfigRouterMeta
-    let path: string = ''
-    if (parent) {
-      if (parent.uri && parent.uri !== STR_SLASH) {
-        path = `${parent.uri}/${e.path}`
-      } else path = e.path
-    } else path = STR_SLASH
+  return raw
+    .map(e => {
+      const meta = e.meta as unknown as PageConfigRouterMeta
+      let path: string = ''
+      if (parent) {
+        if (parent.uri && parent.uri !== STR_SLASH) {
+          path = e.path
+        } else path = e.path
+      } else path = STR_SLASH
+      if (e.path === STR_EMPTY) return undefined
 
-    const o = {
-      uri: path,
-      ...meta
-    } as RouteOption
-    o.sub = e.children ? _toRouteTable(e.children, o) : []
-    return o
-  })
+      const o = {
+        uri: path,
+        ...meta
+      } as RouteOption
+      o.sub = e.children ? _toRouteTable(e.children, o) : []
+      return o
+    })
+    .filter(Boolean) as RouteOption[]
 }
 
 export function toRouteTable(raw: RouteRecordRaw[]) {
