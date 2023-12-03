@@ -1,5 +1,3 @@
-import {defineAutoRoute} from '@compose/api-model'
-
-export default defineAutoRoute({
+export default {
   redirect: '/a/card-resource/all'
-})
+}

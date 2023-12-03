@@ -1,7 +1,7 @@
 import {type Late, type SafeAny, STR_EMPTY, STR_SLASH} from '@compose/compose-types'
-import type {RouteRecordRaw, RouteRecordRedirectOption} from 'vue-router'
+import {type NavigationGuardNext, type RouteLocationNormalized, type RouteMeta, type RouteRecordRaw, type RouteRecordRedirectOption} from 'vue-router'
 
-import {camelTo} from '../tools'
+import {camelTo} from '../tools' // 定义路由处理选项的接口
 
 // 定义路由处理选项的接口
 export interface HandleRouteOption {
@@ -181,9 +181,27 @@ export function resolveRouters(): RouteRecordRaw[] {
 
 export interface PageConfig {
   redirect?: RouteRecordRedirectOption
-  meta?: Record<string, SafeAny>
+  meta?: RouteMeta &
+    Record<string, SafeAny> & {
+      hidden?: boolean
+      disabled?: boolean
+      hasRoles?: string[]
+      hasDepts?: string[]
+      requireDepts?: string[]
+      requireRoles?: string[]
+      hasPermissions?: string[]
+      requirePermissions?: string[]
+      requireLogin?: boolean
+    }
 }
+
+/**
+ * meta 的配置
+ */
+export type PageConfigRouterMeta = PageConfig['meta']
 
 export function defineAutoRoute(cfg?: PageConfig): Late<PageConfig> {
   return cfg
 }
+
+export type BeforeEach = (to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => void

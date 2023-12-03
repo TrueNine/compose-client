@@ -1,8 +1,10 @@
 import type {Maybe, MaybeReadonlyArray, Nullable, RouteOption} from '@compose/compose-types'
 import {STR_EMPTY, STR_SLASH} from '@compose/compose-types'
+import type {RouteRecordRaw} from 'vue-router'
 
 import {maybeArray, maybeReadonlyArray} from '../tools/Array'
 import {cloneDeep} from '../references/LodashEs'
+import type {PageConfigRouterMeta} from '../references'
 
 interface MatchConfig {
   hidden?: boolean
@@ -231,4 +233,28 @@ export class RouteStream {
   get roles(): readonly string[] {
     return this._roles
   }
+}
+
+function _toRouteTable(raw: RouteRecordRaw[], parent?: RouteOption) {
+  //
+  return raw.map(e => {
+    const meta = e.meta as unknown as PageConfigRouterMeta
+    let path: string = ''
+    if (parent) {
+      if (parent.uri && parent.uri !== STR_SLASH) {
+        path = `${parent.uri}/${e.path}`
+      } else path = e.path
+    } else path = STR_SLASH
+
+    const o = {
+      uri: path,
+      ...meta
+    } as RouteOption
+    o.sub = e.children ? _toRouteTable(e.children, o) : []
+    return o
+  })
+}
+
+export function toRouteTable(raw: RouteRecordRaw[]) {
+  return _toRouteTable(raw)
 }

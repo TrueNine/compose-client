@@ -1,6 +1,8 @@
 import {expect, test} from 'vitest'
 
 import {RouteStream} from '../../'
+import {resolveRouters} from '../../references'
+import {toRouteTable} from '../../defineds'
 
 import {RouteTable} from './RouteOptions.data'
 
@@ -17,4 +19,10 @@ test('RouteStream.isAllowPermissions', async () => {
 test('RouteStream.matchClip', async () => {
   const stream = new RouteStream(RouteTable)
   console.log(stream.matchClip({}))
+})
+
+test('toRouteTable', async () => {
+  const routes = resolveRouters()
+  const table = toRouteTable(routes)
+  console.log(table)
 })

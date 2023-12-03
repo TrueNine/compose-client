@@ -38,3 +38,7 @@ export * from './language'
  * 各种 api 的标准
  */
 export * from './api'
+/**
+ * 与安全相关的一系列定义
+ */
+export * from './security'

@@ -30,6 +30,9 @@ export interface RouteOption {
   hasRoles?: string[][]
   requireLogin?: boolean
   tags?: string[]
+
+  requireDepts?: string[]
+  hasDepts?: string[]
   /**
    * ### 当前路由是否被禁用
    */
