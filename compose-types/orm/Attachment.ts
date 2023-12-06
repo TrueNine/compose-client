@@ -21,7 +21,10 @@ export interface Attachment extends IEntity {
  * ## 可查询的轻量文件列表
  */
 export interface LinkedAttachment extends IEntity {
-  readonly id: Id
-  readonly url: string
-  readonly metaName: string
+  readonly id?: Id
+  readonly url?: string
+  readonly mimeType?: string
+  readonly metaName?: string
+  readonly saveName?: string
+  readonly attType?: AttachmentTyping
 }
