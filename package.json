@@ -119,7 +119,7 @@
     "unplugin-auto-import": "^0.17.2",
     "unplugin-fonts": "^1.1.1",
     "unplugin-vue-components": "^0.26.0",
-    "vite": "^5.0.5",
+    "vite": "^5.0.6",
     "vite-plugin-dts": "^3.6.4",
     "vite-plugin-vuetify": "^1.0.2",
     "vitepress": "1.0.0-rc.31",
