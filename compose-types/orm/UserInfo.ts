@@ -6,6 +6,7 @@ import type {ReferenceId, SerialCode} from './Utils'
 
 export interface UserInfo extends IEntity {
   userId?: ReferenceId
+  fullName?: string
   pri?: boolean
   addressId?: ReferenceId
   addressCode?: SerialCode

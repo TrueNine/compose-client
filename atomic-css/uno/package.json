@@ -30,7 +30,7 @@
     "@unocss/transformer-compile-class": "^0.58.0",
     "@unocss/transformer-directives": "^0.58.0",
     "unocss": "^0.58.0",
-    "unocss-preset-weapp": "^0.57.1"
+    "unocss-preset-weapp": "^0.58.0"
   },
   "peerDependencies": {
     "@unocss/cli": "^0.58.0",
@@ -39,6 +39,6 @@
     "@unocss/transformer-compile-class": "^0.58.0",
     "@unocss/transformer-directives": "^0.58.0",
     "unocss": "^0.58.0",
-    "unocss-preset-weapp": "^0.57.1"
+    "unocss-preset-weapp": "^0.58.0"
   }
 }
