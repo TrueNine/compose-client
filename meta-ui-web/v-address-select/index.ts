@@ -3,8 +3,6 @@ import type {Asyncable, BigSerial, Int, Late, LateNull, SerialCode} from '@compo
 
 import _c from './YVAddressSelect.vue'
 
-export default Vue.componentInstallToPlugin(_c)
-
 export type ISelectLevel = 'province' | 'city' | 'district' | 'town' | 'village'
 
 export interface IComponentAddr {
@@ -109,3 +107,5 @@ export const clipCode = (code: string, level: Int) => {
       return code
   }
 }
+const a = Vue.componentInstallToPlugin<typeof _c>(_c)
+export default a

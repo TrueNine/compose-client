@@ -1,6 +1,6 @@
 {
   "name": "@compose/prettier-config",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "scripts": {
     "build-c": "vite build",
     "type-check": "vue-tsc --noEmit",
@@ -23,11 +23,11 @@
   "dependencies": {
     "@vue/eslint-config-prettier": "^8.0.0",
     "eslint-plugin-prettier": "^5.0.1",
-    "prettier": "^3.1.0"
+    "prettier": "^3.1.1"
   },
   "peerDependencies": {
     "@vue/eslint-config-prettier": "^8.0.0",
     "eslint-plugin-prettier": "^5.0.1",
-    "prettier": "^3.1.0"
+    "prettier": "^3.1.1"
   }
 }

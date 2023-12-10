@@ -2,7 +2,6 @@ import {fileURLToPath, URL} from 'node:url'
 
 import {defineConfig} from 'vite'
 import vue from '@vitejs/plugin-vue'
-import dts from 'vite-plugin-dts'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
@@ -12,6 +11,7 @@ import ViteFonts from 'unplugin-fonts/vite'
 import vuetify, {transformAssetUrls} from 'vite-plugin-vuetify'
 import type {ModuleFormat} from 'rollup'
 import {quasar, transformAssetUrls as quasarTransformAssetUrls} from '@quasar/vite-plugin'
+import dts from 'vite-plugin-dts'
 
 export default defineConfig({
   build: {
@@ -70,7 +70,10 @@ export default defineConfig({
     vuetify({}),
     quasar(),
     dts({
-      clearPureImport: false,
+      tsconfigPath: './tsconfig.json',
+      clearPureImport: true,
+      staticImport: false,
+      strictOutput: true,
       exclude: ['dist/**', '__build-src__/**', 'vite.config.ts', '**/__test__/**', 'vitest.config.ts', 'playground']
     }),
     AutoImport({

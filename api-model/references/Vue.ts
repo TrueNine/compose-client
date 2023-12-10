@@ -1,10 +1,11 @@
-import {type Plugin} from 'vue'
+import type {Plugin} from 'vue'
 import type {SafeAny} from '@compose/compose-types'
 
 export interface VueComponentInstanceMapping {
   name?: string
   __name?: string
 }
+export type SFCWithInstall<T = SafeAny> = T & Plugin & VueComponentInstanceMapping & {install: (app: any) => void}
 
 /**
  * ## 针对 vue 封装的一些工具函数
@@ -18,9 +19,9 @@ export class Vue {
    * @param otherComponent
    * @returns 封装后的组件
    */
-  static componentInstallToPlugin<T = SafeAny, E = SafeAny>(component: T, otherComponent?: Record<string, E>): T & Plugin & VueComponentInstanceMapping {
-    let _p = component as unknown as T & Plugin & VueComponentInstanceMapping
-    const _r = otherComponent as unknown as Record<string, T & Plugin & VueComponentInstanceMapping>
+  static componentInstallToPlugin<T = SafeAny, E = SafeAny>(component: T, otherComponent?: Record<string, E>): SFCWithInstall<T> {
+    let _p = component as unknown as SFCWithInstall<T>
+    const _r = otherComponent as unknown as Record<string, SFCWithInstall<T>>
     if (!_p.name) _p = {..._p, name: _p.__name}
     _p.install = app => {
       for (const c of [_p, ...Object.values(_r != null ? _r : {})]) {
