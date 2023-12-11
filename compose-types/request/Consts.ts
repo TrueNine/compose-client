@@ -26,7 +26,7 @@ export const MediaTypes = {
   java: 'text/x-java-source',
   jar: 'application/java-archive',
   md: 'text/markdown',
-  form: 'application/form-data',
+  formData: 'multipart/form-data',
   urlEncode: 'application/x-www-form-urlencoded',
   json: 'application/json',
   css: 'text/css',
