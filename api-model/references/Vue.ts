@@ -5,7 +5,7 @@ export interface VueComponentInstanceMapping {
   name?: string
   __name?: string
 }
-export type SFCWithInstall<T = SafeAny> = T & Plugin & VueComponentInstanceMapping & {install: (app: any) => void}
+export type SFCWithInstall<T = SafeAny> = T & Plugin & VueComponentInstanceMapping & {install: (app: SafeAny) => void}
 
 /**
  * ## 针对 vue 封装的一些工具函数

@@ -4,12 +4,12 @@ import type {IEntity} from './Entities'
 import type {BigText, ReferenceId, SerialCode} from './Utils'
 
 export interface Usr extends IEntity {
-  createUserId?: ReferenceId
+  readonly band?: boolean
+  readonly createUserId?: ReferenceId
   account?: SerialCode
   nickName?: string
   doc?: BigText
   pwdEnc?: BigText
   lastLoginTime?: LocalDateTime
-  band?: boolean
   banTime?: LocalDateTime
 }

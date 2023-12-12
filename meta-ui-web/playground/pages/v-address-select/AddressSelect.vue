@@ -28,6 +28,6 @@ const aab = ref('')
     :find-villages="findCities"
     :find-cities="findCities"
     :find-provinces="findProvinces"
-    @update:full-path="e => (aab = e)"
+    @update:full-path="(e: string) => (aab = e)"
   />
 </template>

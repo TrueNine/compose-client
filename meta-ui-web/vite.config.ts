@@ -67,7 +67,9 @@ export default defineConfig({
     }),
     vueJsx(),
     unocss(),
-    vuetify({}),
+    vuetify({
+      autoImport: false
+    }),
     quasar(),
     dts({
       tsconfigPath: './tsconfig.json',

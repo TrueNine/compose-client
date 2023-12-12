@@ -5,8 +5,9 @@ import type {IEntity} from './Entities'
 import type {ReferenceId, SerialCode} from './Utils'
 
 export interface UserInfo extends IEntity {
-  userId?: ReferenceId
-  fullName?: string
+  readonly fullName?: string
+  readonly createUserId?: ReferenceId
+  readonly userId?: ReferenceId
   pri?: boolean
   addressId?: ReferenceId
   addressCode?: SerialCode

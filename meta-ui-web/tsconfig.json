@@ -2,10 +2,7 @@
   "extends": "@compose/tsconfig/tsconfig.json",
   "compilerOptions": {
     "baseUrl": ".",
-    "types": [
-      "./imports-auto.d.ts",
-      "./imports-comp.d.ts"
-    ],
+    "types": ["./imports-auto.d.ts", "./imports-comp.d.ts"],
     "declaration": true,
     "declarationDir": "dist",
     "declarationMap": true
