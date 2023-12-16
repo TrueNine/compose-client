@@ -15,6 +15,7 @@ export interface UserDocument extends IEntity {
   doc?: BigText
   name?: string
   userId?: ReferenceId
+  userInfoId?: ReferenceId
   poType?: DocumentPointTyping
   coType?: DocumentContentTyping
   doType?: DocumentTyping
