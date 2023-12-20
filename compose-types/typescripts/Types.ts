@@ -39,6 +39,7 @@ export type Late<T = SafeAny> = T | undefined
  * # 元素可为 null
  */
 export type Nullable<T = SafeAny> = T | null
+export type Nil<T = SafeAny> = Nullable<T>
 
 /**
  * # 元素可为 undefined，可能需要后初始化，也可能为 null
