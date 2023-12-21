@@ -192,6 +192,8 @@ export interface PageConfig {
       hasPermissions?: string[]
       requirePermissions?: string[]
       requireLogin?: boolean
+    } & {
+      title?: string
     }
 }
 
