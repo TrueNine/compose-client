@@ -43,6 +43,7 @@ export default defineConfig({
       },
       external: [
         'vue',
+        /(highlight\.js|highlight\.js\/)/,
         /(@vueuse|@vueuse\/)/,
         /(naive-ui|naive-ui\/)/,
         /(vuetify|vuetify\/)/,

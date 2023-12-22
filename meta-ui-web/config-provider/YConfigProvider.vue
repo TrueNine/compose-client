@@ -19,6 +19,7 @@ import {
   QuasarEnUs,
   QuasarZhCn
 } from '../common'
+import {hljs} from '../common'
 
 import type {YConfigProviderProps} from './index'
 
@@ -92,7 +93,7 @@ const naiveDateLocale = computed(() => {
 
 <template>
   <ElConfigProvider :locale="elLocale">
-    <NConfigProvider ref="naiveThemeHandle" :theme="naiveDarkTheme" :locale="naiveLocale" :date-locale="naiveDateLocale">
+    <NConfigProvider ref="naiveThemeHandle" :hljs="hljs" :theme="naiveDarkTheme" :locale="naiveLocale" :date-locale="naiveDateLocale">
       <NGlobalStyle />
       <VDefaultsProvider :defaults="{}">
         <VLocaleProvider :locale="props.locale">
