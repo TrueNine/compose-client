@@ -1,3 +1,5 @@
+import type {Evr} from './index'
+
 export enum DegreeTyping {
   NONE = 0,
   MIN = 1,
@@ -10,7 +12,7 @@ export enum DegreeTyping {
   OTHER = 9999
 }
 
-export const DegreeTypingComment = {
+export const DegreeTypingComment: Record<Evr<typeof DegreeTyping>, string> = {
   [DegreeTyping.NONE]: '文盲',
   [DegreeTyping.MIN]: '小学',
   [DegreeTyping.HALF]: '初中',
@@ -21,7 +23,7 @@ export const DegreeTypingComment = {
   [DegreeTyping.AFTER_EXPERT]: '博士后',
   [DegreeTyping.OTHER]: '其他'
 }
-export const DegreeTypingMap = {
+export const DegreeTypingMap: Record<Evr<typeof DegreeTyping>, number> = {
   [DegreeTyping.NONE]: 0,
   [DegreeTyping.MIN]: 1,
   [DegreeTyping.HALF]: 2,
@@ -32,7 +34,7 @@ export const DegreeTypingMap = {
   [DegreeTyping.AFTER_EXPERT]: 7,
   [DegreeTyping.OTHER]: 9999
 }
-export const DegreeTypingReverseMap = {
+export const DegreeTypingReverseMap: Record<number, Evr<typeof DegreeTyping>> = {
   [0]: DegreeTyping.NONE,
   [1]: DegreeTyping.MIN,
   [2]: DegreeTyping.HALF,
