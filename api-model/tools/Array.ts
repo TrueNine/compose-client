@@ -94,3 +94,24 @@ export function* range(start: number, end: number) {
     yield i
   }
 }
+
+/**
+ * ## 将数组合并为一个 Map
+ * @param key 作为 key 的字段
+ * @param arr 需合并的对象数组
+ */
+export function mergeToMap<T extends object>(key: keyof T, arr: T[]): {[key in keyof T]: T[]} {
+  if (!arr.length) return {} as {[key in keyof T]: T[]}
+  const ks = arr.map(e => ({
+    key: (e[key]?.toString() ?? '') as keyof T,
+    value: e
+  }))
+  return ks.reduce(
+    (acc, cur) => {
+      if (acc[cur.key] !== undefined) acc[cur.key].push(cur.value)
+      else acc[cur.key] = [cur.value]
+      return acc
+    },
+    {} as {[key in keyof T]: T[]}
+  )
+}
