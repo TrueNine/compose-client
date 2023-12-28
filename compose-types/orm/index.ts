@@ -1,7 +1,7 @@
 export * from './Utils'
 export * from './Entities'
 export * from './address'
-export * from './documents'
+export * from './cert'
 export * from './typing'
 
 export * from './Usr'

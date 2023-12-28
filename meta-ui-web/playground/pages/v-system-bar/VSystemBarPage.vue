@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type {RouteOption} from '@compose/compose-types'
+
 const menus = ref<RouteOption[]>([
   {
     uri: 'ab',

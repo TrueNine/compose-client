@@ -1,9 +1,11 @@
 import type {IEntity} from '../Entities'
-import type {BigText, ReferenceId, SerialCode} from '../Utils'
+import type {BigText, ReferenceId, RefId, SerialCode} from '../Utils'
 import type {LocalDateTime} from '../../datetime'
-import {AuditTyping, DocumentContentTyping, DocumentPointTyping, DocumentTyping} from '../typing'
+import {AuditTyping, CertContentTyping, CertPointTyping, CertTyping} from '../typing'
 
-export interface UserDocument extends IEntity {
+export interface Cert extends IEntity {
+  userId?: ReferenceId
+  userInfoId?: RefId
   wmAttId?: ReferenceId
   wmCode?: SerialCode
   attId?: ReferenceId
@@ -14,10 +16,8 @@ export interface UserDocument extends IEntity {
   remark?: BigText
   doc?: BigText
   name?: string
-  userId?: ReferenceId
-  userInfoId?: ReferenceId
-  poType?: DocumentPointTyping
-  coType?: DocumentContentTyping
-  doType?: DocumentTyping
+  poType?: CertPointTyping
+  coType?: CertContentTyping
+  doType?: CertTyping
   auditStatus?: AuditTyping
 }

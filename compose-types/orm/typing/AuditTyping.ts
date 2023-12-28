@@ -1,3 +1,5 @@
+import type {Evr} from '../../enum'
+
 export enum AuditTyping {
   NONE = 0,
   ASSIGNED = 1,
@@ -7,7 +9,8 @@ export enum AuditTyping {
   EXPIRED = 5,
   REJECT = 6
 }
-export const AuditTypingComment = {
+
+export const AuditTypingComment: Record<Evr<typeof AuditTyping>, string> = {
   [AuditTyping.NONE]: '未审核',
   [AuditTyping.ASSIGNED]: '已分配',
   [AuditTyping.PASS]: '通过',
@@ -16,12 +19,13 @@ export const AuditTypingComment = {
   [AuditTyping.EXPIRED]: '已过期',
   [AuditTyping.REJECT]: '已驳回'
 }
-export const AuditTypingReverseMap = {
-  [0]: [AuditTyping.NONE],
-  [1]: [AuditTyping.ASSIGNED],
-  [2]: [AuditTyping.PASS],
-  [3]: [AuditTyping.FAIL],
-  [4]: [AuditTyping.CANCEL],
-  [5]: [AuditTyping.EXPIRED],
-  [6]: [AuditTyping.REJECT]
+
+export const AuditTypingReverseMap: Record<Evr<typeof AuditTyping>, AuditTyping> = {
+  [0]: AuditTyping.NONE,
+  [1]: AuditTyping.ASSIGNED,
+  [2]: AuditTyping.PASS,
+  [3]: AuditTyping.FAIL,
+  [4]: AuditTyping.CANCEL,
+  [5]: AuditTyping.EXPIRED,
+  [6]: AuditTyping.REJECT
 }

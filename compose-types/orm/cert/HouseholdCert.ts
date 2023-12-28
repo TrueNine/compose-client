@@ -1,11 +1,12 @@
 import type {IEntity} from '../Entities'
-import type {BigSerial, ReferenceId} from '../Utils'
+import type {BigSerial, ReferenceId, RefId} from '../Utils'
 import type {Timestamp} from '../../datetime'
 import {BloodTyping, DegreeTyping, GenderTyping} from '../typing'
 import type {Decimal, Int} from '../../typescripts'
 
-export interface HouseholdRegistrationCard extends IEntity {
-  userId: ReferenceId
+export interface HouseholdCert extends IEntity {
+  userId?: RefId
+  userInfoId?: RefId
   issueDate?: Timestamp
   serviceAddressDetailsId?: ReferenceId
   militaryServiceStatus: string

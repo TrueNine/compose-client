@@ -5,10 +5,10 @@ import {reactive} from 'vue'
 
 import {
   clipCode,
-  YVAddressSelectDefaultSelects,
-  type YAddressSelectEmits,
   getAdCodeLevel,
   type IComponentAddr,
+  type YAddressSelectEmits,
+  YVAddressSelectDefaultSelects,
   type YVAddressSelectProps,
   type YVAddressSelectSelectValue
 } from './index'

@@ -1,6 +1,5 @@
 import type {Duration} from 'moment'
-import type {IEntity} from '@compose/compose-types'
-import type {LinkedAttachment} from '@compose/compose-types'
+import type {IEntity, LinkedAttachment} from '@compose/compose-types'
 
 import {GoodsChangeRecordTyping, GoodsInfoTyping, GoodsTyping} from '../enums'
 

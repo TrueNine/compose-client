@@ -14,8 +14,8 @@ import {MultiMarker as ExMultiMarker} from './multimarker'
 import type {
   SearchErrorResult as ExSearchErrorResult,
   SearchNearbyOptions as ExSearchNearbyOptions,
-  SearchRegionOptions as ExSearchRegionOptions,
   SearchOptions as ExISearchOptions,
+  SearchRegionOptions as ExSearchRegionOptions,
   SearchResult as ExSearchResult
 } from './options/service'
 import {Search as ExSearch} from './services'

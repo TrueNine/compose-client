@@ -1,5 +1,6 @@
 import {ref, type Ref} from 'vue'
 import type {CreateMpPayOrderResp} from '@compose/api-model'
+
 export interface PaymentResult {
   meta?: Ref<unknown | null>
   isSuccess?: Ref<boolean>

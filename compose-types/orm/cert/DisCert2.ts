@@ -1,10 +1,13 @@
 import type {IEntity} from '../Entities'
 import type {Timestamp} from '../../datetime'
-import type {BigSerial, Id, ReferenceId, SerialCode} from '../Utils'
+import type {BigSerial, ReferenceId, RefId, SerialCode} from '../Utils'
 import {GenderTyping} from '../typing'
 import type {Int} from '../../typescripts'
 
-export interface DisabilityCertificate2 extends IEntity {
+export interface DisCert2 extends IEntity {
+  userId?: RefId
+  userInfoId?: RefId
+
   birthday?: Timestamp
   addressDetailsId?: ReferenceId
   guardianPhone?: string
@@ -16,6 +19,5 @@ export interface DisabilityCertificate2 extends IEntity {
   gender?: GenderTyping
   code: SerialCode
   name: string
-  userId: Id
   disabilityCode: SerialCode
 }

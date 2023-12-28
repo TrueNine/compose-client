@@ -1,4 +1,5 @@
-import type {Evr} from '../index'
+import type {Evr} from '../../../enum'
+import {enumToOutput} from '../../../enum'
 
 export enum RelationItemTyping {
   NONE = 0,
@@ -8,7 +9,7 @@ export enum RelationItemTyping {
   EMPLOYEE = 4,
   OTHER = 9999
 }
-export const RelationItemTypingComment: Record<Evr<typeof RelationItemTyping>, string> = {
+const co: Record<Evr<typeof RelationItemTyping>, string> = {
   [RelationItemTyping.NONE]: '无',
   [RelationItemTyping.USER]: '用户',
   [RelationItemTyping.CUSTOMER]: '客户',
@@ -16,11 +17,8 @@ export const RelationItemTypingComment: Record<Evr<typeof RelationItemTyping>, s
   [RelationItemTyping.EMPLOYEE]: '员工',
   [RelationItemTyping.OTHER]: '其他'
 }
-export const RelationItemTypingMap: Record<Evr<typeof RelationItemTyping>, number> = {
-  [RelationItemTyping.NONE]: 0,
-  [RelationItemTyping.USER]: 1,
-  [RelationItemTyping.CUSTOMER]: 2,
-  [RelationItemTyping.ENTERPRISE]: 3,
-  [RelationItemTyping.EMPLOYEE]: 4,
-  [RelationItemTyping.OTHER]: 9999
-}
+const e = enumToOutput(RelationItemTyping, co)
+const a = e.comment
+const b = e.map
+const c = e.reverseMap
+export {a as RelationItemTypingComment, b as RelationItemTypingMap, c as RelationItemTypingReverseMap}

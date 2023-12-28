@@ -1,7 +1,7 @@
 import type {Plugin} from 'rollup'
 
-import {Node} from '../adaptors/PackageAdaptor'
 import type {SafeAny} from '../adaptors/PackageAdaptor'
+import {Node} from '../adaptors/PackageAdaptor'
 import type {CustomRollupConfig} from '../CustomRollupConfig'
 import {findWorkspaceVersions} from '../pnpm'
 

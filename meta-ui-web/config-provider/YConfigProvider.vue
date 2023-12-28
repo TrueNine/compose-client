@@ -10,6 +10,7 @@ import {
   ElementPlusDayjs as dayjs,
   ElementPlusEn,
   ElementPlusZhCn,
+  hljs,
   NaiveDarkTheme,
   NaiveDateEnUs,
   NaiveDateZhCN,
@@ -19,7 +20,6 @@ import {
   QuasarEnUs,
   QuasarZhCn
 } from '../common'
-import {hljs} from '../common'
 
 import type {YConfigProviderProps} from './index'
 

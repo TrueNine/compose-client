@@ -2,7 +2,7 @@ import process from 'node:process'
 
 import type {Plugin} from 'vite'
 
-import {type PluginConfig, parseConfig} from './Def'
+import {parseConfig, type PluginConfig} from './Def'
 import {userConfigFactory} from './flow'
 import {optiz} from './resolve'
 

@@ -1,10 +1,9 @@
 import fs from 'node:fs'
 import path from 'node:path'
 
-import type {UserConfig, DepOptimizationOptions} from 'vite'
+import type {DepOptimizationOptions, UserConfig} from 'vite'
 
-import type {ScssVariableDefs} from '../Def'
-import type {PluginConfig} from '../Def'
+import type {PluginConfig, ScssVariableDefs} from '../Def'
 import {debug} from '../util'
 
 /**

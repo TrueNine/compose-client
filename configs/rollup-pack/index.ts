@@ -9,10 +9,8 @@ import copyPlugin from 'rollup-plugin-copy'
 
 import type {CustomRollupConfig} from './CustomRollupConfig'
 import {defaultConfig, rollupDefaultGenerateCode} from './DefaultVars'
-import {umdDtsPlugin} from './plugin'
+import {publishHandlePlugin, terserPlugin, umdDtsPlugin} from './plugin'
 import {getAllOutputDir, mergeDefaultConfig} from './Utils'
-import {publishHandlePlugin} from './plugin'
-import {terserPlugin} from './plugin'
 
 export * from './CustomRollupConfig'
 export * from './DefaultVars'

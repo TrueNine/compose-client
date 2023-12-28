@@ -1,7 +1,8 @@
 import type {TMap} from '../../index'
-type LatLngDataTyping = TMap.LatLngDataTyping
 
 import type {ISearchOptions} from './Base'
+
+type LatLngDataTyping = TMap.LatLngDataTyping
 
 export interface SearchNearbyOptions extends ISearchOptions {
   /**
