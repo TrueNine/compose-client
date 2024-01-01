@@ -245,7 +245,7 @@ const copyFullPath = () => copy(emitsFullPath.value!)
     <VCardText>
       <slot name="default" :selected="selected">
         <VRow :dense="true">
-          <VCol cols="6" sm="6" md="3">
+          <VCol cols="6">
             <VSelect
               v-model="selected.province"
               :return-object="true"
@@ -258,7 +258,7 @@ const copyFullPath = () => copy(emitsFullPath.value!)
           </VCol>
 
           <Transition name="el-fade-in-linear">
-            <VCol v-if="emitsLevel > 1 && emitsDeepLevel > 2" cols="6" sm="6" md="3">
+            <VCol v-if="emitsLevel > 1 && emitsDeepLevel > 2" cols="6" sm="6">
               <VSelect
                 v-model="selected.city"
                 :return-object="true"
@@ -272,7 +272,7 @@ const copyFullPath = () => copy(emitsFullPath.value!)
           </Transition>
 
           <Transition name="el-fade-in-linear">
-            <VCol v-if="emitsLevel > 2 && emitsDeepLevel > 3" cols="6" sm="6" md="3">
+            <VCol v-if="emitsLevel > 2 && emitsDeepLevel > 3" cols="6" sm="6">
               <VSelect
                 v-model="selected.district"
                 :return-object="true"
@@ -286,7 +286,7 @@ const copyFullPath = () => copy(emitsFullPath.value!)
           </Transition>
 
           <Transition name="el-fade-in-linear">
-            <VCol v-if="emitsLevel > 3 && emitsDeepLevel > 4" cols="6" sm="6" md="3">
+            <VCol v-if="emitsLevel > 3 && emitsDeepLevel > 4" cols="6" sm="6">
               <VSelect
                 v-model="selected.town"
                 :return-object="true"
@@ -300,7 +300,7 @@ const copyFullPath = () => copy(emitsFullPath.value!)
           </Transition>
 
           <Transition name="el-fade-in-linear">
-            <VCol v-if="emitsLevel > 4 && emitsDeepLevel > 5" cols="6" sm="6" md="4">
+            <VCol v-if="emitsLevel > 4 && emitsDeepLevel > 5" cols="6" sm="6">
               <VSelect
                 v-model="selected.village"
                 :return-object="true"
