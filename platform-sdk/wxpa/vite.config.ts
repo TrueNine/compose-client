@@ -14,13 +14,13 @@ export default defineConfig({
         preserveModulesRoot: '.',
         preserveModules: true
       },
-      external: ['vue', 'lodash-es', '@compose/api-model', '@compose/compose-types']
+      external: ['vue', 'lodash-es', '@compose/api-model', '@compose/compose-types', 'example/**']
     }
   },
   plugins: [
     dts({
       tsconfigPath: './tsconfig.json',
-      exclude: ['dist/**', '__build-src__/**', 'vite.config.ts', '**/__test__/**', 'vitest.config.ts']
+      exclude: ['dist/**', '__build-src__/**', 'vite.config.ts', '**/__test__/**', 'vitest.config.ts', 'example/**']
     })
   ]
 })

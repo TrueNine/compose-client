@@ -13,6 +13,19 @@ export * from './image'
 export * from './location'
 
 declare global {
+  /**
+   * 在 js sdk 里面看到的，可能是 微信的 native 方法？目前作用未知
+   */
+  export namespace WeixinJSBridge {
+    export function call(): SafeAny
+
+    export function invoke(e: SafeAny, t: SafeAny, n: SafeAny): SafeAny
+
+    export function on(e: SafeAny, t: SafeAny): SafeAny
+
+    export function log(e: SafeAny): void
+  }
+
   export namespace wx {
     export function config(o: ConfigOptions): void
 
@@ -58,7 +71,9 @@ declare global {
      * @param o
      */
     export function onMenuShareQZone(o: UpdateAppMessageShareDataOption): void
+
     export function chooseImage(o: ChooseImageOption): void
+
     export function previewImage(o: PreviewImageOption): void
 
     /**
