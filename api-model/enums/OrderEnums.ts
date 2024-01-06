@@ -1,4 +1,4 @@
-import type {Pair} from '@compose/compose-types'
+import type {Pair} from '@compose/api-types'
 
 /**
  * 订单状态

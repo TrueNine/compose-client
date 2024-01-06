@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type {LateNull, SerialCode} from '@compose/compose-types'
+import type {LateNull, SerialCode} from '@compose/api-types'
 import {CnDistrict, des} from '@compose/api-model'
 import {reactive} from 'vue'
 

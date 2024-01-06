@@ -14,7 +14,7 @@ export default defineConfig({
         preserveModulesRoot: '.',
         preserveModules: true
       },
-      external: ['net', '@stomp/stompjs', 'stompjs', '@compose/compose-types', 'sockjs-client']
+      external: ['net', '@stomp/stompjs', 'stompjs', '@compose/api-types', 'sockjs-client']
     }
   },
   plugins: [

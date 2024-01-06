@@ -1,5 +1,5 @@
 import {Vue} from '@compose/api-model'
-import type {Asyncable, BigSerial, Int, Late, LateNull, SerialCode} from '@compose/compose-types'
+import type {Asyncable, BigSerial, Int, Late, LateNull, SerialCode} from '@compose/api-types'
 
 import _c from './YVAddressSelect.vue'
 

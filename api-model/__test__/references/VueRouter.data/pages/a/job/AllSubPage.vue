@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type {Nullable, Pq, Pr} from '@compose/compose-types'
+import type {Nullable, Pq, Pr} from '@compose/api-types'
 import type {AddressFullPathResp, Job} from '@compose/apidoc-dts-maliang-tnmaster'
 import {DayJs, eagerFetch} from '@compose/api-model'
 

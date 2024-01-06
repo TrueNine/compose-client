@@ -14,7 +14,7 @@ export default defineConfig({
         preserveModulesRoot: '.',
         preserveModules: true
       },
-      external: ['vue', '@compose/api-model', '@compose/compose-types']
+      external: ['vue', '@compose/api-model', '@compose/api-types']
     }
   },
   plugins: [

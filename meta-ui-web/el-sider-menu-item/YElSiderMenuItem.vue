@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {type RouteOption, type SafeAny} from '@compose/compose-types'
+import {type RouteOption, type SafeAny} from '@compose/api-types'
 import {isNonEmpty} from '@compose/api-model'
 
 import YElSiderMenuItem from './YElSiderMenuItem.vue'

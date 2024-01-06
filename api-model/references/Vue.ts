@@ -1,5 +1,5 @@
 import type {Plugin} from 'vue'
-import type {SafeAny} from '@compose/compose-types'
+import type {SafeAny} from '@compose/api-types'
 
 export interface VueComponentInstanceMapping {
   name?: string

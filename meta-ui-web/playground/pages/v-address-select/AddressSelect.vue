@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type {LateNull} from '@compose/compose-types'
+import type {LateNull} from '@compose/api-types'
 
 import {AddressApi} from '../../api/AddressApi'
 import type {IComponentAddr} from '../../../v-address-select'

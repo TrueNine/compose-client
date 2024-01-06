@@ -1,6 +1,6 @@
 {
   "name": "@compose/eslint-config",
-  "version": "0.0.45",
+  "version": "0.0.46",
   "scripts": {
     "prepare": "pnpm build",
     "build": "vite build",

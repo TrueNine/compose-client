@@ -1,5 +1,6 @@
+import {enumToOutput} from '@compose/api-model'
+
 import type {Evr} from '../../../enum'
-import {enumToOutput} from '../../../enum'
 
 export enum RelationItemTyping {
   NONE = 0,

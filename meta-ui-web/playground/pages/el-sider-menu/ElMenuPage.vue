@@ -1,6 +1,6 @@
 import type { YElSiderMenu } from 'index';
 <script setup lang="ts">
-import type {RouteOption} from '@compose/compose-types'
+import type {RouteOption} from '@compose/api-types'
 
 const routeTable = ref<RouteOption[]>([
   {

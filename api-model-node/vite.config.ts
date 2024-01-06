@@ -27,7 +27,7 @@ export default defineConfig({
         'lodash-es/cloneDeep',
         'vue-router',
         '@compose/api-model',
-        '@compose/compose-types',
+        '@compose/api-types',
         'dayjs'
       ]
     }

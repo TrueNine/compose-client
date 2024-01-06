@@ -1,5 +1,5 @@
 /// <reference types="vite/client" />
-import type {SafeAny} from '@compose/compose-types'
+import type {SafeAny} from '@compose/api-types'
 
 declare module '*.vue' {
   import {ComponentOptions} from 'vue'

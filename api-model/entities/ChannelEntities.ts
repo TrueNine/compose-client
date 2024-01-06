@@ -1,6 +1,6 @@
-import type {IEntity} from '@compose/compose-types'
+import type {IEntity} from '@compose/api-types'
 
-import {GoodsTyping} from '../enums/GoodsEnums'
+import {GoodsTyping} from '../enums'
 
 /**
  * 渠道全局配

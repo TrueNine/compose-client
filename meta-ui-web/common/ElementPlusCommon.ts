@@ -5,7 +5,7 @@ import elementZhCn from 'element-plus/dist/locale/zh-cn'
 // @ts-ignore
 import elementEnUs from 'element-plus/dist/locale/en'
 import {dayjs} from 'element-plus'
-import type {SafeAny} from '@compose/compose-types'
+import type {SafeAny} from '@compose/api-types'
 
 const zhCn = elementZhCn as SafeAny
 const en = elementEnUs as SafeAny

@@ -1,5 +1,5 @@
 import {Vue} from '@compose/api-model'
-import type {RouteOption, StrOrNum} from '@compose/compose-types'
+import type {RouteOption, StrOrNum} from '@compose/api-types'
 
 import _c from './YElSiderMenuItem.vue'
 

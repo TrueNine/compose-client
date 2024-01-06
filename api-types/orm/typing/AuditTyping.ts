@@ -1,4 +1,4 @@
-import type {Evr} from '../../enum'
+import type {EnumCommentMap, Evr} from '../../enum'
 
 export enum AuditTyping {
   NONE = 0,
@@ -10,7 +10,7 @@ export enum AuditTyping {
   REJECT = 6
 }
 
-export const AuditTypingComment: Record<Evr<typeof AuditTyping>, string> = {
+export const AuditTypingComment: EnumCommentMap<typeof AuditTyping> = {
   [AuditTyping.NONE]: '未审核',
   [AuditTyping.ASSIGNED]: '已分配',
   [AuditTyping.PASS]: '通过',

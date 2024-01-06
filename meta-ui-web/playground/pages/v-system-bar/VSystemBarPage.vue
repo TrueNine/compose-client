@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type {RouteOption} from '@compose/compose-types'
+import type {RouteOption} from '@compose/api-types'
 
 const menus = ref<RouteOption[]>([
   {

@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-import {ISO8601Format, type Timestamp} from '@compose/compose-types'
+import {ISO8601Format, type Timestamp} from '@compose/api-types'
 
 export type DayJSNewINewInstanceOptions = string | Timestamp | Date | dayjs.Dayjs
 

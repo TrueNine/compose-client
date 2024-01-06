@@ -1,4 +1,4 @@
-import type {Maybe, SafeAny} from '@compose/compose-types'
+import type {Maybe, SafeAny} from '@compose/api-types'
 
 /**
  * # 对数组进行去重

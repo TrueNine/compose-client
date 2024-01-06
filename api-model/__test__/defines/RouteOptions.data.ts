@@ -1,4 +1,4 @@
-import type {RouteOption} from '@compose/compose-types'
+import type {RouteOption} from '@compose/api-types'
 
 // @unocss-include
 export const RouteTable: RouteOption[] = [

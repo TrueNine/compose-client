@@ -1,10 +1,10 @@
 /// <reference types="vite/client" />
 
-import type {SafeAny} from '@compose/compose-types'
+import type {SafeAny} from '@compose/api-types'
 
 declare module '*.vue' {
   import type {DefineComponent} from 'vue'
-  import {SafeAny} from '@compose/compose-types'
+  import {SafeAny} from '@compose/api-types'
   const component: DefineComponent<object, object, SafeAny>
   export default component
 }

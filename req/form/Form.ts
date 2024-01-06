@@ -1,4 +1,4 @@
-import {STR_EMPTY} from '@compose/compose-types'
+import {STR_EMPTY} from '@compose/api-types'
 
 export function form(formContent: object): FormData {
   if (!formContent) return new FormData()

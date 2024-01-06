@@ -34,7 +34,7 @@ export const toolsExternals: string[] = ['lodash-es', 'moment', 'sockjs-client',
 /**
  * ## 内部项目自身常见外部库
  */
-export const composeExternals: string[] = ['@compose-types/api-model', '@compose/api-model-node', '@compose-types/req', '@compose/compose-types']
+export const composeExternals: string[] = ['@api-types/api-model', '@compose/api-model-node', '@api-types/req', '@compose/api-types']
 
 /**
  * ## node 外部库

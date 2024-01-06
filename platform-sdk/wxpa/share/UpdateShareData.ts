@@ -1,4 +1,4 @@
-import type {BigText, HttpUrl} from '@compose/compose-types'
+import type {BigText, HttpUrl} from '@compose/api-types'
 
 import type {BaseOption} from '../common'
 
@@ -13,6 +13,7 @@ export interface UpdateAppMessageShareDataOption extends BaseOption {
   desc?: BigText
   /**
    * 分享链接，必须与当前页面链接保持一致
+   * @default location.href
    */
   link: HttpUrl
   /**

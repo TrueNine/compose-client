@@ -1,4 +1,4 @@
-import {MediaTypes} from '@compose/compose-types'
+import {MediaTypes} from '@compose/api-types'
 
 export function findMediaTypeByFileName(fileName: string): string {
   const o = fileName.split('.').pop() ?? (MediaTypes.other as unknown as keyof typeof MediaTypes)

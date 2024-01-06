@@ -1,4 +1,4 @@
-import type {Decimal, FullAddressDetails, IEntity, Int, ReferenceId, Timestamp} from '@compose/compose-types'
+import type {Decimal, FullAddressDetails, IEntity, Int, ReferenceId, Timestamp} from '@compose/api-types'
 
 import {GoodsTyping, OrderStatusTyping, PayChannelTyping, PaymentTyping} from '../enums'
 

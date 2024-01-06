@@ -1,5 +1,5 @@
 import {useFetch} from '@vueuse/core'
-import type {Address} from '@compose/compose-types'
+import type {Address} from '@compose/api-types'
 
 export const AddressApi = {
   findProvinces() {

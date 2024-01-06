@@ -1,7 +1,7 @@
-import type {SafeAny} from '@compose/compose-types'
+import type {SafeAny} from '@compose/api-types'
 
 import type {ConfigOptions} from './config'
-import type {UpdateAppMessageShareDataOption, UpdateTimelineShareDataOption} from './share'
+import type {OnMenuShareTimelineOption, UpdateAppMessageShareDataOption, UpdateTimelineShareDataOption} from './share'
 import type {CheckJsApiOption} from './basic'
 import type {GetLocationOption} from './location'
 import type {ChooseImageOption, PreviewImageOption} from './image'
@@ -49,16 +49,17 @@ declare global {
     export function updateTimelineShareData(shareData: UpdateTimelineShareDataOption): void
 
     /**
-     * @deprecated 即将过期
+     * @deprecated 1.6.0
      * @param o
+     * @since 1.1.0
      */
-    export function onMenuShareTimeline(o: UpdateTimelineShareDataOption): void
+    export function onMenuShareTimeline(o: OnMenuShareTimelineOption): void
 
     /**
      * @deprecated 即将过期
      * @param o
      */
-    export function onMenuShareAppMessage(o: UpdateAppMessageShareDataOption): void
+    export function onMenuShareAppMessage(o: OnMenuShareTimelineOption): void
 
     /**
      * @deprecated 即将过期

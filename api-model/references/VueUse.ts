@@ -1,6 +1,5 @@
 import type {UseFetchReturn} from '@vueuse/core'
-import type {Nil} from '@compose/compose-types/typescripts'
-import type {SafeAny} from '@compose/compose-types'
+import type {Nil, SafeAny} from '@compose/api-types'
 
 /**
  * ## 将 vueuse 的请求，进行一次立即请求

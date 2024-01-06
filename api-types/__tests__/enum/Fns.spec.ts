@@ -1,6 +1,6 @@
 import {test} from 'vitest'
+import {enumToOutput, findEnumValue} from '@compose/api-model'
 
-import {enumToOutput, findEnumValue} from '../../enum'
 import {RelationItemTyping} from '../../orm'
 
 test('test enum generate output', () => {

@@ -1,4 +1,4 @@
-import type {ISO8601DateFormat} from '@compose/compose-types'
+import type {ISO8601DateFormat} from '@compose/api-types'
 
 import type {OrderStatusTyping} from '../../../enums'
 

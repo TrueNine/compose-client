@@ -2,7 +2,7 @@ import type fsType from 'node:fs'
 import type pathType from 'node:path'
 import type childProcessType from 'node:child_process'
 
-import type {Nullable, SafeAny} from '@compose/compose-types'
+import type {Nullable, SafeAny} from '@compose/api-types'
 
 export class Node {
   static async executeJson<T = SafeAny>(cmd: string, cwd?: string): Promise<Nullable<T>> {

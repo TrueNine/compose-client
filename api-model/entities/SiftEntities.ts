@@ -1,4 +1,4 @@
-import type {IEntity} from '@compose/compose-types'
+import type {IEntity} from '@compose/api-types'
 
 /**
  * 品牌

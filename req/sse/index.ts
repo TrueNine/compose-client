@@ -1,4 +1,4 @@
-import type {HttpUrl, SafeAny} from '@compose/compose-types'
+import type {HttpUrl, SafeAny} from '@compose/api-types'
 
 export {}
 

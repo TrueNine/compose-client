@@ -14,7 +14,7 @@ export default defineConfig({
         preserveModulesRoot: '.',
         preserveModules: true
       },
-      external: ['vue', 'lodash-es', '@compose/api-model', '@compose/compose-types']
+      external: ['vue', 'lodash-es', '@compose/api-model', '@compose/api-types']
     }
   },
   plugins: [

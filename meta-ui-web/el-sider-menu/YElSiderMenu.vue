@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import {RouteStream} from '@compose/api-model'
-import {STR_EMPTY, STR_SLASH} from '@compose/compose-types'
+import {STR_EMPTY, STR_SLASH} from '@compose/api-types'
 
 import YSiderMenuItem from '../el-sider-menu-item'
 

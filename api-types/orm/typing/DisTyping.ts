@@ -1,5 +1,4 @@
-import type {Evr} from '../../enum'
-import type {TypeInt} from '../Utils'
+import type {EnumCommentMap, EnumMap} from '../../enum'
 
 /**
  * ## 残疾类别枚举
@@ -14,7 +13,7 @@ export enum DisTyping {
   MULTIPLE = 7
 }
 
-export const DisTypingComment: Record<Evr<typeof DisTyping>, string> = {
+export const DisTypingComment: EnumCommentMap<typeof DisTyping> = {
   [DisTyping.EYE]: '视力',
   [DisTyping.EAR]: '听力',
   [DisTyping.MOUTH]: '言语',
@@ -23,7 +22,7 @@ export const DisTypingComment: Record<Evr<typeof DisTyping>, string> = {
   [DisTyping.NERVE]: '精神',
   [DisTyping.MULTIPLE]: '多重'
 }
-export const DisTypingMap: Record<Evr<typeof DisTyping>, TypeInt> = {
+export const DisTypingMap: EnumMap<typeof DisTyping> = {
   [DisTyping.EYE]: 1,
   [DisTyping.EAR]: 2,
   [DisTyping.MOUTH]: 3,
@@ -33,7 +32,7 @@ export const DisTypingMap: Record<Evr<typeof DisTyping>, TypeInt> = {
   [DisTyping.MULTIPLE]: 7
 }
 
-export const DisTypingReverseMap: Record<Evr<typeof DisTyping>, DisTyping> = {
+export const DisTypingReverseMap: EnumMap<typeof DisTyping> = {
   [1]: DisTyping.EYE,
   [2]: DisTyping.EAR,
   [3]: DisTyping.MOUTH,

@@ -1,4 +1,4 @@
-import type {Evr} from '../../enum'
+import type {EnumCommentMap, Evr} from '../../enum'
 import type {TypeInt} from '../Utils'
 
 export enum DegreeTyping {
@@ -13,7 +13,7 @@ export enum DegreeTyping {
   OTHER = 9999
 }
 
-export const DegreeTypingComment: Record<Evr<typeof DegreeTyping>, string> = {
+export const DegreeTypingComment: EnumCommentMap<typeof DegreeTyping> = {
   [DegreeTyping.NONE]: '文盲',
   [DegreeTyping.MIN]: '小学',
   [DegreeTyping.HALF]: '初中',

@@ -16,7 +16,7 @@
     "@babel/types": "^7.23.6",
     "@compose/api-model": "workspace:^",
     "@compose/atomic-css-theme": "workspace:^",
-    "@compose/compose-types": "workspace:^",
+    "@compose/api-types": "workspace:^",
     "@compose/eslint-config": "workspace:^",
     "@compose/meta-ui-web": "workspace:^",
     "@compose/prettier-config": "workspace:^",

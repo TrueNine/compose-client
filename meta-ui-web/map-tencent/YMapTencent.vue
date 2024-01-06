@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type {TMap} from '@compose/psdk-tmap'
 import {BasicMapZoomType, initTencentMapWebGlScript, LazyGetMapZoomType} from '@compose/psdk-tmap'
-import type {Nullable} from '@compose/compose-types'
+import type {Nullable} from '@compose/api-types'
 
 import type {YMapTencentProps} from './index'
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type {Job} from '@compose/apidoc-dts-maliang-tnmaster'
-import {GenderTypingMap, GenderTypingReverseMap, type Inst} from '@compose/compose-types'
+import {GenderTypingMap, GenderTypingReverseMap, type Inst} from '@compose/api-types'
 import {VForm} from 'vuetify/components'
 import {DayJs, des} from '@compose/api-model'
 

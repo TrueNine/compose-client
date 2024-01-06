@@ -2,7 +2,7 @@
 
 ```javascript
 module.exports = {
-  extends: ['@compose-types/stylelint-config']
+  extends: ['@api-types/stylelint-config']
 }
 ```
 

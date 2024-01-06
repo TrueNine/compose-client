@@ -1,4 +1,4 @@
-import {type Int, STRS_ASCII} from '@compose/compose-types'
+import {type Int, STRS_ASCII} from '@compose/api-types'
 
 export class Keys {
   static generateRandomAsciiString(length: Int = 32) {

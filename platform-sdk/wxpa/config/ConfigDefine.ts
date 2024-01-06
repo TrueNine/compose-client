@@ -1,4 +1,4 @@
-import type {SerialCode, Timestamp} from '@compose/compose-types'
+import type {SerialCode, Timestamp} from '@compose/api-types'
 
 import type {JsApiListMap, OpenTagListMap} from '../common'
 

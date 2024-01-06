@@ -1,4 +1,4 @@
-import type {BasicType, NullPt} from '@compose/compose-types'
+import type {BasicType, NullPt} from '@compose/api-types'
 
 import {isNonEmpty, isNonEmptyString} from './Values'
 

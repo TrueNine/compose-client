@@ -1,4 +1,4 @@
-import type {Asyncable, Nullable} from '@compose/compose-types'
+import type {Asyncable, Nullable} from '@compose/api-types'
 
 import type {ChannelTypedMessage} from '../typ/Chrome'
 

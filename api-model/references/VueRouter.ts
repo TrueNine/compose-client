@@ -1,7 +1,8 @@
-import {type Late, type SafeAny, STR_EMPTY, STR_SLASH} from '@compose/compose-types'
-import {type NavigationGuardNext, type RouteLocationNormalized, type RouteMeta, type RouteRecordRaw, type RouteRecordRedirectOption} from 'vue-router'
+import type {Late, SafeAny} from '@compose/api-types'
+import {STR_EMPTY, STR_SLASH} from '@compose/api-types'
+import type {NavigationGuardNext, RouteLocationNormalized, RouteMeta, RouteRecordRaw, RouteRecordRedirectOption} from 'vue-router'
 
-import {camelTo} from '../tools' // 定义路由处理选项的接口
+import {camelTo} from '../tools'
 
 // 定义路由处理选项的接口
 export interface HandleRouteOption {

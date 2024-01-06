@@ -1,5 +1,5 @@
 import {Vue} from '@compose/api-model'
-import type {SafeAny} from '@compose/compose-types'
+import type {SafeAny} from '@compose/api-types'
 
 import _c from './YVSystemBar.vue'
 

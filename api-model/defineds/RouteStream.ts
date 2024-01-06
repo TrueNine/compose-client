@@ -1,9 +1,9 @@
-import type {Maybe, MaybeReadonlyArray, Nullable, RouteOption} from '@compose/compose-types'
-import {STR_EMPTY, STR_SLASH} from '@compose/compose-types'
+import type {Maybe, MaybeReadonlyArray, Nullable, RouteOption} from '@compose/api-types'
+import {STR_EMPTY, STR_SLASH} from '@compose/api-types'
 import type {RouteRecordRaw} from 'vue-router'
 
-import {maybeArray, maybeReadonlyArray} from '../tools/Array'
-import {cloneDeep} from '../references/LodashEs'
+import {maybeArray, maybeReadonlyArray} from '../tools'
+import {cloneDeep} from '../references'
 import type {PageConfigRouterMeta} from '../references'
 
 interface MatchConfig {

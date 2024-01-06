@@ -1,4 +1,4 @@
-import {type ICnDistrict, type Int, STR_EMPTY} from '@compose/compose-types'
+import {type ICnDistrict, type Int, STR_EMPTY} from '@compose/api-types'
 
 export {}
 

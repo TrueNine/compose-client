@@ -1,11 +1,11 @@
-import type {SafeAny} from '../typescripts'
-import type {TypeInt} from '../orm'
-import type {Pair} from '../kotlin'
-
-import type {EnumActual, Evr} from './Types'
+import type {EnumActual, EnumCommentMap, Evr, SafeAny, TypeInt, Pair} from '@compose/api-types'
 
 export function findEnumValue<E extends EnumActual, K extends Evr<E>>(e: E, key: K): E[K] {
   return e[key]
+}
+
+export function findEnumComment<E extends EnumActual, K extends Evr<E>>(key: K, comments: EnumCommentMap<E>): string {
+  return comments[key]
 }
 
 export function enumCommentToPairArray<M extends Record<string, string> = SafeAny>(a: M): Pair<string, TypeInt>[] {

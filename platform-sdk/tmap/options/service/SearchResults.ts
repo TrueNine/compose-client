@@ -1,4 +1,4 @@
-import type {Nullable} from '@compose/compose-types'
+import type {Nullable} from '@compose/api-types'
 
 import type {TMap} from '../../index'
 

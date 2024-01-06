@@ -1,4 +1,4 @@
-import {type NullPt, type SafeAny, STR_EMPTY} from '@compose/compose-types'
+import {type NullPt, type SafeAny, STR_EMPTY} from '@compose/api-types'
 
 /**
  * ## 判断一个字符串是否为空，返回本身或空字符串，排除 null | undefined

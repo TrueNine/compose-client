@@ -1,4 +1,4 @@
-import type {Double} from '@compose/compose-types'
+import type {Double} from '@compose/api-types'
 
 import type {BaseOption} from '../common'
 export interface GetLocationSuccessResult {
