@@ -9,17 +9,20 @@ export class Dom {
    * @param src 加载地址
    * @param appendTag 加载位置
    * @param beforeEach 挂载前处理函数
+   * @param loadFn 加载完成回调
    */
   public static loadRemoteScriptTag(
     src: string,
     appendTag: 'head' | 'body' = 'body',
-    beforeEach: (scriptTag: HTMLScriptElement) => HTMLScriptElement = b => b
+    beforeEach: (scriptTag: HTMLScriptElement) => HTMLScriptElement = b => b,
+    loadFn?: () => void
   ) {
     const a = document.querySelector(`script[src='${src}']`) as HTMLScriptElement | null
     if (null !== a) return a
     const scriptTag = document.createElement('script')
     scriptTag.src = src
     scriptTag.setAttribute('charset', 'utf-8')
+    scriptTag.addEventListener('load', () => loadFn?.())
     document.querySelector(appendTag)?.appendChild(beforeEach(scriptTag))
     return scriptTag
   }

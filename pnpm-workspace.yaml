@@ -4,7 +4,7 @@ packages:
   - 'api-model'
   - 'compose-types'
   - '@types/*'
-  - 'web-map/*'
+  - 'platform-sdk/*'
   - 'uni-app/*'
   - 'ext/*'
   - 'req'

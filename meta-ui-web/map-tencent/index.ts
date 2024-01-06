@@ -1,5 +1,5 @@
 import {Vue} from '@compose/api-model'
-import type {BasicMapZoomType, TMap} from '@compose/tmap'
+import type {BasicMapZoomType, TMap} from '@compose/psdk-tmap'
 
 import _c from './YMapTencent.vue'
 

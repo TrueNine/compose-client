@@ -25,10 +25,13 @@ export * from './kotlin'
  * 地图相关定义
  */
 export * from './map'
+
 /**
  * 数据库的抽象定义
  */
 export * from './orm'
+export * from './model'
+
 /**
  * 语言 国际化
  */

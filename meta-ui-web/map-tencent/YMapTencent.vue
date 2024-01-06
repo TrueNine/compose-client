@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import type {TMap} from '@compose/tmap'
-import {BasicMapZoomType, initTencentMapWebGlScript, LazyGetMapZoomType} from '@compose/tmap'
+import type {TMap} from '@compose/psdk-tmap'
+import {BasicMapZoomType, initTencentMapWebGlScript, LazyGetMapZoomType} from '@compose/psdk-tmap'
 import type {Nullable} from '@compose/compose-types'
 
 import type {YMapTencentProps} from './index'
@@ -124,7 +124,7 @@ const searchRegion = () => {
         searchResults.value = e.data
         console.log(e.data)
       })
-      ?.catch(e => {
+      ?.catch((e: unknown) => {
         console.error(e)
       })
   }

@@ -1,7 +1,7 @@
 {
-  "name": "@compose/compose-types",
-  "version": "1.0.66",
-  "description": "yan100 client ui kit",
+  "name": "@compose/psdk-wxpa",
+  "version": "1.0.5",
+  "description": "微信公众号 js-sdk 定义",
   "author": "TrueNine",
   "license": "private",
   "scripts": {
@@ -21,9 +21,6 @@
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
-    "./*": "./*",
-    "./**": "./**",
-    "./dist/*": "./dist/*",
-    "./dist/**": "./dist/**"
+    "./*": "./*"
   }
 }

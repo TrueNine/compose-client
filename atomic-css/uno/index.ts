@@ -10,7 +10,7 @@ export function unocssRules(cfg: ThemeConfig): StaticRule[] {
     ['c-w', {color: cfg.warningColor}],
     ['bg-w', {'background-color': cfg.warningColor}],
     ['w-fit', {width: 'fit-content'}],
-    ['h-fit', {height: 'fit-content'}],
+    ['debug-fit', {height: 'fit-content'}],
     ['c-e', {color: cfg.errorColor}],
     ['bg-e', {'background-color': cfg.errorColor}]
   ]
@@ -18,8 +18,8 @@ export function unocssRules(cfg: ThemeConfig): StaticRule[] {
 
 export function unocssShortCuts(): StaticShortcut[] {
   return [
-    ['wh-full', 'w-full h-full'],
-    ['wh-0', 'w-0 h-0'],
+    ['wh-full', 'w-full debug-full'],
+    ['wh-0', 'w-0 debug-0'],
     ['f-c', 'flex justify-center items-center'],
     ['f-x-c', 'flex justify-center'],
     ['f-y-c', 'flex items-center'],
@@ -27,8 +27,8 @@ export function unocssShortCuts(): StaticShortcut[] {
     ['text-ellipsis', 'truncate'],
     ['text-ell', 'truncate'],
     ['bg-m', 'bg-gray-500 bg-opacity-5'],
-    ['bg-m-h', 'hover:bg-gray-500 hover:bg-opacity-5 duration-100'],
-    ['bg-m-h-s', 'hover:shadow-md bg-m-h']
+    ['bg-m-debug', 'hover:bg-gray-500 hover:bg-opacity-5 duration-100'],
+    ['bg-m-debug-s', 'hover:shadow-md bg-m-debug']
   ]
 }
 
