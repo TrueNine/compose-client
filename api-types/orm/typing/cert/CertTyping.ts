@@ -1,5 +1,4 @@
-import type {TypeInt} from '../../Utils'
-import type {Evr} from '../../../enum'
+import type {EnumCommentMap, EnumMap} from '../../../enum'
 
 export enum CertTyping {
   NONE = 0,
@@ -12,10 +11,11 @@ export enum CertTyping {
   BANK_CARD = 7,
   CONTRACT = 8,
   BIZ_LICENSE = 9,
-  TITLE_IMAGE = 10
+  TITLE_IMAGE = 10,
+  PERSONAL_INCOME_TAX_VIDEO = 11
 }
 
-export const CertTypingComment: Record<Evr<typeof CertTyping>, string> = {
+export const CertTypingComment: EnumCommentMap<typeof CertTyping> = {
   [CertTyping.NONE]: '无要求',
   [CertTyping.ID_CARD]: '身份证',
   [CertTyping.IC_CARD2]: '二代身份证',
@@ -26,9 +26,10 @@ export const CertTypingComment: Record<Evr<typeof CertTyping>, string> = {
   [CertTyping.BANK_CARD]: '银行卡',
   [CertTyping.CONTRACT]: '合同',
   [CertTyping.BIZ_LICENSE]: '营业执照',
-  [CertTyping.TITLE_IMAGE]: '寸照'
+  [CertTyping.TITLE_IMAGE]: '寸照',
+  [CertTyping.PERSONAL_INCOME_TAX_VIDEO]: '个人所得税视频'
 }
-export const CertTypingMap: Record<Evr<typeof CertTyping>, TypeInt> = {
+export const CertTypingMap: EnumMap<typeof CertTyping> = {
   [CertTyping.NONE]: 0,
   [CertTyping.ID_CARD]: 1,
   [CertTyping.IC_CARD2]: 2,
@@ -39,9 +40,11 @@ export const CertTypingMap: Record<Evr<typeof CertTyping>, TypeInt> = {
   [CertTyping.BANK_CARD]: 7,
   [CertTyping.CONTRACT]: 8,
   [CertTyping.BIZ_LICENSE]: 9,
-  [CertTyping.TITLE_IMAGE]: 10
+  [CertTyping.TITLE_IMAGE]: 10,
+  [CertTyping.PERSONAL_INCOME_TAX_VIDEO]: 11
 }
-export const CertTypingReverseMap: Record<Evr<typeof CertTyping>, CertTyping> = {
+
+export const CertTypingReverseMap: EnumMap<typeof CertTyping> = {
   [0]: CertTyping.NONE,
   [1]: CertTyping.ID_CARD,
   [2]: CertTyping.IC_CARD2,
@@ -52,5 +55,6 @@ export const CertTypingReverseMap: Record<Evr<typeof CertTyping>, CertTyping> = 
   [7]: CertTyping.BANK_CARD,
   [8]: CertTyping.CONTRACT,
   [9]: CertTyping.BIZ_LICENSE,
-  [10]: CertTyping.TITLE_IMAGE
+  [10]: CertTyping.TITLE_IMAGE,
+  [11]: CertTyping.PERSONAL_INCOME_TAX_VIDEO
 }

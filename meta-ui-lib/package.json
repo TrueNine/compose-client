@@ -6,7 +6,7 @@
     "@mdi/font": "^7.4.47",
     "dayjs": "^1.11.10",
     "element-plus": "^2.4.4",
-    "naive-ui": "^2.36.0",
+    "naive-ui": "^2.37.0",
     "quasar": "^2.14.2"
   }
 }
