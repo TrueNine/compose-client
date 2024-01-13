@@ -1,7 +1,7 @@
-import type {GeneratedCodeOptions} from 'rollup'
+import type { GeneratedCodeOptions } from "rollup";
 
-import type {CustomRollupConfig, InternalConfigProperties} from './CustomRollupConfig'
-import {allDefaultGlobalVars, allExternals} from './Excludes'
+import type { CustomRollupConfig, InternalConfigProperties } from "./CustomRollupConfig";
+import { allDefaultGlobalVars, allExternals } from "./Excludes";
 
 /**
  * # 默认 rollup 配置

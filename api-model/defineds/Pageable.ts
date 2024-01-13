@@ -1,4 +1,4 @@
-import type {Asyncable, Nullable, Pq, Pr} from '@compose/api-types'
+import type {Asyncable, nil, Nullable, Pq, Pr} from '@compose/api-types'
 import {Pw} from '@compose/api-types'
 
 import {isEmpty} from '../tools'
@@ -20,13 +20,13 @@ export async function loopPageAll<T>(loopFn: (loopPq: Pq) => Asyncable<Nullable<
     dataList: [],
     total: 0
   }
-  if (isEmpty(initDataList) || initPageSize <= 1 || !initDataList || initTotal === 0 || initTotal <= initPageParam.pageSize) return initDataList
+  if (isEmpty(initDataList) || initPageSize <= 1 || !initDataList || initTotal === 0 || initTotal <= (initPageParam?.pageSize ?? 0)) return initDataList
   const resultDataList: T[] = [...initDataList]
-  let nextPq: Pq | null = {...initPageParam, offset: initPageParam.offset + 1}
+  let nextPq: nil<Pq> = {...initPageParam, offset: (initPageParam?.offset ?? 0) + 1}
   while (nextPq !== null) {
     const {dataList = []} = (await loopFn(nextPq)) ?? {dataList: []}
     resultDataList.push(...dataList)
-    nextPq = (nextPq.offset + 1) * nextPq.pageSize < initTotal ? {...nextPq, offset: nextPq.offset + 1} : null
+    nextPq = ((nextPq?.offset ?? 0) + 1) * (nextPq?.pageSize ?? 0) < initTotal ? {...nextPq, offset: (nextPq?.offset ?? 0) + 1} : null
   }
   return resultDataList
 }

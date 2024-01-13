@@ -3,9 +3,8 @@ import type {Nullable} from '@compose/api-types'
 import {TMap} from '../index'
 
 import type {ITencentEvent} from './Events'
-
 import LatLng = TMap.LatLng
-import Point = TMap.Point
+import Point = TMap.Point;
 
 /**
  * ## 地图事件类型

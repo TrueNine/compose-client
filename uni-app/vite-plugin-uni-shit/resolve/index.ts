@@ -1,10 +1,10 @@
-import fs from 'node:fs'
-import path from 'node:path'
+import fs from "node:fs";
+import path from "node:path";
 
-import type {DepOptimizationOptions, UserConfig} from 'vite'
+import type { DepOptimizationOptions, UserConfig } from "vite";
 
-import type {PluginConfig, ScssVariableDefs} from '../Def'
-import {debug} from '../util'
+import type { PluginConfig, ScssVariableDefs } from "../Def";
+import { debug } from "../util";
 
 /**
  * @param fullPath 项目根目录

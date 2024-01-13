@@ -1,4 +1,4 @@
-import type {TMap} from './index'
+import type { TMap } from "./index";
 
 /**
  * 2d 3d 显示模式

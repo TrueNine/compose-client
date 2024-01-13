@@ -14,6 +14,11 @@ const menus = ref<RouteOption[]>([
 </script>
 <template>
   <YVSystemBar>
+    <template #left-btn>
+      <VAppBarNavIcon>
+        <i i-mdi-home-outline text-8 />
+      </VAppBarNavIcon>
+    </template>
     <template #left-drawer="{collapsed}">
       <YElSiderMenu :collapsed="collapsed" :route-table="menus" :roles="[]" :permissions="[]" />
     </template>

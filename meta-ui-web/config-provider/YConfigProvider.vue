@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import 'dayjs/locale/zh-cn'
 import 'dayjs/locale/en'
-import 'vuetify/lib/styles/main.css'
 import 'element-plus/theme-chalk/dark/css-vars.css'
-import '@mdi/font/css/materialdesignicons.css'
+
 import {NConfigProvider} from 'naive-ui'
 
 import {
@@ -20,6 +19,7 @@ import {
   QuasarEnUs,
   QuasarZhCn
 } from '../common'
+import {checkDark, checkLocale} from '../common/VarletCommon'
 
 import type {YConfigProviderProps} from './index'
 
@@ -44,18 +44,22 @@ const quasarLocale = computed(() => {
 darkUse.value = props.dark
 q.dark.set(props?.dark ?? true)
 q.lang.set(quasarLocale.value)
+checkDark(props.dark ?? true)
+checkLocale(props.locale ?? 'zh-CN')
 
 watch(
   () => props.dark,
   v => {
     darkUse.value = v
     q.dark.set(v)
+    checkDark(props.dark ?? true)
     vuetifyUseTheme.global.name.value = darkLight.value
   }
 )
 watch(
   () => props.locale,
   v => {
+    checkLocale(props.locale ?? 'zh-CN')
     dayjs.locale((v ?? 'en').toLowerCase())
     q.lang.set(quasarLocale.value)
   }

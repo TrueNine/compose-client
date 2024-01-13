@@ -1,19 +1,19 @@
 {
   "name": "@compose/tsconfig",
-  "version": "0.0.27",
+  "version": "0.0.28",
   "main": "tsconfig.json",
   "scripts": {
     "pub": "pnpm publish --no-git-checks"
   },
   "dependencies": {
     "@tsconfig/node18": "^18.2.2",
-    "@types/node": "^20.10.7",
+    "@types/node": "^20.11.0",
     "@vue/tsconfig": "^0.5.1",
     "typescript": "^5.3.3"
   },
   "peerDependencies": {
     "@tsconfig/node18": "^18.2.2",
-    "@types/node": "^20.10.5",
+    "@types/node": "^20.11.0",
     "@vue/tsconfig": "^0.5.1",
     "typescript": "^5.3.3"
   }

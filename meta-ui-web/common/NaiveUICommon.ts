@@ -1,5 +1,5 @@
-import {darkTheme, dateEnUS, dateZhCN, enUS, lightTheme, zhCN} from 'naive-ui'
-import type {App} from 'vue'
+import { darkTheme, dateEnUS, dateZhCN, enUS, lightTheme, zhCN } from "naive-ui";
+import type { App } from "vue";
 
 /**
  * 用于适配 tailwindcss 被覆盖的样式，需要在挂挂载之前执行

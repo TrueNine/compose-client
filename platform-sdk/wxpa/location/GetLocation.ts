@@ -1,6 +1,7 @@
 import type {Double} from '@compose/api-types'
 
 import type {BaseOption} from '../common'
+
 export interface GetLocationSuccessResult {
   latitude: Double
   longitude: Double

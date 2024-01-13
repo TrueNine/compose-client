@@ -1,5 +1,4 @@
 import {TMap} from '../index'
-
 import Map = TMap.Map
 /**
  * # MultiMarker的配置参数

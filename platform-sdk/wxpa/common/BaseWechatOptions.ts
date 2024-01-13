@@ -1,4 +1,4 @@
-import type {SafeAny} from '@compose/api-types'
+import type { SafeAny } from "@compose/api-types";
 
 /**
  * 只有成功参数

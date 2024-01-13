@@ -1,4 +1,4 @@
-import type {GlobalsOption} from 'rollup'
+import type { GlobalsOption } from "rollup";
 
 /**
  * ## rollup 常见 外部库

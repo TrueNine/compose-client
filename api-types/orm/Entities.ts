@@ -1,11 +1,21 @@
 import type {LocalDateTime} from '../datetime'
+import type {Int} from '../typescripts'
 
 import type {BigSerial, Id, ReferenceId, SerialCode} from './Utils'
 
 /**
+ * 分页混合实体
+ */
+export interface PageableEntity {
+  pageSize?: Int
+  offset?: Int
+  unPage?: boolean
+}
+
+/**
  * 实体类基类
  */
-export interface IAnyEntity {
+export interface IAnyEntity extends PageableEntity {
   id?: Id
 }
 

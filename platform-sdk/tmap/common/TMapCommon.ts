@@ -1,7 +1,7 @@
-import {Dom, queryParam} from '@compose/api-model'
+import { Dom, queryParam } from "@compose/api-model";
 
-import {WEBGL_JS_URL} from '../Constants'
-import type {TMap} from '../index'
+import { WEBGL_JS_URL } from "../Constants";
+import type { TMap } from "../index";
 
 /**
  * [附加库加载类型](https://lbs.qq.com/webApi/javascriptGL/glGuide/glBasic#3)

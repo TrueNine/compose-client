@@ -1,11 +1,12 @@
-import type {PagedRequestParam} from '../request'
 import type {Int} from '../typescripts'
+
+import type {PageableEntity} from './Entities'
 
 export const PagedWrapper = {
   DEFAULT_MAX: {
     offset: 0,
     pageSize: 42
-  } as PagedRequestParam
+  } as PageableEntity
 }
 
 /**
@@ -17,6 +18,7 @@ export const Pw = PagedWrapper
  * 数据库的主键
  */
 export type Id = string
+
 /**
  * 数据库的外键
  */
@@ -27,6 +29,7 @@ export type RefId = ReferenceId
  * 大数，用于相加或随机增加的大数值
  */
 export type BigSerial = number
+
 /**
  * 序列化编号，通常使用 string 来表示
  */

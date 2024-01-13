@@ -1,4 +1,4 @@
-import type {Late, Nullable, Pt, SafeAny} from './Types'
+import type { Late, Nullable, Pt, SafeAny } from "./Types";
 
 /**
  * # 基本值类型

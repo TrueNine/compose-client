@@ -3,32 +3,44 @@ import type {YVSystemBarSlots} from './index'
 
 const drawer = ref(false)
 const settingsDrawer = ref(false)
-defineSlots<YVSystemBarSlots>()
+const slots = defineSlots<YVSystemBarSlots>()
+const useLeft = computed(() => {
+  return slots['left-btn'] !== undefined
+})
+const useRight = computed(() => {
+  return slots['right-btn'] !== undefined
+})
 </script>
 <template>
   <VApp>
     <VAppBar color="primary">
       <!-- 左侧菜单收展按钮 -->
-      <VAppBarNavIcon @click="drawer = !drawer">
-        <i i-mdi-menu text-8 />
-      </VAppBarNavIcon>
+      <slot name="left-btn">
+        <VAppBarNavIcon @click="drawer = !drawer">
+          <i i-mdi-menu text-8 />
+        </VAppBarNavIcon>
+      </slot>
       <!-- app 名称插槽 -->
       <VAppBarTitle>
-        <slot name="app-title"> Application </slot>
+        <slot name="app-title"> Application</slot>
       </VAppBarTitle>
       <VSpacer />
+
       <!-- 各种右侧的设置按钮 -->
       <slot name="app-settings" />
-      <VAppBarNavIcon @click="settingsDrawer = !settingsDrawer">
-        <i i-mdi-settings text-8 />
-      </VAppBarNavIcon>
+      <slot name="right-btn">
+        <VAppBarNavIcon @click="settingsDrawer = !settingsDrawer">
+          <i i-mdi-settings text-8 />
+        </VAppBarNavIcon>
+      </slot>
     </VAppBar>
 
-    <VNavigationDrawer v-model="drawer" location="left" :border="false" temporary>
+    <VNavigationDrawer v-if="!useLeft" v-model="drawer" location="left" :border="false" :temporary="true">
       <slot name="left-drawer" :collapsed="drawer" />
     </VNavigationDrawer>
+
     <!-- 右侧设置区域 -->
-    <VNavigationDrawer v-model="settingsDrawer" location="right" :border="false" temporary>
+    <VNavigationDrawer v-if="!useRight" v-model="settingsDrawer" location="right" :border="false" temporary>
       <slot name="settings-drawer" :collapsed="settingsDrawer" />
     </VNavigationDrawer>
 

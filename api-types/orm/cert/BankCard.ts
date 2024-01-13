@@ -4,6 +4,7 @@ import type {Int} from '../../typescripts'
 
 export interface BankCard extends IEntity {
   userId?: RefId
+  reservePhone?: string
   userInfoId?: RefId
   issueAddressDetails?: string
   bankType?: string

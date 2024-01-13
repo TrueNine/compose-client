@@ -1,8 +1,8 @@
-import type {CopyOptions} from 'rollup-plugin-copy'
-import type {ExternalOption, GlobalsOption, InputPluginOption, RollupOptions} from 'rollup'
-import type {Options as TerserOption} from '@rollup/plugin-terser'
+import type { CopyOptions } from "rollup-plugin-copy";
+import type { ExternalOption, GlobalsOption, InputPluginOption, RollupOptions } from "rollup";
+import type { Options as TerserOption } from "@rollup/plugin-terser";
 
-import type {Nullable} from './adaptors/PackageAdaptor'
+import type { Nullable } from "./adaptors/PackageAdaptor";
 
 /**
  * # rollup 收缩的打包配置

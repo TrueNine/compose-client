@@ -1,5 +1,5 @@
-import type {SafeAny} from './Types'
-import type {Byte} from './Number'
+import type { SafeAny } from "./Types";
+import type { Byte } from "./Number";
 
 /**
  * 单独一个或更多

@@ -5,7 +5,7 @@ import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
-import {ElementPlusResolver, NaiveUiResolver, QuasarResolver, Vuetify3Resolver} from 'unplugin-vue-components/resolvers'
+import {ElementPlusResolver, NaiveUiResolver, QuasarResolver, VarletUIResolver, Vuetify3Resolver} from 'unplugin-vue-components/resolvers'
 import unocss from 'unocss/vite'
 import ViteFonts from 'unplugin-fonts/vite'
 import vuetify, {transformAssetUrls} from 'vite-plugin-vuetify'
@@ -46,6 +46,7 @@ export default defineConfig({
         /(highlight\.js|highlight\.js\/)/,
         /(@vueuse|@vueuse\/)/,
         /(naive-ui|naive-ui\/)/,
+        /(@varlet|@varlet\/)/,
         /(vuetify|vuetify\/)/,
         /(element-plus|element-plus\/)/,
         /\.(scss|sass|less|css)/,
@@ -103,7 +104,7 @@ export default defineConfig({
       dts: 'imports-comp.d.ts',
       deep: true,
       dirs: '.',
-      resolvers: [ElementPlusResolver(), NaiveUiResolver(), Vuetify3Resolver(), QuasarResolver()]
+      resolvers: [ElementPlusResolver(), NaiveUiResolver(), Vuetify3Resolver(), QuasarResolver(), VarletUIResolver()]
     }),
     ViteFonts({
       google: {

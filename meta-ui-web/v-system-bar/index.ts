@@ -7,8 +7,16 @@ export default Vue.componentInstallToPlugin(_c)
 
 export interface YVSystemBarSlots {
   default(): SafeAny
+
   'app-title'(): SafeAny
+
   'app-settings'(): SafeAny
+
+  'left-btn'(): SafeAny
+
+  'right-btn'(): SafeAny
+
   'left-drawer'(props: {collapsed: boolean}): SafeAny
+
   'settings-drawer'(): SafeAny
 }

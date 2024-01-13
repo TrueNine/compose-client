@@ -62,6 +62,7 @@ export const Headers = {
   contentLength: 'Content-Length',
   userAgent: 'Usr-Agent',
   xDeviceId: 'X-Device-Id',
+  xRequireCleanAuthentication: 'X-Require-Clean-Authentication',
   authorization: 'Authorization',
   xRefreshToken: 'X-Refresh'
 }

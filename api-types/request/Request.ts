@@ -1,10 +1,9 @@
+import type { PageableEntity } from "../orm";
+
 /**
  * 分页参数入参请求
  */
-export interface PagedRequestParam {
-  offset: number
-  pageSize: number
-}
+export type PagedRequestParam = PageableEntity
 
 /**
  * ## PagedRequestParam 的简写形式

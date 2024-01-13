@@ -1,9 +1,9 @@
-import fs from 'node:fs'
+import fs from "node:fs";
 
-import {readPackageJson as readJson} from '../resolve'
-import type {PluginConfig, ScssVariableDefs, UniAppManifestJson, UniAppPagesJson} from '../Def'
-import {fillUniScss, fillVkUview, vkUviewImport} from '../Snippets'
-import {debug} from '../util'
+import { readPackageJson as readJson } from "../resolve";
+import type { PluginConfig, ScssVariableDefs, UniAppManifestJson, UniAppPagesJson } from "../Def";
+import { fillUniScss, fillVkUview, vkUviewImport } from "../Snippets";
+import { debug } from "../util";
 
 /**
  * @param configOptions 处理用户配置
