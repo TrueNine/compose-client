@@ -44,7 +44,7 @@ const quasarLocale = computed(() => {
 darkUse.value = props.dark
 q.dark.set(props?.dark ?? true)
 q.lang.set(quasarLocale.value)
-checkDark(props.dark ?? true)
+checkDark(!(props.dark ?? false))
 checkLocale(props.locale ?? 'zh-CN')
 
 watch(
@@ -52,7 +52,7 @@ watch(
   v => {
     darkUse.value = v
     q.dark.set(v)
-    checkDark(props.dark ?? true)
+    checkDark(!(props.dark ?? false))
     vuetifyUseTheme.global.name.value = darkLight.value
   }
 )
