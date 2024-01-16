@@ -1,4 +1,4 @@
-import type { GlobalsOption } from "rollup";
+import type {GlobalsOption} from 'rollup'
 
 /**
  * ## rollup 常见 外部库
@@ -74,7 +74,7 @@ export const allDefaultGlobalVars: GlobalsOption = allExternals
       .replaceAll('=', '_e')
       .replaceAll('<', '_lt')
       .replaceAll('>', '_gt')
-      .replace(/[^a-zA-Z0-9_]/g, '_ud')
+      .replace(/[^stepNodes-zA-Z0-9_]/g, '_ud')
 
     if (/^[0-9]/.test(variableName)) variableName = `_${variableName}`
     return {[name]: variableName}

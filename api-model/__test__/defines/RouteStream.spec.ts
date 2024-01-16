@@ -13,7 +13,7 @@ test('RouteStream.isAllowPermissions', async () => {
   expect(stream.isAllowPermissions('/goods/addPhysical')).toBe(false)
   const stream2 = new RouteStream(RouteTable, {permissions: ['ADMIN']})
   expect(stream2.isAllowPermissions('/goods/addPhysical')).toBe(true)
-  expect(stream2.isAllowPermissions('/goods/addPhysical?a=1')).toBe(true)
+  expect(stream2.isAllowPermissions('/goods/addPhysical?stepNodes=1')).toBe(true)
 })
 
 test('RouteStream.matchClip', async () => {

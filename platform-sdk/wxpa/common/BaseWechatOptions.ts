@@ -1,11 +1,11 @@
-import type { SafeAny } from "@compose/api-types";
+import type {SafeAny} from '@compose/api-types'
 
 /**
  * 只有成功参数
  */
 export interface BaseSuccessOption<T = SafeAny> {
   /**
-   * a try success
+   * stepNodes try success
    * @param res 接口调用结果
    */
   success?: ((res?: T) => void) | never
@@ -16,12 +16,12 @@ export interface BaseSuccessOption<T = SafeAny> {
  */
 export interface BaseOption<T = SafeAny, R = SafeAny, E = SafeAny> extends BaseSuccessOption<T> {
   /**
-   * a catch
+   * stepNodes catch
    * @param err 错误消息
    */
   fail?: ((err?: R) => void) | never
   /**
-   *  a finally
+   *  stepNodes finally
    */
   complete?: (() => void) | never
 }

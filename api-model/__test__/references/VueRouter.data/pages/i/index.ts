@@ -6,7 +6,7 @@ export const indexTable = [
       {
         title: '管理后台',
         icon: 'i-mdi-security',
-        link: '/a'
+        link: '/stepNodes'
       },
       {
         title: '个人信息',

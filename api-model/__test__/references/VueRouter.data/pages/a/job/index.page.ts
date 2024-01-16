@@ -1,5 +1,5 @@
 export default {
-  redirect: '/a/job/all',
+  redirect: '/stepNodes/job/all',
   meta: {
     title: '首页'
   }

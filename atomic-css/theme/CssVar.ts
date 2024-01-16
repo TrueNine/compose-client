@@ -1,4 +1,4 @@
-// --a-e: #abcd
+// --stepNodes-e: #abcd
 export class CssVar {
   private readonly _name: string
   private readonly _value: string

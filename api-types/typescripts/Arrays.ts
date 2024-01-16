@@ -1,29 +1,39 @@
-import type { SafeAny } from "./Types";
-import type { Byte } from "./Number";
+import type {dynamic} from './Types'
+import type {binary, Byte} from './Number'
 
 /**
- * 单独一个或更多
+ * ## readonly array or array
  */
-export type MaybeArray<T = SafeAny> = T | T[]
+export type LockableArray<T = dynamic> = readonly T[] | T[]
 
 /**
- * 单独一个或更多 readonlyArray
+ * ## 单独一个或更多
  */
-export type MaybeReadonlyArray<T = SafeAny> = T | readonly T[]
+export type MaybeArray<T = dynamic> = T | T[]
 
 /**
- * 单独一个或更多 readonly array 或者 array
+ * ## 单独一个或更多 readonlyArray
  */
-export type Maybe<T = SafeAny> = MaybeArray<T> | MaybeReadonlyArray<T>
+export type MaybeReadonlyArray<T = dynamic> = T | readonly T[]
 
 /**
- * 表示一个字节数组
+ * ## 单独一个或更多 readonly array 或者 array
+ */
+export type Maybe<T = dynamic> = MaybeArray<T> | MaybeReadonlyArray<T>
+
+/**
+ * ## 表示一个字节数组
  * @see ByteArray
  */
 export type ByteBufferedArray = Uint8Array
 
 /**
- * 一个类型式的字节数组
+ * ## 一个类型式的字节数组
  * @see ByteBufferedArray
  */
 export type ByteArray = Byte[]
+
+/**
+ * ## 二进制数组
+ */
+export type BinaryArray = LockableArray<binary> | ByteBufferedArray

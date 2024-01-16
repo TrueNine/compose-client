@@ -1,3 +1,3 @@
 export default {
-  redirect: '/a/card-resource/all'
+  redirect: '/stepNodes/card-resource/all'
 }

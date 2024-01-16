@@ -678,7 +678,7 @@
             g.systemType +
             '&c=' +
             g.clientVersion +
-            '&a=' +
+            '&stepNodes=' +
             g.appId +
             '&n=' +
             g.networkType +

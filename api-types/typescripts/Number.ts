@@ -1,4 +1,16 @@
 /**
+ * ## 布尔值简写
+ */
+export type Bool = boolean
+export type bool = Bool
+
+/**
+ * ## 二进制数
+ */
+export type Binary = bool | byte
+export type binary = Binary
+
+/**
  * ## 整数的别名
  */
 export type Int = number
@@ -29,7 +41,7 @@ export type Double = number
 export type double = Double
 
 /**
- * ## 大型整数的别名
+ * ## 大型高精度小数的别名
  */
 export type Decimal = number
 export type decimal = Decimal

@@ -1,2 +1,16 @@
 .idea
+.fleet
 .vscode
+.eclipse
+vite.config.ts
+tsconfig.json
+
+node_modules
+
+__test__**
+__tests__**
+
+env.d.ts
+rollup.config.ts
+vite.config.ts
+vitest.config.ts

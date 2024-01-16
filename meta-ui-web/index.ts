@@ -1,4 +1,5 @@
 import type {App} from 'vue'
+import type {dynamic} from '@compose/api-types'
 
 import YConfigProvider from './config-provider'
 import YElSiderMenu from './el-sider-menu'
@@ -23,8 +24,8 @@ export {YElSiderMenu, YVAddressSelect, YElSiderMenuItem, YConfigProvider, YMapTe
 
 export default {
   install: (app: App) => {
-    Object.entries(components).forEach(c => {
-      app.use(c[1])
+    Object.entries(components).forEach((c, i) => {
+      app.use(c[i] as dynamic)
     })
   }
 }

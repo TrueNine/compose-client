@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import {ref} from 'vue'
 
-const a = ref(null)
+const stepNodes = ref(null)
 </script>
 
 <template>
-  <section>{{ a }}</section>
+  <section>{{ stepNodes }}</section>
   <div>Login</div>
 </template>

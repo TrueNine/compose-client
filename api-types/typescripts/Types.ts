@@ -32,14 +32,20 @@ export type Clip<T extends object, K extends keyof T> = Omit<T, K> & Pt<Pick<T, 
 export type clip<T extends object, K extends keyof T> = Clip<T, K>
 
 /**
+ * ## 一个可创建的实例
+ */
+export type Newable = abstract new (...args: dynamic) => dynamic
+export type newable = Newable
+
+/**
  * # InstanceType 的简写
  *
  * ```typescript
  * type InstanceType<T extends abstract new (...args: any) => any> = T extends abstract new (...args: any) => infer R ? R : any;
  * ```
  */
-export type Inst<T extends abstract new (...args: SafeAny) => SafeAny> = InstanceType<T>
-export type inst<T extends abstract new (...args: SafeAny) => SafeAny> = Inst<T>
+export type Inst<T extends newable> = InstanceType<T>
+export type inst<T extends newable> = Inst<T>
 
 /**
  * # 元素可为 undefined，可能需要后初始化
@@ -58,7 +64,7 @@ export type nil<T = SafeAny> = Nil<T>
 /**
  * # 元素可为 undefined，可能需要后初始化，也可能为 null
  */
-export type LateNull<T> = T | Late<T> | Nullable<T>
+export type LateNull<T> = T | late<T> | nil<T>
 export type latenull<T> = LateNull<T>
 
 /**

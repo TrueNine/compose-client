@@ -4,6 +4,7 @@ import 'dayjs/locale/en'
 import 'element-plus/theme-chalk/dark/css-vars.css'
 
 import {NConfigProvider} from 'naive-ui'
+import type {dynamic} from '@compose/api-types'
 
 import {
   ElementPlusDayjs as dayjs,
@@ -93,6 +94,9 @@ const naiveDateLocale = computed(() => {
       return NaiveDateEnUs
   }
 })
+defineSlots<{
+  default: () => dynamic
+}>()
 </script>
 
 <template>
@@ -102,7 +106,7 @@ const naiveDateLocale = computed(() => {
       <VDefaultsProvider :defaults="{}">
         <VLocaleProvider :locale="props.locale">
           <VThemeProvider :theme="darkLight">
-            <slot />
+            <slot name="default" />
           </VThemeProvider>
         </VLocaleProvider>
       </VDefaultsProvider>

@@ -1,5 +1,5 @@
 function camelTo(str: string, sep: string = '-') {
-  return str.replace(/([a-z0-9])([A-Z])/g, `$1${sep}$2`).toLowerCase()
+  return str.replace(/([stepNodes-z0-9])([A-Z])/g, `$1${sep}$2`).toLowerCase()
 }
 export type ResolverType = 'component' | 'directive'
 function resolveComponent(name: string) {

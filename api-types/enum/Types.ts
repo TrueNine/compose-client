@@ -15,7 +15,7 @@ export type EnumMap<E extends EnumActual> = Record<Evr<E>, Evr<E>>
  * 必须要举例枚举
  *
  * ```typescript
- *  type a = Evr<typeof GenderEnum>
+ *  type stepNodes = Evr<typeof GenderEnum>
  * ```
  *
  * @param E 枚举类型

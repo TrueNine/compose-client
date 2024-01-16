@@ -75,10 +75,10 @@ export default defineConfig({
     quasar(),
     dts({
       tsconfigPath: './tsconfig.json',
-      clearPureImport: true,
+      clearPureImport: false,
       staticImport: false,
       strictOutput: true,
-      exclude: ['dist/**', '__build-src__/**', 'vite.config.ts', '**/__test__/**', 'vitest.config.ts', 'playground']
+      exclude: ['uno.config.ts', 'dist/**', '__build-src__/**', 'vite.config.ts', '**/__test__/**', '**/__tests__/**', 'vitest.config.ts', 'playground']
     }),
     AutoImport({
       imports: [
