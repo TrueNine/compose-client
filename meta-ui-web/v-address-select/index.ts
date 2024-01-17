@@ -14,7 +14,9 @@ export interface IComponentAddr {
 
 export interface YVAddressSelectProps {
   level?: ISelectLevel
+  selectedLevel?: Int
   adCode?: SerialCode
+  fullPath?: string
   showAdCode?: boolean
   showFullPath?: boolean
   findProvinces?: () => Asyncable<LateNull<LateNull<IComponentAddr>[]>>
@@ -27,9 +29,7 @@ export interface YVAddressSelectProps {
 
 export interface YAddressSelectEmits {
   (e: 'update:adCode', v: string): void
-
   (e: 'update:fullPath', v: string): void
-
   (e: 'update:selectedLevel', v: Int): void
 }
 

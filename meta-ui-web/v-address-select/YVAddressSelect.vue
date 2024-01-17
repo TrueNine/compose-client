@@ -18,6 +18,7 @@ const pad = (code: string) => {
 }
 
 const props = withDefaults(defineProps<YVAddressSelectProps>(), {
+  selectedLevel: 0,
   fullPath: '',
   adCode: '',
   showAdCode: false,
@@ -64,32 +65,9 @@ const datas = reactive<Record<string, IComponentAddr[]>>({
 const defaultSelected = des(YVAddressSelectDefaultSelects)
 const selected = ref<YVAddressSelectSelectValue>(des(YVAddressSelectDefaultSelects))
 
-const _fullPath = ref<string>('')
-const emitsFullPath = computed({
-  get: () => _fullPath.value,
-  set: v => {
-    emits('update:fullPath', v)
-    _fullPath.value = v
-  }
-})
-
-const _adCode = ref<string>('')
-const emitsAdCode = computed({
-  get: () => _adCode.value,
-  set: v => {
-    emits('update:adCode', v)
-    _adCode.value = v
-  }
-})
-
-const _selectedLevel = ref<number>(0)
-const emitsLevel = computed({
-  get: () => _selectedLevel.value,
-  set: v => {
-    emits('update:selectedLevel', v)
-    _selectedLevel.value = v
-  }
-})
+const _fullPath = useVModel(props, 'fullPath', emits, {passive: true})
+const _adCode = useVModel(props, 'adCode', emits, {passive: true})
+const _selectedLevel = useVModel(props, 'selectedLevel', emits, {passive: true, defaultValue: 0})
 
 const sortFn = (a: LateNull<IComponentAddr>, b: LateNull<IComponentAddr>) => {
   if (a!.code < b!.code) return -1
@@ -137,8 +115,8 @@ async function cacheAndUpdate(code: string) {
   }
   selected.value[prevKey] = datas[prevKey].find(e => pad(e.code) === padCode)
   selected.value[currentKey] = defaultSelected[currentKey]
-  emitsFullPath.value = fullPath
-  emitsLevel.value = level
+  _fullPath.value = fullPath
+  _selectedLevel.value = level
   emits('update:adCode', clipCode(code, level - 1))
 }
 
@@ -210,17 +188,17 @@ watch(
   }
 )
 
-const copyAdCode = () => copy(emitsAdCode.value!)
-const copyFullPath = () => copy(emitsFullPath.value!)
+const copyAdCode = () => copy(_adCode.value!)
+const copyFullPath = () => copy(_fullPath.value!)
 </script>
 
 <template>
   <VCard>
     <VCardText v-if="props.showAdCode || props.showFullPath">
       <div min-h-10 p-1>
-        <slot v-if="showAdCode && emitsAdCode" name="ad-code" :ad-code="emitsAdCode">
-          <div v-if="emitsAdCode" flex items-center>
-            <div>{{ emitsAdCode }}</div>
+        <slot v-if="showAdCode && _adCode" name="ad-code" :ad-code="_adCode">
+          <div v-if="_adCode" flex items-center>
+            <div>{{ _adCode }}</div>
             <VTooltip text="复制地址代码">
               <template #activator="{props: e}">
                 <div v-bind="e" pl-2 text-6 i-mdi-file @click="copyAdCode" />
@@ -229,8 +207,8 @@ const copyFullPath = () => copy(emitsFullPath.value!)
           </div>
         </slot>
 
-        <slot name="full-path" :full-path="emitsFullPath">
-          <div v-if="emitsFullPath && props.showFullPath" flex items-center>
+        <slot name="full-path" :full-path="_fullPath">
+          <div v-if="_fullPath && props.showFullPath" flex items-center>
             <div>{{ props.fullPath }}</div>
             <VTooltip text="复制地址">
               <template #activator="{props: e}">
@@ -258,7 +236,7 @@ const copyFullPath = () => copy(emitsFullPath.value!)
           </VCol>
 
           <Transition name="el-fade-in-linear">
-            <VCol v-if="emitsLevel > 1 && emitsDeepLevel > 2" cols="6" sm="6">
+            <VCol v-if="_selectedLevel > 1 && emitsDeepLevel > 2" cols="6" sm="6">
               <VSelect
                 v-model="selected.city"
                 :return-object="true"
@@ -272,7 +250,7 @@ const copyFullPath = () => copy(emitsFullPath.value!)
           </Transition>
 
           <Transition name="el-fade-in-linear">
-            <VCol v-if="emitsLevel > 2 && emitsDeepLevel > 3" cols="6" sm="6">
+            <VCol v-if="_selectedLevel > 2 && emitsDeepLevel > 3" cols="6" sm="6">
               <VSelect
                 v-model="selected.district"
                 :return-object="true"
@@ -286,7 +264,7 @@ const copyFullPath = () => copy(emitsFullPath.value!)
           </Transition>
 
           <Transition name="el-fade-in-linear">
-            <VCol v-if="emitsLevel > 3 && emitsDeepLevel > 4" cols="6" sm="6">
+            <VCol v-if="_selectedLevel > 3 && emitsDeepLevel > 4" cols="6" sm="6">
               <VSelect
                 v-model="selected.town"
                 :return-object="true"
@@ -300,7 +278,7 @@ const copyFullPath = () => copy(emitsFullPath.value!)
           </Transition>
 
           <Transition name="el-fade-in-linear">
-            <VCol v-if="emitsLevel > 4 && emitsDeepLevel > 5" cols="6" sm="6">
+            <VCol v-if="_selectedLevel > 4 && emitsDeepLevel > 5" cols="6" sm="6">
               <VSelect
                 v-model="selected.village"
                 :return-object="true"

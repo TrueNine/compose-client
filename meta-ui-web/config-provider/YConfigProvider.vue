@@ -30,7 +30,8 @@ const darkUse = useDark()
 const q = useQuasar()
 const props = withDefaults(defineProps<YConfigProviderProps>(), {
   locale: 'zh-CN',
-  dark: true
+  dark: true,
+  elementPlusZIndex: 1
 })
 const darkLight = computed(() => (props.dark ? 'dark' : 'light'))
 const quasarLocale = computed(() => {
@@ -100,7 +101,7 @@ defineSlots<{
 </script>
 
 <template>
-  <ElConfigProvider :locale="elLocale">
+  <ElConfigProvider :z-index="1" :locale="elLocale">
     <NConfigProvider ref="naiveThemeHandle" :hljs="hljs" :theme="naiveDarkTheme" :locale="naiveLocale" :date-locale="naiveDateLocale">
       <NGlobalStyle />
       <VDefaultsProvider :defaults="{}">
