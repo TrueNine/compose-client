@@ -1,11 +1,11 @@
-import type {Late, SafeAny} from '@compose/api-types'
+import type {late, Late, AutoRouterPageConfig} from '@compose/api-types'
 import {STR_EMPTY, STR_SLASH} from '@compose/api-types'
-import type {NavigationGuardNext, RouteLocationNormalized, RouteMeta, RouteRecordRaw, RouteRecordRedirectOption} from 'vue-router'
+import type {RouteRecordRaw} from 'vue-router'
 
 import {camelTo} from '../tools'
 
 // 定义路由处理选项的接口
-export interface HandleRouteOption {
+interface HandleRouteOption {
   metaUrl: string
   url: string
   paths: string[]
@@ -21,14 +21,20 @@ export interface HandleRouteOption {
   fullUrl: string
 }
 
-export type HandledRouteOptions = Record<string, HandleRouteOption>
+type HandledRouteOptions = Record<string, HandleRouteOption>
+type CustomRouteRecordRaw = RouteRecordRaw & {
+  fullPath: string
+}
 
-export const PAGE = 'pages'
-export const SUB_PAGE = 'SubPage'
-export const NAME_LINK = '___'
-export const VIEW_PAGE = 'View'
+const PAGE = 'pages'
+const SUB_PAGE = 'SubPage'
+const VIEW_PAGE = 'View'
 
-export function resolveImport(tp: [string, ImportMeta]): HandleRouteOption {
+function resolvePageConfigToConfig(importMeta?: HandleRouteOption) {
+  return importMeta ? (importMeta.source as unknown as Late<AutoRouterPageConfig>) : undefined
+}
+
+function processUrlAndName(tp: [string, ImportMeta]) {
   const metaUrl = tp[0]
   const source = tp[1]
   const paths = metaUrl.split(PAGE).filter(Boolean).slice(1).join('').split('/').filter(Boolean)
@@ -41,7 +47,7 @@ export function resolveImport(tp: [string, ImportMeta]): HandleRouteOption {
   const isSubPage = fileName.includes(SUB_PAGE)
   const url = paths.join(STR_SLASH).replace(`${STR_SLASH}${STR_SLASH}`, STR_SLASH)
   const name = url.slice(1).replace(new RegExp(STR_SLASH, 'g'), '-') || '-'
-  const result: HandleRouteOption = {
+  return {
     url,
     isView,
     isSubPage,
@@ -54,49 +60,40 @@ export function resolveImport(tp: [string, ImportMeta]): HandleRouteOption {
     name,
     fullUrl: url
   }
-  if (isFolderSubPage && !(isSubPage || isView)) {
-    result.url = paths[paths.length - 1]
-    result.parentUrl = paths.slice(0, -1).join(STR_SLASH).replace(`${STR_SLASH}${STR_SLASH}`, STR_SLASH)
-  }
-  if (isSubPage) {
-    result.url = camelTo(fileName.split(SUB_PAGE)[0], STR_SLASH)
-    result.name = result.name + '-' + camelTo(fileName.split(SUB_PAGE)[0], STR_SLASH)
-  }
-  if (isView) {
-    result.url = camelTo(fileName.split(VIEW_PAGE)[0], STR_SLASH)
-    result.name = result.name + '-' + camelTo(fileName.split(VIEW_PAGE)[0], STR_SLASH)
-  }
-  if (isSubPage || isView) {
-    result.parentUrl = url
-    result.paths.push(result.url)
-    result.fullUrl = `${result.parentUrl}${STR_SLASH}${result.url}`
-  }
-  return result
 }
 
-export type CustomRouteRecordRaw = RouteRecordRaw & {
-  fullPath: string
-}
-
-function resolvePageConfigToConfig(importMeta?: HandleRouteOption) {
-  if (importMeta) {
-    const cfg = importMeta.source as unknown as Late<PageConfig>
-    if (cfg) return cfg
+export function resolveImport(tp: [string, ImportMeta]): HandleRouteOption {
+  const r: HandleRouteOption = processUrlAndName(tp)
+  if (r.isFolderSubPage && !(r.isSubPage || r.isView)) {
+    r.url = r.paths[r.paths.length - 1]
+    r.parentUrl = r.paths.slice(0, -1).join(STR_SLASH).replace(`${STR_SLASH}${STR_SLASH}`, STR_SLASH)
   }
-  return undefined
+  if (r.isSubPage) {
+    r.url = camelTo(r.fileName.split(SUB_PAGE)[0], STR_SLASH)
+    r.name = r.name + '-' + camelTo(r.fileName.split(SUB_PAGE)[0], STR_SLASH)
+  }
+  if (r.isView) {
+    r.url = camelTo(r.fileName.split(VIEW_PAGE)[0], STR_SLASH)
+    r.name = r.name + '-' + camelTo(r.fileName.split(VIEW_PAGE)[0], STR_SLASH)
+  }
+  if (r.isSubPage || r.isView) {
+    r.parentUrl = r.url
+    r.paths.push(r.url)
+    r.fullUrl = `${r.parentUrl}${STR_SLASH}${r.url}`
+  }
+  return r
 }
 
 export function resolveSubPath(pathRouteOption: HandledRouteOptions): CustomRouteRecordRaw[] {
   const all: HandleRouteOption[] = []
   const view: HandleRouteOption[] = []
-
   for (const key in pathRouteOption) {
     const option = pathRouteOption[key]
     if (option.isView) view.push(option)
     else all.push(option)
   }
 
-  const allRoutes: Late<CustomRouteRecordRaw>[] = all.map(e => {
+  const allRoutes = all.map(e => {
     const cfg = resolvePageConfigToConfig(e.cfg)
     return {
       path: e.url,
@@ -154,15 +151,14 @@ export function resolveSubPath(pathRouteOption: HandledRouteOptions): CustomRout
       else child.push({path: STR_EMPTY, name: root.name, components: {[e.name]: e.source}})
     }
   })
-
   return result
 }
 
 export function resolveRouters(): RouteRecordRaw[] {
   const cfgSources = import.meta.glob([`/**/pages/**/**.page.ts`, `/**/pages/**/**.page.js`], {eager: true, import: 'default'})
   const vueSources = import.meta.glob([`/**/pages/**/**.vue`, `/**/pages/**/**.jsx`, `/**/pages/**/**.tsx`])
-
   const cfg: HandledRouteOptions = {}
+
   for (const key in cfgSources) {
     const source = cfgSources[key]
     const option = resolveImport([key, source as unknown as ImportMeta])
@@ -176,35 +172,9 @@ export function resolveRouters(): RouteRecordRaw[] {
     option.cfg = cfg[option.fullUrl]
     paths[option.fullUrl] = option
   }
-
   return resolveSubPath(paths)
 }
 
-export interface PageConfig {
-  redirect?: RouteRecordRedirectOption
-  meta?: RouteMeta &
-    Record<string, SafeAny> & {
-      hidden?: boolean
-      disabled?: boolean
-      hasRoles?: string[]
-      hasDepts?: string[]
-      requireDepts?: string[]
-      requireRoles?: string[]
-      hasPermissions?: string[]
-      requirePermissions?: string[]
-      requireLogin?: boolean
-    } & {
-      title?: string
-    }
-}
-
-/**
- * meta 的配置
- */
-export type PageConfigRouterMeta = PageConfig['meta']
-
-export function defineAutoRoute(cfg?: PageConfig): Late<PageConfig> {
+export function defineAutoRoute(cfg?: AutoRouterPageConfig): late<AutoRouterPageConfig> {
   return cfg
 }
-
-export type BeforeEach = (to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => void

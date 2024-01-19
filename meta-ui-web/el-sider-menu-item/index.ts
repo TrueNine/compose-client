@@ -1,11 +1,12 @@
 import {Vue} from '@compose/api-model'
-import type {RouteOption, StrOrNum} from '@compose/api-types'
+import type {RouteOption, StrOrNum, bool} from '@compose/api-types'
 
 import _c from './YElSiderMenuItem.vue'
 
 export interface YElSiderMenuItemProps {
+  hidden?: bool
   item: RouteOption
-  collapsed?: boolean
+  collapsed?: bool
   iconName?: string
   idxKey?: StrOrNum
 }

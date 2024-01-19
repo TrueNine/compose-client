@@ -1,10 +1,10 @@
 import type {Maybe, MaybeReadonlyArray, Nullable, RouteOption} from '@compose/api-types'
 import {STR_EMPTY, STR_SLASH} from '@compose/api-types'
 import type {RouteRecordRaw} from 'vue-router'
+import type {AutoRouterPageConfigRouterMeta} from '@compose/api-types'
 
 import {maybeArray, maybeReadonlyArray} from '../tools'
 import {cloneDeep} from '../references'
-import type {PageConfigRouterMeta} from '../references'
 
 interface MatchConfig {
   hidden?: boolean
@@ -59,6 +59,11 @@ export class RouteStream {
     return _deep(_newRouteOption)
   }
 
+  /**
+   * @deprecated 已经过时
+   * @param config
+   * @param deep
+   */
   matchClip(config: Nullable<MatchConfig> = RouteStream._defaultClipConfig, deep: MaybeReadonlyArray<RouteOption> = this._routeTable) {
     const c = Object.assign(config ?? {}, RouteStream._defaultClipConfig)
     const r = config?.roles ?? []
@@ -98,7 +103,8 @@ export class RouteStream {
     const stack: RouteOption[] = cloneDeep(maybeArray(subPath))
     while (stack.length > 0) {
       const r = stack.pop()!
-      if (r.sub) stack.push(...this.flat(this._getLinkedUri(rootPath, r.uri) ?? STR_EMPTY, r.sub).map(e => cloneDeep(e))) // TODO 测试 clone 机制
+      if (r.sub)
+        stack.push(...this.flat(this._getLinkedUri(rootPath, r.uri) ?? STR_EMPTY, r.sub).map(e => cloneDeep(e))) // TODO 测试 clone 机制
       else maybeResult.push(r)
     }
     return maybeResult.map(r => {
@@ -130,6 +136,12 @@ export class RouteStream {
     return result
   }
 
+  /**
+   * @deprecated 已过时
+   * @param fullPath
+   * @param permissions
+   * @param defaultAllow
+   */
   isAllowPermissions(
     fullPath: MaybeReadonlyArray<string> = [],
     permissions: MaybeReadonlyArray<string> = this._permissions,
@@ -152,6 +164,10 @@ export class RouteStream {
     return defaultAllow
   }
 
+  /**
+   * @deprecated 已经过时
+   * @param paths
+   */
   isRequireLogin(paths: Maybe<string>) {
     const current = this.findRouteOptionByPath(paths).reverse()
     for (const r of current) {
@@ -236,11 +252,10 @@ export class RouteStream {
 }
 
 function _toRouteTable(raw: RouteRecordRaw[], parent?: RouteOption) {
-  //
   return raw
     .map(e => {
-      const meta = e.meta as unknown as PageConfigRouterMeta
-      let path: string = ''
+      const meta = e.meta as unknown as AutoRouterPageConfigRouterMeta
+      let path: string
       if (parent) {
         if (parent.uri && parent.uri !== STR_SLASH) {
           path = e.path

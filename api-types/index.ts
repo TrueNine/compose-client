@@ -2,6 +2,7 @@
  * # 网络标记库
  */
 export * from './request'
+
 /**
  * 日期时间相关定义
  */
@@ -16,6 +17,7 @@ export * from './stylesheet'
  * typescript 的增强定义
  */
 export * from './typescripts'
+
 /**
  * kotlin 的增强定义
  */
@@ -41,11 +43,18 @@ export * from './language'
  * 各种 api 的标准
  */
 export * from './api'
+
 /**
  * 与安全相关的一系列定义
  */
 export * from './security'
+
 /**
  * 枚举方法
  */
 export * from './enum'
+
+/**
+ * 外部依赖类型
+ */
+export * from './reference'

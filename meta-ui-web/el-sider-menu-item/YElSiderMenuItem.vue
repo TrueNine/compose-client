@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-import {type RouteOption, type SafeAny} from '@compose/api-types'
+import {type RouteOption, type dynamic, type bool} from '@compose/api-types'
 import {isNonEmpty} from '@compose/api-model'
 
 import YElSiderMenuItem from './YElSiderMenuItem.vue'
 
 import type {YElSiderMenuItemProps} from './index'
 
-withDefaults(defineProps<YElSiderMenuItemProps>(), {
+const props = withDefaults(defineProps<YElSiderMenuItemProps>(), {
   collapsed: false,
   iconName: 'i-mdi-menu',
   idxKey: undefined,
@@ -14,37 +14,40 @@ withDefaults(defineProps<YElSiderMenuItemProps>(), {
 })
 
 defineSlots<{
-  icon(props: {item: RouteOption}): SafeAny
-  title(props: {item: RouteOption}): SafeAny
+  icon(props: {item: RouteOption}): dynamic
+  title(props: {item: RouteOption}): dynamic
 }>()
 
-function isSub(opt: RouteOption): boolean {
+function isSub(opt: RouteOption): bool {
   return isNonEmpty(opt?.sub)
 }
 </script>
+
 <template>
-  <ElSubMenu v-if="isSub(item)" :index="'' + idxKey?.toString()">
-    <template #title>
-      <div>
-        <slot name="icon" :item="item" />
-      </div>
-      <slot name="title" :item="item" />
-    </template>
-    <!-- 递归自身 -->
-    <YElSiderMenuItem v-for="(it, idx) in item.sub" :key="idx" :idx-key="idxKey + '/' + (it.uri ?? it.href)" :item="it" :disabled="it.disabled">
-      <template #icon="{item: subItem}">
-        <slot name="icon" :item="subItem" />
+  <template v-if="props.hidden">
+    <ElSubMenu v-if="isSub(item)" :index="'' + props.idxKey?.toString()">
+      <template #title>
+        <div>
+          <slot name="icon" :item="item" />
+        </div>
+        <slot name="title" :item="item" />
       </template>
-      <template #title="{item: subItem}">
-        <span><slot name="title" :item="subItem" /></span>
+      <!-- 递归自身 -->
+      <YElSiderMenuItem v-for="(it, idx) in item.sub" :key="idx" :idx-key="props.idxKey + '/' + (it.uri ?? it.href)" :item="it" :disabled="it.disabled">
+        <template #icon="{item: subItem}">
+          <slot name="icon" :item="subItem" />
+        </template>
+        <template #title="{item: subItem}">
+          <span><slot name="title" :item="subItem" /></span>
+        </template>
+      </YElSiderMenuItem>
+    </ElSubMenu>
+    <!-- 自定义 icon 以div方式渲染，非 Block 元素无高度 -->
+    <ElMenuItem v-else :index="`/${idxKey}`" :disabled="item.disabled">
+      <slot name="icon" :item="item" />
+      <template #title>
+        <span><slot name="title" :item="item" /></span>
       </template>
-    </YElSiderMenuItem>
-  </ElSubMenu>
-  <!-- 自定义 icon 以div方式渲染，非 Block 元素无高度 -->
-  <ElMenuItem v-else :index="`/${idxKey}`" :disabled="item.disabled">
-    <slot name="icon" :item="item" />
-    <template #title>
-      <span><slot name="title" :item="item" /></span>
-    </template>
-  </ElMenuItem>
+    </ElMenuItem>
+  </template>
 </template>
