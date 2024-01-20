@@ -1,6 +1,6 @@
 import type {IEntity} from '../Entities'
 import type {Timestamp} from '../../datetime'
-import {GenderTyping} from '../typing'
+import type {GenderTyping} from '@compose/api-model'
 import type {BigSerial, ReferenceId} from '../Utils'
 
 export interface Idcard2 extends IEntity {

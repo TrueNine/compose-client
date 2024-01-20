@@ -1,4 +1,4 @@
-import {queryParam} from '@compose/api-model'
+import {queryParam} from '@compose/req'
 
 export interface RoutingOption {
   url: string

@@ -1,4 +1,4 @@
-import type {EnumCommentMap, EnumMap} from '../../../enum'
+import type {EnumCommentMap, EnumMap} from '@compose/api-types'
 
 export enum CertContentTyping {
   NONE = 0,

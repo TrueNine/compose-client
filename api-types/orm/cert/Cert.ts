@@ -1,7 +1,7 @@
 import type {IEntity} from '../Entities'
 import type {BigText, ReferenceId, RefId, SerialCode} from '../Utils'
 import type {LocalDateTime} from '../../datetime'
-import {AuditTyping, CertContentTyping, CertPointTyping, CertTyping} from '../typing'
+import type {AuditTyping, CertContentTyping, CertPointTyping, CertTyping} from '@compose/api-model'
 
 export interface Cert extends IEntity {
   userId?: ReferenceId

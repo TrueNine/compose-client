@@ -70,5 +70,11 @@ export type latenull<T> = LateNull<T>
 /**
  * ## 绝对不会返回
  */
-export type Nothing = null & never & undefined
+export type Nothing = null & never & undefined & void
 export type nothing = Nothing
+
+/**
+ * ## 返回的一个空值
+ */
+export type Unit = void
+export type unit = Unit

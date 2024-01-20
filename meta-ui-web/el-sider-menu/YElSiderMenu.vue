@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {STR_EMPTY, STR_SLASH} from '@compose/api-types'
+import {STR_EMPTY, STR_SLASH} from '@compose/api-model'
 
 import YSiderMenuItem from '../el-sider-menu-item'
 

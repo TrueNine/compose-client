@@ -1,6 +1,6 @@
 import type {LocalDate} from '../datetime'
 
-import {GenderTyping} from './typing'
+import type {GenderTyping} from '@compose/api-model'
 import type {IEntity} from './Entities'
 import type {ReferenceId, SerialCode} from './Utils'
 

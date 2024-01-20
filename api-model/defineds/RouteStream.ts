@@ -1,5 +1,5 @@
 import type {Maybe, MaybeReadonlyArray, Nullable, RouteOption} from '@compose/api-types'
-import {STR_EMPTY, STR_SLASH} from '@compose/api-types'
+import {STR_EMPTY, STR_SLASH} from '../consts/Strings'
 import type {RouteRecordRaw} from 'vue-router'
 import type {AutoRouterPageConfigRouterMeta} from '@compose/api-types'
 

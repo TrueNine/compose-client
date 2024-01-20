@@ -1,5 +1,5 @@
 import type {asyncable, nil, Pq, Pr, task} from '@compose/api-types'
-import {Pw} from '@compose/api-types'
+import {Pw} from '../consts/Pageable'
 
 import {isEmpty} from '../tools'
 

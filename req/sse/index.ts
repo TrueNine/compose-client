@@ -1,7 +1,5 @@
 import type {HttpUrl, SafeAny} from '@compose/api-types'
 
-export {}
-
 export class SseReceiver {
   private readonly _e: EventSource
   private readonly _url: HttpUrl

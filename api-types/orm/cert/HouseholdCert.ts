@@ -1,7 +1,7 @@
 import type {IEntity} from '../Entities'
 import type {BigSerial, ReferenceId, RefId} from '../Utils'
 import type {Timestamp} from '../../datetime'
-import {BloodTyping, DegreeTyping, GenderTyping} from '../typing'
+import type {BloodTyping, DegreeTyping, GenderTyping} from '@compose/api-model'
 import type {Decimal, Int} from '../../typescripts'
 
 export interface HouseholdCert extends IEntity {

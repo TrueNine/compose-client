@@ -1,5 +1,4 @@
-import type {EnumCommentMap, Evr} from '../../enum'
-import type {TypeInt} from '../Utils'
+import type {EnumCommentMap, EnumMap} from '@compose/api-types'
 
 export enum DegreeTyping {
   NONE = 0,
@@ -25,7 +24,7 @@ export const DegreeTypingComment: EnumCommentMap<typeof DegreeTyping> = {
   [DegreeTyping.OTHER]: '其他'
 }
 
-export const DegreeTypingMap: Record<Evr<typeof DegreeTyping>, TypeInt> = {
+export const DegreeTypingMap: EnumMap<typeof DegreeTyping> = {
   [DegreeTyping.NONE]: 0,
   [DegreeTyping.MIN]: 1,
   [DegreeTyping.HALF]: 2,
@@ -37,7 +36,7 @@ export const DegreeTypingMap: Record<Evr<typeof DegreeTyping>, TypeInt> = {
   [DegreeTyping.OTHER]: 9999
 }
 
-export const DegreeTypingReverseMap: Record<Evr<typeof DegreeTyping>, DegreeTyping> = {
+export const DegreeTypingReverseMap: EnumMap<typeof DegreeTyping> = {
   [0]: DegreeTyping.NONE,
   [1]: DegreeTyping.MIN,
   [2]: DegreeTyping.HALF,

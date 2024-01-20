@@ -2,7 +2,7 @@ import type {LocalDateTime} from '../datetime'
 
 import type {IEntity} from './Entities'
 import type {BigText, ReferenceId, SerialCode, TypeInt} from './Utils'
-import {AuditTyping} from './typing'
+import {AuditTyping} from '@compose/api-model'
 
 export interface Audit extends IEntity {
   auditDeviceId?: SerialCode

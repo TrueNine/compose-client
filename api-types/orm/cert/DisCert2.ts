@@ -1,7 +1,7 @@
 import type {IEntity} from '../Entities'
 import type {Timestamp} from '../../datetime'
 import type {BigSerial, ReferenceId, RefId, SerialCode} from '../Utils'
-import {GenderTyping} from '../typing'
+import type {GenderTyping} from '@compose/api-model'
 import type {Int} from '../../typescripts'
 
 export interface DisCert2 extends IEntity {

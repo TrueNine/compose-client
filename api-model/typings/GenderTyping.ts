@@ -1,5 +1,4 @@
-import type {Evr} from '../../enum'
-import type {TypeInt} from '../Utils'
+import type {EnumCommentMap, EnumMap} from '@compose/api-types'
 
 /**
  * 性别枚举
@@ -19,17 +18,17 @@ export enum GenderTyping {
   UNKNOWN = 2
 }
 
-export const GenderTypingComment: Record<Evr<typeof GenderTyping>, string> = {
+export const GenderTypingComment: EnumCommentMap<typeof GenderTyping> = {
   [GenderTyping.MAN]: '男',
   [GenderTyping.WOMAN]: '女',
   [GenderTyping.UNKNOWN]: '未知'
 }
-export const GenderTypingMap: Record<Evr<typeof GenderTyping>, TypeInt> = {
+export const GenderTypingMap: EnumMap<typeof GenderTyping> = {
   [GenderTyping.MAN]: 1,
   [GenderTyping.WOMAN]: 0,
   [GenderTyping.UNKNOWN]: 2
 }
-export const GenderTypingReverseMap: Record<Evr<typeof GenderTyping>, GenderTyping> = {
+export const GenderTypingReverseMap: EnumMap<typeof GenderTyping> = {
   [1]: GenderTyping.MAN,
   [0]: GenderTyping.WOMAN,
   [2]: GenderTyping.UNKNOWN

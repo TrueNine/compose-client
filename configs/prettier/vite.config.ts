@@ -21,7 +21,7 @@ export default defineConfig({
     dts({
       staticImport: true,
       tsconfigPath: './tsconfig.json',
-      exclude: ['dist/**', '__build-src__/**', 'vite.config.ts', '**/__test__/**', 'vitest.config.ts']
+      exclude: ['dist/**', '__build-src__/**', 'vite.config.ts', '**/__tests__/**', 'vitest.config.ts']
     })
   ]
 })

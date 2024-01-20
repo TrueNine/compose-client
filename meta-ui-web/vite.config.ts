@@ -78,7 +78,7 @@ export default defineConfig({
       clearPureImport: false,
       staticImport: false,
       strictOutput: true,
-      exclude: ['uno.config.ts', 'dist/**', '__build-src__/**', 'vite.config.ts', '**/__test__/**', '**/__tests__/**', 'vitest.config.ts', 'playground']
+      exclude: ['uno.config.ts', 'dist/**', '__build-src__/**', 'vite.config.ts', '**/__tests__/**', '**/__tests__/**', 'vitest.config.ts', 'playground']
     }),
     AutoImport({
       imports: [

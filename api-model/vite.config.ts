@@ -34,9 +34,10 @@ export default defineConfig({
   },
   plugins: [
     dts({
-      staticImport: true,
+      staticImport: false,
+      clearPureImport: false,
       tsconfigPath: './tsconfig.json',
-      exclude: ['dist/**', '__build-src__/**', 'vite.config.ts', '**/__test__/**', 'vitest.config.ts']
+      exclude: ['dist/**', '__build-src__/**', 'vite.config.ts', '**/__tests__/**', 'vitest.config.ts']
     })
   ]
 })

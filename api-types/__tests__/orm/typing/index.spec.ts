@@ -1,6 +1,6 @@
 import {test} from 'vitest'
 
-import {RelationItemTyping} from '../../../orm'
+import {RelationItemTyping} from '@compose/api-model'
 
 test('test enum typing', () => {
   console.log(RelationItemTyping.NONE)

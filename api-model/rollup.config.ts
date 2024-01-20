@@ -19,7 +19,7 @@ export default defineConfig([
       cjs(),
       ts({
         tsconfig: './tsconfig.json',
-        exclude: ['__test__/**', 'rollup.config.ts', 'vite.config.ts', 'vitest.config.ts', 'dist']
+        exclude: ['__tests__/**', 'rollup.config.ts', 'vite.config.ts', 'vitest.config.ts', 'dist']
       })
     ],
     output: [
@@ -55,7 +55,7 @@ export default defineConfig([
           emitDeclarationOnly: true,
           declarationDir: 'dist'
         },
-        exclude: ['__test__/**', 'rollup.config.ts', 'vite.config.ts', 'vitest.config.ts', 'dist']
+        exclude: ['__tests__/**', 'rollup.config.ts', 'vite.config.ts', 'vitest.config.ts', 'dist']
       })
     ],
     output: [

@@ -1,5 +1,5 @@
 import {type Ref, ref, shallowRef} from 'vue'
-import {Headers as ComposeHeader, MediaTypes} from '@compose/api-types'
+import {Headers as ComposeHeader, MediaTypes} from '@compose/req'
 
 export type Headers = {
   [k in string]: string | number

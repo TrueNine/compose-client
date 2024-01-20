@@ -3,6 +3,13 @@ import {ref, computed} from 'vue'
 
 // <P extends object, K extends keyof P, Name extends string>(props: P, key?: K, emit?: (name: Name, ...args: any[]) => void, options?: UseVModelOptions<P[K], false>): WritableComputedRef<P[K]>;
 
+/**
+ * @deprecated 已过时，请使用 useVModel
+ * @param props
+ * @param key
+ * @param emit
+ * @returns
+ */
 export function useWatchVModel<P extends object, K extends keyof P, Name extends string>(props: P, key: K, emit: (name: Name, ...args: dynamic[]) => void) {
   const pName = `update:${key as string}` as Name
 

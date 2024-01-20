@@ -1,5 +1,5 @@
-import {type ICnDistrict, type Int, STR_EMPTY} from '@compose/api-types'
-
+import type {ICnDistrict, int} from '@compose/api-types'
+import {STR_EMPTY} from '../consts/Strings'
 export {}
 
 interface AddrLevel {
@@ -15,8 +15,7 @@ export class CnDistrict implements ICnDistrict {
   static ERROR_DIG = [0, 1, 3, 5, 7, 8, 10, 11]
   static GLOBAL_CODE = CnDistrict.TWO_ZERO
   static THREE_ZERO = '000'
-
-  level: Int
+  level: int
   leaf?: boolean = false
   code: string
   name = STR_EMPTY

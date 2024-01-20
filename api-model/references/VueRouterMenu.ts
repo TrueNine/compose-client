@@ -1,7 +1,6 @@
 import type {RouteRecordRaw} from 'vue-router'
-import {type AutoRouterPageConfig, type late, type Maybe, STR_EMPTY, STR_SLASH} from '@compose/api-types'
-
-export {}
+import type {AutoRouterPageConfig, late, Maybe} from '@compose/api-types'
+import {STR_EMPTY, STR_SLASH} from '../consts/Strings'
 
 type RouteMatch = RouteRecordRaw & {
   fullPath: string
@@ -52,7 +51,7 @@ export function generateMenu(routes: RouteRecordRaw[], matchFn: late<RouteMatchF
         return matchFn
           ? matchFn({
               redirect: route.redirect,
-              ...(route.meta ?? {}),
+              ...route,
               fullPath: combineURIs(parentPath, route.path),
               parentPath
             } as Raw)

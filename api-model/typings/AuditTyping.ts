@@ -1,4 +1,4 @@
-import type {EnumCommentMap, Evr} from '../../enum'
+import type {EnumCommentMap, EnumMap} from '@compose/api-types'
 
 export enum AuditTyping {
   NONE = 0,
@@ -20,7 +20,7 @@ export const AuditTypingComment: EnumCommentMap<typeof AuditTyping> = {
   [AuditTyping.REJECT]: '已驳回'
 }
 
-export const AuditTypingReverseMap: Record<Evr<typeof AuditTyping>, AuditTyping> = {
+export const AuditTypingReverseMap: EnumMap<typeof AuditTyping> = {
   [0]: AuditTyping.NONE,
   [1]: AuditTyping.ASSIGNED,
   [2]: AuditTyping.PASS,

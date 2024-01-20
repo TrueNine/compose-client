@@ -1,6 +1,5 @@
-import {enumToOutput} from '@compose/api-model'
-
-import type {Evr} from '../../../enum'
+import {enumToOutput} from '../../enum/Fns'
+import type {EnumCommentMap} from '@compose/api-types'
 
 export enum RelationItemTyping {
   NONE = 0,
@@ -10,7 +9,7 @@ export enum RelationItemTyping {
   EMPLOYEE = 4,
   OTHER = 9999
 }
-const co: Record<Evr<typeof RelationItemTyping>, string> = {
+const co: EnumCommentMap<typeof RelationItemTyping> = {
   [RelationItemTyping.NONE]: '无',
   [RelationItemTyping.USER]: '用户',
   [RelationItemTyping.CUSTOMER]: '客户',

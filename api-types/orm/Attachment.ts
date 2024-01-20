@@ -1,5 +1,5 @@
 import type {IEntity} from './Entities'
-import {AttachmentTyping} from './typing'
+import type {AttachmentTyping} from '@compose/api-model'
 import type {BigSerial, Id, ReferenceId} from './Utils'
 
 /**

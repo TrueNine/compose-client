@@ -1,5 +1,5 @@
 import type {late, Late, AutoRouterPageConfig} from '@compose/api-types'
-import {STR_EMPTY, STR_SLASH} from '@compose/api-types'
+import {STR_EMPTY, STR_SLASH} from '../consts/Strings'
 import type {RouteRecordRaw} from 'vue-router'
 
 import {camelTo} from '../tools'

@@ -1,6 +1,6 @@
-import type {Asyncable, Nullable} from '@compose/api-types'
+import type {asyncable, nil, task} from '@compose/api-types'
 
-import type {ChannelTypedMessage} from '../typ/Chrome'
+import type {ChannelTypedMessage} from '../typ'
 
 export {}
 
@@ -30,13 +30,13 @@ export class MessageSender {
    * ## 将消息发送到当前打开的浏览器页面
    * @param msg 带id 的消息
    */
-  public static async sendToActivatedTab<T, R = unknown>(msg: ChannelTypedMessage<T>): Promise<Nullable<ChannelTypedMessage<R>>> {
+  public static async sendToActivatedTab<T, R = unknown>(msg: ChannelTypedMessage<T>): task<nil<ChannelTypedMessage<R>>> {
     const current = await MessageSender.getCurrentTab()
     if (current) return (await chrome.tabs.sendMessage(current.id!, msg)) ?? null
     else return null
   }
 
-  public static async sendToRuntimeChannel<T = unknown, R = unknown>(msg: ChannelTypedMessage<T>): Promise<R> {
+  public static async sendToRuntimeChannel<T = unknown, R = unknown>(msg: ChannelTypedMessage<T>): task<R> {
     return await chrome.runtime.sendMessage(msg)
   }
 
@@ -45,7 +45,7 @@ export class MessageSender {
    * @param msgId 指定的消息id
    * @param receiver 接受函数
    */
-  public static async addRuntimeMessageLIstener<T = unknown>(msgId: string, receiver: (msg: ChannelTypedMessage<T>) => Asyncable<void>) {
+  public static async addRuntimeMessageLIstener<T = unknown>(msgId: string, receiver: (msg: ChannelTypedMessage<T>) => asyncable<void>) {
     chrome.runtime.onMessage.addListener(msg => {
       if (msg && msg.msgId && msg.msgId === msgId) receiver(msg)
     })

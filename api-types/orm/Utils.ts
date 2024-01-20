@@ -1,19 +1,5 @@
 import type {Int} from '../typescripts'
 
-import type {PageableEntity} from './Entities'
-
-export const PagedWrapper = {
-  DEFAULT_MAX: {
-    offset: 0,
-    pageSize: 42
-  } as PageableEntity
-}
-
-/**
- * ## PagedWrapper 的简写形式
- */
-export const Pw = PagedWrapper
-
 /**
  * 数据库的主键
  */

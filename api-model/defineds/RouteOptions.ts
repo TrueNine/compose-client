@@ -1,5 +1,5 @@
-import type {MaybeReadonlyArray, Nullable, RouteOption} from '@compose/api-types'
-import {STR_EMPTY} from '@compose/api-types'
+import type {MaybeReadonlyArray, nil, RouteOption} from '@compose/api-types'
+import {STR_EMPTY} from '../consts/Strings'
 
 import {cloneDeep} from '../references'
 import {maybeReadonlyArray} from '../tools'
@@ -140,7 +140,7 @@ export function routeOptionStream(routeOptions: readonly RouteOption[] = [], rou
    * @param config 匹配配置
    * @param deep 无需传递
    */
-  function matchClip(config?: Nullable<MatchConfig>, deep: readonly RouteOption[] = routeOptions) {
+  function matchClip(config?: nil<MatchConfig>, deep: readonly RouteOption[] = routeOptions) {
     const c = Object.assign(config ?? {}, defaultClipConfig)
     const r = config?.roles ?? []
     const p = config?.permissions ?? []
@@ -208,11 +208,11 @@ export function routeOptionStream(routeOptions: readonly RouteOption[] = [], rou
     options: readonly RouteOption[] = routeOptions,
     deep = 0,
     root: RouteOption | null = null
-  ): Nullable<RouteOption> {
+  ): nil<RouteOption> {
     const pathArray = _filterPaths(paths)
     if (pathArray.length === deep || pathArray.length === 0) return root
     const currentPath = pathArray[deep].replace('/', '')
-    let result: Nullable<RouteOption> = null
+    let result: nil<RouteOption> = null
     for (let i = 0; i < options.length; i++) {
       const option = options[i]
       if (option.uri === currentPath) {

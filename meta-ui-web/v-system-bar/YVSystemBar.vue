@@ -16,10 +16,11 @@ const useRight = computed(() => {
     <VAppBar color="primary">
       <!-- 左侧菜单收展按钮 -->
       <slot name="left-btn">
-        <VAppBarNavIcon aria-label="左侧菜单" @click="drawer = !drawer">
+        <VAppBarNavIcon :aria-label="drawer ? '关闭左侧菜单' : '打开左侧菜单'" @click="drawer = !drawer">
           <i i-mdi-menu text-8 />
         </VAppBarNavIcon>
       </slot>
+
       <!-- app 名称插槽 -->
       <VAppBarTitle>
         <slot name="app-title"> Application</slot>
@@ -29,7 +30,7 @@ const useRight = computed(() => {
       <!-- 各种右侧的设置按钮 -->
       <slot name="app-settings" />
       <slot name="right-btn">
-        <VAppBarNavIcon aria-label="设置侧边栏" @click="settingsDrawer = !settingsDrawer">
+        <VAppBarNavIcon :aria-label="settingsDrawer ? '关闭设置侧边栏' : '打开设置侧边栏'" @click="settingsDrawer = !settingsDrawer">
           <i i-mdi-settings text-8 />
         </VAppBarNavIcon>
       </slot>

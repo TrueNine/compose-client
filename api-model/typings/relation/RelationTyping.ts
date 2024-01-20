@@ -1,5 +1,4 @@
-import type {Evr} from '../../../enum'
-import type {TypeInt} from '../../Utils'
+import type {EnumCommentMap, EnumMap} from '@compose/api-types'
 
 export enum RelationTyping {
   NONE = 0,
@@ -9,14 +8,15 @@ export enum RelationTyping {
   OTHER = 9999
 }
 
-export const RelationTypingComment: Record<Evr<typeof RelationTyping>, string> = {
+export const RelationTypingComment: EnumCommentMap<typeof RelationTyping> = {
   [RelationTyping.NONE]: '无',
   [RelationTyping.VICTION]: '受害者',
   [RelationTyping.PARTICIPATOR]: '帮凶',
   [RelationTyping.WITNESS]: '证人',
   [RelationTyping.OTHER]: '其他'
 }
-export const RelationTypingMap: Record<Evr<typeof RelationTyping>, TypeInt> = {
+
+export const RelationTypingMap: EnumMap<typeof RelationTyping> = {
   [RelationTyping.NONE]: 0,
   [RelationTyping.VICTION]: 1,
   [RelationTyping.PARTICIPATOR]: 2,

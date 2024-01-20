@@ -1,5 +1,5 @@
-import {type NullPt, type SafeAny, STR_EMPTY} from '@compose/api-types'
-
+import type {nullpt, dynamic, bool, Maybe, int} from '@compose/api-types'
+import {STR_EMPTY} from '../consts/Strings'
 /**
  * ## 判断一个字符串是否为空，返回本身或空字符串，排除 null | undefined
  * @param str 可空字符串
@@ -13,7 +13,7 @@ export function withEmpty(str?: string): string {
  * # 判断一个对象是否为 null 或 undefined，以减少语义负担
  * @param obj 对象
  */
-export function isEmpty(obj: NullPt<unknown>): boolean {
+export function isEmpty(obj: nullpt<unknown>): bool {
   if (obj === undefined) return true
   if (obj === null) return true
   if (typeof obj === 'string' && !isNonEmptyString(obj)) return true
@@ -43,7 +43,7 @@ export function nullCoalesce<T>(aib: T, replaced: T = aib): NonNullable<T> {
  * # 判断一个对象是否为非空字符串
  * @param obj 对象
  */
-export function isNonEmptyString(obj: NullPt): boolean {
+export function isNonEmptyString(obj: nullpt<string>): bool {
   return typeof obj === 'string' && obj.trim().length > 0
 }
 
@@ -62,7 +62,7 @@ export function mapRecord<T, U>(record: Record<string, T>, callback: (val: T) =>
   )
 }
 
-export function dlv(obj: SafeAny, key: string | string[], def: SafeAny, p: number, undef: SafeAny): SafeAny {
+export function dlv(obj: dynamic, key: Maybe<string>, def: dynamic, p: int, undef: dynamic): dynamic {
   if (typeof key === 'string') key = key.split('.')
   for (p = 0; p < key.length; p++) {
     const path = key[p]

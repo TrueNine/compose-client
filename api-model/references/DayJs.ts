@@ -1,15 +1,15 @@
 import dayjs from 'dayjs'
-import {type ISO8601DateFormat, ISO8601Format, type Timestamp} from '@compose/api-types'
-
-export type DayJSNewINewInstanceOptions = string | Timestamp | Date | dayjs.Dayjs
+import type {ISO8601DateFormat, timestamp} from '@compose/api-types'
+import {ISO8601Format, SECOND_MILLIS} from '../consts/Datetime'
+export type DayJSNewINewInstanceOptions = string | timestamp | Date | dayjs.Dayjs
 
 export class DayJs {
-  static dateMillis(date: DayJSNewINewInstanceOptions, format: ISO8601DateFormat = ISO8601Format.date): Timestamp {
+  static dateMillis(date: DayJSNewINewInstanceOptions, format: ISO8601DateFormat = ISO8601Format.date): timestamp {
     return dayjs(date, format, true).valueOf()
   }
 
-  static datetimeMillis(date: DayJSNewINewInstanceOptions, format: string = ISO8601Format.datetime): Timestamp {
-    return Math.floor(Number(dayjs(date, format, true).valueOf()) / 1000)
+  static datetimeMillis(date: DayJSNewINewInstanceOptions, format: string = ISO8601Format.datetime): timestamp {
+    return Math.floor(Number(dayjs(date, format, true).valueOf()) / SECOND_MILLIS)
   }
 
   static format(date: DayJSNewINewInstanceOptions, format: string = ISO8601Format.datetime): string {
