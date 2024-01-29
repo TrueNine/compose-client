@@ -1,6 +1,6 @@
 {
   "name": "@compose/atomic-css-uno",
-  "version": "0.1.155",
+  "version": "0.1.156",
   "description": "uno css code snippets",
   "author": "TrueNine",
   "license": "private",
@@ -24,21 +24,21 @@
     "./*": "./*"
   },
   "dependencies": {
-    "@unocss/cli": "^0.58.3",
-    "@unocss/core": "^0.58.3",
-    "@unocss/postcss": "^0.58.3",
-    "@unocss/transformer-compile-class": "^0.58.3",
-    "@unocss/transformer-directives": "^0.58.3",
-    "unocss": "^0.58.3",
+    "@unocss/cli": "^0.58.4",
+    "@unocss/core": "^0.58.4",
+    "@unocss/postcss": "^0.58.4",
+    "@unocss/transformer-compile-class": "^0.58.4",
+    "@unocss/transformer-directives": "^0.58.4",
+    "unocss": "^0.58.4",
     "unocss-preset-weapp": "^0.58.1"
   },
   "peerDependencies": {
-    "@unocss/cli": "^0.58.3",
-    "@unocss/core": "^0.58.3",
-    "@unocss/postcss": "^0.58.3",
-    "@unocss/transformer-compile-class": "^0.58.3",
-    "@unocss/transformer-directives": "^0.58.3",
-    "unocss": "^0.58.3",
+    "@unocss/cli": "^0.58.4",
+    "@unocss/core": "^0.58.4",
+    "@unocss/postcss": "^0.58.4",
+    "@unocss/transformer-compile-class": "^0.58.4",
+    "@unocss/transformer-directives": "^0.58.4",
+    "unocss": "^0.58.4",
     "unocss-preset-weapp": "^0.58.1"
   }
 }

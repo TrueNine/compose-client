@@ -68,6 +68,12 @@ export type LateNull<T> = T | late<T> | nil<T>
 export type latenull<T> = LateNull<T>
 
 /**
+ * # 可空，可选，不稳定
+ */
+export type NullPt<T = dynamic> = pt<T> | latenull<T>
+export type nullpt<T = dynamic> = NullPt<T>
+
+/**
  * ## 绝对不会返回
  */
 export type Nothing = null & never & undefined & void

@@ -58,3 +58,5 @@ export type duration = Duration
  */
 export type Period = `P${string}` & string
 export type period = Period
+
+export type TimeSpan = period | duration

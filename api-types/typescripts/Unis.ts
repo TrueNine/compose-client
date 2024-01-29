@@ -1,4 +1,4 @@
-import type {dynamic, latenull, pt} from './Types'
+import type {dynamic} from './Types'
 
 /**
  * # 数值或字符串
@@ -22,9 +22,3 @@ export type task<T> = Task<T>
  */
 export type Asyncable<T = dynamic> = T | task<T>
 export type asyncable<T = dynamic> = Asyncable<T>
-
-/**
- * # 可空，可选，不稳定
- */
-export type NullPt<T = dynamic> = pt<T> | latenull<T>
-export type nullpt<T = dynamic> = NullPt<T>

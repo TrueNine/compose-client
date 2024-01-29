@@ -5,8 +5,8 @@
     "@date-io/dayjs": "^3.0.0",
     "@mdi/font": "^7.4.47",
     "dayjs": "^1.11.10",
-    "element-plus": "^2.5.2",
+    "element-plus": "^2.5.3",
     "naive-ui": "^2.37.3",
-    "quasar": "^2.14.2"
+    "quasar": "^2.14.3"
   }
 }

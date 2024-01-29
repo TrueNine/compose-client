@@ -1,5 +1,6 @@
 import type {nullpt, dynamic, bool, Maybe, int} from '@compose/api-types'
 import {STR_EMPTY} from '../consts/Strings'
+
 /**
  * ## 判断一个字符串是否为空，返回本身或空字符串，排除 null | undefined
  * @param str 可空字符串

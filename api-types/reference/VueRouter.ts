@@ -1,6 +1,5 @@
+import type {dynamic} from 'typescripts'
 import type {RouteMeta, RouteRecordRedirectOption} from 'vue-router'
-
-import type {dynamic} from '../dist'
 
 /**
  * 自动路由页面 meta 配置
