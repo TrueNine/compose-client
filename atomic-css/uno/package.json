@@ -24,21 +24,21 @@
     "./*": "./*"
   },
   "dependencies": {
-    "@unocss/cli": "^0.58.4",
-    "@unocss/core": "^0.58.4",
-    "@unocss/postcss": "^0.58.4",
-    "@unocss/transformer-compile-class": "^0.58.4",
-    "@unocss/transformer-directives": "^0.58.4",
-    "unocss": "^0.58.4",
-    "unocss-preset-weapp": "^0.58.1"
+    "@unocss/cli": "^0.58.5",
+    "@unocss/core": "^0.58.5",
+    "@unocss/postcss": "^0.58.5",
+    "@unocss/transformer-compile-class": "^0.58.5",
+    "@unocss/transformer-directives": "^0.58.5",
+    "unocss": "^0.58.5",
+    "unocss-preset-weapp": "^0.58.5"
   },
   "peerDependencies": {
-    "@unocss/cli": "^0.58.4",
-    "@unocss/core": "^0.58.4",
-    "@unocss/postcss": "^0.58.4",
-    "@unocss/transformer-compile-class": "^0.58.4",
-    "@unocss/transformer-directives": "^0.58.4",
-    "unocss": "^0.58.4",
-    "unocss-preset-weapp": "^0.58.1"
+    "@unocss/cli": "^0.58.5",
+    "@unocss/core": "^0.58.5",
+    "@unocss/postcss": "^0.58.5",
+    "@unocss/transformer-compile-class": "^0.58.5",
+    "@unocss/transformer-directives": "^0.58.5",
+    "unocss": "^0.58.5",
+    "unocss-preset-weapp": "^0.58.5"
   }
 }
