@@ -1,10 +1,10 @@
 import {createApp} from 'vue'
 
-import {createVuetifyMount, quasarInstall} from '../common'
-import {naiveStyleAdaptor} from '../index'
-
 import App from './App.vue'
 import Router from './router'
+
+import {createVuetifyMount, quasarInstall} from '@/common'
+import {naiveStyleAdaptor} from '@/index'
 
 import 'uno.css'
 

@@ -8,11 +8,13 @@ import gulpPostcss from 'gulp-postcss'
 import autoprefixer from 'autoprefixer'
 import cssnano from 'cssnano'
 import unocssPostcss from '@unocss/postcss'
+import {rimraf} from 'rimraf'
 
 export const basePath = joinPath('..')
 export const distPath = joinPath('../dist')
 export const nodeModulesPath = joinPath('../node_modules')
 console.log(distPath)
+
 export async function buildUnocss(fName = 'unocss.css') {
   await run(`unocss "${basePath}/**/*" -c ${basePath}/unocss.config.ts -o ${distPath}/${fName} -m`, basePath)
 }
@@ -27,11 +29,22 @@ export const buildStyle = () => {
     .pipe(gulpPostcss([unocssPostcss(), autoprefixer(), cssnano()]))
     .pipe(dest(distPath))
 }
+export const moveBuildStyle = () => {
+  return src(`${distPath}/src/**/**`).pipe(dest(distPath))
+}
+
+export const deleteBuildStyle = () => {
+  return rimraf(`${distPath}/src`)
+}
 
 export default series(
   parallel(
     async () => buildStyle(),
     async () => buildUnocss()
+  ),
+  series(
+    () => moveBuildStyle(),
+    () => deleteBuildStyle()
   )
 ) as unknown
 

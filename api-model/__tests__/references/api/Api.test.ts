@@ -1,6 +1,6 @@
 import {expect, test} from 'vitest'
 
-import {CnDistrict} from '../../../references'
+import {CnDistrict} from '@/references'
 
 test('CnDistrict', () => {
   const a = new CnDistrict('433127100101')

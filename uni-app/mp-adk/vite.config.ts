@@ -6,15 +6,15 @@ export default defineConfig({
     sourcemap: true,
     lib: {
       fileName: '[name]',
-      entry: 'index.ts',
+      entry: 'src/index.ts',
       formats: ['es', 'cjs']
     },
     rollupOptions: {
       output: {
-        preserveModulesRoot: '.',
+        preserveModulesRoot: 'src',
         preserveModules: true
       },
-      external: ['vue', '@compose/api-model', '@compose/api-types']
+      external: ['vue', '@compose/api-model', '@compose/api-types', '@compose/req']
     }
   },
   plugins: [

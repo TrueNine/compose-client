@@ -2,7 +2,8 @@
 import type {LateNull} from '@compose/api-types'
 
 import {AddressApi} from '../../api/AddressApi'
-import type {IComponentAddr} from '../../../v-address-select'
+
+import type {IComponentAddr} from '@/v-address-select'
 
 const {data, execute} = AddressApi.findProvinces()
 const findProvinces = async () => {

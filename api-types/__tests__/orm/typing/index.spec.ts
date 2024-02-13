@@ -1,5 +1,4 @@
 import {test} from 'vitest'
-
 import {RelationItemTyping} from '@compose/api-model'
 
 test('test enum typing', () => {
@@ -14,6 +13,7 @@ enum AE {
   A = '测',
   B = '试'
 }
+
 test('test loop typings', () => {
   console.log(Object.entries(RelationItemTyping))
   console.log(RelationItemTyping)

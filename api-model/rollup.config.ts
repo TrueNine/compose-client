@@ -6,13 +6,12 @@ import {emptyDirSync} from 'fs-extra'
 
 export default defineConfig([
   {
-    input: 'index.ts',
+    input: 'src/index.ts',
     plugins: [
       {
         name: 'generate-types',
         buildStart: () => {
           emptyDirSync('dist')
-          console.log('清理 dist')
         }
       },
       res(),
@@ -26,7 +25,7 @@ export default defineConfig([
       {
         sourcemap: true,
         entryFileNames: '[name].js',
-        preserveModulesRoot: '.',
+        preserveModulesRoot: 'src',
         preserveModules: true,
         format: 'es',
         dir: 'dist'
@@ -34,7 +33,7 @@ export default defineConfig([
       {
         sourcemap: true,
         entryFileNames: '[name].cjs',
-        preserveModulesRoot: '.',
+        preserveModulesRoot: 'src',
         preserveModules: true,
         format: 'cjs',
         dir: 'dist'
@@ -43,7 +42,7 @@ export default defineConfig([
     external: ['vue', 'tsLib', 'vue-router', /(@compose|@compose\/)/, 'api-types', /(lodash|lodash\/)/, /(dayjs|dayjs\/)/]
   },
   {
-    input: 'index.ts',
+    input: 'src/index.ts',
     plugins: [
       res(),
       cjs(),

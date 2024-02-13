@@ -1,7 +1,5 @@
 import {test} from 'vitest'
-import {enumToOutput, findEnumValue} from '@compose/api-model'
-
-import {RelationItemTyping} from '@compose/api-model'
+import {enumToOutput, findEnumValue, RelationItemTyping} from '@compose/api-model'
 
 test('test enum generate output', () => {
   const b = enumToOutput(RelationItemTyping, {

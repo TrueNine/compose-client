@@ -1,3 +1,5 @@
+import {fileURLToPath, URL} from 'node:url'
+
 import {defineConfig} from 'vite'
 import dts from 'vite-plugin-dts'
 
@@ -9,9 +11,9 @@ export default defineConfig({
     minify: 'terser',
     sourcemap: true,
     lib: {
-      name: 'MetaUI',
+      name: 'ApiModel',
       fileName: '[name]',
-      entry: 'index.ts',
+      entry: 'src/index.ts',
       formats: ['es', 'cjs']
     },
     rollupOptions: {
@@ -39,5 +41,10 @@ export default defineConfig({
       tsconfigPath: './tsconfig.json',
       exclude: ['dist/**', '__build-src__/**', 'vite.config.ts', '**/__tests__/**', 'vitest.config.ts']
     })
-  ]
+  ],
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url))
+    }
+  }
 })

@@ -1,6 +1,6 @@
 import {test} from 'vitest'
 
-import {generateMenu, resolveRouters} from '../../references'
+import {generateMenu, resolveRouters} from '@/references'
 
 test('test generateMenu', () => {
   const routes = resolveRouters()

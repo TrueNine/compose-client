@@ -1,6 +1,6 @@
 import {test} from 'vitest'
 
-import {resolveRouters} from '../../references'
+import {resolveRouters} from '@/references'
 
 test('import.meta', () => {
   console.log(import.meta.glob('/**'))

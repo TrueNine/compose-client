@@ -2,7 +2,9 @@
   "extends": "@compose/tsconfig/tsconfig.json",
   "compilerOptions": {
     "baseUrl": ".",
-    "target": "ESNext",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
     "declaration": true,
     "declarationMap": true,
     "declarationDir": "dist"

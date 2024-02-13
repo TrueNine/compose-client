@@ -9,7 +9,7 @@ import {ElementPlusResolver, NaiveUiResolver, QuasarResolver, VarletUIResolver, 
 import unocss from 'unocss/vite'
 import ViteFonts from 'unplugin-fonts/vite'
 import vuetify, {transformAssetUrls} from 'vite-plugin-vuetify'
-import type {ModuleFormat} from 'rollup'
+//import type {ModuleFormat} from 'rollup'
 import {quasar, transformAssetUrls as quasarTransformAssetUrls} from '@quasar/vite-plugin'
 import dts from 'vite-plugin-dts'
 
@@ -18,27 +18,13 @@ export default defineConfig({
     sourcemap: true,
     lib: {
       name: 'MetaUI',
-      entry: ['index.ts', 'unplugin/index.ts'],
-      formats: ['es', 'cjs'],
-      fileName: (format: ModuleFormat) => {
-        let a: string
-        switch (format) {
-          case 'commonjs':
-          case 'cjs':
-            a = 'cjs'
-            break
-          case 'iife':
-          case 'es':
-          case 'esm':
-          default:
-            a = 'js'
-        }
-        return `[name].${a}`
-      }
+      entry: 'src/index.ts',
+      fileName: '[name]',
+      formats: ['es', 'cjs']
     },
     rollupOptions: {
       output: {
-        preserveModulesRoot: '.',
+        preserveModulesRoot: 'src',
         preserveModules: true
       },
       external: [
@@ -77,6 +63,7 @@ export default defineConfig({
       tsconfigPath: './tsconfig.json',
       clearPureImport: false,
       staticImport: false,
+      entryRoot: 'src',
       strictOutput: true,
       exclude: ['uno.config.ts', 'dist/**', '__build-src__/**', 'vite.config.ts', '**/__tests__/**', '**/__tests__/**', 'vitest.config.ts', 'playground']
     }),
