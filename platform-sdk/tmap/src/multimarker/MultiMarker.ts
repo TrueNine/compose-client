@@ -1,47 +1,47 @@
-type MultiMarkerEvents = TMap.MultiMarkerEvents
-type PointGeometry = TMap.PointGeometry
-type MultiMarkerOptions = TMap.MultiMarkerOptions
-type Map = TMap.Map
+type MultiMarkerEvents = TMap.MultiMarkerEvents;
+type PointGeometry = TMap.PointGeometry;
+type MultiMarkerOptions = TMap.MultiMarkerOptions;
+type Map = TMap.Map;
 
 /**
  * # 多 maker 图层
  */
 export declare class MultiMarker {
-  constructor(options: MultiMarkerOptions)
+    constructor(options: MultiMarkerOptions);
 
-  add(geometries: PointGeometry | PointGeometry[]): this
+    add(geometries: PointGeometry | PointGeometry[]): this;
 
-  setMap(map: Map): this
+    setMap(map: Map): this;
 
-  setGeometries(geometries: PointGeometry[]): this
+    setGeometries(geometries: PointGeometry[]): this;
 
-  setVisible(visible: boolean): this
+    setVisible(visible: boolean): this;
 
-  getMap(): Map
+    getMap(): Map;
 
-  getId(): string
+    getId(): string;
 
-  getGeometries(): PointGeometry[]
+    getGeometries(): PointGeometry[];
 
-  getStyles(): unknown
+    getStyles(): unknown;
 
-  getVisible(): boolean
+    getVisible(): boolean;
 
-  getGeometryById(id: string): PointGeometry | null
+    getGeometryById(id: string): PointGeometry | null;
 
-  updateGeometries(geometry: PointGeometry[]): this
+    updateGeometries(geometry: PointGeometry[]): this;
 
-  remove(ids: string[]): this
+    remove(ids: string[]): this;
 
-  moveAlong(param: unknown, options: unknown): void
+    moveAlong(param: unknown, options: unknown): void;
 
-  stopMove(): this
+    stopMove(): this;
 
-  pauseMove(): this
+    pauseMove(): this;
 
-  resumeMove(): this
+    resumeMove(): this;
 
-  on<K extends keyof MultiMarkerEvents>(eventName: K, listener: (ev: MultiMarkerEvents[K]) => void): this
+    on<K extends keyof MultiMarkerEvents>(eventName: K, listener: (ev: MultiMarkerEvents[K]) => void): this;
 
-  off<K extends keyof MultiMarkerEvents>(eventName: K, listener: (ev: MultiMarkerEvents[K]) => void): this
+    off<K extends keyof MultiMarkerEvents>(eventName: K, listener: (ev: MultiMarkerEvents[K]) => void): this;
 }

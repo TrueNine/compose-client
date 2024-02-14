@@ -1,12 +1,12 @@
-import {test} from 'vitest'
+import { test } from "vitest";
 
-import {resolveRouters} from '@/references'
+import { resolveRouters } from "@/references";
 
-test('import.meta', () => {
-  console.log(import.meta.glob('/**'))
-})
+test("import.meta", () => {
+    console.log(import.meta.glob("/**"));
+});
 
-test('VueRouter.resolveRouters', () => {
-  const a = resolveRouters()
-  console.log(a)
-})
+test("VueRouter.resolveRouters", () => {
+    const a = resolveRouters();
+    console.log(a);
+});

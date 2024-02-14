@@ -1,1 +1,1 @@
-export * from './TMapCommon'
+export * from "./TMapCommon";

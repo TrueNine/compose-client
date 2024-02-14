@@ -1,1 +1,1 @@
-export * from './MultiMarker'
+export * from "./MultiMarker";

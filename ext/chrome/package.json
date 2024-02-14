@@ -1,26 +1,26 @@
 {
-  "name": "@compose/ext-chrome",
-  "version": "0.0.34",
-  "description": "chrome 扩展程序 开发库",
-  "author": "TrueNine",
-  "license": "private",
-  "scripts": {
-    "build": "run-s type-check build-c",
-    "build-c": "vite build",
-    "type-check": "vue-tsc --noEmit",
-    "pub": "run-s build pub-c",
-    "pub-c": "pnpm publish --no-git-checks"
-  },
-  "type": "module",
-  "module": "dist/index.js",
-  "main": "dist/index.cjs",
-  "types": "dist/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
+    "name": "@compose/ext-chrome",
+    "version": "0.0.35",
+    "description": "chrome 扩展程序 开发库",
+    "author": "TrueNine",
+    "license": "private",
+    "scripts": {
+        "build": "run-s type-check build-c",
+        "build-c": "vite build",
+        "type-check": "vue-tsc --noEmit",
+        "pub": "run-s build pub-c",
+        "pub-c": "pnpm publish --no-git-checks"
     },
-    "./*": "./*"
-  }
+    "type": "module",
+    "module": "dist/index.js",
+    "main": "dist/index.cjs",
+    "types": "dist/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js",
+            "require": "./dist/index.cjs"
+        },
+        "./*": "./*"
+    }
 }

@@ -1,49 +1,49 @@
-import {fileURLToPath, URL} from 'node:url'
+import { fileURLToPath, URL } from "node:url";
 
-import {defineConfig} from 'vite'
-import dts from 'vite-plugin-dts'
+import { defineConfig } from "vite";
+import dts from "vite-plugin-dts";
 
 export default defineConfig({
-  build: {
-    sourcemap: true,
-    lib: {
-      name: 'ApiModelNode',
-      fileName: '[name]',
-      entry: 'src/index.ts',
-      formats: ['es', 'cjs']
+    build: {
+        sourcemap: true,
+        lib: {
+            name: "ApiModelNode",
+            fileName: "[name]",
+            entry: "src/index.ts",
+            formats: ["es", "cjs"],
+        },
+        rollupOptions: {
+            output: {
+                preserveModulesRoot: "src",
+                preserveModules: true,
+            },
+            external: [
+                "vue",
+                "node:module",
+                "node:fs",
+                "node:child_process",
+                "element-plus",
+                "node:path",
+                /\.(scss|sass|less|css)/,
+                "lodash-es",
+                "lodash-es/cloneDeep",
+                "vue-router",
+                "@compose/api-model",
+                "@compose/api-types",
+                "dayjs",
+            ],
+        },
     },
-    rollupOptions: {
-      output: {
-        preserveModulesRoot: 'src',
-        preserveModules: true
-      },
-      external: [
-        'vue',
-        'node:module',
-        'node:fs',
-        'node:child_process',
-        'element-plus',
-        'node:path',
-        /\.(scss|sass|less|css)/,
-        'lodash-es',
-        'lodash-es/cloneDeep',
-        'vue-router',
-        '@compose/api-model',
-        '@compose/api-types',
-        'dayjs'
-      ]
-    }
-  },
-  plugins: [
-    dts({
-      staticImport: true,
-      tsconfigPath: './tsconfig.json',
-      exclude: ['dist/**', '__build-src__/**', 'vite.config.ts', '**/__tests__/**', 'vitest.config.ts']
-    })
-  ],
-  resolve: {
-    alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
-    }
-  }
-})
+    plugins: [
+        dts({
+            staticImport: true,
+            tsconfigPath: "./tsconfig.json",
+            exclude: ["dist/**", "__build-src__/**", "vite.config.ts", "**/__tests__/**", "vitest.config.ts"],
+        }),
+    ],
+    resolve: {
+        alias: {
+            "@": fileURLToPath(new URL("./src", import.meta.url)),
+        },
+    },
+});

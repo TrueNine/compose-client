@@ -1,27 +1,27 @@
-import {defineConfig} from 'vite'
-import dts from 'vite-plugin-dts'
+import { defineConfig } from "vite";
+import dts from "vite-plugin-dts";
 
 export default defineConfig({
-  build: {
-    sourcemap: true,
-    lib: {
-      fileName: '[name]',
-      entry: 'src/index.ts',
-      formats: ['es', 'cjs']
+    build: {
+        sourcemap: true,
+        lib: {
+            fileName: "[name]",
+            entry: "src/index.ts",
+            formats: ["es", "cjs"],
+        },
+        rollupOptions: {
+            output: {
+                preserveModulesRoot: "src",
+                preserveModules: true,
+            },
+            external: ["vue", "@compose/api-model", "@compose/api-types", "@compose/req"],
+        },
     },
-    rollupOptions: {
-      output: {
-        preserveModulesRoot: 'src',
-        preserveModules: true
-      },
-      external: ['vue', '@compose/api-model', '@compose/api-types', '@compose/req']
-    }
-  },
-  plugins: [
-    dts({
-      staticImport: true,
-      tsconfigPath: './tsconfig.json',
-      exclude: ['dist/**', '__build-src__/**', 'vite.config.ts', '**/__tests__/**', 'vitest.config.ts']
-    })
-  ]
-})
+    plugins: [
+        dts({
+            staticImport: true,
+            tsconfigPath: "./tsconfig.json",
+            exclude: ["dist/**", "__build-src__/**", "vite.config.ts", "**/__tests__/**", "vitest.config.ts"],
+        }),
+    ],
+});

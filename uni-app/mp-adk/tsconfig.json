@@ -1,26 +1,15 @@
 {
-  "extends": "@compose/tsconfig/tsconfig.json",
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@/*": [
-        "./src/*"
-      ]
+    "extends": "@compose/tsconfig/tsconfig.json",
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["./src/*"]
+        },
+        "declaration": true,
+        "declarationMap": true,
+        "declarationDir": "dist"
     },
-    "declaration": true,
-    "declarationMap": true,
-    "declarationDir": "dist"
-  },
-  "types": [
-    "@dcloudio/types",
-    "./uni.d.ts"
-  ],
-  "include": [
-    "**.d.ts",
-    "**/**.ts",
-    "**/**.d.ts"
-  ],
-  "exclude": [
-    "dist"
-  ]
+    "types": ["@dcloudio/types", "./uni.d.ts"],
+    "include": ["**.d.ts", "**/**.ts", "**/**.d.ts"],
+    "exclude": ["dist"]
 }

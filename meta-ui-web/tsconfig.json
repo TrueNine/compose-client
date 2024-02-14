@@ -1,14 +1,14 @@
 {
-  "extends": "@compose/tsconfig/tsconfig.json",
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"]
+    "extends": "@compose/tsconfig/tsconfig.json",
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["./src/*"]
+        },
+        "types": ["./imports-auto.d.ts", "./imports-comp.d.ts"],
+        "declaration": true,
+        "declarationMap": true,
+        "declarationDir": "dist"
     },
-    "types": ["./imports-auto.d.ts", "./imports-comp.d.ts"],
-    "declaration": true,
-    "declarationMap": true,
-    "declarationDir": "dist"
-  },
-  "exclude": ["uno.config.ts"]
+    "exclude": ["uno.config.ts"]
 }

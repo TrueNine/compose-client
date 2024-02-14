@@ -1,1 +1,1 @@
-export * from './Chrome'
+export * from "./Chrome";

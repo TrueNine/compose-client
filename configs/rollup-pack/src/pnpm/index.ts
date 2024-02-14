@@ -1,1 +1,1 @@
-export * from './WorkspaceVersionResolver'
+export * from "./WorkspaceVersionResolver";

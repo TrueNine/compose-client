@@ -6,9 +6,9 @@
 
 ```json
 {
-  "@types/sockjs-client": "^",
-  "@types/stompjs": "^",
-  "sockjs-client": "^",
-  "stompjs": "^"
+    "@types/sockjs-client": "^",
+    "@types/stompjs": "^",
+    "sockjs-client": "^",
+    "stompjs": "^"
 }
 ```

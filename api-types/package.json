@@ -1,30 +1,30 @@
 {
-  "name": "@compose/api-types",
-  "version": "1.0.89",
-  "description": "yan100 client ui kit",
-  "author": "TrueNine",
-  "license": "private",
-  "scripts": {
-    "build": "run-s type-check build-c dts",
-    "dts": "vue-tsc --declaration",
-    "build-c": "vite build",
-    "type-check": "vue-tsc --noEmit",
-    "pub": "run-s  build pub-c",
-    "pub-c": "pnpm publish --no-git-checks"
-  },
-  "type": "module",
-  "module": "dist/index.js",
-  "main": "dist/index.cjs",
-  "types": "dist/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
+    "name": "@compose/api-types",
+    "version": "1.0.90",
+    "description": "yan100 client ui kit",
+    "author": "TrueNine",
+    "license": "private",
+    "scripts": {
+        "build": "run-s type-check build-c dts",
+        "dts": "vue-tsc --declaration",
+        "build-c": "vite build",
+        "type-check": "vue-tsc --noEmit",
+        "pub": "run-s  build pub-c",
+        "pub-c": "pnpm publish --no-git-checks"
     },
-    "./*": "./*",
-    "./**": "./**",
-    "./dist/*": "./dist/*",
-    "./dist/**": "./dist/**"
-  }
+    "type": "module",
+    "module": "dist/index.js",
+    "main": "dist/index.cjs",
+    "types": "dist/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js",
+            "require": "./dist/index.cjs"
+        },
+        "./*": "./*",
+        "./**": "./**",
+        "./dist/*": "./dist/*",
+        "./dist/**": "./dist/**"
+    }
 }

@@ -1,3 +1,3 @@
 module.exports = {
-  extends: ['@compose/stylelint-config']
-}
+    extends: ["@compose/stylelint-config"],
+};

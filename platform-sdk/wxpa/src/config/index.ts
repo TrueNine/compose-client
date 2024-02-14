@@ -1,1 +1,1 @@
-export * from './ConfigDefine'
+export * from "./ConfigDefine";

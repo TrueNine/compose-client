@@ -23,19 +23,19 @@ export interface UseRequestReturn<T> {
 
   execute: (throwOrFailed?: boolean) => Promise<T>
 
-  text(): UseRequestReturn<string> & PromiseLike<UseRequestReturn<string>>
+  text: () => UseRequestReturn<string> & PromiseLike<UseRequestReturn<string>>
 
-  json<JSON = unknown>(): UseRequestReturn<JSON> & PromiseLike<UseRequestReturn<JSON>>
+  json: <JSON = unknown>() => UseRequestReturn<JSON> & PromiseLike<UseRequestReturn<JSON>>
 
-  formData(): UseRequestReturn<T> & PromiseLike<UseRequestReturn<T>>
+  formData: () => UseRequestReturn<T> & PromiseLike<UseRequestReturn<T>>
 
-  get(): UseRequestReturn<T> & PromiseLike<UseRequestReturn<T>>
+  get: () => UseRequestReturn<T> & PromiseLike<UseRequestReturn<T>>
 
-  post(payload?: unknown, type?: string): UseRequestReturn<T> & PromiseLike<UseRequestReturn<T>>
+  post: (payload?: T, type?: string) => UseRequestReturn<T> & PromiseLike<UseRequestReturn<T>>
 
-  put(payload?: unknown, type?: string): UseRequestReturn<T> & PromiseLike<UseRequestReturn<T>>
+  put: (payload?: T, type?: string) => UseRequestReturn<T> & PromiseLike<UseRequestReturn<T>>
 
-  delete(payload?: unknown, type?: string): UseRequestReturn<T> & PromiseLike<UseRequestReturn<T>>
+  delete: (payload?: T, type?: string) => UseRequestReturn<T> & PromiseLike<UseRequestReturn<T>>
 }
 
 export interface ResponseInit {

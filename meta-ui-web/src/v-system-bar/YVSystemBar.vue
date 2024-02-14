@@ -1,55 +1,61 @@
 <script setup lang="ts">
-import type {YVSystemBarSlots} from './index'
+    import type { YVSystemBarSlots } from "./index";
 
-const drawer = ref(false)
-const settingsDrawer = ref(false)
-const slots = defineSlots<YVSystemBarSlots>()
-const useLeft = computed(() => {
-  return slots['left-btn'] !== undefined
-})
-const useRight = computed(() => {
-  return slots['right-btn'] !== undefined
-})
+    const drawer = ref(false);
+    const settingsDrawer = ref(false);
+    const slots = defineSlots<YVSystemBarSlots>();
+    const useLeft = computed(() => {
+        return slots["left-btn"] !== undefined;
+    });
+    const useRight = computed(() => {
+        return slots["right-btn"] !== undefined;
+    });
 </script>
 <template>
-  <VApp>
-    <VAppBar color="primary">
-      <!-- 左侧菜单收展按钮 -->
-      <slot name="left-btn">
-        <VAppBarNavIcon :aria-label="drawer ? '关闭左侧菜单' : '打开左侧菜单'" @click="drawer = !drawer">
-          <i i-mdi-menu text-8 />
-        </VAppBarNavIcon>
-      </slot>
+    <VApp>
+        <VAppBar color="primary">
+            <!-- 左侧菜单收展按钮 -->
+            <slot name="left-btn">
+                <VAppBarNavIcon role="switch" :aria-checked="drawer" :aria-label="drawer ? '关闭左侧菜单' : '打开左侧菜单'" @click="drawer = !drawer">
+                    <i i-mdi-menu text-8 />
+                </VAppBarNavIcon>
+            </slot>
 
-      <!-- app 名称插槽 -->
-      <VAppBarTitle>
-        <slot name="app-title"> Application</slot>
-      </VAppBarTitle>
-      <VSpacer />
+            <!-- app 名称插槽 -->
+            <VAppBarTitle>
+                <slot name="app-title"> Application</slot>
+            </VAppBarTitle>
+            <VSpacer />
 
-      <!-- 各种右侧的设置按钮 -->
-      <slot name="app-settings" />
-      <slot name="right-btn">
-        <VAppBarNavIcon :aria-label="settingsDrawer ? '关闭设置侧边栏' : '打开设置侧边栏'" @click="settingsDrawer = !settingsDrawer">
-          <i i-mdi-settings text-8 />
-        </VAppBarNavIcon>
-      </slot>
-    </VAppBar>
+            <!-- 各种右侧的设置按钮 -->
+            <slot name="app-settings" />
+            <slot name="right-btn">
+                <VAppBarNavIcon
+                    role="switch"
+                    :aria-checked="settingsDrawer"
+                    :aria-label="settingsDrawer ? '关闭设置侧边栏' : '打开设置侧边栏'"
+                    @click="settingsDrawer = !settingsDrawer"
+                >
+                    <i i-mdi-settings text-8 />
+                </VAppBarNavIcon>
+            </slot>
+        </VAppBar>
 
-    <VNavigationDrawer v-if="!useLeft" v-model="drawer" location="left" :border="false" :temporary="true">
-      <slot name="left-drawer" :collapsed="drawer" />
-    </VNavigationDrawer>
+        <!-- 显示主区域 -->
+        <VMain>
+            <VContainer>
+                <slot />
+            </VContainer>
+        </VMain>
 
-    <!-- 右侧设置区域 -->
-    <VNavigationDrawer v-if="!useRight" v-model="settingsDrawer" location="right" :border="false" temporary>
-      <slot name="settings-drawer" :collapsed="settingsDrawer" />
-    </VNavigationDrawer>
+        <!-- 左侧菜单区域 -->
+        <VNavigationDrawer v-if="!useLeft" v-model="drawer" location="left" :border="false" :temporary="true">
+            <slot name="left-drawer" :collapsed="drawer" />
+        </VNavigationDrawer>
 
-    <!-- 显示主区域 -->
-    <VMain>
-      <VContainer>
-        <slot />
-      </VContainer>
-    </VMain>
-  </VApp>
+        <!-- 右侧设置区域 -->
+        <VNavigationDrawer v-if="!useRight" v-model="settingsDrawer" location="right" :border="false" temporary>
+            <slot name="settings-drawer" :collapsed="settingsDrawer" />
+        </VNavigationDrawer>
+    </VApp>
 </template>

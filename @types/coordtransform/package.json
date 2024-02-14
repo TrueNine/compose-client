@@ -1,16 +1,16 @@
 {
-  "name": "@types/compose-coordtransform",
-  "version": "2.1.8",
-  "description": "地图坐标转换器定义包",
-  "main": "index.d.ts",
-  "types": "index.d.ts",
-  "author": "TrueNine",
-  "license": "private",
-  "scripts": {
-    "build": "echo \"not required build\"",
-    "pub": "pnpm build && pnpm publish --no-git-checks"
-  },
-  "peerDependencies": {
-    "coordtransform": "^2.1.2"
-  }
+    "name": "@types/compose-coordtransform",
+    "version": "2.1.9",
+    "description": "地图坐标转换器定义包",
+    "main": "index.d.ts",
+    "types": "index.d.ts",
+    "author": "TrueNine",
+    "license": "private",
+    "scripts": {
+        "build": "echo \"not required build\"",
+        "pub": "pnpm build && pnpm publish --no-git-checks"
+    },
+    "peerDependencies": {
+        "coordtransform": "^2.1.2"
+    }
 }

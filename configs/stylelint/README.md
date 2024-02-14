@@ -2,15 +2,15 @@
 
 ```javascript
 module.exports = {
-  extends: ['@api-types/stylelint-config']
-}
+    extends: ["@api-types/stylelint-config"],
+};
 ```
 
 2. 增加命令
 
 ```json
 {
-  "slint": "stylelint \"./**/*.{css,sass,scss,less,vue,html}\" --fix"
+    "slint": "stylelint \"./**/*.{css,sass,scss,less,vue,html}\" --fix"
 }
 ```
 

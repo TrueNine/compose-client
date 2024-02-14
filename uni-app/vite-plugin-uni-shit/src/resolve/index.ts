@@ -11,7 +11,7 @@ import { debug } from "../util";
  * @returns package.json 文件
  */
 export function readPackageJson<T>(fullPath: string): T {
-  return JSON.parse(fs.readFileSync(fullPath, {encoding: 'utf-8'}))
+    return JSON.parse(fs.readFileSync(fullPath, { encoding: "utf-8" }));
 }
 
 /**
@@ -20,16 +20,16 @@ export function readPackageJson<T>(fullPath: string): T {
  * @returns record scss 变量定义
  */
 export function parseScssVariables(fileDef: string): ScssVariableDefs {
-  const variables: Record<string, string> = {}
-  const variableRegex = /(\$[\w-]+)\s*:\s*([^;]+);/g
-  const commentRegex = /\/\/.*|\/\*[\s\S]*?\*\//g
-  let match
-  while ((match = variableRegex.exec(fileDef)) !== null) {
-    const variableLine = match[0].replace(commentRegex, '')
-    const [variableName, variableValue] = variableLine.split(':').map(s => s.trim())
-    variables[variableName] = variableValue
-  }
-  return variables as ScssVariableDefs
+    const variables: Record<string, string> = {};
+    const variableRegex = /(\$[\w-]+)\s*:\s*([^;]+);/g;
+    const commentRegex = /\/\/.*|\/\*[\s\S]*?\*\//g;
+    let match;
+    while ((match = variableRegex.exec(fileDef)) !== null) {
+        const variableLine = match[0].replace(commentRegex, "");
+        const [variableName, variableValue] = variableLine.split(":").map((s) => s.trim());
+        variables[variableName] = variableValue;
+    }
+    return variables as ScssVariableDefs;
 }
 
 /**
@@ -38,7 +38,7 @@ export function parseScssVariables(fileDef: string): ScssVariableDefs {
  * @returns scss 变量
  */
 export function readScssVariables(fullFileName: string) {
-  return parseScssVariables(fs.readFileSync(fullFileName, {encoding: 'utf-8'}))
+    return parseScssVariables(fs.readFileSync(fullFileName, { encoding: "utf-8" }));
 }
 
 /**
@@ -48,29 +48,32 @@ export function readScssVariables(fullFileName: string) {
  * @returns 拦截后的配置
  */
 export function optiz(cfg: UserConfig, ucfg?: PluginConfig): UserConfig {
-  const isUseTerser = ucfg?.config.optimization?.useTerser === true
-  function mix(): DepOptimizationOptions {
-    const de = cfg.optimizeDeps?.include
-    const includes = []
-    if (de) includes.push(...de)
-    if (ucfg?.config?.root?.useUni) includes.push('@dcloudio/uni-ui')
-    if (ucfg?.config?.root?.useVkUView) includes.push('vk-uview-ui')
-    return {
-      ...cfg.optimizeDeps,
-      include: includes
+    const isUseTerser = ucfg?.config.optimization?.useTerser === true;
+    function mix(): DepOptimizationOptions {
+        const de = cfg.optimizeDeps?.include;
+        const includes = [];
+        if (de) includes.push(...de);
+        if (ucfg?.config?.root?.useUni) includes.push("@dcloudio/uni-ui");
+        if (ucfg?.config?.root?.useVkUView) includes.push("vk-uview-ui");
+        return {
+            ...cfg.optimizeDeps,
+            include: includes,
+        };
     }
-  }
-  const mixCfg = {
-    ...cfg,
-    resolve: {
-      alias: {
-        '@': path.resolve(ucfg?.rootDir ?? '', 'src')
-      }
-    },
-    // eslint-disable-next-line camelcase
-    build: isUseTerser ? {minify: 'terser', terserOptions: {...cfg.build?.terserOptions, compress: {drop_console: true, drop_debugger: true}}} : undefined,
-    optimizeDeps: mix()
-  } as UserConfig
-  debug(JSON.stringify(mixCfg, null, 2), ucfg?.debugMode ?? false)
-  return mixCfg as UserConfig
+    const mixCfg = {
+        ...cfg,
+        resolve: {
+            alias: {
+                "@": path.resolve(ucfg?.rootDir ?? "", "src"),
+            },
+        },
+
+        build: isUseTerser
+            ? // eslint-disable-next-line camelcase
+              { minify: "terser", terserOptions: { ...cfg.build?.terserOptions, compress: { drop_console: true, drop_debugger: true } } }
+            : undefined,
+        optimizeDeps: mix(),
+    } as UserConfig;
+    debug(JSON.stringify(mixCfg, null, 2), ucfg?.debugMode ?? false);
+    return mixCfg as UserConfig;
 }

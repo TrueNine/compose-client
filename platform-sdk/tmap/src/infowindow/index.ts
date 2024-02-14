@@ -1,28 +1,28 @@
-import type {InfoWindowEvents} from '@/events'
+import type { InfoWindowEvents } from "@/events";
 
-type InfoWindowOptions = TMap.InfoWindowOptions
-type LatLngDataTyping = TMap.LatLngDataTyping
-type Map = TMap.Map
+type InfoWindowOptions = TMap.InfoWindowOptions;
+type LatLngDataTyping = TMap.LatLngDataTyping;
+type Map = TMap.Map;
 
 /**
  * # 用于创建信息窗覆盖物
  */
 export declare class InfoWindow {
-  constructor(options: InfoWindowOptions)
+    constructor(options: InfoWindowOptions);
 
-  setPosition(position: LatLngDataTyping): InfoWindow
+    setPosition(position: LatLngDataTyping): InfoWindow;
 
-  setContent(content: string): InfoWindow
+    setContent(content: string): InfoWindow;
 
-  setMap(map: Map): InfoWindow
+    setMap(map: Map): InfoWindow;
 
-  getMap(): Map
+    getMap(): Map;
 
-  open(): InfoWindow
+    open(): InfoWindow;
 
-  close(): InfoWindow
+    close(): InfoWindow;
 
-  destroy(): InfoWindow
+    destroy(): InfoWindow;
 
-  on<K extends keyof InfoWindowEvents>(name: K, listener: (ev: InfoWindowEvents[K]) => void): InfoWindow
+    on<K extends keyof InfoWindowEvents>(name: K, listener: (ev: InfoWindowEvents[K]) => void): InfoWindow;
 }

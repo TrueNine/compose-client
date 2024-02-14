@@ -1,6 +1,6 @@
 export interface Props {
-  modelValue: boolean
+    modelValue: boolean;
 }
 export interface Emits {
-  (e: 'update:modelValue', v: boolean): void
+    (e: "update:modelValue", v: boolean): void;
 }

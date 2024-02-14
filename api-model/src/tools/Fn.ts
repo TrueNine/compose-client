@@ -1,4 +1,4 @@
-import type {SafeAny} from '@compose/api-types'
+import type { SafeAny } from "@compose/api-types";
 
 /**
  * # 环绕调用
@@ -7,10 +7,10 @@ import type {SafeAny} from '@compose/api-types'
  * @param after 后置调用
  */
 export function around<T>(supplier: () => T, before?: () => void, after?: () => void): T {
-  before?.()
-  const r = supplier()
-  after?.()
-  return r
+    before?.();
+    const r = supplier();
+    after?.();
+    return r;
 }
 
 /**
@@ -21,16 +21,16 @@ export function around<T>(supplier: () => T, before?: () => void, after?: () => 
  * @returns 执行结果
  */
 export function switchTo<T>(fn: () => T, switchBy: () => void): T {
-  switchBy()
-  const r = fn()
-  if (r instanceof Promise) {
-    r.then(er => {
-      switchBy()
-      return er
-    })
-  } else switchBy()
+    switchBy();
+    const r = fn();
+    if (r instanceof Promise) {
+        r.then((er) => {
+            switchBy();
+            return er;
+        });
+    } else switchBy();
 
-  return r
+    return r;
 }
 
 /**
@@ -40,6 +40,6 @@ export function switchTo<T>(fn: () => T, switchBy: () => void): T {
  * @param args 方法参数
  */
 export function optionalCall<F extends CallableFunction, A = SafeAny>(replace: F, fn?: F, ...args: A[]) {
-  if (fn) return fn(args)
-  else return replace(args)
+    if (fn) return fn(args);
+    else return replace(args);
 }

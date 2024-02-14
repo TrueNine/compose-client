@@ -1,2 +1,2 @@
-export * from './Files'
-export * from './ImportAndRequire'
+export * from "./Files";
+export * from "./ImportAndRequire";

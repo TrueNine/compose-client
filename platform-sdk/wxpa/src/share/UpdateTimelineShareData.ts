@@ -1,3 +1,3 @@
-import type {UpdateAppMessageShareDataOption} from './UpdateShareData'
+import type { UpdateAppMessageShareDataOption } from "./UpdateShareData";
 
-export type UpdateTimelineShareDataOption = UpdateAppMessageShareDataOption
+export type UpdateTimelineShareDataOption = UpdateAppMessageShareDataOption;

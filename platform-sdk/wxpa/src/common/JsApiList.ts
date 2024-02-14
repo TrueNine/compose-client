@@ -1,123 +1,123 @@
 export interface JsApiListMap {
-  updateAppMessageShareData: never
-  updateTimelineShareData: never
-  /**
-   * @deprecated 即将过期
-   */
-  onMenuShareTimeline: never
-  /**
-   * @deprecated 即将过期
-   */
-  onMenuShareAppMessage: never
-  /**
-   * @deprecated 即将过期
-   */
-  onMenuShareQQ: never
-  onMenuShareWeibo: never
-  onMenuShareQZone: never
-  startRecord: never
-  stopRecord: never
-  onVoiceRecordEnd: never
-  playVoice: never
-  pauseVoice: never
-  stopVoice: never
-  onVoicePlayEnd: never
-  uploadVoice: never
-  downloadVoice: never
-  chooseImage: never
-  previewImage: never
-  uploadImage: never
-  downloadImage: never
-  translateVoice: never
-  getNetworkType: never
-  openLocation: never
-  getLocation: never
-  hideOptionMenu: never
-  showOptionMenu: never
-  hideMenuItems: never
-  showMenuItems: never
-  hideAllNonBaseMenuItem: never
-  showAllNonBaseMenuItem: never
-  closeWindow: never
-  scanQRCode: never
-  openProductSpecificView: never
-  addCard: never
-  chooseCard: never
-  openCard: never
+    updateAppMessageShareData: never;
+    updateTimelineShareData: never;
+    /**
+     * @deprecated 即将过期
+     */
+    onMenuShareTimeline: never;
+    /**
+     * @deprecated 即将过期
+     */
+    onMenuShareAppMessage: never;
+    /**
+     * @deprecated 即将过期
+     */
+    onMenuShareQQ: never;
+    onMenuShareWeibo: never;
+    onMenuShareQZone: never;
+    startRecord: never;
+    stopRecord: never;
+    onVoiceRecordEnd: never;
+    playVoice: never;
+    pauseVoice: never;
+    stopVoice: never;
+    onVoicePlayEnd: never;
+    uploadVoice: never;
+    downloadVoice: never;
+    chooseImage: never;
+    previewImage: never;
+    uploadImage: never;
+    downloadImage: never;
+    translateVoice: never;
+    getNetworkType: never;
+    openLocation: never;
+    getLocation: never;
+    hideOptionMenu: never;
+    showOptionMenu: never;
+    hideMenuItems: never;
+    showMenuItems: never;
+    hideAllNonBaseMenuItem: never;
+    showAllNonBaseMenuItem: never;
+    closeWindow: never;
+    scanQRCode: never;
+    openProductSpecificView: never;
+    addCard: never;
+    chooseCard: never;
+    openCard: never;
 }
 
 export const AllJsApiList: (keyof JsApiListMap)[] = Array.from(
-  new Set([
-    'updateAppMessageShareData',
+    new Set([
+        "updateAppMessageShareData",
 
-    'updateTimelineShareData',
+        "updateTimelineShareData",
 
-    'onMenuShareTimeline',
+        "onMenuShareTimeline",
 
-    'onMenuShareAppMessage',
+        "onMenuShareAppMessage",
 
-    'onMenuShareQQ',
+        "onMenuShareQQ",
 
-    'onMenuShareWeibo',
+        "onMenuShareWeibo",
 
-    'onMenuShareQZone',
+        "onMenuShareQZone",
 
-    'startRecord',
+        "startRecord",
 
-    'stopRecord',
+        "stopRecord",
 
-    'onVoiceRecordEnd',
+        "onVoiceRecordEnd",
 
-    'playVoice',
+        "playVoice",
 
-    'pauseVoice',
+        "pauseVoice",
 
-    'stopVoice',
+        "stopVoice",
 
-    'onVoicePlayEnd',
+        "onVoicePlayEnd",
 
-    'uploadVoice',
+        "uploadVoice",
 
-    'downloadVoice',
+        "downloadVoice",
 
-    'chooseImage',
+        "chooseImage",
 
-    'previewImage',
+        "previewImage",
 
-    'uploadImage',
+        "uploadImage",
 
-    'downloadImage',
+        "downloadImage",
 
-    'translateVoice',
+        "translateVoice",
 
-    'getNetworkType',
+        "getNetworkType",
 
-    'openLocation',
+        "openLocation",
 
-    'getLocation',
+        "getLocation",
 
-    'hideOptionMenu',
+        "hideOptionMenu",
 
-    'showOptionMenu',
+        "showOptionMenu",
 
-    'hideMenuItems',
+        "hideMenuItems",
 
-    'showMenuItems',
+        "showMenuItems",
 
-    'hideAllNonBaseMenuItem',
+        "hideAllNonBaseMenuItem",
 
-    'showAllNonBaseMenuItem',
+        "showAllNonBaseMenuItem",
 
-    'closeWindow',
+        "closeWindow",
 
-    'scanQRCode',
+        "scanQRCode",
 
-    'openProductSpecificView',
+        "openProductSpecificView",
 
-    'addCard',
+        "addCard",
 
-    'chooseCard',
+        "chooseCard",
 
-    'openCard'
-  ])
-)
+        "openCard",
+    ]),
+);

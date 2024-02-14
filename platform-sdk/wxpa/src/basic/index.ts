@@ -1,1 +1,1 @@
-export * from './CheckJsApi'
+export * from "./CheckJsApi";
