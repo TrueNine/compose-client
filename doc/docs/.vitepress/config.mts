@@ -32,10 +32,11 @@ export default defineConfig({
             },
             { text: "职位管理", items: [{ text: "添加职位", link: "/pages/a/job/add/add-job" }] },
             {
-                text: "示例（除开发人员外无需查看）",
+                text: "开发文档（除开发人员外无需查看）",
                 items: [
                     { text: "Markdown 示例", link: "/dev/markdown-examples" },
                     { text: "pgsql 迁移大版本", link: "/dev/pgsql-migration" },
+                    { text: "playwright docker 安装", link: "/dev/playwright-docker-install" },
                     { text: "运行时 API 示例", link: "/dev/api-examples" }
                 ]
             }
