@@ -1,6 +1,6 @@
 {
     "name": "@compose/prettier-config",
-    "version": "0.0.30",
+    "version": "0.0.31",
     "scripts": {
         "build-c": "vite build",
         "type-check": "vue-tsc --noEmit",

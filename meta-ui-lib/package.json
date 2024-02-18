@@ -7,7 +7,7 @@
         "dayjs": "^1.11.10",
         "element-plus": "^2.5.5",
         "naive-ui": "^2.37.3",
-        "quasar": "^2.14.3"
+        "quasar": "^2.14.4"
     },
     "peerDependencies": {
         "@date-io/dayjs": "^3.0.0",
@@ -15,6 +15,6 @@
         "dayjs": "^1.11.10",
         "element-plus": "^2.5.5",
         "naive-ui": "^2.37.3",
-        "quasar": "^2.14.3"
+        "quasar": "^2.14.4"
     }
 }
