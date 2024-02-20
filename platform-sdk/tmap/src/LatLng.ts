@@ -1,58 +1,58 @@
-import type { WGS84 } from "@compose/api-types";
+import type {WGS84} from '@compose/api-types'
 
 export interface LatLngDataTyping {
-    /**
-     * ## 维度
-     */
-    readonly lat: number;
-    /**
-     * ## 经度
-     */
-    readonly lng: number;
-    /**
-     * ## 高度??
-     */
-    readonly height?: number;
+  /**
+   * ## 维度
+   */
+  readonly lat: number
+  /**
+   * ## 经度
+   */
+  readonly lng: number
+  /**
+   * ## 高度??
+   */
+  readonly height?: number
 }
 
 /**
  * ## 地理位置坐标
  */
 export declare class LatLng implements LatLngDataTyping {
-    lat: number;
-    lng: number;
+  lat: number
+  lng: number
 
-    /**
-     * @param lat 维度
-     * @param lng 精度
-     * @param height 高度（选填）
-     */
-    constructor(lat: number, lng: number, height?: number);
+  /**
+   * @param lat 维度
+   * @param lng 精度
+   * @param height 高度（选填）
+   */
+  constructor(lat: number, lng: number, height?: number)
 
-    getLat(): number;
+  getLat(): number
 
-    getLng(): number;
+  getLng(): number
 }
 
 /**
  * # x 和 y
  */
-export type PointDataTyping = WGS84;
+export type PointDataTyping = WGS84
 
 /**
  * ## x y 标记
  */
 export declare class Point implements PointDataTyping {
-    x: number;
-    y: number;
+  x: number
+  y: number
 
-    getX(): number;
+  getX(): number
 
-    getY(): number;
+  getY(): number
 
-    equals(other: Point): boolean;
+  equals(other: Point): boolean
 
-    clone(): Point;
+  clone(): Point
 
-    toString(): string;
+  toString(): string
 }

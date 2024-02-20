@@ -1,7 +1,7 @@
-import type { asyncable, nil, Pq, Pr, task } from "@compose/api-types";
+import type {asyncable, nil, Pq, Pr, task} from '@compose/api-types'
 
-import { Pw } from "../consts/Pageable";
-import { isEmpty } from "../tools";
+import {Pw} from '../consts/Pageable'
+import {isEmpty} from '../tools'
 
 /**
  * # 遍历所有分页结果
@@ -11,22 +11,22 @@ import { isEmpty } from "../tools";
  * @returns 所有分页 API 返回的数据的数组。
  */
 export async function loopPageAll<T>(loopFn: (loopPq: Pq) => asyncable<nil<Pr<T>>>, initPageParam: Pq = Pw.DEFAULT_MAX): task<T[]> {
-    const {
-        pageSize: initPageSize = 0,
-        dataList: initDataList = [],
-        total: initTotal = 0,
-    } = (await loopFn(initPageParam)) ?? {
-        pageSize: 0,
-        dataList: [],
-        total: 0,
-    };
-    if (isEmpty(initDataList) || initPageSize <= 1 || !initDataList || initTotal === 0 || initTotal <= (initPageParam?.pageSize ?? 0)) return initDataList;
-    const resultDataList: T[] = [...initDataList];
-    let nextPq: nil<Pq> = { ...initPageParam, offset: (initPageParam?.offset ?? 0) + 1 };
-    while (nextPq !== null) {
-        const { dataList = [] } = (await loopFn(nextPq)) ?? { dataList: [] };
-        resultDataList.push(...dataList);
-        nextPq = ((nextPq?.offset ?? 0) + 1) * (nextPq?.pageSize ?? 0) < initTotal ? { ...nextPq, offset: (nextPq?.offset ?? 0) + 1 } : null;
-    }
-    return resultDataList;
+  const {
+    pageSize: initPageSize = 0,
+    dataList: initDataList = [],
+    total: initTotal = 0
+  } = (await loopFn(initPageParam)) ?? {
+    pageSize: 0,
+    dataList: [],
+    total: 0
+  }
+  if (isEmpty(initDataList) || initPageSize <= 1 || !initDataList || initTotal === 0 || initTotal <= (initPageParam?.pageSize ?? 0)) return initDataList
+  const resultDataList: T[] = [...initDataList]
+  let nextPq: nil<Pq> = {...initPageParam, offset: (initPageParam?.offset ?? 0) + 1}
+  while (nextPq !== null) {
+    const {dataList = []} = (await loopFn(nextPq)) ?? {dataList: []}
+    resultDataList.push(...dataList)
+    nextPq = ((nextPq?.offset ?? 0) + 1) * (nextPq?.pageSize ?? 0) < initTotal ? {...nextPq, offset: (nextPq?.offset ?? 0) + 1} : null
+  }
+  return resultDataList
 }

@@ -1,1 +1,1 @@
-export * from "./VueRouter";
+export * from './VueRouter'

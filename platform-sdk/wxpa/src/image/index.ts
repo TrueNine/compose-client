@@ -1,2 +1,2 @@
-export * from "./ChooseImage";
-export * from "./PreviewImage";
+export * from './ChooseImage'
+export * from './PreviewImage'

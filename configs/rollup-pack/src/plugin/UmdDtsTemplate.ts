@@ -1,10 +1,10 @@
-import type { CustomRollupConfig } from "@/CustomRollupConfig";
+import type {CustomRollupConfig} from '@/CustomRollupConfig'
 
 export function umdGlobalDtsTemplateFill(config: CustomRollupConfig) {
-    const lvName = `_${config.umd?.globalVarName}`;
-    const vName = `${config.umd?.globalVarName}`;
-    const fName = `${config.umd?.fileName}`;
-    return `
+  const lvName = `_${config.umd?.globalVarName}`
+  const vName = `${config.umd?.globalVarName}`
+  const fName = `${config.umd?.fileName}`
+  return `
 // eslint-disable-next-line @typescript-eslint/triple-slash-reference
 /// <reference path="./${fName}.d.ts" />
 import * as ${lvName} from './${fName}'
@@ -23,7 +23,7 @@ export * from './${fName}'
 // ts-ignore
 export = ${vName}
 `
-        .trim()
-        .trimStart()
-        .trimEnd();
+    .trim()
+    .trimStart()
+    .trimEnd()
 }

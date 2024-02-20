@@ -4,6 +4,6 @@
 
 ```json
 {
-    "@typescript-eslint/eslint-plugin": "^6.2.0"
+  "@typescript-eslint/eslint-plugin": "^6.2.0"
 }
 ```

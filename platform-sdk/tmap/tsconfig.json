@@ -1,13 +1,13 @@
 {
-    "extends": "@compose/tsconfig/tsconfig.json",
-    "compilerOptions": {
-        "baseUrl": ".",
-        "paths": {
-            "@/*": ["./src/*"]
-        },
-        "declaration": true,
-        "declarationDir": "dist",
-        "declarationMap": true
+  "extends": "@compose/tsconfig/tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
     },
-    "exclude": ["dist", "node_modules"]
+    "declaration": true,
+    "declarationDir": "dist",
+    "declarationMap": true
+  },
+  "exclude": ["dist", "node_modules"]
 }

@@ -1,2 +1,2 @@
-export * from "./RelationTyping";
-export * from "./RelationItemTyping";
+export * from './RelationTyping'
+export * from './RelationItemTyping'

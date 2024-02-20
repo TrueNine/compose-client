@@ -1,3 +1,3 @@
-export * from "./CertContentTyping";
-export * from "./CertPointTyping";
-export * from "./CertTyping";
+export * from './CertContentTyping'
+export * from './CertPointTyping'
+export * from './CertTyping'

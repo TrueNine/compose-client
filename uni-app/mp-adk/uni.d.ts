@@ -1,1 +1,1 @@
-export * from "@dcloudio/types";
+export * from '@dcloudio/types'

@@ -1,1 +1,1 @@
-export * from "./Wxpa";
+export * from './Wxpa'

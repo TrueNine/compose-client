@@ -1,1 +1,1 @@
-export * from "./CnDistrict";
+export * from './CnDistrict'

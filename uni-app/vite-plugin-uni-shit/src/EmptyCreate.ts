@@ -1,14 +1,14 @@
-import fs from "node:fs";
-import path from "node:path";
+import fs from 'node:fs'
+import path from 'node:path'
 
 /**
  * 创建一个空文件
  */
 export function empty() {
-    const rootDir = process.cwd();
-    fs.writeFileSync(
-        path.resolve(rootDir, "src/pages.json"),
-        `{
+  const rootDir = process.cwd()
+  fs.writeFileSync(
+    path.resolve(rootDir, 'src/pages.json'),
+    `{
 	"pages": [
 		{
 			"path": "pages/index/index",
@@ -24,11 +24,11 @@ export function empty() {
 		"backgroundColor": "#F8F8F8"
 	}
 }
-`,
-    );
-    fs.writeFileSync(
-        path.resolve(rootDir, "src/manifest.json"),
-        `{
+`
+  )
+  fs.writeFileSync(
+    path.resolve(rootDir, 'src/manifest.json'),
+    `{
   "name": "gen",
   "appid": "gen",
   "description": "gen",
@@ -56,7 +56,7 @@ export function empty() {
   },
   "vueVersion": "3"
 }
-`,
-    );
-    fs.writeFileSync(path.resolve(rootDir, "src/uni.scss"), "");
+`
+  )
+  fs.writeFileSync(path.resolve(rootDir, 'src/uni.scss'), '')
 }

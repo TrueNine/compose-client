@@ -1,20 +1,20 @@
-import { createApp } from "vue";
+import {createApp} from 'vue'
 
-import App from "./App.vue";
-import Router from "./router";
+import App from './App.vue'
+import Router from './router'
 
-import { createVuetifyMount, quasarInstall } from "@/common";
-import { naiveStyleAdaptor } from "@/index";
+import {createVuetifyMount, quasarInstall} from '@/common'
+import {naiveStyleAdaptor} from '@/index'
 
-import "uno.css";
+import 'uno.css'
 
-export const a = createVuetifyMount((r) => Object.assign({}, r));
+export const a = createVuetifyMount(r => Object.assign({}, r))
 async function setupApp() {
-    naiveStyleAdaptor();
-    const createdApp = createApp(App);
-    quasarInstall(createdApp);
-    createdApp.use(a);
-    createdApp.use(Router);
-    createdApp.mount("#ROOT");
+  naiveStyleAdaptor()
+  const createdApp = createApp(App)
+  quasarInstall(createdApp)
+  createdApp.use(a)
+  createdApp.use(Router)
+  createdApp.mount('#ROOT')
 }
-setupApp().then((r) => r);
+setupApp().then(r => r)

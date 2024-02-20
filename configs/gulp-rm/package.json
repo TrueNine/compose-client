@@ -1,36 +1,36 @@
 {
-    "name": "@compose/gulp-rm",
-    "version": "0.0.3",
-    "scripts": {
-        "prepare": "pnpm build",
-        "build": "vite build",
-        "pub": "run-s build pub-c",
-        "pub-c": "pnpm publish --no-git-checks"
+  "name": "@compose/gulp-rm",
+  "version": "0.0.3",
+  "scripts": {
+    "prepare": "pnpm build",
+    "build": "vite build",
+    "pub": "run-s build pub-c",
+    "pub-c": "pnpm publish --no-git-checks"
+  },
+  "type": "module",
+  "module": "dist/index.js",
+  "main": "dist/index.cjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
     },
-    "type": "module",
-    "module": "dist/index.js",
-    "main": "dist/index.cjs",
-    "types": "dist/index.d.ts",
-    "exports": {
-        ".": {
-            "types": "./dist/index.d.ts",
-            "import": "./dist/index.js",
-            "require": "./dist/index.cjs"
-        },
-        "./*": "./*"
-    },
-    "dependencies": {
-        "@types/through2": "^2.0.41",
-        "gulp-rimraf": "^1.0.0",
-        "rimraf": "^5.0.5",
-        "through2": "^4.0.2",
-        "vinyl": "^3.0.0"
-    },
-    "peerDependencies": {
-        "@types/through2": "^2.0.41",
-        "gulp-rimraf": "^1.0.0",
-        "rimraf": "^5.0.5",
-        "through2": "^4.0.2",
-        "vinyl": "^3.0.0"
-    }
+    "./*": "./*"
+  },
+  "dependencies": {
+    "@types/through2": "^2.0.41",
+    "gulp-rimraf": "^1.0.0",
+    "rimraf": "^5.0.5",
+    "through2": "^4.0.2",
+    "vinyl": "^3.0.0"
+  },
+  "peerDependencies": {
+    "@types/through2": "^2.0.41",
+    "gulp-rimraf": "^1.0.0",
+    "rimraf": "^5.0.5",
+    "through2": "^4.0.2",
+    "vinyl": "^3.0.0"
+  }
 }

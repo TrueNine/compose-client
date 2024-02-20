@@ -1,5 +1,5 @@
-import type { BaseSuccessOption, JsApiListMap } from "../common";
+import type {BaseSuccessOption, JsApiListMap} from '../common'
 
 export interface CheckJsApiOption extends BaseSuccessOption {
-    jsApiList: (keyof JsApiListMap)[];
+  jsApiList: (keyof JsApiListMap)[]
 }

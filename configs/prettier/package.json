@@ -1,33 +1,33 @@
 {
-    "name": "@compose/prettier-config",
-    "version": "0.0.31",
-    "scripts": {
-        "build-c": "vite build",
-        "type-check": "vue-tsc --noEmit",
-        "build": "run-s type-check build-c",
-        "pub": "run-s build pub-c",
-        "pub-c": "pnpm publish --no-git-checks"
+  "name": "@compose/prettier-config",
+  "version": "0.0.32",
+  "scripts": {
+    "build-c": "vite build",
+    "type-check": "vue-tsc --noEmit",
+    "build": "run-s type-check build-c",
+    "pub": "run-s build pub-c",
+    "pub-c": "pnpm publish --no-git-checks"
+  },
+  "type": "module",
+  "module": "dist/index.js",
+  "main": "dist/index.cjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
     },
-    "type": "module",
-    "module": "dist/index.js",
-    "main": "dist/index.cjs",
-    "types": "dist/index.d.ts",
-    "exports": {
-        ".": {
-            "types": "./dist/index.d.ts",
-            "import": "./dist/index.js",
-            "require": "./dist/index.cjs"
-        },
-        "./*": "./*"
-    },
-    "dependencies": {
-        "@vue/eslint-config-prettier": "^9.0.0",
-        "eslint-plugin-prettier": "^5.1.3",
-        "prettier": "^3.2.5"
-    },
-    "peerDependencies": {
-        "@vue/eslint-config-prettier": "^9.0.0",
-        "eslint-plugin-prettier": "^5.1.3",
-        "prettier": "^3.2.5"
-    }
+    "./*": "./*"
+  },
+  "dependencies": {
+    "@vue/eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.1.3",
+    "prettier": "^3.2.5"
+  },
+  "peerDependencies": {
+    "@vue/eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.1.3",
+    "prettier": "^3.2.5"
+  }
 }

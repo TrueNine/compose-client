@@ -1,6 +1,6 @@
-import type { nullpt, dynamic, bool, Maybe, int } from "@compose/api-types";
+import type {nullpt, dynamic, bool, Maybe, int} from '@compose/api-types'
 
-import { STR_EMPTY } from "../consts/Strings";
+import {STR_EMPTY} from '../consts/Strings'
 
 /**
  * ## 判断一个字符串是否为空，返回本身或空字符串，排除 null | undefined
@@ -8,7 +8,7 @@ import { STR_EMPTY } from "../consts/Strings";
  * @returns 本身 或者 ""
  */
 export function withEmpty(str?: string): string {
-    return isNonEmpty(str) ? str! : STR_EMPTY;
+  return isNonEmpty(str) ? str! : STR_EMPTY
 }
 
 /**
@@ -16,11 +16,11 @@ export function withEmpty(str?: string): string {
  * @param obj 对象
  */
 export function isEmpty(obj: nullpt<unknown>): bool {
-    if (obj === undefined) return true;
-    if (obj === null) return true;
-    if (typeof obj === "string" && !isNonEmptyString(obj)) return true;
-    if (Array.isArray(obj) && obj.length === 0) return true;
-    return typeof obj === "object" && Object.keys(obj).length === 0;
+  if (obj === undefined) return true
+  if (obj === null) return true
+  if (typeof obj === 'string' && !isNonEmptyString(obj)) return true
+  if (Array.isArray(obj) && obj.length === 0) return true
+  return typeof obj === 'object' && Object.keys(obj).length === 0
 }
 
 /**
@@ -28,7 +28,7 @@ export function isEmpty(obj: nullpt<unknown>): bool {
  * @param obj 对象
  */
 export function isNonEmpty<T = unknown>(obj: T) {
-    return !isEmpty(obj);
+  return !isEmpty(obj)
 }
 
 /**
@@ -38,7 +38,7 @@ export function isNonEmpty<T = unknown>(obj: T) {
  * @returns NonNullable<T>
  */
 export function nullCoalesce<T>(aib: T, replaced: T = aib): NonNullable<T> {
-    return (isNonEmpty(aib) ? aib : replaced) as NonNullable<T>;
+  return (isNonEmpty(aib) ? aib : replaced) as NonNullable<T>
 }
 
 /**
@@ -46,7 +46,7 @@ export function nullCoalesce<T>(aib: T, replaced: T = aib): NonNullable<T> {
  * @param obj 对象
  */
 export function isNonEmptyString(obj: nullpt<string>): bool {
-    return typeof obj === "string" && obj.trim().length > 0;
+  return typeof obj === 'string' && obj.trim().length > 0
 }
 
 /**
@@ -55,22 +55,22 @@ export function isNonEmptyString(obj: nullpt<string>): bool {
  * @param callback 转换回调
  */
 export function mapRecord<T, U>(record: Record<string, T>, callback: (val: T) => U): Record<string, U> {
-    return Object.entries(record).reduce(
-        (result, [key, value]) => {
-            result[key] = callback(value);
-            return result;
-        },
-        {} as Record<string, U>,
-    );
+  return Object.entries(record).reduce(
+    (result, [key, value]) => {
+      result[key] = callback(value)
+      return result
+    },
+    {} as Record<string, U>
+  )
 }
 
 export function dlv(obj: dynamic, key: Maybe<string>, def: dynamic, p: int, undef: dynamic): dynamic {
-    if (typeof key === "string") key = key.split(".");
-    for (p = 0; p < key.length; p++) {
-        const path = key[p];
-        obj = obj ? obj[path] : undef;
-    }
-    return obj === undef ? def : obj;
+  if (typeof key === 'string') key = key.split('.')
+  for (p = 0; p < key.length; p++) {
+    const path = key[p]
+    obj = obj ? obj[path] : undef
+  }
+  return obj === undef ? def : obj
 }
 
 /**
@@ -78,7 +78,7 @@ export function dlv(obj: dynamic, key: Maybe<string>, def: dynamic, p: int, unde
  * @param obj 操作对象
  */
 export function des<T>(obj: T): T {
-    return { ...obj };
+  return {...obj}
 }
 
 /**
@@ -86,5 +86,5 @@ export function des<T>(obj: T): T {
  * @param arr 操作数组
  */
 export function aDes<T>(arr: T[] | readonly T[]): T[] {
-    return arr.map((e) => ({ ...e }));
+  return arr.map(e => ({...e}))
 }

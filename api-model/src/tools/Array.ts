@@ -1,11 +1,11 @@
-import type { Maybe, SafeAny } from "@compose/api-types";
+import type {Maybe, SafeAny} from '@compose/api-types'
 
 /**
  * # 对数组进行去重
  * @param arr 数组
  */
 export function arrayDistinct<T>(arr: T[]): T[] {
-    return Array.from(new Set(arr));
+  return Array.from(new Set(arr))
 }
 
 /**
@@ -16,17 +16,17 @@ export function arrayDistinct<T>(arr: T[]): T[] {
  * @param currentCombination 当前穷举组合
  */
 export function cartesianProduct<T = unknown>(spec: Record<string, T[]>, currentIndex = 0, currentCombination: Record<string, T> = {}): Record<string, T>[] {
-    if (currentIndex === Object.keys(spec).length) return [currentCombination];
+  if (currentIndex === Object.keys(spec).length) return [currentCombination]
 
-    const currentKey = Object.keys(spec)[currentIndex];
-    const currentValues = spec[currentKey];
-    const result: Record<string, T>[] = [];
-    for (let i = 0; i < currentValues.length; i++) {
-        const nextCombination = { ...currentCombination };
-        nextCombination[currentKey] = currentValues[i];
-        result.push(...cartesianProduct(spec, currentIndex + 1, nextCombination));
-    }
-    return result.filter((e) => Object.keys(e).length !== 0);
+  const currentKey = Object.keys(spec)[currentIndex]
+  const currentValues = spec[currentKey]
+  const result: Record<string, T>[] = []
+  for (let i = 0; i < currentValues.length; i++) {
+    const nextCombination = {...currentCombination}
+    nextCombination[currentKey] = currentValues[i]
+    result.push(...cartesianProduct(spec, currentIndex + 1, nextCombination))
+  }
+  return result.filter(e => Object.keys(e).length !== 0)
 }
 
 /**
@@ -35,11 +35,11 @@ export function cartesianProduct<T = unknown>(spec: Record<string, T[]>, current
  * @param b B数组
  */
 export function arrayDiff<T>(a: T[], b: T[]): T[] {
-    const setA = new Set(a);
-    const setB = new Set(b);
-    const first = setA.size >= setB.size ? setA : setB;
-    const last = setA.size < setB.size ? setA : setB;
-    return Array.from(first).filter((i) => !last.has(i));
+  const setA = new Set(a)
+  const setB = new Set(b)
+  const first = setA.size >= setB.size ? setA : setB
+  const last = setA.size < setB.size ? setA : setB
+  return Array.from(first).filter(i => !last.has(i))
 }
 
 /**
@@ -59,13 +59,13 @@ export function arrayDiff<T>(a: T[], b: T[]): T[] {
  * @returns 组合后的 map k v[]
  */
 export function combineToMap<T, K, V>(arr: T[], keyHandle: (t: T) => K, valueHandle: (t: T) => V): Map<K, V[]> {
-    const result = new Map<K, V[]>();
-    arr.forEach((item) => {
-        const _k = keyHandle(item);
-        if (result.has(_k)) result.get(_k)?.push(valueHandle(item));
-        else result.set(_k, [valueHandle(item)]);
-    });
-    return result;
+  const result = new Map<K, V[]>()
+  arr.forEach(item => {
+    const _k = keyHandle(item)
+    if (result.has(_k)) result.get(_k)?.push(valueHandle(item))
+    else result.set(_k, [valueHandle(item)])
+  })
+  return result
 }
 
 /**
@@ -73,7 +73,7 @@ export function combineToMap<T, K, V>(arr: T[], keyHandle: (t: T) => K, valueHan
  * @param maybe T | Array<T>
  */
 export function maybeArray<T = SafeAny>(maybe: Maybe<T>) {
-    return Array.isArray(maybe) ? maybe : ([maybe] as T[]);
+  return Array.isArray(maybe) ? maybe : ([maybe] as T[])
 }
 
 /**
@@ -81,7 +81,7 @@ export function maybeArray<T = SafeAny>(maybe: Maybe<T>) {
  * @param maybe T | Array<T>
  */
 export function maybeReadonlyArray<T = SafeAny>(maybe: Maybe<T>): readonly T[] {
-    return Array.isArray(maybe) ? maybe : ([maybe] as readonly T[]);
+  return Array.isArray(maybe) ? maybe : ([maybe] as readonly T[])
 }
 
 /**
@@ -90,9 +90,9 @@ export function maybeReadonlyArray<T = SafeAny>(maybe: Maybe<T>): readonly T[] {
  * @param end 结束
  */
 export function* range(start: number, end: number) {
-    for (let i = start; i <= end; i++) {
-        yield i;
-    }
+  for (let i = start; i <= end; i++) {
+    yield i
+  }
 }
 
 /**
@@ -100,18 +100,18 @@ export function* range(start: number, end: number) {
  * @param key 作为 key 的字段
  * @param arr 需合并的对象数组
  */
-export function mergeToMap<T extends object>(key: keyof T, arr: T[]): { [key in keyof T]: T[] } {
-    if (!arr.length) return {} as { [key in keyof T]: T[] };
-    const ks = arr.map((e) => ({
-        key: (e[key]?.toString() ?? "") as keyof T,
-        value: e,
-    }));
-    return ks.reduce(
-        (acc, cur) => {
-            if (acc[cur.key] !== undefined) acc[cur.key].push(cur.value);
-            else acc[cur.key] = [cur.value];
-            return acc;
-        },
-        {} as { [key in keyof T]: T[] },
-    );
+export function mergeToMap<T extends object>(key: keyof T, arr: T[]): {[key in keyof T]: T[]} {
+  if (!arr.length) return {} as {[key in keyof T]: T[]}
+  const ks = arr.map(e => ({
+    key: (e[key]?.toString() ?? '') as keyof T,
+    value: e
+  }))
+  return ks.reduce(
+    (acc, cur) => {
+      if (acc[cur.key] !== undefined) acc[cur.key].push(cur.value)
+      else acc[cur.key] = [cur.value]
+      return acc
+    },
+    {} as {[key in keyof T]: T[]}
+  )
 }

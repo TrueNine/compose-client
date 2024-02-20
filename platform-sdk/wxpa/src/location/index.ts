@@ -1,1 +1,1 @@
-export * from "./GetLocation";
+export * from './GetLocation'

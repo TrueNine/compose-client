@@ -1,22 +1,25 @@
-import { Vue } from "@compose/api-model";
-import type { SafeAny } from "@compose/api-types";
+import {Vue} from '@compose/api-model'
+import type {bool, SafeAny} from '@compose/api-types'
 
-import _c from "./YVSystemBar.vue";
+import _c from './YVSystemBar.vue'
 
-export default Vue.componentInstallToPlugin(_c);
+export default Vue.componentInstallToPlugin(_c)
+export interface YSystemBarProps {
+  showAppBar?: bool
+}
 
 export interface YVSystemBarSlots {
-    default: () => SafeAny;
+  default: () => SafeAny
 
-    "app-title": () => SafeAny;
+  'app-title': () => SafeAny
 
-    "app-settings": () => SafeAny;
+  'app-settings': () => SafeAny
 
-    "left-btn": () => SafeAny;
+  'left-btn': () => SafeAny
 
-    "right-btn": () => SafeAny;
+  'right-btn': () => SafeAny
 
-    "left-drawer": (props: { collapsed: boolean }) => SafeAny;
+  'left-drawer': (props: {collapsed: boolean}) => SafeAny
 
-    "settings-drawer": () => SafeAny;
+  'settings-drawer': () => SafeAny
 }

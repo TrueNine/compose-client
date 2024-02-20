@@ -1,44 +1,44 @@
 {
-    "name": "@compose/atomic-css-uno",
-    "version": "0.1.159",
-    "description": "uno css code snippets",
-    "author": "TrueNine",
-    "license": "private",
-    "scripts": {
-        "build": "run-s type-check build-c",
-        "build-c": "vite build",
-        "type-check": "vue-tsc --noEmit",
-        "pub": "run-s  build pub-c",
-        "pub-c": "pnpm publish --no-git-checks"
+  "name": "@compose/atomic-css-uno",
+  "version": "0.1.159",
+  "description": "uno css code snippets",
+  "author": "TrueNine",
+  "license": "private",
+  "scripts": {
+    "build": "run-s type-check build-c",
+    "build-c": "vite build",
+    "type-check": "vue-tsc --noEmit",
+    "pub": "run-s  build pub-c",
+    "pub-c": "pnpm publish --no-git-checks"
+  },
+  "type": "module",
+  "module": "dist/index.js",
+  "main": "dist/index.cjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
     },
-    "type": "module",
-    "module": "dist/index.js",
-    "main": "dist/index.cjs",
-    "types": "dist/index.d.ts",
-    "exports": {
-        ".": {
-            "types": "./dist/index.d.ts",
-            "import": "./dist/index.js",
-            "require": "./dist/index.cjs"
-        },
-        "./*": "./*"
-    },
-    "dependencies": {
-        "@unocss/cli": "^0.58.5",
-        "@unocss/core": "^0.58.5",
-        "@unocss/postcss": "^0.58.5",
-        "@unocss/transformer-compile-class": "^0.58.5",
-        "@unocss/transformer-directives": "^0.58.5",
-        "unocss": "^0.58.5",
-        "unocss-preset-weapp": "^0.58.5"
-    },
-    "peerDependencies": {
-        "@unocss/cli": "^0.58.5",
-        "@unocss/core": "^0.58.5",
-        "@unocss/postcss": "^0.58.5",
-        "@unocss/transformer-compile-class": "^0.58.5",
-        "@unocss/transformer-directives": "^0.58.5",
-        "unocss": "^0.58.5",
-        "unocss-preset-weapp": "^0.58.5"
-    }
+    "./*": "./*"
+  },
+  "dependencies": {
+    "@unocss/cli": "^0.58.5",
+    "@unocss/core": "^0.58.5",
+    "@unocss/postcss": "^0.58.5",
+    "@unocss/transformer-compile-class": "^0.58.5",
+    "@unocss/transformer-directives": "^0.58.5",
+    "unocss": "^0.58.5",
+    "unocss-preset-weapp": "^0.58.5"
+  },
+  "peerDependencies": {
+    "@unocss/cli": "^0.58.5",
+    "@unocss/core": "^0.58.5",
+    "@unocss/postcss": "^0.58.5",
+    "@unocss/transformer-compile-class": "^0.58.5",
+    "@unocss/transformer-directives": "^0.58.5",
+    "unocss": "^0.58.5",
+    "unocss-preset-weapp": "^0.58.5"
+  }
 }

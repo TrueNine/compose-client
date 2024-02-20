@@ -1,42 +1,42 @@
 {
-    "name": "@compose/req",
-    "version": "0.0.44",
-    "description": "requester",
-    "author": "TrueNine",
-    "license": "private",
-    "scripts": {
-        "build-c": "vite build",
-        "type-check": "vue-tsc --noEmit",
-        "build": "run-s type-check build-c",
-        "pub": "run-s build pub-c",
-        "pub-c": "pnpm publish --no-git-checks"
+  "name": "@compose/req",
+  "version": "0.0.44",
+  "description": "requester",
+  "author": "TrueNine",
+  "license": "private",
+  "scripts": {
+    "build-c": "vite build",
+    "type-check": "vue-tsc --noEmit",
+    "build": "run-s type-check build-c",
+    "pub": "run-s build pub-c",
+    "pub-c": "pnpm publish --no-git-checks"
+  },
+  "type": "module",
+  "module": "dist/index.js",
+  "main": "dist/index.cjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
     },
-    "type": "module",
-    "module": "dist/index.js",
-    "main": "dist/index.cjs",
-    "types": "dist/index.d.ts",
-    "exports": {
-        ".": {
-            "types": "./dist/index.d.ts",
-            "import": "./dist/index.js",
-            "require": "./dist/index.cjs"
-        },
-        "./*": "./*"
-    },
-    "dependencies": {
-        "sockjs-client": "^1.6.1",
-        "stomp-client": "^0.9.0",
-        "stompjs": "^2.3.3",
-        "@types/qs": "^6.9.11",
-        "ws": "^8.16.0",
-        "@stomp/stompjs": "^7.0.0"
-    },
-    "peerDependencies": {
-        "sockjs-client": "^1.6.1",
-        "stomp-client": "^0.9.0",
-        "stompjs": "^2.3.3",
-        "@types/qs": "^6.9.11",
-        "ws": "^8.16.0",
-        "@stomp/stompjs": "^7.0.0"
-    }
+    "./*": "./*"
+  },
+  "dependencies": {
+    "sockjs-client": "^1.6.1",
+    "stomp-client": "^0.9.0",
+    "stompjs": "^2.3.3",
+    "@types/qs": "^6.9.11",
+    "ws": "^8.16.0",
+    "@stomp/stompjs": "^7.0.0"
+  },
+  "peerDependencies": {
+    "sockjs-client": "^1.6.1",
+    "stomp-client": "^0.9.0",
+    "stompjs": "^2.3.3",
+    "@types/qs": "^6.9.11",
+    "ws": "^8.16.0",
+    "@stomp/stompjs": "^7.0.0"
+  }
 }

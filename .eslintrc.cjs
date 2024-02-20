@@ -1,5 +1,5 @@
-const { defineConfig } = require("eslint-define-config");
+const {defineConfig} = require('eslint-define-config')
 
 module.exports = defineConfig({
-    extends: ["@compose/eslint-config"],
-});
+  extends: ['@compose/eslint-config']
+})
