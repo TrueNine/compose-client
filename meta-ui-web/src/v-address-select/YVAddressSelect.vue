@@ -232,6 +232,7 @@ const copyFullPath = () => copy(_fullPath.value!)
           <VCol cols="6">
             <VSelect
               v-model="selected.province"
+              clearable
               :return-object="true"
               :persistent-hint="true"
               :label="defaultSelected.province.name"
@@ -245,6 +246,7 @@ const copyFullPath = () => copy(_fullPath.value!)
             <VCol v-if="_selectedLevel > 1 && emitsDeepLevel > 2" cols="6" sm="6">
               <VSelect
                 v-model="selected.city"
+                clearable
                 :return-object="true"
                 :persistent-hint="true"
                 :label="defaultSelected.city.name"
@@ -259,6 +261,7 @@ const copyFullPath = () => copy(_fullPath.value!)
             <VCol v-if="_selectedLevel > 2 && emitsDeepLevel > 3" cols="6" sm="6">
               <VSelect
                 v-model="selected.district"
+                clearable
                 :return-object="true"
                 :persistent-hint="true"
                 :label="defaultSelected.district.name"
@@ -273,6 +276,7 @@ const copyFullPath = () => copy(_fullPath.value!)
             <VCol v-if="_selectedLevel > 3 && emitsDeepLevel > 4" cols="6" sm="6">
               <VSelect
                 v-model="selected.town"
+                clearable
                 :return-object="true"
                 :persistent-hint="true"
                 :label="defaultSelected.town.name"
@@ -287,6 +291,7 @@ const copyFullPath = () => copy(_fullPath.value!)
             <VCol v-if="_selectedLevel > 4 && emitsDeepLevel > 5" cols="6" sm="6">
               <VSelect
                 v-model="selected.village"
+                clearable
                 :return-object="true"
                 :persistent-hint="true"
                 :label="defaultSelected.village.name"

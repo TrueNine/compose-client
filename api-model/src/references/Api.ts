@@ -1,7 +1,6 @@
 import type {ICnDistrict, int} from '@compose/api-types'
 
-import {STR_EMPTY} from '../consts/Strings'
-export {}
+import {STR_EMPTY} from '@/consts'
 
 interface AddrLevel {
   province?: string
@@ -29,10 +28,9 @@ export class CnDistrict implements ICnDistrict {
 
   get serialArray(): string[] {
     if (this._formatError) return []
-    const ret = [this.addrLevel.province, this.addrLevel.city, this.addrLevel.district, this.addrLevel.town, this.addrLevel.village].filter(
+    return [this.addrLevel.province, this.addrLevel.city, this.addrLevel.district, this.addrLevel.town, this.addrLevel.village].filter(
       e => e !== CnDistrict.TWO_ZERO && e !== CnDistrict.THREE_ZERO && e !== STR_EMPTY
     ) as string[]
-    return ret
   }
 
   get pad() {
