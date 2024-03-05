@@ -11,5 +11,4 @@ packages:
   - 'doc'
   - 'atomic-css/*'
   - 'meta-ui-web'
-  - 'meta-ui-lib'
   - 'meta-ui-web-test'

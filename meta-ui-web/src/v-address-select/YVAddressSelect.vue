@@ -80,6 +80,7 @@ const keyNames: (keyof YVAddressSelectSelectValue)[] = ['province', 'city', 'dis
 const fnNames = ['findProvinces', 'findCities', 'findDistricts', 'findTowns', 'findVillages', 'findByCode']
 
 async function cacheAndUpdate(code: string) {
+  loading.value = true
   if (code.length < 2 || code.length > 12) return
   if (!checkList.includes(code.length)) return
   const padCode = pad(code)
@@ -90,11 +91,12 @@ async function cacheAndUpdate(code: string) {
   const currentFnKey = (fnNames[max] ?? fnNames[5]) as 'findProvinces' | 'findCities' | 'findDistricts' | 'findTowns' | 'findVillages' | 'findByCode'
   const currentKey = keyNames[max]
   const prevKey = keyNames[curIdx]
-  const cache = getCache(padCode)
 
+  const cache = getCache(padCode)
   const pt = addressCacheData[prevKey].find(e => pad(e!.code) === padCode)
-  let fullPath = ''
+
   // ready next addresses
+  let fullPath = ''
   if (level < emitsDeepLevel.value) {
     addressCacheData[currentKey] =
       cache ??
@@ -103,21 +105,27 @@ async function cacheAndUpdate(code: string) {
         .filter(e => e != null)
         .map(e => e!) ??
       []
+
     saveCache(
       padCode,
       addressCacheData[currentKey].map(e => e!)
     )
   }
+
+  // append fullPath
   for (let i = 0; i < max; i++) {
     const key = keyNames[i]
     const item = selected.value[key]
     if (item && item.name) fullPath += item.name
   }
+
   selected.value[prevKey] = addressCacheData[prevKey].find(e => pad(e.code) === padCode)
   selected.value[currentKey] = defaultSelected[currentKey]
+
   _fullPath.value = fullPath
   _selectedLevel.value = level
   _adCode.value = clipCode(code, level - 1)
+  loading.value = false
 }
 
 watch(
@@ -137,7 +145,7 @@ watch(
 watch(
   () => selected.value.district,
   async v => {
-    if (v && v.code !== '') await cacheAndUpdate(v!.code)
+    if (v && v.code !== '' && !loading.value) await cacheAndUpdate(v!.code)
   }
 )
 
@@ -162,77 +170,44 @@ onMounted(async () => {
   })
 })
 
-const copy = (str: string) => {
-  const clip = window.navigator.clipboard
-  clip.writeText(str)
-}
-
 const loading = ref<boolean>(false)
-
-async function load(code: string) {
-  loading.value = true
+const codingLoad = ref(false)
+async function loadCode(code: string) {
+  codingLoad.value = true
   let appendCode = ''
-  for (const e of new CnDistrict(code).serialArray) {
+  const s = new CnDistrict(code).serialArray
+  for (const e of s) {
     appendCode += e
     await cacheAndUpdate(appendCode)
   }
-  loading.value = false
+  codingLoad.value = false
 }
 
-watch(
+watchThrottled(
   () => props.adCode,
   v => {
-    if (v && !loading.value) {
-      load(v)
+    if (v && !loading.value && !codingLoad.value) {
+      loadCode(v)
     } else {
-      _fullPath.value = ''
-      if (_selectedLevel.value === 2) {
+      if (!loading.value && !codingLoad.value) {
         _selectedLevel.value = 0
-        selected.value.province = undefined
+        _fullPath.value = ''
+        selected.value.province = defaultSelected.province
       }
     }
   }
 )
-
-const copyAdCode = () => copy(_adCode.value!)
-const copyFullPath = () => copy(_fullPath.value!)
 </script>
 
 <template>
   <VCard>
-    <VCardText v-if="props.showAdCode || props.showFullPath">
-      <div min-h-10 p-1>
-        <slot v-if="showAdCode && _adCode" name="ad-code" :ad-code="_adCode">
-          <div v-if="_adCode" flex items-center>
-            <div>{{ _adCode }}</div>
-            <VTooltip text="复制地址代码">
-              <template #activator="{props: e}">
-                <div v-bind="e" pl-2 text-6 i-mdi-file @click="copyAdCode" />
-              </template>
-            </VTooltip>
-          </div>
-        </slot>
-
-        <slot name="full-path" :full-path="_fullPath">
-          <div v-if="_fullPath && props.showFullPath" flex items-center>
-            <div>{{ props.fullPath }}</div>
-            <VTooltip text="复制地址">
-              <template #activator="{props: e}">
-                <div v-bind="e" pl-2 text-6 i-mdi-file @click="copyFullPath" />
-              </template>
-            </VTooltip>
-          </div>
-        </slot>
-      </div>
-    </VCardText>
-
-    <VCardText>
+    <div p1>
       <slot name="default" :selected="selected">
         <VRow :dense="true">
           <VCol cols="6">
             <VSelect
               v-model="selected.province"
-              clearable
+              :clearable="true"
               :return-object="true"
               :persistent-hint="true"
               :label="defaultSelected.province.name"
@@ -303,6 +278,6 @@ const copyFullPath = () => copy(_fullPath.value!)
           </Transition>
         </VRow>
       </slot>
-    </VCardText>
+    </div>
   </VCard>
 </template>

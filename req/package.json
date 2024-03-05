@@ -24,19 +24,19 @@
     "./*": "./*"
   },
   "dependencies": {
+    "@stomp/stompjs": "^7.0.0",
+    "@types/qs": "^6.9.12",
     "sockjs-client": "^1.6.1",
     "stomp-client": "^0.9.0",
     "stompjs": "^2.3.3",
-    "@types/qs": "^6.9.11",
-    "ws": "^8.16.0",
-    "@stomp/stompjs": "^7.0.0"
+    "ws": "^8.16.0"
   },
   "peerDependencies": {
+    "@stomp/stompjs": "^7.0.0",
+    "@types/qs": "^6.9.11",
     "sockjs-client": "^1.6.1",
     "stomp-client": "^0.9.0",
     "stompjs": "^2.3.3",
-    "@types/qs": "^6.9.11",
-    "ws": "^8.16.0",
-    "@stomp/stompjs": "^7.0.0"
+    "ws": "^8.16.0"
   }
 }

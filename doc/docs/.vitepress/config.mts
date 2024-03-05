@@ -37,7 +37,8 @@ export default defineConfig({
                     { text: "Markdown 示例", link: "/dev/markdown-examples" },
                     { text: "pgsql 迁移大版本", link: "/dev/pgsql-migration" },
                     { text: "playwright docker 安装", link: "/dev/playwright-docker-install" },
-                    { text: "运行时 API 示例", link: "/dev/api-examples" }
+                  { text: "运行时 API 示例", link: "/dev/api-examples" },
+                  { text: "JPA", link: "/dev/jpa" }
                 ]
             }
         ],

@@ -8,6 +8,14 @@ export default mergeConfig(
   viteConfig,
   defineConfig({
     test: {
+      deps: {
+        optimizer: {
+          web: {
+            include: ['vuetify', 'element-plus']
+          }
+        },
+        inline: ['vuetify', 'element-plus']
+      },
       environment: 'jsdom',
       exclude: [...configDefaults.exclude, 'e2e/*'],
       root: fileURLToPath(new URL('./', import.meta.url))
