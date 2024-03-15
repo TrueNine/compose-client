@@ -2,6 +2,7 @@ import {defineConfig} from 'rollup'
 import ts from '@rollup/plugin-typescript'
 import res from '@rollup/plugin-node-resolve'
 import cjs from '@rollup/plugin-commonjs'
+import terser from '@rollup/plugin-terser'
 import {emptyDirSync} from 'fs-extra'
 
 export default defineConfig([
@@ -16,6 +17,7 @@ export default defineConfig([
       },
       res(),
       cjs(),
+      terser(),
       ts({
         tsconfig: './tsconfig.json',
         exclude: ['__tests__/**', 'rollup.config.ts', 'vite.config.ts', 'vitest.config.ts', 'dist']
