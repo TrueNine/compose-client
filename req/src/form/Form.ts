@@ -1,13 +1,12 @@
 import {STR_EMPTY} from '@compose/api-model'
-import type {dynamic} from '@compose/api-types'
 
-export function toFormPathData(formContent: dynamic, parentExpression: string = ''): {name: string; value: string | Blob}[] {
+export function toFormPathData(formContent: object, parentExpression: string = ''): {name: string; value: string | Blob}[] {
   const _resultArr: {name: string; value: string | Blob}[] = []
   Object.entries(formContent).forEach(([k, v]) => {
     if (v != null && v !== STR_EMPTY) {
       if (typeof v === 'string' || typeof v === 'number' || typeof v === 'boolean') {
         _resultArr.push({name: `${parentExpression}.${k}`, value: v.toString()})
-      } else if (Array.isArray(v)) {
+      } else if (Array.isArray(v) || v instanceof Uint8Array || v instanceof Uint16Array || v instanceof Uint32Array) {
         if (v.length > 0) {
           const v1 = v.filter(e1 => e1 != null && e1 != STR_EMPTY)
           const isObjArray = v1.every(e1 => typeof e1 === 'object')

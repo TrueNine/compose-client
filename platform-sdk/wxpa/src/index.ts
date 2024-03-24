@@ -1,4 +1,4 @@
-import type {SafeAny} from '@compose/api-types'
+import type {dynamic, SafeAny} from '@compose/api-types'
 
 import type {ConfigOptions} from './config'
 import type {OnMenuShareTimelineOption, UpdateAppMessageShareDataOption, UpdateTimelineShareDataOption} from './share'
@@ -86,5 +86,7 @@ declare global {
     export function closeWindow(): void
 
     export function hideAllNonBaseMenuItem(): void
+
+    export function error(e: dynamic): void
   }
 }

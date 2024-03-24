@@ -1,6 +1,6 @@
 {
   "name": "@compose/psdk-wxpa",
-  "version": "1.0.13",
+  "version": "1.0.15",
   "description": "微信公众号 js-sdk 定义",
   "author": "TrueNine",
   "license": "private",
