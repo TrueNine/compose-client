@@ -6,6 +6,6 @@ export const AddressApi = {
     return useFetch('http://localhost:8080/v1/address/provinces', {immediate: false}).get().json<Address[]>()
   },
   findDirectChildrenByCode(code: string = '00') {
-    return useFetch(`http://localhost:8080/v1/address/it/${code}`, {immediate: false}).get().json<Address[]>()
+    return useFetch(`http://localhost:8080/v1/address/s/code/${code}`, {immediate: false}).get().json<Address[]>()
   }
 }

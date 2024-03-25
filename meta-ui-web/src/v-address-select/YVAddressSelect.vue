@@ -163,11 +163,28 @@ watch(
   }
 )
 
+/**
+ * ## 监听代码触发器
+ * @param code adCode
+ */
+function watchChangeCode(code: string) {
+  if (code && !loading.value && !codingLoad.value) {
+    loadCode(code)
+  } else {
+    if (!loading.value && !codingLoad.value) {
+      _selectedLevel.value = 0
+      _fullPath.value = ''
+      selected.value.province = defaultSelected.province
+    }
+  }
+}
+
 onMounted(async () => {
   addressCacheData['province'] = ((await props.findProvinces!()) ?? []).map(e => e!)
   addressCacheData.province.sort((a, b) => {
     return a!.code.localeCompare(b!.code)
   })
+  watchChangeCode(props.adCode)
 })
 
 const loading = ref<boolean>(false)
@@ -183,20 +200,7 @@ async function loadCode(code: string) {
   codingLoad.value = false
 }
 
-watchThrottled(
-  () => props.adCode,
-  v => {
-    if (v && !loading.value && !codingLoad.value) {
-      loadCode(v)
-    } else {
-      if (!loading.value && !codingLoad.value) {
-        _selectedLevel.value = 0
-        _fullPath.value = ''
-        selected.value.province = defaultSelected.province
-      }
-    }
-  }
-)
+watchThrottled(() => props.adCode, watchChangeCode)
 </script>
 
 <template>

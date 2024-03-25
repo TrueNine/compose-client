@@ -18,6 +18,10 @@ const findCities = async (code: LateNull<IComponentAddr>) => {
 }
 const code = ref<string>('')
 const aab = ref('')
+code.value = '433127'
+setTimeout(() => {
+  code.value = '4331'
+}, 3000)
 </script>
 <template>
   {{ aab + 1 }}
