@@ -8,7 +8,7 @@ export function toFormPathData(formContent: object, parentExpression: string = '
         _resultArr.push({name: `${parentExpression}.${k}`, value: v.toString()})
       } else if (Array.isArray(v) || v instanceof Uint8Array || v instanceof Uint16Array || v instanceof Uint32Array) {
         if (v.length > 0) {
-          const v1 = v.filter(e1 => e1 != null && e1 != STR_EMPTY)
+          const v1 = v.filter(e1 => e1 === 0 || (e1 != null && e1 != STR_EMPTY))
           const isObjArray = v1.every(e1 => typeof e1 === 'object')
           const isBlobArray = v1.every(e1 => e1 instanceof Blob)
           if (isObjArray && !isBlobArray) {
