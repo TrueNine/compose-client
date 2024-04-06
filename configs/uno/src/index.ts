@@ -1,5 +1,5 @@
 import type {StaticRule, StaticShortcut} from 'unocss'
-import type {ThemeConfig} from '@compose/atomic-css-theme'
+import type {ThemeConfig} from '@compose/config-theme'
 
 export function unocssRules(cfg: ThemeConfig): StaticRule[] {
   return [

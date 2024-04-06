@@ -1,5 +1,5 @@
 {
-  "name": "@compose/rollup-pack-config",
+  "name": "@compose/config-rollup",
   "version": "0.0.42",
   "author": "TrueNine",
   "license": "private",

@@ -6,6 +6,13 @@ import dts from 'vite-plugin-dts'
 export default defineConfig({
   build: {
     sourcemap: true,
+    minify:'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true
+      }
+    },
     lib: {
       name: 'ApiModelNode',
       fileName: '[name]',
