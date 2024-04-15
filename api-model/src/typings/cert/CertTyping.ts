@@ -3,7 +3,7 @@ import type {EnumCommentMap, EnumMap} from '@compose/api-types'
 export enum CertTyping {
   NONE = 0,
   ID_CARD = 1,
-  IC_CARD2 = 2,
+  ID_CARD2 = 2,
   DISABILITY_CARD = 3,
   DISABILITY_CARD2 = 4,
   DISABILITY_CARD3 = 5,
@@ -18,7 +18,7 @@ export enum CertTyping {
 export const CertTypingComment: EnumCommentMap<typeof CertTyping> = {
   [CertTyping.NONE]: '无要求',
   [CertTyping.ID_CARD]: '身份证',
-  [CertTyping.IC_CARD2]: '二代身份证',
+  [CertTyping.ID_CARD2]: '二代身份证',
   [CertTyping.DISABILITY_CARD]: '残疾证',
   [CertTyping.DISABILITY_CARD2]: '残疾证2代',
   [CertTyping.DISABILITY_CARD3]: '残疾证3代',
@@ -32,7 +32,7 @@ export const CertTypingComment: EnumCommentMap<typeof CertTyping> = {
 export const CertTypingMap: EnumMap<typeof CertTyping> = {
   [CertTyping.NONE]: 0,
   [CertTyping.ID_CARD]: 1,
-  [CertTyping.IC_CARD2]: 2,
+  [CertTyping.ID_CARD2]: 2,
   [CertTyping.DISABILITY_CARD]: 3,
   [CertTyping.DISABILITY_CARD2]: 4,
   [CertTyping.DISABILITY_CARD3]: 5,
@@ -47,7 +47,7 @@ export const CertTypingMap: EnumMap<typeof CertTyping> = {
 export const CertTypingReverseMap: EnumMap<typeof CertTyping> = {
   [0]: CertTyping.NONE,
   [1]: CertTyping.ID_CARD,
-  [2]: CertTyping.IC_CARD2,
+  [2]: CertTyping.ID_CARD2,
   [3]: CertTyping.DISABILITY_CARD,
   [4]: CertTyping.DISABILITY_CARD2,
   [5]: CertTyping.DISABILITY_CARD3,
