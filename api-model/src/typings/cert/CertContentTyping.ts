@@ -16,15 +16,15 @@ export enum CertContentTyping {
 }
 
 export const CertContentTypingComment: EnumCommentMap<typeof CertContentTyping> = {
-  [CertContentTyping.NONE]: '无要求',
+  [CertContentTyping.NONE]: '无',
   [CertContentTyping.IMAGE]: '图片',
-  [CertContentTyping.SCANNED_IMAGE]: '扫描件图片',
-  [CertContentTyping.SCREEN_SHOT]: '屏幕截图',
+  [CertContentTyping.SCANNED_IMAGE]: '扫描件',
+  [CertContentTyping.SCREEN_SHOT]: '截图',
   [CertContentTyping.VIDEO]: '视频',
   [CertContentTyping.RECORDING]: '录音',
   [CertContentTyping.COPYFILE_IMAGE]: '复印件',
   [CertContentTyping.REMAKE_IMAGE]: '翻拍件',
-  [CertContentTyping.PROCESSED_SCANNED_IMAGE]: '处理过的扫描件图片',
+  [CertContentTyping.PROCESSED_SCANNED_IMAGE]: '处理的扫描件',
   [CertContentTyping.PROCESSED_IMAGE]: '处理过的图片',
   [CertContentTyping.PROCESSED_VIDEO]: '处理过的视频',
   [CertContentTyping.PROCESSED_AUDIO]: '处理过的音频'

@@ -16,12 +16,12 @@ export enum CertTyping {
 }
 
 export const CertTypingComment: EnumCommentMap<typeof CertTyping> = {
-  [CertTyping.NONE]: '无要求',
+  [CertTyping.NONE]: '无',
   [CertTyping.ID_CARD]: '身份证',
   [CertTyping.ID_CARD2]: '二代身份证',
   [CertTyping.DISABILITY_CARD]: '残疾证',
-  [CertTyping.DISABILITY_CARD2]: '残疾证2代',
-  [CertTyping.DISABILITY_CARD3]: '残疾证3代',
+  [CertTyping.DISABILITY_CARD2]: '二代残疾证',
+  [CertTyping.DISABILITY_CARD3]: '三代残疾证',
   [CertTyping.HOUSEHOLD_CARD]: ' 户口',
   [CertTyping.BANK_CARD]: '银行卡',
   [CertTyping.CONTRACT]: '合同',

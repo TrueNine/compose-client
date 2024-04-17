@@ -11,7 +11,7 @@ export enum CertPointTyping {
 }
 
 export const CertPointTypingComment: EnumCommentMap<typeof CertPointTyping> = {
-  [CertPointTyping.NONE]: '无要求',
+  [CertPointTyping.NONE]: '无',
   [CertPointTyping.HEADS]: '正面',
   [CertPointTyping.TAILS]: '反面',
   [CertPointTyping.DOUBLE]: '双面',
