@@ -6,10 +6,12 @@ import dts from 'vite-plugin-dts'
 export default defineConfig({
   build: {
     sourcemap: true,
-    minify:'terser',
+    minify: 'terser',
     terserOptions: {
       compress: {
+        // eslint-disable-next-line
         drop_console: true,
+        // eslint-disable-next-line
         drop_debugger: true
       }
     },

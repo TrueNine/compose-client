@@ -1,3 +1,3 @@
 module.exports = {
-  ...require('@compose/prettier-config')
+  ...require('@compose/config-prettier')
 }

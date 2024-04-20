@@ -1,2 +1,4 @@
-export type params<T extends (...args: any[]) => any> = Parameters<T>
-export type returnType<T extends (...args: any[]) => any> = ReturnType<T>
+import type {dynamic} from '@/typescripts/Types'
+
+export type params<T extends (...args: dynamic[]) => dynamic> = Parameters<T>
+export type returnType<T extends (...args: dynamic[]) => dynamic> = ReturnType<T>

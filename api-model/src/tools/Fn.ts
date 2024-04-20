@@ -43,3 +43,8 @@ export function optionalCall<F extends CallableFunction, A = SafeAny>(replace: F
   if (fn) return fn(args)
   else return replace(args)
 }
+
+export function TODO(todoText: string = 'Not Implemented todos'): never {
+  throw new Error(todoText)
+}
+export const FIXME = TODO

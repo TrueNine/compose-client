@@ -1,6 +1,6 @@
 {
   "name": "@compose/req",
-  "version": "0.0.49",
+  "version": "0.0.50",
   "description": "requester",
   "author": "TrueNine",
   "license": "private",
@@ -22,21 +22,5 @@
       "require": "./dist/index.cjs"
     },
     "./*": "./*"
-  },
-  "dependencies": {
-    "@stomp/stompjs": "^7.0.0",
-    "@types/qs": "^6.9.15",
-    "sockjs-client": "^1.6.1",
-    "stomp-client": "^0.9.0",
-    "stompjs": "^2.3.3",
-    "ws": "^8.16.0"
-  },
-  "peerDependencies": {
-    "@stomp/stompjs": "^7.0.0",
-    "@types/qs": "^6.9.15",
-    "sockjs-client": "^1.6.1",
-    "stomp-client": "^0.9.0",
-    "stompjs": "^2.3.3",
-    "ws": "^8.16.0"
   }
 }
