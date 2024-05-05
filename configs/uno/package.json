@@ -1,6 +1,6 @@
 {
   "name": "@compose/config-uno",
-  "version": "0.1.167",
+  "version": "0.1.168",
   "description": "uno css code snippets",
   "author": "TrueNine",
   "license": "private",
@@ -30,7 +30,7 @@
     "@unocss/transformer-compile-class": "^0.59.4",
     "@unocss/transformer-directives": "^0.59.4",
     "unocss": "^0.59.4",
-    "unocss-preset-weapp": "^0.59.1"
+    "unocss-preset-weapp": "^0.59.2"
   },
   "peerDependencies": {
     "@unocss/cli": "^0.59.4",
@@ -39,6 +39,6 @@
     "@unocss/transformer-compile-class": "^0.59.4",
     "@unocss/transformer-directives": "^0.59.4",
     "unocss": "^0.59.4",
-    "unocss-preset-weapp": "^0.59.1"
+    "unocss-preset-weapp": "^0.59.2"
   }
 }
