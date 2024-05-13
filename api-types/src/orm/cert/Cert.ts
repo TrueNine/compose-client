@@ -1,4 +1,4 @@
-import type {AuditTyping, CertContentTyping, CertPointTyping, CertTyping} from '@compose/api-model'
+import type {AuditTyping, CertContentTyping, CertPointTyping, CertTyping} from '@compose/api-typings'
 
 import type {IEntity} from '@/orm'
 import type {RefId} from '@/orm'

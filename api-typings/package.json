@@ -1,40 +1,32 @@
 {
-  "name": "@compose/meta-ui-web",
-  "version": "1.1.150",
+  "name": "@compose/api-typings",
+  "version": "1.0.2",
+  "description": "yan100 enum defines",
+  "author": "TrueNine",
+  "license": "private",
   "scripts": {
-    "dev": "vite",
-    "build-gulp": "gulp -f ./__build-src__/index.ts",
-    "build-vite": "vite build",
+    "prepare": "pnpm build",
+    "build": "run-s type-check build-c dts",
+    "dts": "vue-tsc --declaration",
+    "build-c": "vite build",
     "type-check": "vue-tsc --noEmit",
-    "build": "run-s type-check build-vite build-gulp",
-    "pub": "run-s build pub-c",
+    "pub": "run-s  build pub-c",
     "pub-c": "pnpm publish --no-git-checks"
   },
   "type": "module",
   "module": "dist/index.js",
   "main": "dist/index.cjs",
   "types": "dist/index.d.ts",
-  "typings": "dist/index.d.ts",
-  "sideEffects": [
-    "*.sass",
-    "*.scss",
-    "*.css",
-    "*.vue"
-  ],
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
-    "./unplugin": {
-      "types": "./dist/unplugin/index.d.ts",
-      "import": "./dist/unplugin/index.js",
-      "require": "./dist/unplugin/index.cjs"
-    },
     "./*": "./*",
     "./**": "./**",
-    "./dist/*": "./dist/*"
+    "./dist/*": "./dist/*",
+    "./dist/**": "./dist/**"
   },
   "files": [
     "dist",
@@ -44,6 +36,6 @@
   "repository": {
     "type": "git",
     "url": "git+https://https://github.com/TrueNine/compose-client",
-    "directory": "meta-ui-web"
+    "directory": "api-typings"
   }
 }

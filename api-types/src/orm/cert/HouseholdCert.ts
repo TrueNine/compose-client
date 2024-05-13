@@ -1,4 +1,4 @@
-import type {BloodTyping, DegreeTyping, GenderTyping} from '@compose/api-model'
+import type {BloodTyping, DegreeTyping, GenderTyping} from '@compose/api-typings'
 
 import type {IEntity} from '@/orm'
 import type {RefId} from '@/orm'

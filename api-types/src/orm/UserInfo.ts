@@ -1,4 +1,4 @@
-import type {GenderTyping} from '@compose/api-model'
+import type {GenderTyping} from '@compose/api-typings'
 
 import type {IEntity} from './Entities'
 import type {ReferenceId} from './Utils'

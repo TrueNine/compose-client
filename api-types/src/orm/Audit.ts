@@ -1,4 +1,4 @@
-import {AuditTyping} from '@compose/api-model'
+import {AuditTyping} from '@compose/api-typings'
 
 import type {IEntity} from './Entities'
 import type {RefId, TypeInt} from './Utils'

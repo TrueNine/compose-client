@@ -5,7 +5,7 @@ import {VForm} from 'vuetify/components'
 import {DayJs, des} from '@compose/api-model'
 
 import DisabilityRuleCheckboxComp from '@/components/disability/DisabilityRuleCheckboxComp.vue'
-import {JobApi} from '@/api/JobApi'
+import {JobApi} from '@/data/JobApi'
 
 const initJob = {
   title: '',

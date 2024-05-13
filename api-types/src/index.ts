@@ -40,9 +40,9 @@ export * from './model'
 export * from './language'
 
 /**
- * 各种 api 的标准
+ * 各种 data 的标准
  */
-export * from './api'
+export * from './data'
 
 /**
  * 与安全相关的一系列定义

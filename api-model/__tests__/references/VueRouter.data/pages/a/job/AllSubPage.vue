@@ -3,8 +3,8 @@ import type {Nullable, Pq, Pr} from '@compose/api-types'
 import type {AddressFullPathResp, Job} from '@compose/apidoc-dts-maliang-tnmaster'
 import {DayJs, eagerFetch} from '@compose/api-model'
 
-import {AddressApi} from '@/api/AddressApi'
-import {JobApi} from '@/api/JobApi'
+import {AddressApi} from '@/data/AddressApi'
+import {JobApi} from '@/data/JobApi'
 
 const router = useRouter()
 

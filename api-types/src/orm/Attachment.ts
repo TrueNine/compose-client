@@ -1,4 +1,4 @@
-import type {AttachmentTyping} from '@compose/api-model'
+import type {AttachmentTyping} from '@compose/api-typings'
 
 import type {IEntity} from './Entities'
 import type {Id, RefId} from './Utils'

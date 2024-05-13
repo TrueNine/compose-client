@@ -29,6 +29,7 @@ export default defineConfig({
         'vue-router',
         '@compose/api-model',
         '@compose/api-types',
+        '@compose/api-typings',
         'dayjs'
       ]
     }

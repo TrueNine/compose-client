@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type {LateNull, SerialCode} from '@compose/api-types'
-import {CnDistrict, des} from '@compose/api-model'
+import {AddressUtils, des} from '@compose/api-model'
 import {reactive} from 'vue'
 
 import {
@@ -192,7 +192,7 @@ const codingLoad = ref(false)
 async function loadCode(code: string) {
   codingLoad.value = true
   let appendCode = ''
-  const s = new CnDistrict(code).serialArray
+  const s = new AddressUtils(code).serialArray
   for (const e of s) {
     appendCode += e
     await cacheAndUpdate(appendCode)
