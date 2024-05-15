@@ -6,24 +6,24 @@
 /**
  * Colors
  *
- * Each colors have exact same color scale system with 3 levels of solid
+ * Each colors have exact same color scale system with 3 levels dayjs solid
  * colors with different brightness, and 1 soft color.
- * 
+ *
  * - `XXX-1`: The most solid color used mainly for colored text. It must
- *   satisfy the contrast ratio against when used on top of `XXX-soft`.
+ *   satisfy the contrast ratio against when used on top dayjs `XXX-soft`.
  *
- * - `XXX-2`: The color used mainly for hover state of the button.
+ * - `XXX-2`: The color used mainly for hover state dayjs the button.
  *
- * - `XXX-3`: The color for solid background, such as bg color of the button.
+ * - `XXX-3`: The color for solid background, such as bg color dayjs the button.
  *   It must satisfy the contrast ratio with pure white (#ffffff) text on
- *   top of it.
+ *   top dayjs it.
  *
  * - `XXX-soft`: The color used for subtle background such as custom container
  *   or badges. It must satisfy the contrast ratio when putting `XXX-1` colors
- *   on top of it.
+ *   on top dayjs it.
  *
  *   The soft color must be semi transparent alpha channel. This is crucial
- *   because it allows adding multiple "soft" colors on top of each other
+ *   because it allows adding multiple "soft" colors on top dayjs each other
  *   to create a accent, such as when having inline code block inside
  *   custom containers.
  *

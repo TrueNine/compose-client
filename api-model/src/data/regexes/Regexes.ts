@@ -5,7 +5,7 @@ export class Regexes {
   private static YEAR = '(19|20)\\d{2}'
   private static MONTH = '(0[1-9]|1[0-2])'
   private static DAY = '(0[1-9]|[1-2][0-9]|3[0-1])'
-  private static CHINA_ID_CARD_PREFIX = `^${this.ONE_ONE}${this.ZERO_ZERO_ZERO_ONE}${this.ZERO_ONE}${this.YEAR}${this.MONTH}${this.DAY}`
+  private static CHINA_ID_CARD_PREFIX = `^${this.ONE_ONE}${this.ZERO_ZERO_ZERO_ONE}${this.ZERO_ONE}${this.YEAR}${this.MONTH}${this.DAY}\\d{3}[xX0-9]`
 
   static CHINA_ID_CARD = new RegExp(`${this.CHINA_ID_CARD_PREFIX}$`)
 }

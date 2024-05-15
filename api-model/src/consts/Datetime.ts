@@ -1,27 +1,34 @@
-import type {ISO8601DateFormat, ISO8601MillisFormat, ISO8601SecondsFormat, ISO8601TimeFormat} from '@compose/api-types'
+export const ISO8601TimeZone = {
+  ASIA_SHANGHAI: 'Asia/Shanghai' as const,
+  UTC: 'UTC' as const
+}
 
 /**
  * # 标准格式化字符串
  */
 export const ISO8601Format = {
-  date: 'YYYY-MM-DD' as ISO8601DateFormat,
-  time: 'HH:mm:ss' as ISO8601TimeFormat,
-  datetime: 'YYYY-MM-DD HH:mm:ss' as ISO8601DateFormat,
-  millis: 'x' as ISO8601MillisFormat,
-  second: 'X' as ISO8601SecondsFormat
+  date: 'YYYY-MM-DD' as const,
+  time: 'HH:mm:ss' as const,
+  datetime: 'YYYY-MM-DD HH:mm:ss' as const,
+  millis: 'x' as const,
+  second: 'X' as const
 }
+
 /**
  * ## 一秒的毫秒数
  */
 export const SECOND_MILLIS = 1000
+
 /**
  * ## 一分钟的毫秒数
  */
 export const MINUTE_MILLIS = 60 * SECOND_MILLIS
+
 /**
  * ## 一小时的毫秒数
  */
 export const HOUR_MILLIS = 60 * MINUTE_MILLIS
+
 /**
  * ## 一天的毫秒数
  */
