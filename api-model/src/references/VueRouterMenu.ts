@@ -1,13 +1,13 @@
 import type {RouteRecordRaw} from 'vue-router'
-import type {AutoRouterPageConfig, late, Maybe} from '@compose/api-types'
+import type {AutoRouterConfig, late, Maybe} from '@compose/api-types'
 
-import {STR_EMPTY, STR_SLASH} from '../consts/Strings'
+import {STR_EMPTY, STR_SLASH} from '@/consts'
 
 type RouteMatch = RouteRecordRaw & {
   fullPath: string
   parentPath: string
 }
-type Raw = AutoRouterPageConfig & RouteMatch
+type Raw = AutoRouterConfig & RouteMatch
 type RouteMatchFn = (r: Raw) => boolean
 
 type MenuObject = {

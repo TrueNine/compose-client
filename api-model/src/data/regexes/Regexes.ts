@@ -8,4 +8,5 @@ export class Regexes {
   private static CHINA_ID_CARD_PREFIX = `^${this.ONE_ONE}${this.ZERO_ZERO_ZERO_ONE}${this.ZERO_ONE}${this.YEAR}${this.MONTH}${this.DAY}\\d{3}[xX0-9]`
 
   static CHINA_ID_CARD = new RegExp(`${this.CHINA_ID_CARD_PREFIX}$`)
+  static CHINA_PHONE = /^1[3-9][0-9]\d{8}$/
 }

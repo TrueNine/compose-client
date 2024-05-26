@@ -32,3 +32,17 @@ export function enumToOutput<E extends EnumActual>(e: E, comment: Record<Evr<E>,
   }
   return {comment, map, reverseMap}
 }
+
+export function enumValues<E extends EnumActual>(e: E): Evr<E>[] {
+  const _keyCache = new Set<string | number>()
+  const _vals: Evr<E>[] = []
+  Object.entries(e).forEach(([k, v]) => {
+    _keyCache.add(k)
+    const vIsNumber = typeof v === 'number' || v?.toString().match(/^[0-9]+$/)
+    if (vIsNumber) _vals.push(v as unknown as Evr<E>)
+    else {
+      if (e[v] === undefined && !_keyCache.has(v)) _vals.push(v as unknown as Evr<E>)
+    }
+  })
+  return _vals
+}

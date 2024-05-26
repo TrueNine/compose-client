@@ -16,13 +16,14 @@ interface Params {
 export class DayJs {
   static DEFAULT_TZ: string
   static DEFAULT_UTC: boolean
-
+  static DEFAULT_ZONE_OFFSET: number
   static {
     dayjs.extend(utc)
     dayjs.extend(tz)
 
     this.DEFAULT_TZ = dayjs.tz.guess()
     this.DEFAULT_UTC = this.DEFAULT_TZ === 'UTC'
+    this.DEFAULT_ZONE_OFFSET = dayjs().utcOffset() * 60 * 1000
   }
 
   private static getDefaultParam(date: DayJSNewInstanceOptions, p?: Params, format?: string): rq<Params> {
@@ -46,13 +47,19 @@ export class DayJs {
     const _p = this.getDefaultParam(date, p, ISO8601Format.date)
     return this.timestampOf(_p.date, _p)
   }
+  static getOffsetMillis(timezone: string = this.DEFAULT_TZ): timestamp {
+    return this.dayjs().tz(timezone).utcOffset() * 60 * 1000
+  }
   static timeMillis(date: DayJSNewInstanceOptions, p?: Params): timestamp {
     const _p = this.getDefaultParam(date, p, ISO8601Format.time)
     if (typeof _p.date === 'string') {
       _p.format = `${ISO8601Format.date}$$$$${_p.format}`
       _p.date = `1970-01-01$$$$${_p.date}`
-      return this.timestampOf(_p.date, _p)
+      const offset = this.getOffsetMillis(_p.tz)
+      return this.timestampOf(_p.date, _p) + offset * 2
     } else {
+      _p.utc = true
+      _p.tz = ISO8601TimeZone.UTC
       const dg = this.timestampToTimeTimestamp(_p.date, _p)
       if (dg === undefined) return NaN
       else return dg
@@ -63,8 +70,8 @@ export class DayJs {
     return this.timestampOf(_p.date, _p)
   }
   static format(date: DayJSNewInstanceOptions, p?: Params): string {
-    const {date: _date, format, utc, tz} = this.getDefaultParam(date, p, ISO8601Format.datetime)
-    return this.dayjs(_date, {format, utc}, true).tz(tz).format(format)
+    const _p = this.getDefaultParam(date, p, ISO8601Format.datetime)
+    return this.dayjs(_p.date, {format: _p.format, utc: _p.utc}, true).tz(_p.tz).format(_p.format)
   }
   static formatDatetime(date: DayJSNewInstanceOptions, p?: Params): string {
     const _p = this.getDefaultParam(date, p, ISO8601Format.datetime)

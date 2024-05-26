@@ -20,6 +20,8 @@ node_modules/
 # unplugin-auto-imports vite plugin
 *imports*.json
 *imports*.d.ts
+vite.config.ts.**
+vitest.config.ts.**
 
 # vscode check depd files
 target/

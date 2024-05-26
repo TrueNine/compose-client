@@ -21,3 +21,22 @@ export const MetaUiWebResolver = () => {
     }
   ]
 }
+const _vLabsComponentNames = [
+  'VCalendar',
+  'VNumberInput',
+  'VPicker',
+  'VDateInput',
+  'VPullToRefresh',
+  'VSnackbarQueue',
+  'VStepperVertical',
+  'VTimePicker',
+  'VTreeview'
+]
+export function Vuetify3LabsLabResolver(useLabs: boolean = true) {
+  return {
+    type: 'component',
+    resolve: (name: string) => {
+      if (name.match(/^V[A-Z]/)) return {name, from: useLabs && _vLabsComponentNames.includes(name) ? 'vuetify/labs/components' : 'vuetify/components'}
+    }
+  }
+}

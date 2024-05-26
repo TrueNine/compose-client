@@ -16,8 +16,7 @@ export function withEmpty(str?: string): string {
  * @param obj 对象
  */
 export function isEmpty(obj: nullpt<unknown>): bool {
-  if (obj === undefined) return true
-  if (obj === null) return true
+  if (obj == null) return true
   if (typeof obj === 'string' && !isNonEmptyString(obj)) return true
   if (Array.isArray(obj) && obj.length === 0) return true
   return typeof obj === 'object' && Object.keys(obj).length === 0

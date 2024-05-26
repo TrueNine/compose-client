@@ -1,6 +1,6 @@
 import type {EnumCommentMap} from '@compose/api-types'
 
-import {enumToOutput} from '../../enum/Fns'
+import {enumToOutput} from '@/enums'
 
 export enum RelationItemTyping {
   NONE = 0,

@@ -8,3 +8,5 @@
 **/.vscode/
 **/examples/
 **/*.example.*
+vite.config.ts.**
+vitest.config.ts.**

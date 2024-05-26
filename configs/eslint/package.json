@@ -1,6 +1,6 @@
 {
   "name": "@compose/eslint-config",
-  "version": "0.0.78",
+  "version": "0.0.80",
   "scripts": {
     "prepare": "pnpm build",
     "build": "vite build",
@@ -20,8 +20,8 @@
     "./*": "./*"
   },
   "dependencies": {
-    "@rushstack/eslint-patch": "^1.10.2",
-    "@typescript-eslint/parser": "^7.8.0",
+    "@rushstack/eslint-patch": "^1.10.3",
+    "@typescript-eslint/parser": "^7.10.0",
     "@vue/eslint-config-prettier": "^9.0.0",
     "@vue/eslint-config-typescript": "^13.0.0",
     "eslint": "8.57.0",
@@ -32,8 +32,8 @@
     "prettier": "^3.2.5"
   },
   "peerDependencies": {
-    "@rushstack/eslint-patch": "^1.10.2",
-    "@typescript-eslint/parser": "^7.8.0",
+    "@rushstack/eslint-patch": "^1.10.3",
+    "@typescript-eslint/parser": "^7.10.0",
     "@vue/eslint-config-prettier": "^9.0.0",
     "@vue/eslint-config-typescript": "^13.0.0",
     "eslint": "8.57.0",

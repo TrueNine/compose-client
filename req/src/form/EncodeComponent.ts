@@ -44,3 +44,24 @@ export function queryParam(...cards: nullpt<object>[]): string {
   })
   return params.toString() && `?${params.toString()}`
 }
+
+export function queryHash(...cards: nullpt<object>[]): string {
+  const qp = queryParam(...cards)
+  return qp ? `#${qp.slice(1)}` : ''
+}
+
+export function decodeHash(hash?: string): Record<string, string> {
+  if (hash) {
+    return hash
+      .replace(/^#/, '')
+      .split('&')
+      .map(s => s.split('='))
+      .reduce(
+        (acc, [k, v]) => {
+          acc[k] = v
+          return acc
+        },
+        {} as Record<string, string>
+      )
+  } else return {}
+}

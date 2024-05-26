@@ -1,8 +1,9 @@
-import type {late, Late, AutoRouterPageConfig} from '@compose/api-types'
+import type {late, Late} from '@compose/api-types'
 import type {RouteRecordRaw} from 'vue-router'
+import type {AutoRouterConfig} from '@compose/api-types'
 
-import {STR_EMPTY, STR_SLASH} from '../consts/Strings'
-import {camelTo} from '../tools'
+import {STR_EMPTY, STR_SLASH} from '@/consts'
+import {camelTo} from '@/tools'
 
 // 定义路由处理选项的接口
 interface HandleRouteOption {
@@ -31,7 +32,7 @@ const SUB_PAGE = 'SubPage'
 const VIEW_PAGE = 'View'
 
 function resolvePageConfigToConfig(importMeta?: HandleRouteOption) {
-  return importMeta ? (importMeta.source as unknown as Late<AutoRouterPageConfig>) : undefined
+  return importMeta ? (importMeta.source as unknown as late<AutoRouterConfig>) : undefined
 }
 
 function processUrlAndName(tp: [string, ImportMeta]) {
@@ -175,6 +176,6 @@ export function resolveRouters(): RouteRecordRaw[] {
   return resolveSubPath(paths)
 }
 
-export function defineAutoRoute(cfg?: AutoRouterPageConfig): late<AutoRouterPageConfig> {
+export function defineAutoRoute(cfg?: AutoRouterConfig): late<AutoRouterConfig> {
   return cfg
 }

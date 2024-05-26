@@ -1,7 +1,10 @@
+import {fileURLToPath, URL} from 'node:url'
+
 import {defineConfig} from 'rollup'
 import ts from '@rollup/plugin-typescript'
 import res from '@rollup/plugin-node-resolve'
 import cjs from '@rollup/plugin-commonjs'
+import alias from '@rollup/plugin-alias'
 import terser from '@rollup/plugin-terser'
 import {emptyDirSync} from 'fs-extra'
 
@@ -48,6 +51,9 @@ export default defineConfig([
     plugins: [
       res(),
       cjs(),
+      alias({
+        entries: [{find: '@', replacement: fileURLToPath(new URL('./src', import.meta.url))}]
+      }),
       ts({
         tsconfig: './tsconfig.json',
         compilerOptions: {

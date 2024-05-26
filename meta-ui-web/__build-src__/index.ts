@@ -16,7 +16,9 @@ export const nodeModulesPath = joinPath('../node_modules')
 console.log(distPath)
 
 export async function buildUnocss(fName = 'unocss.css') {
-  await run(`unocss "${basePath}/**/*" -c ${basePath}/unocss.config.ts -o ${distPath}/${fName} -m`, basePath)
+  const cmd = `unocss "${basePath}/**/*.vue" -c ${basePath}/uno.config.ts -o ${distPath}/${fName} -m`
+  console.log(`execute uno compile: ${cmd}   basePath ${basePath}`)
+  await run(cmd, basePath)
 }
 
 export const buildStyle = () => {
