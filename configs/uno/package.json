@@ -24,13 +24,13 @@
     "./*": "./*"
   },
   "dependencies": {
-    "@unocss/cli": "^0.60.3",
-    "@unocss/core": "^0.60.3",
-    "@unocss/postcss": "^0.60.3",
-    "@unocss/transformer-compile-class": "^0.60.3",
-    "@unocss/transformer-directives": "^0.60.3",
-    "unocss": "^0.60.3",
-    "unocss-preset-weapp": "^0.60.0"
+    "@unocss/cli": "^0.61.0",
+    "@unocss/core": "^0.61.0",
+    "@unocss/postcss": "^0.61.0",
+    "@unocss/transformer-compile-class": "^0.61.0",
+    "@unocss/transformer-directives": "^0.61.0",
+    "unocss": "^0.61.0",
+    "unocss-preset-weapp": "^0.60.1"
   },
   "peerDependencies": {
     "@unocss/cli": "^0.60.3",
