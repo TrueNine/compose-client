@@ -1,4 +1,4 @@
-import type {Maybe, SafeAny} from '@compose/api-types'
+import type {late, Maybe, SafeAny} from '@compose/api-types'
 
 /**
  * # 对数组进行去重
@@ -114,4 +114,15 @@ export function mergeToMap<T extends object>(key: keyof T, arr: T[]): {[key in k
     },
     {} as {[key in keyof T]: T[]}
   )
+}
+
+/**
+ * # 获取数组中相同值的第一个元素，如果没有相同值则返回 undefined
+ * @param arr 数组
+ * @param conditional 条件
+ */
+export function sameValue<T>(arr: T[], conditional: (t: T, old: T) => boolean = (t, old) => t === old): late<T> {
+  if (arr.length === 0) return undefined
+  const old = arr[0]
+  return arr.every((v, i) => i === 0 || conditional(v, old)) ? old : undefined
 }

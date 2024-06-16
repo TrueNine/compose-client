@@ -1,6 +1,6 @@
-import type {nullpt, dynamic, bool, Maybe, int} from '@compose/api-types'
+import type {nilpt, dynamic, bool, Maybe, int} from '@compose/api-types'
 
-import {STR_EMPTY} from '../consts/Strings'
+import {STR_EMPTY} from '@/consts'
 
 /**
  * ## 判断一个字符串是否为空，返回本身或空字符串，排除 null | undefined
@@ -8,26 +8,37 @@ import {STR_EMPTY} from '../consts/Strings'
  * @returns 本身 或者 ""
  */
 export function withEmpty(str?: string): string {
-  return isNonEmpty(str) ? str! : STR_EMPTY
+  return isNonNil(str) ? str! : STR_EMPTY
 }
 
 /**
- * # 判断一个对象是否为 null 或 undefined，以减少语义负担
- * @param obj 对象
+ * # 判断一个值是否为空，以减少语义负担
+ *
+ * - null
+ * - undefined
+ * - ''
+ * - []
+ * - [every item is empty]
+ * - {}
+ *
+ * @param value 对象
  */
-export function isEmpty(obj: nullpt<unknown>): bool {
-  if (obj == null) return true
-  if (typeof obj === 'string' && !isNonEmptyString(obj)) return true
-  if (Array.isArray(obj) && obj.length === 0) return true
-  return typeof obj === 'object' && Object.keys(obj).length === 0
+export function isNil(value?: nilpt<unknown>): bool {
+  if (value == null) return true
+  if (typeof value === 'string' && !isNonNilString(value)) return true
+  if (Array.isArray(value)) {
+    if (value.length === 0) return true
+    if (value.every(isNil)) return true
+  }
+  return typeof value === 'object' && Object.keys(value).length === 0
 }
 
 /**
  * # 对 [isEmpty] 的反向调用
- * @param obj 对象
+ * @param value 对象
  */
-export function isNonEmpty<T = unknown>(obj: T) {
-  return !isEmpty(obj)
+export function isNonNil(value?: nilpt<unknown>) {
+  return !isNil(value)
 }
 
 /**
@@ -36,16 +47,16 @@ export function isNonEmpty<T = unknown>(obj: T) {
  * @param replaced 默认值
  * @returns NonNullable<T>
  */
-export function nullCoalesce<T>(aib: T, replaced: T = aib): NonNullable<T> {
-  return (isNonEmpty(aib) ? aib : replaced) as NonNullable<T>
+export function nilCoalesce<T>(aib: T, replaced: T = aib): NonNullable<T> {
+  return (isNonNil(aib) ? aib : replaced) as NonNullable<T>
 }
 
 /**
- * # 判断一个对象是否为非空字符串
- * @param obj 对象
+ * # 判断一个值是否为非空字符串
+ * @param value 对象
  */
-export function isNonEmptyString(obj: nullpt<string>): bool {
-  return typeof obj === 'string' && obj.trim().length > 0
+export function isNonNilString(value?: nilpt<string>): bool {
+  return (value?.trim().length ?? 0) > 0
 }
 
 /**

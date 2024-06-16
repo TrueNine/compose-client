@@ -1,7 +1,7 @@
 import type {asyncable, nil, Pq, Pr, task} from '@compose/api-types'
 
-import {Pw} from '../consts/Pageable'
-import {isEmpty} from '../tools'
+import {Pw} from '@/consts'
+import {isNil} from '@/tools'
 
 /**
  * # 遍历所有分页结果
@@ -20,7 +20,7 @@ export async function loopPageAll<T>(loopFn: (loopPq: Pq) => asyncable<nil<Pr<T>
     dataList: [],
     total: 0
   }
-  if (isEmpty(initDataList) || initPageSize <= 1 || !initDataList || initTotal === 0 || initTotal <= (initPageParam?.pageSize ?? 0)) return initDataList
+  if (isNil(initDataList) || initPageSize <= 1 || !initDataList || initTotal === 0 || initTotal <= (initPageParam?.pageSize ?? 0)) return initDataList
   const resultDataList: T[] = [...initDataList]
   let nextPq: nil<Pq> = {...initPageParam, offset: (initPageParam?.offset ?? 0) + 1}
   while (nextPq !== null) {
