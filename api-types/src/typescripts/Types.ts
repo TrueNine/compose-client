@@ -70,13 +70,13 @@ export type latenull<T> = LateNull<T>
 /**
  * # 可空，可选，不稳定
  */
-export type NullPt<T = dynamic> = pt<T> | latenull<T>
-export type nullpt<T = dynamic> = NullPt<T>
+export type NilPt<T = dynamic> = pt<T> | latenull<T>
+export type nilpt<T = dynamic> = NilPt<T>
 
 /**
  * ## 绝对不会返回
  */
-export type Nothing = null & never & undefined & void
+export type Nothing = never & null & undefined & void
 export type nothing = Nothing
 
 /**
