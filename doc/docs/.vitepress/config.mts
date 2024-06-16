@@ -22,6 +22,15 @@ export default defineConfig({
         ]
       },
       {
+        test: '证件管理',
+        items: [
+          {
+            text: "证件标准文档",
+            link: "/pages/a/card-resource/add/standard_cert"
+          }
+        ]
+      },
+      {
         text: "审核管理",
         items: [
           {
