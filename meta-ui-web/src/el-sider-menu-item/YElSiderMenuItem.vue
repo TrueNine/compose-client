@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import {type RouteOption, type dynamic, type bool} from '@compose/api-types'
-import {isNonEmpty} from '@compose/api-model'
+import {isNonNil} from '@compose/api-model'
 
 import YElSiderMenuItem from './YElSiderMenuItem.vue'
 
@@ -19,7 +19,7 @@ defineSlots<{
 }>()
 
 function isSub(opt: RouteOption): bool {
-  return isNonEmpty(opt?.sub)
+  return isNonNil(opt?.sub)
 }
 </script>
 
