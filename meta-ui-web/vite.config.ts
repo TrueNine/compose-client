@@ -29,6 +29,7 @@ export default defineConfig({
       },
       external: [
         'vue',
+        /(vue-router|vue-router\/)/,
         /(highlight\.js|highlight\.js\/)/,
         /(@vueuse|@vueuse\/)/,
         /(naive-ui|naive-ui\/)/,
