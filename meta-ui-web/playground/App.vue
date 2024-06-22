@@ -1,6 +1,8 @@
 <script setup lang="ts"></script>
 <template>
   <YConfigProvider locale="zh-CN">
-    <RouterView />
+    <VLayout>
+      <RouterView />
+    </VLayout>
   </YConfigProvider>
 </template>
