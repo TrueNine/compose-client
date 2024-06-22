@@ -44,7 +44,7 @@ export default defineConfig([
         dir: 'dist'
       }
     ],
-    external: ['vue', 'tsLib', 'vue-router', /(@compose|@compose\/)/, 'api-types', /(lodash|lodash\/)/, /(dayjs|dayjs\/)/]
+    external: ['vue', 'pdfjs-dist', 'tsLib', 'vue-router', /(@compose|@compose\/)/, 'api-types', /(lodash|lodash\/)/, /(dayjs|dayjs\/)/]
   },
   {
     input: 'src/index.ts',
