@@ -1,25 +1,29 @@
 import {Vue} from '@compose/api-model'
-import type {bool, SafeAny} from '@compose/api-types'
+import type {bool, dynamic} from '@compose/api-types'
 
 import _c from './YVSystemBar.vue'
 
-export default Vue.componentInstallToPlugin(_c)
+import YIco from '@/ico'
+
 export interface YSystemBarProps {
   showAppBar?: bool
+  menuOpened?: bool
+  settingsMenuOpened?: bool
+}
+export interface YVSystemBarEmits {
+  (e: 'update:menuOpened', v: bool): void
+  (e: 'update:settingsMenuOpened', v: bool): void
 }
 
 export interface YVSystemBarSlots {
-  default: () => SafeAny
-
-  'app-title': () => SafeAny
-
-  'app-settings': () => SafeAny
-
-  'left-btn': () => SafeAny
-
-  'right-btn': () => SafeAny
-
-  'left-drawer': (props: {collapsed: boolean}) => SafeAny
-
-  'settings-drawer': () => SafeAny
+  default: () => dynamic
+  'app-title': () => dynamic
+  'app-settings': () => dynamic
+  'left-btn': () => dynamic
+  'right-btn': () => dynamic
+  drawer: (p: {menuOpened: bool}) => dynamic
+  'settings-drawer': (p: {settingsMenuOpened: bool}) => dynamic
 }
+
+const a = Vue.componentInstallToPlugin(_c, {YIco})
+export default a
