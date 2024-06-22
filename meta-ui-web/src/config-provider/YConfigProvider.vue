@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import 'dayjs/locale/zh-cn'
 import 'dayjs/locale/en'
+
 import 'element-plus/theme-chalk/dark/css-vars.css'
 
 import {NConfigProvider} from 'naive-ui'
@@ -20,9 +21,10 @@ import {
   QuasarEnUs,
   QuasarZhCn
 } from '../common'
-import {checkDark, checkLocale} from '../common/VarletCommon'
 
 import type {YConfigProviderProps} from './index'
+
+import {checkDark, checkLocale} from '@/common/VarletCommon'
 
 const vuetifyUseTheme = useTheme()
 
