@@ -8,6 +8,9 @@ import YElSiderMenuItem from './el-sider-menu-item/index'
 import YMapTencent from './map-tencent'
 import YVAddressSelect from './v-address-select'
 import YDebugCode from './debug-code'
+import YVMenu from './v-menu'
+import YVMenuItem from './v-menu-item'
+import YIco from './ico'
 
 export * from './config-provider'
 export * from './el-sider-menu'
@@ -17,11 +20,15 @@ export * from './v-address-select'
 export * from './v-system-bar'
 export * from './debug-code'
 
+export * from './ico'
+export * from './v-menu'
+export * from './v-menu-item'
+
 export * from './common'
 export * from './unplugin'
 
-const components = {YConfigProvider, YVAddressSelect, YMapTencent, YElSiderMenuItem, YElSiderMenu, YVSystemBar, YDebugCode}
-export {YElSiderMenu, YVAddressSelect, YElSiderMenuItem, YConfigProvider, YMapTencent, YVSystemBar, YDebugCode}
+const components = {YConfigProvider, YVAddressSelect, YMapTencent, YElSiderMenuItem, YElSiderMenu, YVSystemBar, YDebugCode, YVMenu, YVMenuItem, YIco}
+export {YElSiderMenu, YVAddressSelect, YElSiderMenuItem, YConfigProvider, YMapTencent, YVSystemBar, YDebugCode, YVMenu, YVMenuItem, YIco}
 
 export default {
   install: (app: App) => {
