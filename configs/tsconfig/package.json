@@ -9,12 +9,12 @@
     "@tsconfig/node20": "^20.1.4",
     "@types/node": "^20.14.10",
     "tslib": "^2.6.3",
-    "typescript": "~5.4.5"
+    "typescript": "^5.5.3"
   },
   "peerDependencies": {
     "@tsconfig/node20": "^20.1.4",
     "@types/node": "^20.14.10",
     "tslib": "^2.6.3",
-    "typescript": "~5.4.5"
+    "typescript": "^5.5.3"
   }
 }
