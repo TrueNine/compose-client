@@ -7,7 +7,6 @@ import type {LocalDate} from '@/datetime'
 import type {SerialCode} from '@/typescripts'
 
 export interface UserInfo extends IEntity {
-  readonly fullName?: string
   readonly createUserId?: ReferenceId
   readonly userId?: ReferenceId
   pri?: boolean
