@@ -2,14 +2,23 @@
 import type {YSystemBarProps, YVSystemBarEmits, YVSystemBarSlots} from './index'
 const props = withDefaults(defineProps<YSystemBarProps>(), {
   showAppBar: true,
+  progress: 0,
+  progressLoading: false,
+  progressColor: 'default',
   menuOpened: false,
   settingsMenuOpened: false
 })
 const emits = defineEmits<YVSystemBarEmits>()
 const slots = defineSlots<YVSystemBarSlots>()
 
-const {menuOpened: _menuOpened, settingsMenuOpened: _settingsMenuOpened} = useVModels(props, emits, {passive: true})
-
+const {
+  menuOpened: _menuOpened,
+  progress: _progress,
+  progressLoading: _progressLoading,
+  progressColor: _progressColor,
+  settingsMenuOpened: _settingsMenuOpened
+} = useVModels(props, emits, {passive: true})
+const progressClr = computed(() => _progressLoading.value && _progress.value === 0)
 const useRight = computed(() => {
   return slots['right-btn'] !== undefined
 })
@@ -47,6 +56,11 @@ const useRight = computed(() => {
 
     <!-- 显示主区域 -->
     <VMain px2>
+      <VProgressLinear v-model="_progress" :striped="true" :active="_progressLoading" :indeterminate="progressClr">
+        <template #default="{value}" v-if="!progressClr">
+          <strong>{{ Math.ceil(value) }}%</strong>
+        </template>
+      </VProgressLinear>
       <slot name="default" />
     </VMain>
 

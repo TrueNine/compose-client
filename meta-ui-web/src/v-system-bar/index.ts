@@ -8,11 +8,17 @@ import YIco from '@/ico'
 export interface YSystemBarProps {
   showAppBar?: bool
   menuOpened?: bool
+  progress?: number
+  progressLoading?: bool
+  progressColor?: string
   settingsMenuOpened?: bool
 }
 export interface YVSystemBarEmits {
   (e: 'update:menuOpened', v: bool): void
   (e: 'update:settingsMenuOpened', v: bool): void
+  (e: 'update:progress', v: number): void
+  (e: 'update:progressLoading', v: bool): void
+  (e: 'update:progressColor', v: string): void
 }
 
 export interface YVSystemBarSlots {
