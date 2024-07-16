@@ -6,7 +6,7 @@ export type EnumOptionalValue = string | number
  */
 export type EnumActual = Record<EnumOptionalKey, EnumOptionalValue>
 
-export type EnumCommentMap<E extends EnumActual> = Record<Evr<E>, string>
+export type EnumCommentMap<E extends EnumActual> = Record<Evr<E>, string> & Record<EnumOptionalKey, string>
 export type EnumMap<E extends EnumActual> = Record<Evr<E>, Evr<E>>
 
 /**
