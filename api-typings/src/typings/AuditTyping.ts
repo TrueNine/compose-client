@@ -19,7 +19,6 @@ export const AuditTypingComment: EnumCommentMap<typeof AuditTyping> = {
   [AuditTyping.EXPIRED]: '已过期',
   [AuditTyping.REJECT]: '已驳回'
 }
-
 export const AuditTypingReverseMap: EnumMap<typeof AuditTyping> = {
   [0]: AuditTyping.NONE,
   [1]: AuditTyping.ASSIGNED,
