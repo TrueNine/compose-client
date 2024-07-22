@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type {bool, RouteOption} from '@compose/api-types'
+import type {bool, late, RouteOption} from '@compose/api-types'
 import {isNonNil} from '@compose/api-model'
 
 import YVMenuItem from '@/v-menu-item/YVMenuItem.vue'
@@ -34,13 +34,17 @@ defineSlots<YVMenuItemSlots>()
 
 const router = useRouter()
 async function routeTo() {
-  if (props.routeMode && !props.route?.disabled) await router.push(_value.value)
+  if (props.routeMode && !props.route?.disabled && router) await router.push(_value.value)
+}
+
+function urlJoin(...args: late<string>[]) {
+  return args?.filter(Boolean).join('/').replace(/\/+/g, '/')
 }
 </script>
 
 <template>
   <template v-if="isSub(_route)">
-    <VListGroup color="primary" :value="props.parentPath">
+    <VListGroup color="primary" :value="_value">
       <template #activator="{props: p}">
         <VListItem :disabled="route.disabled" color="primary" v-bind="p">
           <template #prepend>
@@ -57,7 +61,7 @@ async function routeTo() {
         :route-mode="props.routeMode"
         :path-prefix="props.pathPrefix"
         :sub-menu="true"
-        :parent-path="_route.uri"
+        :parent-path="urlJoin($props.parentPath, _route.uri)"
         :route="r"
       />
     </VListGroup>

@@ -58,5 +58,5 @@ const value = ref()
   <VMain>
     <h1 absolute z-1000>{{ value }}</h1>
   </VMain>
-  <YVMenu v-model:value="value" path-prefix="ab/e/r/t" :routes="routes" />
+  <YVMenu v-model:value="value" path-prefix="/prefix" :routes="routes" />
 </template>
