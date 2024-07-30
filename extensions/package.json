@@ -1,0 +1,60 @@
+{
+  "name": "@compose/extensions",
+  "version": "0.0.1",
+  "description": "yan100 extensions functions and apis",
+  "author": "TrueNine",
+  "license": "private",
+  "scripts": {
+    "build": "run-s type-check build-c dts",
+    "dts": "vue-tsc --declaration",
+    "build-c": "vite build",
+    "type-check": "vue-tsc --noEmit",
+    "pub": "run-s  build pub-c",
+    "pub-c": "pnpm publish --no-git-checks"
+  },
+  "type": "module",
+  "module": "dist/index.js",
+  "main": "dist/index.cjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    "./dayjs": {
+      "types": "./dist/dayjs/index.d.ts",
+      "import": "./dist/dayjs/index.js",
+      "require": "./dist/dayjs/index.cjs"
+    },
+    "./browser": {
+      "types": "./dist/browser/index.d.ts",
+      "import": "./dist/browser/index.js",
+      "require": "./dist/browser/index.cjs"
+    },
+    "./vue": {
+      "types": "./dist/vue/index.d.ts",
+      "import": "./dist/vue/index.js",
+      "require": "./dist/vue/index.cjs"
+    },
+    "./lodash-es": {
+      "types": "./dist/lodash-es/index.d.ts",
+      "import": "./dist/lodash-es/index.js",
+      "require": "./dist/lodash-es/index.cjs"
+    },
+    "./pdfjs-dist": {
+      "types": "./dist/pdfjs-dist/index.d.ts",
+      "import": "./dist/pdfjs-dist/index.js",
+      "require": "./dist/pdfjs-dist/index.cjs"
+    },
+    "./*": "./*",
+    "./**": "./**",
+    "./dist/*": "./dist/*",
+    "./dist/**": "./dist/**"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "homepage": "https://github.com/TrueNine",
+  "repository": {
+    "type": "git",
+    "url": "git+https://https://github.com/TrueNine/compose-client",
+    "directory": "api-types"
+  }
+}

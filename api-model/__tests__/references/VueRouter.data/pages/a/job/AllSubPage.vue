@@ -21,7 +21,7 @@ const changeRequest = async (pq?: Pq) => {
     .value!.dataList!.map(e => [e.addressCode!, e.rqAddressCode!])
     .flat()
     .filter(Boolean)
-  addressData.value = a.length > 0 ? (await eagerFetch(AddressApi.findAllFullPathByCodeIn(a))) ?? [] : []
+  addressData.value = a.length > 0 ? ((await eagerFetch(AddressApi.findAllFullPathByCodeIn(a))) ?? []) : []
 }
 
 onMounted(async () => {

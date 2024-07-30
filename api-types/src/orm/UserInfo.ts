@@ -27,4 +27,12 @@ export interface UserInfo extends IEntity {
   gender?: GenderTyping
   wechatOpenid?: SerialCode
   wechatAuthid?: SerialCode
+  /**
+   * 用户备注
+   */
+  remark?: string
+  /**
+   * 用户备注名
+   */
+  remarkName?: string
 }
