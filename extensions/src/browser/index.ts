@@ -1,3 +1,5 @@
+import type {task} from '@compose/api-types'
+
 /**
  * 一系列的 Dom 操作函数
  */
@@ -53,4 +55,16 @@ export class Dom {
     document.body.appendChild(a).click()
     document.body.removeChild(a)
   }
+}
+
+export const getImageData = async (file: Blob): task<HTMLImageElement> => {
+  return new Promise(resolve => {
+    const r = URL.createObjectURL(file)
+    const img = new Image()
+    img.onload = () => {
+      resolve({...img})
+    }
+    img.src = r
+    URL.revokeObjectURL(r)
+  })
 }
