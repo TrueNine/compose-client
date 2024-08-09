@@ -41,7 +41,7 @@ export function enumValues<E extends EnumActual>(e: E): Evr<E>[] {
     const vIsNumber = typeof v === 'number' || v?.toString().match(/^[0-9]+$/)
     if (vIsNumber) _vals.push(v as unknown as Evr<E>)
     else {
-      if (e[v] === undefined && !_keyCache.has(v)) _vals.push(v as unknown as Evr<E>)
+      if (e[v] === void 0 && !_keyCache.has(v)) _vals.push(v as unknown as Evr<E>)
     }
   })
   return _vals
