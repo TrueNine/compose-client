@@ -8,7 +8,15 @@ export default defineConfig({
     sourcemap: true,
     lib: {
       fileName: '[name]',
-      entry: ['src/browser/index.ts', 'src/dayjs/index.ts', 'src/lodash-es/index.ts', 'src/pdfjs-dist/index.ts', 'src/vue/index.ts'],
+      entry: [
+        'src/index.ts',
+        'src/browser/index.ts',
+        'src/lodash-es/index.ts',
+        'src/dayjs/index.ts',
+        'src/libarchive-js/index.ts',
+        'src/pdfjs-dist/index.ts',
+        'src/vue/index.ts'
+      ],
       formats: ['es', 'cjs']
     },
     rollupOptions: {
@@ -31,6 +39,7 @@ export default defineConfig({
         '@compose/api-types',
         '@compose/api-typings',
         /(^dayjs|^dayjs\/)/,
+        /(^libarchive\.js|^libarchive\.js\/)/,
         /(^lodash-es|^lodash-es\/)/,
         /(^pdfjs-dist|^pdfjs-dist\/)/,
         /(^vue|^vue\/)/

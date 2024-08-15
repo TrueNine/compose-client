@@ -21,6 +21,7 @@ import type {
 import {Search as ExSearch} from './services'
 
 export * from './Constants'
+export * from './LatLng'
 export * from './common'
 
 declare global {

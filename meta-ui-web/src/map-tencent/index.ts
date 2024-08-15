@@ -1,6 +1,5 @@
 import {Vue} from '@compose/api-model'
 import type {BasicMapZoomType, ViewMode} from '@compose/psdk-tmap'
-import type {LatLngDataTyping} from '@compose/psdk-tmap/src/LatLng'
 
 import _c from './YMapTencent.vue'
 export default Vue.componentInstallToPlugin(_c)
@@ -13,7 +12,7 @@ export interface YMapTencentProps {
   multiPoint?: boolean
   showCopyright?: boolean
   viewMode?: ViewMode
-  initCenter?: LatLngDataTyping
+  initCenter?: TMap.LatLngDataTyping
   doubleClickZoom?: boolean
   serviceKey?: string
   styleId?: number

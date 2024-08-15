@@ -1,6 +1,6 @@
 {
   "name": "@compose/eslint-config",
-  "version": "0.0.90",
+  "version": "0.0.91",
   "scripts": {
     "prepare": "pnpm build",
     "build": "vite build",
@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@rushstack/eslint-patch": "^1.10.4",
-    "@typescript-eslint/parser": "^8.0.1",
+    "@typescript-eslint/parser": "^8.1.0",
     "@vue/eslint-config-prettier": "^9.0.0",
     "@vue/eslint-config-typescript": "^13.0.0",
     "eslint": "~8.57.0",

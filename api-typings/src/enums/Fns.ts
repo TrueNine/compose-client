@@ -1,4 +1,9 @@
-import type {EnumActual, EnumCommentMap, Evr, SafeAny, TypeInt, Pair} from '@compose/api-types'
+import type {EnumActual, EnumCommentMap, Evr} from '@/types'
+
+interface Pair<K extends string | number | symbol, V extends string | number> {
+  k: K
+  v: V
+}
 
 export function findEnumValue<E extends EnumActual, K extends Evr<E>>(e: E, key: K): E[K] {
   return e[key]
@@ -8,7 +13,7 @@ export function findEnumComment<E extends EnumActual, K extends Evr<E>>(key: K, 
   return comments[key]
 }
 
-export function enumCommentToPairArray<M extends Record<string, string> = SafeAny>(a: M): Pair<string, TypeInt>[] {
+export function enumCommentToPairArray<EA extends EnumActual, EM extends EnumCommentMap<EA>>(a: EM): Pair<string, number>[] {
   return Object.entries(a).map(([v, k]) => {
     return {k, v: Number(v)}
   })

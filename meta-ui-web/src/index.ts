@@ -11,6 +11,9 @@ import YDebugCode from './debug-code'
 import YVMenu from './v-menu'
 import YVMenuItem from './v-menu-item'
 import YIco from './ico'
+import YForm from './form'
+import YField from './field'
+
 import YPreAuthorize from '@/pre-authorize'
 import YConfigPreAuthorize from '@/config-pre-authorize'
 
@@ -23,6 +26,8 @@ export * from './map-tencent'
 export * from './v-address-select'
 export * from './v-system-bar'
 export * from './debug-code'
+export * from './form'
+export * from './field'
 
 export * from './ico'
 export * from './v-menu'
@@ -43,7 +48,9 @@ const components = {
   YVMenuItem,
   YIco,
   YPreAuthorize,
-  YConfigPreAuthorize
+  YConfigPreAuthorize,
+  YForm,
+  YField
 }
 export {
   YElSiderMenu,
@@ -57,7 +64,9 @@ export {
   YVMenuItem,
   YIco,
   YPreAuthorize,
-  YConfigPreAuthorize
+  YConfigPreAuthorize,
+  YForm,
+  YField
 }
 
 export default {

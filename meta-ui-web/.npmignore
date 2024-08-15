@@ -1,19 +1,23 @@
 .idea
 .vscode
 
-/playground
-/public
-/__test__
-/__tests__
-/__build-src__
+node_modules
 
-/env.d.ts
-/.eslintrc.cjs
-/index.html
-/tsconfig.json
-/uno.config.ts
-/vite.config.ts
-/vitest.config.ts
+tsconfig.json
+
+__test__**
+__tests__**
+__build-src__**
+public
+playground
+
+env.d.ts
+rollup.config.**
+vite.config.**
+vitest.config.**
+.eslintrc.cjs
+index.html
+uno.config.ts
 
 *imports*.json
 *imports*.d.ts

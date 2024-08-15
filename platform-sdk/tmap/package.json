@@ -1,6 +1,6 @@
 {
   "name": "@compose/psdk-tmap",
-  "version": "0.0.38",
+  "version": "0.0.39",
   "description": "腾讯地图 webgl js sdk",
   "author": "TrueNine",
   "license": "private",

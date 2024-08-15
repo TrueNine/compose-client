@@ -1,4 +1,4 @@
-import type {EnumCommentMap, EnumMap} from '@compose/api-types'
+import type {EnumCommentMap, EnumMap} from '@/types'
 
 export enum RelationTyping {
   NONE = 0,

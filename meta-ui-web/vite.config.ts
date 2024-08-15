@@ -38,6 +38,10 @@ export default defineConfig({
         /(element-plus|element-plus\/)/,
         /\.(scss|sass|less|css)/,
         /(lodash-es|lodash-es\/)/,
+        /(yup|yup\/)/,
+        /(vee-validate|vee-validate\/)/,
+        /(@vue\/devtools-api|@vue\/devtools-api\/)/,
+        /(@compose\/extensions|@compose\/extensions\/)/,
         /(dayjs|dayjs\/)/,
         /(@compose|@compose\/)/,
         /@mdi\/font/,
@@ -66,7 +70,7 @@ export default defineConfig({
       staticImport: false,
       entryRoot: 'src',
       strictOutput: true,
-      exclude: ['uno.config.ts', 'dist/**', '__build-src__/**', 'vite.config.ts', '**/__tests__/**', '**/__tests__/**', 'vitest.config.ts', 'playground']
+      exclude: ['uno.config.**', 'dist/**', '__build-src__/**', 'vite.config.**', '**/__tests__/**', '**/__tests__/**', 'vitest.config.**', 'playground']
     }),
     AutoImport({
       imports: [

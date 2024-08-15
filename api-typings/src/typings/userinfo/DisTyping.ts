@@ -1,4 +1,4 @@
-import type {EnumCommentMap, EnumMap} from '@compose/api-types'
+import type {EnumCommentMap, EnumMap} from '@/types'
 
 /**
  * ## 残疾类别枚举

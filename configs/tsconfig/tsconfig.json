@@ -3,7 +3,7 @@
     "strict": true,
     //"composite": true,
     "noImplicitThis": true,
-    "moduleResolution": "Node",
+    "moduleResolution": "Bundler",
     "useDefineForClassFields": true,
     "resolveJsonModule": true,
     "isolatedModules": true,

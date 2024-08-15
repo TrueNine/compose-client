@@ -1,4 +1,4 @@
-import type {double} from '../typescripts'
+import type {double} from '@/typescripts'
 
 /**
  * 地址坐标数据类型

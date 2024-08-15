@@ -1,11 +1,11 @@
 {
   "name": "@compose/api-model",
-  "version": "1.1.113",
+  "version": "1.1.115",
   "description": "yan100 js dev kit",
   "author": "TrueNine",
   "license": "private",
   "scripts": {
-    "prepare": "pnpm --dir ../api-types build && pnpm --dir ../api-typings build && pnpm build",
+    "prepare": "pnpm --dir ../api-types build",
     "build": "rollup --config rollup.config.ts --configPlugin typescript",
     "build-v": "vite build",
     "pub": "run-s build pub-c",
