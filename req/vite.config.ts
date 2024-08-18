@@ -5,11 +5,11 @@ import dts from 'vite-plugin-dts'
 
 export default defineConfig({
   build: {
-    sourcemap: true,
+    sourcemap: false,
     lib: {
       fileName: '[name]',
       entry: 'src/index.ts',
-      formats: ['es', 'cjs']
+      formats: ['es']
     },
     rollupOptions: {
       output: {

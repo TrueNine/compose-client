@@ -2,10 +2,8 @@ import type {UseFetchReturn} from '@vueuse/core'
 import type {dynamic, nil, task} from '@compose/api-types'
 
 /**
- * ## 将 vueuse 的请求，进行一次立即请求
- *
- * @param fetchWith fetch 调用方法
- * @returns 进行的直接请求
+ * @deprecated 请迁移到 [@compose/extension] 包
+ * @see [@compose/extensions] 此包已迁移
  */
 export async function eagerFetch<T = dynamic>(fetchWith: UseFetchReturn<T>): task<nil<T>> {
   const {data, execute, error} = fetchWith

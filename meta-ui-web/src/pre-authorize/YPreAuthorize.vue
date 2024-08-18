@@ -1,43 +1,56 @@
 <script setup lang="tsx">
-import {usePreAuthorize} from '@/common'
+import {isNil} from '@compose/api-model/tools'
+
 import type {YPreAuthorizeProps} from '.'
-import type {dynamic} from '@compose/api-types'
+
+import {usePreAuthorize} from '@/common'
 
 const _handle = usePreAuthorize()
 
-function isEmpty(v: dynamic) {
-  return v === null || v === void 0
-}
-
 const props = withDefaults(defineProps<YPreAuthorizeProps>(), {
   authed: void 0,
+  hasAnyPermissions: () => [],
+  hasAnyRoles: () => [],
+  permissions: () => [],
+  roles: () => [],
   anonymous: void 0
 })
 
 const _authExp = computed(() => {
-  if (isEmpty(props.authed)) return true
+  if (isNil(props.authed)) return true
   else return props.authed === _handle.authed.value
 })
+
 const _anonymousExp = computed(() => {
-  if (isEmpty(props.anonymous)) return true
+  if (isNil(props.anonymous)) return true
   else return props.anonymous === _handle.anonymous.value
 })
+
 const _permissionsExp = computed(() => {
-  if (isEmpty(props.permissions)) return true
+  if (isNil(props.permissions)) return true
   else return _handle.permissions.value && _handle.permissions.value.length && props.permissions?.every(p => _handle.permissions.value?.includes(p) ?? false)
 })
+
 const _rolesExp = computed(() => {
-  if (isEmpty(props.roles)) return true
-  else return _handle.roles.value && _handle.roles.value.length && props.roles?.every(r => _handle.permissions.value?.includes(r) ?? false)
+  if (isNil(props.roles)) return true
+  else return props.roles?.every(r => _handle.permissions.value?.includes(r) ?? false) ?? true
 })
+
 const _hasPermissionsExp = computed(() => {
-  if (isEmpty(props.hasAnyPermissions)) return true
+  if (isNil(props.hasAnyPermissions)) return true
   else return _handle.permissions.value && _handle.permissions.value.length && _handle.permissions.value.some(p => props.hasAnyPermissions?.includes(p))
 })
+
 const _hasRolesExp = computed(() => {
-  if (isEmpty(props.hasAnyRoles)) return true
+  console.log({
+    roles: props.hasAnyRoles,
+    emp: isNil(props.hasAnyRoles),
+    isArr: Array.isArray(props.hasAnyRoles)
+  })
+  if (isNil(props.hasAnyRoles)) return true
   else return _handle.roles.value.some(r => props.hasAnyRoles?.includes(r))
 })
+
 const _exp = computed(() => {
   return _authExp.value && _anonymousExp.value && _permissionsExp.value && _rolesExp.value && _hasPermissionsExp.value && _hasRolesExp.value
 })

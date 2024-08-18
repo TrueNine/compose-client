@@ -6,6 +6,10 @@ import tz from 'dayjs/plugin/timezone'
 import {ISO8601Format, ISO8601TimeZone} from '@/consts'
 export type DayJSNewInstanceOptions = string | timestamp | Date | dayjs.Dayjs
 
+/**
+ * @deprecated 请迁移到 [@compose/extension] 包
+ * @see [@compose/extensions] 此包已迁移
+ */
 interface Params {
   date?: DayJSNewInstanceOptions
   format?: string
@@ -13,6 +17,10 @@ interface Params {
   tz?: string
 }
 
+/**
+ * @deprecated 请迁移到 [@compose/extension] 包
+ * @see [@compose/extensions] 此包已迁移
+ */
 export class DayJs {
   static DEFAULT_TZ: string
   static DEFAULT_UTC: boolean

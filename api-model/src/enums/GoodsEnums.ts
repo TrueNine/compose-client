@@ -2,6 +2,7 @@ import type {Pair} from '@compose/api-types'
 
 /**
  * 商品类型
+ * @deprecated 已经过时老旧，等待迁移
  */
 export enum GoodsTyping {
   /**
@@ -18,6 +19,9 @@ export enum GoodsTyping {
   VIRTUAL_GOODS = 2
 }
 
+/**
+ * @deprecated 已经过时老旧，等待迁移
+ */
 export const GoodsTypingPairs: Pair<string, number>[] = [
   {
     k: '实体商品',
@@ -35,6 +39,7 @@ export const GoodsTypingPairs: Pair<string, number>[] = [
 
 /**
  * 商品单位更改记录
+ * @deprecated 已经过时老旧，等待迁移
  */
 export enum GoodsChangeRecordTyping {
   /**
@@ -49,6 +54,7 @@ export enum GoodsChangeRecordTyping {
 
 /**
  * 商品信息分类
+ * @deprecated 已经过时老旧，等待迁移
  */
 export enum GoodsInfoTyping {
   /**
@@ -67,6 +73,9 @@ export enum GoodsInfoTyping {
   GOODS_UNIT_EXTEND_INFO = 2
 }
 
+/**
+ * @deprecated 已经过时老旧，等待迁移
+ */
 export const GoodsInfoTypingPairs: Pair<string, number>[] = [
   {
     k: '检索类型',

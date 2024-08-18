@@ -1,6 +1,6 @@
 {
   "name": "@compose/extensions",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "yan100 extensions functions and apis",
   "author": "TrueNine",
   "license": "private",
@@ -14,43 +14,35 @@
   },
   "type": "module",
   "module": "dist/index.js",
-  "main": "dist/index.cjs",
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
+      "import": "./dist/index.js"
     },
     "./dayjs": {
       "types": "./dist/dayjs/index.d.ts",
-      "import": "./dist/dayjs/index.js",
-      "require": "./dist/dayjs/index.cjs"
+      "import": "./dist/dayjs/index.js"
     },
     "./browser": {
       "types": "./dist/browser/index.d.ts",
-      "import": "./dist/browser/index.js",
-      "require": "./dist/browser/index.cjs"
+      "import": "./dist/browser/index.js"
     },
     "./vue": {
       "types": "./dist/vue/index.d.ts",
-      "import": "./dist/vue/index.js",
-      "require": "./dist/vue/index.cjs"
+      "import": "./dist/vue/index.js"
     },
     "./lodash-es": {
       "types": "./dist/lodash-es/index.d.ts",
-      "import": "./dist/lodash-es/index.js",
-      "require": "./dist/lodash-es/index.cjs"
+      "import": "./dist/lodash-es/index.js"
     },
     "./pdfjs-dist": {
       "types": "./dist/pdfjs-dist/index.d.ts",
-      "import": "./dist/pdfjs-dist/index.js",
-      "require": "./dist/pdfjs-dist/index.cjs"
+      "import": "./dist/pdfjs-dist/index.js"
     },
     "./libarchive-js": {
       "types": "./dist/libarchive-js/index.d.ts",
-      "import": "./dist/libarchive-js/index.js",
-      "require": "./dist/libarchive-js/index.cjs"
+      "import": "./dist/libarchive-js/index.js"
     },
     "./*": "./*",
     "./**": "./**",

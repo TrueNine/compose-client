@@ -5,11 +5,13 @@ import dts from 'vite-plugin-dts'
 
 export default defineConfig({
   build: {
-    sourcemap: true,
+    minify: 'terser',
+    terserOptions: {},
+    sourcemap: false,
     lib: {
       fileName: '[name]',
-      entry: 'src/index.ts',
-      formats: ['es', 'cjs']
+      entry: ['src/index.ts', 'src/tools/index.ts', 'src/typings/index.ts'],
+      formats: ['es']
     },
     rollupOptions: {
       output: {

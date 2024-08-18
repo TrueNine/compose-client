@@ -1,6 +1,6 @@
 {
   "name": "@compose/api-typings",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "yan100 enum defines",
   "author": "TrueNine",
   "license": "private",
@@ -13,13 +13,22 @@
   },
   "type": "module",
   "module": "dist/index.js",
-  "main": "dist/index.cjs",
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
+      "import": "./dist/index.js"
+    },
+    "./tools": {
+      "types": "./dist/tools/index.d.ts",
+      "import": "./dist/tools/index.js"
+    },
+    "./typings": {
+      "types": "./dist/typings/tools/index.d.ts",
+      "import": "./dist/typings/tools/index.js"
+    },
+    "./types": {
+      "types": "./dist/types/index.d.ts"
     },
     "./*": "./*",
     "./**": "./**",

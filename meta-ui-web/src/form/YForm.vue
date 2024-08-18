@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import {useForm} from 'vee-validate'
-import type {dynamic, late, nil} from '@compose/api-types'
+import {type FormValidationResult, useForm} from 'vee-validate'
+import type {dynamic, nil} from '@compose/api-types'
 import {isEqual} from '@compose/extensions/lodash-es'
 import {maybeArray} from '@compose/api-model'
 
@@ -12,7 +12,9 @@ const props = withDefaults(defineProps<YFormProps>(), {
   isValid: true,
   schema: void 0,
   step: 0,
-  everyStep: false
+  sync: () => ({}),
+  everyStep: false,
+  mixins: () => ({})
 })
 const emits = defineEmits<YFormEmits>()
 
@@ -20,29 +22,25 @@ const _isValid = useVModel(props, 'isValid', emits, {passive: true}) as unknown 
 const _step = useVModel(props, 'step', emits, {passive: true}) as unknown as Ref<number>
 const _modelValue = useVModel(props, 'modelValue', emits, {passive: true})
 const _value = useVModel(props, 'value', emits, {passive: true})
-const _mixins = useVModel(props, 'mixins', emits, {passive: true}) as unknown as Ref<Record<string, dynamic>>
-
-syncRef(_modelValue as Ref<dynamic>, _value as Ref<dynamic>)
+const _mixins = useVModel(props, 'mixins', emits, {passive: true, defaultValue: {}}) as unknown as Ref<Record<string, dynamic>>
+const _sync = useVModel(props, 'sync', emits, {passive: true, defaultValue: {}}) as unknown as Ref<dynamic>
+syncRef(_modelValue, _value)
 
 const validatedState = computed({
   get: () => {
     const rr = usedForm.errorBag
     if (rr) {
-      const isValid = Object.values(rr)
+      return Object.values(rr)
         .filter(e => typeof e === 'string')
         .every(v => !v)
-      ;(_isValid.value as unknown as late<boolean>) = isValid
-      return isValid
     } else return true
   },
-  set: v => {
-    ;(_isValid.value as unknown as late<boolean>) = v
-  }
+  set: v => (_isValid.value = v)
 })
 const stepCounter = computed(() => _cachedSchemas.value.length)
-const hasPrevious = computed(() => _step.value > 0)
-const isLastStep = computed(() => _step.value === stepCounter.value)
-
+const hasPreviousStep = computed(() => _step.value > 0)
+const isLastStep = computed(() => _step.value === stepCounter.value - 1)
+const allValues = ref<dynamic[]>([])
 const _cachedSchemas = computed(() => maybeArray(props.schema))
 const _cachedSchema = computed(() => _cachedSchemas.value[(_step.value ?? 0) as number])
 
@@ -56,15 +54,17 @@ const submitting = ref(false)
 const mergedAllValues = computed(() => {
   return allValues.value.reduce((p, c, i) => {
     return {
-      ...p,
-      ...(i === _step.value ? _modelValue.value : c),
-      ..._mixins.value
+      ...(_mixins.value ?? {}),
+      ...(p ?? {}),
+      ...(i === _step.value ? (_modelValue.value ?? {}) : (c ?? {}))
     }
   }, {})
 })
+syncRef(mergedAllValues, _sync, {direction: 'ltr', deep: true})
+
 const stepSubmitHandle = (values: dynamic, errors?: dynamic) => {
+  submitting.value = true
   try {
-    submitting.value = true
     console.log({
       values,
       step: _step.value,
@@ -72,16 +72,8 @@ const stepSubmitHandle = (values: dynamic, errors?: dynamic) => {
       mergedAllValues: mergedAllValues.value,
       isLastStep: isLastStep.value
     })
-
-    allValues.value[_step.value] = values
-    if (props.everyStep || _cachedSchemas.value.length === 1) {
-      emits('submit', values, _step.value)
-    } else if (!isLastStep.value) {
-      emits('next', values, _step.value)
-      _step.value++
-    } else if (isLastStep.value) {
-      emits('submit', mergedAllValues.value, _step.value)
-    }
+    if (props.everyStep) emits('next', values, _step.value)
+    if (isLastStep.value || stepCounter.value === 1) emits('submit', mergedAllValues.value, _step.value)
   } finally {
     submitting.value = false
   }
@@ -89,17 +81,15 @@ const stepSubmitHandle = (values: dynamic, errors?: dynamic) => {
 
 const submitFn = usedForm.handleSubmit(
   vs => {
-    const submitValue = props.everyStep ? mergedAllValues.value : vs
-    stepSubmitHandle(submitValue, void 0)
+    stepSubmitHandle(vs, void 0)
   },
   ({values, errors}) => {
     const errs = Object.values(errors)
     if (errs.length) {
       // 特殊消息体被视为警告
-      if (errs.every(v => typeof v !== 'string')) {
+      if ((errs as dynamic[]).every(v => typeof v !== 'string')) {
         console.log('errorSubmit')
-        const submitValue = props.everyStep ? mergedAllValues.value : values
-        stepSubmitHandle(submitValue, errors)
+        stepSubmitHandle(values, errors)
       } else validatedState.value = false
     } else validatedState.value = false
   }
@@ -109,7 +99,6 @@ const resetFn = () => {
   emits('reset', _modelValue.value, validatedState.value)
 }
 const formRef = ref<nil<HTMLFormElement>>(null)
-const allValues = ref<dynamic[]>([])
 
 syncRef(usedForm.values as Ref<dynamic>, _modelValue as Ref<dynamic>, {
   immediate: true,
@@ -140,28 +129,43 @@ watch(
   () => _step.value,
   async (v, o) => {
     if (v < o) _isValid.value = true
-    if (v !== o) allValues.value[_step.value] = _modelValue.value
+    if (v !== o) allValues.value[v] = _modelValue.value
   }
 )
 
 function goToPrev() {
-  if (!hasPrevious.value) return
+  if (!hasPreviousStep.value) return
   _step.value--
 }
 
 const getForm = () => usedForm
-const validate = async () => {
-  console.log(`trigger validate step = ${_step.value}`)
-  const r = await usedForm.validate()
-  return r.valid && !r.errors
+const getRef = () => formRef.value
+
+const validIsError = (r: FormValidationResult<dynamic>) => {
+  if (r.valid) return r.valid
+  else {
+    if (r.errors) {
+      const errorValues = Object.values(r.errors)
+      return errorValues.every(v => typeof v !== 'string')
+    } else return false
+  }
 }
+
+const validate = async (): Promise<boolean> => {
+  const r = await usedForm.validate()
+  _isValid.value = validIsError(r)
+  return _isValid.value
+}
+
 defineExpose({
-  getForm
+  getForm,
+  getRef,
+  validate
 })
 </script>
 
 <template>
-  <form ref="formRef" @reset.prevent="resetFn" @submit.prevent="submitFn">
+  <form v-bind="$attrs" ref="formRef" @reset.prevent="resetFn" @submit.prevent="submitFn">
     <slot
       :prev="goToPrev"
       :form-ref="formRef!"

@@ -1,6 +1,6 @@
 import {describe, test, expect} from 'vitest'
 
-import {enumValues} from '@/enums'
+import {enumValues} from '@/tools'
 
 enum ConEnum {
   NONE,

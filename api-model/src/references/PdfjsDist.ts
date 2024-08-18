@@ -1,7 +1,10 @@
 import type {PDFDocumentProxy, PDFPageProxy} from 'pdfjs-dist'
 import type {dynamic, task} from '@compose/api-types'
 import * as pdfjs from 'pdfjs-dist'
-
+/**
+ * @deprecated 请迁移到 [@compose/extension] 包
+ * @see [@compose/extensions] 此包已迁移
+ */
 interface PDFImageData {
   data: number[]
   bitmap: ImageBitmap
@@ -10,7 +13,10 @@ interface PDFImageData {
   width: number
   height: number
 }
-
+/**
+ * @deprecated 请迁移到 [@compose/extension] 包
+ * @see [@compose/extensions] 此包已迁移
+ */
 export class PdfJs {
   private static __workSrc: string
   private static __pdf = pdfjs

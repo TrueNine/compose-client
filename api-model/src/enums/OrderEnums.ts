@@ -2,6 +2,7 @@ import type {Pair} from '@compose/api-types'
 
 /**
  * 订单状态
+ * @deprecated 已经过时老旧，等待迁移
  */
 export enum OrderStatusTyping {
   PRE_PAY = 1001,
@@ -14,6 +15,9 @@ export enum OrderStatusTyping {
   PRE_REFUND = 4001
 }
 
+/**
+ * @deprecated 已经过时老旧，等待迁移
+ */
 export const OrderStatusTypingPairs: Pair<string, number>[] = [
   {
     k: '预付款',
@@ -51,12 +55,16 @@ export const OrderStatusTypingPairs: Pair<string, number>[] = [
 
 /**
  * 支付渠道枚举
+ * @deprecated 已经过时老旧，等待迁移
  */
 export enum PayChannelTyping {
   WECHAT = 0,
   ALIPAY = 1
 }
 
+/**
+ * @deprecated 已经过时老旧，等待迁移
+ */
 export const PayChannelTypingPairs: Pair<string, number>[] = [
   {
     k: '微信支付',
@@ -70,6 +78,7 @@ export const PayChannelTypingPairs: Pair<string, number>[] = [
 
 /**
  * 支付流转类型
+ * @deprecated 已经过时老旧，等待迁移
  */
 export enum PaymentTyping {
   PRE_PAY = 1001,
@@ -79,6 +88,9 @@ export enum PaymentTyping {
   REFUNDED = 2002
 }
 
+/**
+ * @deprecated 已经过时老旧，等待迁移
+ */
 export const PaymentTypingPairs: Pair<string, number>[] = [
   {
     k: '预付款',

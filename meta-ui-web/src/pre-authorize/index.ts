@@ -1,4 +1,4 @@
-import {Vue} from '@compose/api-model'
+import {Vue} from '@compose/extensions/vue'
 
 import _c from './YPreAuthorize.vue'
 

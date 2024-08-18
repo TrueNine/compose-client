@@ -16,13 +16,13 @@ export const nodeModulesPath = joinPath('../node_modules')
 console.log(distPath)
 
 export async function buildUnocss(fName = 'unocss.css') {
-  const cmd = `unocss "${basePath}/**/*.vue" -c ${basePath}/uno.config.ts -o ${distPath}/${fName} -m`
-  console.log(`execute uno compile: ${cmd}   basePath ${basePath}`)
+  const cmd = `unocss "${basePath}/src/**/*.vue" -c ${basePath}/uno.config.ts -o ${distPath}/${fName} -m`
+  console.log(`execute uno compile: ${cmd}   basePath ${basePath}/src`)
   await run(cmd, basePath)
 }
 
 export const buildStyle = () => {
-  return src(`${basePath}/**/**.scss`)
+  return src(`${basePath}/src/**/**.scss`)
     .pipe(
       gulpSass(sass)({
         includePaths: [nodeModulesPath]
@@ -43,11 +43,11 @@ export default series(
   parallel(
     async () => buildStyle(),
     async () => buildUnocss()
-  ),
-  series(
+  )
+  /*  series(
     () => moveBuildStyle(),
     () => deleteBuildStyle()
-  )
+  )*/
 ) as unknown
 
 export function joinPath(pattern: string): string {

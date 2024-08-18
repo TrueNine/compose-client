@@ -5,7 +5,7 @@ import dts from 'vite-plugin-dts'
 
 export default defineConfig({
   build: {
-    sourcemap: true,
+    sourcemap: false,
     lib: {
       fileName: '[name]',
       entry: [
@@ -17,7 +17,7 @@ export default defineConfig({
         'src/pdfjs-dist/index.ts',
         'src/vue/index.ts'
       ],
-      formats: ['es', 'cjs']
+      formats: ['es']
     },
     rollupOptions: {
       output: {

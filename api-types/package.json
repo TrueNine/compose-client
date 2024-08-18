@@ -1,6 +1,6 @@
 {
   "name": "@compose/api-types",
-  "version": "1.0.110",
+  "version": "1.0.111",
   "description": "yan100 client ui kit",
   "author": "TrueNine",
   "license": "private",
@@ -14,13 +14,11 @@
   },
   "type": "module",
   "module": "dist/index.js",
-  "main": "dist/index.cjs",
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
+      "import": "./dist/index.js"
     },
     "./*": "./*",
     "./**": "./**",

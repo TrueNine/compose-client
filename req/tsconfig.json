@@ -6,7 +6,7 @@
       "@/*": ["./src/*"]
     },
     "declaration": true,
-    "declarationMap": true,
+    "declarationMap": false,
     "declarationDir": "dist"
   },
   "exclude": ["node_modules", "dist"]

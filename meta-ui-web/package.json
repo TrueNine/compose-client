@@ -1,6 +1,6 @@
 {
   "name": "@compose/meta-ui-web",
-  "version": "1.1.182",
+  "version": "1.1.196",
   "scripts": {
     "dev": "vite",
     "build-gulp": "gulp -f ./__build-src__/index.ts",
@@ -8,11 +8,10 @@
     "type-check": "vue-tsc --noEmit",
     "build": "run-s type-check build-vite build-gulp",
     "pub": "run-s build pub-c",
-    "pub-c": "pnpm publish --no-git-checks"
+    "pub-c": "pnpm --dir ./dist pub"
   },
   "type": "module",
   "module": "dist/index.js",
-  "main": "dist/index.cjs",
   "types": "dist/index.d.ts",
   "typings": "dist/index.d.ts",
   "sideEffects": [
@@ -24,16 +23,19 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
+      "import": "./dist/index.js"
     },
     "./unplugin": {
       "types": "./dist/unplugin/index.d.ts",
-      "import": "./dist/unplugin/index.js",
-      "require": "./dist/unplugin/index.cjs"
+      "import": "./dist/unplugin/index.js"
+    },
+    "./common": {
+      "types": "./dist/common/index.d.ts",
+      "import": "./dist/common/index.js"
     },
     "./*": "./*",
     "./**": "./**",
+    "./unocss.css": "./unocss.css",
     "./dist/*": "./dist/*"
   },
   "files": [

@@ -1,6 +1,6 @@
 {
   "name": "@compose/api-model",
-  "version": "1.1.115",
+  "version": "1.1.117",
   "description": "yan100 js dev kit",
   "author": "TrueNine",
   "license": "private",
@@ -14,13 +14,27 @@
   },
   "type": "module",
   "module": "dist/index.js",
-  "main": "dist/index.cjs",
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
+      "import": "./dist/index.js"
+    },
+    "./consts": {
+      "types": "./dist/consts/index.d.ts",
+      "import": "./dist/consts/index.js"
+    },
+    "./pageable": {
+      "types": "./dist/pageable/index.d.ts",
+      "import": "./dist/pageable/index.js"
+    },
+    "./data": {
+      "types": "./dist/data/index.d.ts",
+      "import": "./dist/data/index.js"
+    },
+    "./tools": {
+      "types": "./dist/tools/index.d.ts",
+      "import": "./dist/tools/index.js"
     },
     "./*": "./*",
     "./**": "./**",

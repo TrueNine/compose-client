@@ -11,12 +11,14 @@ export interface YFormProps extends ModelValueProps<dynamic> {
   isValid?: boolean
   step?: number
   mixins?: object
+  sync?: dynamic
   everyStep?: boolean
 }
 
 export interface YFormEmits extends ModelValueEmits<dynamic> {
   (e: 'update:isValid', v: boolean): void
   (e: 'update:mixins', v: dynamic): void
+  (e: 'update:sync', v: dynamic): void
   (e: 'submit', values?: dynamic, step?: number): void
   (e: 'next', values?: dynamic, step?: number): void
   (e: 'reset', values?: dynamic, isValid?: boolean): void

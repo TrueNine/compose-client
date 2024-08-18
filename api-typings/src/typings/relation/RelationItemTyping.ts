@@ -1,5 +1,5 @@
 import type {EnumCommentMap} from '@/types'
-import {enumToOutput} from '@/enums'
+import {enumToOutput} from '@/tools'
 
 export enum RelationItemTyping {
   NONE = 0,

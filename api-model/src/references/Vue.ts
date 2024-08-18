@@ -2,18 +2,37 @@ import type {CreateComponentPublicInstance, Plugin, RendererElement, RendererNod
 import type {clip, dynamic, Maybe, newable} from '@compose/api-types'
 
 import {maybeArray} from '../tools'
-
+/**
+ * @deprecated 请迁移到 [@compose/extension] 包
+ * @see [@compose/extensions] 此包已迁移
+ */
 export interface VueComponentInstanceMapping {
   name?: string
   __name?: string
-}
+} /**
+ * @deprecated 请迁移到 [@compose/extension] 包
+ * @see [@compose/extensions] 此包已迁移
+ */
 export type SFCWithInstall<T = dynamic> = T & Plugin & VueComponentInstanceMapping & {install: (app: dynamic) => void}
+/**
+ * @deprecated 请迁移到 [@compose/extension] 包
+ * @see [@compose/extensions] 此包已迁移
+ */
 export type a = CreateComponentPublicInstance
+/**
+ * @deprecated 请迁移到 [@compose/extension] 包
+ * @see [@compose/extensions] 此包已迁移
+ */
 type SlotNode = VNode<RendererNode, RendererElement, Record<string, dynamic>> & {actualName?: string}
+/**
+ * @deprecated 请迁移到 [@compose/extension] 包
+ * @see [@compose/extensions] 此包已迁移
+ */
 type NotChildrenSlotNode = clip<SlotNode, 'children'>
 
 /**
- * ## 针对 vue 封装的一些工具函数
+ * @deprecated 请迁移到 [@compose/extension] 包
+ * @see [@compose/extensions] 此包已迁移
  */
 export class Vue {
   static UNDEFINED_NAME = 'NameUndefined'

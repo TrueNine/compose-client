@@ -5,10 +5,7 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "types": ["./imports-auto.d.ts", "./imports-comp.d.ts"],
-    "declaration": true,
-    "declarationMap": true,
-    "declarationDir": "dist"
+    "types": ["./imports-auto.d.ts", "./imports-comp.d.ts"]
   },
-  "exclude": ["uno.config.ts"]
+  "exclude": ["uno.config.ts","dist"]
 }
