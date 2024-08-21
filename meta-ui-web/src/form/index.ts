@@ -1,13 +1,14 @@
 import {Vue} from '@compose/extensions/vue'
-import type {dynamic, Maybe} from '@compose/api-types'
-import type {Schema} from 'yup'
+import type {dynamic, Maybe, nil} from '@compose/api-types'
+import type {ObjectSchema, Schema} from 'yup'
+import type {FormContext} from 'vee-validate'
 
 import _c from './YForm.vue'
 
 import type {ModelValueEmits, ModelValueProps} from '@/common'
 
 export interface YFormProps extends ModelValueProps<dynamic> {
-  schema?: Maybe<Schema<dynamic, dynamic>>
+  schema?: Maybe<ObjectSchema<dynamic, dynamic>>
   isValid?: boolean
   step?: number
   mixins?: object
@@ -26,6 +27,14 @@ export interface YFormEmits extends ModelValueEmits<dynamic> {
   (e: 'error'): void
   (e: 'update:everyStep', v: boolean): void
 }
+export interface YFormInjection {
+  getForm: () => FormContext<dynamic, dynamic>
+  getRef: () => nil<HTMLFormElement>
+  validate: () => Promise<boolean>
+  setFieldValidate: (key: string, schema: Schema<dynamic, dynamic>) => void
+}
+
+export const YFormInjectionKey: InjectionKey<YFormInjection> = Symbol('YForm-Injection-Provider')
 
 const a = Vue.componentInstallToPlugin<typeof _c>(_c)
 export default a

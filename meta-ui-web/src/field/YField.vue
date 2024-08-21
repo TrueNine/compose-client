@@ -3,6 +3,7 @@ import {useField} from 'vee-validate'
 import type {dynamic} from '@compose/api-types'
 
 import type {YFieldEmits, YFieldProps} from '@/field'
+import {YFormInjectionKey} from '@/form'
 
 const props = withDefaults(defineProps<YFieldProps>(), {
   modelValue: void 0,
@@ -75,6 +76,30 @@ const onUpdateErrorMessages = (v?: Err) => {
 defineSlots<{
   input: (e: dynamic) => dynamic
 }>()
+
+const slots = useSlots()
+const schemaFn = ref<() => dynamic>()
+onMounted(() => {
+  const inp = slots.input
+  if (inp) {
+    const r = inp()
+    if (r) {
+      const first = r.slice(0, 1)[0]
+      if (first) {
+        const sf = (first as dynamic).defaultValidateSchema
+        if (sf && typeof sf === 'function') schemaFn.value = sf
+      }
+    }
+  }
+})
+const parentForm = inject(YFormInjectionKey, void 0)
+
+onUpdated(() => {
+  if (schemaFn.value) {
+    const r = schemaFn.value()
+    if (r && parentForm) parentForm.setFieldValidate(props.name, r)
+  }
+})
 </script>
 
 <template>

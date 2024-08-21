@@ -3,8 +3,9 @@ import {type FormValidationResult, useForm} from 'vee-validate'
 import type {dynamic, nil} from '@compose/api-types'
 import {isEqual} from '@compose/extensions/lodash-es'
 import {maybeArray} from '@compose/api-model'
+import type {Schema} from 'yup'
 
-import type {YFormEmits, YFormProps} from '@/form/index'
+import {type YFormEmits, type YFormInjection, YFormInjectionKey, type YFormProps} from '@/form/index'
 
 const props = withDefaults(defineProps<YFormProps>(), {
   modelValue: void 0,
@@ -156,12 +157,22 @@ const validate = async (): Promise<boolean> => {
   _isValid.value = validIsError(r)
   return _isValid.value
 }
+function setFieldValidate(key: string, schema: Schema<dynamic, dynamic>) {
+  if (_cachedSchema.value) {
+    _cachedSchemas.value[(_step.value ?? 0) as number] = _cachedSchema.value?.shape({
+      [key]: schema
+    })
+  }
+}
 
-defineExpose({
+const expose: YFormInjection = {
   getForm,
   getRef,
-  validate
-})
+  validate,
+  setFieldValidate
+}
+provide(YFormInjectionKey, expose)
+defineExpose(expose)
 </script>
 
 <template>
