@@ -1,7 +1,14 @@
-# 项目说明
+# Compose-Client
 
-芸芸众生，日了狗的事情多的是，dcloud 算是其中的佼佼者了吧？
+前端工具库
 
-为 uni-app 做的一些扩展以及定义，方便老子亲自下场。
-
-uni-app 的版本管理 [github](https://github.com/dcloudio/uni-app/tags)
+- api-model：工具函数
+- api-typings：枚举常量
+- api-types：基础类型
+- configs：各种配置片段
+- ext：浏览器插件
+- extensions：外部库扩展函数
+- meta-ui-web：UI组件
+- platform-sdk：平台 SDK 扩展及定义
+- req：网络库
+- uni-app：uni-app 扩展
