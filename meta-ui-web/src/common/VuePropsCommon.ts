@@ -1,4 +1,5 @@
-import type {Maybe, StrOrNum} from '@compose/api-types'
+import type {asyncable, dynamic, late, Maybe, StrOrNum} from '@compose/api-types'
+import type {Schema} from 'yup'
 
 /**
  * ## 可变换组件 Props
@@ -40,6 +41,13 @@ export interface ModelValueEmits<T = unknown> {
 }
 
 export interface FormFieldStyleProps {
+  /**
+   * ## 组件 的默认校验逻辑
+   * 一般 无需设置此值 ，仅当你自定义组件时
+   *
+   * 此  prop 会在 prop 内被调用，当当前字段无 校验 schema 时
+   */
+  defaultValidateSchema?: () => asyncable<late<Schema<dynamic, dynamic>>>
   label?: string
   placeholder?: string
   errorMessages?: Maybe<string>

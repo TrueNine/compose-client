@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "strict": true,
+    "removeComments": true,
     //"composite": true,
     "noImplicitThis": true,
     "moduleResolution": "Bundler",

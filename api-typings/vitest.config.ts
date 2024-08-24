@@ -1,16 +1,23 @@
-import {fileURLToPath} from 'node:url'
+import {fileURLToPath, URL} from 'node:url'
 
-import {configDefaults, defineConfig, mergeConfig} from 'vitest/config'
+import {manifest} from '@compose/config-vite-fragment'
 
-import viteConfig from './vite.config'
-
-export default mergeConfig(
-  viteConfig,
-  defineConfig({
-    test: {
-      environment: 'jsdom',
-      exclude: [...configDefaults.exclude, 'e2e/*'],
-      root: fileURLToPath(new URL('./', import.meta.url))
+const {defineConfig, buildConfigLib, dtsPlugin, staticCopyPluginPackageJson} = manifest({
+  features: {
+    lang: 'ts',
+    lib: {
+      formats: ['es'],
+      sourcemap: true
     }
-  })
-)
+  }
+})
+
+export default defineConfig({
+  build: buildConfigLib(),
+  plugins: [dtsPlugin(), staticCopyPluginPackageJson()],
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url))
+    }
+  }
+})

@@ -5,7 +5,6 @@
   "author": "TrueNine",
   "license": "private",
   "scripts": {
-    "prepare": "pnpm --dir ../api-typings build",
     "build": "run-s type-check build-c",
     "build-c": "vite build",
     "type-check": "vue-tsc --noEmit",

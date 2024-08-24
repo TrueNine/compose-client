@@ -1,6 +1,6 @@
 {
   "name": "@compose/config-uno",
-  "version": "0.1.185",
+  "version": "0.1.186",
   "description": "uno css code snippets",
   "author": "TrueNine",
   "license": "private",
@@ -8,8 +8,8 @@
     "build": "run-s type-check build-c",
     "build-c": "vite build",
     "type-check": "vue-tsc --noEmit",
-    "pub": "run-s  build pub-c",
-    "pub-c": "pnpm publish --no-git-checks"
+    "pub": "run-s build pub-c",
+    "pub-c": "pnpm --dir ./dist pub"
   },
   "type": "module",
   "module": "dist/index.js",
@@ -23,22 +23,13 @@
     },
     "./*": "./*"
   },
-  "dependencies": {
+  "peerDependencies": {
     "@unocss/cli": "^0.62.2",
     "@unocss/core": "^0.62.2",
     "@unocss/postcss": "^0.62.2",
     "@unocss/transformer-compile-class": "^0.62.2",
     "@unocss/transformer-directives": "^0.62.2",
-    "unocss": "0.62.1",
-    "unocss-preset-weapp": "^0.61.1"
-  },
-  "peerDependencies": {
-    "@unocss/cli": "^0.62.1",
-    "@unocss/core": "^0.62.1",
-    "@unocss/postcss": "^0.62.1",
-    "@unocss/transformer-compile-class": "^0.62.1",
-    "@unocss/transformer-directives": "^0.62.1",
-    "unocss": "0.62.1",
-    "unocss-preset-weapp": "^0.61.1"
+    "unocss": "0.62.2",
+    "unocss-preset-weapp": "^0.62.0"
   }
 }

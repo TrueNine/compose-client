@@ -2,6 +2,7 @@ import {Vue} from '@compose/extensions/vue'
 import type {dynamic, Maybe, nil} from '@compose/api-types'
 import type {ObjectSchema, Schema} from 'yup'
 import type {FormContext} from 'vee-validate'
+import type {InjectionKey} from 'vue'
 
 import _c from './YForm.vue'
 

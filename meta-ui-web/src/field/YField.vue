@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {useField} from 'vee-validate'
 import type {dynamic} from '@compose/api-types'
+import type {Schema} from 'yup'
 
 import type {YFieldEmits, YFieldProps} from '@/field'
 import {YFormInjectionKey} from '@/form'
@@ -78,32 +79,39 @@ defineSlots<{
 }>()
 
 const slots = useSlots()
-const schemaFn = ref<() => dynamic>()
+const schemaFn = ref<() => Schema<dynamic, dynamic>>()
 onMounted(() => {
   const inp = slots.input
   if (inp) {
     const r = inp()
     if (r) {
-      const first = r.slice(0, 1)[0]
+      const first = r
+        .filter(e => {
+          const typ = e.type as dynamic
+          return typ && typ.props && typ.props.defaultValidateSchema && typ.props.defaultValidateSchema.default
+        })
+        .map(e => (e.type as dynamic).props.defaultValidateSchema.default)
+        .slice(0, 1)[0]
       if (first) {
-        const sf = (first as dynamic).defaultValidateSchema
-        if (sf && typeof sf === 'function') schemaFn.value = sf
+        if (first && typeof first === 'function') schemaFn.value = first
       }
     }
   }
 })
-const parentForm = inject(YFormInjectionKey, void 0)
 
-onUpdated(() => {
-  if (schemaFn.value) {
+const parentForm = inject(YFormInjectionKey, void 0)
+onMounted(() => {
+  if (schemaFn.value && parentForm) {
     const r = schemaFn.value()
-    if (r && parentForm) parentForm.setFieldValidate(props.name, r)
+    console.log(r)
+    if (r) parentForm.setFieldValidate(props.name, r)
   }
 })
 </script>
 
 <template>
   <slot
+    ref="slotRef"
     name="input"
     v-bind="otherModelProps"
     :hint="primaryWarning"

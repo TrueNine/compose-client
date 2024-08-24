@@ -3,20 +3,12 @@ import {type FormValidationResult, useForm} from 'vee-validate'
 import type {dynamic, nil} from '@compose/api-types'
 import {isEqual} from '@compose/extensions/lodash-es'
 import {maybeArray} from '@compose/api-model'
-import type {Schema} from 'yup'
+import {object, ObjectSchema, type Schema} from 'yup'
 
 import {type YFormEmits, type YFormInjection, YFormInjectionKey, type YFormProps} from '@/form/index'
 
-const props = withDefaults(defineProps<YFormProps>(), {
-  modelValue: void 0,
-  value: void 0,
-  isValid: true,
-  schema: void 0,
-  step: 0,
-  sync: () => ({}),
-  everyStep: false,
-  mixins: () => ({})
-})
+const props = defineProps<YFormProps>()
+
 const emits = defineEmits<YFormEmits>()
 
 const _isValid = useVModel(props, 'isValid', emits, {passive: true}) as unknown as Ref<boolean>
@@ -42,7 +34,37 @@ const stepCounter = computed(() => _cachedSchemas.value.length)
 const hasPreviousStep = computed(() => _step.value > 0)
 const isLastStep = computed(() => _step.value === stepCounter.value - 1)
 const allValues = ref<dynamic[]>([])
-const _cachedSchemas = computed(() => maybeArray(props.schema))
+// 响应  props.schema
+const _propsSchema = reactive({
+  value: props.schema
+})
+watch(
+  () => props.schema,
+  v => {
+    _propsSchema.value = v
+  }
+)
+
+const _cachedSchemas = computed({
+  get: () => {
+    const arr = maybeArray(_propsSchema.value)
+    return arr.map((e, i) => {
+      const n = _newSchemas.value[i]
+      return n ? e?.shape(n) : e
+    })
+  },
+  set: v => {
+    const s = v[0]
+    if (s) {
+      if (Array.isArray(_propsSchema.value)) {
+        const cp = _propsSchema.value
+        cp[_step.value] = _newSchemas.value[_step.value] ? s : s.shape()
+        _propsSchema.value = cp
+      } else _propsSchema.value = s
+    }
+  }
+})
+
 const _cachedSchema = computed(() => _cachedSchemas.value[(_step.value ?? 0) as number])
 
 const usedForm = useForm({
@@ -66,13 +88,6 @@ syncRef(mergedAllValues, _sync, {direction: 'ltr', deep: true})
 const stepSubmitHandle = (values: dynamic, errors?: dynamic) => {
   submitting.value = true
   try {
-    console.log({
-      values,
-      step: _step.value,
-      errors,
-      mergedAllValues: mergedAllValues.value,
-      isLastStep: isLastStep.value
-    })
     if (props.everyStep) emits('next', values, _step.value)
     if (isLastStep.value || stepCounter.value === 1) emits('submit', mergedAllValues.value, _step.value)
   } finally {
@@ -157,11 +172,15 @@ const validate = async (): Promise<boolean> => {
   _isValid.value = validIsError(r)
   return _isValid.value
 }
+
+const _newSchemas = ref<Record<string, Schema<dynamic, dynamic>>[]>([])
+
 function setFieldValidate(key: string, schema: Schema<dynamic, dynamic>) {
   if (_cachedSchema.value) {
-    _cachedSchemas.value[(_step.value ?? 0) as number] = _cachedSchema.value?.shape({
-      [key]: schema
-    })
+    const customSchema = {[key]: schema}
+    const shape = _cachedSchema.value.shape(customSchema)
+    _cachedSchemas.value = [shape]
+    _newSchemas.value[_step.value] = customSchema
   }
 }
 
