@@ -1,31 +1,27 @@
 import dts from 'vite-plugin-dts'
-import type {Plugin, UserConfig} from 'vite'
+import type {Plugin} from 'vite'
 
-import type {ManifestConfig} from '../index'
+import type {ManifestConfig} from '../types'
 
-export const DtsPlugin = (dtsCfg: ManifestConfig, other?: UserConfig): Plugin => {
+export const DtsPlugin = (dtsCfg: ManifestConfig): Plugin => {
+  const includes = dtsCfg.features.entryDirs.map(dir => `${dir}/**`)
+  includes.push('env.d.ts')
   const cfg = {
-    tsconfigPath: './tsconfig.json',
-    clearPureImport: true,
-    staticImport: true,
+    clearPureImport: false,
+    staticImport: false,
     entryRoot: dtsCfg.features.entryRoot,
     compilerOptions: {
       declaration: dtsCfg.features.lib.dts.enable,
+      declarationOnly: dtsCfg.features.lib.dts.enable,
+      emitDecoratorMetadata: dtsCfg.features.lib.dts.enable,
       declarationMap: dtsCfg.features.lib.sourcemap,
       declarationDir: dtsCfg.build.outDir
     },
     strictOutput: true,
-    exclude: [
-      'uno.config.**',
-      `${dtsCfg.build.outDir}/**`,
-      '__build-src__/**',
-      'vite.config.**',
-      '**/__tests__/**',
-      '**/__tests__/**',
-      'vitest.config.**',
-      'playground'
-    ]
+    include: includes,
+    exclude: [`${dtsCfg.build.outDir}`, `${dtsCfg.build.outDir}/*`, `${dtsCfg.build.outDir}/**`, ...dtsCfg.features.exclude]
   }
-
+  console.log('dts cfg', cfg)
+  console.log('dts cfg json', JSON.stringify(cfg, null, 4))
   return dts(cfg)
 }

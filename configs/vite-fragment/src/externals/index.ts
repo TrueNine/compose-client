@@ -16,5 +16,13 @@ export const Externals = [
 
   /^(lodash-es|lodash-es\/)/,
 
-  /\.(scss|sass|less|css)/
+  /\.(scss|sass|less|css)/,
+
+  // eslint
+  '@rushstack/eslint-patch/modern-module-resolution',
+  '@typescript-eslint/parser',
+  'eslint-define-config',
+
+  // rollup
+  '@rollup/plugin-terser'
 ]

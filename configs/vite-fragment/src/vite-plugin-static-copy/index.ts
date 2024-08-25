@@ -1,7 +1,7 @@
 import {viteStaticCopy} from 'vite-plugin-static-copy'
 import type {Plugin} from 'vite'
 
-import type {ManifestConfig} from '../index'
+import type {ManifestConfig} from '../types'
 
 function packageJsonContentReplace(cfg: ManifestConfig, content: string) {
   if (!content) return void 0
@@ -9,7 +9,7 @@ function packageJsonContentReplace(cfg: ManifestConfig, content: string) {
   const c = JSON.parse(content)
   const hasEsm = cfg.features.lib?.formats?.includes('es') ?? false
   const hasCjs = cfg.features.lib?.formats?.includes('cjs') ?? false
-  const hasDts = cfg.features.lib.dts.enable
+  const hasDts = cfg?.features?.lib?.dts?.enable
   if (!hasDts) delete c.types
   if (!hasCjs) delete c.main
   if (!hasEsm) delete c.module

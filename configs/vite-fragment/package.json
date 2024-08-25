@@ -5,27 +5,38 @@
   "author": "TrueNine",
   "license": "private",
   "scripts": {
-    "build": "run-s type-check build-c",
+    "build": "run-s type-check build-c fmt",
     "build-c": "vite build",
-    "type-check": "vue-tsc --noEmit",
+    "type-check": "vue-tsc -p tsconfig.json --noEmit",
     "pub": "run-s build pub-c",
-    "pub-c": "pnpm --dir ./dist pub"
+    "pub-c": "pnpm --dir ./dist pub",
+    "fmt": "prettier --write \"**/*.ts\" \"**/*.d.ts\" \"**/*.json\" --ignore-unknown"
   },
   "type": "module",
   "module": "dist/index.js",
   "main": "dist/index.cjs",
   "types": "dist/index.d.ts",
-  "files": ["dist/**"],
+  "files": [
+    "dist/**"
+  ],
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
+    "./types": {
+      "types": "./dist/types/index.d.ts"
+    },
     "./vite-plugin-static-copy": {
       "types": "./dist/vite-plugin-static-copy/index.d.ts",
       "import": "./dist/vite-plugin-static-copy/index.js",
       "require": "./dist/vite-plugin-static-copy/index.cjs"
+    },
+    "./rollup-plugin-terser": {
+      "types": "./dist/rollup-plugin-terser/index.d.ts",
+      "import": "./dist/rollup-plugin-terser/index.js",
+      "require": "./dist/rollup-plugin-terser/index.cjs"
     },
     "./build-lib-config": {
       "types": "./dist/build-lib-config/index.d.ts",
@@ -41,6 +52,11 @@
       "types": "./dist/externals/index.d.ts",
       "import": "./dist/externals/index.js",
       "require": "./dist/externals/index.cjs"
+    },
+    "./excludes": {
+      "types": "./dist/excludes/index.d.ts",
+      "import": "./dist/excludes/index.js",
+      "require": "./dist/excludes/index.cjs"
     },
     "./*": "./dist/*"
   }

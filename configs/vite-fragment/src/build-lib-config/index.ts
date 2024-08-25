@@ -1,7 +1,7 @@
 import type {BuildOptions, UserConfig} from 'vite'
 import {mergeConfig} from 'vite'
 
-import type {ManifestConfig} from '../index'
+import type {ManifestConfig} from '../types'
 
 export const BuildConfigLib = (o: ManifestConfig, cfg?: UserConfig): BuildOptions => {
   const f = o.features
@@ -22,7 +22,7 @@ export const BuildConfigLib = (o: ManifestConfig, cfg?: UserConfig): BuildOption
         external: f.lib.externals
       }
     },
-    cfg!.build!
+    cfg?.build ?? {}
   )
   return m
 }
