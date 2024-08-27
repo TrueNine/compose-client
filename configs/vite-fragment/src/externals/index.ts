@@ -1,28 +1,53 @@
 export const Externals = [
-  /(vue|vue\/)/,
+  // compose
+  /^(@compose|@compose\/)/,
 
-  /(dayjs|dayjs\/)/,
+  // vue
+  /^(vue|vue\/)/,
+  /^(@vue|@vue\/)/,
+  /^(@vueuse|@vueuse\/)/,
   /^(vue-router|vue-router\/)/,
+  /^(pinia|pinia\/)/,
 
-  /(fsevents|fsevents\/)/,
-  /(vite:|vite:\/)/,
-  /^vite$/,
+  /^(vee-validate|vee-validate\/)/,
+  /^(yup|yup\/)/,
 
-  /(node|node\/|node:)/,
-  /(fs-extra|fs-extra\/)/,
+  // 组件库
+  /^(element-plus|element-plus\/)/,
+  /^(element-ui|element-ui\/)/,
+  /^(quasar|quasar\/)/,
+  /^(@quasar|@quasar\/)/,
+  /^(vuetify|vuetify\/)/,
+  /^(@varlet|@varlet\/)/,
+  /^(naive-ui|naive-ui\/)/,
 
+  // date class
+  /^(dayjs|dayjs\/)/,
+  /^(moment|moment\/)/,
+  /^(@date-io|@date-io\/)/,
+
+  // code
+  /^(highlight\.js|highlight\.js\/)/,
+
+  /^(fs-extra|fs-extra\/)/,
+  /^(fsevents|fsevents\/)/,
+  /^(vite:|vite:\/|vite$)/,
   /^(vite-plugin-static-copy|vite-plugin-static-copy\/)/,
   /^(vite-plugin-dts|vite-plugin-dts\/)/,
 
-  /^(lodash-es|lodash-es\/)/,
+  /^(node|node\/|node:)/,
+  // rollup
+  '@rollup/plugin-terser',
 
-  /\.(scss|sass|less|css)/,
+  // tools
+  /^(lodash-es|lodash-es\/)/,
+  /^(pdfjs-dist|pdfjs-dist\/)/,
+
+  // 样式文件
+  /\.(scss|sass|less|css)$/,
 
   // eslint
   '@rushstack/eslint-patch/modern-module-resolution',
   '@typescript-eslint/parser',
-  'eslint-define-config',
-
-  // rollup
-  '@rollup/plugin-terser'
+  'eslint-define-config'
 ]
