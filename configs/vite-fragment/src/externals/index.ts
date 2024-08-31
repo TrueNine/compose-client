@@ -42,6 +42,7 @@ export const Externals = [
   // tools
   /^(lodash-es|lodash-es\/)/,
   /^(pdfjs-dist|pdfjs-dist\/)/,
+  /^(libarchive\.js|libarchive\.js\/)/,
 
   // 样式文件
   /\.(scss|sass|less|css)$/,

@@ -37,6 +37,8 @@ export type clip<T extends object, K extends keyof T> = Clip<T, K>
 export type Newable = abstract new (...args: dynamic) => dynamic
 export type newable = Newable
 
+export type WithNew<T = dynamic> = T extends newable ? T : T & newable
+
 /**
  * # InstanceType 的简写
  *
@@ -76,8 +78,19 @@ export type nilpt<T = dynamic> = NilPt<T>
 /**
  * ## 绝对不会返回
  */
-export type Nothing = never & null & undefined & void
+export type Nothing = (never & null & undefined & void) | never | null | undefined | void
 export type nothing = Nothing
+
+/**
+ * ## 条件类型，如果条件为空，则返回默认类型
+ * @typeParam Exp 条件类型
+ * @typeParam Default 默认类型
+ */
+export type OrElse<Exp, Default> = Exp extends nothing ? Default : Exp
+/**
+ * @see OrElse
+ */
+export type orelse<Exp, Default> = OrElse<Exp, Default>
 
 /**
  * ## 返回的一个空值

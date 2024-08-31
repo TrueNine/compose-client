@@ -1,15 +1,77 @@
-import type {CreateComponentPublicInstance, Plugin, RendererElement, RendererNode, VNode} from 'vue'
-import type {clip, dynamic, Maybe, newable} from '@compose/api-types'
+import type {clip, dynamic, Maybe} from '@compose/api-types'
 import {maybeArray} from '@compose/api-model'
+import type {
+  CreateComponentPublicInstance,
+  Plugin,
+  RendererElement,
+  RendererNode,
+  VNode,
+  EmitsOptions,
+  SlotsType,
+  ExtractDefaultPropTypes,
+  ObjectEmitsOptions,
+  DefineComponent,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  PublicProps,
+  ComponentPropsOptions,
+  ExtractPropTypes
+} from 'vue'
+
+type EmitsToProps<T extends EmitsOptions> = T extends string[]
+  ? {
+      [K in `on${Capitalize<T[number]>}`]?: (...args: any[]) => any
+    }
+  : T extends ObjectEmitsOptions
+    ? {
+        [K in `on${Capitalize<string & keyof T>}`]?: K extends `on${infer C}`
+          ? (...args: T[Uncapitalize<C>] extends (...args: infer P) => any ? P : T[Uncapitalize<C>] extends null ? any[] : never) => any
+          : never
+      }
+    : object
+type ResolveProps<PropsOrPropOptions, E extends EmitsOptions> = Readonly<
+  PropsOrPropOptions extends ComponentPropsOptions ? ExtractPropTypes<PropsOrPropOptions> : PropsOrPropOptions
+> &
+  (object extends E ? object : EmitsToProps<E>)
 
 export interface VueComponentInstanceMapping {
   name?: string
   __name?: string
 }
+
 export type SFCWithInstall<T = dynamic> = T & Plugin & VueComponentInstanceMapping & {install: (app: dynamic) => void}
 export type a = CreateComponentPublicInstance
 type SlotNode = VNode<RendererNode, RendererElement, Record<string, dynamic>> & {actualName?: string}
 type NotChildrenSlotNode = clip<SlotNode, 'children'>
+
+export interface GenericProps<
+  Props extends object = object,
+  Emits extends EmitsOptions = Record<string, null>,
+  Slots extends SlotsType = SlotsType,
+  Mixin extends ComponentOptionsMixin = ComponentOptionsMixin
+> {
+  props?: Props
+  emits?: Emits
+  slots?: Slots
+  mixin?: Mixin
+}
+
+export type DefineComponentPart<
+  Props extends dynamic = dynamic,
+  Emits extends EmitsOptions = Record<string, dynamic>,
+  Slots extends SlotsType = SlotsType,
+  Mixin extends ComponentOptionsMixin = ComponentOptionsMixin,
+  RawBindings = object,
+  _D = object,
+  _ComputedOptions extends ComputedOptions = ComputedOptions,
+  _MethodOptions extends MethodOptions = MethodOptions,
+  _ExtendsComponentOptionsMixin extends ComponentOptionsMixin = ComponentOptionsMixin,
+  _EE extends string = string,
+  _PP = PublicProps,
+  _Props = ResolveProps<Props, Emits>,
+  _Defaults = ExtractDefaultPropTypes<Props>
+> = DefineComponent<Props, RawBindings, _D, _ComputedOptions, _MethodOptions, Mixin, _ExtendsComponentOptionsMixin, Emits, _EE, _PP, _Props, _Defaults, Slots>
 
 /**
  * ## 针对 vue 封装的一些工具函数
@@ -19,11 +81,12 @@ export class Vue {
 
   /**
    * ## 准备一个安装的组件
+   *
    * @param component 组件实例
    * @param otherComponent 其他一同注册的组件实例
    * @returns 封装后的组件
    */
-  static componentInstallToPlugin<T extends newable = dynamic, E = dynamic>(component: T, otherComponent?: Record<string, E>): T {
+  static componentInstallToPlugin<T, E = dynamic>(component: T, otherComponent?: Record<string, E>): T {
     let _p = component as unknown as SFCWithInstall<T>
     const _r = otherComponent as unknown as Record<string, SFCWithInstall<T>>
     if (!_p.name) _p = {..._p, name: _p.__name}

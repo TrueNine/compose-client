@@ -27,6 +27,9 @@ export interface Features {
    * ## 输出文件夹
    */
   dist?: string
+  alias?: {
+    [K in string]: string
+  }
   lib?: {
     enable?: boolean
     fileName?: string
@@ -37,6 +40,8 @@ export interface Features {
     dts?: {enable?: boolean}
     copyPackageJsonToDist?: boolean
     copyNpmIgnoreToDist?: boolean
+    copyReadmeToDist?: boolean
+    copySourceCodeToDist?: boolean
     name?: string
     formats?: LibraryFormats[]
     externals?: (string | RegExp)[]

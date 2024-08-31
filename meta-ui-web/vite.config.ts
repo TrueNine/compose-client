@@ -8,25 +8,27 @@ import {ElementPlusResolver, NaiveUiResolver, QuasarResolver, VarletUIResolver, 
 import unocss from 'unocss/vite'
 import ViteFonts from 'unplugin-fonts/vite'
 import vuetify, {transformAssetUrls} from 'vite-plugin-vuetify'
-//import type {ModuleFormat} from 'rollup'
 import {quasar, transformAssetUrls as quasarTransformAssetUrls} from '@quasar/vite-plugin'
 import {manifest} from '@compose/config-vite-fragment'
 
-const {defineConfig, buildConfigLib, dtsPlugin, staticCopyPluginPackageJson} = manifest({
+const {defineConfig} = manifest({
+  pushFeatures: {
+    lib: {
+      externals: [/(playground|playground\/)/]
+    }
+  },
   features: {
-    lang: 'ts',
     entry: ['index', 'unplugin/index', 'common/index'],
     lib: {
-      sourcemap: true
+      sourcemap: true,
+      minify: false,
+      copySourceCodeToDist: true
     }
   }
 })
 
 export default defineConfig({
-  build: buildConfigLib(),
   plugins: [
-    dtsPlugin(),
-    staticCopyPluginPackageJson(),
     vue({
       template: {
         transformAssetUrls: {
@@ -60,14 +62,16 @@ export default defineConfig({
         filepath: './imports-eslint.json',
         globalsPropValue: true
       },
-      exclude: ['dist/**']
+      dirs: ['src/**'],
+      include: ['src/**'],
+      exclude: ['dist', 'playground']
     }),
     Components({
       dts: 'imports-comp.d.ts',
       deep: true,
-      dirs: '.',
-      include: ['src/**', 'playground/**'],
-      exclude: ['dist/**'],
+      dirs: ['src/**'],
+      include: ['src/**'],
+      exclude: ['dist', 'playground'],
       resolvers: [ElementPlusResolver(), NaiveUiResolver(), Vuetify3Resolver(), QuasarResolver(), VarletUIResolver()]
     }),
     ViteFonts({

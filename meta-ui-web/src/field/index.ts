@@ -16,5 +16,5 @@ export interface YFieldEmits {
   (e: 'update:modelValue'): void
 }
 
-const a = Vue.componentInstallToPlugin<typeof _c>(_c)
+const a = Vue.componentInstallToPlugin(_c)
 export default a

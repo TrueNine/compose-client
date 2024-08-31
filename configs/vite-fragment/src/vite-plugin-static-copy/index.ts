@@ -1,4 +1,7 @@
-import {viteStaticCopy} from 'vite-plugin-static-copy'
+import * as fs from 'node:fs'
+import path from 'node:path'
+
+import {type Target, viteStaticCopy} from 'vite-plugin-static-copy'
 import type {Plugin} from 'vite'
 
 import type {ManifestConfig} from '../types'
@@ -45,18 +48,73 @@ function packageJsonContentReplace(cfg: ManifestConfig, content: string) {
   if (c.module) c.module = c.module.replace(distReg, '')
   if (c.main) c.module = c.module.replace(distReg, '')
 
-  if (c.exports) c.exports['./package.json'] = './package.json'
+  if (c.exports) {
+    c.exports['./package.json'] = './package.json'
+    if (cfg.features.lib.copyReadmeToDist) c.exports['./README.md'] = './README.md'
+  }
 
   return JSON.stringify(c, null, 2)
 }
 
-export const StaticCopyPluginLib = (cfg: ManifestConfig): Plugin[] =>
-  viteStaticCopy({
-    targets: [
-      {
-        src: 'package.json',
-        dest: '',
-        transform: content => packageJsonContentReplace(cfg, content) ?? ''
+const processDirectory = (dir: string, cfg: ManifestConfig) => {
+  const files = fs.readdirSync(dir)
+  files.forEach(file => {
+    const filePath = path.join(dir, file)
+    const stat = fs.statSync(filePath)
+    if (stat.isDirectory()) processDirectory(filePath, cfg)
+    else if (file.endsWith('.map')) {
+      const data = JSON.parse(fs.readFileSync(filePath, 'utf-8'))
+      if (Array.isArray(data.sources)) {
+        data.sources = data.sources.map((source: string) => {
+          return cfg.features.entryRoot + '/' + source.split(`${cfg.features.entryRoot}/`)[1]
+        })
       }
-    ]
+      fs.writeFileSync(filePath, JSON.stringify(data))
+    }
   })
+}
+
+export const StaticCopyPlugin = (cfg: ManifestConfig): Plugin[] => {
+  const r = [] as Target[]
+  if (cfg.features.lib.copyNpmIgnoreToDist) {
+    r.push({
+      src: '.npmignore',
+      dest: ''
+    })
+  }
+  if (cfg.features.lib.copyReadmeToDist) {
+    r.push({
+      src: '{README,readme}.{md,txt,md,txt,}',
+      dest: '',
+      rename: 'README.md'
+    })
+  }
+  if (cfg.features.lib.copyPackageJsonToDist)
+    r.push({
+      src: 'package.json',
+      dest: '',
+      transform: content => packageJsonContentReplace(cfg, content) ?? ''
+    })
+  if (cfg.features.lib.copySourceCodeToDist) {
+    r.push({
+      src: cfg.features.entryRoot,
+      dest: ''
+    })
+  }
+  const plugins = viteStaticCopy({
+    targets: r
+  })
+  if (cfg.features.lib.sourcemap && cfg.features.lib.copySourceCodeToDist) {
+    let outDir: string
+    plugins.push({
+      name: 'vite:post-handle-source-map',
+      configResolved(config) {
+        outDir = config.root + '/' + config.build.outDir
+      },
+      closeBundle() {
+        processDirectory(outDir, cfg)
+      }
+    })
+  }
+  return plugins
+}

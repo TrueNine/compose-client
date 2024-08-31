@@ -2,9 +2,9 @@ import type {Maybe, MaybeReadonlyArray, Nullable, RouteOption} from '@compose/ap
 import type {RouteRecordRaw} from 'vue-router'
 import type {AutoRouterPageConfigRouterMeta} from '@compose/api-types'
 
-import {STR_EMPTY, STR_SLASH} from '../consts/Strings'
-import {maybeArray, maybeReadonlyArray} from '../tools'
-import {cloneDeep} from '../references'
+import {STR_EMPTY, STR_SLASH} from '@/consts'
+import {maybeArray, maybeReadonlyArray} from '@/tools'
+import {cloneDeep} from '@/references'
 
 interface MatchConfig {
   hidden?: boolean

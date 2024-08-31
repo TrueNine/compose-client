@@ -28,7 +28,7 @@ export class Dom {
   }
 
   /**
-   * ## 使用 stepNodes 标签对 Blob 进行下载
+   * ## 使用 a 标签对 Blob 进行下载
    * @param blob 文件二进制句柄
    * @param downloadName 下载的文件名称
    */
@@ -42,7 +42,7 @@ export class Dom {
   }
 
   /**
-   * ## 使用 stepNodes 标签进行下载
+   * ## 使用 a 标签进行下载
    * @param url 下载链接
    * @param downloadName 下载的文件名称
    */

@@ -8,13 +8,7 @@ test('test generateMenu', () => {
     console.log(route.fullPath)
     return true
   })
-  const menu2 = generateMenu(
-    routes,
-    route => {
-      return true
-    },
-    'a'
-  )
+  const menu2 = generateMenu(routes, () => true, 'a')
   console.log(menu)
   console.log(menu2)
 })

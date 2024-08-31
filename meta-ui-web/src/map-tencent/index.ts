@@ -1,4 +1,4 @@
-import {Vue} from '@compose/api-model'
+import {Vue} from '@compose/extensions'
 import type {BasicMapZoomType, ViewMode} from '@compose/psdk-tmap'
 
 import _c from './YMapTencent.vue'

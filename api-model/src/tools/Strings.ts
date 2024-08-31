@@ -3,7 +3,7 @@ import type {late} from '@compose/api-types'
 import {__LOWERS_CHINESE_NUMBER_HEXS, __LOWVERS_CHINESE_NUMBERS, __UPPERS_CHINESE_NUMBERS, __UPPERS_CHINESE_NUMBER_HEXS} from '@/consts'
 
 export function camelTo(str: string, sep: string = '-') {
-  return str.replace(/([stepNodes-z0-9])([A-Z])/g, `$1${sep}$2`).toLowerCase()
+  return str.replace(/([a-z0-9])([A-Z])/g, `$1${sep}$2`).toLowerCase()
 }
 
 export function numberToChinese(num?: number, upperCase: boolean = false): late<string> {

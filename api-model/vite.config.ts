@@ -1,48 +1,27 @@
 import {fileURLToPath, URL} from 'node:url'
 
-import {defineConfig} from 'vite'
-import dts from 'vite-plugin-dts'
+import {manifest} from '@compose/config-vite-fragment'
 
-export default defineConfig({
-  optimizeDeps: {
-    exclude: ['import.meta']
-  },
-  build: {
-    minify: 'terser',
-    sourcemap: true,
+console.log(fileURLToPath(new URL('./src', import.meta.url)))
+
+const {defineConfig} = manifest({
+  pushFeatures: {
     lib: {
-      name: 'ApiModel',
-      fileName: '[name]',
-      entry: 'src/index.ts',
-      formats: ['es', 'cjs']
-    },
-    rollupOptions: {
-      output: {
-        preserveModulesRoot: '.',
-        preserveModules: true
-      },
-      external: [
-        'vue',
-        'element-plus',
-        /\.(scss|sass|less|css)/,
-        'lodash-es',
-        'lodash-es/cloneDeep',
-        'vue-router',
-        '@compose/api-model',
-        '@compose/api-types',
-        '@compose/api-typings',
-        'dayjs'
-      ]
+      externals: ['@compose/api-typings', /(__test__|__test__\/)/, /(__tests__|__tests__\/)/, /(\/VueRouter$)/]
     }
   },
-  plugins: [
-    dts({
-      staticImport: false,
-      clearPureImport: false,
-      tsconfigPath: './tsconfig.json',
-      exclude: ['dist/**', '__build-src__/**', 'vite.config.ts', '**/__tests__/**', 'vitest.config.ts']
-    })
-  ],
+  features: {
+    entry: ['index', 'consts/index', 'data/index', 'tools/index', 'defineds/index'],
+    lib: {
+      minify: true,
+      sourcemap: true,
+      copySourceCodeToDist: true
+    }
+  }
+})
+
+export default defineConfig({
+  optimizeDeps: {exclude: ['import.meta']},
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))

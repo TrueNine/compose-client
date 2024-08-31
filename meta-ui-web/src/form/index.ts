@@ -37,5 +37,5 @@ export interface YFormInjection {
 
 export const YFormInjectionKey: InjectionKey<YFormInjection> = Symbol('YForm-Injection-Provider')
 
-const a = Vue.componentInstallToPlugin<typeof _c>(_c)
+const a = Vue.componentInstallToPlugin(_c)
 export default a

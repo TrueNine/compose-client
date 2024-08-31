@@ -1,8 +1,8 @@
 import type {MaybeReadonlyArray, nil, RouteOption} from '@compose/api-types'
 
-import {STR_EMPTY} from '../consts/Strings'
-import {cloneDeep} from '../references'
-import {maybeReadonlyArray} from '../tools'
+import {STR_EMPTY} from '@/consts/Strings'
+import {cloneDeep} from '@/references/LodashEs'
+import {maybeReadonlyArray} from '@/tools/Array'
 
 interface MatchConfig {
   hidden?: boolean

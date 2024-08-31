@@ -1,4 +1,4 @@
-import {Vue} from '@compose/api-model'
+import {Vue} from '@compose/extensions'
 import type {RouteOption} from '@compose/api-types'
 
 import YSiderMenuItem from '../el-sider-menu-item'

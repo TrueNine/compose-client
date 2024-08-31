@@ -1,4 +1,4 @@
-import {Vue} from '@compose/api-model'
+import {Vue} from '@compose/extensions'
 import type {BCP47, int} from '@compose/api-types'
 
 import _c from './YConfigProvider.vue'

@@ -1,4 +1,4 @@
-import {Vue} from '@compose/api-model'
+import {Vue} from '@compose/extensions'
 
 import _c from './YDebugCode.vue'
 

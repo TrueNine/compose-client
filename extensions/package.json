@@ -1,12 +1,11 @@
 {
   "name": "@compose/extensions",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "yan100 extensions functions and apis",
   "author": "TrueNine",
   "license": "private",
   "scripts": {
-    "build": "run-s type-check build-c dts",
-    "dts": "vue-tsc --declaration",
+    "build": "run-s type-check build-c",
     "build-c": "vite build",
     "type-check": "vue-tsc --noEmit",
     "pub": "run-s build pub-c",

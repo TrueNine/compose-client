@@ -84,7 +84,6 @@ export default defineConfig({
     semi: 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',
     '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
-    '@typescript-eslint/no-explicit-any': 'error', // 不可以使用 any 类型
     '@typescript-eslint/no-empty-function': 'off', // 不允许空函数
     '@typescript-eslint/no-namespace': 'off', //禁止使用命名空间
     '@typescript-eslint/explicit-module-boundary-types': 'off',

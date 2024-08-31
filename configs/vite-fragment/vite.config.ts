@@ -12,10 +12,9 @@ const {defineConfig} = manifest({
       'build-lib-config/index',
       'rollup-plugin-terser/index'
     ],
-    lang: 'ts',
     lib: {
       minify: true,
-      minifyUnsafe: false,
+      minifyUnsafe: true,
       sourcemap: false
     }
   }
