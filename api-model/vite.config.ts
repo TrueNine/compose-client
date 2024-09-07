@@ -2,12 +2,10 @@ import {fileURLToPath, URL} from 'node:url'
 
 import {manifest} from '@compose/config-vite-fragment'
 
-console.log(fileURLToPath(new URL('./src', import.meta.url)))
-
 const {defineConfig} = manifest({
   pushFeatures: {
     lib: {
-      externals: ['@compose/api-typings', /(__test__|__test__\/)/, /(__tests__|__tests__\/)/, /(\/VueRouter$)/]
+      externals: [/(\/VueRouter$)/]
     }
   },
   features: {
@@ -15,13 +13,16 @@ const {defineConfig} = manifest({
     lib: {
       minify: true,
       sourcemap: true,
-      copySourceCodeToDist: true
+      dts: {
+        enable: true,
+        dtsSourcemap: false
+      },
+      copySourceCodeToDist: false
     }
   }
 })
 
 export default defineConfig({
-  optimizeDeps: {exclude: ['import.meta']},
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))

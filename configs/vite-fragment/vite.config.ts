@@ -5,6 +5,7 @@ const {defineConfig} = manifest({
     entry: [
       'index',
       'types/index',
+      'alias/index',
       'vite-plugin-dts/index',
       'vite-plugin-static-copy/index',
       'externals/index',
@@ -19,5 +20,6 @@ const {defineConfig} = manifest({
     }
   }
 })
-
-export default defineConfig({})
+const d = defineConfig()
+console.log(d)
+export default d

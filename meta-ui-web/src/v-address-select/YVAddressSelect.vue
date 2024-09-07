@@ -11,7 +11,7 @@ import {
   YVAddressSelectDefaultSelects,
   type YVAddressSelectProps,
   type YVAddressSelectSelectValue
-} from './index'
+} from '.'
 
 const pad = (code: string) => {
   return code.padEnd(12, '0')

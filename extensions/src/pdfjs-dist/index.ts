@@ -13,18 +13,40 @@ interface PDFImageData {
 
 export class PdfJs {
   private static __workSrc: string
+  private static __worker: Worker
   private static __pdf = pdfjs
+
   static get instance() {
     return this.__pdf
   }
 
-  static set workSrc(workSrc: string) {
+  static init() {
+    if (this.workerSrc) {
+      pdfjs.GlobalWorkerOptions.workerSrc = this.__workSrc
+      this.__pdf.GlobalWorkerOptions.workerSrc = this.__workSrc
+    }
+    if (this.worker) {
+      pdfjs.GlobalWorkerOptions.workerPort = this.__worker
+      this.__pdf.GlobalWorkerOptions.workerPort = this.__worker
+    }
+    return this.__pdf
+  }
+
+  static set workerSrc(workSrc: string) {
     PdfJs.__workSrc = workSrc
     this.instance.GlobalWorkerOptions.workerSrc = workSrc
   }
 
-  static get workSrc() {
+  static set worker(worker: Worker) {
+    this.__worker = worker
+    this.instance.GlobalWorkerOptions.workerPort = worker
+  }
+
+  static get workerSrc() {
     return this.__workSrc
+  }
+  static get worker(): Worker {
+    return this.__worker
   }
 
   static async resolvePages<T = dynamic>(pdf: PDFDocumentProxy, pageHandle: (page: PDFPageProxy, numPage: number) => task<T>): task<T[]> {

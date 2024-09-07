@@ -10,5 +10,8 @@
     "pub-c": "pnpm publish --no-git-checks",
     "dev": "vitepress dev docs",
     "preview": "vitepress preview docs"
+  },
+  "dependencies": {
+    "@compose/doc": "file:"
   }
 }

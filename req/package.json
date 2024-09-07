@@ -22,5 +22,8 @@
       "require": "./dist/index.cjs"
     },
     "./*": "./*"
+  },
+  "dependencies": {
+    "@compose/req": "file:"
   }
 }

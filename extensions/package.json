@@ -1,15 +1,16 @@
 {
   "name": "@compose/extensions",
-  "version": "0.0.9",
+  "version": "0.0.15",
   "description": "yan100 extensions functions and apis",
   "author": "TrueNine",
   "license": "private",
   "scripts": {
-    "build": "run-s type-check build-c",
+    "build": "run-s type-check build-c fmt",
+    "pub": "run-s build pub-c",
+    "fmt": "prettier --write \"**/*.ts\" \"**/*.d.ts\" \"**/*.json\" --ignore-unknown",
     "build-c": "vite build",
     "type-check": "vue-tsc --noEmit",
-    "pub": "run-s build pub-c",
-    "pub-c": "pnpm publish --no-git-checks"
+    "pub-c": "pnpm --dir ./dist pub"
   },
   "type": "module",
   "module": "dist/index.js",
@@ -43,6 +44,10 @@
       "types": "./dist/libarchive-js/index.d.ts",
       "import": "./dist/libarchive-js/index.js"
     },
+    "./pino": {
+      "types": "./dist/pino/index.d.ts",
+      "import": "./dist/pino/index.js"
+    },
     "./*": "./*",
     "./**": "./**",
     "./dist/*": "./dist/*",
@@ -57,5 +62,8 @@
     "type": "git",
     "url": "git+https://https://github.com/TrueNine/compose-client",
     "directory": "api-types"
+  },
+  "dependencies": {
+    "@compose/extensions": "file:"
   }
 }

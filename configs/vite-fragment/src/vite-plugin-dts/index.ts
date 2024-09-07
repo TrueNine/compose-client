@@ -7,14 +7,14 @@ export const DtsPlugin = (dtsCfg: ManifestConfig): Plugin => {
   const includes = dtsCfg.features.entryDirs.map(dir => `${dir}/**`)
   includes.push('env.d.ts')
   const cfg = {
-    clearPureImport: false,
-    staticImport: false,
+    clearPureImport: true,
+    staticImport: true,
     entryRoot: dtsCfg.features.entryRoot,
     compilerOptions: {
       declaration: dtsCfg.features.lib.dts.enable,
       declarationOnly: dtsCfg.features.lib.dts.enable,
-      emitDecoratorMetadata: dtsCfg.features.lib.dts.enable,
-      declarationMap: dtsCfg.features.lib.sourcemap,
+      emitDecoratorMetadata: dtsCfg.features.lib.dts.dtsSourcemapMetadata,
+      declarationMap: dtsCfg.features.lib.dts.dtsSourcemap,
       declarationDir: dtsCfg.build.outDir
     },
     strictOutput: true,

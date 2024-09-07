@@ -1,4 +1,9 @@
 export const Externals = [
+  // 既定依赖
+  /(__tests__|__tests__\/)/,
+  /(__test__|__test__\/)/,
+  /(__build-src__|__build-src__\/)/,
+
   // compose
   /^(@compose|@compose\/)/,
 
@@ -42,6 +47,7 @@ export const Externals = [
   // tools
   /^(lodash-es|lodash-es\/)/,
   /^(pdfjs-dist|pdfjs-dist\/)/,
+  /^(pino|pino\/)/,
   /^(libarchive\.js|libarchive\.js\/)/,
 
   // 样式文件

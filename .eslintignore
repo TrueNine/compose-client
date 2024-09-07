@@ -3,6 +3,7 @@
 **/docs/
 
 *.svg
+*.d.ts
 
 **/.idea/
 **/.vscode/

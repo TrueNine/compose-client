@@ -10,5 +10,8 @@
     "@types/node": "^22.5.0",
     "tslib": "^2.6.3",
     "typescript": "^5.5.4"
+  },
+  "dependencies": {
+    "@compose/tsconfig": "file:"
   }
 }

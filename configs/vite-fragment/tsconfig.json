@@ -1,6 +1,10 @@
 {
   "extends": "@compose/tsconfig/tsconfig.json",
   "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
     "noImplicitAny": false
   }
 }

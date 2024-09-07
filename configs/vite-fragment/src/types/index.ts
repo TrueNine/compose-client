@@ -37,7 +37,7 @@ export interface Features {
     minify?: boolean
     minifyUnsafe?: boolean
     terserOptions?: RollupPluginTerserOptions
-    dts?: {enable?: boolean}
+    dts?: {enable?: boolean; dtsSourcemap?: boolean; dtsSourcemapMetadata?: boolean}
     copyPackageJsonToDist?: boolean
     copyNpmIgnoreToDist?: boolean
     copyReadmeToDist?: boolean

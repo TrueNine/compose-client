@@ -9,11 +9,27 @@ import _c from './YForm.vue'
 import type {ModelValueEmits, ModelValueProps} from '@/common'
 
 export interface YFormProps extends ModelValueProps<dynamic> {
+  /**
+   * 表单验证规则
+   */
   schema?: Maybe<ObjectSchema<dynamic, dynamic>>
+  /**
+   * 表单验证状态
+   */
   isValid?: boolean
+  /**
+   * 表单步数
+   * @default 0
+   */
   step?: number
   mixins?: object
+  /**
+   * 表单数据同步
+   */
   sync?: dynamic
+  /**
+   * 是否每个步骤发出 next 事件
+   */
   everyStep?: boolean
 }
 
@@ -28,6 +44,7 @@ export interface YFormEmits extends ModelValueEmits<dynamic> {
   (e: 'error'): void
   (e: 'update:everyStep', v: boolean): void
 }
+
 export interface YFormInjection {
   getForm: () => FormContext<dynamic, dynamic>
   getRef: () => nil<HTMLFormElement>
@@ -38,4 +55,5 @@ export interface YFormInjection {
 export const YFormInjectionKey: InjectionKey<YFormInjection> = Symbol('YForm-Injection-Provider')
 
 const a = Vue.componentInstallToPlugin(_c)
+
 export default a

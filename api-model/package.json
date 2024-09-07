@@ -1,6 +1,6 @@
 {
   "name": "@compose/api-model",
-  "version": "1.1.120",
+  "version": "1.1.121",
   "description": "yan100 js dev kit",
   "author": "TrueNine",
   "license": "private",
@@ -11,7 +11,7 @@
     "pub": "run-s build pub-c",
     "pub-c": "pnpm --dir ./dist pub",
     "test": "vitest",
-    "fmt": "prettier --write \"**/*.ts\" \"**/*.d.ts\" \"**/*.json\" --ignore-unknown"
+    "fmt": "prettier --write \"**/*.{ts,tsx,vue,scss,d.ts,js}\" --ignore-unknown"
   },
   "type": "module",
   "module": "dist/index.js",
@@ -51,5 +51,8 @@
     "type": "git",
     "url": "git+https://https://github.com/TrueNine/compose-client",
     "directory": "api-model"
+  },
+  "dependencies": {
+    "@compose/api-model": "file:"
   }
 }

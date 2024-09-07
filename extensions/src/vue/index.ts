@@ -1,7 +1,6 @@
 import type {clip, dynamic, Maybe} from '@compose/api-types'
 import {maybeArray} from '@compose/api-model'
 import type {
-  CreateComponentPublicInstance,
   Plugin,
   RendererElement,
   RendererNode,
@@ -41,7 +40,7 @@ export interface VueComponentInstanceMapping {
 }
 
 export type SFCWithInstall<T = dynamic> = T & Plugin & VueComponentInstanceMapping & {install: (app: dynamic) => void}
-export type a = CreateComponentPublicInstance
+
 type SlotNode = VNode<RendererNode, RendererElement, Record<string, dynamic>> & {actualName?: string}
 type NotChildrenSlotNode = clip<SlotNode, 'children'>
 
@@ -58,12 +57,12 @@ export interface GenericProps<
 }
 
 export type DefineComponentPart<
-  Props extends dynamic = dynamic,
-  Emits extends EmitsOptions = Record<string, dynamic>,
+  Props,
+  Emits extends EmitsOptions,
   Slots extends SlotsType = SlotsType,
   Mixin extends ComponentOptionsMixin = ComponentOptionsMixin,
-  RawBindings = object,
-  _D = object,
+  Expose = {},
+  _D = {},
   _ComputedOptions extends ComputedOptions = ComputedOptions,
   _MethodOptions extends MethodOptions = MethodOptions,
   _ExtendsComponentOptionsMixin extends ComponentOptionsMixin = ComponentOptionsMixin,
@@ -71,7 +70,7 @@ export type DefineComponentPart<
   _PP = PublicProps,
   _Props = ResolveProps<Props, Emits>,
   _Defaults = ExtractDefaultPropTypes<Props>
-> = DefineComponent<Props, RawBindings, _D, _ComputedOptions, _MethodOptions, Mixin, _ExtendsComponentOptionsMixin, Emits, _EE, _PP, _Props, _Defaults, Slots>
+> = DefineComponent<Props, Expose, _D, _ComputedOptions, _MethodOptions, Mixin, _ExtendsComponentOptionsMixin, Emits, _EE, _PP, _Props, _Defaults, Slots>
 
 /**
  * ## 针对 vue 封装的一些工具函数

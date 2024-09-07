@@ -93,13 +93,13 @@ export default defineConfig({
       {
         types: {
           Foo: "Don't use Foo because it is unsafe",
+          // '{}': {
+          //   message: 'Use object instead',
+          //   fixWith: 'object'
+          // },
           String: {
             message: 'Use string instead',
             fixWith: 'string'
-          },
-          '{}': {
-            message: 'Use object instead',
-            fixWith: 'object'
           }
         }
       }

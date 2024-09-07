@@ -1,8 +1,8 @@
 {
   "name": "@compose/meta-ui-web",
-  "version": "1.1.209",
+  "version": "1.1.214",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --mode devepment",
     "build-gulp": "gulp -f ./__build-src__/index.ts",
     "build-vite": "vite build",
     "type-check": "vue-tsc --noEmit",
@@ -48,5 +48,8 @@
     "type": "git",
     "url": "git+https://https://github.com/TrueNine/compose-client",
     "directory": "meta-ui-web"
+  },
+  "dependencies": {
+    "@compose/meta-ui-web": "file:"
   }
 }

@@ -12,7 +12,7 @@ import {naiveStyleAdaptor} from '@/index'
 import 'uno.css'
 import {Pinia} from './store'
 
-export const a = createVuetifyMount(r => Object.assign({}, r))
+const a = createVuetifyMount(r => Object.assign({}, r))
 async function setupApp() {
   naiveStyleAdaptor()
   const createdApp = createApp(App)

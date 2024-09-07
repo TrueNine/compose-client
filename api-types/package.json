@@ -33,5 +33,8 @@
     "type": "git",
     "url": "git+https://https://github.com/TrueNine/compose-client",
     "directory": "api-types"
+  },
+  "dependencies": {
+    "@compose/api-types": "file:"
   }
 }

@@ -9,6 +9,7 @@ import {StaticCopyPlugin} from './vite-plugin-static-copy'
 import {Excludes} from './excludes'
 import type {BasicConfig, ManifestConfig} from './types'
 import {RollupPluginTerser, RollupPluginTerserDefaultOptions} from './rollup-plugin-terser'
+//import {ResolveAliasConfig} from './alias'
 
 function withDefaults(cfg: BasicConfig = {}): ManifestConfig {
   if (!cfg.features) cfg.features = {}
@@ -47,7 +48,17 @@ function withDefaults(cfg: BasicConfig = {}): ManifestConfig {
     f.lib.minifyUnsafe ??= false
     f.lib.terserOptions ??= RollupPluginTerserDefaultOptions({features: {lib: {minifyUnsafe: f.lib.minifyUnsafe}}} as any) as any
 
-    if (f.lang === 'ts') f.lib.dts ??= {enable: true}
+    if (f.lang === 'ts') {
+      f.lib.dts ??= {enable: true}
+      f.lib.dts.dtsSourcemap ??= f.lib.sourcemap ?? false
+      f.lib.dts.dtsSourcemapMetadata ??= f.lib.sourcemap ?? false
+    } else {
+      f.lib.dts = {
+        enable: false,
+        dtsSourcemap: false,
+        dtsSourcemapMetadata: false
+      }
+    }
   }
 
   const p = cfg.pushFeatures
@@ -73,7 +84,6 @@ function withDefaults(cfg: BasicConfig = {}): ManifestConfig {
 
 export const manifest = (cfg?: BasicConfig) => {
   let rqCfg = withDefaults(cfg ?? {})
-  console.log(rqCfg)
   rqCfg.plugins = rqCfg.plugins ?? []
   rqCfg.build = mergeConfig(rqCfg.build ?? {}, {outDir: rqCfg.features.dist}) as any
 
@@ -92,7 +102,11 @@ export const manifest = (cfg?: BasicConfig) => {
   function defineConfig(userConfig: UserConfig = {}): UserConfig {
     rqCfg = mergeConfig(userConfig, rqCfg) as ManifestConfig
 
-    if (rqCfg.features?.lib?.enable) rqCfg.build = buildConfigLib() as any
+    if (rqCfg.features?.lib?.enable) {
+      rqCfg.build = buildConfigLib() as any
+      //const newResolve = ResolveAliasConfig(rqCfg)
+      //rqCfg.resolve = mergeConfig(rqCfg.resolve, newResolve.resolve) as any
+    }
 
     if (rqCfg.features?.lib?.dts?.enable) rqCfg.plugins.push(dtsPlugin())
 

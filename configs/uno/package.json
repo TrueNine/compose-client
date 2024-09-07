@@ -31,5 +31,8 @@
     "@unocss/transformer-directives": "^0.62.2",
     "unocss": "0.62.2",
     "unocss-preset-weapp": "^0.62.0"
+  },
+  "dependencies": {
+    "@compose/config-uno": "file:"
   }
 }

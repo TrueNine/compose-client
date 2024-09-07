@@ -1,16 +1,15 @@
 {
   "name": "@compose/config-vite-fragment",
-  "version": "0.0.2",
+  "version": "0.0.6",
   "description": "vite config fragment",
   "author": "TrueNine",
   "license": "private",
   "scripts": {
-    "build": "run-s type-check build-c fmt",
+    "build": "run-s type-check build-c",
     "build-c": "vite build",
     "type-check": "vue-tsc -p tsconfig.json --noEmit",
     "pub": "run-s build pub-c",
-    "pub-c": "pnpm --dir ./dist pub",
-    "fmt": "prettier --write \"**/*.ts\" \"**/*.d.ts\" \"**/*.json\" --ignore-unknown"
+    "pub-c": "pnpm --dir ./dist pub"
   },
   "type": "module",
   "module": "dist/index.js",
@@ -25,8 +24,10 @@
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
-    "./types": {
-      "types": "./dist/types/index.d.ts"
+    "./alias": {
+      "types": "./dist/alias/index.d.ts",
+      "import": "./dist/alias/index.js",
+      "require": "./dist/alias/index.cjs"
     },
     "./vite-plugin-static-copy": {
       "types": "./dist/vite-plugin-static-copy/index.d.ts",
@@ -59,5 +60,8 @@
       "require": "./dist/excludes/index.cjs"
     },
     "./*": "./dist/*"
+  },
+  "dependencies": {
+    "@compose/config-vite-fragment": "file:"
   }
 }

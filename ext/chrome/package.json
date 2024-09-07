@@ -22,5 +22,8 @@
       "require": "./dist/index.cjs"
     },
     "./*": "./*"
+  },
+  "dependencies": {
+    "@compose/ext-chrome": "file:"
   }
 }
