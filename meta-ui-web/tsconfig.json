@@ -7,5 +7,5 @@
     },
     "types": ["./imports-auto.d.ts", "./imports-comp.d.ts"]
   },
-  "exclude": ["uno.config.ts","dist"]
+  "exclude": ["uno.config.ts", "dist"]
 }

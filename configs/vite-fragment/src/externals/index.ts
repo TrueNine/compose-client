@@ -48,6 +48,8 @@ export const Externals = [
   /^(lodash-es|lodash-es\/)/,
   /^(pdfjs-dist|pdfjs-dist\/)/,
   /^(pino|pino\/)/,
+  /^(@antfu|@antfu\/)/,
+  /^(@antfu\/ni|@antfu\/ni\/)/,
   /^(libarchive\.js|libarchive\.js\/)/,
 
   // 样式文件
@@ -56,5 +58,8 @@ export const Externals = [
   // eslint
   '@rushstack/eslint-patch/modern-module-resolution',
   '@typescript-eslint/parser',
-  'eslint-define-config'
+  'eslint-define-config',
+
+  // other
+  /^(data:)/
 ]

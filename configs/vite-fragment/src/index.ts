@@ -9,7 +9,6 @@ import {StaticCopyPlugin} from './vite-plugin-static-copy'
 import {Excludes} from './excludes'
 import type {BasicConfig, ManifestConfig} from './types'
 import {RollupPluginTerser, RollupPluginTerserDefaultOptions} from './rollup-plugin-terser'
-//import {ResolveAliasConfig} from './alias'
 
 function withDefaults(cfg: BasicConfig = {}): ManifestConfig {
   if (!cfg.features) cfg.features = {}

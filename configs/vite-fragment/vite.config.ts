@@ -5,7 +5,6 @@ const {defineConfig} = manifest({
     entry: [
       'index',
       'types/index',
-      'alias/index',
       'vite-plugin-dts/index',
       'vite-plugin-static-copy/index',
       'externals/index',

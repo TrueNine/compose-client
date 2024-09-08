@@ -83,6 +83,47 @@ export function dlv(obj: dynamic, key: Maybe<string>, def: dynamic, p: int, unde
   return obj === undef ? def : obj
 }
 
+type _DeepFilter = (data: unknown, key: string | number, deep: number) => boolean | undefined
+type _DeepResolve<T = dynamic> = (data: T | dynamic, key: keyof T | string | number) => T
+interface _DeepOptions<T = dynamic> {
+  deep?: boolean | number
+  resolve?: _DeepResolve<T>
+}
+
+/**
+ * ## 深度过滤对象
+ *
+ * @param source 源对象
+ * @param options 过滤器配置项
+ * @param filter 过滤器
+ */
+export function deepResolve<T extends Record<dynamic, dynamic> | dynamic[] = dynamic>(
+  source: T,
+  options: _DeepOptions = {},
+  filter: _DeepFilter = () => false
+): T {
+  if (!source) return source
+  filter ??= () => false
+  const defaultOptions = {deep: false, resolver: (v: dynamic) => v}
+  options = {...defaultOptions, ...options}
+  const resolver = options.resolve ?? (v => v)
+
+  function _deepResolve<T = dynamic>(obj: T, depth = 0): T {
+    if (obj === undefined || obj === null) return obj
+    const isArr = Array.isArray(obj)
+    if (typeof obj !== 'object' || !isArr) return obj
+    const result: dynamic = isArr ? [] : {}
+    for (const key in obj) {
+      const value = obj[key]
+      if (filter(value, key, depth)) result[key] = resolver(value, key)
+      else if ((options.deep === true && depth > 0) || (typeof options.deep === 'number' && depth < options.deep)) result[key] = _deepResolve(value, depth + 1)
+      else result[key] = resolver(STR_EMPTY, value)
+    }
+    return result
+  }
+  return _deepResolve(source)
+}
+
 /**
  * ## 对对象进行解包操作
  * @param obj 操作对象

@@ -1,7 +1,7 @@
 import type {LibraryFormats, UserConfig} from 'vite'
 import type {Options as RollupPluginTerserOptions} from '@rollup/plugin-terser'
 export interface Features {
-  buildTool?: 'npm' | 'pnpm' | 'yarn'
+  buildTool?: 'npm' | 'pnpm' | 'yarn' | 'nr'
   /**
    * ## 设置当前使用的语言
    * @default 'ts'

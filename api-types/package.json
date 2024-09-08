@@ -1,15 +1,16 @@
 {
   "name": "@compose/api-types",
-  "version": "1.0.114",
+  "version": "1.0.117",
   "description": "yan100 client ui kit",
   "author": "TrueNine",
   "license": "private",
   "scripts": {
-    "build": "run-s type-check build-c",
+    "build": "run-s type-check build-c fmt",
     "build-c": "vite build",
     "type-check": "vue-tsc --noEmit",
     "pub": "run-s  build pub-c",
-    "pub-c": "pnpm publish --no-git-checks"
+    "pub-c": "pnpm --dir ./dist pub",
+    "fmt": "prettier --write \"**/*.{ts,tsx,vue,scss,d.ts,js}\" --ignore-unknown"
   },
   "type": "module",
   "module": "dist/index.js",
@@ -18,6 +19,9 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
+    },
+    "./typescripts": {
+      "types": "./dist/typescripts/index.d.ts"
     },
     "./*": "./*",
     "./**": "./**",

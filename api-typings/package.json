@@ -1,15 +1,16 @@
 {
   "name": "@compose/api-typings",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "yan100 enum defines",
   "author": "TrueNine",
   "license": "private",
   "scripts": {
-    "build": "run-s type-check build-c",
+    "build": "run-s type-check build-c fmt",
     "build-c": "vite build",
     "type-check": "vue-tsc --noEmit",
-    "pub": "run-s  build pub-c",
-    "pub-c": "pnpm publish --no-git-checks"
+    "pub": "run-s build pub-c",
+    "pub-c": "pnpm --dir ./dist pub",
+    "fmt": "prettier --write \"**/*.{ts,tsx,vue,scss,d.ts,js}\" --ignore-unknown"
   },
   "type": "module",
   "module": "dist/index.js",

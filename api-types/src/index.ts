@@ -50,11 +50,6 @@ export * from './data'
 export * from './security'
 
 /**
- * 枚举方法
- */
-export * from './enum'
-
-/**
  * 外部依赖类型
  */
 export * from './reference'
