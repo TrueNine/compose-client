@@ -17,20 +17,5 @@
       "require": "./dist/index.cjs"
     },
     "./*": "./*"
-  },
-  "dependencies": {
-    "@compose/gulp-rm": "file:",
-    "@types/through2": "^2.0.41",
-    "gulp-rimraf": "^1.0.0",
-    "rimraf": "^6.0.0",
-    "through2": "^4.0.2",
-    "vinyl": "^3.0.0"
-  },
-  "peerDependencies": {
-    "@types/through2": "^2.0.41",
-    "gulp-rimraf": "^1.0.0",
-    "rimraf": "^6.0.0",
-    "through2": "^4.0.2",
-    "vinyl": "^3.0.0"
   }
 }
