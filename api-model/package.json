@@ -1,6 +1,6 @@
 {
   "name": "@compose/api-model",
-  "version": "1.1.123",
+  "version": "1.1.124",
   "description": "yan100 js dev kit",
   "author": "TrueNine",
   "license": "private",
@@ -9,7 +9,7 @@
     "build-c": "rollup --config rollup.config.ts --configPlugin typescript",
     "build": "run-s build-v build-c fmt",
     "pub": "run-s build pub-c",
-    "pub-c": "nr --dir ./dist pub",
+    "pub-c": "pnpm --dir ./dist pub",
     "test": "vitest",
     "fmt": "prettier --write \"**/*.{ts,tsx,vue,scss,d.ts,js}\" --ignore-unknown"
   },

@@ -1,25 +1,46 @@
+import type {IPageRequestParam} from '@/request/Request'
+import type {i32, i64} from '@/typescripts'
+
 /**
  * 错误消息统一返回格式
  */
-export interface ErrorMessage {
+export interface ErrBody {
   msg?: string
-  code: number
+  code: i32
   alert?: string
   errMap?: Record<string, string>
 }
 
 /**
- * 分页后数据统一返回
+ * # 分页数据
  */
-export interface PagedResponseResult<D> {
-  dataList?: D[]
-  total: number
-  size: number
-  pageSize: number
-  offset: number
+export interface IPage<D> {
+  /**
+   * ## Data List
+   */
+  readonly d?: D[]
+  /**
+   * ## Total Element Count
+   */
+  readonly t: i64
+  /**
+   * ## Total Page Size
+   */
+  readonly p: i64
+  /**
+   * ## Offset
+   */
+  readonly o: i64
+  /**
+   * 分页原始数据
+   * @see IPageRequestParam
+   * @default undefined
+   */
+  readonly pageParam?: IPageRequestParam & never
 }
 
 /**
- * ## PagedResponseResult 的简写形式
+ * # IPage 的简写形式
+ * @see IPage
  */
-export type Pr<T> = PagedResponseResult<T>
+export type Pr<T> = IPage<T>

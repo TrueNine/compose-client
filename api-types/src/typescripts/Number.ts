@@ -2,7 +2,6 @@
  * ## 布尔值简写
  */
 export type Bool = boolean
-export type bool = Bool
 
 /**
  * ## 二进制数
@@ -51,3 +50,22 @@ export type double = Double
  */
 export type Decimal = number
 export type decimal = Decimal
+
+// === rust 简短类型定义
+export type bool = Bool
+export type u8 = Byte
+export type u16 = Int
+export type u32 = Int
+export type u64 = Long
+export type u128 = BigSerial
+export type usize = Int
+export type i8 = Byte
+export type i16 = Int
+export type i32 = Int
+export type i64 = Long
+export type i128 = BigSerial
+export type isize = Int
+export type f32 = Float
+export type f64 = Double
+export type char = string
+export type str = string

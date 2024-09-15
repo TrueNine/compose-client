@@ -12,21 +12,21 @@ import {isNil} from '@/tools'
  */
 export async function loopPageAll<T>(loopFn: (loopPq: Pq) => asyncable<nil<Pr<T>>>, initPageParam: Pq = Pw.DEFAULT_MAX): task<T[]> {
   const {
-    pageSize: initPageSize = 0,
-    dataList: initDataList = [],
-    total: initTotal = 0
+    p: initPageSize = 0,
+    d: initDataList = [],
+    t: initTotal = 0
   } = (await loopFn(initPageParam)) ?? {
-    pageSize: 0,
-    dataList: [],
-    total: 0
+    p: 0,
+    d: [],
+    t: 0
   }
-  if (isNil(initDataList) || initPageSize <= 1 || !initDataList || initTotal === 0 || initTotal <= (initPageParam?.pageSize ?? 0)) return initDataList
+  if (isNil(initDataList) || initPageSize <= 1 || !initDataList || initTotal === 0 || initTotal <= (initPageParam?.s ?? 0)) return initDataList
   const resultDataList: T[] = [...initDataList]
-  let nextPq: nil<Pq> = {...initPageParam, offset: (initPageParam?.offset ?? 0) + 1}
+  let nextPq: nil<Pq> = {...initPageParam, o: (initPageParam?.o ?? 0) + 1}
   while (nextPq !== null) {
-    const {dataList = []} = (await loopFn(nextPq)) ?? {dataList: []}
-    resultDataList.push(...dataList)
-    nextPq = ((nextPq?.offset ?? 0) + 1) * (nextPq?.pageSize ?? 0) < initTotal ? {...nextPq, offset: (nextPq?.offset ?? 0) + 1} : null
+    const {d = []} = (await loopFn(nextPq)) ?? {d: []}
+    resultDataList.push(...d)
+    nextPq = ((nextPq?.o ?? 0) + 1) * (nextPq?.s ?? 0) < initTotal ? {...nextPq, o: (nextPq?.o ?? 0) + 1} : null
   }
   return resultDataList
 }

@@ -17,5 +17,8 @@
       "require": "./dist/index.cjs"
     },
     "./*": "./*"
+  },
+  "dependencies": {
+    "@compose/gulp-rm": "file:"
   }
 }

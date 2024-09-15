@@ -1,22 +1,13 @@
 import type {Id, RefId} from './Utils'
 
-import type {bigserial, bool, int, serialcode} from '@/typescripts'
+import type {bigserial, bool, serialcode} from '@/typescripts'
 import type {datetime} from '@/datetime'
-
-/**
- * 分页混合实体
- */
-export interface PageableEntity {
-  pageSize?: int
-  offset?: int
-  unPage?: bool
-}
 
 /**
  * 实体类基类
  */
-export interface IAnyEntity extends PageableEntity {
-  id?: Id
+export interface IAnyEntity {
+  readonly id?: Id
 }
 
 /**
