@@ -18,19 +18,19 @@ export interface IPage<D> {
   /**
    * ## Data List
    */
-  readonly d?: D[]
+  d?: D[]
   /**
    * ## Total Element Count
    */
-  readonly t: i64
+  t: i64
   /**
    * ## Total Page Size
    */
-  readonly p: i64
+  p: i64
   /**
    * ## Offset
    */
-  readonly o: i64
+  o: i64
   /**
    * 分页原始数据
    * @see IPageRequestParam

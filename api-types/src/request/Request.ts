@@ -1,4 +1,4 @@
-import type {bool, i32} from '@/typescripts'
+import type {i32} from '@/typescripts'
 
 /**
  * 分页参数入参请求
@@ -15,7 +15,7 @@ export interface IPageRequestParam {
   /**
    * ## UnPage
    */
-  u?: bool
+  u?: never
 }
 
 /**
