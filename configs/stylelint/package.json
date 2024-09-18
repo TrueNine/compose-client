@@ -19,8 +19,5 @@
       "require": "./dist/index.cjs"
     },
     "./*": "./*"
-  },
-  "dependencies": {
-    "@compose/config-stylelint": "file:"
   }
 }

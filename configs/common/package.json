@@ -1,10 +1,10 @@
 {
-  "name": "@compose/gulp-rm",
-  "version": "0.0.6",
+  "name": "@compose/common",
+  "version": "0.0.1",
   "scripts": {
     "build": "vite build",
     "pub": "run-s build pub-c",
-    "pub-c": "pnpm publish --no-git-checks"
+    "pub-c": "pnpm --dir ./dist pub"
   },
   "type": "module",
   "module": "dist/index.js",

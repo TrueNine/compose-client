@@ -17,21 +17,5 @@
       "require": "./dist/index.cjs"
     },
     "./*": "./*"
-  },
-  "peerDependencies": {
-    "@rushstack/eslint-patch": "^1.10.4",
-    "@typescript-eslint/parser": "^8.2.0",
-    "@vue/eslint-config-prettier": "^9.0.0",
-    "@vue/eslint-config-typescript": "^13.0.0",
-    "eslint": "~8.57.0",
-    "eslint-define-config": "^2.1.0",
-    "eslint-plugin-import": "^2.29.1",
-    "eslint-plugin-playwright": "^1.6.2",
-    "eslint-plugin-prettier": "^5.2.1",
-    "eslint-plugin-vue": "^9.27.0",
-    "prettier": "^3.3.3"
-  },
-  "dependencies": {
-    "@compose/eslint-config": "file:"
   }
 }

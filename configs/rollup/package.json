@@ -21,8 +21,5 @@
       "require": "./dist/index.cjs"
     },
     "./*": "./*"
-  },
-  "dependencies": {
-    "@compose/config-rollup": "file:"
   }
 }

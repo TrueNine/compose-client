@@ -22,8 +22,5 @@
       "require": "./dist/index.cjs"
     },
     "./*": "./*"
-  },
-  "dependencies": {
-    "@compose/config-theme": "file:"
   }
 }

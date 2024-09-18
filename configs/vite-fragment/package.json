@@ -60,8 +60,5 @@
       "require": "./dist/excludes/index.cjs"
     },
     "./*": "./dist/*"
-  },
-  "dependencies": {
-    "@compose/config-vite-fragment": "file:"
   }
 }
