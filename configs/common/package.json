@@ -1,5 +1,5 @@
 {
-  "name": "@compose/common",
+  "name": "@compose/config-common",
   "version": "0.0.1",
   "scripts": {
     "build": "vite build",

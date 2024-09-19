@@ -1,6 +1,6 @@
 {
   "name": "@compose/api-typings",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "description": "yan100 enum defines",
   "author": "TrueNine",
   "license": "private",
@@ -45,8 +45,5 @@
     "type": "git",
     "url": "git+https://https://github.com/TrueNine/compose-client",
     "directory": "api-typings"
-  },
-  "dependencies": {
-    "@compose/api-typings": "file:"
   }
 }

@@ -1,7 +1,8 @@
 import dts from 'vite-plugin-dts'
+import type {PluginOptions} from 'vite-plugin-dts'
 import type {Plugin} from 'vite'
 
-import type {ManifestConfig} from '../types'
+import type {ManifestConfig} from '@/types'
 
 export const DtsPlugin = (dtsCfg: ManifestConfig): Plugin => {
   const includes = dtsCfg.features.entryDirs.map(dir => `${dir}/**`)
@@ -20,6 +21,6 @@ export const DtsPlugin = (dtsCfg: ManifestConfig): Plugin => {
     strictOutput: true,
     include: includes,
     exclude: [`${dtsCfg.build.outDir}`, `${dtsCfg.build.outDir}/*`, `${dtsCfg.build.outDir}/**`, ...dtsCfg.features.exclude]
-  }
+  } as PluginOptions
   return dts(cfg)
 }

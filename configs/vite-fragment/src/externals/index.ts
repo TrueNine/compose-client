@@ -36,13 +36,12 @@ export const Externals = [
 
   /^(fs-extra|fs-extra\/)/,
   /^(fsevents|fsevents\/)/,
-  /^(vite:|vite:\/|vite$)/,
-  /^(vite-plugin-static-copy|vite-plugin-static-copy\/)/,
-  /^(vite-plugin-dts|vite-plugin-dts\/)/,
+  /^(vite:|vite:\/|vite-|vite-plugin-|@vitejs|@vitejs\/|vite$)/,
 
   /^(node|node\/|node:)/,
+
   // rollup
-  '@rollup/plugin-terser',
+  /^(rollup|rollup\/|@rollup|@rollup\/|rollup-|rollup-plugin-)/,
 
   // tools
   /^(lodash-es|lodash-es\/)/,
@@ -61,5 +60,8 @@ export const Externals = [
   'eslint-define-config',
 
   // other
-  /^(data:)/
+  /^(data:)/,
+
+  // unocss
+  /^(unocss|unocss\/|unocss-|unocss-\/|@unocss|@unocss\/)/
 ]

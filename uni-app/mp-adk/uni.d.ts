@@ -1,1 +1,1 @@
-export * from '@dcloudio/types'
+/// <reference types="@dcloudio/types" />

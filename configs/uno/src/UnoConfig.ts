@@ -2,16 +2,17 @@ import {defineConfig, presetAttributify, presetMini, presetIcons, presetUno, pre
 import {default as transformerDirectives} from '@unocss/transformer-directives'
 import {default as transformerCompileClass} from '@unocss/transformer-compile-class'
 import {default as transformerAttributifyJsx} from '@unocss/transformer-attributify-jsx'
+import type {ThemeConfig} from '@compose/config-theme'
 
-export default defineConfig({
-  presets: [
-    presetUno(),
-    presetAttributify(),
-    presetIcons(),
-    presetWind(),
-    presetMini({
-      dark: 'media'
-    })
-  ],
-  transformers: [transformerDirectives(), transformerCompileClass(), transformerAttributifyJsx()]
-})
+import {shortCuts} from './ShortCuts'
+import {breakpoints} from './Breakpoints'
+import {unoRules} from './Rules'
+
+export const defaultConfig = (themeConfig: ThemeConfig = {}) =>
+  defineConfig({
+    presets: [presetUno(), presetAttributify(), presetIcons(), presetWind(), presetMini()],
+    shortcuts: shortCuts(),
+    rules: unoRules(themeConfig),
+    theme: {breakpoints},
+    transformers: [transformerDirectives(), transformerCompileClass(), transformerAttributifyJsx()]
+  })

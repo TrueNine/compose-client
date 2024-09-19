@@ -1,6 +1,6 @@
 {
   "name": "@compose/extensions",
-  "version": "0.0.16",
+  "version": "0.0.18",
   "description": "yan100 extensions functions and apis",
   "author": "TrueNine",
   "license": "private",
@@ -62,8 +62,5 @@
     "type": "git",
     "url": "git+https://https://github.com/TrueNine/compose-client",
     "directory": "api-types"
-  },
-  "dependencies": {
-    "@compose/extensions": "file:"
   }
 }

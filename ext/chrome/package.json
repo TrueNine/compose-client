@@ -1,15 +1,16 @@
 {
   "name": "@compose/ext-chrome",
-  "version": "0.0.38",
+  "version": "0.0.39",
   "description": "chrome 扩展程序 开发库",
   "author": "TrueNine",
   "license": "private",
   "scripts": {
-    "build": "run-s type-check build-c",
+    "build": "run-s type-check build-c fmt",
     "build-c": "vite build",
     "type-check": "vue-tsc --noEmit",
     "pub": "run-s build pub-c",
-    "pub-c": "pnpm publish --no-git-checks"
+    "pub-c": "pnpm publish --no-git-checks",
+    "fmt": "prettier --write \"**/*.{ts,tsx,vue,scss,d.ts,js}\" --ignore-unknown"
   },
   "type": "module",
   "module": "dist/index.js",
@@ -22,8 +23,5 @@
       "require": "./dist/index.cjs"
     },
     "./*": "./*"
-  },
-  "dependencies": {
-    "@compose/ext-chrome": "file:"
   }
 }

@@ -5,11 +5,7 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "declaration": true,
-    "declarationMap": true,
-    "declarationDir": "dist"
+    "types": ["@dcloudio/types", "./uni.d.ts"]
   },
-  "types": ["@dcloudio/types", "./uni.d.ts"],
-  "include": ["**.d.ts", "**/**.ts", "**/**.d.ts"],
   "exclude": ["dist"]
 }

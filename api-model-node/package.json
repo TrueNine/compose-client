@@ -1,6 +1,6 @@
 {
   "name": "@compose/api-model-node",
-  "version": "1.1.19",
+  "version": "1.1.20",
   "description": "yan100 client nodejs kit",
   "author": "TrueNine",
   "license": "private",
@@ -9,7 +9,7 @@
     "build": "run-s type-check build-c",
     "type-check": "vue-tsc --noEmit",
     "pub": "run-s build pub-c",
-    "pub-c": "pnpm publish --no-git-checks"
+    "pub-c": "pnpm --dir dist pub"
   },
   "type": "module",
   "module": "dist/index.js",
@@ -22,8 +22,5 @@
       "require": "./dist/index.cjs"
     },
     "./*": "./*"
-  },
-  "dependencies": {
-    "@compose/api-model-node": "file:"
   }
 }

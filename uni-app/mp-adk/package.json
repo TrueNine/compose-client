@@ -1,15 +1,16 @@
 {
   "name": "@compose/uni-mp-adk",
-  "version": "1.0.48",
+  "version": "1.0.49",
   "author": "TrueNine",
   "license": "private",
   "description": "uni-app miniProgram auxiliary development kit",
   "scripts": {
     "build-c": "vite build",
-    "type-check": "vue-tsc --noEmit",
-    "build": "run-s type-check build-c",
+    "type-check": "vue-tsc --build ./tsconfig.json --force",
+    "build": "run-s type-check build-c fmt",
     "pub": "run-s build pub-c",
-    "pub-c": "pnpm publish --no-git-checks"
+    "fmt": "prettier --write \"**/*.{ts,tsx,vue,scss,d.ts,js}\" --ignore-unknown",
+    "pub-c": "pnpm --dir dist pub"
   },
   "type": "module",
   "module": "dist/index.js",
@@ -22,8 +23,5 @@
       "require": "./dist/index.cjs"
     },
     "./*": "./*"
-  },
-  "dependencies": {
-    "@compose/uni-mp-adk": "file:"
   }
 }

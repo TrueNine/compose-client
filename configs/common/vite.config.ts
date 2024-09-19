@@ -2,19 +2,20 @@ import {fileURLToPath, URL} from 'node:url'
 
 import {manifest} from '@compose/config-vite-fragment'
 
-const {defineConfig, buildConfigLib, dtsPlugin, staticCopyPluginPackageJson} = manifest({
+const {defineConfig} = manifest({
   features: {
-    lang: 'ts',
     lib: {
       formats: ['es', 'cjs'],
-      sourcemap: false
+      sourcemap: true,
+      dts: {
+        enable: true,
+        dtsSourcemap: true
+      }
     }
   }
 })
 
 export default defineConfig({
-  build: buildConfigLib(),
-  plugins: [dtsPlugin(), staticCopyPluginPackageJson()],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))

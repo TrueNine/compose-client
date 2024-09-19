@@ -1,14 +1,15 @@
 {
   "name": "@compose/req",
-  "version": "0.0.58",
+  "version": "0.0.60",
   "description": "requester",
   "author": "TrueNine",
   "license": "private",
   "scripts": {
     "build-c": "vite build",
     "type-check": "vue-tsc --noEmit",
-    "build": "run-s type-check build-c",
+    "build": "run-s type-check build-c fmt",
     "pub": "run-s build pub-c",
+    "fmt": "prettier --write \"**/*.{ts,tsx,vue,scss,d.ts,js}\" --ignore-unknown",
     "pub-c": "pnpm publish --no-git-checks"
   },
   "type": "module",
@@ -22,8 +23,5 @@
       "require": "./dist/index.cjs"
     },
     "./*": "./*"
-  },
-  "dependencies": {
-    "@compose/req": "file:"
   }
 }

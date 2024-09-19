@@ -1,6 +1,6 @@
 {
   "name": "@compose/api-types",
-  "version": "1.0.123",
+  "version": "1.0.124",
   "description": "yan100 client ui kit",
   "author": "TrueNine",
   "license": "private",
@@ -40,8 +40,5 @@
     "type": "git",
     "url": "git+https://https://github.com/TrueNine/compose-client",
     "directory": "api-types"
-  },
-  "dependencies": {
-    "@compose/api-types": "file:"
   }
 }

@@ -1,0 +1,1 @@
+{"root":["./uni.d.ts","./vite.config.ts","./src/index.ts","./src/auth/uselogin.ts","./src/auth/usepay.ts","./src/fetch/unifetchrequester.ts","./src/route/unirouter.ts"],"version":"5.6.2"}
