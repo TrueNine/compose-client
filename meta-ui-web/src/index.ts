@@ -13,6 +13,7 @@ import YVMenuItem from './v-menu-item'
 import YIco from './ico'
 import YForm from './form'
 import YField from './field'
+import YPager from './pager'
 
 import YPreAuthorize from '@/pre-authorize'
 import YConfigPreAuthorize from '@/config-pre-authorize'
@@ -35,6 +36,7 @@ export * from './v-menu-item'
 
 export * from './common'
 export * from './unplugin'
+export * from './pager'
 
 const components = {
   YConfigProvider,
@@ -50,8 +52,10 @@ const components = {
   YPreAuthorize,
   YConfigPreAuthorize,
   YForm,
-  YField
+  YField,
+  YPager
 }
+
 export {
   YElSiderMenu,
   YVAddressSelect,
@@ -66,7 +70,8 @@ export {
   YPreAuthorize,
   YConfigPreAuthorize,
   YForm,
-  YField
+  YField,
+  YPager
 }
 
 export default {

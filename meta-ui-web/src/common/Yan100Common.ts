@@ -1,6 +1,7 @@
-import type {InjectionKey} from '@vue/runtime-core'
+import type {InjectionKey} from 'vue'
 import type {Ref} from 'vue'
 import type {Maybe} from '@compose/api-types'
+
 export {}
 
 const providePrefix = '__MetaUIProvideSymbolKey__'
