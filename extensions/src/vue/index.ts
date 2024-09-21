@@ -131,3 +131,5 @@ export class Vue {
     return result
   }
 }
+
+export * from './Types'
