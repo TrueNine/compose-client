@@ -2,7 +2,7 @@ import type {Options as RollupPluginTerserOptions} from '@rollup/plugin-terser'
 import rollupTerser from '@rollup/plugin-terser'
 import {mergeConfig} from 'vite'
 
-import type {ManifestConfig} from '../types'
+import type {ManifestConfig} from '@/types'
 
 export const RollupPluginTerser = (cfg: ManifestConfig, options: RollupPluginTerserOptions) => {
   if (cfg.features.lib.minify) {
