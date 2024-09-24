@@ -31,5 +31,9 @@ describe('Values', () => {
     expect(Object.values(e).every(v => v === 1)).toBe(true)
     const r = deepResolve(obj, {resolve: () => 1}, () => true)
     expect(Object.values(r).every(v => v === 1)).toBe(true)
+
+    const x = deepResolve({d: {a: 1}}, {deep: true, resolve: () => 2}, (_, k) => k === 'a')
+    console.log(x)
+    expect(x).toEqual({d: {a: 2}})
   })
 })

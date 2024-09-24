@@ -115,9 +115,16 @@ export function deepResolve<T extends Record<dynamic, dynamic> | dynamic[] = dyn
     const result: dynamic = isArr ? [] : {}
     for (const key in obj) {
       const value = obj[key]
-      if (filter(value, key, depth)) result[key] = resolver(value, key)
-      else if ((options.deep === true && depth > 0) || (typeof options.deep === 'number' && depth < options.deep)) result[key] = _deepResolve(value, depth + 1)
-      else result[key] = resolver(value, STR_EMPTY)
+      if (filter(value, key, depth)) {
+        result[key] = resolver(value, key)
+        continue
+      }
+      if (
+        options.deep === true ||
+        ((options.deep === void 0 || options.deep === null) && depth <= 0) ||
+        (typeof options.deep === 'number' && depth < options.deep)
+      )
+        result[key] = _deepResolve(value, depth + 1)
     }
     return result
   }
