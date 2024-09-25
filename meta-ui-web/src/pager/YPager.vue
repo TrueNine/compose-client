@@ -1,7 +1,15 @@
 <script setup lang="ts">
-import {YPagerDefaultProps, type YPagerEmits, type YPagerProps} from './index'
+import {Pw} from '@compose/api-model'
 
-const props = withDefaults(defineProps<YPagerProps>(), YPagerDefaultProps)
+import type {YPagerEmits, YPagerProps} from './index'
+
+const props = withDefaults(defineProps<YPagerProps>(), {
+  modelValue: () => Pw.DEFAULT_MAX,
+  pr: null,
+  maxPage: 6,
+  total: 10
+})
+
 const emits = defineEmits<YPagerEmits>()
 
 const modelPage = useVModel(props, 'modelValue', emits, {passive: true})

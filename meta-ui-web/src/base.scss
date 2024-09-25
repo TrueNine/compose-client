@@ -1,0 +1,11 @@
+:root {
+  --y-primary: #3498db;
+  --y-secondary: #2ecc71;
+  --y-danger: #e74c3c;
+  --y-warning: #f1c40f;
+  --y-info: #9b59b6;
+  --y-white: #eee;
+  --y-black: #111;
+  --y-success: var(--y-secondary);
+  --y-error: var(--y-danger);
+}

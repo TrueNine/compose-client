@@ -9,14 +9,14 @@ function resolveComponent(name: string) {
     return {
       name,
       from: '@compose/meta-ui-web',
-      satisfies: [`@compose/meta-ui-web/dist/${camelTo(name)}/index.css`]
+      satisfies: [`@compose/meta-ui-web/${camelTo(name)}/index.css`]
     }
 }
 
 export const MetaUiWebResolver = () => {
   return [
     {
-      type: 'component' as ResolverType,
+      type: 'component' satisfies ResolverType,
       resolve: resolveComponent
     }
   ]
