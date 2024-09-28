@@ -83,12 +83,6 @@ const processDirectory = (dir: string, cfg: ManifestConfig) => {
 
 export const StaticCopyPlugin = (cfg: ManifestConfig): Plugin[] => {
   const r = [] as Target[]
-  if (cfg.features.lib.copyNpmIgnoreToDist) {
-    r.push({
-      src: '.npmignore',
-      dest: ''
-    })
-  }
   if (cfg.features.lib.copyReadmeToDist) {
     r.push({
       src: '{README,readme}.{md,txt,md,txt,}',

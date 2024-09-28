@@ -39,7 +39,6 @@ export interface Features {
     terserOptions?: RollupPluginTerserOptions
     dts?: {enable?: boolean; dtsSourcemap?: boolean; dtsSourcemapMetadata?: boolean}
     copyPackageJsonToDist?: boolean
-    copyNpmIgnoreToDist?: boolean
     copyReadmeToDist?: boolean
     copySourceCodeToDist?: boolean
     name?: string

@@ -34,7 +34,6 @@ function withDefaults(cfg: BasicConfig = {}): ManifestConfig {
   if (f?.lib && f.lib.enable === void 0) f.lib.enable = true
 
   f.lib!.copyPackageJsonToDist ??= f.lib.enable ?? false
-  f.lib!.copyNpmIgnoreToDist ??= f.lib.enable ?? false
   f.lib!.copyReadmeToDist ??= false
   f.lib!.copySourceCodeToDist ??= false
 
