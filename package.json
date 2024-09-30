@@ -14,7 +14,7 @@
     "build:types": "nr --dir ./api-types build",
     "build:model": "nr --dir ./api-model build",
     "build:model-node": "nr --dir ./api-model-node build",
-    "build-all:build-bundle": "run-p build:configs-eslint build:configs-prettier build:configs-theme build:configs-uno",
+    "build-all:build-bundle": "run-s build:configs-eslint build:configs-prettier build:configs-theme build:configs-uno",
     "build-all:ts-bundle": "run-s build:typings build:types",
     "build-all:basic-lib": "run-s build-all:ts-bundle build:model",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --color --ignore-path .eslintignore",
