@@ -1,11 +1,11 @@
 {
   "name": "@compose/extensions",
-  "version": "0.0.19",
+  "version": "0.0.21",
   "description": "yan100 extensions functions and apis",
   "author": "TrueNine",
   "license": "private",
   "scripts": {
-    "build": "run-s type-check build-c fmt",
+    "build": "run-s type-check build-c",
     "pub": "run-s build pub-c",
     "fmt": "prettier --write \"**/*.ts\" \"**/*.d.ts\" \"**/*.json\" --ignore-unknown",
     "build-c": "vite build",

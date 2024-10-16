@@ -1,11 +1,11 @@
 {
   "name": "@compose/api-typings",
-  "version": "1.0.15",
+  "version": "1.0.17",
   "description": "yan100 enum defines",
   "author": "TrueNine",
   "license": "private",
   "scripts": {
-    "build": "run-s type-check build-c fmt",
+    "build": "run-s type-check build-c",
     "build-c": "vite build",
     "type-check": "vue-tsc --noEmit",
     "pub": "run-s build pub-c",

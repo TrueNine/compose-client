@@ -1,6 +1,6 @@
 {
   "name": "@compose/config-common",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "scripts": {
     "build": "vite build",
     "pub": "run-s build pub-c",
