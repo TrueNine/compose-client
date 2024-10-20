@@ -7,7 +7,8 @@ export enum AuditTyping {
   FAIL = 3,
   CANCEL = 4,
   EXPIRED = 5,
-  REJECT = 6
+  REJECT = 6,
+  SHADOW_BAN = 7
 }
 
 export const AuditTypingComment: EnumCommentMap<typeof AuditTyping> = {
@@ -17,7 +18,8 @@ export const AuditTypingComment: EnumCommentMap<typeof AuditTyping> = {
   [AuditTyping.FAIL]: '不通过',
   [AuditTyping.CANCEL]: '取消',
   [AuditTyping.EXPIRED]: '已过期',
-  [AuditTyping.REJECT]: '已驳回'
+  [AuditTyping.REJECT]: '已驳回',
+  [AuditTyping.SHADOW_BAN]: '被隐藏'
 }
 export const AuditTypingReverseMap: EnumMap<typeof AuditTyping> = {
   [0]: AuditTyping.NONE,
@@ -26,5 +28,6 @@ export const AuditTypingReverseMap: EnumMap<typeof AuditTyping> = {
   [3]: AuditTyping.FAIL,
   [4]: AuditTyping.CANCEL,
   [5]: AuditTyping.EXPIRED,
-  [6]: AuditTyping.REJECT
+  [6]: AuditTyping.REJECT,
+  [7]: AuditTyping.REJECT
 }
