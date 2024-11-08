@@ -57,12 +57,12 @@ export class Dom {
   }
 }
 
-export const getImageData = async (file: Blob): task<HTMLImageElement> => {
+export async function getImageData(file: Blob): task<HTMLImageElement> {
   return new Promise(resolve => {
     const r = URL.createObjectURL(file)
     const img = new Image()
     img.onload = () => {
-      resolve({...img})
+      resolve(img)
     }
     img.src = r
     URL.revokeObjectURL(r)
