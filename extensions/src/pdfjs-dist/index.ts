@@ -68,6 +68,19 @@ export class PdfJs {
     return canvas.toDataURL('image/png')
   }
 
+  static async safeGetObject(objId: string, proxy: PDFPageProxy) {
+    return new Promise((resolve, reject) => {
+      let isErr = true
+      proxy.objs.get(objId, (data: unknown) => {
+        isErr = false
+        resolve(data)
+      })
+      setTimeout(() => {
+        if (isErr) reject(new Error(`read PDF objId ${objId} mil ${2000} timeout`))
+      }, 2000)
+    })
+  }
+
   static async extractPdfImages<T = string>(pdfFile: Blob, resolve?: (img: PDFImageData) => task<T>): task<T[]> {
     const pdfArrayBuffer = await pdfFile.arrayBuffer()
     const pdf = await this.instance.getDocument(pdfArrayBuffer).promise
@@ -75,7 +88,7 @@ export class PdfJs {
       const opList = await page.getOperatorList()
       const rawImgOperator = opList.fnArray.map((f, index) => (f === this.instance.OPS.paintImageXObject ? index : null)).filter(n => n !== null) as number[]
       const filename = opList.argsArray[rawImgOperator[0]][0]
-      return page.objs.get(filename)
+      return (await this.safeGetObject(filename, page)) as PDFImageData
     })
     return await Promise.all(
       e.map(async e => {
