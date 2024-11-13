@@ -1,4 +1,5 @@
 import type {late, Maybe, SafeAny} from '@compose/api-types'
+import type {dynamic} from '@compose/api-types'
 
 /**
  * # 对数组进行去重
@@ -72,7 +73,7 @@ export function combineToMap<T, K, V>(arr: T[], keyHandle: (t: T) => K, valueHan
  * 将 maybe 类型转换为 array
  * @param maybe T | Array<T>
  */
-export function maybeArray<T = SafeAny>(maybe: Maybe<T>) {
+export function maybeArray<T = dynamic>(maybe: Maybe<T>) {
   return Array.isArray(maybe) ? maybe : ([maybe] as T[])
 }
 

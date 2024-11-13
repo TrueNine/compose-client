@@ -1,7 +1,7 @@
 import type {CreateComponentPublicInstance, Plugin, RendererElement, RendererNode, VNode} from 'vue'
 import type {clip, dynamic, Maybe, newable} from '@compose/api-types'
 
-import {maybeArray} from '../tools'
+import {maybeArray} from '@/tools'
 /**
  * @deprecated 请迁移到 [@compose/extension] 包
  * @see [@compose/extensions] 此包已迁移
