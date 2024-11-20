@@ -20,7 +20,7 @@ const {
 } = useVModels(props, emits, {passive: true})
 const progressClr = computed(() => _progressLoading.value && _progress.value === 0)
 const useRight = computed(() => {
-  return slots['right-btn'] !== undefined
+  return slots['right-btn'] !== void 0
 })
 </script>
 
