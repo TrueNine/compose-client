@@ -1,13 +1,14 @@
 {
   "name": "@compose/req",
-  "version": "0.0.61",
+  "version": "0.0.62",
   "description": "requester",
   "author": "TrueNine",
   "license": "private",
   "scripts": {
     "build-c": "vite build",
     "type-check": "vue-tsc --noEmit",
-    "build": "run-s type-check build-c",
+    "build": "run-s lint type-check build-c",
+    "lint": "eslint --fix",
     "pub": "run-s build pub-c",
     "fmt": "prettier --write \"**/*.{ts,tsx,vue,scss,d.ts,js}\" --ignore-unknown",
     "pub-c": "pnpm publish --no-git-checks"

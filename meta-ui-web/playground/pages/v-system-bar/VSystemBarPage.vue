@@ -20,7 +20,7 @@ const menus = ref<RouteOption[]>([
       </VAppBarNavIcon>
     </template>
     <template #left-drawer="{collapsed}">
-      <YElSiderMenu :collapsed="collapsed" :route-table="menus" :roles="[]" :permissions="[]" />
+      <YElSiderMenu :collapsed="collapsed" :routeTable="menus" :roles="[]" :permissions="[]" />
     </template>
   </YVSystemBar>
 </template>

@@ -109,7 +109,7 @@ export function deepResolve<T extends Record<dynamic, dynamic> | dynamic[] = dyn
   const resolver = options.resolve ?? (v => v)
 
   function _deepResolve<T = dynamic>(obj: T, depth = 0): T {
-    if (obj === undefined || obj === null) return obj
+    if (obj === void 0 || obj === null) return obj
     const isArr = Array.isArray(obj)
     if (typeof obj !== 'object' && !isArr) return obj
     const result: dynamic = isArr ? [] : {}

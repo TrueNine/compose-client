@@ -109,7 +109,7 @@ export function mergeToMap<T extends object>(key: keyof T, arr: T[]): {[key in k
   }))
   return ks.reduce(
     (acc, cur) => {
-      if (acc[cur.key] !== undefined) acc[cur.key].push(cur.value)
+      if (acc[cur.key] !== void 0) acc[cur.key].push(cur.value)
       else acc[cur.key] = [cur.value]
       return acc
     },
@@ -123,7 +123,7 @@ export function mergeToMap<T extends object>(key: keyof T, arr: T[]): {[key in k
  * @param conditional 条件
  */
 export function sameValue<T>(arr: T[], conditional: (t: T, old: T) => boolean = (t, old) => t === old): late<T> {
-  if (arr.length === 0) return undefined
+  if (arr.length === 0) return void 0
   const old = arr[0]
-  return arr.every((v, i) => i === 0 || conditional(v, old)) ? old : undefined
+  return arr.every((v, i) => i === 0 || conditional(v, old)) ? old : void 0
 }

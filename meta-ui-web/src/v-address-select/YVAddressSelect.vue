@@ -24,12 +24,12 @@ const props = withDefaults(defineProps<YVAddressSelectProps>(), {
   showAdCode: false,
   showFullPath: false,
   level: 'district',
-  findCities: undefined,
-  findTowns: undefined,
-  findProvinces: undefined,
-  findDistricts: undefined,
-  findVillages: undefined,
-  findByCode: undefined
+  findCities: void 0,
+  findTowns: void 0,
+  findProvinces: void 0,
+  findDistricts: void 0,
+  findVillages: void 0,
+  findByCode: void 0
 })
 const emits = defineEmits<YAddressSelectEmits>()
 
@@ -52,7 +52,7 @@ const emitsDeepLevel = computed(() => {
 // 地址缓存
 const addressCache = ref<Record<SerialCode, IComponentAddr[]>>({})
 const saveCache = (code: SerialCode, data: IComponentAddr[]) => (addressCache.value[code] = data)
-const getCache = (code?: SerialCode) => (code ? addressCache.value[code] : undefined)
+const getCache = (code?: SerialCode) => (code ? addressCache.value[code] : void 0)
 
 const addressCacheData = reactive<Record<string, IComponentAddr[]>>({
   province: [],
@@ -212,12 +212,12 @@ watchThrottled(() => props.adCode, watchChangeCode)
             <VSelect
               v-model="selected.province"
               :clearable="true"
-              :return-object="true"
-              :persistent-hint="true"
+              :returnObject="true"
+              :persistentHint="true"
               :label="defaultSelected.province.name"
               :items="addressCacheData.province"
-              item-title="name"
-              item-value="code"
+              itemTitle="name"
+              itemValue="code"
             />
           </VCol>
 
@@ -226,12 +226,12 @@ watchThrottled(() => props.adCode, watchChangeCode)
               <VSelect
                 v-model="selected.city"
                 clearable
-                :return-object="true"
-                :persistent-hint="true"
+                :returnObject="true"
+                :persistentHint="true"
                 :label="defaultSelected.city.name"
                 :items="addressCacheData.city"
-                item-title="name"
-                item-value="code"
+                itemTitle="name"
+                itemValue="code"
               />
             </VCol>
           </Transition>
@@ -241,12 +241,12 @@ watchThrottled(() => props.adCode, watchChangeCode)
               <VSelect
                 v-model="selected.district"
                 clearable
-                :return-object="true"
-                :persistent-hint="true"
+                :returnObject="true"
+                :persistentHint="true"
                 :label="defaultSelected.district.name"
                 :items="addressCacheData.district"
-                item-title="name"
-                item-value="code"
+                itemTitle="name"
+                itemValue="code"
               />
             </VCol>
           </Transition>
@@ -256,12 +256,12 @@ watchThrottled(() => props.adCode, watchChangeCode)
               <VSelect
                 v-model="selected.town"
                 clearable
-                :return-object="true"
-                :persistent-hint="true"
+                :returnObject="true"
+                :persistentHint="true"
                 :label="defaultSelected.town.name"
                 :items="addressCacheData.town"
-                item-title="name"
-                item-value="code"
+                itemTitle="name"
+                itemValue="code"
               />
             </VCol>
           </Transition>
@@ -271,12 +271,12 @@ watchThrottled(() => props.adCode, watchChangeCode)
               <VSelect
                 v-model="selected.village"
                 clearable
-                :return-object="true"
-                :persistent-hint="true"
+                :returnObject="true"
+                :persistentHint="true"
                 :label="defaultSelected.village.name"
                 :items="addressCacheData.village"
-                item-title="name"
-                item-value="code"
+                itemTitle="name"
+                itemValue="code"
               />
             </VCol>
           </Transition>

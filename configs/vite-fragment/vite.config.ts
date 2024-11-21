@@ -1,4 +1,5 @@
 import {manifest} from './src'
+import {fileURLToPath, URL} from 'node:url'
 
 const {defineConfig} = manifest({
   features: {
@@ -19,6 +20,12 @@ const {defineConfig} = manifest({
     }
   }
 })
-const d = defineConfig()
+const d = defineConfig({
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url))
+    }
+  }
+})
 console.log(d)
 export default d

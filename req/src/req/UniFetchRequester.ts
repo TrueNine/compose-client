@@ -93,7 +93,7 @@ export function useReq<T>(url: string, ...args: dynamic[]): UseReqReturn<T> & Pr
   const config: InternalConfig = {
     method: 'GET',
     type: 'text' satisfies DataType,
-    payload: undefined as unknown
+    payload: void 0 as unknown
   }
 
   if (args.length > 0) {
@@ -274,8 +274,8 @@ export function useReq<T>(url: string, ...args: dynamic[]): UseReqReturn<T> & Pr
       if (!isFetching) {
         config.method = method
         if (config.method === 'GET') {
-          config.payload = undefined
-          config.payloadType = undefined
+          config.payload = void 0
+          config.payloadType = void 0
           url = joinPaths(url, queryParam(payload as object))
         } else {
           config.payload = payload
@@ -289,7 +289,7 @@ export function useReq<T>(url: string, ...args: dynamic[]): UseReqReturn<T> & Pr
           }
         } as dynamic
       }
-      return undefined
+      return void 0
     }
   }
 
@@ -312,7 +312,7 @@ export function useReq<T>(url: string, ...args: dynamic[]): UseReqReturn<T> & Pr
           }
         } as dynamic
       }
-      return undefined
+      return void 0
     }
   }
   if (options.immediate) Promise.resolve().then(() => execute())

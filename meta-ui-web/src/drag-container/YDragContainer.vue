@@ -2,5 +2,5 @@
 //
 </script>
 <template>
-  <Component is="div" />
+  <div />
 </template>

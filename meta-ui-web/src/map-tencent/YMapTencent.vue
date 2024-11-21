@@ -13,7 +13,7 @@ let search: Nullable<TMap.service.Search> = null
 const props = withDefaults(defineProps<YMapTencentProps>(), {
   containerId: mapDefaultContainerId,
   viewMode: '2D',
-  serviceKey: undefined,
+  serviceKey: void 0,
   zoom: 13,
   multiPoint: false,
   styleId: 1,
@@ -135,7 +135,7 @@ const searchRegion = () => {
     <map :id="props.containerId" ref="wrapperContainerHandle" flex />
     <!-- 自定义操作句柄 -->
     <nav absolute top-2 left-2 z-1000>
-      <slot name="view-box" :view-mode="is3dMode" :to-2d="to2d" :to-3d="to3d">
+      <slot name="view-box" :viewMode="is3dMode" :to2d="to2d" :to3d="to3d">
         <VBtnGroup>
           <VBtn size="small" :disabled="is3dMode" color="primary" @click="to3d">3D</VBtn>
           <VBtn size="small" :disabled="!is3dMode" color="primary" @click="to2d">2D</VBtn>

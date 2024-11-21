@@ -216,9 +216,9 @@ defineExpose(expose)
   <form v-bind="$attrs" ref="formRef" @reset.prevent="resetFn" @submit.prevent="submitFn">
     <slot
       :prev="goToPrev"
-      :form-ref="formRef!"
+      :formRef="formRef!"
       :submitting="submitting"
-      :is-valid="validatedState"
+      :isValid="validatedState"
       :submit="submitFn"
       :reset="resetFn"
       :step="_step"

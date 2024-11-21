@@ -39,7 +39,7 @@ export class DayJs {
       date: p?.date || date,
       format: p?.format || format || ISO8601Format.datetime,
       utc: p?.utc || this.DEFAULT_UTC || false,
-      tz: p?.tz || (p?.utc ? ISO8601TimeZone.UTC : undefined) || this.DEFAULT_TZ
+      tz: p?.tz || (p?.utc ? ISO8601TimeZone.UTC : void 0) || this.DEFAULT_TZ
     }
   }
 
@@ -69,7 +69,7 @@ export class DayJs {
       _p.utc = true
       _p.tz = ISO8601TimeZone.UTC
       const dg = this.timestampToTimeTimestamp(_p.date, _p)
-      if (dg === undefined) return NaN
+      if (dg === void 0) return NaN
       else return dg
     }
   }

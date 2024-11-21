@@ -261,7 +261,7 @@ function _toRouteTable(raw: RouteRecordRaw[], parent?: RouteOption) {
           path = e.path
         } else path = e.path
       } else path = STR_SLASH
-      if (e.path === STR_EMPTY) return undefined
+      if (e.path === STR_EMPTY) return void 0
 
       const o = {
         uri: path,

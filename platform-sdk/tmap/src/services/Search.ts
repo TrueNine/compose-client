@@ -3,7 +3,6 @@ import type {SearchOptions} from '@/options'
 type SearchNearbyOptions = TMap.service.SearchNearbyOptions
 type SearchResult = TMap.service.SearchResult
 type SearchRegionOptions = TMap.service.SearchRegionOptions
-type SearchErrorResult = TMap.service.SearchErrorResult
 
 /**
  * # 搜索服务类库

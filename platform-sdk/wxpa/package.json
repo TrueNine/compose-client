@@ -1,11 +1,12 @@
 {
   "name": "@compose/psdk-wxpa",
-  "version": "1.0.19",
-  "description": "微信公众号 js-sdk 定义",
+  "version": "1.0.20",
+  "description": "wxpa js-sdk defined",
   "author": "TrueNine",
   "license": "private",
   "scripts": {
-    "build": "run-s type-check build-c",
+    "build": "run-s lint type-check build-c",
+    "lint": "eslint --fix",
     "build-c": "vite build",
     "type-check": "vue-tsc --noEmit",
     "pub": "run-s  build pub-c",

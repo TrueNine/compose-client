@@ -32,7 +32,7 @@ const SUB_PAGE = 'SubPage'
 const VIEW_PAGE = 'View'
 
 function resolvePageConfigToConfig(importMeta?: HandleRouteOption) {
-  return importMeta ? (importMeta.source as unknown as late<AutoRouterConfig>) : undefined
+  return importMeta ? (importMeta.source as unknown as late<AutoRouterConfig>) : void 0
 }
 
 function processUrlAndName(tp: [string, ImportMeta]) {
@@ -125,14 +125,9 @@ export function resolveSubPath(pathRouteOption: HandledRouteOptions): CustomRout
     return path[0] === STR_SLASH ? path.substring(1) : path
   }
 
-  function deepFind(
-    routes: RouteRecordRaw[],
-    paths: Late<string[]> = undefined,
-    startLength = 0,
-    last: Late<RouteRecordRaw> = undefined
-  ): Late<RouteRecordRaw> {
-    if (!paths || paths.length === 0) return undefined
-    if (routes.length === 0 && startLength === 0) return undefined
+  function deepFind(routes: RouteRecordRaw[], paths: Late<string[]> = void 0, startLength = 0, last: Late<RouteRecordRaw> = void 0): Late<RouteRecordRaw> {
+    if (!paths || paths.length === 0) return void 0
+    if (routes.length === 0 && startLength === 0) return void 0
     if (paths.length === startLength) return last
     const currentPath = paths[startLength]
     for (let i = 0; i < routes.length; i++) {
@@ -140,12 +135,12 @@ export function resolveSubPath(pathRouteOption: HandledRouteOptions): CustomRout
         return deepFind(routes[i].children!, paths, startLength + 1, routes[i])
       }
     }
-    return undefined
+    return void 0
   }
 
   view.forEach(e => {
     const root = deepFind(result, e.paths.slice(0, -1))
-    if (root && root.children !== undefined) {
+    if (root && root.children !== void 0) {
       const child = root.children
       const initPath = child.find(e => e.path === STR_EMPTY)
       if (initPath) initPath.components![e.name] = e.source

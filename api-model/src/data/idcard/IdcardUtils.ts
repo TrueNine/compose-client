@@ -10,7 +10,7 @@ export class IdcardUtils {
     const month = Number(trimIdcard.substring(10, 12))
     const day = Number(trimIdcard.substring(12, 14))
     const d = new Date(year, month - 1, day)
-    if (d.getTime() >= Date.now()) return undefined
+    if (d.getTime() >= Date.now()) return void 0
 
     const birthday = d.getTime()
 
@@ -20,6 +20,6 @@ export class IdcardUtils {
         gender: Number(trimIdcard.substring(16, 17)) % 2 === 0 ? GenderTyping.WOMAN : GenderTyping.MAN,
         birthday: birthday satisfies timestamp
       }
-    } else return undefined
+    } else return void 0
   }
 }

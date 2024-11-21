@@ -1,14 +1,15 @@
 {
   "name": "@compose/psdk-tmap",
-  "version": "0.0.42",
-  "description": "腾讯地图 webgl js sdk",
+  "version": "0.0.43",
+  "description": "tencent map webgl js sdk",
   "author": "TrueNine",
   "license": "private",
   "scripts": {
-    "build": "run-s type-check build-c",
+    "build": "run-s lint type-check build-c",
     "build-c": "vite build",
     "type-check": "vue-tsc --noEmit",
-    "pub": "run-s  build pub-c",
+    "pub": "run-s build pub-c",
+    "lint": "eslint --fix",
     "fmt": "prettier --write \"**/*.{ts,tsx,vue,scss,d.ts,js}\" --ignore-unknown",
     "pub-c": "pnpm --dir dist pub"
   },

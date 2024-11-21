@@ -71,7 +71,7 @@ export function optiz(cfg: UserConfig, ucfg?: PluginConfig): UserConfig {
     build: isUseTerser
       ? // eslint-disable-next-line camelcase
         {minify: 'terser', terserOptions: {...cfg.build?.terserOptions, compress: {drop_console: true, drop_debugger: true}}}
-      : undefined,
+      : void 0,
     optimizeDeps: mix()
   } as UserConfig
   debug(JSON.stringify(mixCfg, null, 2), ucfg?.debugMode ?? false)

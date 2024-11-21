@@ -20,12 +20,12 @@ import type {
 
 type EmitsToProps<T extends EmitsOptions> = T extends string[]
   ? {
-      [K in `on${Capitalize<T[number]>}`]?: (...args: any[]) => any
+      [K in `on${Capitalize<T[number]>}`]?: (...args: dynamic[]) => dynamic
     }
   : T extends ObjectEmitsOptions
     ? {
         [K in `on${Capitalize<string & keyof T>}`]?: K extends `on${infer C}`
-          ? (...args: T[Uncapitalize<C>] extends (...args: infer P) => any ? P : T[Uncapitalize<C>] extends null ? any[] : never) => any
+          ? (...args: T[Uncapitalize<C>] extends (...args: infer P) => dynamic ? P : T[Uncapitalize<C>] extends null ? dynamic[] : never) => dynamic
           : never
       }
     : object
@@ -61,8 +61,8 @@ export type DefineComponentPart<
   Emits extends EmitsOptions,
   Slots extends SlotsType = SlotsType,
   Mixin extends ComponentOptionsMixin = ComponentOptionsMixin,
-  Expose = {},
-  _D = {},
+  Expose = object,
+  _D = object,
   _ComputedOptions extends ComputedOptions = ComputedOptions,
   _MethodOptions extends MethodOptions = MethodOptions,
   _ExtendsComponentOptionsMixin extends ComponentOptionsMixin = ComponentOptionsMixin,
@@ -91,7 +91,7 @@ export class Vue {
     if (!_p.name) _p = {..._p, name: _p.__name}
     _p.install = app => {
       for (const c of [_p, ...Object.values(_r != null ? _r : {})]) {
-        const {name = undefined, __name = undefined} = _p
+        const {name = void 0, __name = void 0} = _p
         app.component(__name || name || Vue.UNDEFINED_NAME, _p)
         app.component(_p.name || Vue.UNDEFINED_NAME, c)
       }

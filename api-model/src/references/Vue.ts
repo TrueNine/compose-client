@@ -49,7 +49,7 @@ export class Vue {
     if (!_p.name) _p = {..._p, name: _p.__name}
     _p.install = app => {
       for (const c of [_p, ...Object.values(_r != null ? _r : {})]) {
-        const {name = undefined, __name = undefined} = _p
+        const {name = void 0, __name = void 0} = _p
         app.component(__name || name || Vue.UNDEFINED_NAME, _p)
         app.component(_p.name || Vue.UNDEFINED_NAME, c)
       }

@@ -9,6 +9,6 @@ export type EventHookOn<T = dynamic> = (fn: Callback<T>) => {
 }
 
 export type Callback<T> = IsAny<T> extends true ? (param: dynamic) => void : [T] extends [void] ? () => void : (param: T) => void
-export const defaultWindow = /* #__PURE__ */ isClient ? window : undefined
+export const defaultWindow = /* #__PURE__ */ isClient ? window : void 0
 
 export type Fn = () => void

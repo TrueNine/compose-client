@@ -22,7 +22,7 @@ const menus = useVModel(props, 'routeTable', emits, {passive: true})
 
 <template>
   <ElMenu :router="routeMode" :collapse="!collapsed">
-    <YSiderMenuItem v-for="(it, idx) in menus" :key="idx" :collapsed="collapsed" :item="it" :idx-key="prefix + it.uri">
+    <YSiderMenuItem v-for="(it, idx) in menus" :key="idx" :collapsed="collapsed" :item="it" :idxKey="prefix + it.uri">
       <template #icon="{item}">
         <div :class="[item.iconClass ? item.iconClass : 'c-p']" text-2xl>
           <div :class="[item.iconName ?? 'i-mdi-menu']" />

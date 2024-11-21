@@ -15,7 +15,6 @@ const {
   menuOpened: _menuOpened,
   progress: _progress,
   progressLoading: _progressLoading,
-  progressColor: _progressColor,
   settingsMenuOpened: _settingsMenuOpened
 } = useVModels(props, emits, {passive: true})
 const progressClr = computed(() => _progressLoading.value && _progress.value === 0)
@@ -30,7 +29,7 @@ const useRight = computed(() => {
       <!-- 左侧菜单收展按钮 -->
       <slot name="left-btn">
         <VAppBarNavIcon role="switch" :aria-checked="_menuOpened" :aria-label="_menuOpened ? '关闭菜单' : '打开菜单'" @click="_menuOpened = !_menuOpened">
-          <YIco i-mdi-menu text-8 />
+          <YIco iMdiMenu text8 />
         </VAppBarNavIcon>
       </slot>
 
@@ -49,7 +48,7 @@ const useRight = computed(() => {
           :aria-label="_settingsMenuOpened ? '关闭设置侧边栏' : '打开设置侧边栏'"
           @click="_settingsMenuOpened = !_settingsMenuOpened"
         >
-          <YIco i-mdi-settings text-8 />
+          <YIco iMdiSettings text8 />
         </VAppBarNavIcon>
       </slot>
     </VAppBar>
@@ -65,11 +64,11 @@ const useRight = computed(() => {
     </VMain>
 
     <!-- 菜单区域 -->
-    <slot :menu-opened="_menuOpened" name="drawer" />
+    <slot :menuOpened="_menuOpened" name="drawer" />
 
     <!-- 设置菜单 -->
     <VNavigationDrawer v-if="!useRight && props.showAppBar" v-model="_settingsMenuOpened" location="right" :border="false" temporary>
-      <slot name="settings-drawer" :settings-menu-opened="_settingsMenuOpened" />
+      <slot name="settings-drawer" :settingsMenuOpened="_settingsMenuOpened" />
     </VNavigationDrawer>
   </VApp>
 </template>

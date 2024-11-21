@@ -16,8 +16,8 @@ const internalTypedCode = computed<string>(() => {
 
 <template>
   <VCard>
-    <NSpace bg-m p-4>
-      <NCode :language="lang" :code="internalTypedCode" :word-wrap="wrap" />
+    <NSpace bgM p4>
+      <NCode :language="lang" :code="internalTypedCode" :wordWrap="wrap" />
     </NSpace>
   </VCard>
 </template>

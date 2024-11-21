@@ -48,7 +48,7 @@ function urlJoin(...args: late<string>[]) {
       <template #activator="{props: p}">
         <VListItem :disabled="route.disabled" color="primary" v-bind="p">
           <template #prepend>
-            <slot :hidden="_hidden" :title="_title" :value="_value" :sub-item="false" name="icon" :icon-name="_menuIconClass">
+            <slot :hidden="_hidden" :title="_title" :value="_value" :subItem="false" name="icon" :iconName="_menuIconClass">
               <YIco :class="[_menuIconClass]" />
             </slot>
           </template>
@@ -58,10 +58,10 @@ function urlJoin(...args: late<string>[]) {
       <YVMenuItem
         v-for="(r, i) in _route.sub"
         :key="i"
-        :route-mode="props.routeMode"
-        :path-prefix="props.pathPrefix"
-        :sub-menu="true"
-        :parent-path="urlJoin($props.parentPath, _route.uri)"
+        :routeMode="props.routeMode"
+        :pathPrefix="props.pathPrefix"
+        :subMenu="true"
+        :parentPath="urlJoin($props.parentPath, _route.uri)"
         :route="r"
       />
     </VListGroup>
@@ -70,7 +70,7 @@ function urlJoin(...args: late<string>[]) {
   <template v-else-if="!props.route.hidden">
     <VListItem :disabled="route.disabled" color="primary" nav density="compact" :value="_value" @click="routeTo">
       <template #prepend>
-        <slot :hidden="_hidden" :title="_title" :value="_value" :sub-item="false" name="icon" :icon-name="_menuIconClass">
+        <slot :hidden="_hidden" :title="_title" :value="_value" :subItem="false" name="icon" :iconName="_menuIconClass">
           <YIco :class="[_menuIconClass]" />
         </slot>
       </template>

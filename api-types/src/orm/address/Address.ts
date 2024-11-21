@@ -11,4 +11,4 @@ export interface Address extends ITreeEntity {
   leaf?: bool
 }
 // TODO 确定其类型
-export interface FullAddress extends Address {}
+export type FullAddress = Address

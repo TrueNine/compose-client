@@ -37,12 +37,13 @@ function combineURIs(uri1: string, uri2: string): string {
  * @param matchFn
  * @param clipPath
  */
-export function generateMenu(routes: RouteRecordRaw[], matchFn: late<RouteMatchFn> = undefined, clipPath: late<string> = undefined): MenuObject[] {
+export function generateMenu(routes: RouteRecordRaw[], matchFn: late<RouteMatchFn> = void 0, clipPath: late<string> = void 0): MenuObject[] {
   return generateMenuInternal(routes, matchFn, clipPath)
+
   function generateMenuInternal(
     routes: RouteRecordRaw[],
-    matchFn: late<RouteMatchFn> = undefined,
-    clipPath: late<string> = undefined,
+    matchFn: late<RouteMatchFn> = void 0,
+    clipPath: late<string> = void 0,
     parentPath: string = '',
     deepLevel = 0
   ): MenuObject[] {
@@ -72,6 +73,7 @@ export function generateMenu(routes: RouteRecordRaw[], matchFn: late<RouteMatchF
         }
         return menuObj
       })
+
     function clip(routes: RouteRecordRaw[], clipPath: string): RouteRecordRaw[] {
       for (const r of routes) {
         const fullPath = combineURIs(parentPath, r.path)

@@ -1,4 +1,4 @@
-import {Vue} from '@compose/extensions'
+import {Vue} from '@compose/extensions/vue'
 import type {bool, dynamic} from '@compose/api-types'
 
 import _c from './YVSystemBar.vue'
@@ -13,11 +13,16 @@ export interface YSystemBarProps {
   progressColor?: string
   settingsMenuOpened?: bool
 }
+
 export interface YVSystemBarEmits {
   (e: 'update:menuOpened', v: bool): void
+
   (e: 'update:settingsMenuOpened', v: bool): void
+
   (e: 'update:progress', v: number): void
+
   (e: 'update:progressLoading', v: bool): void
+
   (e: 'update:progressColor', v: string): void
 }
 

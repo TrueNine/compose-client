@@ -19,10 +19,10 @@ const _v = computed({
 </script>
 
 <template>
-  <VNavigationDrawer v-model="_opened" :rail-width="props.railWidth" rail expand-on-hover>
+  <VNavigationDrawer v-model="_opened" :railWidth="props.railWidth" rail expandOnHover>
     <VList v-model:selected="_v" density="compact" nav>
       <template v-for="(route, _) in _routes" :key="_">
-        <YVMenuItem :route-mode="props.routeMode" :path-prefix="props.pathPrefix" :route="route" />
+        <YVMenuItem :routeMode="props.routeMode" :pathPrefix="props.pathPrefix" :route="route" />
       </template>
     </VList>
   </VNavigationDrawer>

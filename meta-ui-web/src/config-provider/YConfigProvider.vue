@@ -103,8 +103,8 @@ defineSlots<{
 </script>
 
 <template>
-  <ElConfigProvider :z-index="1" :locale="elLocale">
-    <NConfigProvider ref="naiveThemeHandle" :hljs="hljs" :theme="naiveDarkTheme" :locale="naiveLocale" :date-locale="naiveDateLocale">
+  <ElConfigProvider :zIndex="1" :locale="elLocale">
+    <NConfigProvider ref="naiveThemeHandle" :hljs="hljs" :theme="naiveDarkTheme" :locale="naiveLocale" :dateLocale="naiveDateLocale">
       <NGlobalStyle />
       <VDefaultsProvider :defaults="{}">
         <VLocaleProvider :locale="props.locale">

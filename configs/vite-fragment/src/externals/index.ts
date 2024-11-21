@@ -1,3 +1,9 @@
+import {NodeExternals} from './NodeExternals'
+import {ViteExternals} from './ViteExternals'
+
+export * from './NodeExternals'
+export * from './EslintExternals'
+
 export const Externals = [
   // 既定依赖
   /(__tests__|__tests__\/)/,
@@ -34,12 +40,6 @@ export const Externals = [
   // code
   /^(highlight\.js|highlight\.js\/)/,
 
-  /^(fs-extra|fs-extra\/)/,
-  /^(fsevents|fsevents\/)/,
-  /^(vite:|vite:\/|vite-|vite-plugin-|@vitejs|@vitejs\/|vite$)/,
-
-  /^(node|node\/|node:)/,
-
   // rollup
   /^(rollup|rollup\/|@rollup|@rollup\/|rollup-|rollup-plugin-)/,
 
@@ -54,14 +54,11 @@ export const Externals = [
   // 样式文件
   /\.(scss|sass|less|css)$/,
 
-  // eslint
-  '@rushstack/eslint-patch/modern-module-resolution',
-  '@typescript-eslint/parser',
-  'eslint-define-config',
+  ...NodeExternals,
+  ...ViteExternals,
 
   // other
   /^(data:)/,
-
   // unocss
   /^(unocss|unocss\/|unocss-|unocss-\/|@unocss|@unocss\/)/
 ]

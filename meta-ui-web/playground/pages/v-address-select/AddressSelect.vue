@@ -28,13 +28,13 @@ setTimeout(() => {
   {{ code + 1 }}
   <VTextField v-model="code" label="地址" />
   <YVAddressSelect
-    v-model:ad-code="code"
-    v-model:full-path="aab"
+    v-model:adCode="code"
+    v-model:fullPath="aab"
     level="district"
-    :find-districts="findCities"
-    :find-towns="findCities"
-    :find-villages="findCities"
-    :find-cities="findCities"
-    :find-provinces="findProvinces"
+    :findDistricts="findCities"
+    :findTowns="findCities"
+    :findVillages="findCities"
+    :findCities="findCities"
+    :findProvinces="findProvinces"
   />
 </template>

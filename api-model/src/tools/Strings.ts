@@ -10,8 +10,8 @@ export function numberToChinese(num?: number, upperCase: boolean = false): late<
   const AA = upperCase ? __UPPERS_CHINESE_NUMBERS : __LOWVERS_CHINESE_NUMBERS
   const BB = upperCase ? __UPPERS_CHINESE_NUMBER_HEXS : __LOWERS_CHINESE_NUMBER_HEXS
 
-  if (num == null) return undefined
-  if (!/^\d*(\.\d*)?$/.test(num.toString())) return undefined
+  if (num == null) return void 0
+  if (!/^\d*(\.\d*)?$/.test(num.toString())) return void 0
 
   // eslint-disable-next-line
   let a: string[] = num.toString().replace(/(^0*)/g, '').split('.'),
