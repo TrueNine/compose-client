@@ -33,7 +33,7 @@ export const VueRules = {
     'error',
     'never',
     {
-      ignore: []
+      ignore: ['i-', 'v-', 'v-bind']
     }
   ],
   'vue/prop-name-casing': ['error', 'camelCase'],
@@ -44,5 +44,5 @@ export const VueRules = {
       ignores: ['router-view', 'router-link', 'scroll-view'],
       registeredComponentsOnly: false
     }
-  ],
+  ]
 } as Partial<Rules>

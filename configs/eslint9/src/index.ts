@@ -1,9 +1,11 @@
 import globals from 'globals'
 
+import unocss from '@unocss/eslint-config/flat'
+
 import pluginJs from '@eslint/js'
 import tseslint from 'typescript-eslint'
 import pluginVue from 'eslint-plugin-vue'
-import {ComposeGlobals} from '@/globals'
+import {ComposeGlobals, EchartsGlobals} from '@/globals'
 import pluginPrettierRecommendedConfigs from 'eslint-plugin-prettier/recommended'
 
 import parserVue from 'vue-eslint-parser'
@@ -21,6 +23,7 @@ export const DefinedConfig = [
       '__build-src__',
       'vite.config.*',
       'vitest.config.*',
+      'playwright.config.*',
       'rollup.config.*',
       'uno.config.*',
       '**/example/**',
@@ -31,11 +34,13 @@ export const DefinedConfig = [
       'playground'
     ]
   },
+  unocss,
   {
     languageOptions: {
       globals: {
         ...globals.browser,
-        ...ComposeGlobals
+        ...ComposeGlobals,
+        ...EchartsGlobals
       }
     }
   },
