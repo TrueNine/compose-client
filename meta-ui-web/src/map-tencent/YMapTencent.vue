@@ -134,7 +134,7 @@ const searchRegion = () => {
   <section relative flex-col transition-all-500>
     <map :id="props.containerId" ref="wrapperContainerHandle" flex />
     <!-- 自定义操作句柄 -->
-    <nav absolute top-2 left-2 z-1000>
+    <nav class="absolute left-2 top-2 z-1000">
       <slot name="view-box" :viewMode="is3dMode" :to2d="to2d" :to3d="to3d">
         <VBtnGroup>
           <VBtn size="small" :disabled="is3dMode" color="primary" @click="to3d">3D</VBtn>
@@ -144,13 +144,13 @@ const searchRegion = () => {
     </nav>
 
     <!-- 操作句柄 -->
-    <div flex w-full min-w-full>
+    <div class="min-w-full w-full flex">
       <slot name="search-box">
-        <div class="flex flex-row w-full">
+        <div class="w-full flex flex-row">
           <ElInput v-model="searchWord" />
           <VBtn color="primary" @click="searchNearby">search</VBtn>
         </div>
-        <div class="flex flex-row w-full">
+        <div class="w-full flex flex-row">
           <ElInput v-model="searchAddressCode" />
           <ElInput v-model="searchWord" />
           <VBtn color="primary" @click="searchRegion">search</VBtn>
