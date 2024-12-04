@@ -48,7 +48,7 @@ const useRight = computed(() => {
           :aria-label="_settingsMenuOpened ? '关闭设置侧边栏' : '打开设置侧边栏'"
           @click="_settingsMenuOpened = !_settingsMenuOpened"
         >
-          <YIco iMdiSettings text8 />
+          <YIco class="text8" i-mdi:settings />
         </VAppBarNavIcon>
       </slot>
     </VAppBar>
