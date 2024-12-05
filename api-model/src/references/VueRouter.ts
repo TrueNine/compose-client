@@ -47,7 +47,8 @@ function processUrlAndName(tp: [string, ImportMeta]) {
   const isFolderSubPage = paths.length > 1
   const isSubPage = fileName.includes(SUB_PAGE)
   const url = paths.join(STR_SLASH).replace(`${STR_SLASH}${STR_SLASH}`, STR_SLASH)
-  const name = url.slice(1).replace(new RegExp(STR_SLASH, 'g'), '-') || '-'
+  // TODO fileName +
+  const name = fileName + url.slice(1).replace(new RegExp(STR_SLASH, 'g'), '-') || '-'
   return {
     url,
     isView,
@@ -93,7 +94,7 @@ export function resolveSubPath(pathRouteOption: HandledRouteOptions): CustomRout
     if (option.isView) view.push(option)
     else all.push(option)
   }
-
+  // 获取所有路由
   const allRoutes = all.map(e => {
     const cfg = resolvePageConfigToConfig(e.cfg)
     return {
@@ -109,6 +110,7 @@ export function resolveSubPath(pathRouteOption: HandledRouteOptions): CustomRout
     } as CustomRouteRecordRaw
   })
 
+  // 开始构建路由
   const result: CustomRouteRecordRaw[] = []
   for (let i = 0; i < allRoutes.length; i++) {
     const e = allRoutes[i]
@@ -150,11 +152,17 @@ export function resolveSubPath(pathRouteOption: HandledRouteOptions): CustomRout
   return result
 }
 
+/**
+ * ## 获取 `import.meta.glob` 下的路由
+ *
+ * 该函数为起点函数
+ * @return `RouteRecordRaw[]` 解析后的路由函数
+ * @deprecated 可读性不佳
+ */
 export function resolveRouters(): RouteRecordRaw[] {
   const cfgSources = import.meta.glob([`/**/pages/**/**.page.ts`, `/**/pages/**/**.page.js`], {eager: true, import: 'default'})
   const vueSources = import.meta.glob([`/**/pages/**/**.vue`, `/**/pages/**/**.jsx`, `/**/pages/**/**.tsx`])
   const cfg: HandledRouteOptions = {}
-
   for (const key in cfgSources) {
     const source = cfgSources[key]
     const option = resolveImport([key, source as unknown as ImportMeta])
@@ -171,6 +179,12 @@ export function resolveRouters(): RouteRecordRaw[] {
   return resolveSubPath(paths)
 }
 
+/**
+ * ## 定义路由的类型辅助函数
+ *
+ * @param cfg 路由自定义配置
+ * @deprecated 可读性不佳
+ */
 export function defineAutoRoute(cfg?: AutoRouterConfig): late<AutoRouterConfig> {
   return cfg
 }
