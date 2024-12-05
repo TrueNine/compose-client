@@ -29,7 +29,7 @@ const useRight = computed(() => {
       <!-- 左侧菜单收展按钮 -->
       <slot name="left-btn">
         <VAppBarNavIcon role="switch" :aria-checked="_menuOpened" :aria-label="_menuOpened ? '关闭菜单' : '打开菜单'" @click="_menuOpened = !_menuOpened">
-          <YIco iMdiMenu text8 />
+          <YIco i-mdi:menu class="text-8" />
         </VAppBarNavIcon>
       </slot>
 
