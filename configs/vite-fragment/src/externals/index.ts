@@ -1,5 +1,7 @@
 import {NodeExternals} from './NodeExternals'
 import {ViteExternals} from './ViteExternals'
+import {TypescriptExternals} from './TypescriptExternals'
+import {EslintExternals} from './EslintExternals'
 
 export * from './NodeExternals'
 export * from './EslintExternals'
@@ -56,6 +58,8 @@ export const Externals = [
 
   ...NodeExternals,
   ...ViteExternals,
+  ...TypescriptExternals,
+  ...EslintExternals,
 
   // other
   /^(data:)/,
