@@ -14,9 +14,7 @@ import {VueRules} from '@/rules'
 import {TypescriptRules} from '@/rules/TypescriptRules'
 import {EcmaRules} from '@/rules/EcmaRules'
 
-export {globals}
-
-export const DefinedConfig = [
+const DefinedConfig = [
   {
     ignores: [
       'dist',
@@ -67,3 +65,4 @@ export const DefinedConfig = [
     }
   } as FlatESLintConfig
 ]
+export {globals, DefinedConfig}
