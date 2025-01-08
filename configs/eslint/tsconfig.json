@@ -4,12 +4,7 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
-    },
-    "declaration": true,
-    "declarationMap": true,
-    "emitDeclarationOnly": true,
-    "emitDecoratorMetadata": true,
-    "declarationDir": "dist"
+    }
   },
   "exclude": ["dist"]
 }
