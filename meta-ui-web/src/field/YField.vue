@@ -73,22 +73,22 @@ const onUpdateErrorMessages = (v?: PrimaryErrorsValueType) => {
   primaryField.setErrors(v! as unknown as PrimaryErrorsValueType)
 }
 defineSlots<{
-  input: (e: dynamic) => dynamic
+  input: (...e: dynamic) => dynamic
 }>()
 
 const slots = useSlots()
 const schemaFn = ref<() => Schema<dynamic, dynamic>>()
 onMounted(() => {
-  const inp = slots.input
-  if (inp) {
-    const r = inp()
+  const input1SlotsFn = slots.input
+  if (input1SlotsFn) {
+    const r = input1SlotsFn()
     if (r) {
       const first = r
-        .filter(e => {
+        .filter((e: dynamic) => {
           const typ = e.type as dynamic
           return typ && typ.props && typ.props.defaultValidateSchema && typ.props.defaultValidateSchema.default
         })
-        .map(e => (e.type as dynamic).props.defaultValidateSchema.default)
+        .map((e: dynamic) => (e.type as dynamic).props.defaultValidateSchema.default)
         .slice(0, 1)[0]
       if (first) {
         if (first && typeof first === 'function') schemaFn.value = first
@@ -111,7 +111,6 @@ onMounted(() => {
 
 <template>
   <slot
-    ref="slotRef"
     name="input"
     v-bind="otherModelProps"
     :hint="primaryWarning"
