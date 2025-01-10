@@ -1,4 +1,5 @@
-import {resolve} from 'node:path'
+import {resolve, dirname} from 'node:path'
+import {fileURLToPath} from 'node:url'
 import {spawn} from 'node:child_process'
 
 import {dest, parallel, series, src} from 'gulp'
@@ -10,10 +11,12 @@ import cssnano from 'cssnano'
 import unocssPostcss from '@unocss/postcss'
 import {rimraf} from 'rimraf'
 
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
+
 export const basePath = joinPath('..')
 export const distPath = joinPath('../dist')
 export const nodeModulesPath = joinPath('../node_modules')
-console.log(distPath)
 
 export async function buildUnocss(fName = 'unocss.css') {
   const cmd = `unocss "${basePath}/src/**/*.vue" -c ${basePath}/uno.config.ts -o ${distPath}/${fName} -m`
