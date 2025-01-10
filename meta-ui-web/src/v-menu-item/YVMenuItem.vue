@@ -19,7 +19,7 @@ const _value = computed(() => {
 })
 
 const _menuIconClass = computed(() => {
-  return _route.value.iconClass || _route.value.iconName || 'i-mdi-menu-open'
+  return _route.value.iconClass || _route.value.iconName || 'i-mdi:menu-open'
 })
 const _title = computed(() => {
   return _route.value.name || _route.value.uri || ''
