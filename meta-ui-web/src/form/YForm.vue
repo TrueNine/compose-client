@@ -1,15 +1,13 @@
 <script setup lang="ts">
-import {type FormValidationResult, useForm} from 'vee-validate'
+import type {FormValidationResult} from 'vee-validate'
+import {useForm} from 'vee-validate'
 import type {dynamic, nil} from '@compose/api-types'
 import {isEqual} from '@compose/extensions/lodash-es'
 import {maybeArray} from '@compose/api-model'
 import type {Schema} from 'yup'
-import {Pino} from '@compose/extensions/pino'
 import {useTemplateRef} from 'vue'
 
 import {type YFormEmits, type YFormInjection, YFormInjectionKey, type YFormProps} from '@/form/index'
-
-const log = Pino.logger('YForm')
 
 const props = withDefaults(defineProps<YFormProps>(), {
   step: 0,
@@ -21,13 +19,12 @@ const props = withDefaults(defineProps<YFormProps>(), {
 })
 const emits = defineEmits<YFormEmits>()
 
-const _isValid = useVModel(props, 'isValid', emits, {passive: true}) as unknown as Ref<boolean>
-const _step = useVModel(props, 'step', emits, {passive: true}) as unknown as Ref<number>
+const _isValid = useVModel(props, 'isValid', emits, {passive: true})
+const _step = useVModel(props, 'step', emits, {passive: true})
 const _modelValue = useVModel(props, 'modelValue', emits, {passive: true})
-const _value = useVModel(props, 'value', emits, {passive: true})
-const _mixins = useVModel(props, 'mixins', emits, {passive: true, defaultValue: {}}) as unknown as Ref<Record<string, dynamic>>
-const _sync = useVModel(props, 'sync', emits, {passive: true, defaultValue: {}}) as unknown as Ref<dynamic>
-syncRef(_modelValue, _value)
+const _mixins = useVModel(props, 'mixins', emits, {passive: true, defaultValue: {}})
+const _sync = useVModel(props, 'sync', emits, {passive: true, defaultValue: {}})
+
 const _newSchemas = ref<Record<string, Schema<dynamic, dynamic>>[]>([])
 
 const validatedState = computed({
@@ -45,15 +42,14 @@ const stepCounter = computed(() => _cachedSchemas.value.length)
 const hasPreviousStep = computed(() => _step.value > 0)
 const isLastStep = computed(() => _step.value === stepCounter.value - 1)
 const allValues = ref<dynamic[]>([])
+
 // 响应  props.schema
 const _propsSchema = reactive({
   value: props.schema
 })
 watch(
   () => props.schema,
-  v => {
-    _propsSchema.value = v
-  }
+  v => (_propsSchema.value = v)
 )
 
 const _cachedSchemas = computed({
@@ -76,17 +72,16 @@ const _cachedSchemas = computed({
   }
 })
 
-const _cachedSchema = computed(() => _cachedSchemas.value[(_step.value ?? 0) as number])
+const _cachedSchema = computed(() => _cachedSchemas.value[_step.value])
 
 const usedForm = useForm({
   validateOnMount: false,
   validationSchema: _cachedSchema,
-  initialValues: _modelValue.value ?? _value.value
+  initialValues: _modelValue.value
 })
 
 const submitting = ref(false)
 const mergedAllValues = computed(() => {
-  log.info('merge all')
   return allValues.value.reduce((p, c, i) => {
     return {
       ...(_mixins.value ?? {}),
@@ -100,11 +95,6 @@ syncRef(mergedAllValues, _sync, {direction: 'ltr', deep: true})
 const stepSubmitHandle = (values: dynamic) => {
   submitting.value = true
   try {
-    log.info({
-      isLastStep: isLastStep.value,
-      values,
-      stepCounter: stepCounter.value
-    })
     if (props.everyStep) emits('next', values, _step.value)
     if (isLastStep.value || stepCounter.value === 1) emits('submit', mergedAllValues.value, _step.value)
   } finally {
@@ -114,16 +104,13 @@ const stepSubmitHandle = (values: dynamic) => {
 
 const submitFn = usedForm.handleSubmit(
   vs => {
-    log.trace('handle submit')
     stepSubmitHandle(vs)
   },
   ({values, errors}) => {
-    log.trace('handle submit error')
     const errs = Object.values(errors)
     if (errs.length) {
       // 特殊消息体被视为警告
       if ((errs as dynamic[]).every(v => typeof v !== 'string')) {
-        log.error('errorSubmit')
         stepSubmitHandle(values)
       } else validatedState.value = false
     } else validatedState.value = false
@@ -136,13 +123,13 @@ const resetFn = () => {
 
 const formRef = useTemplateRef<nil<HTMLFormElement>>('formRef')
 
-syncRef(usedForm.values as Ref<dynamic>, _modelValue as Ref<dynamic>, {
+syncRef(usedForm.values, _modelValue, {
   immediate: true,
   deep: true,
   direction: 'ltr'
 })
+
 const watchSyncFn = (v: dynamic, oldValue: dynamic) => {
-  log.trace('upd')
   _isValid.value = true
   if (isEqual(v, oldValue)) return
   if (v) {
@@ -150,7 +137,6 @@ const watchSyncFn = (v: dynamic, oldValue: dynamic) => {
       const o1 = oldValue?.[key]
       const v1 = v[key]
       if (v1 !== o1) {
-        log.debug({key, v1})
         if (allValues.value[_step.value]) allValues.value[_step.value][key] = v1
         else allValues.value[_step.value] = {[key]: v1}
         usedForm.setFieldValue(key as dynamic, v1)
@@ -208,8 +194,8 @@ const expose: YFormInjection = {
   validate,
   setFieldValidate
 }
-provide(YFormInjectionKey, expose)
 defineExpose(expose)
+provide(YFormInjectionKey, expose)
 </script>
 
 <template>
