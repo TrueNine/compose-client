@@ -1,4 +1,4 @@
-import {Vue} from '@compose/extensions'
+import {Vue} from '@compose/extensions/vue'
 import type {Asyncable, BigSerial, Int, Late, LateNull, SerialCode} from '@compose/api-types'
 
 import _c from './YVAddressSelect.vue'
@@ -107,5 +107,5 @@ export const clipCode = (code: string, level: Int) => {
       return code
   }
 }
-const a = Vue.componentInstallToPlugin<typeof _c>(_c)
-export default a
+
+export default Vue.componentInstallToPlugin<typeof _c>(_c)
