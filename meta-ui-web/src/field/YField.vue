@@ -2,8 +2,9 @@
 import {useField} from 'vee-validate'
 import type {dynamic, late} from '@compose/api-types'
 import type {Schema} from 'yup'
+import type {YFieldEmits, YFieldProps, YFieldSlots} from '@/field'
+import {maybeArray} from '@compose/api-model'
 
-import type {YFieldEmits, YFieldProps} from '@/field'
 import {YFormInjectionKey} from '@/form'
 
 const props = withDefaults(defineProps<YFieldProps>(), {
@@ -14,45 +15,49 @@ const props = withDefaults(defineProps<YFieldProps>(), {
   effectModels: () => ({})
 })
 const emits = defineEmits<YFieldEmits>()
-const _effectModels = useVModel(props, 'effectModels', emits, {passive: true})
+const __effectModelsVModel = useVModel(props, 'effectModels', emits, {passive: true})
+
+const _effectModels = computed(() => {
+  const mo = __effectModelsVModel.value
+  if (!mo) return {}
+  const res = maybeArray(mo).map(e => {
+    if (typeof e === 'string') return {[e]: e}
+    else return e
+  })
+
+  return res.reduce<Record<string, string>>((acc, cur) => {
+    return {...acc, ...cur}
+  }, {})
+})
+
 const _modelName = useVModel(props, 'modelName', emits, {passive: true})
 
 const defaultRules = ref<late<Schema<dynamic, dynamic>>>(props.schema)
 const primaryField = useField(() => props.name, defaultRules, {syncVModel: props.syncVModel})
 
-type PrimaryErrorsValueType = typeof primaryField.errors.value
-
 const primaryWarning = computed<string | undefined>(() => {
   return primaryField.errors.value
     .map(e => {
-      if (typeof e !== 'string') return (e as dynamic).msg
+      if (typeof (e as dynamic) !== 'string') return (e as dynamic).msg
     })
     .filter(Boolean)[0]
 })
 
-const primaryErrors = computed(() => {
+const primaryErrors = computed<string[]>(() => {
   return primaryField.errors.value
     ?.map(e => {
-      if (typeof e === 'string') return e
+      if (typeof (e as dynamic) === 'string') return e
+      else return void 0
     })
     .filter(Boolean)
+    .map(e => e as string)
 })
-
-interface SlotProps extends Record<string, dynamic> {
-  modelValue?: dynamic
-  value?: dynamic
-  'onUpdate:modelValue'?: (v?: dynamic) => void
-  'onUpdate:value'?: (v?: dynamic) => void
-  'onUpdate:errorMessages'?: (v?: PrimaryErrorsValueType) => void
-  errorMessages?: PrimaryErrorsValueType
-}
 
 const setPrimaryFieldValueFn = (v?: dynamic) => {
   primaryField.value.value = v
 }
 
-// TODO 维护好此 prop 避免内存泄露
-const otherModelProps: SlotProps = {
+const otherModelProps: YFieldSlots = {
   ...Object.entries(_effectModels.value)
     .filter(Boolean)
     .filter(([k, v]) => Boolean(k) && Boolean(v))
@@ -60,7 +65,7 @@ const otherModelProps: SlotProps = {
       (acc, [k, v]) => {
         const field = useField(() => v)
         acc[`onUpdate:${k}`] = (v: dynamic) => {
-          field.value.value = v
+          field.setValue(v)
         }
         acc[k] = field.value.value
         return acc
@@ -69,15 +74,17 @@ const otherModelProps: SlotProps = {
     )
 }
 
-const onUpdateErrorMessages = (v?: PrimaryErrorsValueType) => {
-  primaryField.setErrors(v! as unknown as PrimaryErrorsValueType)
+const onUpdateErrorMessages = (v?: string[]) => {
+  primaryField.setErrors(v! as unknown as string[])
 }
+
 defineSlots<{
-  input: (...e: dynamic) => dynamic
+  input: (e: YFieldSlots) => dynamic
 }>()
 
-const slots = useSlots()
 const schemaFn = ref<() => Schema<dynamic, dynamic>>()
+
+/*const slots = useSlots()
 onMounted(() => {
   const input1SlotsFn = slots.input
   if (input1SlotsFn) {
@@ -95,9 +102,10 @@ onMounted(() => {
       }
     }
   }
-})
+})*/
 
 const parentForm = inject(YFormInjectionKey, void 0)
+
 onMounted(() => {
   if (schemaFn.value) {
     const r = schemaFn.value()
