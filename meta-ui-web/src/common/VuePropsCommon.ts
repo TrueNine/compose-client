@@ -18,11 +18,6 @@ export interface ResizeOption {
  */
 export interface ModelValueProps<T = unknown> {
   modelValue?: T
-  /**
-   * @deprecated 不建议使用
-   * @see modelValue
-   */
-  value?: T
 }
 
 /**
@@ -30,12 +25,6 @@ export interface ModelValueProps<T = unknown> {
  */
 export interface ModelValueEmits<T = unknown> {
   (e: 'update:modelValue', value: T): void
-
-  /**
-   * @deprecated 不建议使用
-   * @see modelValue
-   */
-  (e: 'update:value', value: T): void
   (e: 'change', value: T): void
 }
 
