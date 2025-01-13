@@ -54,7 +54,7 @@ const primaryErrors = computed<string[]>(() => {
 })
 
 const setPrimaryFieldValueFn = (v?: dynamic) => {
-  primaryField.value.value = v
+  primaryField.setValue(v)
 }
 
 const otherModelProps: YFieldSlots = {
@@ -83,27 +83,6 @@ defineSlots<{
 }>()
 
 const schemaFn = ref<() => Schema<dynamic, dynamic>>()
-
-/*const slots = useSlots()
-onMounted(() => {
-  const input1SlotsFn = slots.input
-  if (input1SlotsFn) {
-    const r = input1SlotsFn()
-    if (r) {
-      const first = r
-        .filter((e: dynamic) => {
-          const typ = e.type as dynamic
-          return typ && typ.props && typ.props.defaultValidateSchema && typ.props.defaultValidateSchema.default
-        })
-        .map((e: dynamic) => (e.type as dynamic).props.defaultValidateSchema.default)
-        .slice(0, 1)[0]
-      if (first) {
-        if (first && typeof first === 'function') schemaFn.value = first
-      }
-    }
-  }
-})*/
-
 const parentForm = inject(YFormInjectionKey, void 0)
 
 onMounted(() => {

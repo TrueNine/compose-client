@@ -5,9 +5,8 @@ import type {dynamic, nil} from '@compose/api-types'
 import {isEqual} from '@compose/extensions/lodash-es'
 import {maybeArray} from '@compose/api-model'
 import type {Schema} from 'yup'
-import {useTemplateRef} from 'vue'
-
-import {type YFormEmits, type YFormInjection, YFormInjectionKey, type YFormProps} from '@/form/index'
+import {YFormInjectionKey} from '@/form/index'
+import type {YFormEmits, YFormInjection, YFormProps} from '@/form/index'
 
 const props = withDefaults(defineProps<YFormProps>(), {
   step: 0,
@@ -18,7 +17,7 @@ const props = withDefaults(defineProps<YFormProps>(), {
   mixins: () => ({})
 })
 const emits = defineEmits<YFormEmits>()
-
+const isSubmitting = ref(false)
 const _isValid = useVModel(props, 'isValid', emits, {passive: true})
 const _step = useVModel(props, 'step', emits, {passive: true})
 const _modelValue = useVModel(props, 'modelValue', emits, {passive: true})
@@ -38,10 +37,11 @@ const validatedState = computed({
   },
   set: v => (_isValid.value = v)
 })
-const stepCounter = computed(() => _cachedSchemas.value.length)
+const stepCounter = computed(() => allSchemas.value.length)
 const hasPreviousStep = computed(() => _step.value > 0)
 const isLastStep = computed(() => _step.value === stepCounter.value - 1)
-const allValues = ref<dynamic[]>([])
+// 所以当前的值
+const allValues: dynamic[] = []
 
 // 响应  props.schema
 const _propsSchema = reactive({
@@ -52,7 +52,7 @@ watch(
   v => (_propsSchema.value = v)
 )
 
-const _cachedSchemas = computed({
+const allSchemas = computed({
   get: () => {
     const arr = maybeArray(_propsSchema.value)
     return arr.map((e, i) => {
@@ -72,33 +72,38 @@ const _cachedSchemas = computed({
   }
 })
 
-const _cachedSchema = computed(() => _cachedSchemas.value[_step.value])
+const currentSchema = computed(() => allSchemas.value[_step.value])
 
 const usedForm = useForm({
   validateOnMount: false,
-  validationSchema: _cachedSchema,
-  initialValues: _modelValue.value
+  validationSchema: currentSchema,
+  initialValues: _modelValue
+})
+syncRef(usedForm.values, _modelValue, {
+  immediate: true,
+  deep: true,
+  direction: 'ltr'
 })
 
-const submitting = ref(false)
-const mergedAllValues = computed(() => {
-  return allValues.value.reduce((p, c, i) => {
+function mergedAllValues() {
+  return allValues.reduce((p, c, i) => {
     return {
       ...(_mixins.value ?? {}),
       ...(p ?? {}),
       ...(i === _step.value ? (_modelValue.value ?? {}) : (c ?? {}))
     }
   }, {})
-})
-syncRef(mergedAllValues, _sync, {direction: 'ltr', deep: true})
+}
 
-const stepSubmitHandle = (values: dynamic) => {
-  submitting.value = true
+function stepSubmitHandle(values: dynamic) {
+  isSubmitting.value = true
   try {
     if (props.everyStep) emits('next', values, _step.value)
-    if (isLastStep.value || stepCounter.value === 1) emits('submit', mergedAllValues.value, _step.value)
+    if (isLastStep.value || stepCounter.value === 1) {
+      emits('submit', mergedAllValues(), _step.value)
+    }
   } finally {
-    submitting.value = false
+    isSubmitting.value = false
   }
 }
 
@@ -106,53 +111,54 @@ const submitFn = usedForm.handleSubmit(
   vs => {
     stepSubmitHandle(vs)
   },
-  ({values, errors}) => {
+  ({errors, values}) => {
     const errs = Object.values(errors)
     if (errs.length) {
       // 特殊消息体被视为警告
-      if ((errs as dynamic[]).every(v => typeof v !== 'string')) {
+      if ((errs as dynamic[]).every(v => typeof (v as dynamic) !== 'string')) {
         stepSubmitHandle(values)
       } else validatedState.value = false
     } else validatedState.value = false
   }
 )
 
-const resetFn = () => {
+function resetFn() {
   emits('reset', _modelValue.value, validatedState.value)
 }
 
 const formRef = useTemplateRef<nil<HTMLFormElement>>('formRef')
 
-syncRef(usedForm.values, _modelValue, {
-  immediate: true,
-  deep: true,
-  direction: 'ltr'
-})
-
-const watchSyncFn = (v: dynamic, oldValue: dynamic) => {
+/**
+ * 当 modelValue or sync value 更新时触发
+ * @param v 新 modelValue
+ * @param oldValue 旧 modelValue
+ */
+function watchSyncFn(v?: Record<string, dynamic>, oldValue?: Record<string, dynamic>) {
+  console.log('newValue', {v, oldValue})
   _isValid.value = true
   if (isEqual(v, oldValue)) return
   if (v) {
-    Object.keys(v as unknown as Record<string, dynamic>).forEach(key => {
-      const o1 = oldValue?.[key]
-      const v1 = v[key]
-      if (v1 !== o1) {
-        if (allValues.value[_step.value]) allValues.value[_step.value][key] = v1
-        else allValues.value[_step.value] = {[key]: v1}
-        usedForm.setFieldValue(key as dynamic, v1)
-      }
+    Object.keys(v).forEach(key => {
+      const oldValueProp = oldValue?.[key]
+      const newValueProp = v[key]
+      if (newValueProp === oldValueProp) return
+      if (allValues[_step.value]) allValues[_step.value][key] = newValueProp
+      else allValues[_step.value] = {[key]: newValueProp}
+      usedForm.setFieldValue(key as dynamic, newValueProp)
     })
   }
 }
-watch(() => _modelValue.value, watchSyncFn, {deep: true, immediate: true})
-watch(() => _sync.value, watchSyncFn, {deep: true, immediate: true})
+
+watch(_modelValue, watchSyncFn, {deep: true})
+watch(_sync, watchSyncFn, {deep: true}) // TODO 确定其是否有副作用
 
 watch(
-  () => _step.value,
-  async (v, o) => {
-    if (v < o) _isValid.value = true
-    if (v !== o) allValues.value[v] = _modelValue.value
-  }
+  _step,
+  (v, o) => {
+    if (v < _step.value) _isValid.value = true
+    if (v !== o) allValues[v] = _modelValue.value
+  },
+  {immediate: true}
 )
 
 function goToPrev() {
@@ -160,10 +166,15 @@ function goToPrev() {
   _step.value--
 }
 
-const getForm = () => usedForm
-const getRef = () => formRef.value
+function getForm() {
+  return usedForm
+}
 
-const validIsError = (r: FormValidationResult<dynamic>) => {
+function getRef() {
+  return formRef.value!
+}
+
+function validIsError(r: FormValidationResult<dynamic>) {
   if (r.valid) return r.valid
   else {
     if (r.errors) {
@@ -173,17 +184,17 @@ const validIsError = (r: FormValidationResult<dynamic>) => {
   }
 }
 
-const validate = async (): Promise<boolean> => {
+async function validate(): Promise<boolean> {
   const r = await usedForm.validate()
   _isValid.value = validIsError(r)
   return _isValid.value
 }
 
 function setFieldValidate(key: string, schema: Schema<dynamic, dynamic>) {
-  if (_cachedSchema.value) {
+  if (currentSchema.value) {
     const customSchema = {[key]: schema}
-    const shape = _cachedSchema.value.shape(customSchema)
-    _cachedSchemas.value = [shape]
+    const shape = currentSchema.value.shape(customSchema)
+    allSchemas.value = [shape]
     _newSchemas.value[_step.value] = customSchema
   }
 }
@@ -203,7 +214,7 @@ provide(YFormInjectionKey, expose)
     <slot
       :prev="goToPrev"
       :formRef="formRef!"
-      :submitting="submitting"
+      :submitting="isSubmitting"
       :isValid="validatedState"
       :submit="submitFn"
       :reset="resetFn"
