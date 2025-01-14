@@ -8,6 +8,8 @@ import {maybeArray} from '@compose/api-model'
 import {YFormInjectionKey} from '@/form'
 
 const props = withDefaults(defineProps<YFieldProps>(), {
+  label: void 0,
+  placeholder: void 0,
   modelValue: void 0,
   schema: void 0,
   syncVModel: 'modelValue',
@@ -58,7 +60,7 @@ const setPrimaryFieldValueFn = (v?: dynamic) => {
 }
 
 const otherModelProps: YFieldSlots = {
-  ...Object.entries(_effectModels.value)
+  ...(Object.entries(_effectModels.value)
     .filter(Boolean)
     .filter(([k, v]) => Boolean(k) && Boolean(v))
     .reduce(
@@ -71,15 +73,15 @@ const otherModelProps: YFieldSlots = {
         return acc
       },
       {} as Record<string, dynamic>
-    )
-}
+    ) as YFieldSlots)
+} as YFieldSlots
 
 const onUpdateErrorMessages = (v?: string[]) => {
   primaryField.setErrors(v! as unknown as string[])
 }
 
 defineSlots<{
-  input: (e: YFieldSlots) => dynamic
+  input: (e?: YFieldSlots) => dynamic
 }>()
 
 const schemaFn = ref<() => Schema<dynamic, dynamic>>()
@@ -94,14 +96,17 @@ onMounted(() => {
     }
   }
 })
+const a = ref(true)
 </script>
 
 <template>
   <slot
     name="input"
     v-bind="otherModelProps"
+    :label="props.label"
+    :placeholder="props.placeholder"
     :hint="primaryWarning"
-    :persistentHint="true"
+    :persistentHint="a"
     :errorMessages="primaryErrors"
     :[`${_modelName}`]="primaryField.value.value"
     :[`onUpdate:errorMessages`]="onUpdateErrorMessages"
