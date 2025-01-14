@@ -15,7 +15,7 @@ env.d.ts
 rollup.config.**
 vite.config.**
 vitest.config.**
-.eslintrc.cjs
+eslint.config.js
 index.html
 uno.config.ts
 uni.d.ts
