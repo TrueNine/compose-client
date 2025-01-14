@@ -7,6 +7,7 @@ import {maybeArray} from '@compose/api-model'
 import type {Schema} from 'yup'
 import {YFormInjectionKey} from '@/form/index'
 import type {YFormEmits, YFormInjection, YFormProps} from '@/form/index'
+import {cloneDeepWith} from '@compose/extensions/lodash-es'
 
 const props = withDefaults(defineProps<YFormProps>(), {
   step: 0,
@@ -16,6 +17,7 @@ const props = withDefaults(defineProps<YFormProps>(), {
   schema: void 0,
   mixins: () => ({})
 })
+
 const emits = defineEmits<YFormEmits>()
 const isSubmitting = ref(false)
 const _isValid = useVModel(props, 'isValid', emits, {passive: true})
@@ -86,13 +88,26 @@ syncRef(usedForm.values, _modelValue, {
 })
 
 function mergedAllValues() {
-  return allValues.reduce((p, c, i) => {
+  const submitResult = allValues.reduce((p, c, i) => {
     return {
       ...(_mixins.value ?? {}),
       ...(p ?? {}),
       ...(i === _step.value ? (_modelValue.value ?? {}) : (c ?? {}))
     }
   }, {})
+
+  // 使用 cloneDeepWith 进行深度遍历和替换
+  const result = cloneDeepWith(submitResult, value => {
+    if (value && typeof value === 'object' && Object.keys(value).length === 0) {
+      return void 0
+    }
+  })
+
+  if (Object.keys(result).length === 0) {
+    return void 0
+  }
+
+  return result
 }
 
 function stepSubmitHandle(values: dynamic) {
