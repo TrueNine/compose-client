@@ -7,7 +7,6 @@ import {maybeArray} from '@compose/api-model'
 import type {Schema} from 'yup'
 import {YFormInjectionKey} from '@/form/index'
 import type {YFormEmits, YFormInjection, YFormProps} from '@/form/index'
-import {cloneDeepWith} from '@compose/extensions/lodash-es'
 
 const props = withDefaults(defineProps<YFormProps>(), {
   step: 0,
@@ -87,6 +86,27 @@ syncRef(usedForm.values, _modelValue, {
   direction: 'ltr'
 })
 
+function clipProp(obj: dynamic, dep = 0): dynamic {
+  if (obj === void 0 || obj === null) return obj
+  if (obj === '') return void 0
+  if (typeof obj !== 'object') return obj
+  if (obj && typeof obj === 'object' && Object.keys(obj).length === 0) return void 0
+  if (Array.isArray(obj)) {
+    return obj.map(item => clipProp(item, dep + 1)).filter(item => item !== void 0)
+  } else {
+    const newObj: Record<string, dynamic> = {}
+    for (const key in obj) {
+      if (Object.prototype.hasOwnProperty.call(obj, key)) {
+        const value = clipProp(obj[key], dep + 1)
+        if (value !== void 0) {
+          newObj[key] = value
+        }
+      }
+    }
+    return Object.keys(newObj).length === 0 ? void 0 : newObj
+  }
+}
+
 function mergedAllValues() {
   const submitResult = allValues.reduce((p, c, i) => {
     return {
@@ -97,12 +117,7 @@ function mergedAllValues() {
   }, {})
 
   // 使用 cloneDeepWith 进行深度遍历和替换
-  const result = cloneDeepWith(submitResult, value => {
-    if (value && typeof value === 'object' && Object.keys(value).length === 0) {
-      return void 0
-    }
-  })
-
+  const result = clipProp(submitResult)
   if (Object.keys(result).length === 0) {
     return void 0
   }
