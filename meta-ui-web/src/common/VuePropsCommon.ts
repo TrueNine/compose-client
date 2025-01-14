@@ -1,4 +1,4 @@
-import type {asyncable, dynamic, late, Maybe, StrOrNum} from '@compose/api-types'
+import type {dynamic, StrOrNum} from '@compose/api-types'
 import type {Schema} from 'yup'
 
 /**
@@ -25,6 +25,7 @@ export interface ModelValueProps<T = unknown> {
  */
 export interface ModelValueEmits<T = unknown> {
   (e: 'update:modelValue', value: T): void
+
   (e: 'change', value: T): void
 }
 
@@ -35,20 +36,49 @@ export interface FormFieldStyleProps {
    *
    * 此  prop 会在 prop 内被调用，当当前字段无 校验 schema 时
    */
-  defaultValidateSchema?: () => asyncable<late<Schema<dynamic, dynamic>>>
+  defaultValidateSchema?: () => Schema<dynamic, dynamic>
+  /**
+   * 组件标签
+   */
   label?: string
+  /**
+   * 占位符提示
+   */
   placeholder?: string
-  errorMessages?: Maybe<string>
+  /**
+   * 错误信息
+   */
+  errorMessages?: string[]
+  /**
+   * 是否一直显示提示信息
+   */
   persistentHint?: boolean
+  /**
+   * 当前 字段的提示信息
+   */
   hint?: string
+  /**
+   * 该字段是否必须
+   */
   required?: boolean
 }
+
+/**
+ * field Props
+ */
 export interface FormFieldProps<V = unknown> extends ModelValueProps<V>, FormFieldStyleProps {}
 
 export interface FormFieldStyleEmits {
-  (e: 'update:errorMessages', msg?: Maybe<string>): void
-  (e: 'update:hint', hind?: string): void
-  (e: 'update:persistentHint', persistentHint?: boolean): void
-  (e: 'update:required', required?: boolean): void
+  (e: 'update:errorMessages', msg: string[]): void
+
+  (e: 'update:hint', hind: string): void
+
+  (e: 'update:persistentHint', persistentHint: boolean): void
+
+  (e: 'update:required', required: boolean): void
 }
+
+/**
+ * field emits
+ */
 export interface FormFieldEmits<T = unknown> extends FormFieldStyleEmits, ModelValueEmits<T> {}
