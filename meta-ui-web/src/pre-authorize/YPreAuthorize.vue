@@ -1,4 +1,4 @@
-<script setup lang="tsx">
+<script setup lang="ts">
 import {isNil} from '@compose/api-model/tools'
 
 import type {YPreAuthorizeProps} from '.'
@@ -42,11 +42,6 @@ const _hasPermissionsExp = computed(() => {
 })
 
 const _hasRolesExp = computed(() => {
-  console.log({
-    roles: props.hasAnyRoles,
-    emp: isNil(props.hasAnyRoles),
-    isArr: Array.isArray(props.hasAnyRoles)
-  })
   if (isNil(props.hasAnyRoles)) return true
   else return _handle.roles.value.some(r => props.hasAnyRoles?.includes(r))
 })

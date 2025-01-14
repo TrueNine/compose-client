@@ -1,4 +1,4 @@
-<script setup lang="tsx">
+<script setup lang="ts">
 import type {YIcoProps} from './index'
 
 const props = withDefaults(defineProps<YIcoProps>(), {
