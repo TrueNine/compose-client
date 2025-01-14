@@ -13,6 +13,8 @@ import type {FlatESLintConfig, Parser, Rules} from 'eslint-define-config'
 import {VueRules} from '@/rules'
 import {TypescriptRules} from '@/rules/TypescriptRules'
 import {EcmaRules} from '@/rules/EcmaRules'
+import oxlint from 'eslint-plugin-oxlint'
+import skipFormatting from '@vue/eslint-config-prettier/skip-formatting'
 
 const DefinedConfig = [
   {
@@ -63,6 +65,8 @@ const DefinedConfig = [
         parser: tseslint.parser as unknown as Parser
       }
     }
-  } as FlatESLintConfig
+  } as FlatESLintConfig,
+  oxlint.configs['flat/recommended'],
+  skipFormatting
 ]
 export {globals, DefinedConfig}

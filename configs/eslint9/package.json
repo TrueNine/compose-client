@@ -1,6 +1,6 @@
 {
   "name": "@compose/eslint9-config",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "scripts": {
     "build": "run-s type-check build-c",
     "build-c": "vite build",
@@ -29,5 +29,17 @@
       "require": "./dist/globals/index.cjs"
     },
     "./*": "./*"
+  },
+  "peerDependencies": {
+    "eslint": "^9.x.x",
+    "oxlint": "^",
+    "eslint-plugin-oxlint": "^",
+    "@eslint/js": "^9.x.x",
+    "globals": "^",
+    "@unocss/eslint-config": "^",
+    "typescript-eslint": "^",
+    "eslint-plugin-vue": "^",
+    "eslint-plugin-prettier": "^",
+    "@vue/eslint-config-prettier": "^"
   }
 }
