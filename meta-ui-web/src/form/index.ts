@@ -22,11 +22,7 @@ export interface YFormProps extends ModelValueProps<dynamic> {
    * @default 0
    */
   step?: number
-  mixins?: object
-  /**
-   * 表单数据同步
-   */
-  sync?: dynamic
+
   /**
    * 是否每个步骤发出 next 事件
    */
@@ -35,8 +31,6 @@ export interface YFormProps extends ModelValueProps<dynamic> {
 
 export interface YFormEmits extends ModelValueEmits<dynamic> {
   (e: 'update:isValid', v: boolean): void
-  (e: 'update:mixins', v: dynamic): void
-  (e: 'update:sync', v: dynamic): void
   (e: 'submit', values?: dynamic, step?: number): void
   (e: 'next', values?: dynamic, step?: number): void
   (e: 'reset', values?: dynamic, isValid?: boolean): void

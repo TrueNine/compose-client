@@ -12,9 +12,7 @@ const props = withDefaults(defineProps<YFormProps>(), {
   step: 0,
   everyStep: false,
   modelValue: void 0,
-  value: void 0,
-  schema: void 0,
-  mixins: () => ({})
+  schema: void 0
 })
 
 const emits = defineEmits<YFormEmits>()
@@ -22,8 +20,6 @@ const isSubmitting = ref(false)
 const _isValid = useVModel(props, 'isValid', emits, {passive: true})
 const _step = useVModel(props, 'step', emits, {passive: true})
 const _modelValue = useVModel(props, 'modelValue', emits, {passive: true})
-const _mixins = useVModel(props, 'mixins', emits, {passive: true, defaultValue: {}})
-const _sync = useVModel(props, 'sync', emits, {passive: true, defaultValue: {}})
 
 const _newSchemas = ref<Record<string, Schema<dynamic, dynamic>>[]>([])
 
@@ -82,7 +78,6 @@ const usedForm = useForm({
 })
 syncRef(usedForm.values, _modelValue, {
   immediate: true,
-  deep: true,
   direction: 'ltr'
 })
 
@@ -90,7 +85,6 @@ function clipProp(obj: dynamic, dep = 0): dynamic {
   if (obj === void 0 || obj === null) return obj
   if (obj === '') return void 0
   if (Array.isArray(obj)) return obj.map(e => clipProp(e, dep + 1))
-  if (isNaN(obj)) return void 0
   if (typeof obj !== 'object') return obj
   if (Object.prototype.toString.call(obj) !== '[object Object]') return obj
   if (Object.keys(obj).length === 0) return void 0
@@ -107,20 +101,17 @@ function clipProp(obj: dynamic, dep = 0): dynamic {
 }
 
 function mergedAllValues() {
-  const submitResult = allValues.reduce((p, c, i) => {
+  const submitResult = allValues.reduce((acc, cur, idx) => {
     return {
-      ...(_mixins.value ?? {}),
-      ...(p ?? {}),
-      ...(i === _step.value ? (_modelValue.value ?? {}) : (c ?? {}))
+      ...(acc ?? {}),
+      ...(idx === _step.value ? (_modelValue.value ?? {}) : (cur ?? {}))
     }
   }, {})
-
   // 使用 cloneDeepWith 进行深度遍历和替换
   const result = clipProp(submitResult)
-  if (result === void 0 || result === null || result === '' || isNaN(result)) return void 0
+  if (result === void 0 || result === null || result === '') return void 0
   if (Object.keys(result).length === 0) return void 0
-
-  return result
+  return unref(result)
 }
 
 function stepSubmitHandle(values: dynamic) {
@@ -175,7 +166,6 @@ function watchSyncFn(allFieldValues?: Record<string, dynamic>, oldValue?: Record
 }
 
 watch(_modelValue, watchSyncFn, {deep: true})
-watch(_sync, watchSyncFn, {deep: true}) // TODO 确定其是否有副作用
 
 watch(
   _step,

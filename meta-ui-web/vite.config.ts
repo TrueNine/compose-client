@@ -23,7 +23,7 @@ const {defineConfig, buildConfigLib, dtsPlugin, staticCopyPluginPackageJson} = m
     entry: ['index', 'unplugin/index', 'common/index'],
     lib: {
       dts: {
-        dtsSourcemap: false
+        dtsSourcemap: true
       },
       sourcemap: true
     }
