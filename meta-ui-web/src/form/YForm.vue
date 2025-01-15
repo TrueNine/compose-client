@@ -163,24 +163,17 @@ let firstExecuted = false
 
 /**
  * 当 modelValue or sync value 更新时触发
- * @param v 新 modelValue
+ * @param allFieldValues 新 modelValue
  * @param oldValue 旧 modelValue
  */
-function watchSyncFn(v?: Record<string, dynamic>, oldValue?: Record<string, dynamic>) {
+function watchSyncFn(allFieldValues?: Record<string, dynamic>, oldValue?: Record<string, dynamic>) {
   _isValid.value = true
-  if (isEqual(v, oldValue)) return
-  if (v === null || v === void 0) return
+  if (isEqual(allFieldValues, oldValue)) return
+  if (allFieldValues === null || allFieldValues === void 0) return
   if (firstExecuted) {
-    emits('change', v)
+    emits('change', allFieldValues)
   }
-  Object.keys(v).forEach(key => {
-    const oldValueProp = oldValue?.[key]
-    const newValueProp = v[key]
-    if (newValueProp === oldValueProp) return
-    if (allValues[_step.value]) allValues[_step.value][key] = newValueProp
-    else allValues[_step.value] = {[key]: newValueProp}
-    usedForm.setFieldValue(key as dynamic, newValueProp)
-  })
+  usedForm.setValues(allFieldValues)
 }
 
 watch(_modelValue, watchSyncFn, {deep: true})
