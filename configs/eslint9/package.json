@@ -1,6 +1,6 @@
 {
   "name": "@compose/eslint9-config",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "scripts": {
     "build": "run-s type-check build-c",
     "build-c": "vite build",
@@ -31,16 +31,16 @@
     "./*": "./*"
   },
   "peerDependencies": {
-    "eslint": "^9.x.x",
-    "oxlint": "^",
-    "eslint-plugin-oxlint": "^",
-    "@eslint/js": "^9.x.x",
-    "globals": "^",
-    "@unocss/eslint-config": "^",
-    "typescript-eslint": "^",
-    "eslint-plugin-vue": "^",
-    "eslint-plugin-prettier": "^",
-    "@vue/eslint-config-typescript": "^",
-    "@vue/eslint-config-prettier": "^"
+    "eslint": "^9.0.0",
+    "@eslint/js": "^9.0.0",
+    "oxlint": "^0.15.6",
+    "eslint-plugin-oxlint": "*",
+    "globals": "*",
+    "@unocss/eslint-config": "*",
+    "typescript-eslint": "*",
+    "eslint-plugin-vue": "*",
+    "eslint-plugin-prettier": "*",
+    "@vue/eslint-config-typescript": "*",
+    "@vue/eslint-config-prettier": "*"
   }
 }
