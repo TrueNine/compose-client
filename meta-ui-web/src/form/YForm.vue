@@ -117,9 +117,8 @@ function mergedAllValues() {
 
   // 使用 cloneDeepWith 进行深度遍历和替换
   const result = clipProp(submitResult)
-  if (Object.keys(result).length === 0) {
-    return void 0
-  }
+  if (result === void 0 || result === null || result === '' || isNaN(result)) return void 0
+  if (Object.keys(result).length === 0) return void 0
 
   return result
 }
