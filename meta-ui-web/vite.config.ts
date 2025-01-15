@@ -10,6 +10,7 @@ import ViteFonts from 'unplugin-fonts/vite'
 import vuetify, {transformAssetUrls} from 'vite-plugin-vuetify'
 //import type {ModuleFormat} from 'rollup'
 import {quasar, transformAssetUrls as quasarTransformAssetUrls} from '@quasar/vite-plugin'
+import devTools from 'vite-plugin-vue-devtools'
 import {manifest} from '@compose/config-vite-fragment'
 const {defineConfig, buildConfigLib, dtsPlugin, staticCopyPluginPackageJson} = manifest({
   pushFeatures: {
@@ -33,6 +34,7 @@ export default defineConfig({
   build: buildConfigLib(),
   plugins: [
     dtsPlugin(),
+    devTools(),
     staticCopyPluginPackageJson(),
     vue({
       template: {
