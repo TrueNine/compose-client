@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type {FormValidationResult} from 'vee-validate'
 import {useForm} from 'vee-validate'
-import type {dynamic, nil} from '@compose/api-types'
+import type {dynamic} from '@compose/api-types'
 import {isEqual} from '@compose/extensions/lodash-es'
 import {maybeArray} from '@compose/api-model'
 import type {Schema} from 'yup'
@@ -156,8 +156,6 @@ function resetFn() {
   emits('reset', _modelValue.value, validatedState.value)
 }
 
-const formRef = useTemplateRef<nil<HTMLFormElement>>('formRef')
-
 /**
  * 当 modelValue or sync value 更新时触发
  * @param v 新 modelValue
@@ -200,10 +198,6 @@ function getForm() {
   return usedForm
 }
 
-function getRef() {
-  return formRef.value!
-}
-
 function validIsError(r: FormValidationResult<dynamic>) {
   if (r.valid) return r.valid
   else {
@@ -231,7 +225,6 @@ function setFieldValidate(key: string, schema: Schema<dynamic, dynamic>) {
 
 const expose: YFormInjection = {
   getForm,
-  getRef,
   validate,
   setFieldValidate
 }
@@ -240,10 +233,9 @@ provide(YFormInjectionKey, expose)
 </script>
 
 <template>
-  <form v-bind="$attrs" ref="formRef" @reset.prevent="resetFn" @submit.prevent="submitFn">
+  <form v-bind="$attrs" @reset.prevent="resetFn" @submit.prevent="submitFn">
     <slot
       :prev="goToPrev"
-      :formRef="formRef!"
       :submitting="isSubmitting"
       :isValid="validatedState"
       :submit="submitFn"

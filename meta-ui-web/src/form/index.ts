@@ -1,5 +1,5 @@
 import {Vue} from '@compose/extensions/vue'
-import type {dynamic, Maybe, nil} from '@compose/api-types'
+import type {dynamic, Maybe} from '@compose/api-types'
 import type {ObjectSchema, Schema} from 'yup'
 import type {FormContext} from 'vee-validate'
 import type {InjectionKey} from 'vue'
@@ -47,7 +47,6 @@ export interface YFormEmits extends ModelValueEmits<dynamic> {
 
 export interface YFormInjection {
   getForm: () => FormContext<dynamic, dynamic>
-  getRef: () => nil<HTMLFormElement>
   validate: () => Promise<boolean>
   setFieldValidate: (key: string, schema: Schema<dynamic, dynamic>) => void
 }
