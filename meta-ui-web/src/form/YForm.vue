@@ -157,24 +157,30 @@ function resetFn() {
 }
 
 /**
+ * 第一次执行监听
+ */
+let firstExecuted = false
+
+/**
  * 当 modelValue or sync value 更新时触发
  * @param v 新 modelValue
  * @param oldValue 旧 modelValue
  */
 function watchSyncFn(v?: Record<string, dynamic>, oldValue?: Record<string, dynamic>) {
-  console.log('newValue', {v, oldValue})
   _isValid.value = true
   if (isEqual(v, oldValue)) return
-  if (v) {
-    Object.keys(v).forEach(key => {
-      const oldValueProp = oldValue?.[key]
-      const newValueProp = v[key]
-      if (newValueProp === oldValueProp) return
-      if (allValues[_step.value]) allValues[_step.value][key] = newValueProp
-      else allValues[_step.value] = {[key]: newValueProp}
-      usedForm.setFieldValue(key as dynamic, newValueProp)
-    })
+  if (v === null || v === void 0) return
+  if (!firstExecuted) {
+    emits('change', v)
   }
+  Object.keys(v).forEach(key => {
+    const oldValueProp = oldValue?.[key]
+    const newValueProp = v[key]
+    if (newValueProp === oldValueProp) return
+    if (allValues[_step.value]) allValues[_step.value][key] = newValueProp
+    else allValues[_step.value] = {[key]: newValueProp}
+    usedForm.setFieldValue(key as dynamic, newValueProp)
+  })
 }
 
 watch(_modelValue, watchSyncFn, {deep: true})
@@ -185,6 +191,7 @@ watch(
   (v, o) => {
     if (v < _step.value) _isValid.value = true
     if (v !== o) allValues[v] = _modelValue.value
+    firstExecuted = true
   },
   {immediate: true}
 )
