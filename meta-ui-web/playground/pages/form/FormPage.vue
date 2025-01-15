@@ -10,29 +10,39 @@ const submit = (f: dynamic) => {
   console.log('page submit')
   console.log(f)
 }
+
 </script>
 
 <template>
-  <YForm v-model="mv" :schema="schema" @next="submit" @submit="submit">
+  <YForm class="w-50vw p-4" v-model="mv" :schema="schema" @next="submit" @submit="submit">
+    <YField name="defaultSlot.component" label="y field props">
+      <VTextField />
+    </YField>
+
+    <YField name="defaultSlot.empty"></YField>
+    <YField name="defaultSlot.text"> text</YField>
+    <YField name="defaultSlot.variableText">
+      {{ 'text' }}
+    </YField>
+
+    <YField name="defaultSlot.div" effectModels="modelValue">
+      <div class="bg-red">DIV TEXT</div>
+    </YField>
+    <YField name="defaultSlot.input">
+      <input />
+    </YField>
+
     <YField name="a.b">
-      <template #input="p">
-        <VTextField v-bind="p" />
-      </template>
+      <VTextField />
     </YField>
     <YField name="x">
-      <template #input="p">
-        <VTextField v-bind="p" />
-      </template>
+      <VTextField />
     </YField>
     <YField name="y">
-      <template #input="p">
-        <VTextField v-bind="p" />
-      </template>
+      <VTextField />
     </YField>
     <YField name="z">
-      <template #input="p">
-        <VTextField v-bind="p" />
-      </template>
+      <VTextField  />
     </YField>
     <div>
       <div>
