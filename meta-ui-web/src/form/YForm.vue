@@ -89,22 +89,21 @@ syncRef(usedForm.values, _modelValue, {
 function clipProp(obj: dynamic, dep = 0): dynamic {
   if (obj === void 0 || obj === null) return obj
   if (obj === '') return void 0
+  if (Array.isArray(obj)) return obj.map(e => clipProp(e, dep + 1))
+  if (isNaN(obj)) return void 0
   if (typeof obj !== 'object') return obj
-  if (obj && typeof obj === 'object' && Object.keys(obj).length === 0) return void 0
-  if (Array.isArray(obj)) {
-    return obj.map(item => clipProp(item, dep + 1)).filter(item => item !== void 0)
-  } else {
-    const newObj: Record<string, dynamic> = {}
-    for (const key in obj) {
-      if (Object.prototype.hasOwnProperty.call(obj, key)) {
-        const value = clipProp(obj[key], dep + 1)
-        if (value !== void 0) {
-          newObj[key] = value
-        }
+  if (Object.prototype.toString.call(obj) !== '[object Object]') return obj
+  if (Object.keys(obj).length === 0) return void 0
+  const newObj: Record<string, dynamic> = {}
+  for (const key in obj) {
+    if (Object.prototype.hasOwnProperty.call(obj, key)) {
+      const value = clipProp(obj[key], dep + 1)
+      if (value !== void 0) {
+        newObj[key] = value
       }
     }
-    return Object.keys(newObj).length === 0 ? void 0 : newObj
   }
+  return Object.keys(newObj).length === 0 ? void 0 : newObj
 }
 
 function mergedAllValues() {
