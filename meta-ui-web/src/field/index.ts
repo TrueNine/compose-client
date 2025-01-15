@@ -19,7 +19,9 @@ export interface YFieldProps {
 }
 
 export interface YFieldEmits {
-  (e: 'update:modelValue'): void
+  (e: 'update:modelValue', v?: dynamic): void
+
+  (e: 'change', v?: dynamic): void
 }
 
 type _AnyOnUpdates = {
