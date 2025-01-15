@@ -6,6 +6,7 @@ import type {YFieldEmits, YFieldProps, YFieldSlots} from '@/field'
 import {maybeArray} from '@compose/api-model'
 
 import {YFormInjectionKey} from '@/form'
+import {mergeProps} from 'vue'
 
 const props = withDefaults(defineProps<YFieldProps>(), {
   label: void 0,
@@ -35,7 +36,8 @@ const _effectModels = computed(() => {
 const _modelName = useVModel(props, 'modelName', emits, {passive: true})
 
 const defaultRules = ref<late<Schema<dynamic, dynamic>>>(props.schema)
-const primaryField = useField(() => props.name, defaultRules, {syncVModel: props.syncVModel})
+const parentForm = inject(YFormInjectionKey, void 0)
+const primaryField = useField(() => props.name, defaultRules, {syncVModel: props.syncVModel, form: parentForm?.getForm()})
 
 const primaryWarning = computed<string | undefined>(() => {
   return primaryField.errors.value
@@ -81,35 +83,53 @@ const onUpdateErrorMessages = (v?: string[]) => {
 }
 
 defineSlots<{
-  input: (e?: YFieldSlots) => dynamic
+  default?: (e?: YFieldSlots) => VNode[]
+  input?: (e?: YFieldSlots) => dynamic
 }>()
 
-const schemaFn = ref<() => Schema<dynamic, dynamic>>()
-const parentForm = inject(YFormInjectionKey, void 0)
+const slots = useSlots()
+const usedDefaultSlot = computed(() => !!slots?.default)
+const usedInputSlot = computed(() => !!slots?.input)
 
-onMounted(() => {
-  if (schemaFn.value) {
-    const r = schemaFn.value()
-    if (r) {
-      if (parentForm) parentForm.setFieldValidate(props.name, r)
-      else defaultRules.value = r
-    }
-  }
-})
-const a = ref(true)
+const _persistentHint = ref(true)
+
+function DefaultSlotComponent() {
+  const virtualNodes = slots?.default?.()
+  return virtualNodes?.map(e => {
+    return h(
+      e,
+      mergeProps(e.props ?? {}, {
+        ...otherModelProps,
+        [`${_modelName.value}`]: primaryField.value.value,
+        [`onUpdate:${_modelName.value}`]: setPrimaryFieldValueFn,
+        [`onUpdate:errorMessages`]: onUpdateErrorMessages,
+        label: props.label,
+        placeholder: props.placeholder,
+        hint: primaryWarning.value,
+        persistentHint: _persistentHint.value,
+        errorMessages: primaryErrors.value
+      })
+    )
+  })
+}
 </script>
 
 <template>
-  <slot
-    name="input"
-    v-bind="otherModelProps"
-    :label="props.label"
-    :placeholder="props.placeholder"
-    :hint="primaryWarning"
-    :persistentHint="a"
-    :errorMessages="primaryErrors"
-    :[`${_modelName}`]="primaryField.value.value"
-    :[`onUpdate:errorMessages`]="onUpdateErrorMessages"
-    :[`onUpdate:${_modelName}`]="setPrimaryFieldValueFn"
-  />
+  <template v-if="usedDefaultSlot">
+    <component v-bind="otherModelProps" :is="DefaultSlotComponent" v-if="slots?.default" />
+  </template>
+  <template v-if="usedInputSlot">
+    <slot
+      name="input"
+      v-bind="otherModelProps"
+      :label="props.label"
+      :placeholder="props.placeholder"
+      :hint="primaryWarning"
+      :persistentHint="_persistentHint"
+      :errorMessages="primaryErrors"
+      :[`${_modelName}`]="primaryField.value.value"
+      :[`onUpdate:errorMessages`]="onUpdateErrorMessages"
+      :[`onUpdate:${_modelName}`]="setPrimaryFieldValueFn"
+    />
+  </template>
 </template>
