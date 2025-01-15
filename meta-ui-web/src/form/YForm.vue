@@ -170,7 +170,7 @@ function watchSyncFn(v?: Record<string, dynamic>, oldValue?: Record<string, dyna
   _isValid.value = true
   if (isEqual(v, oldValue)) return
   if (v === null || v === void 0) return
-  if (!firstExecuted) {
+  if (firstExecuted) {
     emits('change', v)
   }
   Object.keys(v).forEach(key => {
