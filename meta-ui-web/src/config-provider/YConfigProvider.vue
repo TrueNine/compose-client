@@ -46,25 +46,25 @@ const quasarLocale = computed(() => {
 })
 
 darkUse.value = props.dark
-q.dark.set(props?.dark ?? true)
+q.dark.set(props.dark)
 q.lang.set(quasarLocale.value)
-checkDark(!(props.dark ?? false))
-checkLocale(props.locale ?? 'zh-CN')
+checkDark(!props.dark)
+checkLocale(props.locale)
 
 watch(
   () => props.dark,
   v => {
     darkUse.value = v
     q.dark.set(v)
-    checkDark(!(props.dark ?? false))
+    checkDark(!props.dark)
     vuetifyUseTheme.global.name.value = darkLight.value
   }
 )
 watch(
   () => props.locale,
   v => {
-    checkLocale(props.locale ?? 'zh-CN')
-    dayjs.locale((v ?? 'en').toLowerCase())
+    checkLocale(props.locale)
+    dayjs.locale(v.toLowerCase())
     q.lang.set(quasarLocale.value)
   }
 )
