@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import type {LateNull, SerialCode} from '@compose/api-types'
 import {AddressUtils, des} from '@compose/api-model'
 import {reactive} from 'vue'
 
@@ -12,6 +11,7 @@ import {
   type YVAddressSelectProps,
   type YVAddressSelectSelectValue
 } from '.'
+import type {nil} from '@compose/api-types'
 
 const pad = (code: string) => {
   return code.padEnd(12, '0')
@@ -50,9 +50,9 @@ const emitsDeepLevel = computed(() => {
 })
 
 // 地址缓存
-const addressCache = ref<Record<SerialCode, IComponentAddr[]>>({})
-const saveCache = (code: SerialCode, data: IComponentAddr[]) => (addressCache.value[code] = data)
-const getCache = (code?: SerialCode) => (code ? addressCache.value[code] : void 0)
+const addressCache = ref<Record<string, IComponentAddr[]>>({})
+const saveCache = (code: string, data: IComponentAddr[]) => (addressCache.value[code] = data)
+const getCache = (code?: string) => (code ? addressCache.value[code] : void 0)
 
 const addressCacheData = reactive<Record<string, IComponentAddr[]>>({
   province: [],
@@ -69,9 +69,11 @@ const _fullPath = useVModel(props, 'fullPath', emits, {passive: true})
 const _adCode = useVModel(props, 'adCode', emits, {passive: true})
 const _selectedLevel = useVModel(props, 'selectedLevel', emits, {passive: true, defaultValue: 0})
 
-const sortFn = (a: LateNull<IComponentAddr>, b: LateNull<IComponentAddr>) => {
-  if (a!.code < b!.code) return -1
-  if (a!.code > b!.code) return 1
+const sortFn = (a?: nil<IComponentAddr>, b?: nil<IComponentAddr>) => {
+  if (a === null || a === void 0) return 1
+  if (b === null || b === void 0) return -1
+  if (a.code < b.code) return -1
+  if (a.code > b.code) return 1
   return 0
 }
 
@@ -93,22 +95,22 @@ async function cacheAndUpdate(code: string) {
   const prevKey = keyNames[curIdx]
 
   const cache = getCache(padCode)
-  const pt = addressCacheData[prevKey].find(e => pad(e!.code) === padCode)
+  const pt = addressCacheData[prevKey].find(e => pad(e.code) === padCode)
 
   // ready next addresses
   let fullPath = ''
   if (level < emitsDeepLevel.value) {
     addressCacheData[currentKey] =
       cache ??
-      (await props[currentFnKey]!(pt))
+      (await props[currentFnKey]?.(pt))
         ?.sort(sortFn)
         .filter(e => e != null)
-        .map(e => e!) ??
+        .map(e => e) ??
       []
 
     saveCache(
       padCode,
-      addressCacheData[currentKey].map(e => e!)
+      addressCacheData[currentKey].map(e => e)
     )
   }
 
@@ -116,7 +118,7 @@ async function cacheAndUpdate(code: string) {
   for (let i = 0; i < max; i++) {
     const key = keyNames[i]
     const item = selected.value[key]
-    if (item && item.name) fullPath += item.name
+    if (item?.name) fullPath += item.name
   }
 
   selected.value[prevKey] = addressCacheData[prevKey].find(e => pad(e.code) === padCode)
@@ -138,28 +140,28 @@ watch(
 watch(
   () => selected.value.city,
   async v => {
-    if (v && v.code !== '') await cacheAndUpdate(v!.code)
+    if (v && v.code !== '') await cacheAndUpdate(v.code)
   }
 )
 
 watch(
   () => selected.value.district,
   async v => {
-    if (v && v.code !== '' && !loading.value) await cacheAndUpdate(v!.code)
+    if (v && v.code !== '' && !loading.value) await cacheAndUpdate(v.code)
   }
 )
 
 watch(
   () => selected.value.town,
   async v => {
-    if (v && v.code !== '') await cacheAndUpdate(v!.code)
+    if (v && v.code !== '') await cacheAndUpdate(v.code)
   }
 )
 
 watch(
   () => selected.value.village,
   async v => {
-    if (v && v.code !== '') await cacheAndUpdate(v!.code)
+    if (v && v.code !== '') await cacheAndUpdate(v.code)
   }
 )
 
@@ -167,9 +169,9 @@ watch(
  * ## 监听代码触发器
  * @param code adCode
  */
-function watchChangeCode(code: string) {
+async function watchChangeCode(code: string) {
   if (code && !loading.value && !codingLoad.value) {
-    loadCode(code)
+    await loadCode(code)
   } else {
     if (!loading.value && !codingLoad.value) {
       _selectedLevel.value = 0
@@ -180,15 +182,23 @@ function watchChangeCode(code: string) {
 }
 
 onMounted(async () => {
-  addressCacheData['province'] = ((await props.findProvinces!()) ?? []).map(e => e!)
+  addressCacheData.province = []
+  while (props.findProvinces) {
+    const r = await props.findProvinces()
+    if (!r) break
+    addressCacheData.province = r.filter(Boolean) as IComponentAddr[]
+    break
+  }
+
   addressCacheData.province.sort((a, b) => {
-    return a!.code.localeCompare(b!.code)
+    return a.code.localeCompare(b.code)
   })
-  watchChangeCode(props.adCode)
+  await watchChangeCode(props.adCode)
 })
 
 const loading = ref<boolean>(false)
 const codingLoad = ref(false)
+
 async function loadCode(code: string) {
   codingLoad.value = true
   let appendCode = ''

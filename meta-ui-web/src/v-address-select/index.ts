@@ -28,8 +28,8 @@ export interface YVAddressSelectProps {
 }
 
 export interface YAddressSelectEmits {
-  (e: 'update:adCode', v: string): void
-  (e: 'update:fullPath', v: string): void
+  (e: 'update:adCode' | 'update:fullPath', v: string): void
+
   (e: 'update:selectedLevel', v: Int): void
 }
 
@@ -91,6 +91,7 @@ export function getAdCodeLevel(code: string) {
   else if (obj.village !== '000') level = 5
   return level
 }
+
 export const clipCode = (code: string, level: Int) => {
   switch (level) {
     case 1:
