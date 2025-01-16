@@ -73,7 +73,7 @@
     "@stomp/stompjs": "^7.0.0",
     "@tsconfig/node18": "^18.2.4",
     "@tsconfig/node20": "^20.1.4",
-    "@types/chrome": "^0.0.296",
+    "@types/chrome": "^0.0.297",
     "@types/fs-extra": "^11.0.4",
     "@types/gulp": "^4.0.17",
     "@types/gulp-autoprefixer": "^0.0.37",
