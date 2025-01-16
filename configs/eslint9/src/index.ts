@@ -49,7 +49,16 @@ const DefinedConfig = [
 
   ...tseslint.configs.recommended,
   ...pluginVue.configs['flat/strongly-recommended'],
-  ...vueTsEslintConfig(),
+  ...vueTsEslintConfig({
+    scriptLangs: ['tsx', 'ts', 'js', 'jsx'],
+    extends: ['all'],
+    supportedScriptLangs: {
+      js: true,
+      jsx: true,
+      ts: true,
+      tsx: true
+    }
+  }),
 
   pluginPrettierRecommendedConfigs,
   {
