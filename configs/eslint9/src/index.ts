@@ -15,8 +15,11 @@ import {TypescriptRules} from '@/rules/TypescriptRules'
 import {EcmaRules} from '@/rules/EcmaRules'
 import oxlint from 'eslint-plugin-oxlint'
 import skipFormatting from '@vue/eslint-config-prettier/skip-formatting'
-import {defineConfigWithVueTs, vueTsConfigs} from '@vue/eslint-config-typescript'
+import {defineConfigWithVueTs, configureVueProject, vueTsConfigs} from '@vue/eslint-config-typescript'
 
+configureVueProject({
+  scriptLangs: ['ts', 'tsx', 'js', 'jsx']
+})
 const DefinedConfig = [
   {
     ignores: [
