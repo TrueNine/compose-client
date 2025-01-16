@@ -12,33 +12,34 @@ const props = withDefaults(defineProps<YVMenuItemProps>(), {
 
 const _route = computed(() => props.route)
 const _value = computed(() => {
-  const parentPath = props.parentPath || ``
+  const parentPath = props.parentPath ?? ``
   const prefix = props.pathPrefix || ``
-  const value = props.route.uri || ``
+  const value = props.route.uri ?? ``
   return `/${prefix}/${parentPath}/${value}`.replace(/\/+/g, '/')
 })
 
 const _menuIconClass = computed(() => {
-  return _route.value.iconClass || _route.value.iconName || 'i-mdi:menu-open'
+  return _route.value.iconName ?? 'i-mdi:menu-open'
 })
 const _title = computed(() => {
-  return _route.value.name || _route.value.uri || ''
+  return (_route.value.name || _route.value.uri) ?? ''
 })
 const _hidden = computed(() => !!props.route.hidden)
 
 function isSub(opt: RouteOption): bool {
-  return isNonNil(opt?.sub)
+  return isNonNil(opt.sub)
 }
 
 defineSlots<YVMenuItemSlots>()
 
 const router = useRouter()
+
 async function routeTo() {
-  if (props.routeMode && !props.route?.disabled && router) await router.push(_value.value)
+  if (props.routeMode && !props.route.disabled) await router.push(_value.value)
 }
 
 function urlJoin(...args: late<string>[]) {
-  return args?.filter(Boolean).join('/').replace(/\/+/g, '/')
+  return args.filter(Boolean).join('/').replace(/\/+/g, '/')
 }
 </script>
 
