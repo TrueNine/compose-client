@@ -15,7 +15,7 @@ import {TypescriptRules} from '@/rules/TypescriptRules'
 import {EcmaRules} from '@/rules/EcmaRules'
 import oxlint from 'eslint-plugin-oxlint'
 import skipFormatting from '@vue/eslint-config-prettier/skip-formatting'
-import vueTsEslintConfig from '@vue/eslint-config-typescript'
+import {defineConfigWithVueTs, vueTsConfigs} from '@vue/eslint-config-typescript'
 
 const DefinedConfig = [
   {
@@ -49,16 +49,8 @@ const DefinedConfig = [
 
   ...tseslint.configs.recommended,
   ...pluginVue.configs['flat/strongly-recommended'],
-  ...vueTsEslintConfig({
-    scriptLangs: ['tsx', 'ts', 'js', 'jsx'],
-    extends: ['all'],
-    supportedScriptLangs: {
-      js: true,
-      jsx: true,
-      ts: true,
-      tsx: true
-    }
-  }),
+
+  ...defineConfigWithVueTs(vueTsConfigs.strictTypeChecked, vueTsConfigs.recommended, vueTsConfigs.stylisticTypeChecked, vueTsConfigs.recommendedTypeChecked),
 
   pluginPrettierRecommendedConfigs,
   {
