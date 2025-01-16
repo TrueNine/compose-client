@@ -1,15 +1,15 @@
 <script lang="ts" setup>
-import {BasicMapZoomType, initTencentMapWebGlScript, LazyGetMapZoomType} from '@compose/psdk-tmap'
-import type {Nullable} from '@compose/api-types'
+import {initTencentMapWebGlScript} from '@compose/psdk-tmap'
 
 import type {YMapTencentProps} from './index'
+import type {nil} from '@compose/api-types'
 
-const mapDefaultContainerId: string = 'YMapTencent_Container_Wrapper'
-const wrapperContainerHandle = ref<HTMLElement | null>(null)
-let mapHandle: Nullable<TMap.Map> = null
-let multiMarkerLayer: Nullable<TMap.MultiMarker> = null
-let singleInfoWindow: Nullable<TMap.InfoWindow> = null
-let search: Nullable<TMap.service.Search> = null
+const mapDefaultContainerId = 'YMapTencent_Container_Wrapper'
+const wrapperContainerHandle = useTemplateRef('wrapperContainerHandle')
+let mapHandle: nil<TMap.Map> = null
+let multiMarkerLayer: nil<TMap.MultiMarker> = null
+let singleInfoWindow: nil<TMap.InfoWindow> = null
+let search: nil<TMap.service.Search> = null
 const props = withDefaults(defineProps<YMapTencentProps>(), {
   containerId: mapDefaultContainerId,
   viewMode: '2D',
@@ -21,7 +21,7 @@ const props = withDefaults(defineProps<YMapTencentProps>(), {
   controlBtn: false,
   showCopyright: false,
   initCenter: () => ({lat: 0, lng: 0}),
-  mapZoomType: () => BasicMapZoomType.DEFAULT
+  mapZoomType: () => 1
 })
 const is3dMode = ref(props.viewMode.toUpperCase() === '3D')
 
@@ -34,7 +34,7 @@ const to3d = () => {
   mapHandle?.setViewMode('3D').setPitch(55)
 }
 
-const toCenter = (latLng: TMap.LatLngDataTyping, zoom: boolean = false) => {
+const toCenter = (latLng: TMap.LatLngDataTyping, zoom = false) => {
   if (zoom) mapHandle?.setZoom(20)
   mapHandle?.panTo(latLng)
 }
@@ -43,37 +43,57 @@ const mapInitFn = (_: HTMLElement, t: typeof TMap) => {
   search = new window.TMap.service.Search({
     pageSize: 20
   })
-  mapHandle = new window.TMap.Map(wrapperContainerHandle.value!, {
+  if (!wrapperContainerHandle.value) return
+  mapHandle = new window.TMap.Map(wrapperContainerHandle.value, {
     center: props.initCenter,
     viewMode: props.viewMode,
-    mapStyleId: `style${props.styleId}`,
+    mapStyleId: `style${props.styleId.toString()}`,
     doubleClickZoom: props.doubleClickZoom,
     showControl: props.controlBtn,
-    mapZoomType: LazyGetMapZoomType.getTencentMapZoomType(props.mapZoomType!),
+    mapZoomType: props.mapZoomType,
     rotation: 0
   })
-  multiMarkerLayer = new t.MultiMarker({map: mapHandle!})
+  multiMarkerLayer = new t.MultiMarker({map: mapHandle})
 
-  if (!props.showCopyright && wrapperContainerHandle.value) {
-    const re = wrapperContainerHandle.value!.querySelector('map div div div') as HTMLElement
-    re.style.display = 'none'
+  if (!props.showCopyright) {
+    const re = wrapperContainerHandle.value.querySelector('map div div div')
+    if (re) {
+      ;(re as unknown as HTMLElement).style.display = 'none'
+    }
   }
 
   mapHandle.on('click', ev => {
+    if (!mapHandle) return
     if (!singleInfoWindow)
       singleInfoWindow = new t.InfoWindow({
-        map: mapHandle!,
+        map: mapHandle,
         position: new t.LatLng(0, 0),
         enableCustom: true,
         offset: {x: 0, y: -32}
       })
-    if (!props.multiPoint) multiMarkerLayer?.remove(multiMarkerLayer?.getGeometries().map(r => r.id!))?.updateGeometries([])
-    multiMarkerLayer?.add({position: ev.latLng, styleId: `style${props.styleId}`})
+    if (!props.multiPoint)
+      multiMarkerLayer
+        ?.remove(
+          multiMarkerLayer
+            .getGeometries()
+            .map(r => r.id)
+            .filter(Boolean) as string[]
+        )
+        .updateGeometries([])
+    multiMarkerLayer?.add({position: ev.latLng, styleId: `style${props.styleId.toString()}`})
     multiMarkerLayer?.on('click', () => {
-      if (!props.multiPoint) multiMarkerLayer?.remove(multiMarkerLayer?.getGeometries().map(r => r.id!))?.updateGeometries([])
+      if (!props.multiPoint)
+        multiMarkerLayer
+          ?.remove(
+            multiMarkerLayer
+              .getGeometries()
+              .map(r => r.id)
+              .filter(Boolean) as string[]
+          )
+          .updateGeometries([])
     })
     toCenter(ev.latLng)
-    if (ev.poi && !props.multiPoint) singleInfoWindow.setContent(`<div c-black>${ev.poi.name}</div>`).setPosition(ev.latLng).open()
+    if (!props.multiPoint) singleInfoWindow.setContent(`<div c-black>${ev.poi.name}</div>`).setPosition(ev.latLng).open()
     else singleInfoWindow.close()
   })
 }
@@ -92,23 +112,24 @@ const searchAddressCode = ref<string>('')
 const searchWord = ref<string>('')
 const searchResults = ref<TMap.service.SearchResult['data']>([])
 const searchNearby = () => {
-  if (props.serviceKey) {
-    const center = mapHandle!.getCenter()
-    search
-      ?.searchNearby({
-        center: center,
-        keyword: searchWord.value,
-        radius: 1000,
-        servicesk: props.serviceKey
-      })
-      ?.then(e => {
-        searchResults.value = e.data
-        console.log(e.data)
-      })
-      ?.catch(e => {
-        console.error(e)
-      })
-  }
+  if (!props.serviceKey) return
+  if (!mapHandle) return
+  if (!search) return
+  const center = mapHandle.getCenter()
+  search
+    .searchNearby({
+      center: center,
+      keyword: searchWord.value,
+      radius: 1000,
+      servicesk: props.serviceKey
+    })
+    .then(e => {
+      searchResults.value = e.data
+      console.log(e.data)
+    })
+    .catch((e: unknown) => {
+      console.error(e)
+    })
 }
 
 const searchRegion = () => {
@@ -119,11 +140,11 @@ const searchRegion = () => {
         keyword: searchWord.value,
         servicesk: props.serviceKey
       })
-      ?.then(e => {
+      .then(e => {
         searchResults.value = e.data
         console.log(e.data)
       })
-      ?.catch((e: unknown) => {
+      .catch((e: unknown) => {
         console.error(e)
       })
   }

@@ -1,7 +1,8 @@
 import {Vue} from '@compose/extensions'
-import type {BasicMapZoomType, ViewMode} from '@compose/psdk-tmap'
+import type {ViewMode} from '@compose/psdk-tmap'
 
 import _c from './YMapTencent.vue'
+
 export default Vue.componentInstallToPlugin(_c)
 
 export interface YMapTencentProps {
@@ -16,8 +17,7 @@ export interface YMapTencentProps {
   doubleClickZoom?: boolean
   serviceKey?: string
   styleId?: number
-  mapZoomType?: BasicMapZoomType
+  mapZoomType?: TMap.constants.MAP_ZOOM_TYPE
 }
-export interface YMapTencentEmits {
-  (e: 'update:viewMode', v: ViewMode): void
-}
+
+export type YMapTencentEmits = (e: 'update:viewMode', v: ViewMode) => void
