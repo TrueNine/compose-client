@@ -36,10 +36,13 @@ const _default = {
  */
 export function initTencentMapWebGlScript(
   key: string,
-  callback: (container: HTMLElement, mapHandle: typeof TMap, ev?: Event) => void,
+  callback?: (container: HTMLElement, mapHandle: typeof TMap, ev?: Event) => void,
   options: CreateTencentMapOptions = _default
 ) {
-  const section = document.querySelector(options.loadQuery!)
+  if (!options.loadQuery) return
+  if (!options.containerTag) return
+  if (!options.mapContainerId) return
+  const section = document.querySelector(options.loadQuery)
   const src = Dom.loadRemoteScriptTag(
     `${WEBGL_JS_URL}${queryParam({
       v: '1.exp',
@@ -48,18 +51,18 @@ export function initTencentMapWebGlScript(
     })}`
   )
   // 创建一个id容器
-  const mapContainer: HTMLElement = document.createElement(options.containerTag!)
-  mapContainer.id = options.mapContainerId!
+  const mapContainer: HTMLElement = document.createElement(options.containerTag)
+  mapContainer.id = options.mapContainerId
   section?.appendChild(mapContainer)
+
   if (callback) {
-    const tMap = window.TMap as typeof TMap
-    if (tMap) callback(mapContainer, tMap)
-    else {
-      src.addEventListener('load', (ev: Event) => {
-        const handle = window.TMap
-        callback(mapContainer, handle, ev)
-      })
-    }
+    const tMap = window.TMap
+    callback(mapContainer, tMap)
+    src.addEventListener('load', (ev: Event) => {
+      const handle = window.TMap
+      callback(mapContainer, handle, ev)
+    })
   }
+
   return {src, mapContainer}
 }
