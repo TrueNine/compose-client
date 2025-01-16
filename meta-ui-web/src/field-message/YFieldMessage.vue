@@ -30,12 +30,11 @@ const _modelValue = computed<string[]>({
 
 watch(field.errors, v => {
   if (setModelValueLock.value) return
-  console.log('watch error', v)
   if (!v) {
     _modelValue.value = []
     return
   }
-  _modelValue.value = [v]
+  _modelValue.value = v
 })
 </script>
 
