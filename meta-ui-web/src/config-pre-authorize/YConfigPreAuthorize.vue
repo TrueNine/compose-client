@@ -13,24 +13,16 @@ const props = withDefaults(defineProps<YConfigPreAuthorizeProps>(), {
 })
 
 const _authed = computed(() => {
-  const f = props.authedProvider
-  if (f) return f()
-  else return false
+  return props.authedProvider()
 })
 const _anonymous = computed(() => {
-  const f = props.anonymousProvider
-  if (f) return f()
-  else return false
+  return props.anonymousProvider()
 })
 const _permissions = computed(() => {
-  const f = props.permissionsProvider
-  if (f) return f()
-  else return []
+  return props.permissionsProvider()
 })
 const _roles = computed(() => {
-  const f = props.rolesProvider
-  if (f) return f()
-  else return []
+  return props.rolesProvider()
 })
 
 const impl: PreAuthorizeInjection = {
@@ -38,8 +30,8 @@ const impl: PreAuthorizeInjection = {
   isAnonymous: () => _anonymous.value,
   requirePermissions: permissions => _authed.value && maybeArray(_permissions.value).some(p => permissions.includes(p)),
   requireRoles: roles => _authed.value && maybeArray(_roles.value).some(r => roles.includes(r)),
-  hasAnyPermissions: permissions => maybeArray(_permissions.value).some(p => permissions.includes(p)) ?? false,
-  hasAnyRoles: roles => maybeArray(_roles.value).some(r => roles.includes(r)) ?? false,
+  hasAnyPermissions: permissions => maybeArray(_permissions.value).some(p => permissions.includes(p)),
+  hasAnyRoles: roles => maybeArray(_roles.value).some(r => roles.includes(r)),
   permissions: _permissions,
   roles: _roles,
   authed: _authed,
