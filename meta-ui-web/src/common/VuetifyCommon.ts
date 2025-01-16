@@ -1,4 +1,4 @@
-import {en as en, zhHans as zhCn} from 'vuetify/locale'
+import {en, zhHans as zhCn} from 'vuetify/locale'
 import {createVuetify, type VuetifyOptions} from 'vuetify'
 import type {Late} from '@compose/api-types'
 import DayjsAdaptor from '@date-io/dayjs'

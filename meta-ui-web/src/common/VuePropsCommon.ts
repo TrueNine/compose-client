@@ -1,4 +1,4 @@
-import type {dynamic, StrOrNum} from '@compose/api-types'
+import type {StrOrNum} from '@compose/api-types'
 import type {Schema} from 'yup'
 
 /**
@@ -23,11 +23,7 @@ export interface ModelValueProps<T = unknown> {
 /**
  * # 可绑定值 Emits
  */
-export interface ModelValueEmits<T = unknown> {
-  (e: 'update:modelValue', value: T): void
-
-  (e: 'change', value: T): void
-}
+export type ModelValueEmits<T = unknown> = (e: 'update:modelValue' | 'change', value: T) => void
 
 export interface FormFieldStyleProps {
   /**
@@ -36,7 +32,7 @@ export interface FormFieldStyleProps {
    *
    * 此  prop 会在 prop 内被调用，当当前字段无 校验 schema 时
    */
-  defaultValidateSchema?: () => Schema<dynamic, dynamic>
+  defaultValidateSchema?: () => Schema
   /**
    * 组件标签
    */
@@ -73,9 +69,7 @@ export interface FormFieldStyleEmits {
 
   (e: 'update:hint', hind: string): void
 
-  (e: 'update:persistentHint', persistentHint: boolean): void
-
-  (e: 'update:required', required: boolean): void
+  (e: 'update:persistentHint' | 'update:required', v: boolean): void
 }
 
 /**
