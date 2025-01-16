@@ -13,6 +13,7 @@ import YVMenuItem from './v-menu-item'
 import YIco from './ico'
 import YForm from './form'
 import YField from './field'
+import YFieldMessage from './field-message'
 import YPager from './pager'
 
 import YPreAuthorize from '@/pre-authorize'
@@ -29,6 +30,7 @@ export * from './v-system-bar'
 export * from './debug-code'
 export * from './form'
 export * from './field'
+export * from './field-message'
 
 export * from './ico'
 export * from './v-menu'
@@ -53,6 +55,7 @@ const components = {
   YConfigPreAuthorize,
   YForm,
   YField,
+  YFieldMessage,
   YPager
 }
 
@@ -71,6 +74,7 @@ export {
   YConfigPreAuthorize,
   YForm,
   YField,
+  YFieldMessage,
   YPager
 }
 
