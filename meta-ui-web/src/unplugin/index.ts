@@ -1,11 +1,11 @@
 export type ResolverType = 'component' | 'directive'
 
-function camelTo(str: string, sep: string = '-') {
+function camelTo(str: string, sep = '-') {
   return str.replace(/([a-z0-9])([A-Z])/g, `$1${sep}$2`).toLowerCase()
 }
 
 function resolveComponent(name: string) {
-  if (name.match(/^Y[A-Z]/))
+  if (/^Y[A-Z]/.exec(name))
     return {
       name,
       from: '@compose/meta-ui-web',
@@ -32,11 +32,11 @@ const _vLabsComponentNames = [
   'VTimePicker',
   'VTreeview'
 ]
-export function Vuetify3LabsLabResolver(useLabs: boolean = true) {
+export function Vuetify3LabsLabResolver(useLabs = true) {
   return {
     type: 'component',
     resolve: (name: string) => {
-      if (name.match(/^V[A-Z]/)) return {name, from: useLabs && _vLabsComponentNames.includes(name) ? 'vuetify/labs/components' : 'vuetify/components'}
+      if (/^V[A-Z]/.exec(name)) return {name, from: useLabs && _vLabsComponentNames.includes(name) ? 'vuetify/labs/components' : 'vuetify/components'}
     }
   }
 }
