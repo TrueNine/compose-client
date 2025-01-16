@@ -35,7 +35,7 @@ const _effectModels = computed(() => {
 
 const _modelName = useVModel(props, 'modelName', emits, {passive: true})
 
-const defaultRules = ref<late<Schema<dynamic, dynamic>>>(props.schema)
+const defaultRules = ref<late<Schema>>(props.schema)
 const parentForm = inject(YFormInjectionKey, void 0)
 const primaryField = useField(() => props.name, defaultRules, {
   syncVModel: props.syncVModel,
@@ -48,17 +48,16 @@ const primaryWarning = computed<string | undefined>(() => {
     .map(e => {
       if (typeof (e as dynamic) !== 'string') return (e as dynamic).msg
     })
-    .filter(Boolean)[0]
+    .find(Boolean)
 })
 
 const errorMessages = computed<string[]>(() => {
   return primaryField.errors.value
-    ?.map(e => {
+    .map(e => {
       if (typeof (e as dynamic) === 'string') return e
       else return void 0
     })
-    .filter(Boolean)
-    .map(e => e as string)
+    .filter(Boolean) as string[]
 })
 
 const onUpdatePrimaryModelValue = (v?: dynamic) => {
@@ -66,11 +65,10 @@ const onUpdatePrimaryModelValue = (v?: dynamic) => {
   primaryField.setValue(v)
 }
 
-const otherModelProps: YFieldSlots = {
-  ...(Object.entries(_effectModels.value)
+const otherModelProps: YFieldSlots = (Object.entries(_effectModels.value)
     .filter(Boolean)
     .filter(([k, v]) => Boolean(k) && Boolean(v))
-    .reduce(
+    .reduce<Record<string, dynamic>>(
       (acc, [modelValueName, bindModelValueName]) => {
         const field = useField(() => bindModelValueName, void 0, {form: parentForm?.getForm(), label: props.label})
         acc[`onUpdate:${modelValueName}`] = (updateValue: dynamic) => {
@@ -79,9 +77,8 @@ const otherModelProps: YFieldSlots = {
         acc[modelValueName] = field.value.value
         return acc
       },
-      {} as Record<string, dynamic>
+      {}
     ) as YFieldSlots)
-} as YFieldSlots
 
 const onUpdateErrorMessages = (errorMessages?: string[]) => {
   primaryField.setErrors(errorMessages ?? [])
@@ -93,19 +90,19 @@ defineSlots<{
 }>()
 
 const slots = useSlots()
-const usedDefaultSlot = computed(() => !!slots?.default)
-const usedInputSlot = computed(() => !!slots?.input)
+const usedDefaultSlot = computed(() => !!slots.default)
+const usedInputSlot = computed(() => !!slots.input)
 
 const _persistentHint = ref(true)
 
 function YFormFieldProxyComponent() {
-  const virtualNodes = slots?.default?.()
+  const virtualNodes = slots.default?.()
   return virtualNodes?.map(component => {
     return h(
       component,
       mergeProps(component.props ?? {}, {
         ...otherModelProps,
-        [`${_modelName.value}`]: primaryField.value.value,
+        [_modelName.value]: primaryField.value.value,
         [`onUpdate:${_modelName.value}`]: onUpdatePrimaryModelValue,
         [`onUpdate:errorMessages`]: onUpdateErrorMessages,
         label: props.label,

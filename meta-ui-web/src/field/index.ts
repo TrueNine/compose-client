@@ -12,21 +12,15 @@ export interface YFieldProps {
   placeholder?: string
   name: string
   modelName?: string
-  schema?: Schema<dynamic, dynamic>
+  schema?: Schema
   syncVModel?: boolean | string
   effectModels?: YFieldEffectModelsType
   modelValue?: dynamic
 }
 
-export interface YFieldEmits {
-  (e: 'update:modelValue', v?: dynamic): void
+export type YFieldEmits = (e: 'update:modelValue' | 'change', v?: dynamic) => void
 
-  (e: 'change', v?: dynamic): void
-}
-
-type _AnyOnUpdates = {
-  [k in `onUpdate:${string}`]?: (v?: dynamic) => void
-}
+type _AnyOnUpdates = Partial<Record<`onUpdate:${string}`, (v?: dynamic) => void>>
 
 export interface YFieldSlots extends _AnyOnUpdates, FormFieldProps<dynamic>, FormFieldEmits<dynamic> {}
 
