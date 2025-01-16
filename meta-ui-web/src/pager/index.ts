@@ -14,8 +14,7 @@ export interface YPagerProps extends ModelValueProps<Pq> {
 }
 
 export interface YPagerEmits extends ModelValueEmits<Pq> {
-  (e: 'update:offset', v: i32): void
-  (e: 'update:pageSize', v: i32): void
+  (e: 'update:offset' | 'update:pageSize', v: i32): void
 }
 
 export default Vue.componentInstallToPlugin(_c)
