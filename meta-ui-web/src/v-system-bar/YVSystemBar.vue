@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type {YSystemBarProps, YVSystemBarEmits, YVSystemBarSlots} from './index'
+
 const props = withDefaults(defineProps<YSystemBarProps>(), {
   showAppBar: true,
   progress: 0,
@@ -19,7 +20,7 @@ const {
 } = useVModels(props, emits, {passive: true})
 const progressClr = computed(() => _progressLoading.value && _progress.value === 0)
 const useRight = computed(() => {
-  return slots['right-btn'] !== void 0
+  return !!slots['right-btn']
 })
 </script>
 

@@ -15,13 +15,9 @@ export interface YSystemBarProps {
 }
 
 export interface YVSystemBarEmits {
-  (e: 'update:menuOpened', v: bool): void
-
-  (e: 'update:settingsMenuOpened', v: bool): void
+  (e: 'update:settingsMenuOpened' | 'update:progressLoading' | 'update:menuOpened', v: bool): void
 
   (e: 'update:progress', v: number): void
-
-  (e: 'update:progressLoading', v: bool): void
 
   (e: 'update:progressColor', v: string): void
 }
