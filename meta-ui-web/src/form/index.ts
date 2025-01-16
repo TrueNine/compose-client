@@ -31,18 +31,20 @@ export interface YFormProps extends ModelValueProps<dynamic> {
 
 export interface YFormEmits extends ModelValueEmits<dynamic> {
   (e: 'update:isValid', v: boolean): void
-  (e: 'submit', values?: dynamic, step?: number): void
-  (e: 'next', values?: dynamic, step?: number): void
-  (e: 'reset', values?: dynamic, isValid?: boolean): void
+
+  (e: 'submit' | 'next', values?: dynamic, step?: number): void
+
+  (e: 'reset' | 'update:everyStep', values?: dynamic, isValid?: boolean): void
+
   (e: 'update:step', v: number): void
+
   (e: 'error'): void
-  (e: 'update:everyStep', v: boolean): void
 }
 
 export interface YFormInjection {
   getForm: () => FormContext<dynamic, dynamic>
   validate: () => Promise<boolean>
-  setFieldValidate: (key: string, schema: Schema<dynamic, dynamic>) => void
+  setFieldValidate: (key: string, schema: Schema) => void
 }
 
 export const YFormInjectionKey: InjectionKey<YFormInjection> = Symbol('YForm-Injection-Provider')

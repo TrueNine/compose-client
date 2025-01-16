@@ -21,16 +21,14 @@ const _isValid = useVModel(props, 'isValid', emits, {passive: true})
 const _step = useVModel(props, 'step', emits, {passive: true})
 const _modelValue = useVModel(props, 'modelValue', emits, {passive: true})
 
-const _newSchemas = ref<Record<string, Schema<dynamic, dynamic>>[]>([])
+const _newSchemas = ref<Record<string, Schema>[]>([])
 
 const validatedState = computed({
   get: () => {
     const rr = usedForm.errorBag
-    if (rr) {
-      return Object.values(rr)
-        .filter(e => typeof e === 'string')
-        .every(v => !v)
-    } else return true
+    return Object.values(rr)
+      .filter(e => typeof e === 'string')
+      .every(v => !v)
   },
   set: v => (_isValid.value = v)
 })
@@ -54,7 +52,7 @@ const allSchemas = computed({
     const arr = maybeArray(_propsSchema.value)
     return arr.map((e, i) => {
       const n = _newSchemas.value[i]
-      return n ? e?.shape(n) : e
+      return e?.shape(n)
     })
   },
   set: v => {
@@ -103,7 +101,7 @@ function clipProp(obj: dynamic, dep = 0): dynamic {
 function mergedAllValues() {
   const submitResult = allValues.reduce((acc, cur, idx) => {
     return {
-      ...(acc ?? {}),
+      ...acc,
       ...(idx === _step.value ? (_modelValue.value ?? {}) : (cur ?? {}))
     }
   }, {})
@@ -134,7 +132,7 @@ const submitFn = usedForm.handleSubmit(
     const errs = Object.values(errors)
     if (errs.length) {
       // 特殊消息体被视为警告
-      if ((errs as dynamic[]).every(v => typeof (v as dynamic) !== 'string')) {
+      if ((errs as dynamic[]).every(v => (typeof v as dynamic) !== 'string')) {
         stepSubmitHandle(values)
       } else validatedState.value = false
     } else validatedState.value = false
@@ -157,8 +155,8 @@ let firstExecuted = false
  */
 function watchSyncFn(allFieldValues?: Record<string, dynamic>, oldValue?: Record<string, dynamic>) {
   _isValid.value = true
+  if (!allFieldValues) return
   if (isEqual(allFieldValues, oldValue)) return
-  if (allFieldValues === null || allFieldValues === void 0) return
   if (firstExecuted) {
     emits('change', allFieldValues)
   }
@@ -189,10 +187,8 @@ function getForm() {
 function validIsError(r: FormValidationResult<dynamic>) {
   if (r.valid) return r.valid
   else {
-    if (r.errors) {
-      const errorValues = Object.values(r.errors)
-      return errorValues.every(v => typeof v !== 'string')
-    } else return false
+    const errorValues = Object.values(r.errors)
+    return errorValues.every(v => typeof v !== 'string')
   }
 }
 
@@ -202,7 +198,7 @@ async function validate(): Promise<boolean> {
   return _isValid.value
 }
 
-function setFieldValidate(key: string, schema: Schema<dynamic, dynamic>) {
+function setFieldValidate(key: string, schema: Schema) {
   if (currentSchema.value) {
     const customSchema = {[key]: schema}
     const shape = currentSchema.value.shape(customSchema)
