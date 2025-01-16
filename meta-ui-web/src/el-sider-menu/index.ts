@@ -13,8 +13,6 @@ export interface YElSiderMenuProps {
   roles?: string[]
   routeMode?: boolean
 }
-export interface YElSiderMenuEmits {
-  (e: 'update:routeTable', v: RouteOption[]): void
-}
+export type YElSiderMenuEmits = (e: 'update:routeTable', v: RouteOption[]) => void
 
 export default Vue.componentInstallToPlugin(_c, {YSiderMenuItem})
