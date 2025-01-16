@@ -19,7 +19,7 @@ defineSlots<{
 }>()
 
 function isSub(opt: RouteOption): bool {
-  return isNonNil(opt?.sub)
+  return isNonNil(opt.sub)
 }
 </script>
 
