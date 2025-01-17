@@ -1,6 +1,6 @@
 {
   "name": "@compose/meta-ui-web",
-  "version": "1.1.250",
+  "version": "1.1.251",
   "scripts": {
     "dev": "vite --mode devepment",
     "build-gulp": "gulp -f ./__build-src__/index.ts",

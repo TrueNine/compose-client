@@ -26,7 +26,7 @@ function setErrorHandler(messages?: string | string[]) {
 }
 
 const setModelValueLock = ref(true)
-const _modelValue = computed({
+const _modelValue = computedWithControl(() => fields.value, {
   get: () => fields.value.map(e => e.field.errors.value).reduce((acc, cur) => [...acc, ...cur], []),
   set: (v: string | string[] | undefined) => {
     setModelValueLock.value = true
@@ -40,15 +40,6 @@ const _modelValue = computed({
     emits('update:modelValue', messages)
     setModelValueLock.value = false
   }
-})
-
-watch(field.errors, v => {
-  if (setModelValueLock.value) return
-  if (!v) {
-    _modelValue.value = void 0
-    return
-  }
-  _modelValue.value = v
 })
 </script>
 
