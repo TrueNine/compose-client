@@ -1,16 +1,16 @@
 {
   "name": "@compose/meta-ui-web",
-  "version": "1.1.247",
+  "version": "1.1.250",
   "scripts": {
     "dev": "vite --mode devepment",
     "build-gulp": "gulp -f ./__build-src__/index.ts",
     "build-vite": "vite build",
     "type-check": "vue-tsc -p ./tsconfig.json --noEmit",
-    "build": "run-s lint type-check build-vite build-gulp",
-    "pub": "run-s build pub-c",
+    "build": "run-s type-check build-vite build-gulp",
     "pub-c": "pnpm --dir ./dist pub",
     "lint": "eslint --fix",
-    "fmt": "prettier --write \"**/*.{ts,tsx,vue,scss,d.ts}\" --ignore-unknown"
+    "fmt": "prettier --write \"**/*.{ts,tsx,vue,scss,d.ts}\" --ignore-unknown",
+    "pub": "run-s fmt lint build pub-c"
   },
   "type": "module",
   "module": "dist/index.js",
