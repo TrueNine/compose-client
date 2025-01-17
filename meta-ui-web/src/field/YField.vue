@@ -65,20 +65,17 @@ const onUpdatePrimaryModelValue = (v?: dynamic) => {
   primaryField.setValue(v)
 }
 
-const otherModelProps: YFieldSlots = (Object.entries(_effectModels.value)
-    .filter(Boolean)
-    .filter(([k, v]) => Boolean(k) && Boolean(v))
-    .reduce<Record<string, dynamic>>(
-      (acc, [modelValueName, bindModelValueName]) => {
-        const field = useField(() => bindModelValueName, void 0, {form: parentForm?.getForm(), label: props.label})
-        acc[`onUpdate:${modelValueName}`] = (updateValue: dynamic) => {
-          field.setValue(updateValue)
-        }
-        acc[modelValueName] = field.value.value
-        return acc
-      },
-      {}
-    ) as YFieldSlots)
+const otherModelProps: YFieldSlots = Object.entries(_effectModels.value)
+  .filter(Boolean)
+  .filter(([k, v]) => Boolean(k) && Boolean(v))
+  .reduce<Record<string, dynamic>>((acc, [modelValueName, bindModelValueName]) => {
+    const field = useField(() => bindModelValueName, void 0, {form: parentForm?.getForm(), label: props.label})
+    acc[`onUpdate:${modelValueName}`] = (updateValue: dynamic) => {
+      field.setValue(updateValue)
+    }
+    acc[modelValueName] = field.value.value
+    return acc
+  }, {}) as YFieldSlots
 
 const onUpdateErrorMessages = (errorMessages?: string[]) => {
   primaryField.setErrors(errorMessages ?? [])
