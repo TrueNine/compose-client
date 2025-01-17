@@ -20,7 +20,9 @@ const fields = computed(() => {
 })
 
 function setErrorHandler(messages?: string | string[]) {
-  fields.value.forEach(e => { e.setError(messages); })
+  fields.value.forEach(e => {
+    e.setError(messages)
+  })
 }
 
 const setModelValueLock = ref(true)
