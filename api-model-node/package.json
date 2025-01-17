@@ -7,10 +7,11 @@
   "scripts": {
     "build-c": "vite build",
     "lint": "eslint --fix",
-    "build": "run-s lint type-check build-c",
+    "build": "run-s type-check build-c",
     "type-check": "vue-tsc --noEmit",
-    "pub": "run-s build pub-c",
-    "pub-c": "pnpm --dir dist pub"
+    "fmt": "prettier --write \"**/*.{ts,tsx,vue,scss,d.ts,js}\" --ignore-unknown",
+    "pub-c": "pnpm --dir dist pub",
+    "pub": "run-s fmt lint build pub-c"
   },
   "type": "module",
   "module": "dist/index.js",

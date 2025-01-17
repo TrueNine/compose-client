@@ -5,13 +5,13 @@
   "author": "TrueNine",
   "license": "private",
   "scripts": {
-    "build": "run-s lint type-check build-c",
     "build-c": "vite build",
-    "type-check": "vue-tsc --noEmit",
-    "pub": "run-s  build pub-c",
+    "type-check": "vue-tsc -p ./tsconfig.json --noEmit",
+    "build": "run-s type-check build-c",
     "pub-c": "pnpm --dir ./dist pub",
     "lint": "eslint --fix",
-    "fmt": "prettier --write \"**/*.{ts,tsx,vue,scss,d.ts,js}\" --ignore-unknown"
+    "fmt": "prettier --write \"**/*.{ts,tsx,vue,scss,d.ts,js}\" --ignore-unknown",
+    "pub": "run-s fmt type-check lint build pub-c"
   },
   "type": "module",
   "module": "dist/index.js",

@@ -7,8 +7,9 @@
   "scripts": {
     "build-v": "vite build",
     "build-c": "rollup --config rollup.config.ts --configPlugin typescript",
-    "build": "run-s lint build-v build-c",
-    "pub": "run-s build pub-c",
+    "type-check": "vue-tsc -p ./tsconfig.json --noEmit",
+    "build": "run-s type-check build-v build-c",
+    "pub": "run-s lint fmt build pub-c",
     "pub-c": "pnpm --dir ./dist pub",
     "test": "vitest",
     "lint": "eslint --fix",
