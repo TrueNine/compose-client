@@ -2,11 +2,11 @@
 import type {FormValidationResult} from 'vee-validate'
 import {useForm} from 'vee-validate'
 import type {dynamic} from '@compose/api-types'
-import {isEqual} from '@compose/extensions/lodash-es'
+import {cloneDeep, isEqual} from '@compose/extensions/lodash-es'
 import {maybeArray} from '@compose/api-model'
 import type {Schema} from 'yup'
-import {YFormInjectionKey} from '@/form/index'
 import type {YFormEmits, YFormInjection, YFormProps} from '@/form/index'
+import {YFormInjectionKey} from '@/form/index'
 
 const props = withDefaults(defineProps<YFormProps>(), {
   step: 0,
@@ -76,7 +76,11 @@ const usedForm = useForm({
 })
 syncRef(usedForm.values, _modelValue, {
   immediate: true,
-  direction: 'ltr'
+  deep: true,
+  direction: 'ltr',
+  transform: {
+    ltr: v => cloneDeep(unref(v))
+  }
 })
 
 function clipProp(obj: dynamic, dep = 0): dynamic {
@@ -90,7 +94,9 @@ function clipProp(obj: dynamic, dep = 0): dynamic {
   for (const key in obj) {
     if (Object.prototype.hasOwnProperty.call(obj, key)) {
       const value = clipProp(obj[key], dep + 1)
-      if (value !== void 0) {
+      if (key.startsWith('__')) {
+        newObj[key] = void 0
+      } else if (value !== void 0) {
         newObj[key] = value
       }
     }
