@@ -94,9 +94,7 @@ function clipProp(obj: dynamic, dep = 0): dynamic {
   for (const key in obj) {
     if (Object.prototype.hasOwnProperty.call(obj, key)) {
       const value = clipProp(obj[key], dep + 1)
-      if (key.startsWith('__')) {
-        newObj[key] = void 0
-      } else if (value !== void 0) {
+      if (value !== void 0) {
         newObj[key] = value
       }
     }
