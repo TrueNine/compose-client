@@ -1,5 +1,6 @@
 # Compose-Client
 
+请注意，此项目采用 [BSD 3-Clause License](/LICENSE) 协议，
 后端编写的前端工具库，涵盖大部分基于自身的最佳实践。
 
 ### 基础模块
