@@ -9,5 +9,4 @@ packages:
   - 'uni-app/*'
   - 'ext/*'
   - 'req'
-  - 'doc'
   - 'meta-ui-web'
