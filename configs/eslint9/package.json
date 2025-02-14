@@ -31,9 +31,10 @@
     "./*": "./*"
   },
   "peerDependencies": {
-    "eslint": "^9.0.0",
-    "@eslint/js": "^9.0.0",
-    "oxlint": "^0.15.6",
+    "eslint": "*",
+    "@eslint/js": "*",
+    "vue-eslint-parser": "*",
+    "oxlint": "*",
     "eslint-plugin-oxlint": "*",
     "globals": "*",
     "@unocss/eslint-config": "*",
