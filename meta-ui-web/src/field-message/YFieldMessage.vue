@@ -22,7 +22,7 @@ watch(
   {immediate: true}
 )
 
-function cleanMessage(messages?: (string | undefined) | (string | undefined)[]) {
+function cleanMessage(messages?: string | (string | undefined)[]) {
   if (messages === void 0) {
     return []
   }
@@ -40,7 +40,7 @@ onMounted(() => {
   mounted.value = true
 })
 
-function setErrorHandler(messages?: (string | undefined) | (string | undefined)[]) {
+function setErrorHandler(messages?: string | (string | undefined)[]) {
   const cleanedMsg = cleanMessage(messages)
   fields.forEach(e => {
     e.setErrors(cleanedMsg)
