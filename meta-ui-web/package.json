@@ -2,8 +2,9 @@
   "name": "@compose/meta-ui-web",
   "version": "1.1.256",
   "scripts": {
+    "style": "vite --config ./vite.config.style.ts build",
     "dev": "vite --mode devepment",
-    "build-gulp": "gulp -f ./__build-src__/index.ts",
+    "build-gulp": "gulp -f __build-src__/index.js",
     "build-vite": "vite build",
     "type-check": "vue-tsc -p ./tsconfig.json --noEmit",
     "build": "run-s type-check build-vite build-gulp",
