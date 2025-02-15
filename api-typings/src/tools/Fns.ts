@@ -9,11 +9,11 @@ export function findEnumValue<E extends EnumActual, K extends Evr<E>>(e: E, key:
   return e[key]
 }
 
-export function findEnumComment<E extends EnumActual, K extends Evr<E>>(key: K, comments: EnumCommentMap<E>): string {
+export function findEnumComment<E extends EnumActual>(key: Evr<E>, comments: EnumCommentMap<E>): string {
   return comments[key]
 }
 
-export function enumCommentToPairArray<EA extends EnumActual, EM extends EnumCommentMap<EA>>(a: EM): Pair<string, number>[] {
+export function enumCommentToPairArray<EA extends EnumActual>(a: EnumCommentMap<EA>): Pair<string, number>[] {
   return Object.entries(a).map(([v, k]) => {
     return {k, v: Number(v)}
   })
@@ -43,10 +43,10 @@ export function enumValues<E extends EnumActual>(e: E): Evr<E>[] {
   const _vals: Evr<E>[] = []
   Object.entries(e).forEach(([k, v]) => {
     _keyCache.add(k)
-    const vIsNumber = typeof v === 'number' || v?.toString().match(/^[0-9]+$/)
+    const vIsNumber = typeof v === 'number' || /^[0-9]+$/.exec(v.toString())
     if (vIsNumber) _vals.push(v as unknown as Evr<E>)
     else {
-      if (e[v] === void 0 && !_keyCache.has(v)) _vals.push(v as unknown as Evr<E>)
+      if (!_keyCache.has(v)) _vals.push(v as unknown as Evr<E>)
     }
   })
   return _vals
