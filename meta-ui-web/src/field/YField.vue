@@ -86,7 +86,7 @@ defineSlots<{
   input?: (e?: YFieldSlots) => dynamic
 }>()
 
-const slots = useSlots()
+const slots = useSlots() as unknown as dynamic
 const usedDefaultSlot = computed(() => !!slots.default)
 const usedInputSlot = computed(() => !!slots.input)
 
@@ -94,7 +94,7 @@ const _persistentHint = ref(true)
 
 function YFormFieldProxyComponent() {
   const virtualNodes = slots.default?.()
-  return virtualNodes?.map(component => {
+  return virtualNodes?.map((component: dynamic) => {
     return h(
       component,
       mergeProps(component.props ?? {}, {
