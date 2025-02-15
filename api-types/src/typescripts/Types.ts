@@ -78,7 +78,7 @@ export type nilpt<T = dynamic> = NilPt<T>
 /**
  * ## 绝对不会返回
  */
-export type Nothing = (never & null & undefined & void) | never | null | undefined | void
+export type Nothing = never
 export type nothing = Nothing
 
 /**
@@ -95,5 +95,5 @@ export type orelse<Exp, Default> = OrElse<Exp, Default>
 /**
  * ## 返回的一个空值
  */
-export type Unit = void
+export type Unit = never
 export type unit = Unit
