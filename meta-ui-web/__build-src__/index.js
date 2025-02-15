@@ -1,5 +1,5 @@
-import {resolve, dirname} from 'node:path'
-import {fileURLToPath} from 'node:url'
+import {resolve, dirname} from 'path'
+import {fileURLToPath} from 'url'
 import {spawn} from 'node:child_process'
 
 import {dest, parallel, series, src} from 'gulp'
@@ -9,7 +9,6 @@ import gulpPostcss from 'gulp-postcss'
 import autoprefixer from 'autoprefixer'
 import cssnano from 'cssnano'
 import unocssPostcss from '@unocss/postcss'
-import {rimraf} from 'rimraf'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -34,30 +33,19 @@ export const buildStyle = () => {
     .pipe(gulpPostcss([unocssPostcss(), autoprefixer(), cssnano()]))
     .pipe(dest(distPath))
 }
-export const moveBuildStyle = () => {
-  return src(`${distPath}/src/**/**`).pipe(dest(distPath))
-}
-
-export const deleteBuildStyle = () => {
-  return rimraf(`${distPath}/src`)
-}
 
 export default series(
   parallel(
     async () => buildStyle(),
     async () => buildUnocss()
   )
-  /*  series(
-    () => moveBuildStyle(),
-    () => deleteBuildStyle()
-  )*/
-) as unknown
+)
 
-export function joinPath(pattern: string): string {
+export function joinPath(pattern) {
   return resolve(__dirname, pattern).replaceAll('\\', '/')
 }
 
-export const run = async (command: string, path: string) => {
+export const run = async (command, path) => {
   const [cmd, ...args] = command.split(' ')
   return new Promise(resolve => {
     const app = spawn(cmd, args, {
