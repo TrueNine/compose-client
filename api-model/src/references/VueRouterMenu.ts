@@ -44,7 +44,7 @@ export function generateMenu(routes: RouteRecordRaw[], matchFn: late<RouteMatchF
     routes: RouteRecordRaw[],
     matchFn: late<RouteMatchFn> = void 0,
     clipPath: late<string> = void 0,
-    parentPath: string = '',
+    parentPath = '',
     deepLevel = 0
   ): MenuObject[] {
     if (!deepLevel && clipPath) routes = clip(routes, clipPath)
@@ -66,7 +66,7 @@ export function generateMenu(routes: RouteRecordRaw[], matchFn: late<RouteMatchF
           fullPath: combineURIs(parentPath, route.path),
           parentPath,
           uri: route.path.replace(/^\/+/, STR_EMPTY),
-          name: meta?.title as late<string>
+          name: meta.title as late<string>
         }
         if (route.children) {
           menuObj.sub = generateMenuInternal(route.children, matchFn, clipPath, combineURIs(parentPath, route.path), deepLevel + 1)

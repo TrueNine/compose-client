@@ -170,7 +170,7 @@ export function routeOptionStream(routeOptions: readonly RouteOption[] = [], rou
       }
     }
 
-    _deep = _deep.filter(d => d !== null) as RouteOption[]
+    _deep = _deep.filter(d => d !== null)
     return _deep as RouteOption[]
   }
 

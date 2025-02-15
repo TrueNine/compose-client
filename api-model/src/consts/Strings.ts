@@ -1,9 +1,9 @@
 /**
  * 空的字符串
  */
-export const STR_EMPTY: string = ''
-export const STR_DOT: string = '.'
-export const STR_SLASH: string = '/'
+export const STR_EMPTY = ''
+export const STR_DOT = '.'
+export const STR_SLASH = '/'
 export const STRS_ASCII: string[] = [
   '0',
   '1',

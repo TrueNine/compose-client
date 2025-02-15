@@ -57,7 +57,7 @@ export class PdfJs {
     const pdf = await this.instance.getDocument(pdfArrayBuffer).promise
     const e: PDFImageData[] = await this.resolvePages(pdf, async page => {
       const opList = await page.getOperatorList()
-      const rawImgOperator = opList.fnArray.map((f, index) => (f === this.instance.OPS.paintImageXObject ? index : null)).filter(n => n !== null) as number[]
+      const rawImgOperator = opList.fnArray.map((f, index) => (f === this.instance.OPS.paintImageXObject ? index : null)).filter(n => n !== null)
       const filename = opList.argsArray[rawImgOperator[0]][0]
       return page.objs.get(filename)
     })

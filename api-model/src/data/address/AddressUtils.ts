@@ -1,6 +1,7 @@
-import type {IChinaAddressDistrict, int, ChinaDistrictLevel} from '@compose/api-types'
+import type {IChinaAddressDistrict, i64, ChinaDistrictLevel, AddrCode} from '@compose/api-types'
 
 import {STR_EMPTY} from '@/consts'
+
 type AddrLevel = Record<ChinaDistrictLevel, string>
 
 export class AddressUtils implements IChinaAddressDistrict {
@@ -8,9 +9,9 @@ export class AddressUtils implements IChinaAddressDistrict {
   static ERROR_DIG = [0, 1, 3, 5, 7, 8, 10, 11]
   static GLOBAL_CODE = AddressUtils.TWO_ZERO
   static THREE_ZERO = '000'
-  level: int
+  level: i64
   leaf?: boolean = false
-  code: string
+  code: AddrCode
   name = STR_EMPTY
   addrLevel: AddrLevel
   private readonly _formatError: boolean
@@ -23,7 +24,7 @@ export class AddressUtils implements IChinaAddressDistrict {
     if (this._formatError) return []
     return [this.addrLevel.province, this.addrLevel.city, this.addrLevel.district, this.addrLevel.town, this.addrLevel.village].filter(
       e => e !== AddressUtils.TWO_ZERO && e !== AddressUtils.THREE_ZERO && e !== STR_EMPTY
-    ) as string[]
+    )
   }
 
   get pad() {
@@ -43,11 +44,11 @@ export class AddressUtils implements IChinaAddressDistrict {
 
   constructor(code: string) {
     this._formatError = false
-    if (code == null || code.length > 12 || code.length < 2 || AddressUtils.ERROR_DIG.includes(code.length)) {
+    if (code.length > 12 || code.length < 2 || AddressUtils.ERROR_DIG.includes(code.length)) {
       this._formatError = true
       this.code = AddressUtils.GLOBAL_CODE
     }
-    this.code = code.padEnd(12, '0')
+    this.code = code.padEnd(12, '0') as unknown as AddrCode
 
     this.addrLevel = {
       province: this.code.slice(0, 2),

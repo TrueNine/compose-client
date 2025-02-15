@@ -115,9 +115,9 @@ export function resolveSubPath(pathRouteOption: HandledRouteOptions): CustomRout
   for (let i = 0; i < allRoutes.length; i++) {
     const e = allRoutes[i]
     if (!e) continue
-    const opt = all.find(r => r.name === e?.name)!
+    const opt = all.find(r => r.name === e.name)!
     if (opt.isSubPage || opt.isFolderSubPage) {
-      const parent = allRoutes.find(r => r?.fullPath === opt?.parentUrl)
+      const parent = allRoutes.find(r => r.fullPath === opt.parentUrl)
       if (parent) parent.children?.push(e)
     } else result.push(e)
   }
@@ -165,7 +165,7 @@ export function resolveRouters(): RouteRecordRaw[] {
   const cfg: HandledRouteOptions = {}
   for (const key in cfgSources) {
     const source = cfgSources[key]
-    const option = resolveImport([key, source as unknown as ImportMeta])
+    const option = resolveImport([key, source as ImportMeta])
     cfg[option.fullUrl] = option
   }
 

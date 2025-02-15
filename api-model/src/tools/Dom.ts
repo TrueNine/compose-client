@@ -17,7 +17,7 @@ export class Dom {
     beforeEach: (scriptTag: HTMLScriptElement) => HTMLScriptElement = b => b,
     loadFn?: () => void
   ) {
-    const a = document.querySelector(`script[src='${src}']`) as HTMLScriptElement | null
+    const a = document.querySelector(`script[src='${src}']`)
     if (null !== a) return a
     const scriptTag = document.createElement('script')
     scriptTag.src = src

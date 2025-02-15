@@ -1,9 +1,8 @@
 import type {dynamic} from '@compose/api-types'
 
 export async function promiseAll<T extends Record<string, dynamic>>(taskObj: T): Promise<{[K in keyof T]: Awaited<T[K]>} | null> {
-  if (!taskObj) return null
   const e = Object.entries(taskObj)
-  if (!e || e.length === 0) return null
+  if (e.length === 0) return null
   const keys = e.map(e => e[0])
   const tasks = e.map(e => e[1])
 

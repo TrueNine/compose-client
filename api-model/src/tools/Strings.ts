@@ -2,11 +2,11 @@ import type {late} from '@compose/api-types'
 
 import {__LOWERS_CHINESE_NUMBER_HEXS, __LOWVERS_CHINESE_NUMBERS, __UPPERS_CHINESE_NUMBERS, __UPPERS_CHINESE_NUMBER_HEXS} from '@/consts'
 
-export function camelTo(str: string, sep: string = '-') {
+export function camelTo(str: string, sep = '-') {
   return str.replace(/([a-z0-9])([A-Z])/g, `$1${sep}$2`).toLowerCase()
 }
 
-export function numberToChinese(num?: number, upperCase: boolean = false): late<string> {
+export function numberToChinese(num?: number, upperCase = false): late<string> {
   const AA = upperCase ? __UPPERS_CHINESE_NUMBERS : __LOWVERS_CHINESE_NUMBERS
   const BB = upperCase ? __UPPERS_CHINESE_NUMBER_HEXS : __LOWERS_CHINESE_NUMBER_HEXS
 
@@ -15,8 +15,8 @@ export function numberToChinese(num?: number, upperCase: boolean = false): late<
 
   // eslint-disable-next-line
   let a: string[] = num.toString().replace(/(^0*)/g, '').split('.'),
-    k: number = 0,
-    re: string = ''
+    k = 0,
+    re = ''
 
   for (let i = a[0].length - 1; i >= 0; i--) {
     switch (k) {

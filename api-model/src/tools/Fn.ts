@@ -24,7 +24,7 @@ export function switchTo<T>(fn: () => T, switchBy: () => void): T {
   switchBy()
   const r = fn()
   if (r instanceof Promise) {
-    r.then(er => {
+    void r.then(er => {
       switchBy()
       return er
     })
@@ -44,7 +44,7 @@ export function optionalCall<F extends CallableFunction, A = SafeAny>(replace: F
   else return replace(args)
 }
 
-export function TODO(todoText: string = 'Not Implemented todos'): never {
+export function TODO(todoText = 'Not Implemented todos'): never {
   throw new Error(todoText)
 }
 export const FIXME = TODO

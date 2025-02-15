@@ -70,7 +70,7 @@ export class Vue {
     return res
   }
 
-  static findSlotNodesByName(componentName: string = '', arg?: Maybe<SlotNode>): SlotNode[] {
+  static findSlotNodesByName(componentName = '', arg?: Maybe<SlotNode>): SlotNode[] {
     const res: SlotNode[] = []
     const m = maybeArray(arg).filter(Boolean)
     if (!m) return []
@@ -82,7 +82,7 @@ export class Vue {
     const nodes = maybeArray(node)
     nodes.forEach(n => {
       const r = n.type as Record<string, string>
-      n.actualName = r?.name || r?.__name
+      n.actualName = r.name || r.__name
       if (compareFn(n)) result.push(n)
       if (n.children && typeof n.children !== 'string') this._findSlotNodesBy(n.children as unknown as SlotNode, compareFn, result)
     })

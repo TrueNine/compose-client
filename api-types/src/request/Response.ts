@@ -36,7 +36,7 @@ export interface IPage<D> {
    * @see IPageRequestParam
    * @default undefined
    */
-  readonly pageParam?: IPageRequestParam & never
+  readonly pageParam?: IPageRequestParam
 }
 
 /**

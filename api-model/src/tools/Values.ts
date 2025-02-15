@@ -8,7 +8,7 @@ import {STR_EMPTY} from '@/consts'
  * @returns 本身 或者 ""
  */
 export function withEmpty(str?: string): string {
-  return isNonNil(str) ? str! : STR_EMPTY
+  return isNonNil(str) ? (str as unknown as string) : STR_EMPTY
 }
 
 /**
@@ -65,13 +65,10 @@ export function isNonNilString(value?: nilpt<string>): bool {
  * @param callback 转换回调
  */
 export function mapRecord<T, U>(record: Record<string, T>, callback: (val: T) => U): Record<string, U> {
-  return Object.entries(record).reduce(
-    (result, [key, value]) => {
-      result[key] = callback(value)
-      return result
-    },
-    {} as Record<string, U>
-  )
+  return Object.entries(record).reduce<Record<string, U>>((result, [key, value]) => {
+    result[key] = callback(value)
+    return result
+  }, {})
 }
 
 export function dlv(obj: dynamic, key: Maybe<string>, def: dynamic, p: int, undef: dynamic): dynamic {
@@ -84,7 +81,8 @@ export function dlv(obj: dynamic, key: Maybe<string>, def: dynamic, p: int, unde
 }
 
 type _DeepFilter = (data: unknown, key: string | number, deep: number) => boolean | undefined
-type _DeepResolve<T = dynamic> = (data: T | dynamic, key: keyof T | string | number) => T
+type _DeepResolve<T = dynamic> = (data: T, key: keyof T | string | number) => T
+
 interface _DeepOptions<T = dynamic> {
   deep?: boolean | number
   resolve?: _DeepResolve<T>
@@ -102,8 +100,6 @@ export function deepResolve<T extends Record<dynamic, dynamic> | dynamic[] = dyn
   options: _DeepOptions = {},
   filter: _DeepFilter = () => false
 ): T {
-  if (!source) return source
-  filter ??= () => false
   const defaultOptions = {deep: false, resolve: (v: dynamic) => v}
   options = {...defaultOptions, ...options}
   const resolver = options.resolve ?? (v => v)
@@ -119,15 +115,12 @@ export function deepResolve<T extends Record<dynamic, dynamic> | dynamic[] = dyn
         result[key] = resolver(value, key)
         continue
       }
-      if (
-        options.deep === true ||
-        ((options.deep === void 0 || options.deep === null) && depth <= 0) ||
-        (typeof options.deep === 'number' && depth < options.deep)
-      )
+      if (options.deep === true || ((options.deep === void 0 || options.deep) && depth <= 0) || (typeof options.deep === 'number' && depth < options.deep))
         result[key] = _deepResolve(value, depth + 1)
     }
     return result
   }
+
   return _deepResolve(source)
 }
 

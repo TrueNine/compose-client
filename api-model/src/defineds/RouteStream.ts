@@ -94,7 +94,7 @@ export class RouteStream {
       }
     }
 
-    _deepResult = _deepResult.filter(d => d !== null) as RouteOption[]
+    _deepResult = _deepResult.filter(d => d !== null)
     return _deepResult as RouteOption[]
   }
 
@@ -185,7 +185,7 @@ export class RouteStream {
     foundRouteOptions: MaybeReadonlyArray<RouteOption> = []
   ): RouteOption[] {
     const _sub = maybeReadonlyArray(clippedRouteTable)
-    if (paths?.length === 0) return maybeArray(foundRouteOptions)
+    if (paths.length === 0) return maybeArray(foundRouteOptions)
     const cleanedPaths = this._cleanPaths(paths)
     if (cleanedPaths.length === 0) return maybeArray(foundRouteOptions)
     const currentPath = cleanedPaths[0]
