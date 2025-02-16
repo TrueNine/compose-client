@@ -1,33 +1,32 @@
-import type {TypeInt} from '@/orm'
 import type {timestamp} from '@/datetime'
-import type {bigtext, bool} from '@/typescripts'
+import type {bool, i32, str} from '@/typescripts'
 
 export interface BaseWxpaResp {
-  errorCode?: TypeInt
-  errorMessage?: string
+  errorCode?: i32
+  errorMessage?: str
   expireInSecond?: timestamp
   isError?: bool
 }
 
 export interface WxpaVerifyModel {
-  signature?: bigtext
+  signature?: str
   timestamp?: timestamp
-  nonce?: string
-  echostr?: string
+  nonce?: str
+  echostr?: str
 }
 
 export interface WxpaGetAccessTokenResp extends BaseWxpaResp {
-  accessToken?: string
+  accessToken?: str
 }
 
 export interface WxpaGetTicketResp extends BaseWxpaResp {
-  ticket?: string
+  ticket?: str
 }
 
 export interface WxpaSignatureResp {
-  appId?: string
-  nonceString?: string
+  appId?: str
+  nonceString?: str
   timestamp?: timestamp
-  url?: string
-  sign?: string
+  url?: str
+  sign?: str
 }
