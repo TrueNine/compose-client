@@ -1,5 +1,3 @@
-import type {bigserial} from '@/typescripts'
-
 export type AddrCode = '00' | '000' | '' | `${number}`
 
 export type ChinaDistrictLevel = 'province' | 'city' | 'district' | 'town' | 'village'
@@ -15,5 +13,5 @@ export interface IChinaAddressDistrict {
   /**
    * @default 0
    */
-  level: bigserial
+  level: string
 }
