@@ -3,7 +3,6 @@ import type {GenderTyping} from '@compose/api-typings'
 import type {IEntity} from '@/orm'
 import type {timestamp} from '@/datetime'
 import type {RefId} from '@/orm'
-import type {bigserial} from '@/typescripts'
 
 export interface Idcard2 extends IEntity {
   userId: RefId
@@ -11,7 +10,7 @@ export interface Idcard2 extends IEntity {
   expireDate?: timestamp
   ethnicGroup?: string
   birthday?: timestamp
-  code: bigserial
+  code: string
   name: string
   gender?: GenderTyping
   addressDetailsId?: RefId

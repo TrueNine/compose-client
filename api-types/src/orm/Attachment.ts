@@ -3,8 +3,6 @@ import type {AttachmentTyping} from '@compose/api-typings'
 import type {IEntity} from './Entities'
 import type {Id, RefId} from './Utils'
 
-import type {bigserial} from '@/typescripts'
-
 /**
  * ## 附件
  */
@@ -14,7 +12,7 @@ export interface Attachment extends IEntity {
   urlName?: string
   urlDoc?: string
   attType: AttachmentTyping
-  size?: bigserial
+  size?: number
   mimeType?: string
   urlId?: RefId
   baseUrl?: string
