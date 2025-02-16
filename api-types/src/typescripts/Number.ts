@@ -1,71 +1,93 @@
 /**
  * ## 布尔值简写
+ * @deprecated 改用 rust 风格
  */
 export type Bool = boolean
 
 /**
- * ## 二进制数
+ * @deprecated 改用 rust 风格
  */
-export type Binary = bool | byte
-export type binary = Binary
+export type binary = boolean
 
 /**
  * ## 整数的别名
+ * @deprecated 改用 rust 风格
  */
 export type Int = number
+/**
+ * @deprecated 改用 rust 风格
+ */
 export type int = number
 
 /**
  * ## 大整数的别名
+ * @deprecated 改用 rust 风格
  */
 export type Long = number
+/**
+ * @deprecated 改用 rust 风格
+ */
 export type long = Long
 
 /**
  * 大数，用于相加或随机增加的大数值
+ * @deprecated 改用 rust 风格
  */
 export type BigSerial = Long
+/**
+ * @deprecated 改用 rust 风格
+ */
 export type bigserial = BigSerial
 
 /**
  * 表示一个很小的数值
+ * @deprecated 改用 rust 风格
  */
 export type Byte = number
+/**
+ * @deprecated 改用 rust 风格
+ */
 export type byte = Byte
 
 /**
  * ## 小数的别名
+ * @deprecated 改用 rust 风格
  */
 export type Float = number
+/**
+ * @deprecated 改用 rust 风格
+ */
 export type float = Float
 
 /**
  * ## 小数的别名
+ * @deprecated 改用 rust 风格
  */
 export type Double = number
+/**
+ * @deprecated 改用 rust 风格
+ */
 export type double = Double
 
 /**
  * ## 大型高精度小数的别名
+ * @deprecated 改用 rust 风格
  */
 export type Decimal = number
-export type decimal = Decimal
+export type decimal = number
 
 // === rust 简短类型定义
-export type bool = Bool
-export type u8 = Byte
-export type u16 = Int
-export type u32 = Int
-export type u64 = Long
-export type u128 = BigSerial
-export type usize = Int
-export type i8 = Byte
-export type i16 = Int
-export type i32 = Int
-export type i64 = Long
-export type i128 = BigSerial
-export type isize = Int
-export type f32 = Float
-export type f64 = Double
-export type char = string
-export type str = string
+
+export type bool = boolean
+export type u8 = number
+export type u16 = number
+export type u32 = number
+export type u64 = number
+export type u128 = number
+export type i8 = number
+export type i16 = number
+export type i32 = number
+export type i64 = number
+export type i128 = number
+export type f32 = number
+export type f64 = number
