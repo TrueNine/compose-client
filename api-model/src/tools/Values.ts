@@ -1,4 +1,4 @@
-import type {nilpt, dynamic, bool, Maybe, int} from '@compose/api-types'
+import type {nilpt, dynamic, bool, Maybe} from '@compose/api-types'
 
 import {STR_EMPTY} from '@/consts'
 
@@ -71,7 +71,7 @@ export function mapRecord<T, U>(record: Record<string, T>, callback: (val: T) =>
   }, {})
 }
 
-export function dlv(obj: dynamic, key: Maybe<string>, def: dynamic, p: int, undef: dynamic): dynamic {
+export function dlv(obj: dynamic, key: Maybe<string>, def: dynamic, p: number, undef: dynamic): dynamic {
   if (typeof key === 'string') key = key.split('.')
   for (p = 0; p < key.length; p++) {
     const path = key[p]
