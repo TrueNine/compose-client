@@ -1,4 +1,4 @@
-import {Vue} from '@compose/extensions'
+import {componentInstallToPlugin} from '@compose/extensions/vue'
 
 import _c from './YDebugCode.vue'
 
@@ -9,4 +9,4 @@ export interface YDebugCodeProps {
   lang?: CodeLang
   title?: string | null
 }
-export default Vue.componentInstallToPlugin(_c)
+export default componentInstallToPlugin(_c)

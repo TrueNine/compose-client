@@ -1,12 +1,12 @@
-import {Vue} from '@compose/extensions'
-import type {BCP47, int} from '@compose/api-types'
+import {componentInstallToPlugin} from '@compose/extensions/vue'
+import type {BCP47, i32} from '@compose/api-types'
 
 import _c from './YConfigProvider.vue'
 
 export interface YConfigProviderProps {
   locale?: BCP47
   dark?: boolean
-  elementPlusZIndex?: int
+  elementPlusZIndex?: i32
 }
 
-export default Vue.componentInstallToPlugin(_c)
+export default componentInstallToPlugin(_c)

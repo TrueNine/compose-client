@@ -1,4 +1,4 @@
-import {Vue} from '@compose/extensions/vue'
+import {componentInstallToPlugin} from '@compose/extensions/vue'
 import type {bool, dynamic} from '@compose/api-types'
 
 import _c from './YVSystemBar.vue'
@@ -32,5 +32,5 @@ export interface YVSystemBarSlots {
   'settings-drawer': (p: {settingsMenuOpened: bool}) => dynamic
 }
 
-const a = Vue.componentInstallToPlugin(_c, {YIco})
+const a = componentInstallToPlugin(_c, {YIco})
 export default a

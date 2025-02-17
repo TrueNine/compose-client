@@ -1,4 +1,4 @@
-import {Vue} from '@compose/extensions/vue'
+import {componentInstallToPlugin} from '@compose/extensions/vue'
 import type {Schema} from 'yup'
 import type {dynamic} from '@compose/api-types'
 import type {FormFieldProps, FormFieldEmits} from '@/common/VuePropsCommon'
@@ -24,6 +24,5 @@ type _AnyOnUpdates = Partial<Record<`onUpdate:${string}`, (v?: dynamic) => void>
 
 export interface YFieldSlots extends _AnyOnUpdates, FormFieldProps<dynamic>, FormFieldEmits<dynamic> {}
 
-const a = Vue.componentInstallToPlugin(_c)
-
+const a = componentInstallToPlugin(_c)
 export default a

@@ -1,6 +1,6 @@
-import {Vue} from '@compose/extensions/vue'
+import {componentInstallToPlugin} from '@compose/extensions/vue'
 
 import YDragContainer from './YDragContainer.vue'
 
-const _c = Vue.componentInstallToPlugin(YDragContainer)
+const _c = componentInstallToPlugin(YDragContainer)
 export default _c

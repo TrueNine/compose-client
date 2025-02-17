@@ -1,9 +1,9 @@
-import {Vue} from '@compose/extensions'
+import {componentInstallToPlugin} from '@compose/extensions/vue'
 import type {ViewMode} from '@compose/psdk-tmap'
 
 import _c from './YMapTencent.vue'
 
-export default Vue.componentInstallToPlugin(_c)
+export default componentInstallToPlugin(_c)
 
 export interface YMapTencentProps {
   zoom?: number

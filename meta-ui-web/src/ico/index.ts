@@ -1,4 +1,4 @@
-import {Vue} from '@compose/extensions'
+import {componentInstallToPlugin} from '@compose/extensions/vue'
 
 import _c from './YIco.vue'
 
@@ -6,5 +6,5 @@ export interface YIcoProps {
   tag?: keyof HTMLElementTagNameMap
 }
 
-const a = Vue.componentInstallToPlugin(_c)
+const a = componentInstallToPlugin(_c)
 export default a

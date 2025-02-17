@@ -1,7 +1,8 @@
-import {Vue} from '@compose/extensions/vue'
-import type {Asyncable, BigSerial, Int, Late, LateNull, SerialCode} from '@compose/api-types'
+import {componentInstallToPlugin} from '@compose/extensions/vue'
+import type {Asyncable, Late, LateNull} from '@compose/api-types'
 
 import _c from './YVAddressSelect.vue'
+import type {i32, i64, str} from '@compose/api-types'
 
 export type ISelectLevel = 'province' | 'city' | 'district' | 'town' | 'village'
 
@@ -9,13 +10,13 @@ export interface IComponentAddr {
   code: string
   name: string
   leaf?: boolean
-  level: BigSerial
+  level: i64
 }
 
 export interface YVAddressSelectProps {
   level?: ISelectLevel
-  selectedLevel?: Int
-  adCode?: SerialCode
+  selectedLevel?: i32
+  adCode?: str
   fullPath?: string
   showAdCode?: boolean
   showFullPath?: boolean
@@ -30,7 +31,7 @@ export interface YVAddressSelectProps {
 export interface YAddressSelectEmits {
   (e: 'update:adCode' | 'update:fullPath', v: string): void
 
-  (e: 'update:selectedLevel', v: Int): void
+  (e: 'update:selectedLevel', v: i32): void
 }
 
 export interface YVAddressSelectSelectValue {
@@ -92,7 +93,7 @@ export function getAdCodeLevel(code: string) {
   return level
 }
 
-export const clipCode = (code: string, level: Int) => {
+export const clipCode = (code: string, level: i32) => {
   switch (level) {
     case 1:
       return code.slice(0, 2)
@@ -109,4 +110,4 @@ export const clipCode = (code: string, level: Int) => {
   }
 }
 
-export default Vue.componentInstallToPlugin<typeof _c>(_c)
+export default componentInstallToPlugin(_c)
