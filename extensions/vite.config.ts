@@ -5,7 +5,7 @@ import {manifest} from '@compose/config-vite-fragment'
 const {defineConfig} = manifest({
   features: {
     lib: {enable: true},
-    entry: ['index', 'browser/index', 'lodash-es/index', 'dayjs/index', 'libarchive-js/index', 'pdfjs-dist/index', 'vue/index', 'pino/index']
+    entry: ['index', 'browser/document', 'lodash-es/index', 'dayjs/index', 'libarchive-js/index', 'pdfjs-dist/index', 'vue/index', 'pino/index']
   }
 })
 
