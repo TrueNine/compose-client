@@ -22,9 +22,9 @@ export function cartesianProduct<T = unknown>(spec: Record<string, T[]>, current
   const currentKey = Object.keys(spec)[currentIndex]
   const currentValues = spec[currentKey]
   const result: Record<string, T>[] = []
-  for (let i = 0; i < currentValues.length; i++) {
+  for (const value of currentValues) {
     const nextCombination = {...currentCombination}
-    nextCombination[currentKey] = currentValues[i]
+    nextCombination[currentKey] = value
     result.push(...cartesianProduct(spec, currentIndex + 1, nextCombination))
   }
   return result.filter(e => Object.keys(e).length !== 0)
@@ -109,12 +109,12 @@ export function mergeToMap<T extends object>(key: keyof T, arr: T[]): {[key in k
   }))
   return ks.reduce(
     (acc, cur) => {
-      if (acc[cur.key] !== void 0) acc[cur.key].push(cur.value)
+      if (acc[cur.key] !== void 0) acc[cur.key]?.push(cur.value)
       else acc[cur.key] = [cur.value]
       return acc
     },
-    {} as {[key in keyof T]: T[]}
-  )
+    {} as {[key in keyof T]: T[] | undefined}
+  ) as {[key in keyof T]: T[]}
 }
 
 /**
