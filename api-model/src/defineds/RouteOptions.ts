@@ -66,6 +66,7 @@ export function routeOptionStream(routeOptions: readonly RouteOption[] = [], rou
   }
 
   function isRequireLogin(path: string[] | string) {
+    // eslint-disable-next-line @typescript-eslint/no-deprecated
     const current = cloneDeep(findRouteOptionPath(path)).reverse()
     console.log({
       current
@@ -87,17 +88,18 @@ export function routeOptionStream(routeOptions: readonly RouteOption[] = [], rou
    * @param permissions 权限
    * @param defaultAllow 默认规则
    * @returns 是否拥有足够的权限
+   * @deprecated 嵌入了外部 API
    */
   function isAllowPermissions(fullPath: string[] | string = [], permissions: string[] = [], defaultAllow = true): boolean {
-    const optionPath = cloneDeep(findRouteOptionPath(fullPath, routeOptions ?? []))
+    // eslint-disable-next-line @typescript-eslint/no-deprecated
+    const optionPath = cloneDeep(findRouteOptionPath(fullPath, routeOptions))
     if (optionPath.length === 0) return defaultAllow
     for (let i = optionPath.length; i > 0; i--) {
       const option = optionPath[i - 1]
       if (option.requirePermissions) return _hasPermissionsGroup(option.requirePermissions, permissions)
       if (option.hasPermissions) {
         const r = option.hasPermissions
-        for (let j = 0; j < r.length; j++) {
-          const require = r[j]
+        for (const require of r) {
           if (_hasPermissionsGroup(require, permissions)) return true
         }
         return false
@@ -108,17 +110,25 @@ export function routeOptionStream(routeOptions: readonly RouteOption[] = [], rou
 
   /**
    * ## 将所有路由选项展开，并去除 sub
+   *
+   * @deprecated 调用外部 API
    * @param rootPath 起始路径
    * @param subPath 无需填写
    * @returns 被摊平的 sub
    */
   function flatRouteOptions(rootPath = '', subPath: readonly RouteOption[] = routeOptions): Omit<RouteOption, 'sub'>[] {
     const maybeResult: RouteOption[] = []
+    // eslint-disable-next-line @typescript-eslint/no-deprecated
     const stack: RouteOption[] = cloneDeep([...subPath])
     while (stack.length > 0) {
-      const r = stack.pop()!
-      if (r.sub) stack.push(...flatRouteOptions(_getLinkedUri(rootPath, r.uri) ?? '', r.sub).map(e => ({...e})))
-      else maybeResult.push(cloneDeep(r))
+      const r = stack.pop()
+      // eslint-disable-next-line @typescript-eslint/no-deprecated
+      if (r?.sub) stack.push(...flatRouteOptions(_getLinkedUri(rootPath, r.uri) ?? '', r.sub).map(e => ({...e})))
+      else {
+        // eslint-disable-next-line @typescript-eslint/no-deprecated
+        const ee = cloneDeep(r)
+        if (ee) maybeResult.push(ee)
+      }
     }
     return maybeResult.map(r => {
       delete r.sub
@@ -139,13 +149,15 @@ export function routeOptionStream(routeOptions: readonly RouteOption[] = [], rou
    * ### 递归裁剪不需要的菜单选项
    * @param config 匹配配置
    * @param deep 无需传递
+   * @deprecated 使用外部 API
    */
   function matchClip(config?: nil<MatchConfig>, deep: readonly RouteOption[] = routeOptions) {
     const c = Object.assign(config ?? {}, defaultClipConfig)
     const r = config?.roles ?? []
     const p = config?.permissions ?? []
 
-    let _deep = cloneDeep([...deep]).filter(d => d !== null) as (RouteOption | null)[]
+    // eslint-disable-next-line @typescript-eslint/no-deprecated
+    let _deep = cloneDeep([...deep]).filter(Boolean) as (RouteOption | null)[]
     for (let i = 0; i < _deep.length; i++) {
       const a = _deep[i]
       if (a) {
@@ -158,7 +170,7 @@ export function routeOptionStream(routeOptions: readonly RouteOption[] = [], rou
             continue
           }
         } else if (a.requireRoles && c.roles && c.matchRole) {
-          if (!a.requireRoles.every(e => r.includes(e)) || !c.roles) {
+          if (!a.requireRoles.every(e => r.includes(e))) {
             _deep[i] = null
             continue
           }
@@ -166,6 +178,7 @@ export function routeOptionStream(routeOptions: readonly RouteOption[] = [], rou
           _deep[i] = null
           continue
         }
+        // eslint-disable-next-line @typescript-eslint/no-deprecated
         if (a.sub) a.sub = matchClip(c, a.sub)
       }
     }
@@ -178,6 +191,7 @@ export function routeOptionStream(routeOptions: readonly RouteOption[] = [], rou
    * @returns 返回所有不带 hidden 属性的路由
    */
   function toShow(): RouteOption[] {
+    // eslint-disable-next-line @typescript-eslint/no-deprecated
     const _newRouteOption = cloneDeep([...routeOptions])
 
     function _deep(sub: RouteOption[] = _newRouteOption) {
@@ -186,6 +200,7 @@ export function routeOptionStream(routeOptions: readonly RouteOption[] = [], rou
           return !r.hidden
         })
         .map(r => {
+          // eslint-disable-next-line @typescript-eslint/no-deprecated
           const _n = cloneDeep(r)
           if (r.sub) _n.sub = _deep(r.sub)
           return _n
@@ -202,6 +217,7 @@ export function routeOptionStream(routeOptions: readonly RouteOption[] = [], rou
    * @param deep 递归层级
    * @param root 根元素
    * @returns 查找到的菜单节点
+   * @deprecated 调用外部 API
    */
   function deepFindRouteOptionByUriPath(
     paths: string[] | string = [],
@@ -213,9 +229,9 @@ export function routeOptionStream(routeOptions: readonly RouteOption[] = [], rou
     if (pathArray.length === deep || pathArray.length === 0) return root
     const currentPath = pathArray[deep].replace('/', '')
     let result: nil<RouteOption> = null
-    for (let i = 0; i < options.length; i++) {
-      const option = options[i]
+    for (const option of options) {
       if (option.uri === currentPath) {
+        // eslint-disable-next-line @typescript-eslint/no-deprecated
         result = deepFindRouteOptionByUriPath(pathArray, [...(option.sub ?? [])], deep + 1, option)
         break
       }
@@ -225,11 +241,15 @@ export function routeOptionStream(routeOptions: readonly RouteOption[] = [], rou
 
   return {
     findRouteOptionPath,
+    // eslint-disable-next-line @typescript-eslint/no-deprecated
     flatRouteOptions,
+    // eslint-disable-next-line @typescript-eslint/no-deprecated
     isAllowPermissions,
     isRequireLogin,
+    // eslint-disable-next-line @typescript-eslint/no-deprecated
     deepFindRouteOptionByUriPath,
     toShow,
+    // eslint-disable-next-line @typescript-eslint/no-deprecated
     matchClip
   }
 }
