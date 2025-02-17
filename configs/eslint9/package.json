@@ -1,6 +1,6 @@
 {
   "name": "@compose/eslint9-config",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "scripts": {
     "build": "run-s type-check build-c",
     "build-c": "vite build",
