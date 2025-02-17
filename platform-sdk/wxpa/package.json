@@ -1,6 +1,6 @@
 {
   "name": "@compose/psdk-wxpa",
-  "version": "1.0.20",
+  "version": "1.0.21",
   "description": "wxpa js-sdk defined",
   "author": "TrueNine",
   "license": "private",
@@ -9,7 +9,7 @@
     "lint": "eslint --fix",
     "build-c": "vite build",
     "type-check": "vue-tsc --noEmit",
-    "pub": "run-s  build pub-c",
+    "pub": "run-s lint type-check build fmt pub-c",
     "pub-c": "pnpm --dir dist pub",
     "fmt": "prettier --write \"**/*.{ts,tsx,vue,scss,d.ts,js}\" --ignore-unknown"
   },

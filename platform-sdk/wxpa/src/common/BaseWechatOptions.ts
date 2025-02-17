@@ -8,7 +8,7 @@ export interface BaseSuccessOption<T = dynamic> {
    * stepNodes try success
    * @param res 接口调用结果
    */
-  success?: ((res?: T) => void) | never
+  success?: (res?: T) => void
 }
 
 /**
@@ -19,11 +19,11 @@ export interface BaseOption<T = dynamic, R = dynamic> extends BaseSuccessOption<
    * stepNodes catch
    * @param err 错误消息
    */
-  fail?: ((err?: R) => void) | never
+  fail?: (err?: R) => void
   /**
    *  stepNodes finally
    */
-  complete?: (() => void) | never
+  complete?: () => void
 }
 
 /**
@@ -33,7 +33,7 @@ export interface BaseCancelableOption<T = dynamic, R = dynamic> extends BaseOpti
   /**
    * 用户点击取消时的回调函数，仅部分有用户取消操作的api才会用到
    */
-  cancel?: (() => void) | never
+  cancel?: () => void
 }
 
 /**
@@ -44,7 +44,7 @@ export interface BaseTriggerOption<T = dynamic, R = dynamic, E = dynamic> extend
    * 监听Menu中的按钮点击时触发的方法，该方法仅支持Menu中的相关接口
    * @param res 可能是事件
    */
-  trigger?: ((res?: E) => void) | never
+  trigger?: (res?: E) => void
 }
 
 /**

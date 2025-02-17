@@ -1,13 +1,12 @@
-import type {SerialCode, Timestamp} from '@compose/api-types'
-
 import type {JsApiListMap, OpenTagListMap} from '@/common'
+import type {timestamp} from '@compose/api-types'
 
 export interface ConfigOptions {
   debug?: boolean
-  appId: SerialCode
-  timestamp: Timestamp
-  nonceStr: SerialCode
-  signature: SerialCode
+  appId: string
+  timestamp: timestamp
+  nonceStr: string
+  signature: string
   jsApiList?: (keyof JsApiListMap)[]
   openTagList?: (keyof OpenTagListMap)[]
 }

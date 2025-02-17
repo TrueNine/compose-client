@@ -1,16 +1,16 @@
-import type {Double} from '@compose/api-types'
-
-import type {BaseOption} from '../common'
+import type {BaseOption} from '@/common'
+import type {f64} from '@compose/api-types'
 
 export interface GetLocationSuccessResult {
-  latitude: Double
-  longitude: Double
+  latitude: f64
+  longitude: f64
   /**
    * 速度 米每秒
    */
-  speed?: Double
-  accuracy?: Double
+  speed?: f64
+  accuracy?: f64
 }
+
 export interface GetLocationOption extends BaseOption<GetLocationSuccessResult> {
   type: 'gjc02' | 'wgs84'
 }

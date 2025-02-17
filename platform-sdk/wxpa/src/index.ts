@@ -31,7 +31,7 @@ declare global {
 
     export function ready(c: () => void): void
 
-    export function error(c: (res: SafeAny) => void): void
+    export function error(c: (res: dynamic) => void): void
 
     // -----------
 
@@ -86,7 +86,5 @@ declare global {
     export function closeWindow(): void
 
     export function hideAllNonBaseMenuItem(): void
-
-    export function error(e: dynamic): void
   }
 }
