@@ -8,17 +8,9 @@ tsconfig.json
 __test__**
 __tests__**
 __build-src__**
-public
-playground
 
 env.d.ts
 rollup.config.**
 vite.config.**
 vitest.config.**
-eslint.config.js
-index.html
-uno.config.ts
-
-*imports*.json
-*imports*.d.ts
-
+eslint.config.**

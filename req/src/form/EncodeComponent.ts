@@ -2,7 +2,7 @@ import type {BasicType, nilpt} from '@compose/api-types'
 import {isNonNil, isNonNilString} from '@compose/api-model'
 
 export class SearchParam {
-  private _root: Map<string, BasicType> = new Map()
+  private _root = new Map<string, BasicType>()
 
   toString(): string {
     return Array.from(this._root)
@@ -21,26 +21,30 @@ export class SearchParam {
  */
 export function encodeQueryParam(...cards: nilpt<object>[]): string {
   const params = new SearchParam()
-  if (!cards) return ''
+  if (!cards.length) return ''
   cards.filter(isNonNil).forEach(c => {
     Object.entries(c as Record<string, unknown>)
       .filter(([, v]) => isNonNil(v))
       .map(([k, v]) => [k, isNonNilString(v as string) ? encodeURIComponent(v as string) : v])
       .map(([k, v]) => [k, Array.isArray(v) ? v.join(',') : v])
-      .forEach(([k, v]) => params.append(encodeURIComponent(k as string), v as string))
+      .forEach(([k, v]) => {
+        params.append(encodeURIComponent(k as string), v as string)
+      })
   })
   return params.toString() && `?${params.toString()}`
 }
 
 export function queryParam(...cards: nilpt<object>[]): string {
   const params = new SearchParam()
-  if (!cards) return ''
+  if (cards.length) return ''
   cards.filter(isNonNil).forEach(c => {
     Object.entries(c as Record<string, unknown>)
       .filter(([, v]) => isNonNil(v))
       .map(([k, v]) => [k, v])
       .map(([k, v]) => [k, Array.isArray(v) ? v.filter(isNonNil).join(',') : v])
-      .forEach(([k, v]) => params.append(k as string, v as string))
+      .forEach(([k, v]) => {
+        params.append(k as string, v as string)
+      })
   })
   return params.toString() && `?${params.toString()}`
 }
@@ -56,12 +60,9 @@ export function decodeHash(hash?: string): Record<string, string> {
       .replace(/^#/, '')
       .split('&')
       .map(s => s.split('='))
-      .reduce(
-        (acc, [k, v]) => {
-          acc[k] = v
-          return acc
-        },
-        {} as Record<string, string>
-      )
+      .reduce<Record<string, string>>((acc, [k, v]) => {
+        acc[k] = v
+        return acc
+      }, {})
   } else return {}
 }
