@@ -13,7 +13,7 @@ import 'uno.css'
 import {Pinia} from './store'
 
 const a = createVuetifyMount(r => Object.assign({}, r))
-async function setupApp() {
+function setupApp() {
   naiveStyleAdaptor()
   const createdApp = createApp(App)
   quasarInstall(createdApp)
@@ -22,4 +22,4 @@ async function setupApp() {
   createdApp.use(Router)
   createdApp.mount('#ROOT')
 }
-setupApp().then(r => r)
+setupApp()

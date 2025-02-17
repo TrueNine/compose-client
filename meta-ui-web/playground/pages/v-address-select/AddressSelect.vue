@@ -12,7 +12,7 @@ const findProvinces = async () => {
 }
 
 const findCities = async (code: LateNull<IComponentAddr>) => {
-  const {data, execute} = AddressApi.findDirectChildrenByCode(code!.code)
+  const {data, execute} = AddressApi.findDirectChildrenByCode(code?.code)
   await execute()
   return data.value
 }
