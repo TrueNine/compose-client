@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import type {LateNull} from '@compose/api-types'
-
 import {AddressApi} from '../../api/AddressApi'
 
 import type {IComponentAddr} from '@/v-address-select'
@@ -11,7 +9,7 @@ const findProvinces = async () => {
   return data.value
 }
 
-const findCities = async (code: LateNull<IComponentAddr>) => {
+const findCities = async (code?: IComponentAddr) => {
   const {data, execute} = AddressApi.findDirectChildrenByCode(code?.code)
   await execute()
   return data.value

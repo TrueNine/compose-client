@@ -1,8 +1,9 @@
 import {componentInstallToPlugin} from '@compose/extensions/vue'
-import type {Asyncable, Late, LateNull} from '@compose/api-types'
+import type {asyncable} from '@compose/api-types'
 
 import _c from './YVAddressSelect.vue'
 import type {i32, i64, str} from '@compose/api-types'
+import type {late, latenil} from '@compose/api-types'
 
 export type ISelectLevel = 'province' | 'city' | 'district' | 'town' | 'village'
 
@@ -20,12 +21,12 @@ export interface YVAddressSelectProps {
   fullPath?: string
   showAdCode?: boolean
   showFullPath?: boolean
-  findProvinces?: () => Asyncable<LateNull<LateNull<IComponentAddr>[]>>
-  findCities?: (addr: LateNull<IComponentAddr>) => Asyncable<LateNull<LateNull<IComponentAddr>[]>>
-  findDistricts?: (addr: LateNull<IComponentAddr>) => Asyncable<LateNull<LateNull<IComponentAddr>[]>>
-  findTowns?: (addr: LateNull<IComponentAddr>) => Asyncable<LateNull<LateNull<IComponentAddr>[]>>
-  findVillages?: (addr: LateNull<IComponentAddr>) => Asyncable<LateNull<LateNull<IComponentAddr>[]>>
-  findByCode?: (addr: LateNull<IComponentAddr>) => Asyncable<LateNull<LateNull<IComponentAddr>[]>>
+  findProvinces?: () => asyncable<latenil<latenil<IComponentAddr>[]>>
+  findCities?: (addr?: IComponentAddr) => asyncable<latenil<latenil<IComponentAddr>[]>>
+  findDistricts?: (addr?: IComponentAddr) => asyncable<latenil<latenil<IComponentAddr>[]>>
+  findTowns?: (addr?: IComponentAddr) => asyncable<latenil<latenil<IComponentAddr>[]>>
+  findVillages?: (addr?: IComponentAddr) => asyncable<latenil<latenil<IComponentAddr>[]>>
+  findByCode?: (addr?: IComponentAddr) => asyncable<latenil<latenil<IComponentAddr>[]>>
 }
 
 export interface YAddressSelectEmits {
@@ -35,11 +36,11 @@ export interface YAddressSelectEmits {
 }
 
 export interface YVAddressSelectSelectValue {
-  province?: Late<IComponentAddr>
-  city?: Late<IComponentAddr>
-  district?: Late<IComponentAddr>
-  town?: Late<IComponentAddr>
-  village?: Late<IComponentAddr>
+  province?: late<IComponentAddr>
+  city?: late<IComponentAddr>
+  district?: late<IComponentAddr>
+  town?: late<IComponentAddr>
+  village?: late<IComponentAddr>
 }
 
 export const YVAddressSelectDefaultSelects = {
