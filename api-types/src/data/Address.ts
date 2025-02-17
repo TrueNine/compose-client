@@ -1,3 +1,5 @@
+import type {i32} from '@/typescripts'
+
 export type AddrCode = '00' | '000' | '' | `${number}`
 
 export type ChinaDistrictLevel = 'province' | 'city' | 'district' | 'town' | 'village'
@@ -13,5 +15,5 @@ export interface IChinaAddressDistrict {
   /**
    * @default 0
    */
-  level: string
+  level: i32
 }
