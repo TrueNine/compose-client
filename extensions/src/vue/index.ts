@@ -1,7 +1,6 @@
 import type {clip, dynamic, Maybe} from '@compose/api-types'
 import {maybeArray} from '@compose/api-model'
 import type {
-  Plugin,
   RendererElement,
   RendererNode,
   VNode,
@@ -19,9 +18,7 @@ import type {
 } from 'vue'
 
 type EmitsToProps<T extends EmitsOptions> = T extends string[]
-  ? {
-      [K in `on${Capitalize<T[number]>}`]?: (...args: dynamic[]) => dynamic
-    }
+  ? Partial<Record<`on${Capitalize<T[number]>}`, (...args: dynamic[]) => dynamic>>
   : T extends ObjectEmitsOptions
     ? {
         [K in `on${Capitalize<string & keyof T>}`]?: K extends `on${infer C}`
@@ -39,7 +36,7 @@ export interface VueComponentInstanceMapping {
   __name?: string
 }
 
-export type SFCWithInstall<T = dynamic> = T & Plugin & VueComponentInstanceMapping & {install: (app: dynamic) => void}
+export type SFCWithInstall<T = dynamic> = T & VueComponentInstanceMapping & {install: (app: dynamic) => void}
 
 type SlotNode = VNode<RendererNode, RendererElement, Record<string, dynamic>> & {actualName?: string}
 type NotChildrenSlotNode = clip<SlotNode, 'children'>
@@ -72,64 +69,55 @@ export type DefineComponentPart<
   _Defaults = ExtractDefaultPropTypes<Props>
 > = DefineComponent<Props, Expose, _D, _ComputedOptions, _MethodOptions, Mixin, _ExtendsComponentOptionsMixin, Emits, _EE, _PP, _Props, _Defaults, Slots>
 
+const undefinedName = 'NameUndefined'
+
+function _findSlotNodesBy(node: Maybe<SlotNode>, compareFn: (node: NotChildrenSlotNode) => boolean = () => true, result: SlotNode[] = []): SlotNode[] {
+  const nodes = maybeArray(node)
+  nodes.forEach(n => {
+    const r = n.type as Record<string, string>
+    n.actualName = r.name || r.__name
+    if (compareFn(n)) result.push(n)
+    if (n.children && typeof n.children !== 'string') _findSlotNodesBy(n.children as unknown as SlotNode, compareFn, result)
+  })
+  return result
+}
+
 /**
- * ## 针对 vue 封装的一些工具函数
+ * ## 准备一个安装的组件
+ *
+ * @param component 组件实例
+ * @param otherComponent 其他一同注册的组件实例
+ * @returns 封装后的组件
  */
-export class Vue {
-  static UNDEFINED_NAME = 'NameUndefined'
-
-  /**
-   * ## 准备一个安装的组件
-   *
-   * @param component 组件实例
-   * @param otherComponent 其他一同注册的组件实例
-   * @returns 封装后的组件
-   */
-  static componentInstallToPlugin<T, E = dynamic>(component: T, otherComponent?: Record<string, E>): T {
-    let _p = component as unknown as SFCWithInstall<T>
-    const _r = otherComponent as unknown as Record<string, SFCWithInstall<T>>
-    if (!_p.name) _p = {..._p, name: _p.__name}
-    _p.install = app => {
-      for (const c of [_p, ...Object.values(_r != null ? _r : {})]) {
-        const {name = void 0, __name = void 0} = _p
-        app.component(__name || name || Vue.UNDEFINED_NAME, _p)
-        app.component(_p.name || Vue.UNDEFINED_NAME, c)
-      }
+export function componentInstallToPlugin<T, E = dynamic>(component: T, otherComponent?: Record<string, E>): T {
+  let _p = component as unknown as SFCWithInstall<T>
+  const _r = otherComponent as unknown as Record<string, SFCWithInstall<T>>
+  if (!_p.name) _p = {..._p, name: _p.__name}
+  _p.install = app => {
+    for (const c of [_p, ...Object.values(_r)]) {
+      const {name = void 0, __name = void 0} = _p
+      app.component(__name ?? name ?? undefinedName, _p)
+      app.component(_p.name ?? undefinedName, c)
     }
-    if (_r) {
-      for (const [key, comp] of Object.entries(_r)) {
-        ;(_p as dynamic)[key] = comp
-      }
-    }
-    return _p as unknown as T
   }
+  for (const [key, comp] of Object.entries(_r)) {
+    ;(_p as dynamic)[key] = comp
+  }
+  return _p as unknown as T
+}
 
-  static findSlotNodesBy(compareFn: (node: NotChildrenSlotNode) => boolean = () => true, arg?: Maybe<SlotNode>): SlotNode[] {
-    const res: SlotNode[] = []
-    const _m = maybeArray(arg).filter(Boolean)
-    if (!_m) return []
-    _m.forEach(ele => res.push(...this._findSlotNodesBy(ele!, compareFn)))
-    return res
-  }
+export function findSlotNodesBy(compareFn: (node: NotChildrenSlotNode) => boolean = () => true, arg?: Maybe<SlotNode>): SlotNode[] {
+  const res: SlotNode[] = []
+  const _m = maybeArray(arg).filter(Boolean) as SlotNode[]
+  _m.forEach(ele => res.push(..._findSlotNodesBy(ele, compareFn)))
+  return res
+}
 
-  static findSlotNodesByName(componentName: string = '', arg?: Maybe<SlotNode>): SlotNode[] {
-    const res: SlotNode[] = []
-    const m = maybeArray(arg).filter(Boolean)
-    if (!m) return []
-    m.forEach(ele => res.push(...this._findSlotNodesBy(ele!, v => v.actualName === componentName)))
-    return res
-  }
-
-  private static _findSlotNodesBy(node: Maybe<SlotNode>, compareFn: (node: NotChildrenSlotNode) => boolean = () => true, result: SlotNode[] = []): SlotNode[] {
-    const nodes = maybeArray(node)
-    nodes.forEach(n => {
-      const r = n.type as Record<string, string>
-      n.actualName = r?.name || r?.__name
-      if (compareFn(n)) result.push(n)
-      if (n.children && typeof n.children !== 'string') this._findSlotNodesBy(n.children as unknown as SlotNode, compareFn, result)
-    })
-    return result
-  }
+export function findSlotNodesByName(componentName = '', arg?: Maybe<SlotNode>): SlotNode[] {
+  const res: SlotNode[] = []
+  const m = maybeArray(arg).filter(Boolean) as SlotNode[]
+  m.forEach(ele => res.push(..._findSlotNodesBy(ele, v => v.actualName === componentName)))
+  return res
 }
 
 export * from './Types'
