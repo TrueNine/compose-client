@@ -37,7 +37,7 @@ export * from './model'
 /**
  * 语言 国际化
  */
-export * from './language'
+export * from './i18n'
 
 /**
  * 各种 data 的标准
