@@ -1,9 +1,10 @@
 import type {IEntity} from '@compose/api-types'
 
-import {GoodsTyping} from '../enums'
+import {GoodsTyping} from '@/enums'
 
 /**
  * 渠道全局配
+ * @deprecated 废弃
  */
 export interface ChannelGlobalConfig extends IEntity {
   allowMirrorPenetration?: string
@@ -11,6 +12,7 @@ export interface ChannelGlobalConfig extends IEntity {
 
 /**
  * 渠道
+ * @deprecated 废弃
  */
 export interface Channels extends IEntity {
   pid?: string
@@ -25,10 +27,12 @@ export interface Channels extends IEntity {
 
 /**
  * 渠道商品组镜像
+ * @deprecated 废弃
  */
 export interface ChannelMirrorGoods extends IEntity {
   channelId: string
   mirrorType: number
+  // eslint-disable-next-line @typescript-eslint/no-deprecated
   goodsType: GoodsTyping
   goodsGroupId?: number
   goodsUnitId?: number
@@ -56,6 +60,7 @@ export interface ChannelMirrorGoods extends IEntity {
 
 /**
  * 渠道结算记录
+ * @deprecated 单纯的类型定义
  */
 export interface ChannelCommissionRecord extends IEntity {
   ordersId?: string

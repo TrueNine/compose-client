@@ -31,10 +31,12 @@ export interface GoodsInfo extends IEntity {
   /**
    * 商品类型
    */
+  // eslint-disable-next-line @typescript-eslint/no-deprecated
   type?: GoodsTyping
   /**
    * 商品信息类型
    */
+  // eslint-disable-next-line @typescript-eslint/no-deprecated
   infoType?: GoodsInfoTyping
 }
 
@@ -42,7 +44,9 @@ export interface GoodsInfo extends IEntity {
  * 全商品信息返回
  */
 export interface FullGoodsInfo extends GoodsInfo {
+  // eslint-disable-next-line @typescript-eslint/no-deprecated
   goodsParams?: GoodsParams[]
+  // eslint-disable-next-line @typescript-eslint/no-deprecated
   detailsImages?: FullGoodsInfoDetailsImages[]
   goodsUnits?: FullGoodsUnit[]
   brand?: Brand
@@ -82,6 +86,7 @@ export interface GoodsUnitSpecification extends IEntity {
 
 /**
  * 商品参数
+ * @deprecated 单纯的类型定义
  */
 export interface GoodsParams extends IEntity {
   paramName?: string
@@ -90,6 +95,7 @@ export interface GoodsParams extends IEntity {
 
 /**
  * 商品详情图
+ * @deprecated 单纯的类型定义
  */
 export interface GoodsInfoDetailsImages extends IEntity {
   imgId?: number
@@ -97,12 +103,17 @@ export interface GoodsInfoDetailsImages extends IEntity {
   goodsInfoId?: number
 }
 
+/**
+ * @deprecated 单纯的类型定义
+ */
+// eslint-disable-next-line @typescript-eslint/no-deprecated
 export interface FullGoodsInfoDetailsImages extends GoodsInfoDetailsImages {
   image: LinkedAttachment
 }
 
 /**
  * 商品单位变动记录
+ * @deprecated 暂未使用
  */
 export interface GoodsUnitChangeRecord extends IEntity {
   goodsUnitId?: number
@@ -111,6 +122,7 @@ export interface GoodsUnitChangeRecord extends IEntity {
   newTitle?: string
   oldPrice?: number
   oldTitle?: string
+  // eslint-disable-next-line @typescript-eslint/no-deprecated
   changeType?: GoodsChangeRecordTyping
 }
 
