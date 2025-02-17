@@ -3,8 +3,8 @@ import type {timestamp} from '@compose/api-types'
 
 import {Regexes} from '@/data/regexes'
 
-export class IdcardUtils {
-  static getInfo(idcard: string) {
+export const IdcardUtils = {
+  getInfo(idcard: string) {
     const trimIdcard = idcard.trim().substring(0, 18)
     const year = Number(trimIdcard.substring(6, 10))
     const month = Number(trimIdcard.substring(10, 12))
