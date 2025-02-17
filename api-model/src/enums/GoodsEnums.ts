@@ -25,14 +25,17 @@ export enum GoodsTyping {
 export const GoodsTypingPairs: Pair<string, number>[] = [
   {
     k: '实体商品',
+    // eslint-disable-next-line @typescript-eslint/no-deprecated
     v: GoodsTyping.PHYSICAL_GOODS.valueOf()
   },
   {
     k: '服务商品',
+    // eslint-disable-next-line @typescript-eslint/no-deprecated
     v: GoodsTyping.SERVICE_GOODS.valueOf()
   },
   {
     k: '虚拟商品',
+    // eslint-disable-next-line @typescript-eslint/no-deprecated
     v: GoodsTyping.VIRTUAL_GOODS.valueOf()
   }
 ]
@@ -79,14 +82,17 @@ export enum GoodsInfoTyping {
 export const GoodsInfoTypingPairs: Pair<string, number>[] = [
   {
     k: '检索类型',
+    // eslint-disable-next-line @typescript-eslint/no-deprecated
     v: GoodsInfoTyping.RETRIEVAL.valueOf()
   },
   {
     k: '商品单位信息',
+    // eslint-disable-next-line @typescript-eslint/no-deprecated
     v: GoodsInfoTyping.GOODS_UNIT_INFO.valueOf()
   },
   {
     k: '商品单位继承信息',
+    // eslint-disable-next-line @typescript-eslint/no-deprecated
     v: GoodsInfoTyping.GOODS_UNIT_EXTEND_INFO.valueOf()
   }
 ]
