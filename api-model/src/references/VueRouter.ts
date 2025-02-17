@@ -1,4 +1,4 @@
-import type {late, Late} from '@compose/api-types'
+import type {late} from '@compose/api-types'
 import type {RouteRecordRaw} from 'vue-router'
 import type {AutoRouterConfig} from '@compose/api-types'
 
@@ -129,7 +129,7 @@ export function resolveSubPath(pathRouteOption: HandledRouteOptions): CustomRout
     return path.startsWith(STR_SLASH) ? path.substring(1) : path
   }
 
-  function deepFind(routes: RouteRecordRaw[], paths: Late<string[]> = void 0, startLength = 0, last: Late<RouteRecordRaw> = void 0): Late<RouteRecordRaw> {
+  function deepFind(routes: RouteRecordRaw[], paths: late<string[]> = void 0, startLength = 0, last: late<RouteRecordRaw> = void 0): late<RouteRecordRaw> {
     if (!paths || paths.length === 0) return void 0
     if (routes.length === 0 && startLength === 0) return void 0
     if (paths.length === startLength) return last

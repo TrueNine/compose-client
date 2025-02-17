@@ -1,4 +1,4 @@
-import type {Maybe, MaybeReadonlyArray, Nullable, RouteOption} from '@compose/api-types'
+import type {Maybe, MaybeReadonlyArray, nil, RouteOption} from '@compose/api-types'
 import type {RouteRecordRaw} from 'vue-router'
 import type {AutoRouterPageConfigRouterMeta} from '@compose/api-types'
 
@@ -74,7 +74,7 @@ export class RouteStream {
    * @param config
    * @param deep
    */
-  matchClip(config: Nullable<MatchConfig> = RouteStream._defaultClipConfig, deep: MaybeReadonlyArray<RouteOption> = this._routeTable) {
+  matchClip(config: nil<MatchConfig> = RouteStream._defaultClipConfig, deep: MaybeReadonlyArray<RouteOption> = this._routeTable) {
     const c = Object.assign(config ?? {}, RouteStream._defaultClipConfig)
     const r = config?.roles ?? []
     const p = config?.permissions ?? []
@@ -142,12 +142,12 @@ export class RouteStream {
     paths: MaybeReadonlyArray<string> = [],
     options: readonly RouteOption[] = this._routeTable,
     deepLevel = 0,
-    root: Nullable<RouteOption> = null
-  ): Nullable<RouteOption> {
+    root: nil<RouteOption> = null
+  ): nil<RouteOption> {
     const pathArray = this._cleanPaths(paths)
     if (pathArray.length === deepLevel || pathArray.length === 0) return root
     const currentPath = pathArray[deepLevel].replace(RouteStream._SLASH, STR_EMPTY)
-    let result: Nullable<RouteOption> = null
+    let result: nil<RouteOption> = null
     for (const option of options) {
       if (option.uri === currentPath) {
         result = this.deepFindRouteOptionByUriPath(pathArray, [...(option.sub ?? [])], deepLevel + 1, option)

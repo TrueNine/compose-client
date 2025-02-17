@@ -1,4 +1,4 @@
-import type {late, Maybe, SafeAny} from '@compose/api-types'
+import type {late, Maybe} from '@compose/api-types'
 import type {dynamic} from '@compose/api-types'
 
 /**
@@ -81,7 +81,7 @@ export function maybeArray<T = dynamic>(maybe: Maybe<T>) {
  * 将 maybe 类型转换为 readonly array
  * @param maybe T | Array<T>
  */
-export function maybeReadonlyArray<T = SafeAny>(maybe: Maybe<T>): readonly T[] {
+export function maybeReadonlyArray<T = dynamic>(maybe: Maybe<T>): readonly T[] {
   return Array.isArray(maybe) ? maybe : ([maybe] as readonly T[])
 }
 
