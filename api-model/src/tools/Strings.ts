@@ -24,7 +24,7 @@ export function numberToChinese(num?: number, upperCase = false): late<string> {
         re = BB[7] + re
         break
       case 4:
-        if (!new RegExp('0{4}\\d{' + (a[0].length - i - 1) + '}$').test(a[0])) re = BB[4] + re
+        if (!new RegExp('0{4}\\d{' + (a[0].length - i - 1).toString() + '}$').test(a[0])) re = BB[4] + re
         break
       case 8:
         re = BB[5] + re
