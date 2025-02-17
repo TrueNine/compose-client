@@ -16,15 +16,15 @@ export class SemVer {
   }
 
   addPatch() {
-    return `${this._major}.${this._minor}.${this._patch + 1}`
+    return `${this._major.toString()}.${this._minor.toString()}.${(this._patch + 1).toString()}`
   }
 
   addMinor() {
-    return `${this._major}.${this._minor + 1}.${this._patch}`
+    return `${this._major.toString()}.${(this._minor + 1).toString()}.${this._patch.toString()}`
   }
 
   addMajor() {
-    return `${this._major + 1}.${this._minor}.${this._patch}`
+    return `${(this._major + 1).toString()}.${this._minor.toString()}.${this._patch.toString()}`
   }
 
   get major() {
