@@ -12,9 +12,17 @@ import vuetify, {transformAssetUrls} from 'vite-plugin-vuetify'
 import {quasar, transformAssetUrls as quasarTransformAssetUrls} from '@quasar/vite-plugin'
 import devTools from 'vite-plugin-vue-devtools'
 import {manifest} from '@compose/config-vite-fragment'
+
 const {defineConfig, buildConfigLib, dtsPlugin, staticCopyPluginPackageJson} = manifest({
   pushFeatures: {
     lib: {
+      enable: true,
+      minify: true,
+      sourcemap: true,
+      dts: {
+        enable: true,
+        dtsSourcemap: true
+      },
       externals: [/playground\/main/, /\.html$/]
     }
   },
