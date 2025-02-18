@@ -16,15 +16,15 @@ interface Params {
   tz?: string
 }
 
-export const DEFAULT_TZ = dayjs.tz.guess()
-export const DEFAULT_UTC = DEFAULT_TZ === 'UTC'
-export const DEFAULT_ZONE_OFFSET = dayjs().utcOffset() * 60 * 1000
-
 dayjs.extend(utc)
 dayjs.extend(tz)
 dayjs.extend(duration)
 dayjs.extend(pluralGetSet)
 dayjs.extend(isBetween)
+
+export const DEFAULT_TZ = dayjs.tz.guess()
+export const DEFAULT_UTC = DEFAULT_TZ === 'UTC'
+export const DEFAULT_ZONE_OFFSET = dayjs().utcOffset() * 60 * 1000
 
 export const DayJs = dayjs
 
