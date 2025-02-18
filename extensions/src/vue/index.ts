@@ -14,7 +14,8 @@ import type {
   ComponentOptionsMixin,
   PublicProps,
   ComponentPropsOptions,
-  ExtractPropTypes
+  ExtractPropTypes,
+  App
 } from 'vue'
 
 type EmitsToProps<T extends EmitsOptions> = T extends string[]
@@ -90,20 +91,22 @@ function _findSlotNodesBy(node: Maybe<SlotNode>, compareFn: (node: NotChildrenSl
  * @returns 封装后的组件
  */
 export function componentInstallToPlugin<T, E = dynamic>(component: T, otherComponent?: Record<string, E>): T {
-  let _p = component as unknown as SFCWithInstall<T>
-  const _r = otherComponent as unknown as Record<string, SFCWithInstall<T>>
-  if (!_p.name) _p = {..._p, name: _p.__name}
-  _p.install = app => {
-    for (const c of [_p, ...Object.values(_r)]) {
-      const {name = void 0, __name = void 0} = _p
-      app.component(__name ?? name ?? undefinedName, _p)
-      app.component(_p.name ?? undefinedName, c)
+  let primaryComponent = component as unknown as SFCWithInstall<T>
+  const otherSecondaryComponentInstallers = otherComponent as unknown as Record<string, SFCWithInstall<T>> | undefined
+  if (!primaryComponent.name) primaryComponent = {...primaryComponent, name: primaryComponent.__name}
+  primaryComponent.install = (app: App) => {
+    const allInstallComponents = [primaryComponent, ...Object.values(otherSecondaryComponentInstallers ?? {})]
+    for (const toInstallComponent of allInstallComponents) {
+      const {name = void 0, __name = void 0} = toInstallComponent
+      app.component(name ?? __name ?? undefinedName, toInstallComponent)
     }
   }
-  for (const [key, comp] of Object.entries(_r)) {
-    ;(_p as dynamic)[key] = comp
+  if (otherSecondaryComponentInstallers) {
+    for (const [key, comp] of Object.entries(otherSecondaryComponentInstallers)) {
+      ;(primaryComponent as dynamic)[key] = comp
+    }
   }
-  return _p as unknown as T
+  return primaryComponent as unknown as T
 }
 
 export function findSlotNodesBy(compareFn: (node: NotChildrenSlotNode) => boolean = () => true, arg?: Maybe<SlotNode>): SlotNode[] {
