@@ -36,7 +36,7 @@ export function encodeQueryParam(...cards: nilpt<object>[]): string {
 
 export function queryParam(...cards: nilpt<object>[]): string {
   const params = new SearchParam()
-  if (cards.length) return ''
+  if (!cards.length) return ''
   cards.filter(isNonNil).forEach(c => {
     Object.entries(c as Record<string, unknown>)
       .filter(([, v]) => isNonNil(v))
@@ -55,14 +55,13 @@ export function queryHash(...cards: nilpt<object>[]): string {
 }
 
 export function decodeHash(hash?: string): Record<string, string> {
-  if (hash) {
-    return hash
-      .replace(/^#/, '')
-      .split('&')
-      .map(s => s.split('='))
-      .reduce<Record<string, string>>((acc, [k, v]) => {
-        acc[k] = v
-        return acc
-      }, {})
-  } else return {}
+  if (!hash) return {}
+  return hash
+    .replace(/^#/, '')
+    .split('&')
+    .map(s => s.split('='))
+    .reduce<Record<string, string>>((acc, [k, v]) => {
+      acc[k] = v
+      return acc
+    }, {})
 }
