@@ -47,11 +47,11 @@ export function dateMillis(date: DayJSNewInstanceOptions, p?: Params): timestamp
   return timestampOf(_p.date, _p)
 }
 
-export function getOffsetMillis(timezone: string = DEFAULT_TZ): timestamp {
+export function getOffsetMillis(timezone: string = DEFAULT_TZ): number {
   return DayJs.tz(timezone).utcOffset() * 60 * 1000
 }
 
-export function timeMillis(date: DayJSNewInstanceOptions, p?: Params): timestamp {
+export function timeMillis(date: DayJSNewInstanceOptions, p?: Params): number {
   const _p = getDefaultParam(date, p, ISO8601Format.time)
   if (typeof _p.date === 'string') {
     _p.format = `${ISO8601Format.date}$$$$${_p.format}`
@@ -67,7 +67,7 @@ export function timeMillis(date: DayJSNewInstanceOptions, p?: Params): timestamp
   }
 }
 
-export function datetimeMillis(date: DayJSNewInstanceOptions, p?: Params): timestamp {
+export function datetimeMillis(date: DayJSNewInstanceOptions, p?: Params): number {
   const _p = getDefaultParam(date, p, ISO8601Format.datetime)
   return timestampOf(_p.date, _p)
 }
@@ -97,7 +97,7 @@ export function formatTime(date: DayJSNewInstanceOptions, p?: Params): string {
  * @param ts 时间戳
  * @param p 参数
  */
-function timestampToTimeTimestamp(ts: timestamp | Date | dayjs.Dayjs, p?: Params): late<timestamp> {
+function timestampToTimeTimestamp(ts: timestamp | Date | dayjs.Dayjs, p?: Params): late<number> {
   const _p = getDefaultParam(ts, p, ISO8601Format.datetime)
   let dj: dayjs.Dayjs
   if (typeof ts === 'number' || typeof ts === 'string') {
