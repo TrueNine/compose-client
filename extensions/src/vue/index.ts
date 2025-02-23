@@ -72,17 +72,6 @@ export type DefineComponentPart<
 
 const undefinedName = 'NameUndefined'
 
-function _findSlotNodesBy(node: Maybe<SlotNode>, compareFn: (node: NotChildrenSlotNode) => boolean = () => true, result: SlotNode[] = []): SlotNode[] {
-  const nodes = maybeArray(node)
-  nodes.forEach(n => {
-    const r = n.type as Record<string, string>
-    n.actualName = r.name || r.__name
-    if (compareFn(n)) result.push(n)
-    if (n.children && typeof n.children !== 'string') _findSlotNodesBy(n.children as unknown as SlotNode, compareFn, result)
-  })
-  return result
-}
-
 /**
  * ## 准备一个安装的组件
  *
@@ -107,6 +96,17 @@ export function componentInstallToPlugin<T, E = dynamic>(component: T, otherComp
     }
   }
   return primaryComponent as unknown as T
+}
+
+function _findSlotNodesBy(node: Maybe<SlotNode>, compareFn: (node: NotChildrenSlotNode) => boolean = () => true, result: SlotNode[] = []): SlotNode[] {
+  const nodes = maybeArray(node)
+  nodes.forEach(n => {
+    const r = n.type as Record<string, string>
+    n.actualName = r.name || r.__name
+    if (compareFn(n)) result.push(n)
+    if (n.children && typeof n.children !== 'string') _findSlotNodesBy(n.children as unknown as SlotNode, compareFn, result)
+  })
+  return result
 }
 
 export function findSlotNodesBy(compareFn: (node: NotChildrenSlotNode) => boolean = () => true, arg?: Maybe<SlotNode>): SlotNode[] {
