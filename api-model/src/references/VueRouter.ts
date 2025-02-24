@@ -1,4 +1,4 @@
-import type {late, Late} from '@compose/api-types'
+import type {late} from '@compose/api-types'
 import type {RouteRecordRaw} from 'vue-router'
 import type {AutoRouterConfig} from '@compose/api-types'
 
@@ -39,7 +39,10 @@ function processUrlAndName(tp: [string, ImportMeta]) {
   const metaUrl = tp[0]
   const source = tp[1]
   const paths = metaUrl.split(PAGE).filter(Boolean).slice(1).join('').split('/').filter(Boolean)
-  const fileName = paths.pop()!
+  const fileName = paths.pop()
+  if (!fileName) {
+    throw new Error('fileName is not end with page')
+  }
   if (paths.length === 0) paths.push(STR_SLASH)
   if (paths[0] !== STR_SLASH) paths.unshift(STR_SLASH)
   const isFn = typeof source === 'function'
@@ -112,10 +115,9 @@ export function resolveSubPath(pathRouteOption: HandledRouteOptions): CustomRout
 
   // 开始构建路由
   const result: CustomRouteRecordRaw[] = []
-  for (let i = 0; i < allRoutes.length; i++) {
-    const e = allRoutes[i]
-    if (!e) continue
-    const opt = all.find(r => r.name === e.name)!
+  for (const e of allRoutes) {
+    const opt = all.find(r => r.name === e.name)
+    if (!opt) throw new Error(`router is not found`)
     if (opt.isSubPage || opt.isFolderSubPage) {
       const parent = allRoutes.find(r => r.fullPath === opt.parentUrl)
       if (parent) parent.children?.push(e)
@@ -124,17 +126,17 @@ export function resolveSubPath(pathRouteOption: HandledRouteOptions): CustomRout
 
   function cleanFirstSlash(path: string): string {
     if (path === STR_SLASH) return STR_SLASH
-    return path[0] === STR_SLASH ? path.substring(1) : path
+    return path.startsWith(STR_SLASH) ? path.substring(1) : path
   }
 
-  function deepFind(routes: RouteRecordRaw[], paths: Late<string[]> = void 0, startLength = 0, last: Late<RouteRecordRaw> = void 0): Late<RouteRecordRaw> {
+  function deepFind(routes: RouteRecordRaw[], paths: late<string[]> = void 0, startLength = 0, last: late<RouteRecordRaw> = void 0): late<RouteRecordRaw> {
     if (!paths || paths.length === 0) return void 0
     if (routes.length === 0 && startLength === 0) return void 0
     if (paths.length === startLength) return last
     const currentPath = paths[startLength]
-    for (let i = 0; i < routes.length; i++) {
-      if (cleanFirstSlash(currentPath) === cleanFirstSlash(routes[i].path)) {
-        return deepFind(routes[i].children!, paths, startLength + 1, routes[i])
+    for (const e of routes) {
+      if (cleanFirstSlash(currentPath) === cleanFirstSlash(e.path)) {
+        return deepFind(e.children ?? [], paths, startLength + 1, e)
       }
     }
     return void 0
@@ -145,7 +147,7 @@ export function resolveSubPath(pathRouteOption: HandledRouteOptions): CustomRout
     if (root && root.children !== void 0) {
       const child = root.children
       const initPath = child.find(e => e.path === STR_EMPTY)
-      if (initPath) initPath.components![e.name] = e.source
+      if (initPath?.components) initPath.components[e.name] = e.source
       else child.push({path: STR_EMPTY, name: root.name, components: {[e.name]: e.source}})
     }
   })

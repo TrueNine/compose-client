@@ -15,7 +15,7 @@ const {defineConfig} = manifest({
       sourcemap: true,
       dts: {
         enable: true,
-        dtsSourcemap: false
+        dtsSourcemap: true
       },
       copySourceCodeToDist: false
     }

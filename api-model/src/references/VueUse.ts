@@ -8,6 +8,6 @@ import type {dynamic, nil, task} from '@compose/api-types'
 export async function eagerFetch<T = dynamic>(fetchWith: UseFetchReturn<T>): task<nil<T>> {
   const {data, execute, error} = fetchWith
   await execute()
-  if (error.value) return await Promise.reject(error.value)
+  if (error.value) throw new Error(error.value)
   return data.value
 }

@@ -20,7 +20,7 @@ export async function loopPageAll<T>(loopFn: (loopPq: Pq) => asyncable<nil<Pr<T>
     d: [],
     t: 0
   }
-  if (isNil(initDataList) || initPageSize <= 1 || !initDataList || initTotal === 0 || initTotal <= (initPageParam.s ?? 0)) return initDataList
+  if (isNil(initDataList) || initPageSize <= 1 || initTotal === 0 || initTotal <= (initPageParam.s ?? 0)) return initDataList
   const resultDataList: T[] = [...initDataList]
   let nextPq: nil<Pq> = {...initPageParam, o: (initPageParam.o ?? 0) + 1}
   while (nextPq !== null) {

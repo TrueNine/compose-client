@@ -1,4 +1,4 @@
-import {Dom} from '@compose/api-model'
+import {loadRemoteScriptTag} from '@compose/extensions/browser/document'
 import {queryParam} from '@compose/req'
 
 import {WEBGL_JS_URL} from '@/Constants'
@@ -43,7 +43,7 @@ export function initTencentMapWebGlScript(
   if (!options.containerTag) return
   if (!options.mapContainerId) return
   const section = document.querySelector(options.loadQuery)
-  const src = Dom.loadRemoteScriptTag(
+  const src = loadRemoteScriptTag(
     `${WEBGL_JS_URL}${queryParam({
       v: '1.exp',
       key,

@@ -1,4 +1,4 @@
-import {Vue} from '@compose/extensions'
+import {componentInstallToPlugin} from '@compose/extensions/vue'
 import type {RouteOption} from '@compose/api-types'
 
 import YSiderMenuItem from '../el-sider-menu-item'
@@ -13,6 +13,7 @@ export interface YElSiderMenuProps {
   roles?: string[]
   routeMode?: boolean
 }
+
 export type YElSiderMenuEmits = (e: 'update:routeTable', v: RouteOption[]) => void
 
-export default Vue.componentInstallToPlugin(_c, {YSiderMenuItem})
+export default componentInstallToPlugin(_c, {YSiderMenuItem})

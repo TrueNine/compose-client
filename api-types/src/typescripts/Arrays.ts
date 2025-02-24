@@ -1,5 +1,5 @@
 import type {dynamic} from './Types'
-import type {binary, Byte} from './Number'
+import type {i8} from '@/typescripts/Number'
 
 /**
  * ## readonly array or array
@@ -31,9 +31,9 @@ export type ByteBufferedArray = Uint8Array
  * ## 一个类型式的字节数组
  * @see ByteBufferedArray
  */
-export type ByteArray = Byte[]
+export type ByteArray = i8[]
 
 /**
  * ## 二进制数组
  */
-export type BinaryArray = LockableArray<binary> | ByteBufferedArray
+export type BinaryArray = LockableArray<boolean> | ByteBufferedArray

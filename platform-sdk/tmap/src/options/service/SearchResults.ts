@@ -1,4 +1,4 @@
-import type {Nullable} from '@compose/api-types'
+import type {nil} from '@compose/api-types'
 
 export interface SearchResult {
   /**
@@ -35,11 +35,11 @@ export interface SearchResult {
     /**
      * 电话
      */
-    tel?: Nullable<string>
+    tel?: nil<string>
     /**
      * 分类
      */
-    category?: Nullable<string>
+    category?: nil<string>
     /**
      * POI类型，值说明：0:普通POI / 1:公交车站 / 2:地铁站 / 3:公交线路 / 4:行政区划
      */

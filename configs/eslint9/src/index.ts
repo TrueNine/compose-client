@@ -20,11 +20,12 @@ import {defineConfigWithVueTs, configureVueProject, vueTsConfigs} from '@vue/esl
 configureVueProject({
   scriptLangs: ['ts', 'tsx', 'js', 'jsx']
 })
-const DefinedConfig = [
+
+export const DefinedConfig = [
   {
     ignores: [
-      'dist',
-      '__build-src__',
+      'dist/**',
+      '__build-src__/**',
       'vite.config.*',
       'vitest.config.*',
       'playwright.config.*',
@@ -33,9 +34,8 @@ const DefinedConfig = [
       '**/example/**',
       '**/examples/**',
       'node_modules',
-      '__tests__',
-      '__test__',
-      'playground'
+      '__tests__/**',
+      '__test__/**'
     ]
   },
   unocss,
@@ -77,5 +77,3 @@ const DefinedConfig = [
   oxlint.configs['flat/recommended'],
   skipFormatting
 ]
-
-export {globals, DefinedConfig}

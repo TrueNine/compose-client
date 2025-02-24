@@ -1,11 +1,11 @@
 {
   "name": "@compose/extensions",
-  "version": "0.0.30",
+  "version": "30.0.5",
   "description": "yan100 extensions functions and apis",
   "author": "TrueNine",
   "license": "private",
   "scripts": {
-    "build": "run-s lint type-check build-c",
+    "build": "run-s fmt lint type-check build-c",
     "lint": "eslint --fix",
     "pub": "run-s build pub-c",
     "fmt": "prettier --write \"**/*.ts\" \"**/*.d.ts\" \"**/*.json\" --ignore-unknown",
@@ -25,9 +25,9 @@
       "types": "./dist/dayjs/index.d.ts",
       "import": "./dist/dayjs/index.js"
     },
-    "./browser": {
-      "types": "./dist/browser/index.d.ts",
-      "import": "./dist/browser/index.js"
+    "./browser/document": {
+      "types": "./dist/browser/document.d.ts",
+      "import": "./dist/browser/document.js"
     },
     "./vue": {
       "types": "./dist/vue/index.d.ts",

@@ -11,89 +11,85 @@ interface PDFImageData {
   height: number
 }
 
-export class PdfJs {
-  private static __workSrc: string
-  private static __worker: Worker
-  private static __pdf = pdfjs
+let __workSrc: string | undefined
+let __worker: Worker | undefined
 
-  static get instance() {
-    return this.__pdf
-  }
+export const PdfJs = pdfjs
 
-  static init() {
-    if (this.workerSrc) {
-      pdfjs.GlobalWorkerOptions.workerSrc = this.__workSrc
-      this.__pdf.GlobalWorkerOptions.workerSrc = this.__workSrc
-    }
-    if (this.worker) {
-      pdfjs.GlobalWorkerOptions.workerPort = this.__worker
-      this.__pdf.GlobalWorkerOptions.workerPort = this.__worker
-    }
-    return this.__pdf
+export function init() {
+  if (__workSrc) {
+    pdfjs.GlobalWorkerOptions.workerSrc = __workSrc
+    PdfJs.GlobalWorkerOptions.workerSrc = __workSrc
   }
+  if (__worker) {
+    pdfjs.GlobalWorkerOptions.workerPort = __worker
+    PdfJs.GlobalWorkerOptions.workerPort = __worker
+  }
+  return PdfJs
+}
 
-  static set workerSrc(workSrc: string) {
-    PdfJs.__workSrc = workSrc
-    this.instance.GlobalWorkerOptions.workerSrc = workSrc
-  }
+export function setWorkerSrc(workSrc: string) {
+  __workSrc = workSrc
+  PdfJs.GlobalWorkerOptions.workerSrc = workSrc
+}
 
-  static set worker(worker: Worker) {
-    this.__worker = worker
-    this.instance.GlobalWorkerOptions.workerPort = worker
-  }
+export function setWorker(worker: Worker) {
+  __worker = worker
+  PdfJs.GlobalWorkerOptions.workerPort = worker
+}
 
-  static get workerSrc() {
-    return this.__workSrc
-  }
-  static get worker(): Worker {
-    return this.__worker
-  }
+export function getWorkerSrc() {
+  return __workSrc
+}
 
-  static async resolvePages<T = dynamic>(pdf: PDFDocumentProxy, pageHandle: (page: PDFPageProxy, numPage: number) => task<T>): task<T[]> {
-    const result: T[] = []
-    for (let i = 1; i <= pdf.numPages; i++) {
-      const page = await pdf.getPage(i)
-      const r = await pageHandle(page, i)
-      result.push(r)
-    }
-    return result
-  }
+export function getWorker(): Worker | undefined {
+  return __worker
+}
 
-  static async resolveImage(arg: PDFImageData): task<string> {
-    const canvas = globalThis.document.createElement('canvas')
-    canvas.width = arg.width
-    canvas.height = arg.height
-    const ctx = canvas.getContext('2d')!
-    ctx.drawImage(arg.bitmap, 0, 0)
-    return canvas.toDataURL('image/png')
+export async function resolvePages<T = dynamic>(pdf: PDFDocumentProxy, pageHandle: (page: PDFPageProxy, numPage: number) => task<T>): task<T[]> {
+  const result: T[] = []
+  for (let i = 1; i <= pdf.numPages; i++) {
+    const page = await pdf.getPage(i)
+    const r = await pageHandle(page, i)
+    result.push(r)
   }
+  return result
+}
 
-  static async safeGetObject(objId: string, proxy: PDFPageProxy) {
-    return new Promise((resolve, reject) => {
-      let isErr = true
-      proxy.objs.get(objId, (data: unknown) => {
-        isErr = false
-        resolve(data)
-      })
-      setTimeout(() => {
-        if (isErr) reject(new Error(`read PDF objId ${objId} mil ${2000} timeout`))
-      }, 2000)
+export function resolveImage(arg: PDFImageData): string {
+  const canvas = globalThis.document.createElement('canvas')
+  canvas.width = arg.width
+  canvas.height = arg.height
+  const ctx = canvas.getContext('2d')
+  ctx?.drawImage(arg.bitmap, 0, 0)
+  return canvas.toDataURL('image/png')
+}
+
+export async function safeGetObject(objId: string, proxy: PDFPageProxy) {
+  return new Promise((resolve, reject) => {
+    let isErr = true
+    proxy.objs.get(objId, (data: unknown) => {
+      isErr = false
+      resolve(data)
     })
-  }
+    setTimeout(() => {
+      if (isErr) reject(new Error(`read PDF objId ${objId} mil 2000 timeout`))
+    }, 2000)
+  })
+}
 
-  static async extractPdfImages<T = string>(pdfFile: Blob, resolve?: (img: PDFImageData) => task<T>): task<T[]> {
-    const pdfArrayBuffer = await pdfFile.arrayBuffer()
-    const pdf = await this.instance.getDocument(pdfArrayBuffer).promise
-    const e: PDFImageData[] = await this.resolvePages(pdf, async page => {
-      const opList = await page.getOperatorList()
-      const rawImgOperator = opList.fnArray.map((f, index) => (f === this.instance.OPS.paintImageXObject ? index : null)).filter(n => n !== null) as number[]
-      const filename = opList.argsArray[rawImgOperator[0]][0]
-      return (await this.safeGetObject(filename, page)) as PDFImageData
+export async function extractPdfImages<T = string>(pdfFile: Blob, resolve?: (img: PDFImageData) => task<T>): task<T[]> {
+  const pdfArrayBuffer = await pdfFile.arrayBuffer()
+  const pdf = await PdfJs.getDocument(pdfArrayBuffer).promise
+  const e: PDFImageData[] = await resolvePages(pdf, async page => {
+    const opList = await page.getOperatorList()
+    const rawImgOperator = opList.fnArray.map((f, index) => (f === PdfJs.OPS.paintImageXObject ? index : null)).filter(n => n !== null)
+    const filename = opList.argsArray[rawImgOperator[0]][0]
+    return (await safeGetObject(filename, page)) as PDFImageData
+  })
+  return await Promise.all(
+    e.map(async e => {
+      return (await (resolve ?? resolveImage)(e)) as T
     })
-    return await Promise.all(
-      e.map(async e => {
-        return (await (resolve ?? this.resolveImage)(e)) as T
-      })
-    )
-  }
+  )
 }

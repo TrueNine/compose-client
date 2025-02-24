@@ -1,4 +1,4 @@
-import {Vue} from '@compose/extensions/vue'
+import {componentInstallToPlugin} from '@compose/extensions/vue'
 
 import _c from './YPreAuthorize.vue'
 
@@ -11,4 +11,4 @@ export interface YPreAuthorizeProps {
   anonymous?: boolean
 }
 
-export default Vue.componentInstallToPlugin(_c)
+export default componentInstallToPlugin(_c)

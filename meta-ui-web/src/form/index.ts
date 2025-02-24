@@ -1,4 +1,4 @@
-import {Vue} from '@compose/extensions/vue'
+import {componentInstallToPlugin} from '@compose/extensions/vue'
 import type {dynamic, Maybe} from '@compose/api-types'
 import type {ObjectSchema, Schema} from 'yup'
 import type {FormContext} from 'vee-validate'
@@ -49,6 +49,6 @@ export interface YFormInjection {
 
 export const YFormInjectionKey: InjectionKey<YFormInjection> = Symbol('YForm-Injection-Provider')
 
-const a = Vue.componentInstallToPlugin(_c)
+const a = componentInstallToPlugin(_c)
 
 export default a

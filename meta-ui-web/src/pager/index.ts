@@ -1,4 +1,4 @@
-import {Vue} from '@compose/extensions'
+import {componentInstallToPlugin} from '@compose/extensions/vue'
 import type {clip, i32, nil, Pq, Pr} from '@compose/api-types'
 
 import _c from './YPager.vue'
@@ -17,4 +17,4 @@ export interface YPagerEmits extends ModelValueEmits<Pq> {
   (e: 'update:offset' | 'update:pageSize', v: i32): void
 }
 
-export default Vue.componentInstallToPlugin(_c)
+export default componentInstallToPlugin(_c)

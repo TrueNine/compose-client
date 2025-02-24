@@ -1,5 +1,5 @@
 import type {IEntity, ITreeEntity} from './Entities'
-import type {ReferenceId} from './Utils'
+import type {RefId} from './Utils'
 
 export interface Dept extends ITreeEntity {
   name: string
@@ -7,6 +7,6 @@ export interface Dept extends ITreeEntity {
 }
 
 export interface UserDept extends IEntity {
-  userId: ReferenceId
-  deptId: ReferenceId
+  userId: RefId
+  deptId: RefId
 }

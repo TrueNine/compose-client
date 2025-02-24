@@ -1,16 +1,16 @@
 import type {IEntity} from './Entities'
-import type {ReferenceId} from './Utils'
+import type {RefId} from './Utils'
 
 import type {datetime} from '@/datetime'
-import type {bigtext, bool, serialcode} from '@/typescripts'
+import type {bool, str} from '@/typescripts'
 
 export interface Usr extends IEntity {
   readonly band?: bool
-  readonly createUserId?: ReferenceId
-  account?: serialcode
-  nickName?: string
-  doc?: bigtext
-  pwdEnc?: bigtext
+  readonly createUserId?: RefId
+  account?: str
+  nickName?: str
+  doc?: str
+  pwdEnc?: str
   lastLoginTime?: datetime
   banTime?: datetime
 }

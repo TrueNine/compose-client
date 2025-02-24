@@ -1,4 +1,4 @@
-import {Vue} from '@compose/extensions'
+import {componentInstallToPlugin} from '@compose/extensions/vue'
 import type {RouteOption} from '@compose/api-types'
 
 import _c from './YVMenu.vue'
@@ -20,5 +20,5 @@ export interface YVMenuEmits {
   (e: 'update:opened', opened: boolean): void
 }
 
-const a = Vue.componentInstallToPlugin<typeof _c>(_c, {YVMenuItem, YIco})
+const a = componentInstallToPlugin(_c, {YVMenuItem, YIco})
 export default a

@@ -1,6 +1,6 @@
 {
   "name": "@compose/meta-ui-web",
-  "version": "1.1.257",
+  "version": "1.1.262",
   "scripts": {
     "style": "vite --config ./vite.config.style.ts build",
     "dev": "vite --mode devepment",
@@ -11,7 +11,7 @@
     "pub-c": "pnpm --dir ./dist pub",
     "lint": "eslint --fix",
     "fmt": "prettier --write \"**/*.{ts,tsx,vue,scss,d.ts}\" --ignore-unknown",
-    "pub": "run-s fmt lint build pub-c"
+    "pub": "run-s lint build fmt pub-c"
   },
   "type": "module",
   "module": "dist/index.js",

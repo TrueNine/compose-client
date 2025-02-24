@@ -1,11 +1,11 @@
 import {en, zhHans as zhCn} from 'vuetify/locale'
 import {createVuetify, type VuetifyOptions} from 'vuetify'
-import type {Late} from '@compose/api-types'
+import type {late} from '@compose/api-types'
 import DayjsAdaptor from '@date-io/dayjs'
 import DateIoEn from 'dayjs/locale/en'
 import DateIoZhCn from 'dayjs/locale/zh-cn'
 
-function createVuetifyMount(optFn: (o: Late<VuetifyOptions>) => Late<VuetifyOptions>) {
+function createVuetifyMount(optFn: (o?: VuetifyOptions) => late<VuetifyOptions>) {
   const opt = {
     date: {
       adapter: DayjsAdaptor,

@@ -1,4 +1,5 @@
-import type {HttpUrl, SafeAny} from '@compose/api-types'
+import type {HttpUrl} from '@compose/api-types'
+import type {dynamic} from '@compose/api-types'
 
 export class SseReceiver {
   private readonly _e: EventSource
@@ -17,15 +18,15 @@ export class SseReceiver {
     return this._e
   }
 
-  onOpen(c: (this: EventSource, ev: Event) => SafeAny) {
+  onOpen(c: (this: EventSource, ev: Event) => dynamic) {
     this.handle.onopen = c
   }
 
-  onMessage<T = SafeAny>(c: (this: EventSource, ev: MessageEvent<T>) => SafeAny) {
+  onMessage<T = dynamic>(c: (this: EventSource, ev: MessageEvent<T>) => dynamic) {
     this.handle.onmessage = c
   }
 
-  onError(a: (this: EventSource, event: Event) => SafeAny) {
+  onError(a: (this: EventSource, event: Event) => dynamic) {
     this.handle.onerror = a
   }
 

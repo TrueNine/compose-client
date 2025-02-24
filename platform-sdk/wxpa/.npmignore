@@ -13,3 +13,4 @@ env.d.ts
 rollup.config.**
 vite.config.**
 vitest.config.**
+eslint.config.**

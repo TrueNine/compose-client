@@ -3,7 +3,7 @@ import type {BloodTyping, DegreeTyping, GenderTyping} from '@compose/api-typings
 import type {IEntity} from '@/orm'
 import type {RefId} from '@/orm'
 import type {timestamp} from '@/datetime'
-import type {bigserial, decimal, int} from '@/typescripts'
+import type {decimal, i32, i64, str} from '@/typescripts'
 
 export interface HouseholdCert extends IEntity {
   userId?: RefId
@@ -19,14 +19,14 @@ export interface HouseholdCert extends IEntity {
   bloodType?: BloodTyping
   height?: decimal
   birthday?: timestamp
-  ethnicGroup?: string
+  ethnicGroup?: str
   gender?: GenderTyping
-  relationship?: string
-  oldName?: string
-  name?: string
-  issueOrgan?: string
+  relationship?: str
+  oldName?: str
+  name?: str
+  issueOrgan?: str
   addressDetailsId?: RefId
-  code: bigserial
-  householdPrimaryName?: string
-  householdType?: int
+  code: i64
+  householdPrimaryName?: str
+  householdType?: i32
 }

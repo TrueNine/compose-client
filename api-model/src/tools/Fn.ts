@@ -1,4 +1,4 @@
-import type {SafeAny} from '@compose/api-types'
+import type {dynamic} from '@compose/api-types'
 
 /**
  * # 环绕调用
@@ -39,7 +39,7 @@ export function switchTo<T>(fn: () => T, switchBy: () => void): T {
  * @param fn 首选方法
  * @param args 方法参数
  */
-export function optionalCall<F extends CallableFunction, A = SafeAny>(replace: F, fn?: F, ...args: A[]) {
+export function optionalCall<F extends CallableFunction, A = dynamic>(replace: F, fn?: F, ...args: A[]) {
   if (fn) return fn(args)
   else return replace(args)
 }
@@ -47,4 +47,5 @@ export function optionalCall<F extends CallableFunction, A = SafeAny>(replace: F
 export function TODO(todoText = 'Not Implemented todos'): never {
   throw new Error(todoText)
 }
+
 export const FIXME = TODO

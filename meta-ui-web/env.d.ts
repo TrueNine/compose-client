@@ -4,8 +4,7 @@ import type {dynamic} from '@compose/api-types'
 
 declare module '*.vue' {
   import type {DefineComponent} from 'vue'
-  import {SafeAny} from '@compose/api-types'
-  const component: DefineComponent<object, object, SafeAny>
+  const component: DefineComponent<object, object, dynamic>
   export default component
 }
 

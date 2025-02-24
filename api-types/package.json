@@ -1,6 +1,6 @@
 {
   "name": "@compose/api-types",
-  "version": "1.0.127",
+  "version": "2.0.3",
   "description": "yan100 client ui kit",
   "author": "TrueNine",
   "license": "private",
@@ -11,7 +11,7 @@
     "pub-c": "pnpm --dir ./dist pub",
     "lint": "eslint --fix",
     "fmt": "prettier --write \"**/*.{ts,tsx,vue,scss,d.ts,js}\" --ignore-unknown",
-    "pub": "run-s fmt type-check lint build pub-c"
+    "pub": "run-s fmt type-check lint build fmt pub-c"
   },
   "type": "module",
   "module": "dist/index.js",

@@ -1,10 +1,10 @@
-import type {Maybe, MaybeReadonlyArray, Nullable, RouteOption} from '@compose/api-types'
+import type {Maybe, MaybeReadonlyArray, nil, RouteOption} from '@compose/api-types'
 import type {RouteRecordRaw} from 'vue-router'
 import type {AutoRouterPageConfigRouterMeta} from '@compose/api-types'
 
 import {STR_EMPTY, STR_SLASH} from '@/consts'
 import {maybeArray, maybeReadonlyArray} from '@/tools'
-import {cloneDeep} from '@/references'
+import {cloneDeep} from '@/references/LodashEs'
 
 interface MatchConfig {
   hidden?: boolean
@@ -33,8 +33,16 @@ export class RouteStream {
     hidden: true
   }
 
+  /**
+   * @deprecated 使用外部 API
+   * @param routeTable
+   * @param matchConfig
+   * @param rootPath
+   */
   constructor(routeTable: Maybe<RouteOption>, matchConfig: MatchConfig = RouteStream._defaultClipConfig, rootPath: string = RouteStream._SLASH) {
+    // eslint-disable-next-line @typescript-eslint/no-deprecated
     routeTable = cloneDeep(routeTable)
+    // eslint-disable-next-line @typescript-eslint/no-deprecated
     matchConfig = cloneDeep(matchConfig)
     this._routeTable = maybeArray(routeTable)
     this._allowUndefined = matchConfig.allowUndefined ?? true
@@ -44,12 +52,14 @@ export class RouteStream {
   }
 
   getVisible(): readonly RouteOption[] {
+    // eslint-disable-next-line @typescript-eslint/no-deprecated
     const _newRouteOption = cloneDeep(this._routeTable)
 
     function _deep(sub = _newRouteOption) {
       return sub
         .filter(r => Boolean(!r))
         .map(r => {
+          // eslint-disable-next-line @typescript-eslint/no-deprecated
           const _n = cloneDeep(r)
           if (r.sub) _n.sub = _deep(r.sub)
           return _n
@@ -64,11 +74,11 @@ export class RouteStream {
    * @param config
    * @param deep
    */
-  matchClip(config: Nullable<MatchConfig> = RouteStream._defaultClipConfig, deep: MaybeReadonlyArray<RouteOption> = this._routeTable) {
+  matchClip(config: nil<MatchConfig> = RouteStream._defaultClipConfig, deep: MaybeReadonlyArray<RouteOption> = this._routeTable) {
     const c = Object.assign(config ?? {}, RouteStream._defaultClipConfig)
     const r = config?.roles ?? []
     const p = config?.permissions ?? []
-    let _deepResult = maybeReadonlyArray(deep).filter(d => d !== null) as (RouteOption | null)[]
+    let _deepResult = maybeReadonlyArray(deep).filter(Boolean) as (RouteOption | null)[]
 
     for (let i = 0; i < _deepResult.length; i++) {
       const currentRoute = _deepResult[i]
@@ -90,6 +100,7 @@ export class RouteStream {
           _deepResult[i] = null
           continue
         }
+        // eslint-disable-next-line @typescript-eslint/no-deprecated
         if (currentRoute.sub) currentRoute.sub = this.matchClip(c, currentRoute.sub)
       }
     }
@@ -98,14 +109,25 @@ export class RouteStream {
     return _deepResult as RouteOption[]
   }
 
+  /**
+   * @deprecated 调用外部 API
+   * @param rootPath
+   * @param subPath
+   */
   flat(rootPath = STR_EMPTY, subPath: MaybeReadonlyArray<RouteOption> = this._routeTable): Omit<RouteOption, 'sub'>[] {
     const maybeResult: RouteOption[] = []
+    // eslint-disable-next-line @typescript-eslint/no-deprecated
     const stack: RouteOption[] = cloneDeep(maybeArray(subPath))
     while (stack.length > 0) {
-      const r = stack.pop()!
-      if (r.sub)
+      const r = stack.pop()
+      if (r?.sub) {
+        // eslint-disable-next-line @typescript-eslint/no-deprecated
         stack.push(...this.flat(this._getLinkedUri(rootPath, r.uri) ?? STR_EMPTY, r.sub).map(e => cloneDeep(e))) // TODO 测试 clone 机制
-      else maybeResult.push(r)
+      } else {
+        if (r) {
+          maybeResult.push(r)
+        }
+      }
     }
     return maybeResult.map(r => {
       delete r.sub
@@ -120,14 +142,13 @@ export class RouteStream {
     paths: MaybeReadonlyArray<string> = [],
     options: readonly RouteOption[] = this._routeTable,
     deepLevel = 0,
-    root: Nullable<RouteOption> = null
-  ): Nullable<RouteOption> {
+    root: nil<RouteOption> = null
+  ): nil<RouteOption> {
     const pathArray = this._cleanPaths(paths)
     if (pathArray.length === deepLevel || pathArray.length === 0) return root
     const currentPath = pathArray[deepLevel].replace(RouteStream._SLASH, STR_EMPTY)
-    let result: Nullable<RouteOption> = null
-    for (let i = 0; i < options.length; i++) {
-      const option = options[i]
+    let result: nil<RouteOption> = null
+    for (const option of options) {
       if (option.uri === currentPath) {
         result = this.deepFindRouteOptionByUriPath(pathArray, [...(option.sub ?? [])], deepLevel + 1, option)
         break
@@ -154,8 +175,7 @@ export class RouteStream {
       if (option.requirePermissions) return this._hasPermissionsGroup(option.requirePermissions, permissions)
       if (option.hasPermissions) {
         const r = option.hasPermissions
-        for (let j = 0; j < r.length; j++) {
-          const require = r[j]
+        for (const require of r) {
           if (this._hasPermissionsGroup(require, permissions)) return true
         }
         return false

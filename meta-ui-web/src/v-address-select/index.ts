@@ -1,7 +1,9 @@
-import {Vue} from '@compose/extensions/vue'
-import type {Asyncable, BigSerial, Int, Late, LateNull, SerialCode} from '@compose/api-types'
+import {componentInstallToPlugin} from '@compose/extensions/vue'
+import type {asyncable} from '@compose/api-types'
 
 import _c from './YVAddressSelect.vue'
+import type {i32, i64, str} from '@compose/api-types'
+import type {late, latenil} from '@compose/api-types'
 
 export type ISelectLevel = 'province' | 'city' | 'district' | 'town' | 'village'
 
@@ -9,36 +11,36 @@ export interface IComponentAddr {
   code: string
   name: string
   leaf?: boolean
-  level: BigSerial
+  level: i64
 }
 
 export interface YVAddressSelectProps {
   level?: ISelectLevel
-  selectedLevel?: Int
-  adCode?: SerialCode
+  selectedLevel?: i32
+  adCode?: str
   fullPath?: string
   showAdCode?: boolean
   showFullPath?: boolean
-  findProvinces?: () => Asyncable<LateNull<LateNull<IComponentAddr>[]>>
-  findCities?: (addr: LateNull<IComponentAddr>) => Asyncable<LateNull<LateNull<IComponentAddr>[]>>
-  findDistricts?: (addr: LateNull<IComponentAddr>) => Asyncable<LateNull<LateNull<IComponentAddr>[]>>
-  findTowns?: (addr: LateNull<IComponentAddr>) => Asyncable<LateNull<LateNull<IComponentAddr>[]>>
-  findVillages?: (addr: LateNull<IComponentAddr>) => Asyncable<LateNull<LateNull<IComponentAddr>[]>>
-  findByCode?: (addr: LateNull<IComponentAddr>) => Asyncable<LateNull<LateNull<IComponentAddr>[]>>
+  findProvinces?: () => asyncable<latenil<latenil<IComponentAddr>[]>>
+  findCities?: (addr?: IComponentAddr) => asyncable<latenil<latenil<IComponentAddr>[]>>
+  findDistricts?: (addr?: IComponentAddr) => asyncable<latenil<latenil<IComponentAddr>[]>>
+  findTowns?: (addr?: IComponentAddr) => asyncable<latenil<latenil<IComponentAddr>[]>>
+  findVillages?: (addr?: IComponentAddr) => asyncable<latenil<latenil<IComponentAddr>[]>>
+  findByCode?: (addr?: IComponentAddr) => asyncable<latenil<latenil<IComponentAddr>[]>>
 }
 
 export interface YAddressSelectEmits {
   (e: 'update:adCode' | 'update:fullPath', v: string): void
 
-  (e: 'update:selectedLevel', v: Int): void
+  (e: 'update:selectedLevel', v: i32): void
 }
 
 export interface YVAddressSelectSelectValue {
-  province?: Late<IComponentAddr>
-  city?: Late<IComponentAddr>
-  district?: Late<IComponentAddr>
-  town?: Late<IComponentAddr>
-  village?: Late<IComponentAddr>
+  province?: late<IComponentAddr>
+  city?: late<IComponentAddr>
+  district?: late<IComponentAddr>
+  town?: late<IComponentAddr>
+  village?: late<IComponentAddr>
 }
 
 export const YVAddressSelectDefaultSelects = {
@@ -92,7 +94,7 @@ export function getAdCodeLevel(code: string) {
   return level
 }
 
-export const clipCode = (code: string, level: Int) => {
+export const clipCode = (code: string, level: i32) => {
   switch (level) {
     case 1:
       return code.slice(0, 2)
@@ -109,4 +111,4 @@ export const clipCode = (code: string, level: Int) => {
   }
 }
 
-export default Vue.componentInstallToPlugin<typeof _c>(_c)
+export default componentInstallToPlugin(_c)

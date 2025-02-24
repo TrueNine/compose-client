@@ -3,7 +3,7 @@ import {readFileSync} from 'node:fs'
 
 import {describe, test} from 'vitest'
 
-import {ArchiveJs} from '@/libarchive-js'
+import {extract} from '@/libarchive-js'
 
 describe('test libarchive.js', () => {
   test('test libarchive.js', async () => {
@@ -12,7 +12,7 @@ describe('test libarchive.js', () => {
     const rarFile = new File([f], 'test.rar')
     console.log(rarFile)
 
-    const r = await ArchiveJs.extract(rarFile)
+    const r = await extract(rarFile)
 
     console.log(r)
   })

@@ -1,34 +1,48 @@
-import type {Decimal, FullAddressDetails, IEntity, Int, ReferenceId, Timestamp} from '@compose/api-types'
+import type {FullAddressDetails, IEntity} from '@compose/api-types'
 
-import {GoodsTyping, OrderStatusTyping, PayChannelTyping, PaymentTyping} from '../enums'
+import {GoodsTyping, OrderStatusTyping, PayChannelTyping, PaymentTyping} from '@/enums'
 
 import type {FullGoodsUnit} from './GoodsEntities'
+import type {decimal, i32, RefId, timestamp} from '@compose/api-types'
 
+/**
+ * @deprecated 单纯的类型定义
+ */
 export interface Orders extends IEntity {
-  type?: Int
+  type?: i32
   orderCode?: string
   customerName?: string
   customerLandline?: string
   customerPhone?: string
   deliveryAddressDetailsId?: string
   orderRemark?: string
-  requireTime?: Timestamp
-  delayedTime?: Timestamp
-  startTime?: Timestamp
-  endTime?: Timestamp
+  requireTime?: timestamp
+  delayedTime?: timestamp
+  startTime?: timestamp
+  endTime?: timestamp
+  // eslint-disable-next-line @typescript-eslint/no-deprecated
   status?: OrderStatusTyping
-  totalPrice?: Decimal
+  totalPrice?: decimal
   ordersPayRecordId?: string
-  userId?: ReferenceId
-  createTime?: Timestamp
+  userId?: RefId
+  createTime?: timestamp
 }
 
+/**
+ * @deprecated 单纯的类型定义
+ */
+// eslint-disable-next-line @typescript-eslint/no-deprecated
 export interface FullOrders extends Orders {
+  // eslint-disable-next-line @typescript-eslint/no-deprecated
   orderPayRecord?: OrdersPayRecord
   deliveryAddressDetails?: FullAddressDetails
+  // eslint-disable-next-line @typescript-eslint/no-deprecated
   orderGoods?: FullOrdersGoods[]
 }
 
+/**
+ * @deprecated 单纯的类型定义
+ */
 export interface OrdersGoods extends IEntity {
   subtotal?: number
   quantity?: number
@@ -46,11 +60,17 @@ export interface OrdersGoods extends IEntity {
   goodsWeightG?: number
   goodsUnitId?: string
   ordersId?: string
+  // eslint-disable-next-line @typescript-eslint/no-deprecated
   goodsType?: GoodsTyping
 }
 
+/**
+ * @deprecated 单纯的类型定义
+ */
 export interface OrdersPayRecord extends IEntity {
+  // eslint-disable-next-line @typescript-eslint/no-deprecated
   payChannelType?: PayChannelTyping
+  // eslint-disable-next-line @typescript-eslint/no-deprecated
   payType?: PaymentTyping
   orderCode?: string
   payCode?: string
@@ -60,6 +80,10 @@ export interface OrdersPayRecord extends IEntity {
   prePayCode?: string
 }
 
+/**
+ * @deprecated 单纯的类型定义
+ */
+// eslint-disable-next-line @typescript-eslint/no-deprecated
 export interface FullOrdersGoods extends OrdersGoods {
   goodsUnit?: FullGoodsUnit
 }
