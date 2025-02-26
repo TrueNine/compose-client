@@ -1,11 +1,13 @@
-import dayjs, {Dayjs} from 'dayjs'
-import type {late, rq, timestamp} from '@compose/api-types'
-import utc from 'dayjs/plugin/utc'
-import duration, {type DurationUnitType} from 'dayjs/plugin/duration'
-import tz from 'dayjs/plugin/timezone'
-import pluralGetSet from 'dayjs/plugin/pluralGetSet'
+import type { late, rq, timestamp } from '@compose/api-types'
+import type { Dayjs } from 'dayjs'
+import type { DurationUnitType } from 'dayjs/plugin/duration'
+import { ISO8601Format, ISO8601TimeZone } from '@compose/api-model'
+import dayjs from 'dayjs'
+import duration from 'dayjs/plugin/duration'
 import isBetween from 'dayjs/plugin/isBetween'
-import {ISO8601Format, ISO8601TimeZone} from '@compose/api-model'
+import pluralGetSet from 'dayjs/plugin/pluralGetSet'
+import tz from 'dayjs/plugin/timezone'
+import utc from 'dayjs/plugin/utc'
 
 export type DayJSNewInstanceOptions = timestamp | Date | dayjs.Dayjs
 
@@ -33,12 +35,12 @@ function getDefaultParam(date: DayJSNewInstanceOptions, p?: Params, format?: str
     date: p?.date ?? date,
     format: p?.format ?? format ?? ISO8601Format.datetime,
     utc: (p?.utc ?? DEFAULT_UTC) || false,
-    tz: p?.tz ?? (p?.utc ? ISO8601TimeZone.UTC : void 0) ?? DEFAULT_TZ
+    tz: p?.tz ?? (p?.utc ? ISO8601TimeZone.UTC : void 0) ?? DEFAULT_TZ,
   }
 }
 
-function timestampOf(date: DayJSNewInstanceOptions, p?: Params) {
-  const {date: _date, format, tz} = getDefaultParam(date, p, ISO8601Format.datetime)
+function timestampOf(date: DayJSNewInstanceOptions, p?: Params): number {
+  const { date: _date, format, tz } = getDefaultParam(date, p, ISO8601Format.datetime)
   return DayJs.tz(_date, format, tz).valueOf()
 }
 
@@ -58,11 +60,13 @@ export function timeMillis(date: DayJSNewInstanceOptions, p?: Params): number {
     _p.date = `1970-01-01$$$$${_p.date}`
     const offset = getOffsetMillis(_p.tz)
     return timestampOf(_p.date, _p) + Number(offset) * 2
-  } else {
+  }
+  else {
     _p.utc = true
     _p.tz = ISO8601TimeZone.UTC
     const dg = timestampToTimeTimestamp(_p.date, _p)
-    if (dg === void 0) return NaN
+    if (dg === void 0)
+      return Number.NaN
     else return dg
   }
 }
@@ -74,7 +78,7 @@ export function datetimeMillis(date: DayJSNewInstanceOptions, p?: Params): numbe
 
 export function format(date: DayJSNewInstanceOptions, p?: Params): string {
   const _p = getDefaultParam(date, p, ISO8601Format.datetime)
-  return DayJs(_p.date, {format: _p.format, utc: _p.utc}, true).tz(_p.tz).format(_p.format)
+  return DayJs(_p.date, { format: _p.format, utc: _p.utc }, true).tz(_p.tz).format(_p.format)
 }
 
 export function formatDatetime(date: DayJSNewInstanceOptions, p?: Params): string {
@@ -101,10 +105,12 @@ function timestampToTimeTimestamp(ts: timestamp | Date | dayjs.Dayjs, p?: Params
   const _p = getDefaultParam(ts, p, ISO8601Format.datetime)
   let dj: dayjs.Dayjs
   if (typeof ts === 'number' || typeof ts === 'string') {
-    dj = DayJs(ts, {utc: _p.utc}, true).tz(_p.tz)
-  } else if (ts instanceof Date) {
-    dj = DayJs(ts, {utc: _p.utc}, true).tz(_p.tz)
-  } else {
+    dj = DayJs(ts, { utc: _p.utc }, true).tz(_p.tz)
+  }
+  else if (ts instanceof Date) {
+    dj = DayJs(ts, { utc: _p.utc }, true).tz(_p.tz)
+  }
+  else {
     dj = ts.tz(_p.tz)
   }
   const hMs = dj.hour() * 3600000
@@ -113,21 +119,29 @@ function timestampToTimeTimestamp(ts: timestamp | Date | dayjs.Dayjs, p?: Params
   return hMs + mMs + sMs + dj.millisecond()
 }
 
-export function isToday(to: DayJSNewInstanceOptions, qua = 1, unit: DurationUnitType = 'day') {
+export function isToday(to: DayJSNewInstanceOptions, qua = 1, unit: DurationUnitType = 'day'): boolean {
   const now = dayjs()
   const yesterday = DayJs(now).subtract(dayjs.duration(qua, unit)).startOf(unit)
   const toDate = dayjs(to).startOf(unit)
   return toDate.isSame(yesterday)
 }
 
-export function formatToday(to: Dayjs) {
+export function formatToday(to: Dayjs): string {
   const now = DayJs()
-  if (isToday(to, 0)) return to.format('HH:mm')
+  if (isToday(to, 0))
+    return to.format('HH:mm')
   if (to.isBefore(now)) {
-    if (isToday(to)) return '昨天 ' + to.format('HH:mm')
-    else if (isToday(to, 0, 'month')) return to.format('MM-DD')
-    else if (isToday(to, 0, 'year')) return to.format('MM-DD')
-    else if (to.year() >= 2000) return to.format('YY-MM-DD')
+    if (isToday(to))
+      return `昨天 ${to.format('HH:mm')}`
+    else if (isToday(to, 0, 'month'))
+      return to.format('MM-DD')
+    else if (isToday(to, 0, 'year'))
+      return to.format('MM-DD')
+    else if (to.year() >= 2000)
+      return to.format('YY-MM-DD')
     else return to.format('YYYY-MM-DD')
-  } else return to.format('YYYY-MM-DD')
+  }
+  else {
+    return to.format('YYYY-MM-DD')
+  }
 }

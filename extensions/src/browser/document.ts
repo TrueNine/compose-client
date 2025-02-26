@@ -1,4 +1,4 @@
-import type {task} from '@compose/api-types'
+import type { task } from '@compose/api-types'
 
 /**
  * ## 加载外部 script 标签
@@ -13,10 +13,11 @@ export function loadRemoteScriptTag(
   src: string,
   appendTag: 'head' | 'body' = 'body',
   beforeEach: (scriptTag: HTMLScriptElement) => HTMLScriptElement = b => b,
-  loadFn?: () => void
-) {
+  loadFn?: () => void,
+): Element {
   const a = document.querySelector(`script[src='${src}']`)
-  if (null !== a) return a
+  if (a !== null)
+    return a
   const scriptTag = document.createElement('script')
   scriptTag.src = src
   scriptTag.setAttribute('charset', 'utf-8')
@@ -30,7 +31,7 @@ export function loadRemoteScriptTag(
  * @param blob 文件二进制句柄
  * @param downloadName 下载的文件名称
  */
-export function downloadBlob(blob: Blob, downloadName = 'noneFile') {
+export function downloadBlob(blob: Blob, downloadName = 'noneFile'): void {
   const a = document.createElement('a')
   a.href = window.URL.createObjectURL(blob)
   a.download = downloadName
@@ -44,7 +45,7 @@ export function downloadBlob(blob: Blob, downloadName = 'noneFile') {
  * @param url 下载链接
  * @param downloadName 下载的文件名称
  */
-export function download(url: string, downloadName = 'noneFile') {
+export function download(url: string, downloadName = 'noneFile'): void {
   const a = document.createElement('a')
   a.href = url
   a.download = downloadName
@@ -57,7 +58,7 @@ export function download(url: string, downloadName = 'noneFile') {
  * @param file
  */
 export async function getImageData(file: Blob): task<HTMLImageElement> {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     const r = URL.createObjectURL(file)
     const img = new Image()
     img.onload = () => {

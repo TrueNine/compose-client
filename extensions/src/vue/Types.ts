@@ -1,4 +1,4 @@
-import type {dynamic} from '@compose/api-types'
+import type { dynamic } from '@compose/api-types'
 
 type NativeType = null | number | string | boolean | symbol | ((...args: dynamic) => dynamic)
 

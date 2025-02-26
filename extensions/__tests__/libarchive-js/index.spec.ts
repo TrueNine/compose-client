@@ -1,19 +1,18 @@
+import { readFileSync } from 'node:fs'
 import * as path from 'node:path'
-import {readFileSync} from 'node:fs'
 
-import {describe, test} from 'vitest'
+import { extract } from '@/libarchive-js'
 
-import {extract} from '@/libarchive-js'
+import { describe, expect, it } from 'vitest'
 
 describe('test libarchive.js', () => {
-  test('test libarchive.js', async () => {
+  it('test libarchive.js', async () => {
     const filePath = path.resolve(__dirname, '冯雪飞.rar')
     const f = readFileSync(filePath)
     const rarFile = new File([f], 'test.rar')
-    console.log(rarFile)
 
     const r = await extract(rarFile)
 
-    console.log(r)
+    expect(r).toBeDefined()
   })
 })

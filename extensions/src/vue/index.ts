@@ -1,22 +1,22 @@
-import type {clip, dynamic, Maybe} from '@compose/api-types'
-import {maybeArray} from '@compose/api-model'
+import type { clip, dynamic, Maybe } from '@compose/api-types'
 import type {
+  App,
+  ComponentOptionsMixin,
+  ComponentPropsOptions,
+  ComputedOptions,
+  DefineComponent,
+  EmitsOptions,
+  ExtractDefaultPropTypes,
+  ExtractPropTypes,
+  MethodOptions,
+  ObjectEmitsOptions,
+  PublicProps,
   RendererElement,
   RendererNode,
-  VNode,
-  EmitsOptions,
   SlotsType,
-  ExtractDefaultPropTypes,
-  ObjectEmitsOptions,
-  DefineComponent,
-  ComputedOptions,
-  MethodOptions,
-  ComponentOptionsMixin,
-  PublicProps,
-  ComponentPropsOptions,
-  ExtractPropTypes,
-  App
+  VNode,
 } from 'vue'
+import { maybeArray } from '@compose/api-model'
 
 type EmitsToProps<T extends EmitsOptions> = T extends string[]
   ? Partial<Record<`on${Capitalize<T[number]>}`, (...args: dynamic[]) => dynamic>>
@@ -30,23 +30,23 @@ type EmitsToProps<T extends EmitsOptions> = T extends string[]
 type ResolveProps<PropsOrPropOptions, E extends EmitsOptions> = Readonly<
   PropsOrPropOptions extends ComponentPropsOptions ? ExtractPropTypes<PropsOrPropOptions> : PropsOrPropOptions
 > &
-  (object extends E ? object : EmitsToProps<E>)
+(object extends E ? object : EmitsToProps<E>)
 
 export interface VueComponentInstanceMapping {
   name?: string
   __name?: string
 }
 
-export type SFCWithInstall<T = dynamic> = T & VueComponentInstanceMapping & {install: (app: dynamic) => void}
+export type SFCWithInstall<T = dynamic> = T & VueComponentInstanceMapping & { install: (app: dynamic) => void }
 
-type SlotNode = VNode<RendererNode, RendererElement, Record<string, dynamic>> & {actualName?: string}
+type SlotNode = VNode<RendererNode, RendererElement, Record<string, dynamic>> & { actualName?: string }
 type NotChildrenSlotNode = clip<SlotNode, 'children'>
 
 export interface GenericProps<
   Props extends object = object,
   Emits extends EmitsOptions = Record<string, null>,
   Slots extends SlotsType = SlotsType,
-  Mixin extends ComponentOptionsMixin = ComponentOptionsMixin
+  Mixin extends ComponentOptionsMixin = ComponentOptionsMixin,
 > {
   props?: Props
   emits?: Emits
@@ -67,7 +67,7 @@ export type DefineComponentPart<
   _EE extends string = string,
   _PP = PublicProps,
   _Props = ResolveProps<Props, Emits>,
-  _Defaults = ExtractDefaultPropTypes<Props>
+  _Defaults = ExtractDefaultPropTypes<Props>,
 > = DefineComponent<Props, Expose, _D, _ComputedOptions, _MethodOptions, Mixin, _ExtendsComponentOptionsMixin, Emits, _EE, _PP, _Props, _Defaults, Slots>
 
 const undefinedName = 'NameUndefined'
@@ -82,11 +82,12 @@ const undefinedName = 'NameUndefined'
 export function componentInstallToPlugin<T, E = dynamic>(component: T, otherComponent?: Record<string, E>): T {
   let primaryComponent = component as unknown as SFCWithInstall<T>
   const otherSecondaryComponentInstallers = otherComponent as unknown as Record<string, SFCWithInstall<T>> | undefined
-  if (!primaryComponent.name) primaryComponent = {...primaryComponent, name: primaryComponent.__name}
+  if (!primaryComponent.name)
+    primaryComponent = { ...primaryComponent, name: primaryComponent.__name }
   primaryComponent.install = (app: App) => {
     const allInstallComponents = [primaryComponent, ...Object.values(otherSecondaryComponentInstallers ?? {})]
     for (const toInstallComponent of allInstallComponents) {
-      const {name = void 0, __name = void 0} = toInstallComponent
+      const { name = void 0, __name = void 0 } = toInstallComponent
       app.component(name ?? __name ?? undefinedName, toInstallComponent)
     }
   }
@@ -100,11 +101,13 @@ export function componentInstallToPlugin<T, E = dynamic>(component: T, otherComp
 
 function _findSlotNodesBy(node: Maybe<SlotNode>, compareFn: (node: NotChildrenSlotNode) => boolean = () => true, result: SlotNode[] = []): SlotNode[] {
   const nodes = maybeArray(node)
-  nodes.forEach(n => {
+  nodes.forEach((n) => {
     const r = n.type as Record<string, string>
     n.actualName = r.name || r.__name
-    if (compareFn(n)) result.push(n)
-    if (n.children && typeof n.children !== 'string') _findSlotNodesBy(n.children as unknown as SlotNode, compareFn, result)
+    if (compareFn(n))
+      result.push(n)
+    if (n.children && typeof n.children !== 'string')
+      _findSlotNodesBy(n.children as unknown as SlotNode, compareFn, result)
   })
   return result
 }

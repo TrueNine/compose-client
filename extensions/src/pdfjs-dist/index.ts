@@ -1,5 +1,5 @@
-import type {PDFDocumentProxy, PDFPageProxy} from 'pdfjs-dist'
-import type {dynamic, task} from '@compose/api-types'
+import type { dynamic, task } from '@compose/api-types'
+import type { PDFDocumentProxy, PDFPageProxy } from 'pdfjs-dist'
 import * as pdfjs from 'pdfjs-dist'
 
 interface PDFImageData {
@@ -16,7 +16,7 @@ let __worker: Worker | undefined
 
 export const PdfJs = pdfjs
 
-export function init() {
+export function init(): typeof pdfjs {
   if (__workSrc) {
     pdfjs.GlobalWorkerOptions.workerSrc = __workSrc
     PdfJs.GlobalWorkerOptions.workerSrc = __workSrc
@@ -28,17 +28,17 @@ export function init() {
   return PdfJs
 }
 
-export function setWorkerSrc(workSrc: string) {
+export function setWorkerSrc(workSrc: string): void {
   __workSrc = workSrc
   PdfJs.GlobalWorkerOptions.workerSrc = workSrc
 }
 
-export function setWorker(worker: Worker) {
+export function setWorker(worker: Worker): void {
   __worker = worker
   PdfJs.GlobalWorkerOptions.workerPort = worker
 }
 
-export function getWorkerSrc() {
+export function getWorkerSrc(): string | undefined {
   return __workSrc
 }
 
@@ -65,7 +65,7 @@ export function resolveImage(arg: PDFImageData): string {
   return canvas.toDataURL('image/png')
 }
 
-export async function safeGetObject(objId: string, proxy: PDFPageProxy) {
+export async function safeGetObject(objId: string, proxy: PDFPageProxy): Promise<unknown> {
   return new Promise((resolve, reject) => {
     let isErr = true
     proxy.objs.get(objId, (data: unknown) => {
@@ -73,7 +73,8 @@ export async function safeGetObject(objId: string, proxy: PDFPageProxy) {
       resolve(data)
     })
     setTimeout(() => {
-      if (isErr) reject(new Error(`read PDF objId ${objId} mil 2000 timeout`))
+      if (isErr)
+        reject(new Error(`read PDF objId ${objId} mil 2000 timeout`))
     }, 2000)
   })
 }
@@ -81,15 +82,15 @@ export async function safeGetObject(objId: string, proxy: PDFPageProxy) {
 export async function extractPdfImages<T = string>(pdfFile: Blob, resolve?: (img: PDFImageData) => task<T>): task<T[]> {
   const pdfArrayBuffer = await pdfFile.arrayBuffer()
   const pdf = await PdfJs.getDocument(pdfArrayBuffer).promise
-  const e: PDFImageData[] = await resolvePages(pdf, async page => {
+  const e: PDFImageData[] = await resolvePages(pdf, async (page) => {
     const opList = await page.getOperatorList()
     const rawImgOperator = opList.fnArray.map((f, index) => (f === PdfJs.OPS.paintImageXObject ? index : null)).filter(n => n !== null)
     const filename = opList.argsArray[rawImgOperator[0]][0]
     return (await safeGetObject(filename, page)) as PDFImageData
   })
   return await Promise.all(
-    e.map(async e => {
+    e.map(async (e) => {
       return (await (resolve ?? resolveImage)(e)) as T
-    })
+    }),
   )
 }
