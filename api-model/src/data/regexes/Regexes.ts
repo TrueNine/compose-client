@@ -7,6 +7,7 @@ const DAY = '(0[1-9]|[1-2][0-9]|3[0-1])'
 const CHINA_ID_CARD_PREFIX = `^${ONE_ONE}${ZERO_ZERO_ZERO_ONE}${ZERO_ONE}${YEAR}${MONTH}${DAY}\\d{3}[xX0-9]`
 
 export const Regexes = {
+  // eslint-disable-next-line regexp/prefer-d,regexp/use-ignore-case,regexp/no-useless-range
   CHINA_ID_CARD: new RegExp(`${CHINA_ID_CARD_PREFIX}$`),
-  CHINA_PHONE: /^1[3-9][0-9]\d{8}$/
+  CHINA_PHONE: /^1[3-9]\d{9}$/,
 }

@@ -1,5 +1,3 @@
-import type {dynamic} from '@compose/api-types'
-
 /**
  * # 环绕调用
  * @param supplier 提供一个返回值的函数
@@ -24,24 +22,16 @@ export function switchTo<T>(fn: () => T, switchBy: () => void): T {
   switchBy()
   const r = fn()
   if (r instanceof Promise) {
-    void r.then(er => {
+    void r.then((er) => {
       switchBy()
       return er
     })
-  } else switchBy()
+  }
+  else {
+    switchBy()
+  }
 
   return r
-}
-
-/**
- * ## 调用函数，如果没有提供方法，则使用替换方法
- * @param replace 替换调用的方法
- * @param fn 首选方法
- * @param args 方法参数
- */
-export function optionalCall<F extends CallableFunction, A = dynamic>(replace: F, fn?: F, ...args: A[]) {
-  if (fn) return fn(args)
-  else return replace(args)
 }
 
 export function TODO(todoText = 'Not Implemented todos'): never {

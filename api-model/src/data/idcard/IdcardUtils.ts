@@ -1,7 +1,7 @@
-import {GenderTyping} from '@compose/api-typings'
-import type {timestamp} from '@compose/api-types'
+import type { timestamp } from '@compose/api-types'
+import { Regexes } from '@/data/regexes'
 
-import {Regexes} from '@/data/regexes'
+import { GenderTyping } from '@compose/api-typings'
 
 export const IdcardUtils = {
   getInfo(idcard: string) {
@@ -10,7 +10,8 @@ export const IdcardUtils = {
     const month = Number(trimIdcard.substring(10, 12))
     const day = Number(trimIdcard.substring(12, 14))
     const d = new Date(year, month - 1, day)
-    if (d.getTime() >= Date.now()) return void 0
+    if (d.getTime() >= Date.now())
+      return void 0
 
     const birthday = d.getTime()
 
@@ -18,8 +19,11 @@ export const IdcardUtils = {
       return {
         adCode: trimIdcard.substring(0, 6),
         gender: Number(trimIdcard.substring(16, 17)) % 2 === 0 ? GenderTyping.WOMAN : GenderTyping.MAN,
-        birthday: birthday satisfies timestamp
+        birthday: birthday satisfies timestamp,
       }
-    } else return void 0
-  }
+    }
+    else {
+      return void 0
+    }
+  },
 }

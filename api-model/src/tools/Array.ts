@@ -1,5 +1,4 @@
-import type {late, Maybe} from '@compose/api-types'
-import type {dynamic} from '@compose/api-types'
+import type { dynamic, late, Maybe } from '@compose/api-types'
 
 /**
  * # 对数组进行去重
@@ -17,13 +16,14 @@ export function arrayDistinct<T>(arr: T[]): T[] {
  * @param currentCombination 当前穷举组合
  */
 export function cartesianProduct<T = unknown>(spec: Record<string, T[]>, currentIndex = 0, currentCombination: Record<string, T> = {}): Record<string, T>[] {
-  if (currentIndex === Object.keys(spec).length) return [currentCombination]
+  if (currentIndex === Object.keys(spec).length)
+    return [currentCombination]
 
   const currentKey = Object.keys(spec)[currentIndex]
   const currentValues = spec[currentKey]
   const result: Record<string, T>[] = []
   for (const value of currentValues) {
-    const nextCombination = {...currentCombination}
+    const nextCombination = { ...currentCombination }
     nextCombination[currentKey] = value
     result.push(...cartesianProduct(spec, currentIndex + 1, nextCombination))
   }
@@ -55,15 +55,16 @@ export function arrayDiff<T>(a: T[], b: T[]): T[] {
  * ```
  *
  * @param arr 数组
- * @param valueHandle 值提供函数
  * @param keyHandle 键提供函数
+ * @param valueHandle 值提供函数
  * @returns 组合后的 map k v[]
  */
 export function combineToMap<T, K, V>(arr: T[], keyHandle: (t: T) => K, valueHandle: (t: T) => V): Map<K, V[]> {
   const result = new Map<K, V[]>()
-  arr.forEach(item => {
+  arr.forEach((item) => {
     const _k = keyHandle(item)
-    if (result.has(_k)) result.get(_k)?.push(valueHandle(item))
+    if (result.has(_k))
+      result.get(_k)?.push(valueHandle(item))
     else result.set(_k, [valueHandle(item)])
   })
   return result
@@ -73,7 +74,7 @@ export function combineToMap<T, K, V>(arr: T[], keyHandle: (t: T) => K, valueHan
  * 将 maybe 类型转换为 array
  * @param maybe T | Array<T>
  */
-export function maybeArray<T = dynamic>(maybe: Maybe<T>) {
+export function maybeArray<T = dynamic>(maybe: Maybe<T>): T[] {
   return Array.isArray(maybe) ? maybe : ([maybe] as T[])
 }
 
@@ -90,7 +91,7 @@ export function maybeReadonlyArray<T = dynamic>(maybe: Maybe<T>): readonly T[] {
  * @param start 开始
  * @param end 结束
  */
-export function* range(start: number, end: number) {
+export function* range(start: number, end: number): Generator<number, void, unknown> {
   for (let i = start; i <= end; i++) {
     yield i
   }
@@ -101,20 +102,22 @@ export function* range(start: number, end: number) {
  * @param key 作为 key 的字段
  * @param arr 需合并的对象数组
  */
-export function mergeToMap<T extends object>(key: keyof T, arr: T[]): {[key in keyof T]: T[]} {
-  if (!arr.length) return {} as {[key in keyof T]: T[]}
+export function mergeToMap<T extends object>(key: keyof T, arr: T[]): { [key in keyof T]: T[] } {
+  if (!arr.length)
+    return {} as { [key in keyof T]: T[] }
   const ks = arr.map(e => ({
     key: (e[key]?.toString() ?? '') as keyof T,
-    value: e
+    value: e,
   }))
   return ks.reduce(
     (acc, cur) => {
-      if (acc[cur.key] !== void 0) acc[cur.key]?.push(cur.value)
+      if (acc[cur.key] !== void 0)
+        acc[cur.key]?.push(cur.value)
       else acc[cur.key] = [cur.value]
       return acc
     },
-    {} as {[key in keyof T]: T[] | undefined}
-  ) as {[key in keyof T]: T[]}
+    {} as { [key in keyof T]: T[] | undefined },
+  ) as { [key in keyof T]: T[] }
 }
 
 /**
@@ -123,7 +126,8 @@ export function mergeToMap<T extends object>(key: keyof T, arr: T[]): {[key in k
  * @param conditional 条件
  */
 export function sameValue<T>(arr: T[], conditional: (t: T, old: T) => boolean = (t, old) => t === old): late<T> {
-  if (arr.length === 0) return void 0
+  if (arr.length === 0)
+    return void 0
   const old = arr[0]
   return arr.every((v, i) => i === 0 || conditional(v, old)) ? old : void 0
 }

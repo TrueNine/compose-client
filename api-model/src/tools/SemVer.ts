@@ -9,37 +9,37 @@ export class SemVer {
 
   constructor(version: string) {
     this._version = version
-    const mmp = version.trim().split('.').map(parseInt)
+    const mmp = version.trim().split('.').map(Number.parseInt)
     this._major = mmp[0]
     this._minor = mmp[1]
     this._patch = mmp[2]
   }
 
-  addPatch() {
+  addPatch(): string {
     return `${this._major.toString()}.${this._minor.toString()}.${(this._patch + 1).toString()}`
   }
 
-  addMinor() {
+  addMinor(): string {
     return `${this._major.toString()}.${(this._minor + 1).toString()}.${this._patch.toString()}`
   }
 
-  addMajor() {
+  addMajor(): string {
     return `${(this._major + 1).toString()}.${this._minor.toString()}.${this._patch.toString()}`
   }
 
-  get major() {
+  get major(): number {
     return this._major
   }
 
-  get minor() {
+  get minor(): number {
     return this._minor
   }
 
-  get patch() {
+  get patch(): number {
     return this._patch
   }
 
-  get metaVersion() {
+  get metaVersion(): string {
     return this._version
   }
 }

@@ -1,6 +1,6 @@
 export const ISO8601TimeZone = {
   ASIA_SHANGHAI: 'Asia/Shanghai' as const,
-  UTC: 'UTC' as const
+  UTC: 'UTC' as const,
 }
 
 /**
@@ -11,7 +11,7 @@ export const ISO8601Format = {
   time: 'HH:mm:ss' as const,
   datetime: 'YYYY-MM-DD HH:mm:ss' as const,
   millis: 'x' as const,
-  second: 'X' as const
+  second: 'X' as const,
 }
 
 /**

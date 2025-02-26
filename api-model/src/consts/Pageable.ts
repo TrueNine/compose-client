@@ -1,9 +1,9 @@
-import type {Pq, Pr} from '@compose/api-types'
+import type { Pq, Pr } from '@compose/api-types'
 
 export const PagedWrapper = {
   DEFAULT_MAX: {
     o: 0,
-    s: 42
+    s: 42,
   } as Pq,
 
   /**
@@ -15,9 +15,9 @@ export const PagedWrapper = {
       o: 0,
       p: 0,
       t: 0,
-      d: [] as T[]
+      d: [] as T[],
     } as Pr<T>
-  }
+  },
 }
 
 /**

@@ -1,6 +1,6 @@
-import type {nilpt, dynamic, bool, Maybe} from '@compose/api-types'
+import type { bool, dynamic, Maybe, nilpt } from '@compose/api-types'
 
-import {STR_EMPTY} from '@/consts'
+import { STR_EMPTY } from '@/consts'
 
 /**
  * ## 判断一个字符串是否为空，返回本身或空字符串，排除 null | undefined
@@ -24,11 +24,15 @@ export function withEmpty(str?: string): string {
  * @param value 对象
  */
 export function isNil(value?: nilpt<unknown>): bool {
-  if (value == null) return true
-  if (typeof value === 'string' && !isNonNilString(value)) return true
+  if (value == null)
+    return true
+  if (typeof value === 'string' && !isNonNilString(value))
+    return true
   if (Array.isArray(value)) {
-    if (value.length === 0) return true
-    if (value.every(isNil)) return true
+    if (value.length === 0)
+      return true
+    if (value.every(isNil))
+      return true
   }
   return typeof value === 'object' && Object.keys(value).length === 0
 }
@@ -37,7 +41,7 @@ export function isNil(value?: nilpt<unknown>): bool {
  * # 对 [isEmpty] 的反向调用
  * @param value 对象
  */
-export function isNonNil(value?: nilpt<unknown>) {
+export function isNonNil(value?: nilpt<unknown>): boolean {
   return !isNil(value)
 }
 
@@ -72,7 +76,8 @@ export function mapRecord<T, U>(record: Record<string, T>, callback: (val: T) =>
 }
 
 export function dlv(obj: dynamic, key: Maybe<string>, def: dynamic, p: number, undef: dynamic): dynamic {
-  if (typeof key === 'string') key = key.split('.')
+  if (typeof key === 'string')
+    key = key.split('.')
   for (p = 0; p < key.length; p++) {
     const path = key[p]
     obj = obj ? obj[path] : undef
@@ -98,16 +103,18 @@ interface _DeepOptions<T = dynamic> {
 export function deepResolve<T extends Record<dynamic, dynamic> | dynamic[] = dynamic>(
   source: T,
   options: _DeepOptions = {},
-  filter: _DeepFilter = () => false
+  filter: _DeepFilter = () => false,
 ): T {
-  const defaultOptions = {deep: false, resolve: (v: dynamic) => v}
-  options = {...defaultOptions, ...options}
+  const defaultOptions = { deep: false, resolve: (v: dynamic) => v }
+  options = { ...defaultOptions, ...options }
   const resolver = options.resolve ?? (v => v)
 
   function _deepResolve<T = dynamic>(obj: T, depth = 0): T {
-    if (obj === void 0 || obj === null) return obj
+    if (obj === void 0 || obj === null)
+      return obj
     const isArr = Array.isArray(obj)
-    if (typeof obj !== 'object' && !isArr) return obj
+    if (typeof obj !== 'object' && !isArr)
+      return obj
     const result: dynamic = isArr ? [] : {}
     for (const key in obj) {
       const value = obj[key]
@@ -129,7 +136,7 @@ export function deepResolve<T extends Record<dynamic, dynamic> | dynamic[] = dyn
  * @param obj 操作对象
  */
 export function des<T>(obj: T): T {
-  return {...obj}
+  return { ...obj }
 }
 
 /**
@@ -137,5 +144,5 @@ export function des<T>(obj: T): T {
  * @param arr 操作数组
  */
 export function aDes<T>(arr: T[] | readonly T[]): T[] {
-  return arr.map(e => ({...e}))
+  return arr.map(e => ({ ...e }))
 }
