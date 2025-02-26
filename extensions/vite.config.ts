@@ -1,8 +1,8 @@
-import {fileURLToPath, URL} from 'node:url'
+import { fileURLToPath, URL } from 'node:url'
 
-import {manifest} from '@compose/config-vite-fragment'
+import { manifest } from '@compose/config-vite-fragment'
 
-const {defineConfig} = manifest({
+const { defineConfig } = manifest({
   features: {
     lib: {
       enable: true,
@@ -10,17 +10,17 @@ const {defineConfig} = manifest({
       sourcemap: true,
       dts: {
         enable: true,
-        dtsSourcemap: true
-      }
+        dtsSourcemap: true,
+      },
     },
-    entry: ['index', 'browser/document', 'lodash-es/index', 'dayjs/index', 'libarchive-js/index', 'pdfjs-dist/index', 'vue/index', 'pino/index']
-  }
+    entry: ['index', 'browser/document', 'lodash-es/index', 'dayjs/index', 'libarchive-js/index', 'pdfjs-dist/index', 'vue/index', 'pino/index'],
+  },
 })
 
 export default defineConfig({
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
-    }
-  }
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+    },
+  },
 })

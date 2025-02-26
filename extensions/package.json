@@ -1,21 +1,16 @@
 {
   "name": "@compose/extensions",
-  "version": "30.0.5",
+  "type": "module",
+  "version": "30.0.6",
   "description": "yan100 extensions functions and apis",
   "author": "TrueNine",
   "license": "private",
-  "scripts": {
-    "build": "run-s fmt lint type-check build-c",
-    "lint": "eslint --fix",
-    "pub": "run-s build pub-c",
-    "fmt": "prettier --write \"**/*.ts\" \"**/*.d.ts\" \"**/*.json\" --ignore-unknown",
-    "build-c": "vite build",
-    "type-check": "vue-tsc --noEmit",
-    "pub-c": "pnpm --dir ./dist pub"
+  "homepage": "https://github.com/TrueNine",
+  "repository": {
+    "type": "git",
+    "url": "git+https://https://github.com/TrueNine/compose-client",
+    "directory": "api-types"
   },
-  "type": "module",
-  "module": "dist/index.js",
-  "types": "dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -45,6 +40,10 @@
       "types": "./dist/libarchive-js/index.d.ts",
       "import": "./dist/libarchive-js/index.js"
     },
+    "./vue-router": {
+      "types": "./dist/vue-router/index.d.ts",
+      "import": "./dist/vue-router/index.js"
+    },
     "./pino": {
       "types": "./dist/pino/index.d.ts",
       "import": "./dist/pino/index.js"
@@ -54,14 +53,18 @@
     "./dist/*": "./dist/*",
     "./dist/**": "./dist/**"
   },
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
     "dist",
     "src"
   ],
-  "homepage": "https://github.com/TrueNine",
-  "repository": {
-    "type": "git",
-    "url": "git+https://https://github.com/TrueNine/compose-client",
-    "directory": "api-types"
+  "scripts": {
+    "build": "run-s type-check lint build-c",
+    "lint": "eslint --fix",
+    "pub": "run-s build pub-c",
+    "build-c": "vite build",
+    "type-check": "vue-tsc --noEmit",
+    "pub-c": "pnpm --dir ./dist pub"
   }
 }
