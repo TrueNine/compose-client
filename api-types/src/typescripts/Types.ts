@@ -2,9 +2,9 @@
  * 已知的任意类型，用于某些时候骗过编译器
  * @deprecated 不建议直接使用，使用 `dynamic` 更为贴切
  */
-// eslint-disable-next-line
+// eslint-disable-next-line ts/ban-ts-comment
 // @ts-ignore
-// eslint-disable-next-line
+// eslint-disable-next-line ts/no-explicit-any
 export type SafeAny = any
 /**
  * 已知的任意类型，用于某些时候骗过编译器

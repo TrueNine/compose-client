@@ -1,8 +1,7 @@
-import type {AuditTyping, CertContentTyping, CertPointTyping, CertTyping} from '@compose/api-typings'
+import type { datetime } from '@/datetime'
 
-import type {IEntity} from '@/orm'
-import type {RefId} from '@/orm'
-import type {datetime} from '@/datetime'
+import type { IEntity, RefId } from '@/orm'
+import type { AuditTyping, CertContentTyping, CertPointTyping, CertTyping } from '@compose/api-typings'
 
 export interface Cert extends IEntity {
   userId?: RefId

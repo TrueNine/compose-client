@@ -1,6 +1,6 @@
-import type {ITreeEntity} from '@/orm'
-import type {WGS84} from '@/map'
-import type {i128} from '@/typescripts'
+import type { WGS84 } from '@/map'
+import type { ITreeEntity } from '@/orm'
+import type { i128 } from '@/typescripts'
 
 export interface Address extends ITreeEntity {
   code: string

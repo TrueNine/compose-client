@@ -1,10 +1,10 @@
-import type {AuditTyping} from '@compose/api-typings'
+import type { datetime } from '@/datetime'
 
-import type {IEntity} from './Entities'
-import type {RefId} from './Utils'
+import type { i32, str } from '@/typescripts'
+import type { AuditTyping } from '@compose/api-typings'
 
-import type {datetime} from '@/datetime'
-import type {i32, str} from '@/typescripts'
+import type { IEntity } from './Entities'
+import type { RefId } from './Utils'
 
 export interface Audit extends IEntity {
   auditDeviceId?: str

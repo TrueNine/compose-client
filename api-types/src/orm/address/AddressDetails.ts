@@ -1,8 +1,6 @@
-import type {IEntity} from '@/orm'
-import type {WGS84} from '@/map'
-import type {RefId} from '@/orm'
-import type {Address} from '@/orm'
-import type {str} from '@/typescripts'
+import type { WGS84 } from '@/map'
+import type { Address, IEntity, RefId } from '@/orm'
+import type { str } from '@/typescripts'
 
 export interface AddressDetails extends IEntity {
   addressId?: RefId

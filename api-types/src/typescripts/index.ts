@@ -1,5 +1,5 @@
 export * from './Arrays'
-export * from './Types'
+export * from './Fns'
 export * from './Number'
 export * from './String'
-export * from './Fns'
+export * from './Types'

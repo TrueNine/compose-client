@@ -1,7 +1,7 @@
-import type {AttachmentTyping} from '@compose/api-typings'
+import type { AttachmentTyping } from '@compose/api-typings'
 
-import type {IEntity} from './Entities'
-import type {Id, RefId} from './Utils'
+import type { IEntity } from './Entities'
+import type { Id, RefId } from './Utils'
 
 /**
  * ## 附件

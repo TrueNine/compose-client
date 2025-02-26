@@ -1,5 +1,5 @@
-import type {IEntity, ITreeEntity} from './Entities'
-import type {RefId} from './Utils'
+import type { IEntity, ITreeEntity } from './Entities'
+import type { RefId } from './Utils'
 
 export interface Dept extends ITreeEntity {
   name: string

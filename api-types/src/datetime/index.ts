@@ -1,2 +1,2 @@
-export * from './RouteTable'
 export * from './Formats'
+export * from './RouteTable'

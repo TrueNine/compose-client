@@ -1,4 +1,4 @@
-import type {f64} from '@/typescripts'
+import type { f64 } from '@/typescripts'
 
 /**
  * 地址坐标数据类型

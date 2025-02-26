@@ -1,5 +1,5 @@
-import type {IEntity} from './Entities'
-import type {RefId} from './Utils'
+import type { IEntity } from './Entities'
+import type { RefId } from './Utils'
 
 export interface Api extends IEntity {
   permissionsId?: RefId

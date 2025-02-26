@@ -1,10 +1,10 @@
-import type {GenderTyping} from '@compose/api-typings'
+import type { date } from '@/datetime'
 
-import type {IEntity} from './Entities'
-import type {RefId} from './Utils'
+import type { bool, str } from '@/typescripts'
+import type { GenderTyping } from '@compose/api-typings'
 
-import type {date} from '@/datetime'
-import type {bool, str} from '@/typescripts'
+import type { IEntity } from './Entities'
+import type { RefId } from './Utils'
 
 export interface UserInfo extends IEntity {
   readonly createUserId?: RefId

@@ -1,4 +1,4 @@
-import type {IEntity} from './Entities'
+import type { IEntity } from './Entities'
 
 export interface Permissions extends IEntity {
   name: string

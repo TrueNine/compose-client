@@ -1,7 +1,7 @@
-import type {Id, RefId} from './Utils'
+import type { datetime } from '@/datetime'
 
-import type {bool, i64} from '@/typescripts'
-import type {datetime} from '@/datetime'
+import type { bool, i64 } from '@/typescripts'
+import type { Id, RefId } from './Utils'
 
 /**
  * 实体类基类

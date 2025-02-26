@@ -1,8 +1,7 @@
-import type {GenderTyping} from '@compose/api-typings'
+import type { timestamp } from '@/datetime'
 
-import type {IEntity} from '@/orm'
-import type {timestamp} from '@/datetime'
-import type {RefId} from '@/orm'
+import type { IEntity, RefId } from '@/orm'
+import type { GenderTyping } from '@compose/api-typings'
 
 export interface Idcard2 extends IEntity {
   userId: RefId

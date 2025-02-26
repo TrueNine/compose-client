@@ -1,7 +1,7 @@
 /**
- * # 网络标记库
+ * 各种 data 的标准
  */
-export * from './request'
+export * from './data'
 
 /**
  * 日期时间相关定义
@@ -9,14 +9,9 @@ export * from './request'
 export * from './datetime'
 
 /**
- * 样式相关定义
+ * 语言 国际化
  */
-export * from './stylesheet'
-
-/**
- * typescript 的增强定义
- */
-export * from './typescripts'
+export * from './i18n'
 
 /**
  * kotlin 的增强定义
@@ -32,17 +27,15 @@ export * from './map'
  * 数据库的抽象定义
  */
 export * from './orm'
-export * from './model'
+/**
+ * 外部依赖类型
+ */
+export * from './reference'
 
 /**
- * 语言 国际化
+ * # 网络标记库
  */
-export * from './i18n'
-
-/**
- * 各种 data 的标准
- */
-export * from './data'
+export * from './request'
 
 /**
  * 与安全相关的一系列定义
@@ -50,6 +43,11 @@ export * from './data'
 export * from './security'
 
 /**
- * 外部依赖类型
+ * 样式相关定义
  */
-export * from './reference'
+export * from './stylesheet'
+
+/**
+ * typescript 的增强定义
+ */
+export * from './typescripts'

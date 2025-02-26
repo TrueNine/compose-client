@@ -1,4 +1,4 @@
-import type {i32} from '@/typescripts'
+import type { i32 } from '@/typescripts'
 
 export type AddrCode = '00' | '000' | '' | `${number}`
 

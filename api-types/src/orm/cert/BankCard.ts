@@ -1,6 +1,5 @@
-import type {IEntity} from '@/orm'
-import type {RefId} from '@/orm'
-import type {i32, str} from '@/typescripts'
+import type { IEntity, RefId } from '@/orm'
+import type { i32, str } from '@/typescripts'
 
 export interface BankCard extends IEntity {
   userId?: RefId

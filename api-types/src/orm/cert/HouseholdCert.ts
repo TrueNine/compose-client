@@ -1,9 +1,8 @@
-import type {BloodTyping, DegreeTyping, GenderTyping} from '@compose/api-typings'
+import type { timestamp } from '@/datetime'
 
-import type {IEntity} from '@/orm'
-import type {RefId} from '@/orm'
-import type {timestamp} from '@/datetime'
-import type {decimal, i32, i64, str} from '@/typescripts'
+import type { IEntity, RefId } from '@/orm'
+import type { decimal, i32, i64, str } from '@/typescripts'
+import type { BloodTyping, DegreeTyping, GenderTyping } from '@compose/api-typings'
 
 export interface HouseholdCert extends IEntity {
   userId?: RefId
