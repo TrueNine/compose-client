@@ -1,20 +1,22 @@
-import {defineConfig} from 'rollup'
-import type {Plugin} from 'rollup'
-import ts from '@rollup/plugin-typescript'
+import type { Plugin } from 'rollup'
 import cjs from '@rollup/plugin-commonjs'
 import res from '@rollup/plugin-node-resolve'
-//import alias from '@rollup/plugin-alias'
-//import {emptyDirSync} from 'fs-extra'
+import ts from '@rollup/plugin-typescript'
+import { defineConfig } from 'rollup'
+// import alias from '@rollup/plugin-alias'
+// import {emptyDirSync} from 'fs-extra'
 
-const customExternalPlugin = async (): Promise<Plugin> => {
+async function customExternalPlugin(): Promise<Plugin> {
   return {
     name: 'custom-external-plugin',
     generateBundle: (_, bundle) => {
-      Object.keys(bundle).forEach(key => {
-        if (key.startsWith('consts/Strings')) delete bundle[key]
-        else if (key.startsWith('tools/Strings')) delete bundle[key]
+      Object.keys(bundle).forEach((key) => {
+        if (key.startsWith('consts/Strings'))
+          delete bundle[key]
+        else if (key.startsWith('tools/Strings'))
+          delete bundle[key]
       })
-    }
+    },
   }
 }
 
@@ -28,8 +30,8 @@ export default defineConfig([
         preserveModulesRoot: 'src',
         preserveModules: true,
         format: 'esm',
-        dir: 'dist'
-      }
-    ]
-  }
+        dir: 'dist',
+      },
+    ],
+  },
 ])

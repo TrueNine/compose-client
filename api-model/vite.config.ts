@@ -1,31 +1,31 @@
-import {fileURLToPath, URL} from 'node:url'
+import { fileURLToPath, URL } from 'node:url'
 
-import {manifest} from '@compose/config-vite-fragment'
+import { manifest } from '@compose/config-vite-fragment'
 
-const {defineConfig} = manifest({
+const { defineConfig } = manifest({
   pushFeatures: {
     lib: {
-      externals: [/(\/VueRouter$)/]
-    }
+      externals: [/(\/VueRouter$)/],
+    },
   },
   features: {
-    entry: ['index', 'consts/index', 'data/index', 'tools/index', 'defineds/index'],
+    entry: ['index', 'consts/index', 'data/index', 'tools/index'],
     lib: {
       minify: true,
       sourcemap: true,
       dts: {
         enable: true,
-        dtsSourcemap: true
+        dtsSourcemap: true,
       },
-      copySourceCodeToDist: false
-    }
-  }
+      copySourceCodeToDist: false,
+    },
+  },
 })
 
 export default defineConfig({
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
-    }
-  }
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+    },
+  },
 })
