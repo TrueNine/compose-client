@@ -16,7 +16,7 @@ const {defineConfig} = manifest({
     }
   },
   features: {
-    entry: ['index', 'rules/index', 'globals/index'],
+    entry: ['index'],
     lang: 'ts',
     lib: {
       formats: ['es', 'cjs'],

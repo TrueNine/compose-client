@@ -1,79 +1,102 @@
-import globals from 'globals'
-
-import unocss from '@unocss/eslint-config/flat'
-
-import pluginJs from '@eslint/js'
-import tseslint from 'typescript-eslint'
-import pluginVue from 'eslint-plugin-vue'
-import {ComposeGlobals, EchartsGlobals} from '@/globals'
-import pluginPrettierRecommendedConfigs from 'eslint-plugin-prettier/recommended'
-
-import parserVue from 'vue-eslint-parser'
-import type {FlatESLintConfig, Parser, Rules} from 'eslint-define-config'
-import {VueRules} from '@/rules'
-import {TypescriptRules} from '@/rules/TypescriptRules'
-import {EcmaRules} from '@/rules/EcmaRules'
-import oxlint from 'eslint-plugin-oxlint'
-import skipFormatting from '@vue/eslint-config-prettier/skip-formatting'
-import {defineConfigWithVueTs, configureVueProject, vueTsConfigs} from '@vue/eslint-config-typescript'
+import {configureVueProject} from '@vue/eslint-config-typescript'
+import {antfu, type Awaitable, type TypedFlatConfigItem} from '@antfu/eslint-config'
 
 configureVueProject({
   scriptLangs: ['ts', 'tsx', 'js', 'jsx']
 })
 
-export const DefinedConfig = [
-  {
-    ignores: [
-      'dist/**',
-      '__build-src__/**',
-      'vite.config.*',
-      'vitest.config.*',
-      'playwright.config.*',
-      'rollup.config.*',
-      'uno.config.*',
-      '**/example/**',
-      '**/examples/**',
-      'node_modules',
-      '__tests__/**',
-      '__test__/**'
+type UserEslintConfig = Awaitable<TypedFlatConfigItem> | TypedFlatConfigItem
+
+export const EcmaRules: UserEslintConfig = {
+  rules: {
+    'no-undefined': 'error',
+    'no-restricted-syntax': 'error',
+    'no-global-assign': 'error',
+    'no-unused-vars': 'error',
+    'no-var': 'error',
+    camelcase: ['error', {properties: 'always'}], // 优先使用 const
+    'prefer-const': [
+      'error',
+      {
+        destructuring: 'any',
+        ignoreReadBeforeAssign: false
+      }
     ]
-  },
-  unocss,
-  {
-    languageOptions: {
-      globals: {
-        ...globals.browser,
-        ...ComposeGlobals,
-        ...EchartsGlobals
+  }
+}
+
+export const TypescriptRules: UserEslintConfig = {
+  rules: {
+    'ts/no-explicit-any': 'error',
+    'ts/no-namespace': 'off',
+    'ts/no-unused-vars': [
+      'error',
+      {
+        vars: 'all',
+        args: 'after-used',
+        ignoreRestSiblings: false
       }
-    }
-  },
-  pluginJs.configs.recommended,
-
-  ...tseslint.configs.recommended,
-  ...pluginVue.configs['flat/strongly-recommended'],
-
-  ...defineConfigWithVueTs(vueTsConfigs.strictTypeChecked, vueTsConfigs.recommended, vueTsConfigs.stylisticTypeChecked, vueTsConfigs.recommendedTypeChecked),
-
-  pluginPrettierRecommendedConfigs,
-  {
-    rules: {
-      ...EcmaRules,
-      ...TypescriptRules
-    } as Partial<Rules>
-  },
-  {
-    files: ['**/*.vue'],
-    rules: {...VueRules},
-    languageOptions: {
-      ecmaVersion: 'latest',
-      parser: parserVue,
-      parserOptions: {
-        ecmaFeatures: {jsx: true},
-        parser: tseslint.parser as unknown as Parser
+    ]
+  }
+}
+export const VueRules: UserEslintConfig = {
+  rules: {
+    'vue/attributes-order': [
+      'warn',
+      {
+        order: [
+          'DEFINITION',
+          'LIST_RENDERING',
+          'CONDITIONALS',
+          'RENDER_MODIFIERS',
+          'GLOBAL',
+          'UNIQUE',
+          'TWO_WAY_BINDING',
+          'OTHER_DIRECTIVES',
+          'OTHER_ATTR',
+          'EVENTS',
+          'CONTENT'
+        ]
       }
-    }
-  } as FlatESLintConfig,
-  oxlint.configs['flat/recommended'],
-  skipFormatting
-]
+    ],
+    'vue/v-on-event-hyphenation': [
+      'error',
+      'never',
+      {
+        autofix: true
+      }
+    ],
+    'vue/attribute-hyphenation': [
+      'error',
+      'never',
+      {
+        ignoreTags: ['i-', 'v-', 'v-bind']
+      }
+    ],
+    'vue/prop-name-casing': ['error', 'camelCase'],
+    'vue/component-name-in-template-casing': [
+      'error',
+      'PascalCase',
+      {
+        ignores: ['router-view', 'router-link', 'scroll-view'],
+        registeredComponentsOnly: false
+      }
+    ]
+  }
+}
+
+type PrettierC = NonNullable<Parameters<typeof antfu>[0]>['formatters']
+export const Formatters: PrettierC = {
+  css: 'prettier',
+  html: 'prettier',
+  prettierOptions: {
+    tabWidth: 2,
+    arrowParens: 'avoid',
+    vueIndentScriptAndStyle: true,
+    useTabs: false,
+    singleQuote: true,
+    jsxSingleQuote: true,
+    trailingComma: 'es5',
+    bracketSpacing: true,
+  },
+}
