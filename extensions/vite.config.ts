@@ -13,7 +13,7 @@ const { defineConfig } = manifest({
         dtsSourcemap: true,
       },
     },
-    entry: ['index', 'browser/document', 'lodash-es/index', 'dayjs/index', 'libarchive-js/index', 'pdfjs-dist/index', 'vue/index', 'pino/index'],
+    entry: ['index', 'browser/document', 'lodash-es/index', 'dayjs/index', 'libarchive-js/index', 'pdfjs-dist/index', 'vue/index', 'pino/index', 'vue-router/index'],
   },
 })
 
