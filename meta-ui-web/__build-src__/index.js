@@ -1,14 +1,14 @@
-import {resolve, dirname} from 'path'
-import {fileURLToPath} from 'url'
-import {spawn} from 'node:child_process'
+import { spawn } from 'node:child_process'
+import { dirname, resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
 
-import {dest, parallel, series, src} from 'gulp'
-import gulpSass from 'gulp-sass'
-import sass from 'sass'
-import gulpPostcss from 'gulp-postcss'
+import unocssPostcss from '@unocss/postcss'
 import autoprefixer from 'autoprefixer'
 import cssnano from 'cssnano'
-import unocssPostcss from '@unocss/postcss'
+import { dest, parallel, series, src } from 'gulp'
+import gulpPostcss from 'gulp-postcss'
+import gulpSass from 'gulp-sass'
+import sass from 'sass'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -19,16 +19,15 @@ export const nodeModulesPath = joinPath('../node_modules')
 
 export async function buildUnocss(fName = 'unocss.css') {
   const cmd = `unocss "${basePath}/src/**/*.vue" -c ${basePath}/uno.config.ts -o ${distPath}/${fName} -m`
-  console.log(`execute uno compile: ${cmd}   basePath ${basePath}/src`)
   await run(cmd, basePath)
 }
 
-export const buildStyle = () => {
+export function buildStyle() {
   return src(`${basePath}/src/**/**.scss`)
     .pipe(
       gulpSass(sass)({
-        includePaths: [nodeModulesPath]
-      })
+        includePaths: [nodeModulesPath],
+      }),
     )
     .pipe(gulpPostcss([unocssPostcss(), autoprefixer(), cssnano()]))
     .pipe(dest(distPath))
@@ -37,21 +36,21 @@ export const buildStyle = () => {
 export default series(
   parallel(
     async () => buildStyle(),
-    async () => buildUnocss()
-  )
+    async () => buildUnocss(),
+  ),
 )
 
 export function joinPath(pattern) {
   return resolve(__dirname, pattern).replaceAll('\\', '/')
 }
 
-export const run = async (command, path) => {
+export async function run(command, path) {
   const [cmd, ...args] = command.split(' ')
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     const app = spawn(cmd, args, {
       cwd: path,
       stdio: 'inherit',
-      shell: true
+      shell: true,
     })
     app.on('close', resolve)
   })
