@@ -37,14 +37,35 @@ export async function loopPageAll<T>(loopFn: (loopPq: Pq) => asyncable<nil<Pr<T>
  * @param arr 数组
  * @param pq 分页参数
  */
-export function arrayToPage<T>(
-  arr: T[],
-  pq: Pq = Pw.DEFAULT_MAX,
-): Pr<T> {
-  const segment = pq.s ?? Pw.DEFAULT_MAX.s ?? arr.length
+export function arrayToPage<T>(arr: T[], pq: Pq = Pw.DEFAULT_MAX): Pr<T> {
+  if (!arr.length) {
+    return Pw.empty()
+  }
+
+  const minPageSize = Math.min(arr.length, pq.s ?? arr.length)
+  const safeOffset = Math.max(0, pq.o ?? 0)
+
+  if (pq.s === 0) {
+    return {
+      d: arr,
+      p: 1,
+      t: arr.length,
+    }
+  }
+
+  const pageSize = Math.ceil(arr.length / minPageSize)
+  if (pq.o === 0) {
+    return {
+      d: arr.slice(0, minPageSize),
+      p: pageSize,
+      t: arr.length,
+    }
+  }
+  const sliceStart = Math.min(safeOffset * minPageSize, arr.length)
+  const sliceEnd = Math.min(sliceStart + minPageSize, arr.length)
   return {
-    d: arr.slice((pq.o ?? 0) * segment, (pq.o ?? 0) * segment + segment),
-    p: Math.ceil(arr.length / segment),
+    d: arr.slice(sliceStart, sliceEnd),
+    p: pageSize,
     t: arr.length,
   }
 }
