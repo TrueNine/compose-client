@@ -1,4 +1,4 @@
-import {createPinia, defineStore} from 'pinia'
+import { createPinia, defineStore } from 'pinia'
 
 const PlaygroundPinia = createPinia()
 
@@ -12,9 +12,9 @@ const usePlaygroundStore = defineStore('playground', () => {
     authed,
     anon,
     permissions,
-    roles
+    roles,
   }
 })
-export {PlaygroundPinia as Pinia, usePlaygroundStore}
+export { PlaygroundPinia as Pinia, usePlaygroundStore }
 
 export default PlaygroundPinia

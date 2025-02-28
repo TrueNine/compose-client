@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import {string} from 'yup'
+import type { FormFieldEmits, FormFieldProps } from '@/common'
 
-import type {FormFieldEmits, FormFieldProps} from '@/common'
+import { string } from 'yup'
+
 const props = withDefaults(defineProps<FormFieldProps<string>>(), {
-  defaultValidateSchema: () => string().max(3).required()
+  defaultValidateSchema: () => string().max(3).required(),
 })
 const emits = defineEmits<FormFieldEmits<string>>()
-const mv = useVModel(props, 'modelValue', emits, {passive: true})
+const mv = useVModel(props, 'modelValue', emits, { passive: true })
 </script>
 
 <template>

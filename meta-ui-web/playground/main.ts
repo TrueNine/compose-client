@@ -1,19 +1,20 @@
-import {createApp} from 'vue'
+import { createVuetifyMount, quasarInstall } from '@/common'
 
-import '@mdi/font/css/materialdesignicons.css'
-import 'vuetify/styles'
+import { naiveStyleAdaptor } from '@/index'
+import { createApp } from 'vue'
 
 import App from './App.vue'
 import Router from './router'
 
-import {createVuetifyMount, quasarInstall} from '@/common'
-import {naiveStyleAdaptor} from '@/index'
+import { Pinia } from './store'
+import '@mdi/font/css/materialdesignicons.css'
 
+import 'vuetify/styles'
 import 'uno.css'
-import {Pinia} from './store'
 
 const a = createVuetifyMount(r => Object.assign({}, r))
-function setupApp() {
+
+function setupApp(): void {
   naiveStyleAdaptor()
   const createdApp = createApp(App)
   quasarInstall(createdApp)
@@ -22,4 +23,5 @@ function setupApp() {
   createdApp.use(Router)
   createdApp.mount('#ROOT')
 }
+
 setupApp()
