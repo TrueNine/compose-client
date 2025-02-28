@@ -11,7 +11,7 @@ const schema = z.object({
 })
 
 function submit(s: dynamic) {
-  console.log(s)
+  console.error({ submit: s })
 }
 function error(e: dynamic) {
   console.error(e)
