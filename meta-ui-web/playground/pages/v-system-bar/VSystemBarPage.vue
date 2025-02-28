@@ -1,17 +1,18 @@
 <script setup lang="ts">
-import type {RouteOption} from '@compose/api-types'
+import type { RouteOption } from '@compose/api-types'
 
 const menus = ref<RouteOption[]>([
   {
     uri: 'ab',
-    name: 'AB'
+    name: 'AB',
   },
   {
     uri: 'cd',
-    name: 'CD'
-  }
+    name: 'CD',
+  },
 ])
 </script>
+
 <template>
   <YVSystemBar>
     <template #left-btn>
@@ -19,7 +20,7 @@ const menus = ref<RouteOption[]>([
         <i i-mdi-home-outline text-8 />
       </VAppBarNavIcon>
     </template>
-    <template #left-drawer="{collapsed}">
+    <template #left-drawer="{ collapsed }">
       <YElSiderMenu :collapsed="collapsed" :routeTable="menus" :roles="[]" :permissions="[]" />
     </template>
   </YVSystemBar>

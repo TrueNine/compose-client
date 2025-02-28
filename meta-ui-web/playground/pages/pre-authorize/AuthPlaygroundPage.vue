@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import {usePlaygroundStore} from '../../store'
-
 import YPreAuthorize from '@/pre-authorize'
+
+import { usePlaygroundStore } from '../../store'
 
 const store = usePlaygroundStore()
 
-const acl = () => {
+function acl() {
   return store.anon
 }
-const permissions = () => {
+function permissions() {
   return ['ROOT', 'ADMIN']
 }
 setTimeout(() => {
@@ -18,6 +18,8 @@ setTimeout(() => {
 
 <template>
   <YConfigPreAuthorize :anonymousProvider="acl" :permissionsProvider="permissions">
-    <YPreAuthorize :permissions="['ROOT']"> 123 </YPreAuthorize>
+    <YPreAuthorize :permissions="['ROOT']">
+      123
+    </YPreAuthorize>
   </YConfigPreAuthorize>
 </template>
