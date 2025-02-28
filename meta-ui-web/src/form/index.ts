@@ -1,14 +1,29 @@
-import {componentInstallToPlugin} from '@compose/extensions/vue'
-import type {dynamic, Maybe} from '@compose/api-types'
-import type {ObjectSchema, Schema} from 'yup'
-import type {FormContext} from 'vee-validate'
-import type {InjectionKey} from 'vue'
+import type { ModelValueEmits, ModelValueProps } from '@/common'
+import type { dynamic, Maybe } from '@compose/api-types'
+import type { FormSlotProps, InvalidSubmissionContext, Form as VeeFrom } from 'vee-validate'
+import type { InjectionKey, VNode } from 'vue'
 
+import type { ObjectSchema } from 'yup'
+
+import { componentInstallToPlugin } from '@compose/extensions/vue'
 import _c from './YForm.vue'
 
-import type {ModelValueEmits, ModelValueProps} from '@/common'
+interface FormAttribute {
+  method?: string
+  target?: string
+  action?: string
+  autocomplete?: string
+  acceptcharset?: string
+  enctype?: string
+  novalidate?: boolean | 'true' | 'false'
+}
+export interface YFormProps extends ModelValueProps<dynamic>, FormAttribute {
 
-export interface YFormProps extends ModelValueProps<dynamic> {
+  /**
+   * 表单名称
+   */
+  name?: string
+
   /**
    * 表单验证规则
    */
@@ -27,6 +42,10 @@ export interface YFormProps extends ModelValueProps<dynamic> {
    * 是否每个步骤发出 next 事件
    */
   everyStep?: boolean
+  /**
+   * 初始值
+   */
+  initValue?: dynamic
 }
 
 export interface YFormEmits extends ModelValueEmits<dynamic> {
@@ -38,17 +57,18 @@ export interface YFormEmits extends ModelValueEmits<dynamic> {
 
   (e: 'update:step', v: number): void
 
-  (e: 'error'): void
+  (e: 'error', ctx: InvalidSubmissionContext): void
 }
 
+export interface YFormSlots {
+  default: (props: FormSlotProps) => VNode[]
+}
 export interface YFormInjection {
-  getForm: () => FormContext<dynamic, dynamic>
+  getForm: () => InstanceType<typeof VeeFrom> | undefined
   validate: () => Promise<boolean>
-  setFieldValidate: (key: string, schema: Schema) => void
+  setFieldValidate: (key: string, schema: ObjectSchema<dynamic>) => void
 }
 
-export const YFormInjectionKey: InjectionKey<YFormInjection> = Symbol('YForm-Injection-Provider')
+export const YFormInjectionKey: InjectionKey<YFormInjection> = Symbol('InjectionKey<YFormInjection>')
 
-const a = componentInstallToPlugin(_c)
-
-export default a
+export default componentInstallToPlugin(_c)

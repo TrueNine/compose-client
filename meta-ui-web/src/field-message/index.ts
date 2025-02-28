@@ -1,7 +1,7 @@
-import {componentInstallToPlugin} from '@compose/extensions/vue'
+import type { ModelValueEmits, ModelValueProps } from '@/common/VuePropsCommon'
 
+import { componentInstallToPlugin } from '@compose/extensions/vue'
 import YFieldMessageSfc from './YFieldMessage.vue'
-import type {ModelValueProps, ModelValueEmits} from '@/common/VuePropsCommon'
 
 export interface YFieldMessageProps extends ModelValueProps<string[]> {
   name: string | string[]

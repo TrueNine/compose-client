@@ -1,26 +1,21 @@
 <script setup lang="ts">
-import {useField} from 'vee-validate'
-import type {YFieldMessageEmits, YFieldMessageProps} from './index'
-import {maybeArray} from '@compose/api-model'
+import type { YFieldMessageEmits, YFieldMessageProps } from './index'
+import { maybeArray } from '@compose/api-model'
+import { useField } from 'vee-validate'
 
 const props = defineProps<YFieldMessageProps>()
 const emits = defineEmits<YFieldMessageEmits>()
-const parentForm = inject(YFormInjectionKey)
 
 const __propName = toRef(props.name)
 const _manes = computed(() => {
   return maybeArray(__propName.value).filter(Boolean)
 })
 let fields: ReturnType<typeof useField>[] = []
-watch(
-  _manes,
-  names => {
-    fields = names.map(e => {
-      return useField(e, void 0, {form: parentForm?.getForm(), syncVModel: false})
-    })
-  },
-  {immediate: true}
-)
+watch(_manes, (names) => {
+  fields = names.map((e) => {
+    return useField(e, void 0, { syncVModel: false })
+  })
+}, { immediate: true })
 
 function cleanMessage(messages?: string | (string | undefined)[]) {
   if (messages === void 0) {
@@ -42,7 +37,7 @@ onMounted(() => {
 
 function setErrorHandler(messages?: string | (string | undefined)[]) {
   const cleanedMsg = cleanMessage(messages)
-  fields.forEach(e => {
+  fields.forEach((e) => {
     e.setErrors(cleanedMsg)
   })
   return cleanedMsg
@@ -54,7 +49,7 @@ const _modelValue = computed<string[]>({
     const msg = setErrorHandler(v)
     emits('change', msg)
     emits('update:modelValue', msg)
-  }
+  },
 })
 const active = computed(() => !!(_modelValue.value.length && mounted.value))
 </script>

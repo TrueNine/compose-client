@@ -1,134 +1,95 @@
 <script setup lang="ts">
-import {useField} from 'vee-validate'
-import type {dynamic, late} from '@compose/api-types'
-import type {Schema} from 'yup'
-import type {YFieldEmits, YFieldProps, YFieldSlots} from '@/field'
-import {maybeArray} from '@compose/api-model'
-
-import {YFormInjectionKey} from '@/form'
-import {mergeProps} from 'vue'
+import type { YFieldEmits, YFieldProps, YFieldSlots, YFieldSlotsProps } from '@/field/index'
+import type { dynamic, Maybe } from '@compose/api-types'
+import { maybeArray } from '@compose/api-model'
+import { useField, Field as VeeField } from 'vee-validate'
+import { mergeProps } from 'vue'
 
 const props = withDefaults(defineProps<YFieldProps>(), {
-  label: void 0,
-  placeholder: void 0,
   modelValue: void 0,
-  schema: void 0,
-  syncVModel: 'modelValue',
   modelName: 'modelValue',
-  effectModels: () => ({})
+  rule: void 0,
 })
 const emits = defineEmits<YFieldEmits>()
-const __effectModelsVModel = useVModel(props, 'effectModels', emits, {passive: true})
+const slots = defineSlots<YFieldSlots>()
 
+const _name = useVModel(props, 'name', emits, { passive: true })
+const _modelName = useVModel(props, 'modelName', emits, { passive: true })
+const _modelValue = useVModel(props, 'modelValue', emits, { passive: true })
+const _rule = useVModel(props, 'rule', emits, { passive: true })
+const _errorMessages = useVModel(props, 'errorMessages', emits, { passive: true })
+const __effectModelsVModel = useVModel(props, 'effectModels', emits, { passive: true })
 const _effectModels = computed(() => {
   const mo = __effectModelsVModel.value
-  if (!mo) return {}
-  const res = maybeArray(mo).map(e => {
-    if (typeof e === 'string') return {[e]: e}
+  if (!mo) {
+    return {}
+  }
+  const res = maybeArray(mo).map((e) => {
+    if (typeof e === 'string')
+      return { [e]: e }
     else return e
   })
 
   return res.reduce<Record<string, string>>((acc, cur) => {
-    return {...acc, ...cur}
+    return { ...acc, ...cur }
   }, {})
 })
 
-const _modelName = useVModel(props, 'modelName', emits, {passive: true})
+const field = useField(_name, _rule, { label: props.label })
 
-const defaultRules = ref<late<Schema>>(props.schema)
-const parentForm = inject(YFormInjectionKey, void 0)
-const primaryField = useField(() => props.name, defaultRules, {
-  syncVModel: props.syncVModel,
-  form: parentForm?.getForm(),
-  label: props.label
-})
-
-const primaryWarning = computed<string | undefined>(() => {
-  return primaryField.errors.value
-    .map(e => {
-      if (typeof (e as dynamic) !== 'string') return (e as dynamic).msg
-    })
-    .find(Boolean)
-})
-
-const errorMessages = computed<string[]>(() => {
-  return primaryField.errors.value
-    .map(e => {
-      if (typeof (e as dynamic) === 'string') return e
-      else return void 0
-    })
-    .filter(Boolean) as string[]
-})
-
-const onUpdatePrimaryModelValue = (v?: dynamic) => {
+function onUpdateValue(v?: dynamic) {
   emits('change', v)
-  primaryField.setValue(v)
+  field.setValue(v)
+  _modelValue.value = v
 }
 
-const otherModelProps: YFieldSlots = Object.entries(_effectModels.value)
+function onUpdateErrorMessages(errorMessages?: Maybe<string>) {
+  const msg = errorMessages ?? []
+  field.setErrors(maybeArray(msg))
+  _errorMessages.value = msg
+}
+
+const otherModelProps = Object.entries(_effectModels.value)
   .filter(Boolean)
   .filter(([k, v]) => Boolean(k) && Boolean(v))
   .reduce<Record<string, dynamic>>((acc, [modelValueName, bindModelValueName]) => {
-    const field = useField(() => bindModelValueName, void 0, {form: parentForm?.getForm(), label: props.label})
+    const field = useField(() => bindModelValueName, void 0, { label: props.label })
     acc[`onUpdate:${modelValueName}`] = (updateValue: dynamic) => {
       field.setValue(updateValue)
     }
     acc[modelValueName] = field.value.value
     return acc
-  }, {}) as YFieldSlots
+  }, {})
 
-const onUpdateErrorMessages = (errorMessages?: string[]) => {
-  primaryField.setErrors(errorMessages ?? [])
-}
-
-defineSlots<{
-  default?: (e?: YFieldSlots) => VNode[]
-  input?: (e?: YFieldSlots) => dynamic
-}>()
-
-const slots = useSlots() as unknown as dynamic
-const usedDefaultSlot = computed(() => !!slots.default)
-const usedInputSlot = computed(() => !!slots.input)
-
-const _persistentHint = ref(true)
-
-function YFormFieldProxyComponent() {
-  const virtualNodes = slots.default?.()
+function YFormFieldProxyComponent(props?: YFieldSlotsProps) {
+  const virtualNodes = slots.default?.(props)
   return virtualNodes?.map((component: dynamic) => {
     return h(
       component,
       mergeProps(component.props ?? {}, {
         ...otherModelProps,
-        [_modelName.value]: primaryField.value.value,
-        [`onUpdate:${_modelName.value}`]: onUpdatePrimaryModelValue,
+        [_modelName.value]: field.value.value,
+        [`onUpdate:${_modelName.value}`]: onUpdateValue,
         [`onUpdate:errorMessages`]: onUpdateErrorMessages,
-        label: props.label,
-        placeholder: props.placeholder,
-        hint: primaryWarning.value,
-        persistentHint: _persistentHint.value,
-        errorMessages: errorMessages.value
-      })
+        label: props?.label,
+        placeholder: props?.placeholder,
+        hint: void 0,
+        persistentHint: true,
+        errorMessages: field.errors.value,
+      }),
     )
   })
 }
+
+const usedDefaultSlot = computed(() => !!slots.default)
 </script>
 
 <template>
-  <template v-if="usedDefaultSlot">
-    <component v-bind="otherModelProps" :is="YFormFieldProxyComponent" v-if="slots?.default" />
-  </template>
-  <template v-if="usedInputSlot">
-    <slot
-      name="input"
-      v-bind="otherModelProps"
-      :label="props.label"
-      :placeholder="props.placeholder"
-      :hint="primaryWarning"
-      :persistentHint="_persistentHint"
-      :errorMessages="errorMessages"
-      :[`${_modelName}`]="primaryField.value.value"
-      :[`onUpdate:errorMessages`]="onUpdateErrorMessages"
-      :[`onUpdate:${_modelName}`]="onUpdatePrimaryModelValue"
-    />
-  </template>
+  <VeeField :name="_name">
+    <template #default>
+      <template v-if="usedDefaultSlot">
+        <component :is="YFormFieldProxyComponent" v-if="slots?.default" />
+      </template>
+    </template>
+  </VeeField>
 </template>
