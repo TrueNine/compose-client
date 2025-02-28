@@ -88,7 +88,7 @@ const usedDefaultSlot = computed(() => !!slots.default)
   <VeeField :name="_name">
     <template #default>
       <template v-if="usedDefaultSlot">
-        <component :is="YFormFieldProxyComponent" v-if="slots?.default" />
+        <component v-bind="props" :is="YFormFieldProxyComponent" v-if="slots?.default" />
       </template>
     </template>
   </VeeField>
