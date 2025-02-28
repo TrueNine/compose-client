@@ -1,5 +1,5 @@
-import {componentInstallToPlugin} from '@compose/extensions/vue'
-import type {ViewMode} from '@compose/psdk-tmap'
+import type { ViewMode } from '@compose/psdk-tmap'
+import { componentInstallToPlugin } from '@compose/extensions/vue'
 
 import _c from './YMapTencent.vue'
 

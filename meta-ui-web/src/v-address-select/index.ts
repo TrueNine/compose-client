@@ -1,9 +1,7 @@
-import {componentInstallToPlugin} from '@compose/extensions/vue'
-import type {asyncable} from '@compose/api-types'
+import type { asyncable, i32, i64, late, latenil, str } from '@compose/api-types'
 
+import { componentInstallToPlugin } from '@compose/extensions/vue'
 import _c from './YVAddressSelect.vue'
-import type {i32, i64, str} from '@compose/api-types'
-import type {late, latenil} from '@compose/api-types'
 
 export type ISelectLevel = 'province' | 'city' | 'district' | 'town' | 'village'
 
@@ -48,53 +46,58 @@ export const YVAddressSelectDefaultSelects = {
     name: '选择省份',
     code: '',
     leaf: false,
-    level: 1
+    level: 1,
   },
   city: {
     name: '选择市',
     code: '',
     leaf: false,
-    level: 2
+    level: 2,
   },
   district: {
     name: '选择区/县',
     code: '',
     leaf: false,
-    level: 3
+    level: 3,
   },
   town: {
     name: '选择镇/街道',
     code: '',
     leaf: false,
-    level: 4
+    level: 4,
   },
   village: {
     name: '选择村/居委会',
     code: '',
     leaf: false,
-    level: 5
-  }
+    level: 5,
+  },
 }
 
-export function getAdCodeLevel(code: string) {
+export function getAdCodeLevel(code: string): number {
   const padCode = code.padEnd(12, '0')
   const obj = {
     province: padCode.slice(0, 2),
     city: padCode.slice(2, 4),
     district: padCode.slice(4, 6),
     town: padCode.slice(6, 9),
-    village: padCode.slice(9, 12)
+    village: padCode.slice(9, 12),
   }
   let level = 0
-  if (obj.province !== '00') level = 2
-  if (obj.city !== '00') level = 3
-  if (obj.district !== '00') level = 4
-  if (obj.town !== '000') level = 5
-  else if (obj.village !== '000') level = 5
+  if (obj.province !== '00')
+    level = 2
+  if (obj.city !== '00')
+    level = 3
+  if (obj.district !== '00')
+    level = 4
+  if (obj.town !== '000')
+    level = 5
+  else if (obj.village !== '000')
+    level = 5
   return level
 }
 
-export const clipCode = (code: string, level: i32) => {
+export function clipCode(code: string, level: i32): string {
   switch (level) {
     case 1:
       return code.slice(0, 2)

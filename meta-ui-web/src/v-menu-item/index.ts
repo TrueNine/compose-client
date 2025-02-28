@@ -1,9 +1,9 @@
-import {componentInstallToPlugin} from '@compose/extensions/vue'
-import type {dynamic, RouteOption} from '@compose/api-types'
+import type { dynamic, RouteOption } from '@compose/api-types'
+import YIco from '@/ico/index'
+
+import { componentInstallToPlugin } from '@compose/extensions/vue'
 
 import _c from './YVMenuItem.vue'
-
-import YIco from '@/ico/index'
 
 export interface YVMenuItemProps {
   value?: string
@@ -30,5 +30,5 @@ export interface YVMenuItemSlots {
   icon: (data: IconSlotData) => dynamic
 }
 
-const a = componentInstallToPlugin<typeof _c>(_c, {YIco})
+const a = componentInstallToPlugin<typeof _c>(_c, { YIco })
 export default a

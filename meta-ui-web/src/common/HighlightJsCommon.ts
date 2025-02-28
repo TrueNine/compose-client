@@ -8,7 +8,7 @@ const languages = {
   javascript,
   json,
   kotlin,
-  typescript
+  typescript,
 }
 
 Object.entries(languages).forEach(([key, value]) => {

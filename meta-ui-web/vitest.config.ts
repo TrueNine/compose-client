@@ -1,6 +1,6 @@
-import {fileURLToPath} from 'node:url'
+import { fileURLToPath } from 'node:url'
 
-import {configDefaults, defineConfig, mergeConfig} from 'vitest/config'
+import { configDefaults, defineConfig, mergeConfig } from 'vitest/config'
 
 import viteConfig from './vite.config'
 
@@ -11,14 +11,14 @@ export default mergeConfig(
       deps: {
         optimizer: {
           web: {
-            include: ['vuetify', 'element-plus']
-          }
+            include: ['vuetify', 'element-plus'],
+          },
         },
-        inline: ['vuetify', 'element-plus']
+        inline: ['vuetify', 'element-plus'],
       },
       environment: 'jsdom',
       exclude: [...configDefaults.exclude, 'e2e/*'],
-      root: fileURLToPath(new URL('./', import.meta.url))
-    }
-  })
+      root: fileURLToPath(new URL('./', import.meta.url)),
+    },
+  }),
 )

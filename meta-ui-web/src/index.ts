@@ -1,44 +1,44 @@
-import type {App} from 'vue'
-import type {dynamic} from '@compose/api-types'
+import type { dynamic } from '@compose/api-types'
+import type { App } from 'vue'
 
+import YConfigPreAuthorize from '@/config-pre-authorize'
+import YPreAuthorize from '@/pre-authorize'
 import YConfigProvider from './config-provider'
-import YElSiderMenu from './el-sider-menu'
-import YVSystemBar from './v-system-bar'
-import YElSiderMenuItem from './el-sider-menu-item/index'
-import YMapTencent from './map-tencent'
-import YVAddressSelect from './v-address-select'
 import YDebugCode from './debug-code'
-import YVMenu from './v-menu'
-import YVMenuItem from './v-menu-item'
-import YIco from './ico'
-import YForm from './form'
+import YElSiderMenu from './el-sider-menu'
+import YElSiderMenuItem from './el-sider-menu-item/index'
 import YField from './field'
 import YFieldMessage from './field-message'
+import YForm from './form'
+import YIco from './ico'
+import YMapTencent from './map-tencent'
 import YPager from './pager'
+import YVAddressSelect from './v-address-select'
+import YVMenu from './v-menu'
 
-import YPreAuthorize from '@/pre-authorize'
-import YConfigPreAuthorize from '@/config-pre-authorize'
-
-export * from './pre-authorize'
-export * from './config-pre-authorize'
-export * from './config-provider'
-export * from './el-sider-menu'
-export * from './el-sider-menu-item'
-export * from './map-tencent'
-export * from './v-address-select'
-export * from './v-system-bar'
-export * from './debug-code'
-export * from './form'
-export * from './field'
-export * from './field-message'
-
-export * from './ico'
-export * from './v-menu'
-export * from './v-menu-item'
+import YVMenuItem from './v-menu-item'
+import YVSystemBar from './v-system-bar'
 
 export * from './common'
-export * from './unplugin'
+export * from './config-pre-authorize'
+export * from './config-provider'
+export * from './debug-code'
+export * from './el-sider-menu'
+export * from './el-sider-menu-item'
+export * from './field'
+export * from './field-message'
+export * from './form'
+export * from './ico'
+export * from './map-tencent'
 export * from './pager'
+
+export * from './pre-authorize'
+export * from './unplugin'
+export * from './v-address-select'
+
+export * from './v-menu'
+export * from './v-menu-item'
+export * from './v-system-bar'
 
 const components = {
   YConfigProvider,
@@ -56,26 +56,26 @@ const components = {
   YForm,
   YField,
   YFieldMessage,
-  YPager
+  YPager,
 }
 
 export {
-  YElSiderMenu,
-  YVAddressSelect,
-  YElSiderMenuItem,
-  YConfigProvider,
-  YMapTencent,
-  YVSystemBar,
-  YDebugCode,
-  YVMenu,
-  YVMenuItem,
-  YIco,
-  YPreAuthorize,
   YConfigPreAuthorize,
-  YForm,
+  YConfigProvider,
+  YDebugCode,
+  YElSiderMenu,
+  YElSiderMenuItem,
   YField,
   YFieldMessage,
-  YPager
+  YForm,
+  YIco,
+  YMapTencent,
+  YPager,
+  YPreAuthorize,
+  YVAddressSelect,
+  YVMenu,
+  YVMenuItem,
+  YVSystemBar,
 }
 
 export default {
@@ -83,5 +83,5 @@ export default {
     Object.entries(components).forEach((c, i) => {
       app.use(c[i] as dynamic)
     })
-  }
+  },
 }

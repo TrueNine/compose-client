@@ -1,9 +1,10 @@
 /// <reference types="vite/client" />
 
-import type {dynamic} from '@compose/api-types'
+import type { dynamic } from '@compose/api-types'
 
 declare module '*.vue' {
-  import type {DefineComponent} from 'vue'
+  import type { DefineComponent } from 'vue'
+
   const component: DefineComponent<object, object, dynamic>
   export default component
 }

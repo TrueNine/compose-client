@@ -1,6 +1,5 @@
-import type {InjectionKey} from 'vue'
-import type {Ref, ComputedRef} from 'vue'
-import type {Maybe} from '@compose/api-types'
+import type { Maybe } from '@compose/api-types'
+import type { ComputedRef, InjectionKey, Ref } from 'vue'
 
 const providePrefix = '__MetaUIProvideSymbolKey__'
 
@@ -23,6 +22,6 @@ export interface PreAuthorizeInjection {
 
 export const PreAuthorizeInjectionSymbol: InjectionKey<PreAuthorizeInjection> = getProvideSymbolKey('PreAuthorizeInjection')
 
-export function usePreAuthorize() {
+export function usePreAuthorize(): PreAuthorizeInjection | undefined {
   return inject(PreAuthorizeInjectionSymbol)
 }

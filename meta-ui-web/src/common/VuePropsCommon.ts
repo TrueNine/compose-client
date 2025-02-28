@@ -1,5 +1,5 @@
-import type {StrOrNum} from '@compose/api-types'
-import type {Schema} from 'yup'
+import type { StrOrNum } from '@compose/api-types'
+import type { Schema } from 'yup'
 
 /**
  * ## 可变换组件 Props

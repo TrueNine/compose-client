@@ -1,21 +1,16 @@
 <script lang="ts" setup>
-import {AddressUtils, des} from '@compose/api-model'
-import {reactive} from 'vue'
+import type { nil } from '@compose/api-types'
+import type { IComponentAddr, YAddressSelectEmits, YVAddressSelectProps, YVAddressSelectSelectValue } from '.'
 
+import { AddressUtils, des } from '@compose/api-model'
+import { reactive } from 'vue'
 import {
   clipCode,
   getAdCodeLevel,
-  type IComponentAddr,
-  type YAddressSelectEmits,
-  YVAddressSelectDefaultSelects,
-  type YVAddressSelectProps,
-  type YVAddressSelectSelectValue
-} from '.'
-import type {nil} from '@compose/api-types'
 
-const pad = (code: string) => {
-  return code.padEnd(12, '0')
-}
+  YVAddressSelectDefaultSelects,
+
+} from '.'
 
 const props = withDefaults(defineProps<YVAddressSelectProps>(), {
   selectedLevel: 0,
@@ -29,9 +24,14 @@ const props = withDefaults(defineProps<YVAddressSelectProps>(), {
   findProvinces: void 0,
   findDistricts: void 0,
   findVillages: void 0,
-  findByCode: void 0
+  findByCode: void 0,
 })
+
 const emits = defineEmits<YAddressSelectEmits>()
+
+function pad(code: string) {
+  return code.padEnd(12, '0')
+}
 
 const emitsDeepLevel = computed(() => {
   switch (props.level) {
@@ -59,32 +59,39 @@ const addressCacheData = reactive<Record<string, IComponentAddr[]>>({
   city: [],
   district: [],
   town: [],
-  village: []
+  village: [],
 })
 
 const defaultSelected = des(YVAddressSelectDefaultSelects)
 const selected = ref<YVAddressSelectSelectValue>(des(YVAddressSelectDefaultSelects))
 
-const _fullPath = useVModel(props, 'fullPath', emits, {passive: true})
-const _adCode = useVModel(props, 'adCode', emits, {passive: true})
-const _selectedLevel = useVModel(props, 'selectedLevel', emits, {passive: true, defaultValue: 0})
+const _fullPath = useVModel(props, 'fullPath', emits, { passive: true })
+const _adCode = useVModel(props, 'adCode', emits, { passive: true })
+const _selectedLevel = useVModel(props, 'selectedLevel', emits, { passive: true, defaultValue: 0 })
 
-const sortFn = (a?: nil<IComponentAddr>, b?: nil<IComponentAddr>) => {
-  if (a === null || a === void 0) return 1
-  if (b === null || b === void 0) return -1
-  if (a.code < b.code) return -1
-  if (a.code > b.code) return 1
+function sortFn(a?: nil<IComponentAddr>, b?: nil<IComponentAddr>) {
+  if (a === null || a === void 0)
+    return 1
+  if (b === null || b === void 0)
+    return -1
+  if (a.code < b.code)
+    return -1
+  if (a.code > b.code)
+    return 1
   return 0
 }
 
 const checkList = [2, 4, 6, 9, 12]
 const keyNames: (keyof YVAddressSelectSelectValue)[] = ['province', 'city', 'district', 'town', 'village']
 const fnNames = ['findProvinces', 'findCities', 'findDistricts', 'findTowns', 'findVillages', 'findByCode']
+const loading = ref<boolean>(false)
 
 async function cacheAndUpdate(code: string) {
   loading.value = true
-  if (code.length < 2 || code.length > 12) return
-  if (!checkList.includes(code.length)) return
+  if (code.length < 2 || code.length > 12)
+    return
+  if (!checkList.includes(code.length))
+    return
   const padCode = pad(code)
   const level = getAdCodeLevel(code)
 
@@ -100,17 +107,17 @@ async function cacheAndUpdate(code: string) {
   // ready next addresses
   let fullPath = ''
   if (level < emitsDeepLevel.value) {
-    addressCacheData[currentKey] =
-      cache ??
-      (await props[currentFnKey]?.(pt))
-        ?.sort(sortFn)
-        .filter(e => e != null)
-        .map(e => e) ??
-      []
+    addressCacheData[currentKey]
+      = cache
+        ?? (await props[currentFnKey]?.(pt))
+          ?.sort(sortFn)
+          .filter(e => e != null)
+          .map(e => e)
+          ?? []
 
     saveCache(
       padCode,
-      addressCacheData[currentKey].map(e => e)
+      addressCacheData[currentKey].map(e => e),
     )
   }
 
@@ -118,7 +125,8 @@ async function cacheAndUpdate(code: string) {
   for (let i = 0; i < max; i++) {
     const key = keyNames[i]
     const item = selected.value[key]
-    if (item?.name) fullPath += item.name
+    if (item?.name)
+      fullPath += item.name
   }
 
   selected.value[prevKey] = addressCacheData[prevKey].find(e => pad(e.code) === padCode)
@@ -132,38 +140,44 @@ async function cacheAndUpdate(code: string) {
 
 watch(
   () => selected.value.province,
-  async v => {
-    if (v && v.code !== '') await cacheAndUpdate(v.code)
-  }
+  async (v) => {
+    if (v && v.code !== '')
+      await cacheAndUpdate(v.code)
+  },
 )
 
 watch(
   () => selected.value.city,
-  async v => {
-    if (v && v.code !== '') await cacheAndUpdate(v.code)
-  }
+  async (v) => {
+    if (v && v.code !== '')
+      await cacheAndUpdate(v.code)
+  },
 )
 
 watch(
   () => selected.value.district,
-  async v => {
-    if (v && v.code !== '' && !loading.value) await cacheAndUpdate(v.code)
-  }
+  async (v) => {
+    if (v && v.code !== '' && !loading.value)
+      await cacheAndUpdate(v.code)
+  },
 )
 
 watch(
   () => selected.value.town,
-  async v => {
-    if (v && v.code !== '') await cacheAndUpdate(v.code)
-  }
+  async (v) => {
+    if (v && v.code !== '')
+      await cacheAndUpdate(v.code)
+  },
 )
 
 watch(
   () => selected.value.village,
-  async v => {
-    if (v && v.code !== '') await cacheAndUpdate(v.code)
-  }
+  async (v) => {
+    if (v && v.code !== '')
+      await cacheAndUpdate(v.code)
+  },
 )
+const codingLoad = ref(false)
 
 /**
  * ## 监听代码触发器
@@ -172,7 +186,8 @@ watch(
 async function watchChangeCode(code: string) {
   if (code && !loading.value && !codingLoad.value) {
     await loadCode(code)
-  } else {
+  }
+  else {
     if (!loading.value && !codingLoad.value) {
       _selectedLevel.value = 0
       _fullPath.value = ''
@@ -183,21 +198,16 @@ async function watchChangeCode(code: string) {
 
 onMounted(async () => {
   addressCacheData.province = []
-  while (props.findProvinces) {
-    const r = await props.findProvinces()
-    if (!r) break
-    addressCacheData.province = r.filter(Boolean) as IComponentAddr[]
-    break
-  }
+
+  const r = await props.findProvinces?.() ?? []
+
+  addressCacheData.province = r.filter((e): e is IComponentAddr => Boolean(e))
 
   addressCacheData.province.sort((a, b) => {
     return a.code.localeCompare(b.code)
   })
   await watchChangeCode(props.adCode)
 })
-
-const loading = ref<boolean>(false)
-const codingLoad = ref(false)
 
 async function loadCode(code: string) {
   codingLoad.value = true

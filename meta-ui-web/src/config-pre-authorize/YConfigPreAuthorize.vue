@@ -1,15 +1,16 @@
 <script setup lang="ts">
-import {maybeArray} from '@compose/api-model'
+import type { PreAuthorizeInjection } from '@/common'
 
-import type {YConfigPreAuthorizeProps} from '.'
+import type { YConfigPreAuthorizeProps } from '.'
+import { PreAuthorizeInjectionSymbol } from '@/common'
 
-import {type PreAuthorizeInjection, PreAuthorizeInjectionSymbol} from '@/common'
+import { maybeArray } from '@compose/api-model'
 
 const props = withDefaults(defineProps<YConfigPreAuthorizeProps>(), {
   authedProvider: () => false,
   permissionsProvider: () => [],
   rolesProvider: () => [],
-  anonymousProvider: () => false
+  anonymousProvider: () => false,
 })
 
 const _authed = computed(() => {
@@ -35,7 +36,7 @@ const impl: PreAuthorizeInjection = {
   permissions: _permissions,
   roles: _roles,
   authed: _authed,
-  anonymous: _anonymous
+  anonymous: _anonymous,
 }
 provide(PreAuthorizeInjectionSymbol, impl)
 defineExpose(impl)

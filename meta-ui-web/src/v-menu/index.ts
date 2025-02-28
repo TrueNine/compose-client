@@ -1,10 +1,10 @@
-import {componentInstallToPlugin} from '@compose/extensions/vue'
-import type {RouteOption} from '@compose/api-types'
-
-import _c from './YVMenu.vue'
-
+import type { RouteOption } from '@compose/api-types'
 import YIco from '@/ico'
+
 import YVMenuItem from '@/v-menu-item/YVMenuItem.vue'
+
+import { componentInstallToPlugin } from '@compose/extensions/vue'
+import _c from './YVMenu.vue'
 
 export interface YVMenuProps {
   value?: string
@@ -20,5 +20,5 @@ export interface YVMenuEmits {
   (e: 'update:opened', opened: boolean): void
 }
 
-const a = componentInstallToPlugin(_c, {YVMenuItem, YIco})
+const a = componentInstallToPlugin(_c, { YVMenuItem, YIco })
 export default a

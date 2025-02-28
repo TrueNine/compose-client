@@ -1,4 +1,4 @@
-import {componentInstallToPlugin} from '@compose/extensions/vue'
+import { componentInstallToPlugin } from '@compose/extensions/vue'
 
 import _c from './YDebugCode.vue'
 

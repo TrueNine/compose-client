@@ -1,14 +1,10 @@
-//import '@quasar/extras/material-icons/material-icons.css'
-//import '@quasar/extras/themify/themify.css'
-//import 'quasar/dist/quasar.prod.css'
-
-import type {App} from 'vue'
-import {Quasar} from 'quasar'
-import qZhCn from 'quasar/lang/zh-CN'
+import type { App } from 'vue'
+import { Quasar } from 'quasar'
 import qEnUs from 'quasar/lang/en-US'
+import qZhCn from 'quasar/lang/zh-CN'
 
-export {qZhCn as QuasarZhCn, qEnUs as QuasarEnUs}
+export { qEnUs as QuasarEnUs, qZhCn as QuasarZhCn }
 
-export function quasarInstall(app: App) {
+export function quasarInstall(app: App): void {
   app.use(Quasar, {})
 }

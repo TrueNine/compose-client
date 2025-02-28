@@ -1,9 +1,9 @@
-import {componentInstallToPlugin} from '@compose/extensions/vue'
-import type {clip, i32, nil, Pq, Pr} from '@compose/api-types'
+import type { ModelValueEmits, ModelValueProps } from '@/common'
+import type { clip, i32, nil, Pq, Pr } from '@compose/api-types'
+
+import { componentInstallToPlugin } from '@compose/extensions/vue'
 
 import _c from './YPager.vue'
-
-import type {ModelValueEmits, ModelValueProps} from '@/common'
 
 type OPr<T = unknown> = clip<Pr<T>, 'd'>
 

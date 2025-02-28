@@ -1,5 +1,5 @@
-import {componentInstallToPlugin} from '@compose/extensions/vue'
-import type {BCP47, i32} from '@compose/api-types'
+import type { BCP47, i32 } from '@compose/api-types'
+import { componentInstallToPlugin } from '@compose/extensions/vue'
 
 import _c from './YConfigProvider.vue'
 

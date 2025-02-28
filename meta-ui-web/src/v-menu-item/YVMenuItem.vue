@@ -1,15 +1,16 @@
 <script setup lang="ts">
-import type {bool, late, RouteOption} from '@compose/api-types'
-import {isNonNil} from '@compose/api-model'
+import type { YVMenuItemProps, YVMenuItemSlots } from '@/v-menu-item/index'
+import type { bool, late, RouteOption } from '@compose/api-types'
 
 import YVMenuItem from '@/v-menu-item/YVMenuItem.vue'
-import type {YVMenuItemProps, YVMenuItemSlots} from '@/v-menu-item/index'
+import { isNonNil } from '@compose/api-model'
 
 const props = withDefaults(defineProps<YVMenuItemProps>(), {
   pathPrefix: '',
-  routeMode: false
+  routeMode: false,
 })
 
+defineSlots<YVMenuItemSlots>()
 const _route = computed(() => props.route)
 const _value = computed(() => {
   const parentPath = props.parentPath ?? ``
@@ -30,12 +31,11 @@ function isSub(opt: RouteOption): bool {
   return isNonNil(opt.sub)
 }
 
-defineSlots<YVMenuItemSlots>()
-
 const router = useRouter()
 
 async function routeTo() {
-  if (props.routeMode && !props.route.disabled) await router.push(_value.value)
+  if (props.routeMode && !props.route.disabled)
+    await router.push(_value.value)
 }
 
 function urlJoin(...args: late<string>[]) {
@@ -46,14 +46,16 @@ function urlJoin(...args: late<string>[]) {
 <template>
   <template v-if="isSub(_route)">
     <VListGroup color="primary" :value="_value">
-      <template #activator="{props: p}">
+      <template #activator="{ props: p }">
         <VListItem :disabled="route.disabled" color="primary" v-bind="p">
           <template #prepend>
             <slot :hidden="_hidden" :title="_title" :value="_value" :subItem="false" name="icon" :iconName="_menuIconClass">
               <YIco :class="[_menuIconClass]" />
             </slot>
           </template>
-          <VListItemTitle px1>{{ _title }}</VListItemTitle>
+          <VListItemTitle px1>
+            {{ _title }}
+          </VListItemTitle>
         </VListItem>
       </template>
       <YVMenuItem
@@ -77,7 +79,9 @@ function urlJoin(...args: late<string>[]) {
       </template>
       <template #append>
         <template v-if="props.route.tags">
-          <VChip v-for="(tag, i) in props.route.tags" :key="i" variant="text" color="primary">{{ tag }}</VChip>
+          <VChip v-for="(tag, i) in props.route.tags" :key="i" variant="text" color="primary">
+            {{ tag }}
+          </VChip>
         </template>
       </template>
       <VListItemTitle>{{ _title }}</VListItemTitle>
