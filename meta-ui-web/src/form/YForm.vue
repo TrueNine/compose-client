@@ -41,7 +41,16 @@ provide(YFormInjectionKey, exposed)
 </script>
 
 <template>
-  <VeeForm ref="formComponentRef" :validateOnMount="false" :validationSchema="_schema" :name="props.name" v-bind="$attrs" :initialValues="props.initValue" @InvalidSubmit="handleInvalidSubmit" @submit="handleSubmit">
+  <VeeForm
+    ref="formComponentRef"
+    :validateOnMount="false"
+    :validationSchema="_schema"
+    :name="props.name"
+    v-bind="$attrs"
+    :initialValues="props.initValue"
+    @invalidSubmit="handleInvalidSubmit"
+    @submit="handleSubmit"
+  >
     <template #default="p">
       <slot name="default" v-bind="p" />
     </template>

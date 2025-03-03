@@ -2,7 +2,7 @@
 import type { YFieldEmits, YFieldProps, YFieldSlots, YFieldSlotsProps } from '@/field/index'
 import type { dynamic, Maybe } from '@compose/api-types'
 import { maybeArray } from '@compose/api-model'
-import { useField, Field as VeeField } from 'vee-validate'
+import { useField } from 'vee-validate'
 import { mergeProps } from 'vue'
 
 const props = withDefaults(defineProps<YFieldProps>(), {
@@ -85,11 +85,7 @@ const usedDefaultSlot = computed(() => !!slots.default)
 </script>
 
 <template>
-  <VeeField :name="_name">
-    <template #default>
-      <template v-if="usedDefaultSlot">
-        <component v-bind="props" :is="YFormFieldProxyComponent" v-if="slots?.default" />
-      </template>
-    </template>
-  </VeeField>
+  <template v-if="usedDefaultSlot">
+    <component v-bind="props" :is="YFormFieldProxyComponent" v-if="slots?.default" />
+  </template>
 </template>
