@@ -7,7 +7,7 @@ const props = withDefaults(defineProps<YIcoProps>(), {
 </script>
 
 <template>
-  <Component :is="props.tag" class="inline-block text-6">
+  <Component :is="props.tag" style="display: inline-block" class="text-6">
     <slot name="default" />
   </Component>
 </template>
