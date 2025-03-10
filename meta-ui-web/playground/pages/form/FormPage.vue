@@ -16,10 +16,12 @@ function submit(s: dynamic) {
 function error(e: dynamic) {
   console.error(e)
 }
+const bindValues = ref()
 </script>
 
 <template>
-  <YForm class="w-50vw p-4" :schema="schema" @error="error" @submit="submit">
+  {{ bindValues }}
+  <YForm v-model="bindValues" class="w-50vw p-4" :schema="schema" @error="error" @submit="submit">
     <YField name="files[0]">
       <VTextField />
     </YField>
