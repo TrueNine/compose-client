@@ -1,7 +1,7 @@
 import type { ModelValueEmits, ModelValueProps } from '@/common'
 import type { dynamic, Maybe } from '@compose/api-types'
-import type { FormSlotProps, InvalidSubmissionContext, Form as VeeFrom } from 'vee-validate'
-import type { InjectionKey, VNode } from 'vue'
+import type { FormContext, InvalidSubmissionContext } from 'vee-validate'
+import type { InjectionKey, VNode, WritableComputedRef } from 'vue'
 
 import type { ObjectSchema } from 'yup'
 
@@ -61,10 +61,10 @@ export interface YFormEmits extends ModelValueEmits<dynamic> {
 }
 
 export interface YFormSlots {
-  default: (props: FormSlotProps) => VNode[]
+  default: (props: dynamic) => VNode[]
 }
 export interface YFormInjection {
-  getForm: () => InstanceType<typeof VeeFrom> | undefined
+  getForm: () => FormContext<WritableComputedRef<dynamic, dynamic>>
   validate: () => Promise<boolean>
   setFieldValidate: (key: string, schema: ObjectSchema<dynamic>) => void
 }

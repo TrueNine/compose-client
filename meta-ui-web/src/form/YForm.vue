@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import type { YFormEmits, YFormProps, YFormSlots } from '@/form/index'
-import type { dynamic } from '@compose/api-types'
-import type { InvalidSubmissionContext } from 'vee-validate'
-import { Form as VeeForm } from 'vee-validate'
+import { useForm } from 'vee-validate'
 
 const props = withDefaults(defineProps<YFormProps>(), {
   step: 0,
@@ -15,18 +13,40 @@ const props = withDefaults(defineProps<YFormProps>(), {
 const emits = defineEmits<YFormEmits>()
 defineSlots<YFormSlots>()
 const _schema = useVModel(props, 'schema', emits, { passive: true })
+const _modelValue = useVModel(props, 'modelValue', emits)
+const usedForm = useForm({
+  name: props.name,
+  validationSchema: _schema,
+  initialValues: _modelValue,
+})
+usedForm.handleSubmit(
+  (values) => {
+    emits('submit', values, props.step)
+  },
+  (ctx) => {
+    emits('error', ctx)
+  },
+)
 
-function handleSubmit(values: dynamic) {
-  emits('submit', values)
-}
-
-function handleInvalidSubmit(ctx: InvalidSubmissionContext) {
-  emits('error', ctx)
+function handleSubmit(e?: Event) {
+  usedForm.submitForm(e)
 }
 
 const formComponentRef = useTemplateRef('formComponentRef')
+
+watch(_modelValue, (v) => {
+  if (!formComponentRef.value) {
+    return
+  }
+  usedForm.setValues(v)
+})
+
+watch(usedForm.values, (v) => {
+  _modelValue.value = v
+})
+
 const exposed: YFormInjection = {
-  getForm: () => formComponentRef.value ?? void 0,
+  getForm: () => usedForm,
   setFieldValidate: () => {
     throw new Error('Framework UnImplementation setFieldValidate')
   },
@@ -38,21 +58,18 @@ const exposed: YFormInjection = {
 
 defineExpose(exposed)
 provide(YFormInjectionKey, exposed)
+function handleReset() {
+  usedForm.handleReset()
+}
 </script>
 
 <template>
-  <VeeForm
+  <form
     ref="formComponentRef"
-    :validateOnMount="false"
-    :validationSchema="_schema"
-    :name="props.name"
     v-bind="$attrs"
-    :initialValues="props.initValue"
-    @invalidSubmit="handleInvalidSubmit"
-    @submit="handleSubmit"
+    @reset.prevent="handleReset"
+    @submit.prevent="handleSubmit"
   >
-    <template #default="p">
-      <slot name="default" v-bind="p" />
-    </template>
-  </VeeForm>
+    <slot name="default" />
+  </form>
 </template>
