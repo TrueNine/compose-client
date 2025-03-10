@@ -44,8 +44,8 @@ function onUpdateValue(v?: dynamic) {
 }
 
 function onUpdateErrorMessages(errorMessages?: Maybe<string>) {
-  const msg = errorMessages ?? []
-  field.setErrors(maybeArray(msg))
+  const msg = maybeArray(errorMessages ?? [])
+  field.setErrors(msg)
   _errorMessages.value = msg
 }
 

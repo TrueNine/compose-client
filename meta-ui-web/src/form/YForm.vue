@@ -19,7 +19,7 @@ const usedForm = useForm({
   validationSchema: _schema,
   initialValues: _modelValue,
 })
-usedForm.handleSubmit(
+const submitHandler = usedForm.handleSubmit(
   (values) => {
     emits('submit', values, props.step)
   },
@@ -29,7 +29,7 @@ usedForm.handleSubmit(
 )
 
 function handleSubmit(e?: Event) {
-  usedForm.submitForm(e)
+  submitHandler(e)
 }
 
 const formComponentRef = useTemplateRef('formComponentRef')
@@ -68,7 +68,7 @@ function handleReset() {
     ref="formComponentRef"
     v-bind="$attrs"
     @reset.prevent="handleReset"
-    @submit.prevent="handleSubmit"
+    @submit.prevent="ev => handleSubmit(ev)"
   >
     <slot name="default" />
   </form>
