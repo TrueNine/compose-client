@@ -59,9 +59,15 @@ export interface YFormEmits extends ModelValueEmits<dynamic> {
 
   (e: 'error', ctx: InvalidSubmissionContext): void
 }
-
+export interface YFormSlotsSubMitProps {
+  disabled: boolean
+  isSubmitting: boolean
+  submit: (ev?: Event) => void
+  reset: () => void
+}
 export interface YFormSlots {
   default: (props: dynamic) => VNode[]
+  submit: (props: YFormSlotsSubMitProps) => VNode[]
 }
 export interface YFormInjection {
   getForm: () => FormContext<WritableComputedRef<dynamic, dynamic>>

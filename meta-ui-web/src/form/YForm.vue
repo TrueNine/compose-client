@@ -64,5 +64,12 @@ function handleReset() {
     @submit.prevent="ev => handleSubmit(ev)"
   >
     <slot name="default" />
+    <slot
+      name="submit"
+      :reset="handleReset"
+      :submit="submitHandler"
+      :disabled="Object.keys(usedForm.errorBag.value).length >= 1"
+      :isSubmitting="usedForm.isSubmitting.value"
+    />
   </form>
 </template>
