@@ -33,8 +33,10 @@ function error(e: dynamic) {
 </script>
 
 <template>
-  {{ _modelValue }}
   <YForm v-model="_modelValue" class="w-50vw p-4" :schema="schema" @error="error" @submit="submit">
+    <div>
+      {{ _modelValue }}
+    </div>
     <YField name="files[0]">
       <VTextField />
     </YField>
@@ -44,7 +46,10 @@ function error(e: dynamic) {
     <YField name="a.b">
       <VTextField />
     </YField>
-    <VBtn type="submit" block color="primary">
+    <template #submit="e">
+      {{ e }}
+    </template>
+    <VBtn type="submit" :block="true" color="primary">
       SUBMIT
     </VBtn>
   </YForm>
