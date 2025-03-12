@@ -32,12 +32,7 @@ function handleSubmit(e?: Event) {
   submitHandler(e)
 }
 
-const formComponentRef = useTemplateRef('formComponentRef')
-
 watch(_modelValue, (v) => {
-  if (!formComponentRef.value) {
-    return
-  }
   usedForm.setValues(v)
 })
 
@@ -51,13 +46,13 @@ const exposed: YFormInjection = {
     throw new Error('Framework UnImplementation setFieldValidate')
   },
   validate: async () => {
-    const result = await formComponentRef.value?.validate()
-    return result?.valid ?? false
+    return (await usedForm.validate()).valid
   },
 }
 
 defineExpose(exposed)
 provide(YFormInjectionKey, exposed)
+
 function handleReset() {
   usedForm.handleReset()
 }
@@ -65,9 +60,7 @@ function handleReset() {
 
 <template>
   <form
-    ref="formComponentRef"
-    v-bind="$attrs"
-    @reset.prevent="handleReset"
+    @reset="handleReset"
     @submit.prevent="ev => handleSubmit(ev)"
   >
     <slot name="default" />
