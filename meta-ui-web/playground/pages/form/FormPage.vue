@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { dynamic } from '@compose/api-types'
 
-import * as z from 'yup'
+import * as z from 'zod'
 
 interface Props {
   modelValue?: dynamic
@@ -20,9 +20,9 @@ const _modelValue = useVModel(props, 'modelValue', emit, { passive: true })
 const schema = z.object({
   files: z.array(z.string()),
   a: z.object({
-    b: z.string().required(),
+    b: z.string().default('23344'),
   }),
-})
+}).optional().refine(v => (v?.files.length ?? 0) > 0, '123123123')
 
 function submit(s: dynamic) {
   console.error({ submit: s })
