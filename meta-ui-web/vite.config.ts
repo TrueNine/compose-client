@@ -23,7 +23,15 @@ const { defineConfig, buildConfigLib, dtsPlugin, staticCopyPluginPackageJson } =
         enable: true,
         dtsSourcemap: true,
       },
-      externals: [/playground\/main/, /\.html$/],
+      externals: [
+        /playground\/main/,
+        /\.html$/,
+        /^@vee-valudate/,
+        /^@vee-valudate\/zod/,
+        /^@vee-valudate\/yup/,
+        /zod/,
+        /yup/,
+      ],
     },
   },
   features: {

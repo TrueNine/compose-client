@@ -1,10 +1,11 @@
 import type { ModelValueEmits, ModelValueProps } from '@/common'
 import type { dynamic, Maybe } from '@compose/api-types'
-import type { FormContext, InvalidSubmissionContext } from 'vee-validate'
+import type { FormContext, InvalidSubmissionContext, TypedSchema } from 'vee-validate'
 import type { InjectionKey, VNode, WritableComputedRef } from 'vue'
 
-import type { ObjectSchema } from 'yup'
+import type { Schema as YupSchema } from 'yup'
 
+import type { ZodSchema } from 'zod'
 import { componentInstallToPlugin } from '@compose/extensions/vue'
 import _c from './YForm.vue'
 
@@ -17,6 +18,7 @@ interface FormAttribute {
   enctype?: string
   novalidate?: boolean | 'true' | 'false'
 }
+export type YFormPropsSchema = TypedSchema | YupSchema | ZodSchema
 export interface YFormProps extends ModelValueProps<dynamic>, FormAttribute {
 
   /**
@@ -27,7 +29,7 @@ export interface YFormProps extends ModelValueProps<dynamic>, FormAttribute {
   /**
    * 表单验证规则
    */
-  schema?: Maybe<ObjectSchema<dynamic, dynamic>>
+  schema?: Maybe<YFormPropsSchema>
   /**
    * 表单验证状态
    */
@@ -72,7 +74,7 @@ export interface YFormSlots {
 export interface YFormInjection {
   getForm: () => FormContext<WritableComputedRef<dynamic, dynamic>>
   validate: () => Promise<boolean>
-  setFieldValidate: (key: string, schema: ObjectSchema<dynamic>) => void
+  setFieldValidate: (key: string, schema: YFormPropsSchema) => void
 }
 
 export const YFormInjectionKey: InjectionKey<YFormInjection> = Symbol('InjectionKey<YFormInjection>')

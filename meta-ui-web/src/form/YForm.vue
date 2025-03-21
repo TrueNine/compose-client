@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import type { YFormEmits, YFormProps, YFormSlots } from '@/form/index'
+import { toTypedSchema as yupToTypedSchema } from '@vee-validate/yup'
+import { toTypedSchema as zodToTypedSchema } from '@vee-validate/zod'
 import { useForm } from 'vee-validate'
+import { ObjectSchema } from 'yup'
+import { ZodObject } from 'zod'
 
 const props = withDefaults(defineProps<YFormProps>(), {
   step: 0,
@@ -12,7 +16,17 @@ const props = withDefaults(defineProps<YFormProps>(), {
 
 const emits = defineEmits<YFormEmits>()
 defineSlots<YFormSlots>()
-const _schema = useVModel(props, 'schema', emits, { passive: true })
+const __schema = useVModel(props, 'schema', emits, { passive: true })
+const _schema = computed(() => {
+  const s = __schema.value
+  if (s instanceof ZodObject) {
+    return zodToTypedSchema(s)
+  }
+  if (s instanceof ObjectSchema) {
+    return yupToTypedSchema(s)
+  }
+  return s
+})
 const _modelValue = useVModel(props, 'modelValue', emits)
 const usedForm = useForm({
   name: props.name,
@@ -63,7 +77,13 @@ function handleReset() {
     @reset="handleReset"
     @submit.prevent="ev => handleSubmit(ev)"
   >
-    <slot name="default" />
+    <slot
+      :reset="handleReset"
+      :submit="submitHandler"
+      :disabled="Object.keys(usedForm.errorBag.value).length >= 1"
+      :isSubmitting="usedForm.isSubmitting.value"
+      name="default"
+    />
     <slot
       name="submit"
       :reset="handleReset"
