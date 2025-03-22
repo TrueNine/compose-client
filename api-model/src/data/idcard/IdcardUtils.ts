@@ -1,5 +1,5 @@
 import type { timestamp } from '@compose/api-types'
-import { Regexes } from '@/data/regexes'
+import { Regexes } from '@/consts/Regexes'
 
 import { GenderTyping } from '@compose/api-typings'
 
