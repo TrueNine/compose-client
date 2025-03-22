@@ -4,7 +4,7 @@ import { toTypedSchema as yupToTypedSchema } from '@vee-validate/yup'
 import { toTypedSchema as zodToTypedSchema } from '@vee-validate/zod'
 import { useForm } from 'vee-validate'
 import { ObjectSchema } from 'yup'
-import { ZodObject } from 'zod'
+import { ZodType } from 'zod'
 
 const props = withDefaults(defineProps<YFormProps>(), {
   step: 0,
@@ -19,7 +19,7 @@ defineSlots<YFormSlots>()
 const __schema = useVModel(props, 'schema', emits, { passive: true })
 const _schema = computed(() => {
   const s = __schema.value
-  if (s instanceof ZodObject) {
+  if (s instanceof ZodType) {
     return zodToTypedSchema(s)
   }
   if (s instanceof ObjectSchema) {
@@ -70,6 +70,10 @@ provide(YFormInjectionKey, exposed)
 function handleReset() {
   usedForm.handleReset()
 }
+
+setTimeout(() => {
+  usedForm.setFieldError('a.b', 'error')
+}, 2000)
 </script>
 
 <template>
