@@ -1,8 +1,18 @@
 {
   "name": "@compose/meta-ui-web",
   "type": "module",
-  "version": "1.1.276",
+  "version": "1.1.277",
   "homepage": "https://github.com/TrueNine",
+  "scripts": {
+    "dev": "vite --mode devepment",
+    "build-gulp": "gulp -f __build-src__/index.js",
+    "build-vite": "vite build",
+    "type-check": "vue-tsc -p ./tsconfig.json --noEmit",
+    "build": "run-s type-check build-vite build-gulp",
+    "pub-c": "pnpm --dir ./dist pub",
+    "lint": "eslint --fix",
+    "pub": "run-s lint build pub-c"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://https://github.com/TrueNine/compose-client",
@@ -38,15 +48,5 @@
     "dist",
     "src"
   ],
-  "scripts": {
-    "dev": "vite --mode devepment",
-    "build-gulp": "gulp -f __build-src__/index.js",
-    "build-vite": "vite build",
-    "type-check": "vue-tsc -p ./tsconfig.json --noEmit",
-    "build": "run-s type-check build-vite build-gulp",
-    "pub-c": "pnpm --dir ./dist pub",
-    "lint": "eslint --fix",
-    "pub": "run-s lint build pub-c"
-  },
   "typings": "dist/index.d.ts"
 }
