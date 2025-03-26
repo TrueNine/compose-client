@@ -17,7 +17,7 @@ const { defineConfig, buildConfigLib, dtsPlugin, staticCopyPluginPackageJson } =
   pushFeatures: {
     lib: {
       enable: true,
-      minify: true,
+      minify: false,
       sourcemap: true,
       dts: {
         enable: true,
