@@ -23,17 +23,17 @@ setTimeout(() => {
 </script>
 
 <template>
-  {{ aab + 1 }}
-  {{ code + 1 }}
-  <VTextField v-model="code" label="地址" />
-  <YVAddressSelect
-    v-model:adCode="code"
-    v-model:fullPath="aab"
-    level="district"
-    :findDistricts="findCities"
-    :findTowns="findCities"
-    :findVillages="findCities"
-    :findCities="findCities"
-    :findProvinces="findProvinces"
-  />
+{{ aab + 1 }}
+{{ code + 1 }}
+<VTextField v-model="code" label="地址" />
+<YVAddressSelect
+  v-model:adCode="code"
+  v-model:fullPath="aab"
+  level="district"
+  :findDistricts="findCities"
+  :findTowns="findCities"
+  :findVillages="findCities"
+  :findCities="findCities"
+  :findProvinces="findProvinces"
+/>
 </template>

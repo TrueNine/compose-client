@@ -6,11 +6,11 @@ const value = ref<number>()
 </script>
 
 <template>
-  {{ range }}
-  {{ value }}
-  <VCard>
-    <VCardText>
-      <YQDatePicker v-model:value="value" landscape />
-    </VCardText>
-  </VCard>
+{{ range }}
+{{ value }}
+<VCard>
+  <VCardText>
+    <YQDatePicker v-model:value="value" landscape />
+  </VCardText>
+</VCard>
 </template>

@@ -26,7 +26,7 @@ const routeTable = ref<RouteOption[]>([
 </script>
 
 <template>
-  <div class="w-1/5">
-    <YElSiderMenu :routeTable="routeTable" :collapse="false" parentIndex="acl" />
-  </div>
+<div class="w-1/5">
+  <YElSiderMenu :routeTable="routeTable" :collapse="false" parentIndex="acl" />
+</div>
 </template>

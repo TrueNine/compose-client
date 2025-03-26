@@ -21,25 +21,25 @@ function error(e: dynamic) {
 </script>
 
 <template>
-  <YForm class="w-50vw p-4" :schema="schema" @error="error" @submit="submit">
-    <YField :name="['modelValue', 'other1', 'other2']">
-      <PeekView />
-    </YField>
-    <YField label="files[0]" name="files[0]">
-      <VTextField />
-    </YField>
-    <YField name="files[1]">
-      <VTextField />
-    </YField>
+<YForm class="w-50vw p-4" :schema="schema" @error="error" @submit="submit">
+  <YField :name="['modelValue', 'other1', 'other2']">
+    <PeekView />
+  </YField>
+  <YField label="files[0]" name="files[0]">
+    <VTextField />
+  </YField>
+  <YField name="files[1]">
+    <VTextField />
+  </YField>
 
-    <YField name="a.b">
-      <VTextField />
-    </YField>
-    <template #submit="e">
-      {{ e }}
-    </template>
-    <VBtn type="submit" :block="true" color="primary">
-      SUBMIT
-    </VBtn>
-  </YForm>
+  <YField name="a.b">
+    <VTextField />
+  </YField>
+  <template #submit="e">
+    {{ e }}
+  </template>
+  <VBtn type="submit" :block="true" color="primary">
+    SUBMIT
+  </VBtn>
+</YForm>
 </template>

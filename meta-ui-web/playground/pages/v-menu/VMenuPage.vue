@@ -56,10 +56,10 @@ const value = ref()
 </script>
 
 <template>
-  <VMain>
-    <h1 absolute z-1000>
-      {{ value }}
-    </h1>
-  </VMain>
-  <YVMenu v-model:value="value" pathPrefix="/prefix" :routes="routes" />
+<VMain>
+  <h1 absolute z-1000>
+    {{ value }}
+  </h1>
+</VMain>
+<YVMenu v-model:value="value" pathPrefix="/prefix" :routes="routes" />
 </template>

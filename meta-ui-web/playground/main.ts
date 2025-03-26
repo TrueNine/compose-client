@@ -12,7 +12,7 @@ import '@mdi/font/css/materialdesignicons.css'
 import 'vuetify/styles'
 import 'uno.css'
 
-const a = createVuetifyMount(r => Object.assign({}, r))
+const a = createVuetifyMount((r) => Object.assign({}, r))
 
 function setupApp(): void {
   naiveStyleAdaptor()

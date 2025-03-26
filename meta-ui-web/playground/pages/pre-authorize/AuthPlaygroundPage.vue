@@ -17,9 +17,9 @@ setTimeout(() => {
 </script>
 
 <template>
-  <YConfigPreAuthorize :anonymousProvider="acl" :permissionsProvider="permissions">
-    <YPreAuthorize :permissions="['ROOT']">
-      123
-    </YPreAuthorize>
-  </YConfigPreAuthorize>
+<YConfigPreAuthorize :anonymousProvider="acl" :permissionsProvider="permissions">
+  <YPreAuthorize :permissions="['ROOT']">
+    123
+  </YPreAuthorize>
+</YConfigPreAuthorize>
 </template>
