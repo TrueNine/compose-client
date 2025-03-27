@@ -64,7 +64,6 @@ const exposed: YFormInjection = {
   },
 }
 
-defineExpose(exposed)
 provide(YFormInjectionKey, exposed)
 
 function handleReset() {
@@ -74,26 +73,27 @@ function handleReset() {
 setTimeout(() => {
   usedForm.setFieldError('a.b', 'error')
 }, 2000)
+defineExpose(exposed)
 </script>
 
 <template>
-  <form
-    @reset="handleReset"
-    @submit.prevent="ev => handleSubmit(ev)"
-  >
-    <slot
-      :reset="handleReset"
-      :submit="submitHandler"
-      :disabled="Object.keys(usedForm.errorBag.value).length >= 1"
-      :isSubmitting="usedForm.isSubmitting.value"
-      name="default"
-    />
-    <slot
-      name="submit"
-      :reset="handleReset"
-      :submit="submitHandler"
-      :disabled="Object.keys(usedForm.errorBag.value).length >= 1"
-      :isSubmitting="usedForm.isSubmitting.value"
-    />
-  </form>
+<form
+  @reset="handleReset"
+  @submit.prevent="ev => handleSubmit(ev)"
+>
+  <slot
+    :reset="handleReset"
+    :submit="submitHandler"
+    :disabled="Object.keys(usedForm.errorBag.value).length >= 1"
+    :isSubmitting="usedForm.isSubmitting.value"
+    name="default"
+  />
+  <slot
+    name="submit"
+    :reset="handleReset"
+    :submit="submitHandler"
+    :disabled="Object.keys(usedForm.errorBag.value).length >= 1"
+    :isSubmitting="usedForm.isSubmitting.value"
+  />
+</form>
 </template>

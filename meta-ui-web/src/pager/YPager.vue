@@ -27,5 +27,5 @@ const modelOffset = computed({
 </script>
 
 <template>
-  <VPagination v-bind="$attrs" v-model="modelOffset" :totalVisible="props.total" :maxPages="maxPage" :length="maxPage" />
+<VPagination v-bind="$attrs" v-model="modelOffset" :totalVisible="props.total" :maxPages="maxPage" :length="maxPage" />
 </template>

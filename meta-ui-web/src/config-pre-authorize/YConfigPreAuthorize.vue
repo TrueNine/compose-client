@@ -29,10 +29,10 @@ const _roles = computed(() => {
 const impl: PreAuthorizeInjection = {
   isAuthed: () => _authed.value,
   isAnonymous: () => _anonymous.value,
-  requirePermissions: permissions => _authed.value && maybeArray(_permissions.value).some(p => permissions.includes(p)),
-  requireRoles: roles => _authed.value && maybeArray(_roles.value).some(r => roles.includes(r)),
-  hasAnyPermissions: permissions => maybeArray(_permissions.value).some(p => permissions.includes(p)),
-  hasAnyRoles: roles => maybeArray(_roles.value).some(r => roles.includes(r)),
+  requirePermissions: (permissions) => _authed.value && maybeArray(_permissions.value).some((p) => permissions.includes(p)),
+  requireRoles: (roles) => _authed.value && maybeArray(_roles.value).some((r) => roles.includes(r)),
+  hasAnyPermissions: (permissions) => maybeArray(_permissions.value).some((p) => permissions.includes(p)),
+  hasAnyRoles: (roles) => maybeArray(_roles.value).some((r) => roles.includes(r)),
   permissions: _permissions,
   roles: _roles,
   authed: _authed,
@@ -43,5 +43,5 @@ defineExpose(impl)
 </script>
 
 <template>
-  <slot name="default" />
+<slot name="default" />
 </template>

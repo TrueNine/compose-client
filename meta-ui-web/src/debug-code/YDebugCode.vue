@@ -9,18 +9,20 @@ const props = withDefaults(defineProps<YDebugCodeProps>(), {
 })
 
 const internalTypedCode = computed<string>(() => {
-  if (props.lang === 'json')
+  if (props.lang === 'json') {
     return JSON.stringify(props.code, null, 2)
-  if (typeof props.code === 'string')
+  }
+  if (typeof props.code === 'string') {
     return props.code
+  }
   return JSON.stringify(props.code)
 })
 </script>
 
 <template>
-  <VCard>
-    <NSpace bgM p4>
-      <NCode :language="lang" :code="internalTypedCode" :wordWrap="wrap" />
-    </NSpace>
-  </VCard>
+<VCard>
+  <NSpace bgM p4>
+    <NCode :language="lang" :code="internalTypedCode" :wordWrap="wrap" />
+  </NSpace>
+</VCard>
 </template>

@@ -37,8 +37,9 @@ export function Vuetify3LabsLabResolver(useLabs = true): { type: string, resolve
   return {
     type: 'component',
     resolve: (name: string) => {
-      if (/^V[A-Z]/.exec(name))
+      if (/^V[A-Z]/.exec(name)) {
         return { name, from: useLabs && _vLabsComponentNames.includes(name) ? 'vuetify/labs/components' : 'vuetify/components' }
+      }
     },
   }
 }

@@ -59,9 +59,9 @@ const elLocale = computed(() => {
 </script>
 
 <template>
-  <ElConfigProvider :zIndex="1" :locale="elLocale">
-    <VThemeProvider :theme="darkLight">
-      <slot name="default" />
-    </VThemeProvider>
-  </ElConfigProvider>
+<ElConfigProvider :zIndex="1" :locale="elLocale">
+  <VThemeProvider :theme="darkLight">
+    <slot name="default" />
+  </VThemeProvider>
+</ElConfigProvider>
 </template>

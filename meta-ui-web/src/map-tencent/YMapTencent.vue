@@ -35,8 +35,9 @@ function to3d() {
 }
 
 function toCenter(latLng: TMap.LatLngDataTyping, zoom = false) {
-  if (zoom)
+  if (zoom) {
     mapHandle?.setZoom(20)
+  }
   mapHandle?.panTo(latLng)
 }
 
@@ -44,8 +45,9 @@ function mapInitFn(_: HTMLElement, t: typeof TMap) {
   search = new window.TMap.service.Search({
     pageSize: 20,
   })
-  if (!wrapperContainerHandle.value)
+  if (!wrapperContainerHandle.value) {
     return
+  }
   mapHandle = new window.TMap.Map(wrapperContainerHandle.value, {
     center: props.initCenter,
     viewMode: props.viewMode,
@@ -65,8 +67,9 @@ function mapInitFn(_: HTMLElement, t: typeof TMap) {
   }
 
   mapHandle.on('click', (ev) => {
-    if (!mapHandle)
+    if (!mapHandle) {
       return
+    }
     if (!singleInfoWindow) {
       singleInfoWindow = new t.InfoWindow({
         map: mapHandle,
@@ -80,7 +83,7 @@ function mapInitFn(_: HTMLElement, t: typeof TMap) {
         ?.remove(
           multiMarkerLayer
             .getGeometries()
-            .map(r => r.id)
+            .map((r) => r.id)
             .filter(Boolean) as string[],
         )
         .updateGeometries([])
@@ -92,16 +95,18 @@ function mapInitFn(_: HTMLElement, t: typeof TMap) {
           ?.remove(
             multiMarkerLayer
               .getGeometries()
-              .map(r => r.id)
+              .map((r) => r.id)
               .filter(Boolean) as string[],
           )
           .updateGeometries([])
       }
     })
     toCenter(ev.latLng)
-    if (!props.multiPoint)
+    if (!props.multiPoint) {
       singleInfoWindow.setContent(`<div class="c-black">${ev.poi.name}</div>`).setPosition(ev.latLng).open()
-    else singleInfoWindow.close()
+    } else {
+      singleInfoWindow.close()
+    }
   })
 }
 
@@ -120,12 +125,15 @@ const searchWord = ref<string>('')
 const searchResults = ref<TMap.service.SearchResult['data']>([])
 
 function searchNearby() {
-  if (!props.serviceKey)
+  if (!props.serviceKey) {
     return
-  if (!mapHandle)
+  }
+  if (!mapHandle) {
     return
-  if (!search)
+  }
+  if (!search) {
     return
+  }
   const center = mapHandle.getCenter()
   search
     .searchNearby({
@@ -161,48 +169,48 @@ function searchRegion() {
 </script>
 
 <template>
-  <section relative flex-col class="transition-all-500">
-    <map :id="props.containerId" ref="wrapperContainerHandle" flex />
-    <!-- 自定义操作句柄 -->
-    <nav class="absolute left-2 top-2 z-1000">
-      <slot name="view-box" :viewMode="is3dMode" :to2d="to2d" :to3d="to3d">
-        <VBtnGroup>
-          <VBtn size="small" :disabled="is3dMode" color="primary" @click="to3d">
-            3D
-          </VBtn>
-          <VBtn size="small" :disabled="!is3dMode" color="primary" @click="to2d">
-            2D
-          </VBtn>
-        </VBtnGroup>
-      </slot>
-    </nav>
+<section relative flex-col class="transition-all-500">
+  <map :id="props.containerId" ref="wrapperContainerHandle" flex />
+  <!-- 自定义操作句柄 -->
+  <nav class="absolute left-2 top-2 z-1000">
+    <slot name="view-box" :viewMode="is3dMode" :to2d="to2d" :to3d="to3d">
+      <VBtnGroup>
+        <VBtn size="small" :disabled="is3dMode" color="primary" @click="to3d">
+          3D
+        </VBtn>
+        <VBtn size="small" :disabled="!is3dMode" color="primary" @click="to2d">
+          2D
+        </VBtn>
+      </VBtnGroup>
+    </slot>
+  </nav>
 
-    <!-- 操作句柄 -->
-    <div class="min-w-full w-full flex">
-      <slot name="search-box">
-        <div class="w-full flex flex-row">
-          <ElInput v-model="searchWord" />
-          <VBtn color="primary" @click="searchNearby">
-            search
-          </VBtn>
-        </div>
-        <div class="w-full flex flex-row">
-          <ElInput v-model="searchAddressCode" />
-          <ElInput v-model="searchWord" />
-          <VBtn color="primary" @click="searchRegion">
-            search
-          </VBtn>
-        </div>
-      </slot>
-    </div>
-    <!-- 搜索结果 -->
-    <div>
-      <div v-for="(it, idx) in searchResults" :key="idx" class="cursor-pointer py-1" @click="toCenter(it.location, true)">
-        <VChip>{{ it.title }}</VChip>
-        <span>{{ it.address }}</span>
-        <VChip>{{ it.ad_info.adcode }}</VChip>
-        <VDivider />
+  <!-- 操作句柄 -->
+  <div class="min-w-full w-full flex">
+    <slot name="search-box">
+      <div class="w-full flex flex-row">
+        <ElInput v-model="searchWord" />
+        <VBtn color="primary" @click="searchNearby">
+          search
+        </VBtn>
       </div>
+      <div class="w-full flex flex-row">
+        <ElInput v-model="searchAddressCode" />
+        <ElInput v-model="searchWord" />
+        <VBtn color="primary" @click="searchRegion">
+          search
+        </VBtn>
+      </div>
+    </slot>
+  </div>
+  <!-- 搜索结果 -->
+  <div>
+    <div v-for="(it, idx) in searchResults" :key="idx" class="cursor-pointer py-1" @click="toCenter(it.location, true)">
+      <VChip>{{ it.title }}</VChip>
+      <span>{{ it.address }}</span>
+      <VChip>{{ it.ad_info.adcode }}</VChip>
+      <VDivider />
     </div>
-  </section>
+  </div>
+</section>
 </template>
