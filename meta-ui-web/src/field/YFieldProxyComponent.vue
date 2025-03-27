@@ -34,10 +34,15 @@ const _modelNames = computed(() => {
   return props.modelNames
 })
 
-const _allFields = Object.entries(_modelNames.value)
-  .map(([modelValueName, bindModelValueName]) => {
-    return useField(modelValueName, void 0, { label: bindModelValueName })
-  })
+const _allFields = reactive(
+  Object.entries(_modelNames.value)
+    .map(([modelValueName, bindModelValueName]) => {
+      return useField(modelValueName, void 0, { label: bindModelValueName })
+    }),
+)
+const _allErrors = computed(() => {
+  return _allFields.map((e) => e.errorMessage).filter((e): e is string => Boolean(e))
+})
 
 const effectVModels = computed(() => {
   if (!mounted.value) {
@@ -51,7 +56,8 @@ const effectVModels = computed(() => {
     return mergeProps(
       props.component.props ?? {},
       {
-        'onBlur': f.handleBlur,
+        'onBlur': (e: Event) => f.handleBlur(e, true),
+        'onReset': () => f.handleReset,
         [`onUpdate:${label}`]: (v: dynamic) => {
           f.setValue(v)
         },
@@ -60,8 +66,8 @@ const effectVModels = computed(() => {
         },
       },
       {
-        [label]: f.value.value,
-        errorMessages: f.errors.value,
+        [label]: f.value,
+        errorMessages: _allErrors.value,
         label: props.label,
         placeholder: props.placeholder,
       },
@@ -73,5 +79,5 @@ const effectVModels = computed(() => {
 </script>
 
 <template>
-  <component v-bind="effectVModels" :is="props.component" />
+<component v-bind="effectVModels" :is="props.component" />
 </template>

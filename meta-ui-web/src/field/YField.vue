@@ -21,8 +21,7 @@ const _effectModels = computed(() => {
     const name = names[i]
     if (typeof name === 'string') {
       result[name] = i === 0 ? 'modelValue' : name
-    }
-    else {
+    } else {
       Object.assign(result, name)
     }
   }
@@ -37,14 +36,14 @@ const usedDefaultSlot = computed(() => !!slots.default)
 </script>
 
 <template>
-  <template v-if="usedDefaultSlot">
-    <template v-for="(c, _) in slots.default()" :key="_">
-      <YFieldProxyComponent
-        :label="props.label"
-        :placeholder="props.placeholder"
-        :component="c"
-        :modelNames="_effectModels"
-      />
-    </template>
+<template v-if="usedDefaultSlot">
+  <template v-for="(c, _) in slots.default()" :key="_">
+    <YFieldProxyComponent
+      :label="props.label"
+      :placeholder="props.placeholder"
+      :component="c"
+      :modelNames="_effectModels"
+    />
   </template>
+</template>
 </template>
