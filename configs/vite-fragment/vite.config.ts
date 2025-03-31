@@ -14,9 +14,8 @@ const {defineConfig} = manifest({
       'rollup-plugin-terser/index'
     ],
     lib: {
-      minify: true,
-      minifyUnsafe: true,
-      sourcemap: false
+      minify: false,
+      sourcemap: true
     }
   }
 })
@@ -27,5 +26,4 @@ const d = defineConfig({
     }
   }
 })
-console.log(d)
 export default d
