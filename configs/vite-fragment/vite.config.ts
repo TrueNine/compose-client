@@ -14,6 +14,7 @@ const {defineConfig} = manifest({
       'rollup-plugin-terser/index'
     ],
     lib: {
+      formats: ['es', 'cjs'],
       minify: false,
       sourcemap: true
     }
