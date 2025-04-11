@@ -2,7 +2,12 @@
   "name": "compose-client",
   "version": "1.0.7",
   "author": "TrueNine",
-  "description": "no desc",
+  "description": "no description",
+  "packageManager": "pnpm@10.8.0",
+  "engines": {
+    "node": ">=22.14.0",
+    "pnpm": ">=10.8.0"
+  },
   "scripts": {
     "build:configs:vite-fragment": "nr --dir ./configs/vite-fragment build",
     "build:configs:eslint9": "nr --dir ./configs/eslint9 build",
