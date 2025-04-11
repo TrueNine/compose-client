@@ -41,13 +41,10 @@
     "src"
   ],
   "scripts": {
-    "build-v": "vite build",
-    "build-c": "rollup --config rollup.config.ts --configPlugin typescript",
-    "type-check": "vue-tsc -p ./tsconfig.json --noEmit",
-    "build": "run-s type-check build-v",
-    "pub-c": "pnpm --dir ./dist pub",
-    "test": "vitest",
-    "lint": "eslint --fix",
-    "pub": "run-s lint build pub-c"
+    "build-c": "vite build",
+    "type-check": "vue-tsc --noEmit",
+    "build": "run-s type-check build-c",
+    "pub-c": "pnpm --dir dist pub",
+    "pub": "run-s build pub-c"
   }
 }
