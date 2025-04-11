@@ -9,6 +9,11 @@ export * from './data'
 export * from './datetime'
 
 /**
+ * 枚举类型
+ */
+export * from './enums/index copy'
+
+/**
  * 语言 国际化
  */
 export * from './i18n'
@@ -23,10 +28,6 @@ export * from './kotlin'
  */
 export * from './map'
 
-/**
- * 数据库的抽象定义
- */
-export * from './orm'
 /**
  * 外部依赖类型
  */
