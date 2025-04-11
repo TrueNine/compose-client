@@ -4,12 +4,10 @@
   "author": "TrueNine",
   "description": "no desc",
   "scripts": {
-    "build:config:vite-fragment": "nr --dir ./configs/vite-fragment build",
-    "build:config:common": "nr --dir ./configs/common build",
-    "build:config:theme": "nr --dir ./configs/theme build",
-    "build:config:uno": "nr --dir ./configs/uno build",
-    "build:configs_post": "run-p build:config:theme build:config:uno",
-    "build:configs": "run-s build:config:vite-fragment build:config:common build:configs_post",
+    "build:configs:vite-fragment": "nr --dir ./configs/vite-fragment build",
+    "build:configs:eslint9": "nr --dir ./configs/eslint9 build",
+    "build:configs:uno": "nr --dir ./configs/uno build",
+    "build:configs": "run-s build:configs:vite-fragment build:configs:eslint9 build:configs:uno",
 
     "build:api:types": "nr --dir ./api-types build",
     "build:api:model": "nr --dir ./api-model build",
