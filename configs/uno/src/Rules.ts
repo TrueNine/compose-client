@@ -1,4 +1,4 @@
-import type {ThemeConfig} from '@compose/config-theme'
+import type {ThemeConfig} from './Theme'
 import type {StaticRule} from 'unocss'
 
 export function unoRules(cfg: ThemeConfig): StaticRule[] {

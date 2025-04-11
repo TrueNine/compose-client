@@ -2,7 +2,7 @@ import {defineConfig, presetAttributify, presetMini, presetIcons, presetUno, pre
 import {default as transformerDirectives} from '@unocss/transformer-directives'
 import {default as transformerCompileClass} from '@unocss/transformer-compile-class'
 import {default as transformerAttributifyJsx} from '@unocss/transformer-attributify-jsx'
-import type {ThemeConfig} from '@compose/config-theme'
+import type {ThemeConfig} from './Theme'
 
 import {shortCuts} from './ShortCuts'
 import {breakpoints} from './Breakpoints'
