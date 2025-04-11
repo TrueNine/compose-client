@@ -28,7 +28,7 @@
 
     "build:all": "run-p build:platform-sdk build:ext build:extensions build:req build:meta-ui-web",
 
-    "prepare": "run-s build:configs build:api build:all",
+    "prepare": "run-s build:configs build:api build:all"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^4.12.0",
