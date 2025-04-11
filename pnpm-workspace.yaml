@@ -1,10 +1,8 @@
 packages:
   - 'configs/*'
-  - 'api-model-node'
   - 'api-model'
   - 'extensions'
   - 'api-types'
-  - 'api-typings'
   - 'platform-sdk/*'
   - 'uni-app/*'
   - 'ext/*'
