@@ -15,7 +15,7 @@
     "build:api:types": "nr --dir ./api-types build",
     "build:api:model": "nr --dir ./api-model build",
     "build:api": "run-s build:api:types build:api:model",
-    
+
     "build:ext:chrome": "nr --dir ./ext/chrome build",
     "build:ext": "run-p build:ext:chrome",
 
