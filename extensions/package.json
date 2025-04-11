@@ -60,11 +60,8 @@
     "src"
   ],
   "scripts": {
-    "build": "run-s type-check lint build-c",
-    "lint": "eslint --fix",
-    "pub": "run-s build pub-c",
     "build-c": "vite build",
     "type-check": "vue-tsc --noEmit",
-    "pub-c": "pnpm --dir ./dist pub"
+    "build": "run-s type-check build-c"
   }
 }
