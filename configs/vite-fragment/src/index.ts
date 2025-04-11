@@ -102,8 +102,6 @@ export const manifest = (cfg?: BasicConfig) => {
 
     if (rqCfg.features?.lib?.enable) {
       rqCfg.build = buildConfigLib() as any
-      //const newResolve = ResolveAliasConfig(rqCfg)
-      //rqCfg.resolve = mergeConfig(rqCfg.resolve, newResolve.resolve) as any
     }
 
     if (rqCfg.features?.lib?.dts?.enable) rqCfg.plugins.push(dtsPlugin())
@@ -118,7 +116,6 @@ export const manifest = (cfg?: BasicConfig) => {
       rqCfg.plugins.push(staticCopyPluginPackageJson())
     }
     const vite = viteDefineConfig(rqCfg as unknown as UserConfig)
-    console.log(vite)
     return vite
   }
 
