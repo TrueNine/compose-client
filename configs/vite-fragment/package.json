@@ -5,11 +5,11 @@
   "author": "TrueNine",
   "license": "private",
   "scripts": {
-    "build": "run-s type-check build-c",
     "build-c": "vite build",
-    "type-check": "vue-tsc -p tsconfig.json --composite false --noEmit --noEmit",
-    "pub": "run-s build pub-c",
-    "pub-c": "pnpm --dir ./dist pub"
+    "type-check": "vue-tsc --noEmit",
+    "build": "run-s type-check build-c",
+    "pub-c": "pnpm --dir dist pub",
+    "pub": "run-s build pub-c"
   },
   "type": "module",
   "module": "dist/index.js",

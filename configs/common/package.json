@@ -2,9 +2,11 @@
   "name": "@compose/config-common",
   "version": "0.0.3",
   "scripts": {
-    "build": "vite build",
-    "pub": "run-s build pub-c",
-    "pub-c": "pnpm --dir ./dist pub"
+    "build-c": "vite build",
+    "type-check": "vue-tsc --noEmit",
+    "build": "run-s type-check build-c",
+    "pub-c": "pnpm --dir dist pub",
+    "pub": "run-s build pub-c"
   },
   "type": "module",
   "module": "dist/index.js",

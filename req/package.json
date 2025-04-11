@@ -8,7 +8,7 @@
     "build-c": "vite build",
     "type-check": "vue-tsc --noEmit",
     "build": "run-s type-check build-c",
-    "pub-c": "pnpm publish --no-git-checks",
+    "pub-c": "pnpm --dir dist pub",
     "pub": "run-s build pub-c"
   },
   "type": "module",
