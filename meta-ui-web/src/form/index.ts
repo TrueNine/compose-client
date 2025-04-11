@@ -6,7 +6,8 @@ import type { InjectionKey, VNode, WritableComputedRef } from 'vue'
 import type { Schema as YupSchema } from 'yup'
 
 import type { ZodSchema } from 'zod'
-import { componentInstallToPlugin } from '@compose/extensions/vue'
+import { componentInstallToPlugin } from '@/common'
+
 import _c from './YForm.vue'
 
 interface FormAttribute {

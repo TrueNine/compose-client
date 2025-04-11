@@ -1,5 +1,5 @@
 import type { bool, RouteOption, StrOrNum } from '@compose/api-types'
-import { componentInstallToPlugin } from '@compose/extensions/vue'
+import { componentInstallToPlugin } from '@/common'
 
 import _c from './YElSiderMenuItem.vue'
 

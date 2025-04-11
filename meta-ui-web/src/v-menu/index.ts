@@ -3,7 +3,7 @@ import YIco from '@/ico'
 
 import YVMenuItem from '@/v-menu-item/YVMenuItem.vue'
 
-import { componentInstallToPlugin } from '@compose/extensions/vue'
+import { componentInstallToPlugin } from '@/common'
 import _c from './YVMenu.vue'
 
 export interface YVMenuProps {

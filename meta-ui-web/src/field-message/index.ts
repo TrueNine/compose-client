@@ -1,4 +1,5 @@
-import { componentInstallToPlugin } from '@compose/extensions/vue'
+import { componentInstallToPlugin } from '@/common'
+
 import YFieldMessageSfc from './YFieldMessage.vue'
 
 export interface YFieldMessageProps {

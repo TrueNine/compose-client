@@ -1,6 +1,6 @@
 import type { asyncable, i32, i64, late, latenil, str } from '@compose/api-types'
 
-import { componentInstallToPlugin } from '@compose/extensions/vue'
+import { componentInstallToPlugin } from '@/common'
 import _c from './YVAddressSelect.vue'
 
 export type ISelectLevel = 'province' | 'city' | 'district' | 'town' | 'village'

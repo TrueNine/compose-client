@@ -1,7 +1,7 @@
 import type { dynamic, RouteOption } from '@compose/api-types'
 import YIco from '@/ico/index'
 
-import { componentInstallToPlugin } from '@compose/extensions/vue'
+import { componentInstallToPlugin } from '@/common'
 
 import _c from './YVMenuItem.vue'
 

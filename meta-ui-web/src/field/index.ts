@@ -2,7 +2,8 @@ import type { FormFieldEmits, FormFieldProps } from '@/common/VuePropsCommon'
 import type { dynamic, Maybe } from '@compose/api-types'
 
 import type { VNode } from 'vue'
-import { componentInstallToPlugin } from '@compose/extensions/vue'
+import { componentInstallToPlugin } from '@/common'
+
 import _c from './YField.vue'
 import _d from './YFieldProxyComponent.vue'
 

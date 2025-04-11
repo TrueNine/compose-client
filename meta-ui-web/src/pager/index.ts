@@ -1,7 +1,7 @@
 import type { ModelValueEmits, ModelValueProps } from '@/common'
 import type { clip, i32, nil, Pq, Pr } from '@compose/api-types'
 
-import { componentInstallToPlugin } from '@compose/extensions/vue'
+import { componentInstallToPlugin } from '@/common'
 
 import _c from './YPager.vue'
 

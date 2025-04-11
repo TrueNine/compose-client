@@ -1,5 +1,5 @@
 import type { RouteOption } from '@compose/api-types'
-import { componentInstallToPlugin } from '@compose/extensions/vue'
+import { componentInstallToPlugin } from '@/common'
 
 import YSiderMenuItem from '../el-sider-menu-item'
 
