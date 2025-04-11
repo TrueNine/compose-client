@@ -2,7 +2,6 @@
   "compilerOptions": {
     "strict": true,
     "removeComments": false,
-    //"composite": true,
     "noImplicitThis": true,
     "moduleResolution": "Bundler",
     "useDefineForClassFields": true,
@@ -24,7 +23,6 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "useUnknownInCatchVariables": true,
-    // 不允许使用 any
     "noImplicitAny": true
   }
 }
