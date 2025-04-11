@@ -6,10 +6,9 @@
   "scripts": {
     "build:config:vite-fragment": "nr --dir ./configs/vite-fragment build",
     "build:config:common": "nr --dir ./configs/common build",
-    "build:config:eslint9": "nr --dir ./configs/eslint9 build",
     "build:config:theme": "nr --dir ./configs/theme build",
     "build:config:uno": "nr --dir ./configs/uno build",
-    "build:configs_post": "run-p build:config:eslint9 build:config:theme build:config:uno",
+    "build:configs_post": "run-p build:config:theme build:config:uno",
     "build:configs": "run-s build:config:vite-fragment build:config:common build:configs_post",
 
     "build:api:types": "nr --dir ./api-types build",
@@ -29,7 +28,7 @@
 
     "build:all": "run-p build:platform-sdk build:ext build:extensions build:req build:meta-ui-web",
 
-    "prepare": "run-s build:configs build:api build:all"
+    "prepare": "run-s build:configs build:api build:all",
   },
   "devDependencies": {
     "@antfu/eslint-config": "^4.12.0",
