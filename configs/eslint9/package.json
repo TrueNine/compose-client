@@ -18,20 +18,28 @@
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
+    "./types": {
+      "types": "./dist/types/index.d.ts"
+    },
+    "./defaults": {
+      "types": "./dist/defaults/index.d.ts",
+      "import": "./dist/defaults/index.js",
+      "require": "./dist/defaults/index.cjs"
+    },
     "./*": "./*"
   },
   "peerDependencies": {
     "eslint": "*",
     "@eslint/js": "*",
-    "vue-eslint-parser": "*",
-    "oxlint": "*",
-    "eslint-plugin-oxlint": "*",
-    "globals": "*",
     "@unocss/eslint-config": "*",
     "typescript-eslint": "*",
     "eslint-plugin-vue": "*",
     "eslint-plugin-prettier": "*",
     "@vue/eslint-config-typescript": "*",
-    "@vue/eslint-config-prettier": "*"
+    "@vue/eslint-config-prettier": "*",
+    "@antfu/eslint-config": "*",
+    "vite": "*",
+    "prettier": "*",
+    "vue-tsc": "*"
   }
 }

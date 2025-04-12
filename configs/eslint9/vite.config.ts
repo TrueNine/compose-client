@@ -1,22 +1,20 @@
-import {fileURLToPath, URL} from 'node:url'
-import {manifest} from '@compose/config-vite-fragment'
+import { fileURLToPath, URL } from 'node:url'
+import { manifest } from '@compose/config-vite-fragment'
 
-const {defineConfig} = manifest({
+const { defineConfig } = manifest({
   pushFeatures: {
     lib: {
       externals: [
         '@eslint/js',
-        'globals',
         '@rushstack/eslint-patch',
         'typescript-eslint',
         'eslint-plugin-vue',
         'vue-eslint-parser',
-        /^(eslint-plugin-prettier|eslint-plugin-prettier\/)/
       ]
     }
   },
   features: {
-    entry: ['index'],
+    entry: ['index', 'types/index', 'defaults/index'],
     lang: 'ts',
     lib: {
       formats: ['es', 'cjs'],

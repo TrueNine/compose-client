@@ -1,102 +1,58 @@
-import {configureVueProject} from '@vue/eslint-config-typescript'
-import {antfu, type Awaitable, type TypedFlatConfigItem} from '@antfu/eslint-config'
+import { antfu } from '@antfu/eslint-config'
+import type { AntFuFormatterConfig, AntFuJsConfig, AntFuStrictTsConfig, AntFuStylisticConfig, AntFuTsConfig, AntFuUnocssConfig, AntFuVueConfig } from './types'
+import { defaultFormatterConfig, defaultJsConfig, defaultStrictTsConfig, defaultStylisticConfig, defaultTsConfig, defaultUnocssConfig, defaultVueConfig, mergeWithDefaults } from './defaults'
 
-configureVueProject({
-  scriptLangs: ['ts', 'tsx', 'js', 'jsx']
-})
-
-type UserEslintConfig = Awaitable<TypedFlatConfigItem> | TypedFlatConfigItem
-
-export const EcmaRules: UserEslintConfig = {
-  rules: {
-    'no-undefined': 'error',
-    'no-restricted-syntax': 'error',
-    'no-global-assign': 'error',
-    'no-unused-vars': 'error',
-    'no-var': 'error',
-    camelcase: ['error', {properties: 'always'}], // 优先使用 const
-    'prefer-const': [
-      'error',
-      {
-        destructuring: 'any',
-        ignoreReadBeforeAssign: false
-      }
-    ]
-  }
+interface ConfigOptions {
+  type?: 'app' | 'lib'
+  ignores?: string[]
+  jsx?: boolean
+  vue?: boolean | AntFuVueConfig
+  formatters?: boolean | AntFuFormatterConfig
+  javascript?: AntFuJsConfig
+  typescript?: boolean | AntFuStrictTsConfig | AntFuTsConfig
+  unocss?: boolean | AntFuUnocssConfig
+  stylistic?: boolean | AntFuStylisticConfig
 }
 
-export const TypescriptRules: UserEslintConfig = {
-  rules: {
-    'ts/no-explicit-any': 'error',
-    'ts/no-namespace': 'off',
-    'ts/no-unused-vars': [
-      'error',
-      {
-        vars: 'all',
-        args: 'after-used',
-        ignoreRestSiblings: false
-      }
-    ]
-  }
-}
-export const VueRules: UserEslintConfig = {
-  rules: {
-    'vue/attributes-order': [
-      'warn',
-      {
-        order: [
-          'DEFINITION',
-          'LIST_RENDERING',
-          'CONDITIONALS',
-          'RENDER_MODIFIERS',
-          'GLOBAL',
-          'UNIQUE',
-          'TWO_WAY_BINDING',
-          'OTHER_DIRECTIVES',
-          'OTHER_ATTR',
-          'EVENTS',
-          'CONTENT'
-        ]
-      }
-    ],
-    'vue/v-on-event-hyphenation': [
-      'error',
-      'never',
-      {
-        autofix: true
-      }
-    ],
-    'vue/attribute-hyphenation': [
-      'error',
-      'never',
-      {
-        ignoreTags: ['i-', 'v-', 'v-bind']
-      }
-    ],
-    'vue/prop-name-casing': ['error', 'camelCase'],
-    'vue/component-name-in-template-casing': [
-      'error',
-      'PascalCase',
-      {
-        ignores: ['router-view', 'router-link', 'scroll-view'],
-        registeredComponentsOnly: false
-      }
-    ]
-  }
-}
 
-type PrettierC = NonNullable<Parameters<typeof antfu>[0]>['formatters']
-export const Formatters: PrettierC = {
-  css: 'prettier',
-  html: 'prettier',
-  prettierOptions: {
-    tabWidth: 2,
-    arrowParens: 'avoid',
-    vueIndentScriptAndStyle: true,
-    useTabs: false,
-    singleQuote: true,
-    jsxSingleQuote: true,
-    trailingComma: 'es5',
-    bracketSpacing: true,
-  },
+export default function eslint9(options: ConfigOptions = {}): ReturnType<typeof antfu> {
+  let {
+    type = 'app',
+    ignores = [],
+    unocss = false,
+    vue = false,
+    jsx = false,
+    stylistic = false,
+    javascript = defaultJsConfig,
+    typescript = defaultTsConfig,
+    formatters = false
+  } = options
+
+  unocss = mergeWithDefaults(unocss, defaultUnocssConfig)
+  vue = mergeWithDefaults(vue, defaultVueConfig)
+  javascript = mergeWithDefaults(javascript, defaultJsConfig)
+  stylistic = mergeWithDefaults(stylistic, defaultStylisticConfig)
+  formatters = mergeWithDefaults(formatters, defaultFormatterConfig)
+
+  // 严格 ts 模式
+  if (
+    typescript !== null &&
+    typeof typescript === 'object' &&
+    'strictTypescriptEslint' in typescript &&
+    typescript.strictTypescriptEslint === true
+  ) {
+    typescript = mergeWithDefaults(typescript, defaultStrictTsConfig)
+  }
+
+  return antfu({
+    type,
+    ignores,
+    unocss,
+    vue,
+    jsx,
+    typescript,
+    javascript,
+    stylistic,
+    formatters
+  })
 }
