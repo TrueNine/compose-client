@@ -13,8 +13,7 @@ export default defineConfig({
         './src/vite-plugin-static-copy/index.ts',
         './src/externals/index.ts',
         './src/excludes/index.ts',
-        './src/build-lib-config/index.ts',
-        './src/rollup-plugin-terser/index.ts'
+        './src/build-lib-config/index.ts'
       ],
       formats: ['es', 'cjs'],
       fileName: '[name]',

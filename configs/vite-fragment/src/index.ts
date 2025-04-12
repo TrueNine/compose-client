@@ -1,14 +1,12 @@
-import type {UserConfig} from 'vite'
-import {defineConfig as viteDefineConfig, mergeConfig} from 'vite'
-import type {Options as RollupPluginTerserOptions} from '@rollup/plugin-terser'
+import type { UserConfig } from 'vite'
+import { defineConfig as viteDefineConfig, mergeConfig } from 'vite'
 
-import {BuildConfigLib as _BuildConfigLib} from './build-lib-config'
-import {DtsPlugin as _DtsPlugin} from './vite-plugin-dts'
-import {Externals} from './externals'
-import {StaticCopyPlugin} from './vite-plugin-static-copy'
-import {Excludes} from './excludes'
-import type {BasicConfig, ManifestConfig} from './types'
-import {RollupPluginTerser, RollupPluginTerserDefaultOptions} from './rollup-plugin-terser'
+import { BuildConfigLib as _BuildConfigLib } from './build-lib-config'
+import { DtsPlugin as _DtsPlugin } from './vite-plugin-dts'
+import { Externals } from './externals'
+import { StaticCopyPlugin } from './vite-plugin-static-copy'
+import { Excludes } from './excludes'
+import type { BasicConfig, ManifestConfig } from './types'
 
 function withDefaults(cfg: BasicConfig = {}): ManifestConfig {
   if (!cfg.features) cfg.features = {}
@@ -21,7 +19,7 @@ function withDefaults(cfg: BasicConfig = {}): ManifestConfig {
     if (!Array.isArray(f.entry)) f.entry = [f.entry]
     f.exclude ??= Excludes
     f.dist ??= 'dist'
-    cfg.build = {outDir: f.dist}
+    cfg.build = { outDir: f.dist }
 
     f.entryRoot ??= 'src'
     if (!f.alias) {
@@ -30,7 +28,7 @@ function withDefaults(cfg: BasicConfig = {}): ManifestConfig {
       }
     }
   }
-  if (!f.lib) f.lib = {enable: false}
+  if (!f.lib) f.lib = { enable: false }
   if (f?.lib && f.lib.enable === void 0) f.lib.enable = true
 
   f.lib!.copyPackageJsonToDist ??= f.lib.enable ?? false
@@ -44,10 +42,10 @@ function withDefaults(cfg: BasicConfig = {}): ManifestConfig {
     f.lib.formats ??= ['es']
     f.lib.minify ??= false
     f.lib.minifyUnsafe ??= false
-    f.lib.terserOptions ??= RollupPluginTerserDefaultOptions({features: {lib: {minifyUnsafe: f.lib.minifyUnsafe}}} as any) as any
+
 
     if (f.lang === 'ts') {
-      f.lib.dts ??= {enable: true}
+      f.lib.dts ??= { enable: true }
       f.lib.dts.dtsSourcemap ??= f.lib.sourcemap ?? false
       f.lib.dts.dtsSourcemapMetadata ??= f.lib.sourcemap ?? false
     } else {
@@ -77,13 +75,13 @@ function withDefaults(cfg: BasicConfig = {}): ManifestConfig {
     f.entryDirs = f.entry.map(e => e.split('/').slice(0, -1).join('/')!)
   }
 
-  return {...cfg, features: f, pushFeatures: p} as unknown as ManifestConfig
+  return { ...cfg, features: f, pushFeatures: p } as unknown as ManifestConfig
 }
 
 export const manifest = (cfg?: BasicConfig) => {
   let rqCfg = withDefaults(cfg ?? {})
   rqCfg.plugins = rqCfg.plugins ?? []
-  rqCfg.build = mergeConfig(rqCfg.build ?? {}, {outDir: rqCfg.features.dist}) as any
+  rqCfg.build = mergeConfig(rqCfg.build ?? {}, { outDir: rqCfg.features.dist }) as any
 
   const buildConfigLib = () => {
     return _BuildConfigLib(rqCfg)
@@ -106,12 +104,6 @@ export const manifest = (cfg?: BasicConfig) => {
 
     if (rqCfg.features?.lib?.dts?.enable) rqCfg.plugins.push(dtsPlugin())
 
-    if (rqCfg.features?.lib?.minify)
-      rqCfg.build = mergeConfig(rqCfg.build, {
-        rollupOptions: {
-          plugins: rollupPluginTerser(rqCfg.features.lib.terserOptions as unknown as RollupPluginTerserOptions)
-        }
-      }) as any
     if (rqCfg.features.lib.copyPackageJsonToDist || rqCfg.features.lib.sourcemap) {
       rqCfg.plugins.push(staticCopyPluginPackageJson())
     }
@@ -119,16 +111,12 @@ export const manifest = (cfg?: BasicConfig) => {
     return vite
   }
 
-  function rollupPluginTerser(options?: RollupPluginTerserOptions) {
-    return RollupPluginTerser(rqCfg, options ?? {})
-  }
+
 
   return {
     buildConfigLib,
     dtsPlugin,
     staticCopyPluginPackageJson,
-
-    rollupPluginTerser,
 
     defineConfig
   }
