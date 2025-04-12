@@ -14,7 +14,7 @@ interface DtsPluginOptions extends DtsConfigOptions {
 export const defaultDtsCfg: DtsPluginOptions = {
   entry: ['index.ts'],
   entryRoot: 'src',
-  outDir: 'dist'
+  outDir: 'dist',
 }
 
 export function DtsPlugin(options: DtsPluginOptions = defaultDtsCfg): Plugin {
@@ -38,11 +38,11 @@ export function DtsPlugin(options: DtsPluginOptions = defaultDtsCfg): Plugin {
       declarationOnly: true,
       emitDecoratorMetadata: true,
       declarationMap: true,
-      declarationDir: options.outDir
+      declarationDir: options.outDir,
     },
     strictOutput: true,
     include: includes,
-    exclude: [`${options.outDir}`, `${options.outDir}/*`, `${options.outDir}/**`, ...options.excludes ?? []]
+    exclude: [`${options.outDir}`, `${options.outDir}/*`, `${options.outDir}/**`, ...options.excludes ?? []],
   } satisfies PluginOptions
   return dts.default(dtsPluginConfig)
 }

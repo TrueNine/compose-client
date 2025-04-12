@@ -2,7 +2,6 @@ export interface DtsConfigOptions {
   tsconfigPath?: string
 }
 
-
 export interface BuildLibraryConfigOptions {
   entryRoot?: string
   entry?: string[]
@@ -15,7 +14,7 @@ export interface BuildLibraryConfigOptions {
 }
 
 export interface ManifestConfig {
-  packageManager?: 'npm' | 'yarn' | 'pnpm',
+  packageManager?: 'npm' | 'yarn' | 'pnpm'
   dts?: boolean | DtsConfigOptions
   lib?: boolean | BuildLibraryConfigOptions
 }

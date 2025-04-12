@@ -18,7 +18,7 @@ function packageJsonContentReplace(content: string, options: Omit<PackageJsonOpt
     entry,
     dts = false,
     formats = ['es'],
-    buildTool = 'npm'
+    buildTool = 'npm',
   } = options
 
   if (formats.length === 0) {
@@ -66,79 +66,71 @@ function packageJsonContentReplace(content: string, options: Omit<PackageJsonOpt
     packageJson.typings = 'index.d.ts' // Redundant but sometimes expected
   }
 
-
-  const newExports: Record<string, any> = {};
+  const newExports: Record<string, any> = {}
   entry.forEach((entryPath) => {
     // Normalize entry path, remove src/ prefix if present, remove extension
-    const baseName = path.basename(entryPath).replace(/\.[jt]sx?$/, '');
-    const dirName = path.dirname(entryPath);
+    const baseName = path.basename(entryPath).replace(/\.[jt]sx?$/, '')
+    const dirName = path.dirname(entryPath)
     // Construct the export key, handle index files mapping to '.' or subpaths
-    let exportKey = '.';
-    let baseOutputPath = '';
+    let exportKey = '.'
+    let baseOutputPath = ''
 
     if (baseName === 'index') {
       // If index is not in the root (e.g., src/components/index.ts), use the dir name
       if (dirName !== '.' && dirName !== 'src') {
-        exportKey = `./${dirName.replace(/^src\/?/, '')}`;
-        baseOutputPath = `${dirName.replace(/^src\/?/, '')}/index`;
+        exportKey = `./${dirName.replace(/^src\/?/, '')}`
+        baseOutputPath = `${dirName.replace(/^src\/?/, '')}/index`
       } else {
         // Root index file (index.ts or src/index.ts)
-        exportKey = '.';
-        baseOutputPath = 'index';
+        exportKey = '.'
+        baseOutputPath = 'index'
       }
     } else {
       // Non-index files
-      const relativeDir = dirName === '.' || dirName === 'src' ? '' : `${dirName.replace(/^src\/?/, '')}/`;
-      exportKey = `./${relativeDir}${baseName}`;
-      baseOutputPath = `${relativeDir}${baseName}`;
+      const relativeDir = dirName === '.' || dirName === 'src' ? '' : `${dirName.replace(/^src\/?/, '')}/`
+      exportKey = `./${relativeDir}${baseName}`
+      baseOutputPath = `${relativeDir}${baseName}`
     }
 
     // Clean leading slash if relativeDir was empty initially
     if (exportKey.startsWith('./.')) {
-      exportKey = exportKey.substring(2);
+      exportKey = exportKey.substring(2)
     }
     if (exportKey === './') {
-      exportKey = '.'; // Handle case where entry might be just 'index.ts'
+      exportKey = '.' // Handle case where entry might be just 'index.ts'
     }
 
-    const exportValue: Record<string, string> = {};
+    const exportValue: Record<string, string> = {}
     if (hasEsm) {
-      exportValue.import = `./${baseOutputPath}.js`;
+      exportValue.import = `./${baseOutputPath}.js`
     }
     if (hasCjs) {
-      exportValue.require = `./${baseOutputPath}.cjs`;
+      exportValue.require = `./${baseOutputPath}.cjs`
     }
     if (dts) {
-      exportValue.types = `./${baseOutputPath}.d.ts`;
+      exportValue.types = `./${baseOutputPath}.d.ts`
     }
 
     // Only add if there are any valid export types
     if (Object.keys(exportValue).length > 0) {
       // If the key is '.', also set top-level fields
       if (exportKey === '.') {
-        if (hasEsm) { packageJson.module = exportValue.import.substring(2); } // Remove './'
-        if (hasCjs) { packageJson.main = exportValue.require.substring(2); }
+        if (hasEsm) {
+          packageJson.module = exportValue.import.substring(2)
+        } // Remove './'
+        if (hasCjs) {
+          packageJson.main = exportValue.require.substring(2)
+        }
         if (dts) {
-          packageJson.types = exportValue.types.substring(2);
-          packageJson.typings = exportValue.types.substring(2);
+          packageJson.types = exportValue.types.substring(2)
+          packageJson.typings = exportValue.types.substring(2)
         }
       }
-      newExports[exportKey] = exportValue;
+      newExports[exportKey] = exportValue
     }
-  });
-
-  // Always export package.json
-  newExports['./package.json'] = './package.json';
-  packageJson.exports = newExports;
-  // --- Generate exports based on entry, formats, and dts --- END
-
-  // Remove the commented out old logic
-  /*
-  const originalExports = (JSON.parse(content) as PackageJson).exports
-  if (originalExports && typeof originalExports === 'object') {
-    // ... [old logic removed] ...
-  }
-  */
+  })
+  newExports['./package.json'] = './package.json'
+  packageJson.exports = newExports
 
   return JSON.stringify(packageJson, null, 2)
 }

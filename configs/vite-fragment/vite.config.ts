@@ -14,7 +14,7 @@ export default defineConfig({
         './src/vite-plugin-package-json/index.ts',
         './src/externals/index.ts',
         './src/excludes/index.ts',
-        './src/lib/index.ts'
+        './src/lib/index.ts',
       ],
       formats: ['es', 'cjs'],
       fileName: '[name]',
@@ -26,9 +26,9 @@ export default defineConfig({
         preserveModules: true,
         preserveModulesRoot: 'src',
         compact: false,
-        minifyInternalExports: false
-      }
-    }
+        minifyInternalExports: false,
+      },
+    },
   },
   plugins: [
     dts({
@@ -41,21 +41,21 @@ export default defineConfig({
         declarationOnly: true,
         emitDecoratorMetadata: true,
         declarationMap: true,
-        declarationDir: 'dist'
+        declarationDir: 'dist',
       },
       strictOutput: true,
-      include: ['src/**/*.ts', "env.d.ts"],
+      include: ['src/**/*.ts', 'env.d.ts'],
       exclude: ['dist/**', 'node_modules/**', '**/*.spec.ts'],
     }),
     PackageJsonGeneratorPlugin({
       formats: ['es', 'cjs'],
       entry: ['index.ts', 'vite-plugin-dts/index.ts', 'vite-plugin-package-json/index.ts', 'externals/index.ts', 'excludes/index.ts', 'lib/index.ts'],
       buildTool: 'pnpm',
-    })
+    }),
   ],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
-    }
-  }
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+    },
+  },
 })

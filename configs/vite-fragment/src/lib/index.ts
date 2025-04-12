@@ -1,8 +1,7 @@
-import type { BuildOptions, } from 'vite'
+import type { BuildOptions } from 'vite'
 import type { BuildLibraryConfigOptions } from '../types'
 
 import { Externals } from '../externals'
-
 
 export function BuildConfigLib(options: BuildLibraryConfigOptions = {}): BuildOptions {
   const {
@@ -32,8 +31,8 @@ export function BuildConfigLib(options: BuildLibraryConfigOptions = {}): BuildOp
         preserveModulesRoot: entryRoot,
         preserveModules: true,
         compact: false,
-        minifyInternalExports: false
-      }
-    }
+        minifyInternalExports: false,
+      },
+    },
   }
 }

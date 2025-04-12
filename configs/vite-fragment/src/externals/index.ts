@@ -64,5 +64,5 @@ export const Externals = [
   // other
   /^data:/,
   // unocss
-  /^(unocss|@unocss)/
+  /^(unocss|@unocss)/,
 ]

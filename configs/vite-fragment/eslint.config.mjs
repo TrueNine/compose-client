@@ -9,6 +9,6 @@ export default eslint9({
       project: ['./tsconfig.node.json', './tsconfig.json', './tsconfig.vitest.json'],
       tsconfigRootDir: '.',
       sourceType: 'module',
-    }
-  }
+    },
+  },
 })
