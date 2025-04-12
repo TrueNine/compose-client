@@ -30,16 +30,17 @@ export function DtsPlugin(options: DtsPluginOptions = defaultDtsCfg): Plugin {
   }
 
   const dtsPluginConfig = {
-    clearPureImport: true,
-    staticImport: true,
+    clearPureImport: false,
+    staticImport: false,
     entryRoot: options.entryRoot,
     compilerOptions: {
       declaration: true,
       declarationOnly: true,
-      emitDecoratorMetadata: true,
-      declarationMap: true,
+      emitDecoratorMetadata: false,
+      declarationMap: false,
       declarationDir: options.outDir,
     },
+    logLevel: 'error',
     strictOutput: true,
     include: includes,
     exclude: [`${options.outDir}`, `${options.outDir}/*`, `${options.outDir}/**`, ...options.excludes ?? []],

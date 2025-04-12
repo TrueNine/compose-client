@@ -6,9 +6,7 @@ import path from 'node:path'
 import process from 'node:process'
 
 interface PackageJsonOptions {
-  // outDir?: string // Removed as unused for now
-  entry: string[] // Make entry mandatory
-  dts?: boolean
+  entry: string[]
   formats?: LibraryFormats[]
   buildTool?: 'npm' | 'pnpm' | 'yarn'
 }
@@ -16,7 +14,6 @@ interface PackageJsonOptions {
 function packageJsonContentReplace(content: string, options: Omit<PackageJsonOptions, 'content'>): string | undefined {
   const {
     entry,
-    dts = false,
     formats = ['es'],
     buildTool = 'npm',
   } = options
@@ -49,7 +46,6 @@ function packageJsonContentReplace(content: string, options: Omit<PackageJsonOpt
   const hasEsm = formats.includes('es')
   const hasCjs = formats.includes('cjs')
 
-  // Clear potentially existing top-level fields before recalculating
   delete packageJson.main
   delete packageJson.module
   delete packageJson.types
@@ -61,12 +57,8 @@ function packageJsonContentReplace(content: string, options: Omit<PackageJsonOpt
     packageJson.type = 'commonjs'
   }
 
-  if (dts) {
-    packageJson.types = 'index.d.ts' // Assuming default entry
-    packageJson.typings = 'index.d.ts' // Redundant but sometimes expected
-  }
-
   const newExports: Record<string, any> = {}
+
   entry.forEach((entryPath) => {
     // Normalize entry path, remove src/ prefix if present, remove extension
     const baseName = path.basename(entryPath).replace(/\.[jt]sx?$/, '')
@@ -92,7 +84,11 @@ function packageJsonContentReplace(content: string, options: Omit<PackageJsonOpt
       baseOutputPath = `${relativeDir}${baseName}`
     }
 
-    // Clean leading slash if relativeDir was empty initially
+    // --- Determine if types should be generated for this entry --- START
+    const isTypeScriptEntry = entryPath.match(/\.tsx?$/)
+    // --- Determine if types should be generated for this entry --- END
+
+    // --- Clean leading slash if relativeDir was empty initially --- START
     if (exportKey.startsWith('./.')) {
       exportKey = exportKey.substring(2)
     }
@@ -107,9 +103,11 @@ function packageJsonContentReplace(content: string, options: Omit<PackageJsonOpt
     if (hasCjs) {
       exportValue.require = `./${baseOutputPath}.cjs`
     }
-    if (dts) {
+    // --- Generate types entry only if it's a TS/TSX file --- START
+    if (isTypeScriptEntry) {
       exportValue.types = `./${baseOutputPath}.d.ts`
     }
+    // --- Generate types entry only if it's a TS/TSX file --- END
 
     // Only add if there are any valid export types
     if (Object.keys(exportValue).length > 0) {
@@ -117,19 +115,22 @@ function packageJsonContentReplace(content: string, options: Omit<PackageJsonOpt
       if (exportKey === '.') {
         if (hasEsm) {
           packageJson.module = exportValue.import.substring(2)
-        } // Remove './'
+        }
         if (hasCjs) {
           packageJson.main = exportValue.require.substring(2)
         }
-        if (dts) {
+        // Set top-level types directly if main entry is TS
+        if (isTypeScriptEntry) {
           packageJson.types = exportValue.types.substring(2)
-          packageJson.typings = exportValue.types.substring(2)
+          packageJson.typings = exportValue.types.substring(2) // Keep both for compatibility
         }
       }
       newExports[exportKey] = exportValue
     }
   })
+
   newExports['./package.json'] = './package.json'
+  newExports['./*'] = './*'
   packageJson.exports = newExports
 
   return JSON.stringify(packageJson, null, 2)

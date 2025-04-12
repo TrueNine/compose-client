@@ -7,6 +7,7 @@ import { PackageJsonGeneratorPlugin } from './src/vite-plugin-package-json'
 export default defineConfig({
   build: {
     outDir: 'dist',
+    minify: false,
     lib: {
       entry: [
         './src/index.ts',
@@ -19,7 +20,7 @@ export default defineConfig({
       formats: ['es', 'cjs'],
       fileName: '[name]',
     },
-    sourcemap: true,
+    sourcemap: false,
     rollupOptions: {
       external: Externals,
       output: {
@@ -40,7 +41,7 @@ export default defineConfig({
         declaration: true,
         declarationOnly: true,
         emitDecoratorMetadata: true,
-        declarationMap: true,
+        declarationMap: false,
         declarationDir: 'dist',
       },
       strictOutput: true,
