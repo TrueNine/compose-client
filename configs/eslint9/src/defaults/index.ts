@@ -2,7 +2,7 @@ import type { AntFuFormatterConfig, AntFuJsConfig, AntFuStylisticConfig, AntFuTs
 
 export const defaultUnocssConfig: AntFuUnocssConfig = {
   attributify: true,
-  strict: true
+  strict: true,
 }
 
 export const defaultVueConfig: AntFuVueConfig = {
@@ -147,7 +147,7 @@ export const defaultFormatterConfig: AntFuFormatterConfig = {
 export const defaultStrictTsConfig: AntFuTsConfig = {
   overrides: {
     'ts/no-floating-promises': 'error',
-  }
+  },
 }
 
 export const defaultStylisticConfig: AntFuStylisticConfig = {
@@ -161,7 +161,6 @@ export const defaultStylisticConfig: AntFuStylisticConfig = {
     'style/arrow-parens': ['error', 'always'],
   },
 }
-
 
 /**
  * 合并配置项，支持以下场景：
@@ -184,18 +183,24 @@ export const defaultStylisticConfig: AntFuStylisticConfig = {
 export function mergeWithDefaults<T extends object>(
   value?: boolean | T | null,
   defaults?: T
-): T;
+): T
 export function mergeWithDefaults<T extends object>(
   value?: boolean | T | null,
   defaults?: boolean
-): boolean | T;
+): boolean | T
 export function mergeWithDefaults<T extends object>(
   value?: boolean | T | null,
-  defaults?: boolean | T | null
-) {
+  defaults?: boolean | T | null,
+): boolean | T {
   // 处理无默认值的情况
   if (defaults === false || defaults === null || defaults === void 0) {
-    return value === true ? true : (value === false || value === null ? false : value)
+    if (value === true) {
+      return true
+    }
+    if (value === false || value === null) {
+      return false
+    }
+    return value as T
   }
 
   // 处理 value 为 undefined 的情况
@@ -217,7 +222,7 @@ export function mergeWithDefaults<T extends object>(
   if (typeof value === 'object' && typeof defaults === 'object') {
     return {
       ...defaults,
-      ...value
+      ...value,
     }
   }
 

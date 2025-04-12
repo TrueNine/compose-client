@@ -1,5 +1,5 @@
-import { antfu } from '@antfu/eslint-config'
 import type { AntFuFormatterConfig, AntFuJsConfig, AntFuStrictTsConfig, AntFuStylisticConfig, AntFuTsConfig, AntFuUnocssConfig, AntFuVueConfig } from './types'
+import { antfu } from '@antfu/eslint-config'
 import { defaultFormatterConfig, defaultJsConfig, defaultStrictTsConfig, defaultStylisticConfig, defaultTsConfig, defaultUnocssConfig, defaultVueConfig, mergeWithDefaults } from './defaults'
 
 interface ConfigOptions {
@@ -14,9 +14,8 @@ interface ConfigOptions {
   stylistic?: boolean | AntFuStylisticConfig
 }
 
-
-export default function eslint9(options: ConfigOptions = {}): ReturnType<typeof antfu> {
-  let {
+export default async function eslint9(options: ConfigOptions = {}): Promise<ReturnType<typeof antfu>> {
+  const {
     type = 'app',
     ignores = [],
     unocss = false,
@@ -25,34 +24,35 @@ export default function eslint9(options: ConfigOptions = {}): ReturnType<typeof 
     stylistic = false,
     javascript = defaultJsConfig,
     typescript = defaultTsConfig,
-    formatters = false
+    formatters = false,
   } = options
 
-  unocss = mergeWithDefaults(unocss, defaultUnocssConfig)
-  vue = mergeWithDefaults(vue, defaultVueConfig)
-  javascript = mergeWithDefaults(javascript, defaultJsConfig)
-  stylistic = mergeWithDefaults(stylistic, defaultStylisticConfig)
-  formatters = mergeWithDefaults(formatters, defaultFormatterConfig)
+  const _unocss = mergeWithDefaults(unocss, defaultUnocssConfig)
+  const _vue = mergeWithDefaults(vue, defaultVueConfig)
+  const _javascript = mergeWithDefaults(javascript, defaultJsConfig)
+  const _stylistic = mergeWithDefaults(stylistic, defaultStylisticConfig)
+  const _formatters = mergeWithDefaults(formatters, defaultFormatterConfig)
+  let _typescript = typescript
 
   // 严格 ts 模式
   if (
-    typescript !== null &&
-    typeof typescript === 'object' &&
-    'strictTypescriptEslint' in typescript &&
-    typescript.strictTypescriptEslint === true
+    _typescript !== null
+    && typeof _typescript === 'object'
+    && 'strictTypescriptEslint' in _typescript
+    && _typescript.strictTypescriptEslint === true
   ) {
-    typescript = mergeWithDefaults(typescript, defaultStrictTsConfig)
+    _typescript = mergeWithDefaults(typescript, defaultStrictTsConfig)
   }
 
   return antfu({
     type,
     ignores,
-    unocss,
-    vue,
+    unocss: _unocss,
+    vue: _vue,
     jsx,
-    typescript,
-    javascript,
-    stylistic,
-    formatters
+    typescript: _typescript,
+    javascript: _javascript,
+    stylistic: _stylistic,
+    formatters: _formatters,
   })
 }

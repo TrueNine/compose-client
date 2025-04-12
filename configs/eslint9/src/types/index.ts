@@ -1,4 +1,4 @@
-import type antfu from "@antfu/eslint-config"
+import type antfu from '@antfu/eslint-config'
 
 /**
  * AntFu Config

@@ -1,17 +1,7 @@
 {
   "name": "@compose/eslint9-config",
-  "version": "0.0.19",
-  "scripts": {
-    "build-c": "vite build",
-    "type-check": "vue-tsc --noEmit",
-    "build": "run-s type-check build-c",
-    "pub-c": "pnpm --dir dist pub",
-    "pub": "run-s build pub-c"
-  },
   "type": "module",
-  "module": "dist/index.js",
-  "main": "dist/index.cjs",
-  "types": "dist/index.d.ts",
+  "version": "0.0.19",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -28,18 +18,29 @@
     },
     "./*": "./*"
   },
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "lint": "eslint --fix",
+    "build-c": "vite build",
+    "type-check": "vue-tsc --noEmit",
+    "build": "run-s type-check lint build-c",
+    "pub-c": "pnpm --dir dist pub",
+    "pub": "run-s build pub-c"
+  },
   "peerDependencies": {
-    "eslint": "*",
+    "@antfu/eslint-config": "*",
     "@eslint/js": "*",
     "@unocss/eslint-config": "*",
-    "typescript-eslint": "*",
-    "eslint-plugin-vue": "*",
-    "eslint-plugin-prettier": "*",
-    "@vue/eslint-config-typescript": "*",
     "@vue/eslint-config-prettier": "*",
-    "@antfu/eslint-config": "*",
-    "vite": "*",
+    "@vue/eslint-config-typescript": "*",
+    "eslint": "*",
+    "eslint-plugin-prettier": "*",
+    "eslint-plugin-vue": "*",
     "prettier": "*",
+    "typescript-eslint": "*",
+    "vite": "*",
     "vue-tsc": "*"
   }
 }
