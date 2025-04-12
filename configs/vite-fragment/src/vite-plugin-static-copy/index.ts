@@ -1,9 +1,8 @@
-import { viteStaticCopy } from 'vite-plugin-static-copy'
-import type { Plugin } from 'vite'
-import type { LibraryFormats } from 'vite'
+import type { ManifestConfig } from '@/types'
+import type { LibraryFormats, Plugin  } from 'vite'
 import type { Target } from 'vite-plugin-static-copy'
 
-import type { ManifestConfig } from '@/types'
+import { viteStaticCopy } from 'vite-plugin-static-copy'
 
 interface PackageJsonOptions {
   content?: string
@@ -22,8 +21,8 @@ function packageJsonContentReplace(options: PackageJsonOptions = {}): string | u
     buildTool = 'npm'
   } = options
 
-  if (!formats.length) return void 0
-  if (!content) return void 0
+  if (!formats.length) {return void 0}
+  if (!content) {return void 0}
 
   try {
     const c = JSON.parse(content)
@@ -38,8 +37,8 @@ function packageJsonContentReplace(options: PackageJsonOptions = {}): string | u
       delete c.types
       delete c.typings
     }
-    if (!hasCjs) delete c.main
-    if (!hasEsm) delete c.module
+    if (!hasCjs) {delete c.main}
+    if (!hasEsm) {delete c.module}
 
     if (hasEsm) {
       c.type = 'module'
@@ -55,17 +54,17 @@ function packageJsonContentReplace(options: PackageJsonOptions = {}): string | u
     delete c.files
 
     const cleanPlainPath = (p: string): string => p.replace(plainDistPrefixReg, '')
-    if (typeof c.types === 'string') c.types = cleanPlainPath(c.types)
-    if (typeof c.typings === 'string') c.typings = cleanPlainPath(c.typings)
-    if (typeof c.module === 'string') c.module = cleanPlainPath(c.module)
-    if (typeof c.main === 'string') c.main = cleanPlainPath(c.main)
+    if (typeof c.types === 'string') {c.types = cleanPlainPath(c.types)}
+    if (typeof c.typings === 'string') {c.typings = cleanPlainPath(c.typings)}
+    if (typeof c.module === 'string') {c.module = cleanPlainPath(c.module)}
+    if (typeof c.main === 'string') {c.main = cleanPlainPath(c.main)}
 
     if (c.exports && typeof c.exports === 'object') {
       const cleanExportPath = (p: string): string => p.replace(distPrefixReg, './')
       const newExports: Record<string, any> = {}
 
       for (const key in c.exports) {
-        if (!Object.prototype.hasOwnProperty.call(c.exports, key)) continue
+        if (!Object.prototype.hasOwnProperty.call(c.exports, key)) {continue}
 
         const newKey = key.replace(distPrefixReg, './')
         const value = c.exports[key]
@@ -76,11 +75,11 @@ function packageJsonContentReplace(options: PackageJsonOptions = {}): string | u
           const newValue: Record<string, string> = {}
           let hasProperties = false
           for (const subKey in value) {
-            if (!Object.prototype.hasOwnProperty.call(value, subKey)) continue
+            if (!Object.prototype.hasOwnProperty.call(value, subKey)) {continue}
 
-            if (subKey === 'types' && !dts) continue
-            if (subKey === 'import' && !hasEsm) continue
-            if (subKey === 'require' && !hasCjs) continue
+            if (subKey === 'types' && !dts) {continue}
+            if (subKey === 'import' && !hasEsm) {continue}
+            if (subKey === 'require' && !hasCjs) {continue}
 
             const subValue = value[subKey]
             if (typeof subValue === 'string') {
@@ -114,7 +113,7 @@ export function StaticCopyPlugin(options: PackageJsonOptions | ManifestConfig): 
 
   if ('features' in options) {
     // ManifestConfig case
-    const cfg = options as ManifestConfig
+    const cfg = options
     if (cfg.features.lib.copyPackageJsonToDist) {
       r.push({
         src: 'package.json',

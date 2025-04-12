@@ -1,57 +1,57 @@
-import {NodeExternals} from './NodeExternals'
-import {ViteExternals} from './ViteExternals'
-import {TypescriptExternals} from './TypescriptExternals'
-import {EslintExternals} from './EslintExternals'
+import { EslintExternals } from './EslintExternals'
+import { NodeExternals } from './NodeExternals'
+import { TypescriptExternals } from './TypescriptExternals'
+import { ViteExternals } from './ViteExternals'
 
-export * from './NodeExternals'
 export * from './EslintExternals'
+export * from './NodeExternals'
 
 export const Externals = [
   // 既定依赖
-  /(__tests__|__tests__\/)/,
-  /(__test__|__test__\/)/,
-  /(__build-src__|__build-src__\/)/,
+  /^__tests__/,
+  /^__test__/,
+  /^__build-src__/,
 
   // compose
-  /^(@compose|@compose\/)/,
+  /^@compose/,
 
   // vue
-  /^(vue|vue\/)/,
-  /^(@vue|@vue\/)/,
-  /^(@vueuse|@vueuse\/)/,
-  /^(vue-router|vue-router\/)/,
-  /^(pinia|pinia\/)/,
+  /^vue/,
+  /^@vue/,
+  /^@vueuse/,
+  /^vue-router/,
+  /^pinia/,
 
-  /^(vee-validate|vee-validate\/)/,
-  /^(yup|yup\/)/,
+  /^vee-validate/,
+  /^yup/,
 
   // 组件库
-  /^(element-plus|element-plus\/)/,
-  /^(element-ui|element-ui\/)/,
-  /^(quasar|quasar\/)/,
-  /^(@quasar|@quasar\/)/,
-  /^(vuetify|vuetify\/)/,
-  /^(@varlet|@varlet\/)/,
-  /^(naive-ui|naive-ui\/)/,
+  /^element-plus/,
+  /^element-ui/,
+  /^quasar/,
+  /^@quasar/,
+  /^vuetify/,
+  /^@varlet/,
+  /^naive-ui/,
 
   // date class
-  /^(dayjs|dayjs\/)/,
-  /^(moment|moment\/)/,
-  /^(@date-io|@date-io\/)/,
+  /^dayjs/,
+  /^moment/,
+  /^@date-io/,
 
   // code
-  /^(highlight\.js|highlight\.js\/)/,
+  /^highlight\.js/,
 
   // rollup
-  /^(rollup|rollup\/|@rollup|@rollup\/|rollup-|rollup-plugin-)/,
+  /^(@rollup|rollup)/,
 
   // tools
-  /^(lodash-es|lodash-es\/)/,
-  /^(pdfjs-dist|pdfjs-dist\/)/,
-  /^(pino|pino\/)/,
-  /^(@antfu|@antfu\/)/,
-  /^(@antfu\/ni|@antfu\/ni\/)/,
-  /^(libarchive\.js|libarchive\.js\/)/,
+  /^lodash-es/,
+  /^pdfjs-dist/,
+  /^pino/,
+  /^@antfu/,
+  /^@antfu\/ni/,
+  /^libarchive\.js/,
 
   // 样式文件
   /\.(scss|sass|less|css)$/,
@@ -62,7 +62,7 @@ export const Externals = [
   ...EslintExternals,
 
   // other
-  /^(data:)/,
+  /^data:/,
   // unocss
-  /^(unocss|unocss\/|unocss-|unocss-\/|@unocss|@unocss\/)/
+  /^(unocss|@unocss)/
 ]

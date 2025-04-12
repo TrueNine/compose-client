@@ -1,8 +1,8 @@
-import * as dts from 'vite-plugin-dts'
-import type {PluginOptions} from 'vite-plugin-dts'
-import type {Plugin} from 'vite'
-
 import type {ManifestConfig} from '@/types'
+import type {Plugin} from 'vite'
+import type {PluginOptions} from 'vite-plugin-dts'
+
+import * as dts from 'vite-plugin-dts'
 
 export function DtsPlugin(dtsCfg: ManifestConfig): Plugin {
   const includes = dtsCfg.features.entryDirs.map(dir => `${dir}/**`)

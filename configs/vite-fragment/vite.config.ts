@@ -6,6 +6,7 @@ import { StaticCopyPlugin } from './src/vite-plugin-static-copy'
 
 export default defineConfig({
   build: {
+    outDir: 'dist',
     lib: {
       entry: [
         './src/index.ts',
@@ -27,27 +28,30 @@ export default defineConfig({
       }
     }
   },
-  plugins: [dts({
-    tsconfigPath: './tsconfig.node.json',
-    clearPureImport: true,
-    staticImport: true,
-    entryRoot: 'src',
-    compilerOptions: {
-      declaration: true,
-      declarationOnly: true,
-      emitDecoratorMetadata: true,
-      declarationMap: true,
-      declarationDir: 'dist'
-    },
-    strictOutput: true,
-    include: ['src/**/*.ts', "env.d.ts"],
-    exclude: ['dist/**', 'node_modules/**', '**/*.spec.ts'],
-  }), StaticCopyPlugin({
-    formats: ['es', 'cjs'],
-    outDir: 'dist',
-    dts: true,
-    buildTool: 'pnpm',
-  })],
+  plugins: [
+    dts({
+      tsconfigPath: './tsconfig.node.json',
+      clearPureImport: true,
+      staticImport: true,
+      entryRoot: 'src',
+      compilerOptions: {
+        declaration: true,
+        declarationOnly: true,
+        emitDecoratorMetadata: true,
+        declarationMap: true,
+        declarationDir: 'dist'
+      },
+      strictOutput: true,
+      include: ['src/**/*.ts', "env.d.ts"],
+      exclude: ['dist/**', 'node_modules/**', '**/*.spec.ts'],
+    }),
+    StaticCopyPlugin({
+      formats: ['es', 'cjs'],
+      outDir: 'dist',
+      dts: true,
+      buildTool: 'pnpm',
+    })
+  ],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))

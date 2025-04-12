@@ -1,28 +1,10 @@
 {
   "name": "@compose/config-vite-fragment",
+  "type": "module",
   "version": "0.0.19",
   "description": "vite config fragment",
   "author": "TrueNine",
   "license": "private",
-  "scripts": {
-    "build-c": "vite build",
-    "type-check": "vue-tsc --noEmit",
-    "build": "run-s type-check build-c",
-    "pub-c": "pnpm --dir dist pub",
-    "pub": "run-s build pub-c"
-  },
-  "type": "module",
-  "module": "dist/index.js",
-  "main": "dist/index.cjs",
-  "types": "dist/index.d.ts",
-  "files": [
-    "dist/**"
-  ],
-  "peerDependencies": {
-    "vite": ">=6.0.0",
-    "vite-plugin-dts": ">=4.5.3",
-    "vite-plugin-static-copy": ">=2.3.1"
-  },
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -60,5 +42,24 @@
       "require": "./dist/excludes/index.cjs"
     },
     "./*": "./dist/*"
+  },
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/**"
+  ],
+  "scripts": {
+    "lint": "eslint --fix",
+    "build-c": "vite build",
+    "type-check": "vue-tsc --noEmit",
+    "build": "run-s type-check lint build-c",
+    "pub-c": "pnpm --dir dist pub",
+    "pub": "run-s build pub-c"
+  },
+  "peerDependencies": {
+    "vite": ">=6.0.0",
+    "vite-plugin-dts": ">=4.5.3",
+    "vite-plugin-static-copy": ">=2.3.1"
   }
 }

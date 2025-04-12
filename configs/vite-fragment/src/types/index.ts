@@ -1,5 +1,5 @@
-import type {LibraryFormats, UserConfig} from 'vite'
 import type {Options as RollupPluginTerserOptions} from '@rollup/plugin-terser'
+import type {LibraryFormats, UserConfig} from 'vite'
 export interface Features {
   buildTool?: 'npm' | 'pnpm' | 'yarn' | 'nr'
   /**
