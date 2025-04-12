@@ -16,15 +16,15 @@
       "import": "./dist/alias/index.js",
       "require": "./dist/alias/index.cjs"
     },
-    "./vite-plugin-static-copy": {
-      "types": "./dist/vite-plugin-static-copy/index.d.ts",
-      "import": "./dist/vite-plugin-static-copy/index.js",
-      "require": "./dist/vite-plugin-static-copy/index.cjs"
+    "./vite-plugin-package-json": {
+      "types": "./dist/vite-plugin-package-json/index.d.ts",
+      "import": "./dist/vite-plugin-package-json/index.js",
+      "require": "./dist/vite-plugin-package-json/index.cjs"
     },
-    "./build-lib-config": {
-      "types": "./dist/build-lib-config/index.d.ts",
-      "import": "./dist/build-lib-config/index.js",
-      "require": "./dist/build-lib-config/index.cjs"
+    "./lib": {
+      "types": "./dist/lib/index.d.ts",
+      "import": "./dist/lib/index.js",
+      "require": "./dist/lib/index.cjs"
     },
     "./vite-plugin-dts": {
       "types": "./dist/vite-plugin-dts/index.d.ts",

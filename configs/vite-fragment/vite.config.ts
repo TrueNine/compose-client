@@ -2,7 +2,7 @@ import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vite'
 import dts from 'vite-plugin-dts'
 import { Externals } from './src/externals'
-import { StaticCopyPlugin } from './src/vite-plugin-static-copy'
+import { PackageJsonGeneratorPlugin } from './src/vite-plugin-package-json'
 
 export default defineConfig({
   build: {
@@ -11,10 +11,10 @@ export default defineConfig({
       entry: [
         './src/index.ts',
         './src/vite-plugin-dts/index.ts',
-        './src/vite-plugin-static-copy/index.ts',
+        './src/vite-plugin-package-json/index.ts',
         './src/externals/index.ts',
         './src/excludes/index.ts',
-        './src/build-lib-config/index.ts'
+        './src/lib/index.ts'
       ],
       formats: ['es', 'cjs'],
       fileName: '[name]',
@@ -24,7 +24,9 @@ export default defineConfig({
       external: Externals,
       output: {
         preserveModules: true,
-        preserveModulesRoot: 'src'
+        preserveModulesRoot: 'src',
+        compact: false,
+        minifyInternalExports: false
       }
     }
   },
@@ -45,10 +47,9 @@ export default defineConfig({
       include: ['src/**/*.ts', "env.d.ts"],
       exclude: ['dist/**', 'node_modules/**', '**/*.spec.ts'],
     }),
-    StaticCopyPlugin({
+    PackageJsonGeneratorPlugin({
       formats: ['es', 'cjs'],
-      outDir: 'dist',
-      dts: true,
+      entry: ['index.ts', 'vite-plugin-dts/index.ts', 'vite-plugin-package-json/index.ts', 'externals/index.ts', 'excludes/index.ts', 'lib/index.ts'],
       buildTool: 'pnpm',
     })
   ],

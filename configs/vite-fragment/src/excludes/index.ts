@@ -7,7 +7,7 @@ export const Excludes = [
   'vitest.config.**',
   'uno.config.**',
   'rollup.config.**',
-
+  '**/eslint.config.**',
   '__tests__',
   '__tests__/**',
   '**/__tests__/**',
@@ -18,5 +18,5 @@ export const Excludes = [
 
   '__build-src__',
   '__build-src__/**',
-  '**/__build-src__/**'
+  '**/__build-src__/**',
 ]

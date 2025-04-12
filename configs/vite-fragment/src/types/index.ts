@@ -1,63 +1,39 @@
-import type {Options as RollupPluginTerserOptions} from '@rollup/plugin-terser'
-import type {LibraryFormats, UserConfig} from 'vite'
-export interface Features {
-  buildTool?: 'npm' | 'pnpm' | 'yarn' | 'nr'
-  /**
-   * ## 设置当前使用的语言
-   * @default 'ts'
-   */
-  lang?: 'ts' | 'js'
-  exclude?: string[]
-  /**
-   * ## 入口文件 根文件夹
-   * @default 'src'
-   */
+export interface DtsConfigOptions {
+  tsconfigPath?: string
+}
+
+
+export interface BuildLibraryConfigOptions {
   entryRoot?: string
-  /**
-   * ## 入口 文件，相对于 entry
-   * @default ['index']
-   */
-  entry?: string | string[]
-  /**
-   * ## 默认生成的 dir 文件
-   * @default []
-   */
-  entryDirs?: string[]
-  /**
-   * ## 输出文件夹
-   */
-  dist?: string
-  alias?: {
-    [K in string]: string
-  }
-  lib?: {
-    enable?: boolean
-    fileName?: string
-    sourcemap?: boolean
-    minify?: boolean
-    minifyUnsafe?: boolean
-    terserOptions?: RollupPluginTerserOptions
-    dts?: {enable?: boolean; dtsSourcemap?: boolean; dtsSourcemapMetadata?: boolean}
-    copyPackageJsonToDist?: boolean
-    copyReadmeToDist?: boolean
-    copySourceCodeToDist?: boolean
-    name?: string
-    formats?: LibraryFormats[]
-    externals?: (string | RegExp)[]
-  }
+  entry?: string[]
+  sourcemap?: boolean
+  formats?: ('es' | 'cjs' | 'umd' | 'iife')[]
+  name?: string
+  outDir?: string
+  externals?: (RegExp | string)[]
+  excludes?: string[]
 }
 
-export interface BasicConfig extends UserConfig {
-  features?: Features
-  pushFeatures?: Features
+export interface ManifestConfig {
+  packageManager?: 'npm' | 'yarn' | 'pnpm',
+  dts?: boolean | DtsConfigOptions
+  lib?: boolean | BuildLibraryConfigOptions
 }
-export type DeepRequiredArray<T extends any[]> = T extends Array<infer U> ? DeepRequired<U>[] : T
-export type DeepRequired<T> = T extends object
-  ? T extends Array<any>
-    ? T
-    : {
-        [P in keyof T]-?: NonNullable<DeepRequired<T[P]>>
-      }
-  : T
 
-export type ManifestConfig = DeepRequired<BasicConfig>
+export interface PackageJson {
+  name?: string
+  version?: string
+  scripts?: Record<string, string>
+  main?: string
+  module?: string
+  types?: string
+  type?: string
+  typings?: string
+  packageManager?: 'npm' | 'pnpm' | 'yarn'
+  exports?: Record<string, string | Record<string, string>>
+  files?: string[]
+  dependencies?: Record<string, string>
+  devDependencies?: Record<string, string>
+  peerDependencies?: Record<string, string>
+  engines?: Record<string, string>
+}
