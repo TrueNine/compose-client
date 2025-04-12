@@ -2,7 +2,7 @@ import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vite'
 import dts from 'vite-plugin-dts'
 import { Externals } from '../vite-fragment/src/externals'
-import { StaticCopyPlugin } from '../vite-fragment/src/vite-plugin-static-copy'
+import { PackageJsonGeneratorPlugin } from '../vite-fragment/src/vite-plugin-package-json'
 
 export default defineConfig({
   build: {
@@ -40,11 +40,11 @@ export default defineConfig({
       include: ['src/**/*.ts', 'env.d.ts'],
       exclude: ['dist/**', 'node_modules/**', '**/*.spec.ts'],
     }),
-    StaticCopyPlugin({
+    PackageJsonGeneratorPlugin({
       formats: ['es', 'cjs'],
-      outDir: 'dist',
       dts: true,
       buildTool: 'pnpm',
+      entry: ['index.ts'],
     }),
   ],
   resolve: {
