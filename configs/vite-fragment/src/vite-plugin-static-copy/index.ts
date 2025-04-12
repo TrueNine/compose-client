@@ -1,121 +1,146 @@
-import * as fs from 'node:fs'
-import path from 'node:path'
+import { viteStaticCopy } from 'vite-plugin-static-copy'
+import type { Plugin } from 'vite'
+import type { LibraryFormats } from 'vite'
+import type { Target } from 'vite-plugin-static-copy'
 
-import {type Target, viteStaticCopy} from 'vite-plugin-static-copy'
-import type {Plugin} from 'vite'
+import type { ManifestConfig } from '@/types'
 
-import type {ManifestConfig} from '@/types'
+interface PackageJsonOptions {
+  content?: string
+  outDir?: string
+  dts?: boolean
+  formats?: LibraryFormats[]
+  buildTool?: 'npm' | 'pnpm' | 'yarn' | 'nr'
+}
 
-function packageJsonContentReplace(cfg: ManifestConfig, content: string) {
+function packageJsonContentReplace(options: PackageJsonOptions = {}): string | undefined {
+  const {
+    content,
+    outDir = 'dist',
+    dts = false,
+    formats = [],
+    buildTool = 'npm'
+  } = options
+
+  if (!formats.length) return void 0
   if (!content) return void 0
 
-  const c = JSON.parse(content)
+  try {
+    const c = JSON.parse(content)
 
-  const distReg = new RegExp(`^\\.\\/${cfg.build.outDir}\\/`, 'g')
-  const plainDistReg = new RegExp(`^${cfg.build.outDir}\\/`, 'g')
+    const distPrefixReg = new RegExp(`^./${outDir}/`, 'g')
+    const plainDistPrefixReg = new RegExp(`^${outDir}/`, 'g')
 
-  const hasEsm = cfg.features.lib?.formats?.includes('es') ?? false
-  const hasCjs = cfg.features.lib?.formats?.includes('cjs') ?? false
-  const hasDts = cfg?.features?.lib?.dts?.enable
-  if (!hasDts) delete c.types
-  if (!hasCjs) delete c.main
-  if (!hasEsm) delete c.module
-  if (hasEsm && hasCjs) c.type = 'module'
-  else if (hasEsm) c.type = 'module'
-  else if (hasCjs) c.type = 'commonjs'
+    const hasEsm = formats.includes('es')
+    const hasCjs = formats.includes('cjs')
 
-  c.scripts = {
-    pub: `${cfg.features.buildTool} publish --no-git-checks --ignore-scripts`
-  }
-  c.files = void 0
-
-  if (c.types) c.types = c.types.replace(plainDistReg, '')
-  if (c.module) c.module = c.module.replace(plainDistReg, '')
-  if (c.main) c.main = c.main.replace(plainDistReg, '')
-
-  Object.keys(c.exports).forEach(key => {
-    const newKey = key.replace(distReg, './')
-    const value = c.exports[key]
-    if (typeof value === 'string') {
-      c.exports[newKey] = value.replace(distReg, './')
-    } else if (typeof value === 'object') {
-      Object.keys(value).forEach(subKey => {
-        if (!hasDts && subKey === 'types') delete value[subKey]
-        if (!hasEsm && subKey === 'import') delete value[subKey]
-        if (!hasCjs && subKey === 'require') delete value[subKey]
-        if (value[subKey]) value[subKey] = value[subKey].replace(distReg, './')
-      })
-      c.exports[newKey] = value
+    if (!dts) {
+      delete c.types
+      delete c.typings
     }
-    if (newKey !== key) delete c.exports[key]
-  })
+    if (!hasCjs) delete c.main
+    if (!hasEsm) delete c.module
 
-  if (c.types) c.types = c.types.replace(distReg, './')
-  if (c.typings) c.typings = c.typings.replace(distReg, './')
-  if (c.module) c.module = c.module.replace(distReg, './')
-  if (c.main) c.module = c.module.replace(distReg, './')
+    if (hasEsm) {
+      c.type = 'module'
+    } else if (hasCjs) {
+      c.type = 'commonjs'
+    } else {
+      delete c.type
+    }
 
-  if (c.exports) {
-    c.exports['./package.json'] = './package.json'
-    if (cfg.features.lib.copyReadmeToDist) c.exports['./README.md'] = './README.md'
-  }
+    c.scripts = {
+      pub: `${buildTool} publish --no-git-checks --ignore-scripts`,
+    }
+    delete c.files
 
-  return JSON.stringify(c, null, 2)
-}
+    const cleanPlainPath = (p: string): string => p.replace(plainDistPrefixReg, '')
+    if (typeof c.types === 'string') c.types = cleanPlainPath(c.types)
+    if (typeof c.typings === 'string') c.typings = cleanPlainPath(c.typings)
+    if (typeof c.module === 'string') c.module = cleanPlainPath(c.module)
+    if (typeof c.main === 'string') c.main = cleanPlainPath(c.main)
 
-const processDirectory = (dir: string, cfg: ManifestConfig) => {
-  const files = fs.readdirSync(dir)
-  files.forEach(file => {
-    const filePath = path.join(dir, file)
-    const stat = fs.statSync(filePath)
-    if (stat.isDirectory()) processDirectory(filePath, cfg)
-    else if (file.endsWith('.map')) {
-      const data = JSON.parse(fs.readFileSync(filePath, 'utf-8'))
-      if (Array.isArray(data.sources)) {
-        data.sources = data.sources.map((source: string) => {
-          return cfg.features.entryRoot + '/' + source.split(`${cfg.features.entryRoot}/`)[1]
-        })
+    if (c.exports && typeof c.exports === 'object') {
+      const cleanExportPath = (p: string): string => p.replace(distPrefixReg, './')
+      const newExports: Record<string, any> = {}
+
+      for (const key in c.exports) {
+        if (!Object.prototype.hasOwnProperty.call(c.exports, key)) continue
+
+        const newKey = key.replace(distPrefixReg, './')
+        const value = c.exports[key]
+
+        if (typeof value === 'string') {
+          newExports[newKey] = cleanExportPath(value)
+        } else if (typeof value === 'object' && value !== null) {
+          const newValue: Record<string, string> = {}
+          let hasProperties = false
+          for (const subKey in value) {
+            if (!Object.prototype.hasOwnProperty.call(value, subKey)) continue
+
+            if (subKey === 'types' && !dts) continue
+            if (subKey === 'import' && !hasEsm) continue
+            if (subKey === 'require' && !hasCjs) continue
+
+            const subValue = value[subKey]
+            if (typeof subValue === 'string') {
+              newValue[subKey] = cleanExportPath(subValue)
+              hasProperties = true
+            }
+          }
+          if (hasProperties) {
+            newExports[newKey] = newValue
+          }
+        } else {
+          newExports[newKey] = value
+        }
       }
-      fs.writeFileSync(filePath, JSON.stringify(data))
+
+      newExports['./package.json'] = './package.json'
+      c.exports = newExports
     }
-  })
+
+    return JSON.stringify(c, null, 2)
+  } catch (error) {
+    console.error("Failed to parse or process package.json content:", error)
+    return void 0
+  }
 }
 
-export const StaticCopyPlugin = (cfg: ManifestConfig): Plugin[] => {
+export function StaticCopyPlugin(options: PackageJsonOptions): Plugin[]
+export function StaticCopyPlugin(cfg: ManifestConfig): Plugin[]
+export function StaticCopyPlugin(options: PackageJsonOptions | ManifestConfig): Plugin[] {
   const r = [] as Target[]
-  if (cfg.features.lib.copyReadmeToDist) {
-    r.push({
-      src: '{README,readme}.{md,txt,md,txt,}',
-      dest: '',
-      rename: 'README.md'
-    })
-  }
-  if (cfg.features.lib.copyPackageJsonToDist)
+
+  if ('features' in options) {
+    // ManifestConfig case
+    const cfg = options as ManifestConfig
+    if (cfg.features.lib.copyPackageJsonToDist) {
+      r.push({
+        src: 'package.json',
+        dest: '',
+        transform: (content: string) => packageJsonContentReplace({
+          content,
+          outDir: cfg.build.outDir,
+          dts: cfg.features.lib.dts?.enable ?? false,
+          formats: cfg.features.lib.formats ?? [],
+          buildTool: cfg.features.buildTool
+        }) ?? '',
+      })
+    }
+  } else {
+    // PackageJsonOptions case
     r.push({
       src: 'package.json',
       dest: '',
-      transform: content => packageJsonContentReplace(cfg, content) ?? ''
-    })
-  if (cfg.features.lib.copySourceCodeToDist) {
-    r.push({
-      src: cfg.features.entryRoot,
-      dest: ''
+      transform: (content: string) => packageJsonContentReplace({
+        content,
+        ...options
+      }) ?? '',
     })
   }
-  const plugins = viteStaticCopy({
+
+  return viteStaticCopy({
     targets: r
   })
-  if (cfg.features.lib.sourcemap && cfg.features.lib.copySourceCodeToDist) {
-    let outDir: string
-    plugins.push({
-      name: 'vite:post-handle-source-map',
-      configResolved(config) {
-        outDir = config.root + '/' + config.build.outDir
-      },
-      closeBundle() {
-        processDirectory(outDir, cfg)
-      }
-    })
-  }
-  return plugins
 }
