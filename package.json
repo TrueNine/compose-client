@@ -11,8 +11,9 @@
   "scripts": {
     "build:configs:vite-fragment": "nr --dir ./configs/vite-fragment build",
     "build:configs:eslint9": "nr --dir ./configs/eslint9 build",
+    "build:configs_1": "run-p build:configs:vite-fragment build:configs:eslint9",
     "build:configs:uno": "nr --dir ./configs/uno build",
-    "build:configs": "run-s build:configs:vite-fragment build:configs:eslint9 build:configs:uno",
+    "build:configs": "run-s build:configs_1 build:configs:uno",
     "build:api:types": "nr --dir ./api-types build",
     "build:api:model": "nr --dir ./api-model build",
     "build:api": "run-s build:api:types build:api:model",
