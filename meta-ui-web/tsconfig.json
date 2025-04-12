@@ -2,6 +2,9 @@
   "extends": "@compose/tsconfig/tsconfig.json",
   "compilerOptions": {
     "baseUrl": ".",
+    "jsx": "preserve",
+    "jsxImportSource": "vue",
+    "lib": ["ESNext", "DOM"],
     "paths": {
       "@/*": ["./src/*"]
     },
