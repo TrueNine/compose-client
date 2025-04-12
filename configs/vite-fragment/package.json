@@ -21,8 +21,7 @@
   "peerDependencies": {
     "vite": ">=6.0.0",
     "vite-plugin-dts": ">=4.5.3",
-    "vite-plugin-static-copy": ">=2.3.1",
-    "rollup-plugin-terser": ">=5.3.1"
+    "vite-plugin-static-copy": ">=2.3.1"
   },
   "exports": {
     ".": {
@@ -39,11 +38,6 @@
       "types": "./dist/vite-plugin-static-copy/index.d.ts",
       "import": "./dist/vite-plugin-static-copy/index.js",
       "require": "./dist/vite-plugin-static-copy/index.cjs"
-    },
-    "./rollup-plugin-terser": {
-      "types": "./dist/rollup-plugin-terser/index.d.ts",
-      "import": "./dist/rollup-plugin-terser/index.js",
-      "require": "./dist/rollup-plugin-terser/index.cjs"
     },
     "./build-lib-config": {
       "types": "./dist/build-lib-config/index.d.ts",
