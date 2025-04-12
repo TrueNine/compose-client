@@ -12,7 +12,6 @@ pnpm-lock.yaml*
 *.ntvs*
 *.njsproj
 *.sln
-.vscode/
 
 # node
 node_modules/
