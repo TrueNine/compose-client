@@ -17,5 +17,5 @@
   "diffEditor.experimental.showMoves": true,
   "diffEditor.experimental.useTrueInlineView": true,
   "diffEditor.hideUnchangedRegions.contextLineCount": 1,
-  "diffEditor.hideUnchangedRegions.enabled": true
+  "diffEditor.hideUnchangedRegions.enabled": false
 }
