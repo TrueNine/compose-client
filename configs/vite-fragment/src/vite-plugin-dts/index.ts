@@ -1,49 +1,119 @@
-import type { DtsConfigOptions } from '@/types'
 import type { Plugin } from 'vite'
 import type { PluginOptions } from 'vite-plugin-dts'
-
 import * as dts from 'vite-plugin-dts'
 
-interface DtsPluginOptions extends DtsConfigOptions {
-  entryRoot?: string
+export interface SimpleDtsOptions {
+  /**
+   * 入口文件路径,默认为 ['src/index.ts']
+   */
   entry?: string[]
+  /**
+   * tsconfig 路径,默认为 'tsconfig.json'
+   */
+  tsconfigPath?: string
+  /**
+   * 源码根目录,默认为 'src'
+   */
+  entryRoot?: string
+  /**
+   * 输出目录,默认为 'dist'
+   */
   outDir?: string
+  /**
+   * 排除的文件模式
+   */
   excludes?: string[]
+  /**
+   * 是否生成 sourcemap,默认 false
+   */
+  sourcemap?: boolean
+  /**
+   * 是否启用严格模式,默认 true
+   */
+  strict?: boolean
+  /**
+   * 日志级别,默认 'error'
+   */
+  logLevel?: 'info' | 'warn' | 'error'
 }
 
-export const defaultDtsCfg: DtsPluginOptions = {
+const DEFAULT_OPTIONS: Required<SimpleDtsOptions> = {
+  tsconfigPath: 'tsconfig.json',
   entry: ['index.ts'],
   entryRoot: 'src',
   outDir: 'dist',
+  excludes: [],
+  sourcemap: false,
+  strict: true,
+  logLevel: 'error',
 }
 
-export function DtsPlugin(options: DtsPluginOptions = defaultDtsCfg): Plugin {
-  const includes = options?.entry?.map((e) => `${options.entryRoot}/${e}`)?.filter(Boolean) ?? []
-  if (includes.length === 0) {
-    throw new Error('entry is required')
-  }
-  if (options.entryRoot === void 0) {
-    throw new Error('entryRoot is required')
-  }
-  if (options.outDir === void 0) {
-    throw new Error('outDir is required')
-  }
+/**
+ * 创建简化版的 DTS 插件
+ */
+export function createDtsPlugin(options: SimpleDtsOptions = {}): Plugin {
+  const finalOptions = { ...DEFAULT_OPTIONS, ...options }
 
-  const dtsPluginConfig = {
-    clearPureImport: false,
-    staticImport: false,
-    entryRoot: options.entryRoot,
+  const includes = finalOptions.entry.map((e) => {
+    const root = finalOptions.entryRoot.endsWith('/')
+      ? finalOptions.entryRoot.slice(0, -1)
+      : finalOptions.entryRoot
+    const path = e.startsWith('/') ? e.slice(1) : e
+    return `${root}/**/${path}`
+  })
+  console.error('includes', includes)
+  const dtsPluginConfig: PluginOptions = {
+    // 基础配置
+    entryRoot: finalOptions.entryRoot,
+    tsconfigPath: finalOptions.tsconfigPath,
+    include: includes,
+    exclude: [
+      `${finalOptions.outDir}/**`,
+      ...finalOptions.excludes,
+    ],
+
+    // 编译器选项
     compilerOptions: {
       declaration: true,
-      declarationOnly: true,
+      emitDeclarationOnly: true,
+      declarationDir: finalOptions.outDir,
+      declarationMap: finalOptions.sourcemap,
       emitDecoratorMetadata: false,
-      declarationMap: false,
-      declarationDir: options.outDir,
     },
-    logLevel: 'error',
-    strictOutput: true,
-    include: includes,
-    exclude: [`${options.outDir}`, `${options.outDir}/*`, `${options.outDir}/**`, ...options.excludes ?? []],
-  } satisfies PluginOptions
+
+    // 插件行为
+    clearPureImport: true,
+    staticImport: false,
+    logLevel: finalOptions.logLevel,
+    strictOutput: finalOptions.strict,
+  }
+
   return dts.default(dtsPluginConfig)
+}
+
+// 导出一些常用的预设配置
+export const dtsPresets = {
+  /**
+   * 库模式预设
+   */
+  lib: (customOptions: SimpleDtsOptions = {}): Plugin => {
+    return createDtsPlugin({
+      entry: ['index.ts'],
+      sourcemap: true,
+      strict: true,
+      ...customOptions,
+    })
+  },
+
+  /**
+   * 应用模式预设
+   */
+  app: (customOptions: SimpleDtsOptions = {}): Plugin => {
+    return createDtsPlugin({
+      entry: ['main.ts', 'index.ts'],
+      sourcemap: false,
+      strict: false,
+      ...customOptions,
+    })
+  },
 }

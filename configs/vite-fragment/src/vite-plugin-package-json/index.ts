@@ -5,7 +5,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import process from 'node:process'
 
-interface PackageJsonOptions {
+export interface PackageJsonOptions {
   entry: string[]
   formats?: LibraryFormats[]
   buildTool?: 'npm' | 'pnpm' | 'yarn'
@@ -93,7 +93,7 @@ function packageJsonContentReplace(content: string, options: Omit<PackageJsonOpt
       exportKey = exportKey.substring(2)
     }
     if (exportKey === './') {
-      exportKey = '.' // Handle case where entry might be just 'index.ts'
+      exportKey = '.'
     }
 
     const exportValue: Record<string, string> = {}
@@ -122,7 +122,7 @@ function packageJsonContentReplace(content: string, options: Omit<PackageJsonOpt
         // Set top-level types directly if main entry is TS
         if (isTypeScriptEntry) {
           packageJson.types = exportValue.types.substring(2)
-          packageJson.typings = exportValue.types.substring(2) // Keep both for compatibility
+          packageJson.typings = exportValue.types.substring(2)
         }
       }
       newExports[exportKey] = exportValue
