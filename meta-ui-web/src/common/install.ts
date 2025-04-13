@@ -20,8 +20,9 @@ const undefinedName = 'NameUndefined'
 export function componentInstallToPlugin<T, E = dynamic>(component: T, otherComponent?: Record<string, E>): T {
   let primaryComponent = component as unknown as SFCWithInstall<T>
   const otherSecondaryComponentInstallers = otherComponent as unknown as Record<string, SFCWithInstall<T>> | undefined
-  if (!primaryComponent.name)
+  if (primaryComponent.name == null) {
     primaryComponent = { ...primaryComponent, name: primaryComponent.__name }
+  }
   primaryComponent.install = (app: App) => {
     const allInstallComponents = [primaryComponent, ...Object.values(otherSecondaryComponentInstallers ?? {})]
     for (const toInstallComponent of allInstallComponents) {
@@ -31,8 +32,8 @@ export function componentInstallToPlugin<T, E = dynamic>(component: T, otherComp
   }
   if (otherSecondaryComponentInstallers) {
     for (const [key, comp] of Object.entries(otherSecondaryComponentInstallers)) {
-      ;(primaryComponent as dynamic)[key] = comp
+      ;(primaryComponent as Record<string, unknown>)[key] = comp
     }
   }
-  return primaryComponent as unknown as T
+  return primaryComponent as T
 }
