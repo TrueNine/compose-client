@@ -1,19 +1,8 @@
 {
-  "extends": "@compose/tsconfig/tsconfig.json",
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@/*": [
-        "./src/*"
-      ]
-    },
-    "declaration": true,
-    "declarationDir": "dist",
-    "declarationMap": false
-  },
-  "exclude": [
-    "node_modules/**",
-    "dist/**",
-    "*.mjs"
-  ]
+  "references": [
+    {
+      "path": "./tsconfig.extensions.json"
+    }
+  ],
+  "files": []
 }

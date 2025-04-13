@@ -73,8 +73,9 @@ export async function safeGetObject(objId: string, proxy: PDFPageProxy): Promise
       resolve(data)
     })
     setTimeout(() => {
-      if (isErr)
+      if (isErr) {
         reject(new Error(`read PDF objId ${objId} mil 2000 timeout`))
+      }
     }, 2000)
   })
 }
@@ -84,11 +85,11 @@ export async function extractPdfImages<T = string>(pdfFile: Blob, resolve?: (img
   const pdf = await PdfJs.getDocument(pdfArrayBuffer).promise
   const e: PDFImageData[] = await resolvePages(pdf, async (page) => {
     const opList = await page.getOperatorList()
-    const rawImgOperator = opList.fnArray.map((f, index) => (f === PdfJs.OPS.paintImageXObject ? index : null)).filter(n => n !== null)
+    const rawImgOperator = opList.fnArray.map((f, index) => (f === PdfJs.OPS.paintImageXObject ? index : null)).filter((n) => n !== null)
     const filename = opList.argsArray[rawImgOperator[0]][0]
     return (await safeGetObject(filename, page)) as PDFImageData
   })
-  return await Promise.all(
+  return Promise.all(
     e.map(async (e) => {
       return (await (resolve ?? resolveImage)(e)) as T
     }),

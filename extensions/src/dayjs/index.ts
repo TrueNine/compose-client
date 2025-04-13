@@ -60,14 +60,15 @@ export function timeMillis(date: DayJSNewInstanceOptions, p?: Params): number {
     _p.date = `1970-01-01$$$$${_p.date}`
     const offset = getOffsetMillis(_p.tz)
     return timestampOf(_p.date, _p) + Number(offset) * 2
-  }
-  else {
+  } else {
     _p.utc = true
     _p.tz = ISO8601TimeZone.UTC
     const dg = timestampToTimeTimestamp(_p.date, _p)
-    if (dg === void 0)
+    if (dg === void 0) {
       return Number.NaN
-    else return dg
+    } else {
+      return dg
+    }
   }
 }
 
@@ -106,11 +107,9 @@ function timestampToTimeTimestamp(ts: timestamp | Date | dayjs.Dayjs, p?: Params
   let dj: dayjs.Dayjs
   if (typeof ts === 'number' || typeof ts === 'string') {
     dj = DayJs(ts, { utc: _p.utc }, true).tz(_p.tz)
-  }
-  else if (ts instanceof Date) {
+  } else if (ts instanceof Date) {
     dj = DayJs(ts, { utc: _p.utc }, true).tz(_p.tz)
-  }
-  else {
+  } else {
     dj = ts.tz(_p.tz)
   }
   const hMs = dj.hour() * 3600000
@@ -128,20 +127,22 @@ export function isToday(to: DayJSNewInstanceOptions, qua = 1, unit: DurationUnit
 
 export function formatToday(to: Dayjs): string {
   const now = DayJs()
-  if (isToday(to, 0))
+  if (isToday(to, 0)) {
     return to.format('HH:mm')
-  if (to.isBefore(now)) {
-    if (isToday(to))
-      return `昨天 ${to.format('HH:mm')}`
-    else if (isToday(to, 0, 'month'))
-      return to.format('MM-DD')
-    else if (isToday(to, 0, 'year'))
-      return to.format('MM-DD')
-    else if (to.year() >= 2000)
-      return to.format('YY-MM-DD')
-    else return to.format('YYYY-MM-DD')
   }
-  else {
+  if (to.isBefore(now)) {
+    if (isToday(to)) {
+      return `昨天 ${to.format('HH:mm')}`
+    } else if (isToday(to, 0, 'month')) {
+      return to.format('MM-DD')
+    } else if (isToday(to, 0, 'year')) {
+      return to.format('MM-DD')
+    } else if (to.year() >= 2000) {
+      return to.format('YY-MM-DD')
+    } else {
+      return to.format('YYYY-MM-DD')
+    }
+  } else {
     return to.format('YYYY-MM-DD')
   }
 }

@@ -15,10 +15,12 @@ export function setWorker(worker: Worker): void {
 
 export function init(): void {
   const r = {} as dynamic
-  if (__archiveWorker)
+  if (__archiveWorker) {
     r.workerUrl = __archiveUrl
-  if (__archiveWorker)
+  }
+  if (__archiveWorker) {
     r.getWorker = () => __archiveWorker
+  }
   Archive.init(r)
 }
 

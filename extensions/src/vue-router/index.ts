@@ -23,14 +23,17 @@ type MenuObject = {
 } & RouteRecordRaw
 
 function combineURIs(uri1: string, uri2: string): string {
-  if (!uri1.startsWith(STR_SLASH))
+  if (!uri1.startsWith(STR_SLASH)) {
     uri1 = STR_SLASH + uri1
+  }
   uri1 = uri1.replace(/\/$/, STR_EMPTY)
   uri2 = uri2.replace(/^\//, STR_EMPTY)
-  if (!uri1 && !uri2)
+  if (!uri1 && !uri2) {
     return STR_EMPTY
-  if (!uri1)
+  }
+  if (!uri1) {
     return uri2
+  }
   const result = `${uri1}${STR_SLASH}${uri2}`
   return result.replace(/\/$/, STR_EMPTY)
 }
@@ -52,8 +55,9 @@ export function generateMenu(routes: RouteRecordRaw[], matchFn: late<RouteMatchF
     parentPath = '',
     deepLevel = 0,
   ): MenuObject[] {
-    if (!deepLevel && clipPath)
+    if (!deepLevel && clipPath) {
       routes = clip(routes, clipPath)
+    }
     return routes
       .filter((route) => {
         return matchFn
@@ -83,10 +87,11 @@ export function generateMenu(routes: RouteRecordRaw[], matchFn: late<RouteMatchF
     function clip(routes: RouteRecordRaw[], clipPath: string): RouteRecordRaw[] {
       for (const r of routes) {
         const fullPath = combineURIs(parentPath, r.path)
-        if (fullPath.startsWith(clipPath) || fullPath.startsWith(clipPath + STR_SLASH))
+        if (fullPath.startsWith(clipPath) || fullPath.startsWith(clipPath + STR_SLASH)) {
           return [...(r.children ?? [])]
-        else if (r.children)
+        } else if (r.children) {
           return clip(r.children, clipPath)
+        }
       }
       return []
     }

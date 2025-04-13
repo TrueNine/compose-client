@@ -67,10 +67,12 @@ function _findSlotNodesBy(node: Maybe<SlotNode>, compareFn: (node: NotChildrenSl
   nodes.forEach((n) => {
     const r = n.type as Record<string, string>
     n.actualName = r.name || r.__name
-    if (compareFn(n))
+    if (compareFn(n)) {
       result.push(n)
-    if (n.children && typeof n.children !== 'string')
+    }
+    if (n.children && typeof n.children !== 'string') {
       _findSlotNodesBy(n.children as unknown as SlotNode, compareFn, result)
+    }
   })
   return result
 }
@@ -78,14 +80,14 @@ function _findSlotNodesBy(node: Maybe<SlotNode>, compareFn: (node: NotChildrenSl
 export function findSlotNodesBy(compareFn: (node: NotChildrenSlotNode) => boolean = () => true, arg?: Maybe<SlotNode>): SlotNode[] {
   const res: SlotNode[] = []
   const _m = maybeArray(arg).filter(Boolean) as SlotNode[]
-  _m.forEach(ele => res.push(..._findSlotNodesBy(ele, compareFn)))
+  _m.forEach((ele) => res.push(..._findSlotNodesBy(ele, compareFn)))
   return res
 }
 
 export function findSlotNodesByName(componentName = '', arg?: Maybe<SlotNode>): SlotNode[] {
   const res: SlotNode[] = []
   const m = maybeArray(arg).filter(Boolean) as SlotNode[]
-  m.forEach(ele => res.push(..._findSlotNodesBy(ele, v => v.actualName === componentName)))
+  m.forEach((ele) => res.push(..._findSlotNodesBy(ele, (v) => v.actualName === componentName)))
   return res
 }
 

@@ -1,26 +1,35 @@
 import { fileURLToPath, URL } from 'node:url'
+import { configureViteFragment } from '@compose/config-vite-fragment'
+import { defineConfig } from 'vite'
 
-import { manifest } from '@compose/config-vite-fragment'
-
-const { defineConfig } = manifest({
-  features: {
-    lib: {
-      enable: true,
-      minify: true,
-      sourcemap: true,
-      dts: {
-        enable: true,
-        dtsSourcemap: true,
+export default defineConfig(
+  configureViteFragment(
+    {
+      lib: {
+        entry: [
+          'index',
+          'browser/document',
+          'lodash-es/index',
+          'dayjs/index',
+          'libarchive-js/index',
+          'pdfjs-dist/index',
+          'vue/index',
+          'pino/index',
+          'vue-router/index',
+        ],
+        formats: ['es'],
+      },
+      dts: { tsconfigPath: './tsconfig.extensions.json' },
+      packageJson: {
+        buildTool: 'pnpm',
       },
     },
-    entry: ['index', 'browser/document', 'lodash-es/index', 'dayjs/index', 'libarchive-js/index', 'pdfjs-dist/index', 'vue/index', 'pino/index', 'vue-router/index'],
-  },
-})
-
-export default defineConfig({
-  resolve: {
-    alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url)),
+    {
+      resolve: {
+        alias: {
+          '@': fileURLToPath(new URL('./src', import.meta.url)),
+        },
+      },
     },
-  },
-})
+  ),
+)

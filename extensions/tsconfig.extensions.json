@@ -1,0 +1,29 @@
+{
+  "extends": [
+    "@vue/tsconfig/tsconfig.dom.json",
+    "@compose/tsconfig/tsconfig.json"
+  ],
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
+    "lib": [
+      "ESNext",
+      "DOM",
+      "WebWorker"
+    ],
+    "baseUrl": ".",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    }
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "env.d.ts",
+    "vite.config.ts",
+    "vitest.config.ts"
+  ]
+}

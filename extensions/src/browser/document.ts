@@ -12,12 +12,13 @@ import type { task } from '@compose/api-types'
 export function loadRemoteScriptTag(
   src: string,
   appendTag: 'head' | 'body' = 'body',
-  beforeEach: (scriptTag: HTMLScriptElement) => HTMLScriptElement = b => b,
+  beforeEach: (scriptTag: HTMLScriptElement) => HTMLScriptElement = (b) => b,
   loadFn?: () => void,
 ): Element {
   const a = document.querySelector(`script[src='${src}']`)
-  if (a !== null)
+  if (a !== null) {
     return a
+  }
   const scriptTag = document.createElement('script')
   scriptTag.src = src
   scriptTag.setAttribute('charset', 'utf-8')
