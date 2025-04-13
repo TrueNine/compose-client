@@ -10,7 +10,7 @@ export class SearchParam {
       .join(`&`)
   }
 
-  append(name: string, value: BasicType) {
+  append(name: string, value: BasicType): void {
     this._root.set(name, value)
   }
 }
@@ -59,7 +59,7 @@ export function queryHash(...cards: nilpt<object>[]): string {
 }
 
 export function decodeHash(hash?: string): Record<string, string> {
-  if (!hash) {
+  if (hash == null) {
     return {}
   }
   return hash

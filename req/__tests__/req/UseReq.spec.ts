@@ -1,7 +1,7 @@
-import { describe, expect } from 'vitest'
+import { describe, expect, it } from 'vitest'
 
-describe('testUseReq', () => {
-  it('testUseReq', async () => {
+describe('useReq', () => {
+  it('should work correctly', async () => {
     expect(1).toBe(1)
   })
 })
