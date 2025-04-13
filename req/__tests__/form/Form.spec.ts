@@ -1,5 +1,5 @@
 import { form, toFormPathData } from '@/form'
-import { describe, expect } from 'vitest'
+import { describe, expect, it } from 'vitest'
 
 import { ref } from 'vue'
 
@@ -45,11 +45,11 @@ describe('form', () => {
       password: 'pwd',
       tagMap: { k: 'v', bb: 23 },
       genders: ['1', '2', '3'],
-      file: new Blob(),
-      files: [new Blob(), new Blob()],
+      file: new Blob([]),
+      files: [new Blob([]), new Blob([])],
       fileMap: {
-        e: new Blob(),
-        a: new Blob(),
+        e: new Blob([]),
+        a: new Blob([]),
       },
       tagMaps: [
         {
