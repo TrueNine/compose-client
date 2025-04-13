@@ -8,8 +8,7 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "types": ["node"],
-    "noEmit": false
+    "types": ["node"]
   },
   "include": [
     "src/**/*.ts",

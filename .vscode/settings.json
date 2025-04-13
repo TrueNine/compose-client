@@ -1,4 +1,26 @@
 {
+  "prettier.enable": false,
+  "editor.formatOnSave": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "never"
+  },
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "vue",
+    "html",
+    "markdown",
+    "json",
+    "jsonc",
+    "yaml",
+    "toml",
+    "xml",
+    "css",
+    "scss"
+  ],
   "explorer.fileNesting.enabled": true,
   "explorer.fileNesting.patterns": {
     "tsconfig.json": "tsconfig.*.json, env.d.ts",
@@ -7,15 +29,11 @@
     "README.md": "LICENSE, .git*, .editorconfig",
     "*.d.ts": "${basename}.js, ${basename}.cjs, ${basename}.js.map, ${basename}.cjs.map"
   },
-  "editor.codeActionsOnSave": {
-    "source.fixAll": "explicit"
-  },
   "diffEditor.wordWrap": "off",
   "diffEditor.renderSideBySide": false,
-  "oxc.enable": true,
-  "git.closeDiffOnOperation": true,
   "diffEditor.experimental.showMoves": true,
   "diffEditor.experimental.useTrueInlineView": true,
   "diffEditor.hideUnchangedRegions.contextLineCount": 1,
-  "diffEditor.hideUnchangedRegions.enabled": false
+  "diffEditor.hideUnchangedRegions.enabled": false,
+  "git.closeDiffOnOperation": true
 }

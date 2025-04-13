@@ -75,6 +75,8 @@ export const defaultVueConfig: AntFuVueConfig = {
 
 export const defaultJsConfig: AntFuJsConfig = {
   overrides: {
+    'no-inline-comments': 'error',
+    'unicorn/no-useless-spread': 'error',
     'import/extensions': ['error', 'never', {
       'css': 'always',
       'svg': 'always',
