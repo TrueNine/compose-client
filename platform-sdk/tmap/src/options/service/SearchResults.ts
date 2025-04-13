@@ -1,4 +1,4 @@
-import type { nil } from '@compose/api-types'
+import type { LatLng } from '../../LatLng'
 
 export interface SearchResult {
   /**
@@ -31,15 +31,15 @@ export interface SearchResult {
     /**
      * 坐标
      */
-    location: TMap.LatLng
+    location: LatLng
     /**
      * 电话
      */
-    tel?: nil<string>
+    tel?: string | null
     /**
      * 分类
      */
-    category?: nil<string>
+    category?: string | null
     /**
      * POI类型，值说明：0:普通POI / 1:公交车站 / 2:地铁站 / 3:公交线路 / 4:行政区划
      */

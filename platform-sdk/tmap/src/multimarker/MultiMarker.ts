@@ -1,7 +1,7 @@
-type MultiMarkerEvents = TMap.MultiMarkerEvents
-type PointGeometry = TMap.PointGeometry
-type MultiMarkerOptions = TMap.MultiMarkerOptions
-type Map = TMap.Map
+import type { MultiMarkerEvents } from '../events'
+import type { Map } from '../map'
+import type { MultiMarkerOptions } from '../options/MultiMarkerOptions'
+import type { PointGeometry } from '../options/PointGeometies'
 
 /**
  * # 多 maker 图层

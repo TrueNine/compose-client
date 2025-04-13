@@ -1,6 +1,5 @@
-type LatLngDataTyping = TMap.LatLngDataTyping
-type PointDataTyping = TMap.PointDataTyping
-type Map = TMap.Map
+import type { LatLngDataTyping, PointDataTyping } from '../LatLng'
+import type { Map } from '../map'
 
 export interface InfoWindowOptions {
   map: Map

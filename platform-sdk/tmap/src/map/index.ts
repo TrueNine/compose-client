@@ -1,10 +1,8 @@
-type LatLngDataTyping = TMap.LatLngDataTyping
-type ViewMode = TMap.ViewMode
-type MapStyleIds = TMap.MapStyleIds
-type EaseOptions = TMap.EaseOptions
-type LatLng = TMap.LatLng
-type MapOptions = TMap.MapOptions
-type MapEvents = TMap.MapEvents
+import type { MapStyleIds, ViewMode } from '../Constants'
+import type { MapEvents } from '../events'
+import type { LatLng, LatLngDataTyping } from '../LatLng'
+import type { EaseOptions } from '../options/EaseOptions'
+import type { MapOptions } from '../options/MapOptions'
 
 export declare class Map {
   constructor(html: string | HTMLElement, mode: MapOptions)
@@ -37,7 +35,7 @@ export declare class Map {
    * @param latLng 经纬度
    * @param ease
    */
-  panTo(latLng: TMap.LatLngDataTyping, ease?: TMap.EaseOptions): this
+  panTo(latLng: LatLngDataTyping, ease?: EaseOptions): this
 
   /**
    * ## 设置地图缩放级别

@@ -1,6 +1,6 @@
+import type { TMapSDK } from '../types'
 import { WEBGL_JS_URL } from '@/Constants'
 import { loadRemoteScriptTag } from '@compose/extensions/browser/document'
-
 import { queryParam } from '@compose/req'
 
 /**
@@ -28,38 +28,62 @@ const _default = {
   mapContainerId: 'tencent-tmap-webgl',
 } satisfies CreateTencentMapOptions
 
+interface InitResult {
+  src: HTMLScriptElement
+  mapContainer: HTMLElement
+}
+
 /**
  * ## 初始化腾讯地图
  * @param key sdk key
  * @param callback 加载脚本后的回调函数
  * @param options 加载选项
+ * @returns 初始化结果，包含脚本元素和地图容器
  */
 export function initTencentMapWebGlScript(
   key: string,
-  callback?: (container: HTMLElement, mapHandle: typeof TMap, ev?: Event) => void,
+  callback?: (container: HTMLElement, mapHandle: TMapSDK, ev?: Event) => void,
   options: CreateTencentMapOptions = _default,
-) {
-  if (!options.loadQuery) {
-    return
+): InitResult | null {
+  // 验证必要参数
+  if (typeof options.loadQuery !== 'string') {
+    return null
   }
-  if (!options.containerTag) {
-    return
+  const query = options.loadQuery.trim()
+  if (!query) {
+    return null
   }
-  if (!options.mapContainerId) {
-    return
+
+  const containerTag = options.containerTag
+  if (!containerTag) {
+    return null
   }
-  const section = document.querySelector(options.loadQuery)
+
+  if (typeof options.mapContainerId !== 'string') {
+    return null
+  }
+  const containerId = options.mapContainerId.trim()
+  if (!containerId) {
+    return null
+  }
+
+  const section = document.querySelector(query)
+  if (!section) {
+    return null
+  }
+
   const src = loadRemoteScriptTag(
     `${WEBGL_JS_URL}${queryParam({
       v: '1.exp',
       key,
       libraries: options.libraries,
     })}`,
-  )
+  ) as HTMLScriptElement
+
   // 创建一个id容器
-  const mapContainer: HTMLElement = document.createElement(options.containerTag)
-  mapContainer.id = options.mapContainerId
-  section?.appendChild(mapContainer)
+  const mapContainer: HTMLElement = document.createElement(containerTag)
+  mapContainer.id = containerId
+  section.appendChild(mapContainer)
 
   if (callback) {
     const tMap = window.TMap

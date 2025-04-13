@@ -1,9 +1,6 @@
 import type { nil } from '@compose/api-types'
-
+import type { LatLng, Point } from '../LatLng'
 import type { ITencentEvent } from './Events'
-
-import LatLng = TMap.LatLng
-import Point = TMap.Point
 
 /**
  * ## 地图事件类型

@@ -1,4 +1,4 @@
-import Map = TMap.Map
+import type { Map } from '../map'
 /**
  * # MultiMarker的配置参数
  */

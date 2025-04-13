@@ -1,8 +1,9 @@
 import type { SearchOptions } from '@/options'
+import type { TMapService } from '../types'
 
-type SearchNearbyOptions = TMap.service.SearchNearbyOptions
-type SearchResult = TMap.service.SearchResult
-type SearchRegionOptions = TMap.service.SearchRegionOptions
+type SearchNearbyOptions = TMapService['SearchNearbyOptions']
+type SearchResult = TMapService['SearchResult']
+type SearchRegionOptions = TMapService['SearchRegionOptions']
 
 /**
  * # 搜索服务类库

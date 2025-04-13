@@ -1,8 +1,6 @@
-type LatLngDataTyping = TMap.LatLngDataTyping
-type PointDataTyping = TMap.PointDataTyping
-type ViewMode = TMap.ViewMode
-type MapStyleIds = TMap.MapStyleIds
-type MAP_ZOOM_TYPE = TMap.constants.MAP_ZOOM_TYPE
+import type { BasicMapZoomType, MapStyleIds, ViewMode } from '../Constants'
+import type { LatLngDataTyping, PointDataTyping } from '../LatLng'
+
 /**
  * # 地图配置参数
  *
@@ -81,5 +79,5 @@ export interface MapOptions {
   /**
    * ## 地图缩放类型
    */
-  mapZoomType?: MAP_ZOOM_TYPE
+  mapZoomType?: BasicMapZoomType
 }

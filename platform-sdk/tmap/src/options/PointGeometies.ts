@@ -1,5 +1,5 @@
-type LatLngDataTyping = TMap.LatLngDataTyping
-type MapStyleIds = TMap.MapStyleIds
+import type { MapStyleIds } from '../Constants'
+import type { LatLngDataTyping } from '../LatLng'
 
 /**
  * # 点图形数据
