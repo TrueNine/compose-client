@@ -12,19 +12,19 @@ export class CssVar {
     this._value = value
   }
 
-  get defineCssVar() {
+  get defineCssVar(): string {
     return `${this.varName}: ${this.varValue};`
   }
 
-  get varValue() {
+  get varValue(): string {
     return this._value
   }
 
-  get useVar() {
+  get useVar(): string {
     return `var(${this.varName})`
   }
 
-  get varName() {
+  get varName(): string {
     return this._name
   }
 

@@ -1,13 +1,11 @@
 {
-  "extends": "@compose/tsconfig/tsconfig.json",
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"]
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
     },
-    "declaration": true,
-    "declarationDir": "dist",
-    "declarationMap": true
-  },
-  "exclude": ["node_modules", "dist"]
+    {
+      "path": "./tsconfig.vitest.json"
+    }
+  ],
+  "files": []
 }
