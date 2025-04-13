@@ -1,4 +1,4 @@
-import type {dynamic} from '@compose/api-types'
+import type { dynamic } from '@compose/api-types'
 
 /**
  * 只有成功参数

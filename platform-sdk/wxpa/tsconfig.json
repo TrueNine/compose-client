@@ -1,13 +1,17 @@
 {
-  "extends": "@compose/tsconfig/tsconfig.json",
+  "extends": "./tsconfig.node.json",
   "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"]
-    },
-    "declaration": true,
-    "declarationDir": "dist",
-    "declarationMap": true
+    "lib": [
+      "ES2020",
+      "DOM"
+    ],
+    "types": [
+      "node"
+    ]
   },
-  "exclude": ["dist", "node_modules", "example/**"]
+  "include": [
+    "src/**/*",
+    "env.d.ts",
+    "vite.config.ts"
+  ]
 }

@@ -118,6 +118,6 @@ export const AllJsApiList: (keyof JsApiListMap)[] = Array.from(
 
     'chooseCard',
 
-    'openCard'
-  ])
+    'openCard',
+  ]),
 )

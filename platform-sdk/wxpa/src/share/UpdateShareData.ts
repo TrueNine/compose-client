@@ -1,6 +1,6 @@
-import type {HttpUrl} from '@compose/api-types'
+import type { BaseOption } from '@/common'
 
-import type {BaseOption} from '@/common'
+import type { HttpUrl } from '@compose/api-types'
 
 export interface UpdateAppMessageShareDataOption extends BaseOption {
   /**
