@@ -54,14 +54,19 @@ const DEFAULT_OPTIONS: Required<SimpleDtsOptions> = {
 export function createDtsPlugin(options: SimpleDtsOptions = {}): Plugin {
   const finalOptions = { ...DEFAULT_OPTIONS, ...options }
 
-  const includes = finalOptions.entry.map((e) => {
-    const root = finalOptions.entryRoot.endsWith('/')
-      ? finalOptions.entryRoot.slice(0, -1)
-      : finalOptions.entryRoot
-    const path = e.startsWith('/') ? e.slice(1) : e
-    return `${root}/**/${path}`
-  })
-  console.error('includes', includes)
+  // 收集所有入口文件的后缀
+  const extensions = new Set(
+    finalOptions.entry.map((entry) => {
+      const match = entry.match(/\.([^.]+)$/)
+      return match ? match[1] : 'ts'
+    }),
+  )
+
+  // 生成包含所有后缀的 glob 模式
+  const includes = Array.from(extensions).map((ext) =>
+    `${finalOptions.entryRoot}/**/*.${ext}`,
+  )
+
   const dtsPluginConfig: PluginOptions = {
     // 基础配置
     entryRoot: finalOptions.entryRoot,

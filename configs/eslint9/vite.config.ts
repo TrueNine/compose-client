@@ -6,27 +6,10 @@ export default defineConfig(
   configureViteFragment(
     {
       lib: {
-        entry: [
-          'index.ts',
-        ],
+        entry: ['index', 'defaults/index'],
         formats: ['es', 'cjs'],
       },
-      dts: {
-        tsconfigPath: './tsconfig.node.json',
-        overridePluginOptions: {
-          clearPureImport: true,
-          staticImport: true,
-          compilerOptions: {
-            declaration: true,
-            declarationOnly: true,
-            emitDecoratorMetadata: true,
-            declarationMap: false,
-          },
-          strictOutput: true,
-          include: ['src/**/*.ts', 'env.d.ts'],
-          exclude: ['dist/**', 'node_modules/**', '**/*.spec.ts'],
-        },
-      },
+      dts: { tsconfigPath: './tsconfig.node.json' },
       packageJson: {
         buildTool: 'pnpm',
       },
