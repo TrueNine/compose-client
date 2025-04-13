@@ -24,7 +24,7 @@
   "explorer.fileNesting.enabled": true,
   "explorer.fileNesting.patterns": {
     "tsconfig.json": "tsconfig.*.json, env.d.ts",
-    "vite.config.*": "jsconfig*, vitest.config.*, cypress.config.*, playwright.config.*, vitest.workspace.*, .eslint*, eslint*, .oxlint*, oxlint*, .prettier*, prettier*,",
+    "vite.config.*": "jsconfig*, vitest.config.*, cypress.config.*, playwright.config.*, vitest.workspace.*, .eslint*, eslint*, .oxlint*, oxlint*, .prettier*, prettier*, uno.config.*",
     "package.json": "package-lock.json, pnpm*, .yarnrc*, yarn*, .npmrc",
     "README.md": "LICENSE, .git*, .editorconfig",
     "*.d.ts": "${basename}.js, ${basename}.cjs, ${basename}.js.map, ${basename}.cjs.map"
