@@ -5,6 +5,9 @@
     },
     {
       "path": "./tsconfig.vitest.json"
+    },
+    {
+      "path": "./tsconfig.extensions.json"
     }
   ],
   "files": []
