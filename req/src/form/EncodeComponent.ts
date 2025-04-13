@@ -1,6 +1,13 @@
 import type { BasicType, nilpt } from '@compose/api-types'
 import { isNonNil, isNonNilString } from '@compose/api-model'
 
+/**
+ * 表示 URL 查询参数的类
+ *
+ * 该类提供了一系列方法来操作和查询 URL 查询参数
+ *
+ *
+ */
 export class SearchParam {
   private _root = new Map<string, BasicType>()
   private _cachedString: string | null = null
@@ -134,58 +141,157 @@ export class SearchParam {
 }
 
 /**
- * # 将多个对象转换为 URLSearchParams 格式的字符串
- * @param cards 需转换对象
+ * 将多个对象转换为带 `?` 前缀的 URL 查询参数字符串
+ *
+ * @example
+ * ```ts
+ * encodeQueryParam({ page: 1, size: 10 }) // "?page=1&size=10"
+ * encodeQueryParam({ tags: ['a', 'b'] }) // "?tags=a,b"
+ * encodeQueryParam({ name: '测试' }) // "?name=%E6%B5%8B%E8%AF%95"
+ * ```
+ *
+ * @param cards - 需要转换的对象数组，支持嵌套数组
+ * @returns 返回带 `?` 前缀的查询字符串，如果没有有效参数则返回空字符串
  */
 export function encodeQueryParam(...cards: nilpt<object>[]): string {
-  const params = new SearchParam()
   if (!cards.length) {
     return ''
   }
-  cards.filter(isNonNil).forEach((c) => {
-    Object.entries(c as Record<string, unknown>)
-      .filter(([, v]) => isNonNil(v))
-      .map(([k, v]) => [k, isNonNilString(v as string) ? encodeURIComponent(v as string) : v])
-      .map(([k, v]) => [k, Array.isArray(v) ? v.join(',') : v])
-      .forEach(([k, v]) => {
-        params.append(encodeURIComponent(k as string), v as string)
-      })
-  })
-  return params.toString() && `?${params.toString()}`
+
+  const params = new SearchParam()
+  const validCards = cards.filter(isNonNil)
+
+  if (!validCards.length) {
+    return ''
+  }
+
+  for (const card of validCards) {
+    const entries = Object.entries(card as Record<string, unknown>)
+    for (const [key, value] of entries) {
+      if (value == null) {
+        continue
+      }
+
+      const encodedKey = encodeURIComponent(key)
+      let encodedValue: string
+
+      if (Array.isArray(value)) {
+        encodedValue = value.join(',')
+      } else if (typeof value === 'string') {
+        encodedValue = encodeURIComponent(value)
+      } else {
+        encodedValue = String(value)
+      }
+
+      params.append(encodedKey, encodedValue)
+    }
+  }
+
+  const result = params.toString()
+  return result ? `?${result}` : ''
 }
 
+/**
+ * 将多个对象转换为带 `?` 前缀的 URL 查询参数字符串
+ * 与 encodeQueryParam 的区别是不会对参数值进行 URL 编码
+ *
+ * @example
+ * ```ts
+ * queryParam({ page: 1, size: 10 }) // "?page=1&size=10"
+ * queryParam({ tags: ['a', 'b'] }) // "?tags=a,b"
+ * queryParam({ name: '测试' }) // "?name=测试"
+ * ```
+ *
+ * @param cards - 需要转换的对象数组
+ * @returns 返回带 `?` 前缀的查询字符串，如果没有有效参数则返回空字符串
+ */
 export function queryParam(...cards: nilpt<object>[]): string {
-  const params = new SearchParam()
   if (!cards.length) {
     return ''
   }
-  cards.filter(isNonNil).forEach((c) => {
-    Object.entries(c as Record<string, unknown>)
-      .filter(([, v]) => isNonNil(v))
-      .map(([k, v]) => [k, v])
-      .map(([k, v]) => [k, Array.isArray(v) ? v.filter(isNonNil).join(',') : v])
-      .forEach(([k, v]) => {
-        params.append(k as string, v as string)
-      })
-  })
-  return params.toString() && `?${params.toString()}`
+
+  const params = new SearchParam()
+  const validCards = cards.filter(isNonNil)
+
+  if (!validCards.length) {
+    return ''
+  }
+
+  for (const card of validCards) {
+    const entries = Object.entries(card as Record<string, unknown>)
+    for (const [key, value] of entries) {
+      if (value == null) {
+        continue
+      }
+
+      let finalValue: string
+      if (Array.isArray(value)) {
+        finalValue = value.filter(isNonNil).join(',')
+      } else {
+        finalValue = String(value)
+      }
+
+      params.append(key, finalValue)
+    }
+  }
+
+  const result = params.toString()
+  return result ? `?${result}` : ''
 }
 
+/**
+ * 将多个对象转换为带 `#` 前缀的 URL hash 字符串
+ *
+ * @example
+ * ```ts
+ * queryHash({ page: 1 }) // "#page=1"
+ * queryHash({ tags: ['a', 'b'] }) // "#tags=a,b"
+ * ```
+ *
+ * @param cards - 需要转换的对象数组
+ * @returns 返回带 `#` 前缀的 hash 字符串，如果没有有效参数则返回空字符串
+ */
 export function queryHash(...cards: nilpt<object>[]): string {
   const qp = queryParam(...cards)
   return qp ? `#${qp.slice(1)}` : ''
 }
 
+/**
+ * 解析 URL hash 字符串为对象
+ *
+ * @example
+ * ```ts
+ * decodeHash('#page=1&size=10') // { page: '1', size: '10' }
+ * decodeHash('page=1&size=10') // { page: '1', size: '10' }
+ * ```
+ *
+ * @param hash - 要解析的 hash 字符串，可以带 `#` 前缀
+ * @returns 解析后的对象，如果输入为空则返回空对象
+ */
 export function decodeHash(hash?: string): Record<string, string> {
-  if (hash == null) {
-    return {}
+  const result: Record<string, string> = {}
+
+  if (!isNonNilString(hash)) {
+    return result
   }
-  return hash
-    .replace(/^#/, '')
-    .split('&')
-    .map((s) => s.split('='))
-    .reduce<Record<string, string>>((acc, [k, v]) => {
-      acc[k] = v
-      return acc
-    }, {})
+
+  // 此时我们已经确认 hash 是非空字符串
+  const rawInput = (hash as string).startsWith('#') ? (hash as string).slice(1) : hash as string
+  if (!isNonNilString(rawInput)) {
+    return result
+  }
+
+  const pairs = (rawInput).split('&')
+  for (const pair of pairs) {
+    if (!isNonNilString(pair)) {
+      continue
+    }
+
+    const [key, value] = pair.split('=')
+    if (isNonNilString(key)) {
+      result[key] = isNonNilString(value) ? value : ''
+    }
+  }
+
+  return result
 }
