@@ -1,7 +1,7 @@
-import {describe, expect, test} from 'vitest'
-import {ref} from 'vue'
+import { form, toFormPathData } from '@/form'
+import { describe, expect } from 'vitest'
 
-import {form, toFormPathData} from '@/form'
+import { ref } from 'vue'
 
 describe('form', () => {
   const as = {
@@ -24,15 +24,15 @@ describe('form', () => {
     title: '二道贩子',
     endDate: 1711814400000,
     startDate: 1710691200000,
-    orderedWight: 0
+    orderedWight: 0,
   }
 
-  test('test uint8array insert 0', () => {
+  it('test uint8array insert 0', () => {
     const a = toFormPathData({
-      a: new Uint8Array([0, 1, 0, 1])
+      a: new Uint8Array([0, 1, 0, 1]),
     })
     console.log(a)
-    expect(a).not.toEqual([{name: 'a', value: '1,1'}])
+    expect(a).not.toEqual([{ name: 'a', value: '1,1' }])
 
     const b = toFormPathData(ref(as).value)
     console.log(b)
@@ -43,33 +43,33 @@ describe('form', () => {
     info: {
       account: 'ab',
       password: 'pwd',
-      tagMap: {k: 'v', bb: 23},
+      tagMap: { k: 'v', bb: 23 },
       genders: ['1', '2', '3'],
       file: new Blob(),
       files: [new Blob(), new Blob()],
       fileMap: {
         e: new Blob(),
-        a: new Blob()
+        a: new Blob(),
       },
       tagMaps: [
         {
           k: 'v',
-          bb: 23
+          bb: 23,
         },
         {
           k: 'v',
-          bb: 23
-        }
-      ]
-    }
+          bb: 23,
+        },
+      ],
+    },
   }
 
-  test('toFormPathData', () => {
+  it('toFormPathData', () => {
     const a = toFormPathData(testObj)
     console.log(a)
   })
 
-  test('has object', () => {
+  it('has object', () => {
     const result = form(testObj)
 
     console.log(result)
@@ -84,21 +84,21 @@ describe('form', () => {
     expect(result.get('info.password')).toBe('pwd')
   })
 
-  test('form plain', () => {
-    const f = form({a: 1, b: '2'})
+  it('form plain', () => {
+    const f = form({ a: 1, b: '2' })
     console.log(f)
 
     const f1 = form({
       a: [
         {
           a: 1,
-          b: 2
+          b: 2,
         },
         {
           a: 1,
-          b: 2
-        }
-      ]
+          b: 2,
+        },
+      ],
     })
     console.log(f1.keys())
     console.log(f1.values())

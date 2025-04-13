@@ -1,2 +1,2 @@
-export * from './Form'
 export * from './EncodeComponent'
+export * from './Form'

@@ -1,20 +1,10 @@
 {
   "name": "@compose/req",
+  "type": "module",
   "version": "0.0.65",
   "description": "requester",
   "author": "TrueNine",
   "license": "private",
-  "scripts": {
-    "build-c": "vite build",
-    "type-check": "vue-tsc --noEmit",
-    "build": "run-s type-check build-c",
-    "pub-c": "pnpm --dir dist pub",
-    "pub": "run-s build pub-c"
-  },
-  "type": "module",
-  "module": "dist/index.js",
-  "main": "dist/index.cjs",
-  "types": "dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -22,5 +12,16 @@
       "require": "./dist/index.cjs"
     },
     "./*": "./*"
+  },
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "lint": "eslint --fix",
+    "build-c": "vite build",
+    "type-check": "vue-tsc --noEmit",
+    "build": "run-s type-check lint build-c",
+    "pub-c": "pnpm --dir dist pub",
+    "pub": "run-s build pub-c"
   }
 }

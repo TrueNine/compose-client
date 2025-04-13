@@ -1,5 +1,4 @@
-import type {HttpUrl} from '@compose/api-types'
-import type {dynamic} from '@compose/api-types'
+import type { dynamic, HttpUrl } from '@compose/api-types'
 
 export class SseReceiver {
   private readonly _e: EventSource

@@ -1,5 +1,5 @@
-import type {BasicType, nilpt} from '@compose/api-types'
-import {isNonNil, isNonNilString} from '@compose/api-model'
+import type { BasicType, nilpt } from '@compose/api-types'
+import { isNonNil, isNonNilString } from '@compose/api-model'
 
 export class SearchParam {
   private _root = new Map<string, BasicType>()
@@ -21,8 +21,10 @@ export class SearchParam {
  */
 export function encodeQueryParam(...cards: nilpt<object>[]): string {
   const params = new SearchParam()
-  if (!cards.length) return ''
-  cards.filter(isNonNil).forEach(c => {
+  if (!cards.length) {
+    return ''
+  }
+  cards.filter(isNonNil).forEach((c) => {
     Object.entries(c as Record<string, unknown>)
       .filter(([, v]) => isNonNil(v))
       .map(([k, v]) => [k, isNonNilString(v as string) ? encodeURIComponent(v as string) : v])
@@ -36,8 +38,10 @@ export function encodeQueryParam(...cards: nilpt<object>[]): string {
 
 export function queryParam(...cards: nilpt<object>[]): string {
   const params = new SearchParam()
-  if (!cards.length) return ''
-  cards.filter(isNonNil).forEach(c => {
+  if (!cards.length) {
+    return ''
+  }
+  cards.filter(isNonNil).forEach((c) => {
     Object.entries(c as Record<string, unknown>)
       .filter(([, v]) => isNonNil(v))
       .map(([k, v]) => [k, v])
@@ -55,11 +59,13 @@ export function queryHash(...cards: nilpt<object>[]): string {
 }
 
 export function decodeHash(hash?: string): Record<string, string> {
-  if (!hash) return {}
+  if (!hash) {
+    return {}
+  }
   return hash
     .replace(/^#/, '')
     .split('&')
-    .map(s => s.split('='))
+    .map((s) => s.split('='))
     .reduce<Record<string, string>>((acc, [k, v]) => {
       acc[k] = v
       return acc
