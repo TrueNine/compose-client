@@ -7,9 +7,6 @@ const STR_SLASH = '/'
 
 /**
  * 路由匹配的基础类型
- * @interface RouteMatch
- * @property {string} fullPath - 完整的路由路径
- * @property {string} parentPath - 父级路由路径
  */
 interface RouteMatch {
   fullPath: string
@@ -24,17 +21,12 @@ type Raw = AutoRouterConfig & RouteRecordSingleView & RouteMatch
 
 /**
  * 路由匹配函数类型
- * @callback RouteMatchFn
- * @param {Raw} r - 原始路由配置对象
- * @returns {boolean} 是否匹配
  */
 type RouteMatchFn = (r: Raw) => boolean
 
 /**
  * 菜单对象类型
  * 扩展了 Vue Router 的路由记录类型
- * @interface MenuObject
- * @extends {RouteRecordRaw}
  */
 type MenuObject = RouteRecordRaw & {
   uri: string
@@ -50,9 +42,9 @@ type MenuObject = RouteRecordRaw & {
 /**
  * 合并两个 URI 路径
  *
- * @param {string} uri1 - 第一个 URI 路径
- * @param {string} uri2 - 第二个 URI 路径
- * @returns {string} 合并后的 URI 路径
+ * @param uri1 - 第一个 URI 路径
+ * @param uri2 - 第二个 URI 路径
+ * @returns 合并后的 URI 路径
  * @example
  * combineURIs('/foo', 'bar') // 返回 '/foo/bar'
  * combineURIs('foo', '/bar') // 返回 '/foo/bar'
@@ -76,10 +68,10 @@ function combineURIs(uri1: string, uri2: string): string {
 /**
  * 根据裁剪路径过滤路由配置
  *
- * @param {RouteRecordRaw[]} routes - 路由配置数组
- * @param {string} clipPath - 裁剪路径
- * @param {string} [parentPath] - 父级路径
- * @returns {RouteRecordRaw[]} 过滤后的路由配置数组
+ * @param routes - 路由配置数组
+ * @param clipPath - 裁剪路径
+ * @param parentPath - 父级路径
+ * @returns 过滤后的路由配置数组
  */
 function clipRoutes(routes: RouteRecordRaw[], clipPath: string, parentPath = ''): RouteRecordRaw[] {
   for (const route of routes) {
@@ -105,10 +97,10 @@ function clipRoutes(routes: RouteRecordRaw[], clipPath: string, parentPath = '')
 /**
  * 将路由配置转换为菜单对象
  *
- * @param {RouteRecordRaw} route - 路由配置
- * @param {string} parentPath - 父级路径
- * @param {RouteMatchFn} [matchFn] - 可选的路由匹配函数
- * @returns {MenuObject | null} 转换后的菜单对象，如果不匹配则返回 null
+ * @param route - 路由配置
+ * @param parentPath - 父级路径
+ * @param matchFn - 可选的路由匹配函数
+ * @returns 转换后的菜单对象，如果不匹配则返回 null
  */
 function routeToMenuObject(
   route: RouteRecordRaw,
@@ -152,11 +144,11 @@ function routeToMenuObject(
 /**
  * 内部菜单生成函数
  *
- * @param {RouteRecordRaw[]} routes - 路由配置数组
- * @param {RouteMatchFn} [matchFn] - 可选的路由匹配函数
- * @param {string | null} [clipPath] - 可选的裁剪路径
- * @param {string} [parentPath] - 父级路径
- * @returns {MenuObject[]} 生成的菜单对象数组
+ * @param routes - 路由配置数组
+ * @param matchFn - 可选的路由匹配函数
+ * @param clipPath - 可选的裁剪路径
+ * @param parentPath - 父级路径
+ * @returns 生成的菜单对象数组
  */
 function generateMenuInternal(
   routes: RouteRecordRaw[],
@@ -178,10 +170,10 @@ function generateMenuInternal(
  * 此函数将 Vue Router 的路由配置转换为菜单对象数组。
  * 支持路由过滤、路径裁剪和自定义匹配规则。
  *
- * @param {RouteRecordRaw[]} routes - 路由配置数组
- * @param {RouteMatchFn} [matchFn] - 可选的路由匹配函数，用于过滤路由
- * @param {string} [clipPath] - 可选的裁剪路径，用于从特定路径开始生成菜单
- * @returns {MenuObject[]} 生成的菜单对象数组
+ * @param routes - 路由配置数组
+ * @param matchFn - 可选的路由匹配函数，用于过滤路由
+ * @param clipPath - 可选的裁剪路径，用于从特定路径开始生成菜单
+ * @returns 生成的菜单对象数组
  *
  * @example
  * ```typescript
