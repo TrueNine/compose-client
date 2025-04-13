@@ -1,7 +1,6 @@
 import { fileURLToPath, URL } from 'node:url'
 
-import { manifest } from '@compose/config-vite-fragment'
-// import type {ModuleFormat} from 'rollup'
+import { configureViteFragment } from '@compose/config-vite-fragment'
 import { quasar, transformAssetUrls as quasarTransformAssetUrls } from '@quasar/vite-plugin'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
@@ -10,48 +9,17 @@ import AutoImport from 'unplugin-auto-import/vite'
 import ViteFonts from 'unplugin-fonts/vite'
 import { ElementPlusResolver, NaiveUiResolver, QuasarResolver, VarletUIResolver, Vuetify3Resolver } from 'unplugin-vue-components/resolvers'
 import Components from 'unplugin-vue-components/vite'
+import { defineConfig } from 'vite'
 import devTools from 'vite-plugin-vue-devtools'
 import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
 
-const { defineConfig, buildConfigLib, dtsPlugin, staticCopyPluginPackageJson } = manifest({
-  pushFeatures: {
-    lib: {
-      enable: true,
-      minify: false,
-      sourcemap: true,
-      dts: {
-        enable: true,
-        dtsSourcemap: true,
-      },
-      externals: [
-        /playground\/main/,
-        /\.html$/,
-        /^@vee-valudate/,
-        /^@vee-valudate\/zod/,
-        /^@vee-valudate\/yup/,
-        /zod/,
-        /yup/,
-      ],
-    },
-  },
-  features: {
-    lang: 'ts',
+export default defineConfig(configureViteFragment({
+  lib: {
     entry: ['index', 'unplugin/index', 'common/index'],
-    lib: {
-      dts: {
-        dtsSourcemap: true,
-      },
-      sourcemap: true,
-    },
+    formats: ['es'],
   },
-})
-
-export default defineConfig({
-  build: buildConfigLib(),
-  plugins: [
-    dtsPlugin(),
+  additionalPlugins: [
     devTools(),
-    staticCopyPluginPackageJson(),
     vue({
       template: {
         transformAssetUrls: {
@@ -106,6 +74,7 @@ export default defineConfig({
       },
     }),
   ],
+}, {
   define: { 'process.env': {} },
   resolve: {
     alias: {
@@ -115,4 +84,4 @@ export default defineConfig({
   server: {
     port: 3000,
   },
-})
+}))
