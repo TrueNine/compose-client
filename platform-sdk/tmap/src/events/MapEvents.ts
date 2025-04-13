@@ -1,6 +1,6 @@
-import type {nil} from '@compose/api-types'
+import type { nil } from '@compose/api-types'
 
-import type {ITencentEvent} from './Events'
+import type { ITencentEvent } from './Events'
 
 import LatLng = TMap.LatLng
 import Point = TMap.Point
@@ -10,7 +10,7 @@ import Point = TMap.Point
  */
 export interface MapEvent<K extends string> extends ITencentEvent<K, Event, EventTarget> {
   latLng: LatLng
-  poi: {name: string}
+  poi: { name: string }
   point: nil<Point>
 }
 

@@ -1,4 +1,4 @@
-import type {ITencentEvent} from './Events'
+import type { ITencentEvent } from './Events'
 
 type PointDataTyping = TMap.PointDataTyping
 type LatLngDataTyping = TMap.LatLngDataTyping

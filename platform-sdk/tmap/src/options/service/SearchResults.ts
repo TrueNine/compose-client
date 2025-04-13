@@ -1,4 +1,4 @@
-import type {nil} from '@compose/api-types'
+import type { nil } from '@compose/api-types'
 
 export interface SearchResult {
   /**

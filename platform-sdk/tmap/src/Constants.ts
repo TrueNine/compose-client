@@ -15,7 +15,7 @@ export enum BasicMapZoomType {
   /**
    * 以地图中心为缩放基点
    */
-  CENTER
+  CENTER,
 }
 
 export const WEBGL_JS_URL = 'https://map.qq.com/api/gljs'

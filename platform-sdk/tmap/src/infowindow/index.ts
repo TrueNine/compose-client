@@ -1,4 +1,4 @@
-import type {InfoWindowEvents} from '@/events'
+import type { InfoWindowEvents } from '@/events'
 
 type InfoWindowOptions = TMap.InfoWindowOptions
 type LatLngDataTyping = TMap.LatLngDataTyping

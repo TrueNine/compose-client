@@ -1,4 +1,4 @@
-import type {WGS84} from '@compose/api-types'
+import type { WGS84 } from '@compose/api-types'
 
 export interface LatLngDataTyping {
   /**

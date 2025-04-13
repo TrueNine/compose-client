@@ -1,4 +1,4 @@
-import type {SearchOptions} from '@/options'
+import type { SearchOptions } from '@/options'
 
 type SearchNearbyOptions = TMap.service.SearchNearbyOptions
 type SearchResult = TMap.service.SearchResult

@@ -1,4 +1,4 @@
-import type {ISearchOptions} from './Base'
+import type { ISearchOptions } from './Base'
 
 type LatLngDataTyping = TMap.LatLngDataTyping
 

@@ -1,7 +1,7 @@
-import {loadRemoteScriptTag} from '@compose/extensions/browser/document'
-import {queryParam} from '@compose/req'
+import { WEBGL_JS_URL } from '@/Constants'
+import { loadRemoteScriptTag } from '@compose/extensions/browser/document'
 
-import {WEBGL_JS_URL} from '@/Constants'
+import { queryParam } from '@compose/req'
 
 /**
  * [附加库加载类型](https://lbs.qq.com/webApi/javascriptGL/glGuide/glBasic#3)
@@ -25,7 +25,7 @@ const _default = {
   isAsync: false,
   asyncFunName: 'initTencentFromAsync',
   containerTag: 'map',
-  mapContainerId: 'tencent-tmap-webgl'
+  mapContainerId: 'tencent-tmap-webgl',
 } satisfies CreateTencentMapOptions
 
 /**
@@ -37,18 +37,24 @@ const _default = {
 export function initTencentMapWebGlScript(
   key: string,
   callback?: (container: HTMLElement, mapHandle: typeof TMap, ev?: Event) => void,
-  options: CreateTencentMapOptions = _default
+  options: CreateTencentMapOptions = _default,
 ) {
-  if (!options.loadQuery) return
-  if (!options.containerTag) return
-  if (!options.mapContainerId) return
+  if (!options.loadQuery) {
+    return
+  }
+  if (!options.containerTag) {
+    return
+  }
+  if (!options.mapContainerId) {
+    return
+  }
   const section = document.querySelector(options.loadQuery)
   const src = loadRemoteScriptTag(
     `${WEBGL_JS_URL}${queryParam({
       v: '1.exp',
       key,
-      libraries: options.libraries
-    })}`
+      libraries: options.libraries,
+    })}`,
   )
   // 创建一个id容器
   const mapContainer: HTMLElement = document.createElement(options.containerTag)
@@ -64,5 +70,5 @@ export function initTencentMapWebGlScript(
     })
   }
 
-  return {src, mapContainer}
+  return { src, mapContainer }
 }
