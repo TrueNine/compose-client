@@ -16,8 +16,9 @@ export function arrayDistinct<T>(arr: T[]): T[] {
  * @param currentCombination 当前穷举组合
  */
 export function cartesianProduct<T = unknown>(spec: Record<string, T[]>, currentIndex = 0, currentCombination: Record<string, T> = {}): Record<string, T>[] {
-  if (currentIndex === Object.keys(spec).length)
+  if (currentIndex === Object.keys(spec).length) {
     return [currentCombination]
+  }
 
   const currentKey = Object.keys(spec)[currentIndex]
   const currentValues = spec[currentKey]
@@ -27,7 +28,7 @@ export function cartesianProduct<T = unknown>(spec: Record<string, T[]>, current
     nextCombination[currentKey] = value
     result.push(...cartesianProduct(spec, currentIndex + 1, nextCombination))
   }
-  return result.filter(e => Object.keys(e).length !== 0)
+  return result.filter((e) => Object.keys(e).length !== 0)
 }
 
 /**
@@ -40,7 +41,7 @@ export function arrayDiff<T>(a: T[], b: T[]): T[] {
   const setB = new Set(b)
   const first = setA.size >= setB.size ? setA : setB
   const last = setA.size < setB.size ? setA : setB
-  return Array.from(first).filter(i => !last.has(i))
+  return Array.from(first).filter((i) => !last.has(i))
 }
 
 /**
@@ -63,9 +64,11 @@ export function combineToMap<T, K, V>(arr: T[], keyHandle: (t: T) => K, valueHan
   const result = new Map<K, V[]>()
   arr.forEach((item) => {
     const _k = keyHandle(item)
-    if (result.has(_k))
+    if (result.has(_k)) {
       result.get(_k)?.push(valueHandle(item))
-    else result.set(_k, [valueHandle(item)])
+    } else {
+      result.set(_k, [valueHandle(item)])
+    }
   })
   return result
 }
@@ -103,17 +106,20 @@ export function* range(start: number, end: number): Generator<number, void, unkn
  * @param arr 需合并的对象数组
  */
 export function mergeToMap<T extends object>(key: keyof T, arr: T[]): { [key in keyof T]: T[] } {
-  if (!arr.length)
+  if (!arr.length) {
     return {} as { [key in keyof T]: T[] }
-  const ks = arr.map(e => ({
+  }
+  const ks = arr.map((e) => ({
     key: (e[key]?.toString() ?? '') as keyof T,
     value: e,
   }))
   return ks.reduce(
     (acc, cur) => {
-      if (acc[cur.key] !== void 0)
+      if (acc[cur.key] !== void 0) {
         acc[cur.key]?.push(cur.value)
-      else acc[cur.key] = [cur.value]
+      } else {
+        acc[cur.key] = [cur.value]
+      }
       return acc
     },
     {} as { [key in keyof T]: T[] | undefined },
@@ -126,8 +132,9 @@ export function mergeToMap<T extends object>(key: keyof T, arr: T[]): { [key in 
  * @param conditional 条件
  */
 export function sameValue<T>(arr: T[], conditional: (t: T, old: T) => boolean = (t, old) => t === old): late<T> {
-  if (arr.length === 0)
+  if (arr.length === 0) {
     return void 0
+  }
   const old = arr[0]
   return arr.every((v, i) => i === 0 || conditional(v, old)) ? old : void 0
 }

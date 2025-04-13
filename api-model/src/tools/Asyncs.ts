@@ -1,12 +1,13 @@
-import type { dynamic } from '@compose/api-types'
-
-export async function promiseAll<T extends Record<string, dynamic>>(taskObj: T): Promise<{ [K in keyof T]: Awaited<T[K]> } | null> {
-  const e = Object.entries(taskObj)
-  if (e.length === 0)
+export async function promiseAll<T extends Record<string, Promise<unknown>>>(
+  promiseObject: T,
+): Promise<{ [K in keyof T]: Awaited<T[K]> } | null> {
+  const entries = Object.entries(promiseObject)
+  if (entries.length === 0) {
     return null
-  const keys = e.map(e => e[0])
-  const tasks = e.map(e => e[1])
+  }
+  const propertyNames = entries.map((entry) => entry[0])
+  const promiseValues = entries.map((entry) => entry[1] as T[keyof T])
 
-  const result = await Promise.all(tasks)
-  return Object.fromEntries(keys.map((k, i) => [k, result[i]])) as { [K in keyof T]: Awaited<T[K]> }
+  const resolvedValues = await Promise.all(promiseValues)
+  return Object.fromEntries(propertyNames.map((name, index) => [name, resolvedValues[index]])) as { [K in keyof T]: Awaited<T[K]> }
 }

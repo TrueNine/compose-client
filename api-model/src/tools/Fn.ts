@@ -20,18 +20,17 @@ export function around<T>(supplier: () => T, before?: () => void, after?: () => 
  */
 export function switchTo<T>(fn: () => T, switchBy: () => void): T {
   switchBy()
-  const r = fn()
-  if (r instanceof Promise) {
-    void r.then((er) => {
+  const result = fn()
+  if (result instanceof Promise) {
+    void result.then((resolvedValue: T) => {
       switchBy()
-      return er
+      return resolvedValue
     })
-  }
-  else {
+  } else {
     switchBy()
   }
 
-  return r
+  return result
 }
 
 export function TODO(todoText = 'Not Implemented todos'): never {

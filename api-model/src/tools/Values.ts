@@ -24,15 +24,19 @@ export function withEmpty(str?: string): string {
  * @param value 对象
  */
 export function isNil(value?: nilpt<unknown>): bool {
-  if (value == null)
+  if (value == null) {
     return true
-  if (typeof value === 'string' && !isNonNilString(value))
+  }
+  if (typeof value === 'string' && !isNonNilString(value)) {
     return true
+  }
   if (Array.isArray(value)) {
-    if (value.length === 0)
+    if (value.length === 0) {
       return true
-    if (value.every(isNil))
+    }
+    if (value.every(isNil)) {
       return true
+    }
   }
   return typeof value === 'object' && Object.keys(value).length === 0
 }
@@ -76,8 +80,9 @@ export function mapRecord<T, U>(record: Record<string, T>, callback: (val: T) =>
 }
 
 export function dlv(obj: dynamic, key: Maybe<string>, def: dynamic, p: number, undef: dynamic): dynamic {
-  if (typeof key === 'string')
+  if (typeof key === 'string') {
     key = key.split('.')
+  }
   for (p = 0; p < key.length; p++) {
     const path = key[p]
     obj = obj ? obj[path] : undef
@@ -107,14 +112,16 @@ export function deepResolve<T extends Record<dynamic, dynamic> | dynamic[] = dyn
 ): T {
   const defaultOptions = { deep: false, resolve: (v: dynamic) => v }
   options = { ...defaultOptions, ...options }
-  const resolver = options.resolve ?? (v => v)
+  const resolver = options.resolve ?? ((v) => v)
 
   function _deepResolve<T = dynamic>(obj: T, depth = 0): T {
-    if (obj === void 0 || obj === null)
+    if (obj === void 0 || obj === null) {
       return obj
+    }
     const isArr = Array.isArray(obj)
-    if (typeof obj !== 'object' && !isArr)
+    if (typeof obj !== 'object' && !isArr) {
       return obj
+    }
     const result: dynamic = isArr ? [] : {}
     for (const key in obj) {
       const value = obj[key]
@@ -122,8 +129,9 @@ export function deepResolve<T extends Record<dynamic, dynamic> | dynamic[] = dyn
         result[key] = resolver(value, key)
         continue
       }
-      if (options.deep === true || ((options.deep === void 0 || options.deep) && depth <= 0) || (typeof options.deep === 'number' && depth < options.deep))
+      if (options.deep === true || ((options.deep === void 0 || options.deep) && depth <= 0) || (typeof options.deep === 'number' && depth < options.deep)) {
         result[key] = _deepResolve(value, depth + 1)
+      }
     }
     return result
   }
@@ -144,5 +152,5 @@ export function des<T>(obj: T): T {
  * @param arr 操作数组
  */
 export function aDes<T>(arr: T[] | readonly T[]): T[] {
-  return arr.map(e => ({ ...e }))
+  return arr.map((e) => ({ ...e }))
 }
