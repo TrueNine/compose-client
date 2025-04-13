@@ -1,8 +1,18 @@
-import type {asyncable, nil, task} from '@compose/api-types'
+import type { asyncable, task } from '@compose/api-types'
 
-import type {ChannelTypedMessage} from '../typ'
+import type { ChannelTypedMessage } from '../typ'
 
-export {}
+/**
+ * 类型守卫：检查消息是否符合 ChannelTypedMessage 接口
+ */
+function isChannelTypedMessage<T>(message: unknown): message is ChannelTypedMessage<T> {
+  return (
+    message !== null
+    && typeof message === 'object'
+    && 'msgId' in message
+    && typeof (message as ChannelTypedMessage<T>).msgId === 'string'
+  )
+}
 
 /**
  * # 消息管道推送器
@@ -11,33 +21,10 @@ export {}
  * @since 2023-07-26
  */
 export class MessageSender {
-  /**
-   * ## 查询当前浏览器打开的页面 tab
-   *
-   * - 限制在 popup
-   * @returns 浏览器当前打开的窗口页面
-   */
-  public static async getCurrentTab(): Promise<chrome.tabs.Tab | undefined> {
-    return chrome.tabs
-      .query({
-        active: true,
-        currentWindow: true
-      })
-      .then(r => r[0])
-  }
-
-  /**
-   * ## 将消息发送到当前打开的浏览器页面
-   * @param msg 带id 的消息
-   */
-  public static async sendToActivatedTab<T, R = unknown>(msg: ChannelTypedMessage<T>): task<nil<ChannelTypedMessage<R>>> {
-    const current = await MessageSender.getCurrentTab()
-    if (current) return (await chrome.tabs.sendMessage(current.id!, msg)) ?? null
-    else return null
-  }
-
-  public static async sendToRuntimeChannel<T = unknown, R = unknown>(msg: ChannelTypedMessage<T>): task<R> {
-    return await chrome.runtime.sendMessage(msg)
+  public static async sendToRuntimeChannel<T = unknown, R = unknown>(
+    msg: ChannelTypedMessage<T>,
+  ): task<R> {
+    return chrome.runtime.sendMessage(msg)
   }
 
   /**
@@ -45,9 +32,14 @@ export class MessageSender {
    * @param msgId 指定的消息id
    * @param receiver 接受函数
    */
-  public static async addRuntimeMessageLIstener<T = unknown>(msgId: string, receiver: (msg: ChannelTypedMessage<T>) => asyncable<void>) {
-    chrome.runtime.onMessage.addListener(msg => {
-      if (msg && msg.msgId && msg.msgId === msgId) receiver(msg)
+  public static addRuntimeMessageLIstener<T = unknown>(
+    msgId: string,
+    receiver: (msg: ChannelTypedMessage<T>) => asyncable<void>,
+  ): void {
+    chrome.runtime.onMessage.addListener((message: unknown) => {
+      if (isChannelTypedMessage<T>(message) && message.msgId === msgId) {
+        void receiver(message)
+      }
     })
   }
 }
