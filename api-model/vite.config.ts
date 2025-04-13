@@ -1,31 +1,25 @@
 import { fileURLToPath, URL } from 'node:url'
+import { configureViteFragment } from '@compose/config-vite-fragment'
+import { defineConfig } from 'vite'
 
-import { manifest } from '@compose/config-vite-fragment'
-
-const { defineConfig } = manifest({
-  pushFeatures: {
-    lib: {
-      externals: [/(\/VueRouter$)/],
-    },
-  },
-  features: {
-    entry: ['index', 'consts/index', 'data/index', 'tools/index'],
-    lib: {
-      minify: true,
-      sourcemap: true,
-      dts: {
-        enable: true,
-        dtsSourcemap: true,
+export default defineConfig(
+  configureViteFragment(
+    {
+      lib: {
+        entry: ['index', 'consts/index', 'data/index', 'tools/index'],
+        formats: ['es', 'cjs'],
       },
-      copySourceCodeToDist: false,
+      dts: { tsconfigPath: './tsconfig.node.json' },
+      packageJson: {
+        buildTool: 'pnpm',
+      },
     },
-  },
-})
-
-export default defineConfig({
-  resolve: {
-    alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url)),
+    {
+      resolve: {
+        alias: {
+          '@': fileURLToPath(new URL('./src', import.meta.url)),
+        },
+      },
     },
-  },
-})
+  ),
+)
