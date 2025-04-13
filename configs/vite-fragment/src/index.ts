@@ -1,4 +1,4 @@
-import type { BuildOptions, Plugin, UserConfig } from 'vite'
+import type { BuildOptions, Plugin, PluginOption, UserConfig } from 'vite'
 
 import type { BuildLibraryConfigOptions } from './types'
 import type { SimpleDtsOptions } from './vite-plugin-dts'
@@ -23,7 +23,7 @@ export interface ViteFragmentOptions {
   dts?: DtsOptions
   packageJson?: PackageJsonGenOptions
   additionalExternals?: (string | RegExp)[]
-  additionalPlugins?: Plugin[]
+  additionalPlugins?: PluginOption[]
 }
 
 export function configureViteFragment(
@@ -108,7 +108,7 @@ export function configureViteFragment(
 
   const basePluginsNormalized = basePluginsArray.filter(Boolean) as Plugin[]
 
-  const mergedPlugins: Plugin[] = [
+  const mergedPlugins: PluginOption[] = [
     ...basePluginsNormalized,
     ...generatedPlugins,
     ...(options.additionalPlugins ?? []),
