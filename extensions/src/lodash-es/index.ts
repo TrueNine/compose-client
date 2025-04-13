@@ -8,4 +8,4 @@ export {}
 export const cloneDeep = _cloneDeep
 export const merge = _merge
 export const isEqual = _isEqual
-export const cloneDeepWith = _cloneDeepWith
+export const cloneDeepWith: typeof _cloneDeepWith = _cloneDeepWith

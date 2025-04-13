@@ -17,7 +17,8 @@
       "@/*": [
         "./src/*"
       ]
-    }
+    },
+    "types": ["lodash-es"]
   },
   "include": [
     "src/**/*.ts",
