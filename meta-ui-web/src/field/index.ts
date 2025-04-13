@@ -5,7 +5,7 @@ import type { VNode } from 'vue'
 import { componentInstallToPlugin } from '@/common'
 
 import _c from './YField.vue'
-import _d from './YFieldProxyComponent.vue'
+import YFieldProxyComponent from './YFieldProxyComponent.vue'
 
 export type YFieldEffectModelsType = string | Record<string, string> | (string | Record<string, string>)[]
 
@@ -30,5 +30,4 @@ export interface YFieldSlots {
   default: () => VNode[]
 }
 
-const componentInstall = componentInstallToPlugin(_c, { YFieldProxyComponent: _d })
-export default componentInstall
+export default componentInstallToPlugin(_c, { YFieldProxyComponent })

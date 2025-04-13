@@ -14,8 +14,12 @@ import devTools from 'vite-plugin-vue-devtools'
 import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
 
 export default defineConfig(configureViteFragment({
+  additionalExternals: [
+    /^@vee-validate/,
+    /^zod/,
+  ],
   lib: {
-    entry: ['index', 'unplugin/index', 'common/index'],
+    entry: ['index.ts', 'unplugin/index.ts', 'common/index.ts'],
     formats: ['es'],
   },
   additionalPlugins: [

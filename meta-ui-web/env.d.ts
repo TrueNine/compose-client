@@ -9,12 +9,12 @@ declare module '*.vue' {
   export default component
 }
 
-declare module 'element-plus/dist/locale/zh-cn' {
+declare module 'element-plus/dist/locale/zh-cn.mjs' {
   const a: SafeAny
   export default a
 }
 
-declare module 'element-plus/dist/locale/en' {
+declare module 'element-plus/dist/locale/en.mjs' {
   const a: dynamic
   export default a
 }

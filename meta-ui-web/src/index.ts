@@ -1,5 +1,4 @@
-import type { dynamic } from '@compose/api-types'
-import type { App } from 'vue'
+import type { App, Plugin } from 'vue'
 
 import YConfigPreAuthorize from '@/config-pre-authorize'
 import YPreAuthorize from '@/pre-authorize'
@@ -41,7 +40,6 @@ export * from './v-system-bar'
 const components = {
   YConfigProvider,
   YVAddressSelect,
-  YMapTencent,
   YElSiderMenuItem,
   YElSiderMenu,
   YVSystemBar,
@@ -55,7 +53,7 @@ const components = {
   YField,
   YFieldMessage,
   YPager,
-}
+} as Record<string, unknown>
 
 export {
   YConfigPreAuthorize,
@@ -67,7 +65,6 @@ export {
   YFieldMessage,
   YForm,
   YIco,
-  YMapTencent,
   YPager,
   YPreAuthorize,
   YVAddressSelect,
@@ -78,8 +75,8 @@ export {
 
 export default {
   install: (app: App) => {
-    Object.entries(components).forEach((c, i) => {
-      app.use(c[i] as dynamic)
+    Object.entries(components).forEach(([_name, component]) => {
+      app.use(component as Plugin<[]>)
     })
   },
 }

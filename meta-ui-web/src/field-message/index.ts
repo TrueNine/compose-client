@@ -8,6 +8,4 @@ export interface YFieldMessageProps {
 
 export type YFieldMessageEmits = (e: 'update:name', name: string) => void
 
-const YFieldMessage = componentInstallToPlugin(YFieldMessageSfc)
-
-export default YFieldMessage
+export default componentInstallToPlugin(YFieldMessageSfc)

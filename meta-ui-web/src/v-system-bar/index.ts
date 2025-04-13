@@ -1,8 +1,7 @@
 import type { bool, dynamic } from '@compose/api-types'
-import YIco from '@/ico'
-
 import { componentInstallToPlugin } from '@/common'
 
+import YIco from '@/ico'
 import _c from './YVSystemBar.vue'
 
 export interface YSystemBarProps {
@@ -16,9 +15,7 @@ export interface YSystemBarProps {
 
 export interface YVSystemBarEmits {
   (e: 'update:settingsMenuOpened' | 'update:progressLoading' | 'update:menuOpened', v: bool): void
-
   (e: 'update:progress', v: number): void
-
   (e: 'update:progressColor', v: string): void
 }
 
@@ -32,5 +29,4 @@ export interface YVSystemBarSlots {
   'settings-drawer': (p: { settingsMenuOpened: bool }) => dynamic
 }
 
-const a = componentInstallToPlugin(_c, { YIco })
-export default a
+export default componentInstallToPlugin(_c, { YIco })

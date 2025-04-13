@@ -43,7 +43,7 @@ const submitHandler = usedForm.handleSubmit(
 )
 
 function handleSubmit(e?: Event) {
-  submitHandler(e)
+  void submitHandler(e)
 }
 
 watch(_modelValue, (v) => {
@@ -71,7 +71,7 @@ function handleReset() {
 }
 
 setTimeout(() => {
-  usedForm.setFieldError('a.b', 'error')
+  void usedForm.setFieldError('a.b', 'error')
 }, 2000)
 defineExpose(exposed)
 </script>
