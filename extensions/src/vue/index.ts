@@ -1,94 +1,104 @@
 import type { clip, dynamic, Maybe } from '@compose/api-types'
 import type {
-  ComponentOptionsMixin,
-  ComponentPropsOptions,
-  ComputedOptions,
-  DefineComponent,
-  EmitsOptions,
-  ExtractDefaultPropTypes,
-  ExtractPropTypes,
-  MethodOptions,
-  ObjectEmitsOptions,
-  PublicProps,
   RendererElement,
   RendererNode,
-  SlotsType,
   VNode,
 } from 'vue'
 import { maybeArray } from '@compose/api-model'
 
-type EmitsToProps<T extends EmitsOptions> = T extends string[]
-  ? Partial<Record<`on${Capitalize<T[number]>}`, (...args: dynamic[]) => dynamic>>
-  : T extends ObjectEmitsOptions
-    ? {
-        [K in `on${Capitalize<string & keyof T>}`]?: K extends `on${infer C}`
-          ? (...args: T[Uncapitalize<C>] extends (...args: infer P) => dynamic ? P : T[Uncapitalize<C>] extends null ? dynamic[] : never) => dynamic
-          : never
-      }
-    : object
-type ResolveProps<PropsOrPropOptions, E extends EmitsOptions> = Readonly<
-  PropsOrPropOptions extends ComponentPropsOptions ? ExtractPropTypes<PropsOrPropOptions> : PropsOrPropOptions
-> &
-(object extends E ? object : EmitsToProps<E>)
-
+/**
+ * 表示 Vue 插槽节点的类型定义
+ * 继承自 Vue 的 VNode，并添加了 actualName 可选属性用于存储实际组件名
+ */
 type SlotNode = VNode<RendererNode, RendererElement, Record<string, dynamic>> & { actualName?: string }
+
+/**
+ * 从 SlotNode 类型中排除 children 属性的类型
+ * 用于在比较函数中避免处理子节点
+ */
 type NotChildrenSlotNode = clip<SlotNode, 'children'>
 
-export interface GenericProps<
-  Props extends object = object,
-  Emits extends EmitsOptions = Record<string, null>,
-  Slots extends SlotsType = SlotsType,
-  Mixin extends ComponentOptionsMixin = ComponentOptionsMixin,
-> {
-  props?: Props
-  emits?: Emits
-  slots?: Slots
-  mixin?: Mixin
-}
+/**
+ * 递归查找符合条件的插槽节点
+ *
+ * @param slotNode - 要搜索的插槽节点或节点数组
+ * @param compareFn - 用于判断节点是否符合条件的比较函数，默认返回 true
+ * @param accumulator - 用于累积找到的节点的数组
+ * @returns 符合条件的插槽节点数组
+ *
+ * @internal
+ */
+function _findSlotNodesBy(
+  slotNode: Maybe<SlotNode>,
+  compareFn: (node: NotChildrenSlotNode) => boolean = () => true,
+  accumulator: SlotNode[] = [],
+): SlotNode[] {
+  const slotNodes = maybeArray(slotNode)
+  slotNodes.forEach((currentNode) => {
+    const componentType = currentNode.type as Record<string, string>
+    currentNode.actualName = componentType.name || componentType.__name
 
-export type DefineComponentPart<
-  Props,
-  Emits extends EmitsOptions,
-  Slots extends SlotsType = SlotsType,
-  Mixin extends ComponentOptionsMixin = ComponentOptionsMixin,
-  Expose = object,
-  _D = object,
-  _ComputedOptions extends ComputedOptions = ComputedOptions,
-  _MethodOptions extends MethodOptions = MethodOptions,
-  _ExtendsComponentOptionsMixin extends ComponentOptionsMixin = ComponentOptionsMixin,
-  _EE extends string = string,
-  _PP = PublicProps,
-  _Props = ResolveProps<Props, Emits>,
-  _Defaults = ExtractDefaultPropTypes<Props>,
-> = DefineComponent<Props, Expose, _D, _ComputedOptions, _MethodOptions, Mixin, _ExtendsComponentOptionsMixin, Emits, _EE, _PP, _Props, _Defaults, Slots>
-
-function _findSlotNodesBy(node: Maybe<SlotNode>, compareFn: (node: NotChildrenSlotNode) => boolean = () => true, result: SlotNode[] = []): SlotNode[] {
-  const nodes = maybeArray(node)
-  nodes.forEach((n) => {
-    const r = n.type as Record<string, string>
-    n.actualName = r.name || r.__name
-    if (compareFn(n)) {
-      result.push(n)
+    if (compareFn(currentNode)) {
+      accumulator.push(currentNode)
     }
-    if (n.children && typeof n.children !== 'string') {
-      _findSlotNodesBy(n.children as unknown as SlotNode, compareFn, result)
+
+    const nodeChildren = currentNode.children
+    if (nodeChildren != null && typeof nodeChildren === 'object') {
+      _findSlotNodesBy(nodeChildren as unknown as SlotNode, compareFn, accumulator)
     }
   })
-  return result
+  return accumulator
 }
 
-export function findSlotNodesBy(compareFn: (node: NotChildrenSlotNode) => boolean = () => true, arg?: Maybe<SlotNode>): SlotNode[] {
-  const res: SlotNode[] = []
-  const _m = maybeArray(arg).filter(Boolean) as SlotNode[]
-  _m.forEach((ele) => res.push(..._findSlotNodesBy(ele, compareFn)))
-  return res
+/**
+ * 根据自定义比较函数查找插槽节点
+ *
+ * @param compareFn - 用于判断节点是否符合条件的比较函数，默认返回 true
+ * @param targetNode - 要搜索的目标节点或节点数组
+ * @returns 所有符合比较函数条件的插槽节点数组
+ *
+ * @example
+ * ```ts
+ * // 查找所有 div 类型的插槽节点
+ * const divNodes = findSlotNodesBy(
+ *   node => (node.type as any) === 'div',
+ *   parentNode
+ * )
+ * ```
+ */
+export function findSlotNodesBy(
+  compareFn: (node: NotChildrenSlotNode) => boolean = () => true,
+  targetNode?: Maybe<SlotNode>,
+): SlotNode[] {
+  const resultNodes: SlotNode[] = []
+  const validNodes = maybeArray(targetNode).filter(Boolean) as SlotNode[]
+  validNodes.forEach((slotNode) => resultNodes.push(..._findSlotNodesBy(slotNode, compareFn)))
+  return resultNodes
 }
 
-export function findSlotNodesByName(componentName = '', arg?: Maybe<SlotNode>): SlotNode[] {
-  const res: SlotNode[] = []
-  const m = maybeArray(arg).filter(Boolean) as SlotNode[]
-  m.forEach((ele) => res.push(..._findSlotNodesBy(ele, (v) => v.actualName === componentName)))
-  return res
+/**
+ * 根据组件名称查找插槽节点
+ *
+ * @param componentName - 要查找的组件名称，默认为空字符串
+ * @param targetNode - 要搜索的目标节点或节点数组
+ * @returns 所有匹配指定组件名称的插槽节点数组
+ *
+ * @example
+ * ```ts
+ * // 查找所有名为 'MyComponent' 的插槽节点
+ * const myComponentNodes = findSlotNodesByName('MyComponent', parentNode)
+ * ```
+ */
+export function findSlotNodesByName(
+  componentName = '',
+  targetNode?: Maybe<SlotNode>,
+): SlotNode[] {
+  const resultNodes: SlotNode[] = []
+  const validNodes = maybeArray(targetNode).filter(Boolean) as SlotNode[]
+  validNodes.forEach((slotNode) =>
+    resultNodes.push(..._findSlotNodesBy(slotNode, (node) => node.actualName === componentName)),
+  )
+  return resultNodes
 }
 
 export * from './Types'
