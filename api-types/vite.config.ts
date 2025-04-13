@@ -1,17 +1,27 @@
 import { fileURLToPath, URL } from 'node:url'
+import { configureViteFragment } from '@compose/config-vite-fragment'
+import { defineConfig } from 'vite'
 
-import { manifest } from '@compose/config-vite-fragment'
-
-const { defineConfig } = manifest({
-  features: {
-    lib: { enable: true },
-  },
-})
-
-export default defineConfig({
-  resolve: {
-    alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url)),
+export default defineConfig(
+  configureViteFragment(
+    {
+      lib: {
+        entry: [
+          'index.ts',
+        ],
+        formats: ['es', 'cjs'],
+      },
+      dts: { tsconfigPath: './tsconfig.node.json' },
+      packageJson: {
+        buildTool: 'pnpm',
+      },
     },
-  },
-})
+    {
+      resolve: {
+        alias: {
+          '@': fileURLToPath(new URL('./src', import.meta.url)),
+        },
+      },
+    },
+  ),
+)

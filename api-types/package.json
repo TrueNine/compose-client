@@ -16,12 +16,6 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
-    "./orm": {
-      "types": "./dist/orm/index.d.ts"
-    },
-    "./typescripts": {
-      "types": "./dist/typescripts/index.d.ts"
-    },
     "./*": "./*"
   },
   "module": "dist/index.js",
@@ -31,9 +25,10 @@
     "src"
   ],
   "scripts": {
+    "lint": "eslint --fix",
     "build-c": "vite build",
     "type-check": "vue-tsc --noEmit",
-    "build": "run-s type-check build-c",
+    "build": "run-s type-check lint build-c",
     "pub-c": "pnpm --dir dist pub",
     "pub": "run-s build pub-c"
   }
