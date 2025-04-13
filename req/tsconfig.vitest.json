@@ -6,6 +6,6 @@
     "types": ["node"],
     "allowImportingTsExtensions": false
   },
-  "include": ["src/**/__tests__/*", "env.d.ts"],
+  "include": ["src/**/__tests__/*", "__tests__/**/*", "env.d.ts"],
   "exclude": []
 }
