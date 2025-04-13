@@ -1,156 +1,190 @@
-import type { bool, dynamic, Maybe, nilpt } from '@compose/api-types'
+import type { bool, nilpt } from '@compose/api-types'
 
 import { STR_EMPTY } from '@/consts'
 
 /**
- * ## 判断一个字符串是否为空，返回本身或空字符串，排除 null | undefined
- * @param str 可空字符串
- * @returns 本身 或者 ""
+ * 将可能为空的字符串转换为非空字符串
+ * @param input - 输入字符串
+ * @returns 非空字符串，若输入为空则返回空字符串
  */
-export function withEmpty(str?: string): string {
-  return isNonNil(str) ? (str as unknown as string) : STR_EMPTY
+export function withEmpty(input?: string): string {
+  return isNonNil(input) ? (input as string) : STR_EMPTY
 }
 
 /**
- * # 判断一个值是否为空，以减少语义负担
- *
+ * 判断值是否为空
+ * 以下情况被视为空：
  * - null
  * - undefined
- * - ''
- * - []
- * - [every item is empty]
- * - {}
+ * - 空字符串
+ * - 空数组
+ * - 所有元素都为空的数组
+ * - 空对象
  *
- * @param value 对象
+ * @param value - 待检查的值
+ * @returns 是否为空
  */
 export function isNil(value?: nilpt<unknown>): bool {
   if (value == null) {
     return true
   }
+
   if (typeof value === 'string' && !isNonNilString(value)) {
     return true
   }
+
   if (Array.isArray(value)) {
-    if (value.length === 0) {
-      return true
-    }
-    if (value.every(isNil)) {
-      return true
-    }
+    return value.length === 0 || value.every(isNil)
   }
+
   return typeof value === 'object' && Object.keys(value).length === 0
 }
 
 /**
- * # 对 [isEmpty] 的反向调用
- * @param value 对象
+ * 判断值是否非空
+ * @param value - 待检查的值
  */
 export function isNonNil(value?: nilpt<unknown>): boolean {
   return !isNil(value)
 }
 
 /**
- * # nullCoalesce 函数用于判断一个对象是否为 null 或 undefined，如果是则返回默认值
- * @param aib 对象
- * @param replaced 默认值
- * @returns NonNullable<T>
+ * 空值合并操作
+ * @param value - 原始值
+ * @param defaultValue - 默认值
+ * @returns 非空值
  */
-export function nilCoalesce<T>(aib: T, replaced: T = aib): NonNullable<T> {
-  return (isNonNil(aib) ? aib : replaced) as NonNullable<T>
+export function nilCoalesce<T>(value: T, defaultValue: T = value): NonNullable<T> {
+  return (isNonNil(value) ? value : defaultValue) as NonNullable<T>
 }
 
 /**
- * # 判断一个值是否为非空字符串
- * @param value 对象
+ * 判断字符串是否非空
+ * @param value - 待检查的字符串
  */
 export function isNonNilString(value?: nilpt<string>): bool {
   return (value?.trim().length ?? 0) > 0
 }
 
 /**
- * # 将一个 Record[string,T] 转换为另一个 Record[string,U]
- * @param record 需转换对象
- * @param callback 转换回调
+ * 将对象的值类型从 T 映射为 U
+ * @param record - 源对象
+ * @param transform - 转换函数
  */
-export function mapRecord<T, U>(record: Record<string, T>, callback: (val: T) => U): Record<string, U> {
-  return Object.entries(record).reduce<Record<string, U>>((result, [key, value]) => {
-    result[key] = callback(value)
-    return result
+export function mapRecord<T, U>(record: Record<string, T>, transform: (val: T) => U): Record<string, U> {
+  return Object.entries(record).reduce<Record<string, U>>((acc, [key, value]) => {
+    acc[key] = transform(value)
+    return acc
   }, {})
 }
 
-export function dlv(obj: dynamic, key: Maybe<string>, def: dynamic, p: number, undef: dynamic): dynamic {
-  if (typeof key === 'string') {
-    key = key.split('.')
-  }
-  for (p = 0; p < key.length; p++) {
-    const path = key[p]
-    obj = obj ? obj[path] : undef
-  }
-  return obj === undef ? def : obj
-}
-
-type _DeepFilter = (data: unknown, key: string | number, deep: number) => boolean | undefined
-type _DeepResolve<T = dynamic> = (data: T, key: keyof T | string | number) => T
-
-interface _DeepOptions<T = dynamic> {
-  deep?: boolean | number
-  resolve?: _DeepResolve<T>
-}
-
 /**
- * ## 深度过滤对象
- *
- * @param source 源对象
- * @param options 过滤器配置项
- * @param filter 过滤器
+ * 安全地获取对象的深层属性值
+ * @param obj - 源对象
+ * @param path - 属性路径，可以是点分隔的字符串或字符串数组
+ * @param defaultValue - 默认值
  */
-export function deepResolve<T extends Record<dynamic, dynamic> | dynamic[] = dynamic>(
-  source: T,
-  options: _DeepOptions = {},
-  filter: _DeepFilter = () => false,
+export function dlv<T = unknown>(
+  obj: Record<string, unknown>,
+  path: string | string[],
+  defaultValue: T,
 ): T {
-  const defaultOptions = { deep: false, resolve: (v: dynamic) => v }
-  options = { ...defaultOptions, ...options }
-  const resolver = options.resolve ?? ((v) => v)
+  const keys = typeof path === 'string' ? path.split('.') : path
+  let current: unknown = obj
 
-  function _deepResolve<T = dynamic>(obj: T, depth = 0): T {
-    if (obj === void 0 || obj === null) {
-      return obj
+  for (const key of keys) {
+    if (current == null || typeof current !== 'object') {
+      return defaultValue
     }
-    const isArr = Array.isArray(obj)
-    if (typeof obj !== 'object' && !isArr) {
-      return obj
-    }
-    const result: dynamic = isArr ? [] : {}
-    for (const key in obj) {
-      const value = obj[key]
-      if (filter(value, key, depth)) {
-        result[key] = resolver(value, key)
-        continue
-      }
-      if (options.deep === true || ((options.deep === void 0 || options.deep) && depth <= 0) || (typeof options.deep === 'number' && depth < options.deep)) {
-        result[key] = _deepResolve(value, depth + 1)
-      }
-    }
-    return result
+    current = (current as Record<string, unknown>)[key]
   }
 
-  return _deepResolve(source)
+  return current as T ?? defaultValue
+}
+
+type DeepFilterFn = (value: unknown, key: string | number, depth: number) => boolean
+type DeepTransformFn<T = unknown> = (value: T, key: string | number) => T
+
+interface DeepOptions<T = unknown> {
+  maxDepth?: boolean | number
+  transform?: DeepTransformFn<T>
 }
 
 /**
- * ## 对对象进行解包操作
- * @param obj 操作对象
+ * 深度处理对象或数组
+ * @param source - 源数据
+ * @param options - 配置选项
+ * @param filter - 过滤函数
  */
-export function des<T>(obj: T): T {
+export function deepResolve<T extends Record<string, unknown> | unknown[]>(
+  source: T,
+  options: DeepOptions = {},
+  filter: DeepFilterFn = () => false,
+): T {
+  const {
+    maxDepth = false,
+    transform = (value: unknown) => value,
+  } = options
+
+  function processValue<V>(value: V, depth: number): V {
+    if (value == null || typeof value !== 'object') {
+      return value
+    }
+
+    const isArray = Array.isArray(value)
+    const result: Record<string, unknown> | unknown[] = isArray ? [] : {}
+
+    if (isArray) {
+      const arr = value as unknown[]
+      arr.forEach((item, index) => {
+        const key = String(index)
+        if (filter(item, key, depth)) {
+          ; (result as unknown[])[index] = transform(item, key)
+        } else {
+          const shouldRecurse = maxDepth === true
+            || (typeof maxDepth === 'number' && depth < maxDepth)
+            || (maxDepth === false && depth <= 0)
+
+            ; (result as unknown[])[index] = shouldRecurse
+            ? processValue(item, depth + 1)
+            : item
+        }
+      })
+    } else {
+      const obj = value as Record<string, unknown>
+      for (const [key, item] of Object.entries(obj)) {
+        if (filter(item, key, depth)) {
+          ; (result as Record<string, unknown>)[key] = transform(item, key)
+        } else {
+          const shouldRecurse = maxDepth === true
+            || (typeof maxDepth === 'number' && depth < maxDepth)
+            || (maxDepth === false && depth <= 0)
+
+            ; (result as Record<string, unknown>)[key] = shouldRecurse
+            ? processValue(item, depth + 1)
+            : item
+        }
+      }
+    }
+
+    return result as V
+  }
+
+  return processValue(source, 0)
+}
+
+/**
+ * 浅拷贝对象
+ * @param obj - 源对象
+ */
+export function des<T extends Record<string, unknown>>(obj: T): T {
   return { ...obj }
 }
 
 /**
- * ## 对数组进行解构操作
- * @param arr 操作数组
+ * 浅拷贝数组中的所有对象
+ * @param arr - 源数组
  */
-export function aDes<T>(arr: T[] | readonly T[]): T[] {
-  return arr.map((e) => ({ ...e }))
+export function aDes<T extends Record<string, unknown>>(arr: T[] | readonly T[]): T[] {
+  return arr.map((item) => ({ ...item }))
 }
