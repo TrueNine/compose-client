@@ -1,5 +1,9 @@
-import type { dynamic } from '@compose/api-types'
 import { Archive } from 'libarchive.js'
+
+interface ArchiveOptions {
+  workerUrl?: string
+  getWorker?: () => Worker
+}
 
 export const ArchiveJs: typeof Archive = Archive
 let __archiveUrl: string | undefined
@@ -14,17 +18,18 @@ export function setWorker(worker: Worker): void {
 }
 
 export function init(): void {
-  const r = {} as dynamic
+  const archiveOptions: ArchiveOptions = {}
   if (__archiveWorker) {
-    r.workerUrl = __archiveUrl
+    archiveOptions.workerUrl = __archiveUrl
   }
   if (__archiveWorker) {
-    r.getWorker = () => __archiveWorker
+    const worker = __archiveWorker
+    archiveOptions.getWorker = () => worker
   }
-  Archive.init(r)
+  Archive.init(archiveOptions)
 }
 
 export async function extract(file: File): Promise<{ file: File, path: string }[]> {
-  const r = await ArchiveJs.open(file)
-  return (await r.getFilesArray()) as { file: File, path: string }[]
+  const archiveInstance = await ArchiveJs.open(file)
+  return (await archiveInstance.getFilesArray()) as { file: File, path: string }[]
 }
