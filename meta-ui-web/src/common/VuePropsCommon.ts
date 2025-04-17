@@ -23,7 +23,10 @@ export interface ModelValueProps<T = unknown> {
 /**
  * # 可绑定值 Emits
  */
-export type ModelValueEmits<T = unknown> = (e: 'update:modelValue' | 'change', value: T) => void
+export interface ModelValueEmits<T = unknown> {
+  'update:modelValue': [value: T]
+  'change': [value: T]
+}
 
 export interface FormFieldStyleProps {
   /**
@@ -62,17 +65,16 @@ export interface FormFieldStyleProps {
 /**
  * field Props
  */
-export interface FormFieldProps<V = unknown> extends ModelValueProps<V>, FormFieldStyleProps {}
+export interface FormFieldProps<V = unknown> extends ModelValueProps<V>, FormFieldStyleProps { }
 
 export interface FormFieldStyleEmits {
-  (e: 'update:errorMessages', msg: string[]): void
-
-  (e: 'update:hint', hind: string): void
-
-  (e: 'update:persistentHint' | 'update:required', v: boolean): void
+  'update:errorMessages': [msg: string[]]
+  'update:hint': [hint: string]
+  'update:persistentHint': [v: boolean]
+  'update:required': [v: boolean]
 }
 
 /**
  * field emits
  */
-export interface FormFieldEmits<T = unknown> extends FormFieldStyleEmits, ModelValueEmits<T> {}
+export interface FormFieldEmits<T = unknown> extends FormFieldStyleEmits, ModelValueEmits<T> { }
