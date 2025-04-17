@@ -59,7 +59,7 @@
     "pub": "run-s build pub-c"
   },
   "peerDependencies": {
-    "vite": ">=6.0.0",
+    "vite": ">=6.3.1",
     "vite-plugin-dts": ">=4.5.3"
   }
 }

@@ -4,7 +4,6 @@ import { configureViteFragment } from './src/index'
 
 export default defineConfig(
   configureViteFragment(
-    // === Vite Fragment Options ===
     {
       lib: {
         entry: [
