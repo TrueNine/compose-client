@@ -52,15 +52,13 @@ export interface YFormProps extends ModelValueProps<dynamic>, FormAttribute {
 }
 
 export interface YFormEmits extends ModelValueEmits<dynamic> {
-  (e: 'update:isValid', v: boolean): void
-
-  (e: 'submit' | 'next', values?: dynamic, step?: number): void
-
-  (e: 'reset' | 'update:everyStep', values?: dynamic, isValid?: boolean): void
-
-  (e: 'update:step', v: number): void
-
-  (e: 'error', ctx: InvalidSubmissionContext): void
+  'update:isValid': [ v: boolean]
+  'next': [values?: dynamic, step?: number]
+  'submit': [values?: dynamic, step?: number]
+  'reset': [values?: dynamic, isValid?: boolean]
+  'update:everyStep': [values?: dynamic, isValid?: boolean]
+  'update:step': [v: number]
+  'error': [ctx: InvalidSubmissionContext]
 }
 export interface YFormSlotsSubMitProps {
   disabled: boolean
