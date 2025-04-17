@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import type { PreAuthorizeInjection } from '@/common'
-
 import type { YConfigPreAuthorizeProps } from '.'
 import { PreAuthorizeInjectionSymbol } from '@/common'
-
 import { maybeArray } from '@compose/api-model'
 
 const props = withDefaults(defineProps<YConfigPreAuthorizeProps>(), {
@@ -13,33 +11,34 @@ const props = withDefaults(defineProps<YConfigPreAuthorizeProps>(), {
   anonymousProvider: () => false,
 })
 
-const _authed = computed(() => {
-  return props.authedProvider()
-})
-const _anonymous = computed(() => {
-  return props.anonymousProvider()
-})
-const _permissions = computed(() => {
-  return props.permissionsProvider()
-})
-const _roles = computed(() => {
-  return props.rolesProvider()
-})
+// 合并相关的状态计算
+const state = computed(() => ({
+  authed: props.authedProvider(),
+  anonymous: props.anonymousProvider(),
+  permissions: maybeArray(props.permissionsProvider()),
+  roles: maybeArray(props.rolesProvider()),
+}))
 
-const impl: PreAuthorizeInjection = {
-  isAuthed: () => _authed.value,
-  isAnonymous: () => _anonymous.value,
-  requirePermissions: (permissions) => _authed.value && maybeArray(_permissions.value).some((p) => permissions.includes(p)),
-  requireRoles: (roles) => _authed.value && maybeArray(_roles.value).some((r) => roles.includes(r)),
-  hasAnyPermissions: (permissions) => maybeArray(_permissions.value).some((p) => permissions.includes(p)),
-  hasAnyRoles: (roles) => maybeArray(_roles.value).some((r) => roles.includes(r)),
-  permissions: _permissions,
-  roles: _roles,
-  authed: _authed,
-  anonymous: _anonymous,
-}
-provide(PreAuthorizeInjectionSymbol, impl)
-defineExpose(impl)
+// 预计算权限注入实现
+const impl = computed<PreAuthorizeInjection>(() => ({
+  isAuthed: () => state.value.authed,
+  isAnonymous: () => state.value.anonymous,
+  requirePermissions: (permissions) =>
+    state.value.authed && state.value.permissions.some((p) => permissions.includes(p)),
+  requireRoles: (roles) =>
+    state.value.authed && state.value.roles.some((r) => roles.includes(r)),
+  hasAnyPermissions: (permissions) =>
+    state.value.permissions.some((p) => permissions.includes(p)),
+  hasAnyRoles: (roles) =>
+    state.value.roles.some((r) => roles.includes(r)),
+  permissions: computed(() => state.value.permissions),
+  roles: computed(() => state.value.roles),
+  authed: computed(() => state.value.authed),
+  anonymous: computed(() => state.value.anonymous),
+}))
+
+provide(PreAuthorizeInjectionSymbol, impl.value)
+defineExpose(impl.value)
 </script>
 
 <template>
