@@ -13,79 +13,84 @@ import { defineConfig } from 'vite'
 import devTools from 'vite-plugin-vue-devtools'
 import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
 
-export default defineConfig(configureViteFragment({
-  additionalExternals: [
-    /^@vee-validate/,
-    /^zod/,
-  ],
-  lib: {
-    entry: ['index.ts', 'unplugin/index.ts', 'common/index.ts'],
-    formats: ['es'],
-  },
-  additionalPlugins: [
-    devTools(),
-    vue({
-      template: {
-        transformAssetUrls: {
-          ...transformAssetUrls,
-          ...quasarTransformAssetUrls,
-        },
-      },
-    }),
-    vueJsx(),
-    unocss(),
-    vuetify({
-      autoImport: false,
-    }),
-    quasar(),
-    AutoImport({
-      imports: [
-        'vue',
-        {
-          'naive-ui': ['useDialog', 'useMessage', 'useNotification', 'useLoadingBar'],
-          'vuetify': ['useTheme'],
-        },
-        'pinia',
-        'quasar',
-        'vue-router',
-        'vue-i18n',
-        '@vueuse/core',
+export default defineConfig(
+  configureViteFragment(
+    {
+      additionalExternals: [
+        /^@vee-validate/,
+        /^zod/,
       ],
-      dts: 'imports-auto.d.ts',
-      eslintrc: {
-        enabled: true,
-        filepath: './imports-eslint.json',
-        globalsPropValue: true,
+      lib: {
+        entry: ['index.ts', 'unplugin/index.ts', 'common/index.ts'],
+        formats: ['es'],
       },
-      dirs: ['./src', './playground'],
-      exclude: ['dist/**'],
-    }),
-    Components({
-      dts: 'imports-comp.d.ts',
-      deep: true,
-      dirs: ['./src', './playground'],
-      exclude: ['dist/**'],
-      resolvers: [ElementPlusResolver(), NaiveUiResolver(), Vuetify3Resolver(), QuasarResolver(), VarletUIResolver()],
-    }),
-    ViteFonts({
-      google: {
-        families: [
-          {
-            name: 'Roboto',
-            styles: 'wght@100;300;400;500;700;900',
+      additionalPlugins: [
+        devTools(),
+        vue({
+          template: {
+            transformAssetUrls: {
+              ...transformAssetUrls,
+              ...quasarTransformAssetUrls,
+            },
           },
-        ],
-      },
-    }),
-  ],
-}, {
-  define: { 'process.env': {} },
-  resolve: {
-    alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url)),
+        }),
+        vueJsx(),
+        unocss(),
+        vuetify({
+          autoImport: false,
+        }),
+        quasar(),
+        AutoImport({
+          imports: [
+            'vue',
+            {
+              'naive-ui': ['useDialog', 'useMessage', 'useNotification', 'useLoadingBar'],
+              'vuetify': ['useTheme'],
+            },
+            'pinia',
+            'quasar',
+            'vue-router',
+            'vue-i18n',
+            '@vueuse/core',
+          ],
+          dts: 'imports-auto.d.ts',
+          eslintrc: {
+            enabled: true,
+            filepath: './imports-eslint.json',
+            globalsPropValue: true,
+          },
+          dirs: ['./src', './playground'],
+          exclude: ['dist/**'],
+        }),
+        Components({
+          dts: 'imports-comp.d.ts',
+          deep: true,
+          dirs: ['./src', './playground'],
+          exclude: ['dist/**'],
+          resolvers: [ElementPlusResolver(), NaiveUiResolver(), Vuetify3Resolver(), QuasarResolver(), VarletUIResolver()],
+        }),
+        ViteFonts({
+          google: {
+            families: [
+              {
+                name: 'Roboto',
+                styles: 'wght@100;300;400;500;700;900',
+              },
+            ],
+          },
+        }),
+      ],
     },
-  },
-  server: {
-    port: 3000,
-  },
-}))
+    {
+      define: { 'process.env': {} },
+      resolve: {
+        alias: {
+          '@': fileURLToPath(new URL('./src', import.meta.url)),
+        },
+      },
+      server: {
+        port: 3000,
+      },
+    },
+  ),
+)
