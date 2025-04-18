@@ -17,7 +17,6 @@ export default defineConfig(
           'pino/index',
           'vue-router/index',
         ],
-        formats: ['es'],
       },
       dts: { tsconfigPath: './tsconfig.extensions.json' },
       packageJson: {

@@ -2,9 +2,11 @@ import { antfu } from '@antfu/eslint-config'
 
 export default antfu({
   type: 'lib',
+  pnpm: true,
   stylistic: {
     jsx: true,
     indent: 2,
+
     quotes: 'single',
     semi: false,
     overrides: {
@@ -47,11 +49,6 @@ export default antfu({
   },
   typescript: {
     tsconfigPath: './tsconfig.node.json',
-    parserOptions: {
-      project: ['./tsconfig.json', './tsconfig.node.json'],
-      tsconfigRootDir: '.',
-      sourceType: 'module',
-    },
     overrides: {
       'ts/member-ordering': ['error'],
       'ts/no-extra-non-null-assertion': 'error',

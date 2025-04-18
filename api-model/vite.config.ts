@@ -7,7 +7,7 @@ export default defineConfig(
     {
       lib: {
         entry: ['index', 'consts/index', 'data/index', 'tools/index'],
-        formats: ['es', 'cjs'],
+        formats: ['es'],
       },
       dts: { tsconfigPath: './tsconfig.node.json' },
       packageJson: {

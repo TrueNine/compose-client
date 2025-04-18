@@ -1,4 +1,3 @@
-import process from 'node:process'
 import eslint9 from '@compose/eslint9-config'
 
 export default eslint9({
@@ -11,8 +10,8 @@ export default eslint9({
     strictTypescriptEslint: true,
     tsconfigPath: './tsconfig.json',
     parserOptions: {
-      project: ['tsconfig.json'],
-      tsconfigRootDir: process.cwd(),
+      project: ['./tsconfig.json'],
+      tsconfigRootDir: '.',
       sourceType: 'module',
     },
   },

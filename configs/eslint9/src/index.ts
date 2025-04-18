@@ -4,6 +4,7 @@ import { defaultFormatterConfig, defaultJsConfig, defaultStrictTsConfig, default
 
 interface ConfigOptions {
   type?: 'app' | 'lib'
+  pnpm?: boolean
   ignores?: string[]
   jsx?: boolean
   vue?: boolean | AntFuVueConfig
@@ -21,6 +22,7 @@ export default async function eslint9(options: ConfigOptions = {}): Promise<Retu
     unocss = false,
     vue = false,
     jsx = false,
+    pnpm = true,
     stylistic = true,
     javascript = defaultJsConfig,
     typescript = defaultTsConfig,
@@ -47,6 +49,7 @@ export default async function eslint9(options: ConfigOptions = {}): Promise<Retu
   return antfu({
     type,
     ignores,
+    pnpm,
     unocss: _unocss,
     vue: _vue,
     jsx,

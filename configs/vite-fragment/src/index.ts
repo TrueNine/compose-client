@@ -36,7 +36,7 @@ export function configureViteFragment(
     entry: ['./src/index.ts'],
     entryRoot: 'src',
     outDir: 'dist',
-    formats: ['es', 'cjs'] as const,
+    formats: ['es'] as const,
     sourcemap: false,
     name: 'index',
   }
@@ -66,6 +66,7 @@ export function configureViteFragment(
   const dtsDefaults: SimpleDtsOptions = {
     entry: finalEntryArray,
     entryRoot: mergedLibOptions.entryRoot,
+    sourcemap: mergedLibOptions.sourcemap,
     outDir: mergedLibOptions.outDir ?? 'dist',
   }
 
@@ -77,6 +78,7 @@ export function configureViteFragment(
   const dtsPlugin = createDtsPlugin({
     ...finalDtsOptions,
     outDir: typeof finalDtsOptions.outDir === 'string' ? finalDtsOptions.outDir : 'dist',
+    sourcemap: finalDtsOptions.sourcemap,
     logLevel: 'error',
   })
 

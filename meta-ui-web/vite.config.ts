@@ -21,8 +21,8 @@ export default defineConfig(
         /^zod/,
       ],
       lib: {
+        sourcemap: true,
         entry: ['index.ts', 'unplugin/index.ts', 'common/index.ts'],
-        formats: ['es'],
       },
       additionalPlugins: [
         devTools(),

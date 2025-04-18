@@ -8,13 +8,14 @@ export function BuildConfigLib(options: BuildLibraryConfigOptions = {}): BuildOp
     entry = ['./src/index.ts'],
     entryRoot = 'src',
     outDir = 'dist',
-    formats = ['es', 'cjs'],
-    sourcemap = true,
+    formats = ['es'],
+    sourcemap = false,
     name = 'index',
     externals = Externals,
   } = options
 
   return {
+    reportCompressedSize: false,
     sourcemap,
     outDir,
     emptyOutDir: true,

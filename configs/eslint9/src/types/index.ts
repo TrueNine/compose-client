@@ -41,9 +41,4 @@ export type AntFuFormatterConfig = Exclude<AntFuConfig['formatters'], boolean | 
 export type AntFuStrictTsConfig = AntFuTsConfig & {
   strictTypescriptEslint: true
   tsconfigPath: string
-  parserOptions: {
-    project: string[]
-    tsconfigRootDir: string
-    sourceType: 'module'
-  }
 }

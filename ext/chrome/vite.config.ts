@@ -9,7 +9,6 @@ export default defineConfig(
         entry: [
           'index.ts',
         ],
-        formats: ['es'],
       },
       dts: { tsconfigPath: './tsconfig.extensions.json' },
       packageJson: {

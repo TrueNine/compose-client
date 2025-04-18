@@ -5,10 +5,5 @@ export default eslint9({
   typescript: {
     strictTypescriptEslint: true,
     tsconfigPath: './tsconfig.extensions.json',
-    parserOptions: {
-      project: ['./tsconfig.extensions.json', './tsconfig.json'],
-      tsconfigRootDir: '.',
-      sourceType: 'module',
-    },
   },
 })

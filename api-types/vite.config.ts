@@ -9,7 +9,7 @@ export default defineConfig(
         entry: [
           'index.ts',
         ],
-        formats: ['es', 'cjs'],
+        formats: ['es'],
       },
       dts: { tsconfigPath: './tsconfig.node.json' },
       packageJson: {

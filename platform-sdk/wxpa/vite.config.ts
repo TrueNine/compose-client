@@ -7,7 +7,6 @@ export default defineConfig(
     {
       lib: {
         entry: ['index.ts', 'examples/jweixin.example.js'],
-        formats: ['es'],
       },
       dts: { tsconfigPath: './tsconfig.node.json' },
       packageJson: {

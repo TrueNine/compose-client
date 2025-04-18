@@ -83,7 +83,7 @@ export function createDtsPlugin(options: SimpleDtsOptions = {}): Plugin {
       emitDeclarationOnly: true,
       declarationDir: finalOptions.outDir,
       declarationMap: finalOptions.sourcemap,
-      emitDecoratorMetadata: false,
+      emitDecoratorMetadata: finalOptions.sourcemap,
     },
 
     // 插件行为
