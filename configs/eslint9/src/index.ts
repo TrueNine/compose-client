@@ -26,7 +26,7 @@ export default async function eslint9(options: ConfigOptions = {}): Promise<Retu
     stylistic = true,
     javascript = defaultJsConfig,
     typescript = defaultTsConfig,
-    formatters = true,
+    formatters = false,
   } = options
 
   const _unocss = mergeWithDefaults(unocss, defaultUnocssConfig)
@@ -53,6 +53,7 @@ export default async function eslint9(options: ConfigOptions = {}): Promise<Retu
     unocss: _unocss,
     vue: _vue,
     jsx,
+    test: true,
     typescript: _typescript,
     javascript: _javascript,
     stylistic: _stylistic,
