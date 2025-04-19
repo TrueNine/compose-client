@@ -1,4 +1,4 @@
-import type { HttpUrl } from '@compose/api-types'
+import type { HttpUrl } from '@compose/types'
 
 import type { BaseOption } from '../common'
 

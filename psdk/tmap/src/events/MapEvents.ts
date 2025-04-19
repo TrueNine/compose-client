@@ -1,4 +1,4 @@
-import type { nil } from '@compose/api-types'
+import type { nil } from '@compose/types'
 import type { LatLng, Point } from '../LatLng'
 import type { ITencentEvent } from './Events'
 

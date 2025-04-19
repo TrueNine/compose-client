@@ -1,4 +1,4 @@
-import type { dynamic } from '@compose/api-types'
+import type { dynamic } from '@compose/types'
 
 import type { CheckJsApiOption } from './basic'
 import type { ConfigOptions } from './config'

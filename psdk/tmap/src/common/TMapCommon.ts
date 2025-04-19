@@ -1,6 +1,6 @@
 import type { TMapSDK } from '../types'
 import { WEBGL_JS_URL } from '@/Constants'
-import { loadRemoteScriptTag } from '@compose/extensions/browser/document'
+import { loadRemoteScriptTag } from '@compose/external/browser/document'
 import { queryParam } from '@compose/req'
 
 /**

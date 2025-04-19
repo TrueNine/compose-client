@@ -1,5 +1,5 @@
 import type { BaseOption } from '@/common'
-import type { f64 } from '@compose/api-types'
+import type { f64 } from '@compose/types'
 
 export interface GetLocationSuccessResult {
   latitude: f64
