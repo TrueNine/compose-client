@@ -1,4 +1,4 @@
-import type { asyncable, task } from '@compose/api-types'
+import type { asyncable, task } from '@compose/types'
 
 import type { ChannelTypedMessage } from '../typ'
 
