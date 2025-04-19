@@ -1,5 +1,5 @@
-import type { BasicType, nilpt } from '@compose/api-types'
-import { isNonNil, isNonNilString } from '@compose/api-model'
+import type { BasicType, nilpt } from '@compose/types'
+import { isNonNil, isNonNilString } from '@compose/shared'
 
 /**
  * 表示 URL 查询参数的类
@@ -158,7 +158,7 @@ export function encodeQueryParam(...cards: nilpt<object>[]): string {
     return ''
   }
 
-  const params = new SearchParam()
+  const params: Array<[string, string]> = []
   const validCards = cards.filter(isNonNil)
 
   if (!validCards.length) {
@@ -171,23 +171,25 @@ export function encodeQueryParam(...cards: nilpt<object>[]): string {
       if (value == null) {
         continue
       }
-
       const encodedKey = encodeURIComponent(key)
-      let encodedValue: string
-
       if (Array.isArray(value)) {
-        encodedValue = value.join(',')
+        for (const v of value) {
+          if (v != null) {
+            params.push([encodedKey, encodeURIComponent(String(v))])
+          }
+        }
       } else if (typeof value === 'string') {
-        encodedValue = encodeURIComponent(value)
+        params.push([encodedKey, encodeURIComponent(value)])
+      } else if (typeof value === 'object') {
+        // 嵌套对象只处理一层，输出空字符串
+        params.push([encodedKey, ''])
       } else {
-        encodedValue = String(value)
+        params.push([encodedKey, String(value)])
       }
-
-      params.append(encodedKey, encodedValue)
     }
   }
 
-  const result = params.toString()
+  const result = params.map(([k, v]) => `${k}=${v}`).join('&')
   return result ? `?${result}` : ''
 }
 
@@ -210,7 +212,7 @@ export function queryParam(...cards: nilpt<object>[]): string {
     return ''
   }
 
-  const params = new SearchParam()
+  const params: Array<[string, string]> = []
   const validCards = cards.filter(isNonNil)
 
   if (!validCards.length) {
@@ -223,19 +225,22 @@ export function queryParam(...cards: nilpt<object>[]): string {
       if (value == null) {
         continue
       }
-
-      let finalValue: string
       if (Array.isArray(value)) {
-        finalValue = value.filter(isNonNil).join(',')
+        for (const v of value) {
+          if (v != null) {
+            params.push([key, String(v)])
+          }
+        }
+      } else if (typeof value === 'object') {
+        // 嵌套对象只处理一层，输出空字符串
+        params.push([key, ''])
       } else {
-        finalValue = String(value)
+        params.push([key, String(value)])
       }
-
-      params.append(key, finalValue)
     }
   }
 
-  const result = params.toString()
+  const result = params.map(([k, v]) => `${k}=${v}`).join('&')
   return result ? `?${result}` : ''
 }
 
@@ -252,8 +257,39 @@ export function queryParam(...cards: nilpt<object>[]): string {
  * @returns 返回带 `#` 前缀的 hash 字符串，如果没有有效参数则返回空字符串
  */
 export function queryHash(...cards: nilpt<object>[]): string {
-  const qp = queryParam(...cards)
-  return qp ? `#${qp.slice(1)}` : ''
+  if (!cards.length) {
+    return ''
+  }
+
+  const params: Array<[string, string]> = []
+  const validCards = cards.filter(isNonNil)
+
+  if (!validCards.length) {
+    return ''
+  }
+
+  for (const card of validCards) {
+    const entries = Object.entries(card as Record<string, unknown>)
+    for (const [key, value] of entries) {
+      if (value == null) {
+        continue
+      }
+      if (Array.isArray(value)) {
+        for (const v of value) {
+          if (v != null) {
+            params.push([key, String(v)])
+          }
+        }
+      } else if (typeof value === 'object') {
+        params.push([key, ''])
+      } else {
+        params.push([key, String(value)])
+      }
+    }
+  }
+
+  const result = params.map(([k, v]) => `${k}=${v}`).join('&')
+  return result ? `#${result}` : ''
 }
 
 /**
@@ -268,7 +304,7 @@ export function queryHash(...cards: nilpt<object>[]): string {
  * @param hash - 要解析的 hash 字符串，可以带 `#` 前缀
  * @returns 解析后的对象，如果输入为空则返回空对象
  */
-export function decodeHash(hash?: string): Record<string, string> {
+export function decodeHash(hash?: string | null): Record<string, string> {
   const result: Record<string, string> = {}
 
   if (!isNonNilString(hash)) {

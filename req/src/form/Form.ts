@@ -1,4 +1,4 @@
-import { STR_EMPTY } from '@compose/api-model'
+import { STR_EMPTY } from '@compose/shared'
 
 interface FormDataItem {
   name: string

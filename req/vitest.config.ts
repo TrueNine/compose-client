@@ -8,7 +8,7 @@ export default mergeConfig(
   viteConfig,
   defineConfig({
     test: {
-      environment: 'jsdom',
+      environment: 'edge-runtime',
       exclude: [...configDefaults.exclude, 'e2e/*'],
       root: fileURLToPath(new URL('./', import.meta.url)),
     },
