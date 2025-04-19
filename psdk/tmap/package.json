@@ -1,7 +1,7 @@
 {
   "name": "@compose/psdk-tmap",
   "type": "module",
-  "version": "0.0.45",
+  "version": "1.0.0",
   "description": "tencent map webgl js sdk",
   "author": "TrueNine",
   "license": "private",
