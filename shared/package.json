@@ -1,5 +1,5 @@
 {
-  "name": "@compose/api-model",
+  "name": "@compose/shared",
   "type": "module",
   "version": "1.1.140",
   "description": "yan100 js dev kit",
@@ -9,7 +9,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://https://github.com/TrueNine/compose-client",
-    "directory": "api-model"
+    "directory": "shared"
   },
   "exports": {
     ".": {
@@ -41,6 +41,7 @@
     "src"
   ],
   "scripts": {
+    "test": "vitest run",
     "lint": "eslint --fix",
     "build-c": "vite build",
     "type-check": "vue-tsc --noEmit",

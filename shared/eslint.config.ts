@@ -1,9 +1,9 @@
 import eslint9 from '@compose/eslint9-config'
 
 export default eslint9({
-  type: 'lib',
+  test: true,
   typescript: {
     strictTypescriptEslint: true,
-    tsconfigPath: './tsconfig.node.json',
+    tsconfigPath: './tsconfig.json',
   },
 })
