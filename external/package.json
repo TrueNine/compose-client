@@ -1,7 +1,7 @@
 {
   "name": "@compose/external",
   "type": "module",
-  "version": "30.0.7",
+  "version": "31.0.0",
   "description": "yan100 extensions functions and apis",
   "author": "TrueNine",
   "license": "private",

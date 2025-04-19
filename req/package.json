@@ -1,7 +1,7 @@
 {
   "name": "@compose/req",
   "type": "module",
-  "version": "0.0.65",
+  "version": "1.0.0",
   "description": "requester",
   "author": "TrueNine",
   "license": "private",
