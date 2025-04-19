@@ -111,7 +111,10 @@ export const defaultTsConfig: AntFuTsConfig = {
     'ts/member-ordering': ['error'],
     'ts/no-extra-non-null-assertion': 'error',
     'ts/no-non-null-assertion': 'error',
-    'ts/no-explicit-any': 'error',
+    'ts/no-explicit-any': ['error', {
+      fixToUnknown: true,
+      ignoreRestArgs: true,
+    }],
     'ts/no-namespace': 'off',
     'ts/no-unused-vars': [
       'error',

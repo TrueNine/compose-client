@@ -1,3 +1,4 @@
+import type { OptionsTypeScriptParserOptions } from '@antfu/eslint-config'
 import type { AntFuFormatterConfig, AntFuJsConfig, AntFuStrictTsConfig, AntFuStylisticConfig, AntFuTsConfig, AntFuUnocssConfig, AntFuVueConfig } from './types'
 import { antfu } from '@antfu/eslint-config'
 import { defaultFormatterConfig, defaultJsConfig, defaultStrictTsConfig, defaultStylisticConfig, defaultTsConfig, defaultUnocssConfig, defaultVueConfig, mergeWithDefaults } from './defaults'
@@ -5,6 +6,7 @@ import { defaultFormatterConfig, defaultJsConfig, defaultStrictTsConfig, default
 interface ConfigOptions {
   type?: 'app' | 'lib'
   pnpm?: boolean
+  test?: boolean
   ignores?: string[]
   jsx?: boolean
   vue?: boolean | AntFuVueConfig
@@ -17,8 +19,9 @@ interface ConfigOptions {
 
 export default async function eslint9(options: ConfigOptions = {}): Promise<ReturnType<typeof antfu>> {
   const {
-    type = 'app',
+    type = 'lib',
     ignores = [],
+    test = false,
     unocss = false,
     vue = false,
     jsx = false,
@@ -44,16 +47,21 @@ export default async function eslint9(options: ConfigOptions = {}): Promise<Retu
     && _typescript.strictTypescriptEslint === true
   ) {
     _typescript = mergeWithDefaults(typescript, defaultStrictTsConfig)
+    if (typeof _typescript === 'object' && 'tsconfigPath' in _typescript) {
+      (_typescript as OptionsTypeScriptParserOptions).parserOptions = {
+        projectService: true,
+      }
+    }
   }
 
   return antfu({
     type,
     ignores,
     pnpm,
+    test,
     unocss: _unocss,
     vue: _vue,
     jsx,
-    test: true,
     typescript: _typescript,
     javascript: _javascript,
     stylistic: _stylistic,

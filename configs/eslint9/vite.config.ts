@@ -6,10 +6,10 @@ export default defineConfig(
   configureViteFragment(
     {
       lib: {
-        entry: ['index', 'defaults/index'],
+        entry: ['index.ts', 'defaults/index.ts'],
         formats: ['es', 'cjs'],
       },
-      dts: { tsconfigPath: './tsconfig.node.json' },
+      dts: { tsconfigPath: './tsconfig.build.json' },
       packageJson: {
         buildTool: 'pnpm',
       },

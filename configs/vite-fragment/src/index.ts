@@ -39,6 +39,7 @@ export function configureViteFragment(
     formats: ['es'] as const,
     sourcemap: false,
     name: 'index',
+    excludes: ['**/__tests__/**', '**/__test__/**', '**/__build-src__/**', '**/*.spec.ts', '**/*.test.ts'],
   }
 
   const userOrDefaultEntry = options.lib?.entry ?? libDefaults.entry
@@ -68,6 +69,7 @@ export function configureViteFragment(
     entryRoot: mergedLibOptions.entryRoot,
     sourcemap: mergedLibOptions.sourcemap,
     outDir: mergedLibOptions.outDir ?? 'dist',
+    excludes: mergedLibOptions.excludes,
   }
 
   const finalDtsOptions: SimpleDtsOptions = {

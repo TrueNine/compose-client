@@ -16,12 +16,11 @@ export default defineConfig(
         ],
         formats: ['es', 'cjs'],
       },
-      dts: { tsconfigPath: './tsconfig.node.json' },
+      dts: { tsconfigPath: './tsconfig.build.json' },
       packageJson: {
         buildTool: 'pnpm',
       },
     },
-    // === Base Vite Config ===
     {
       resolve: {
         alias: {

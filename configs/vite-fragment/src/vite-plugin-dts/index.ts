@@ -87,8 +87,8 @@ export function createDtsPlugin(options: SimpleDtsOptions = {}): Plugin {
     },
 
     // 插件行为
-    clearPureImport: true,
-    staticImport: false,
+    clearPureImport: false,
+    staticImport: true,
     logLevel: finalOptions.logLevel,
     strictOutput: finalOptions.strict,
   }

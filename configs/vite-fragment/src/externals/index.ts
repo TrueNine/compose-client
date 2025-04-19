@@ -8,9 +8,9 @@ export * from './NodeExternals'
 
 export const Externals = [
   // 既定依赖
-  /^__tests__/,
-  /^__test__/,
-  /^__build-src__/,
+  /__tests__/,
+  /__test__/,
+  /__build-src__/,
 
   // compose
   /^@compose/,
