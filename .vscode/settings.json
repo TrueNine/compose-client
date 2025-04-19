@@ -35,5 +35,8 @@
   "diffEditor.experimental.useTrueInlineView": true,
   "diffEditor.hideUnchangedRegions.contextLineCount": 1,
   "diffEditor.hideUnchangedRegions.enabled": false,
-  "git.closeDiffOnOperation": true
+  "git.closeDiffOnOperation": true,
+  "workbench.editor.enablePreview": false,
+  "explorer.restoreWindows": "none",
+  "explorer.openEditors.visible": 0
 }
