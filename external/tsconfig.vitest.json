@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.build.json",
+  "compilerOptions": {
+    "composite": true,
+    "types": ["node"]
+  },
+  "include": [
+    "src/**/__tests__/**/*.{spec,test}.{ts,tsx}"
+  ]
+}
