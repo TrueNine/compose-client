@@ -5,6 +5,7 @@ import { Externals } from '../externals'
 
 export function BuildConfigLib(options: BuildLibraryConfigOptions = {}): BuildOptions {
   const {
+    minify = false,
     entry = ['./src/index.ts'],
     entryRoot = 'src',
     outDir = 'dist',
@@ -25,7 +26,7 @@ export function BuildConfigLib(options: BuildLibraryConfigOptions = {}): BuildOp
     sourcemap,
     outDir,
     emptyOutDir: true,
-    minify: false,
+    minify,
     lib: {
       entry,
       formats,
@@ -40,8 +41,8 @@ export function BuildConfigLib(options: BuildLibraryConfigOptions = {}): BuildOp
       output: {
         preserveModulesRoot: entryRoot,
         preserveModules: true,
-        compact: false,
-        minifyInternalExports: false,
+        compact: minify,
+        minifyInternalExports: minify,
       },
     },
   }

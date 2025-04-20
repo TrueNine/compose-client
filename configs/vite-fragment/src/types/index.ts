@@ -15,6 +15,10 @@ export interface BuildLibraryConfigOptions {
    * 自定义每种 format 的输出文件名后缀映射，如 { es: '.mjs', cjs: '.cjs', umd: '.umd.js' }
    */
   fileNameMap?: Partial<Record<'es' | 'cjs' | 'umd' | 'iife', string>>
+  /**
+   * 是否压缩输出文件
+   */
+  minify?: boolean
 }
 
 export interface ManifestConfig {
