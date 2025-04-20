@@ -9,8 +9,8 @@ import { createDtsPlugin } from './vite-plugin-dts'
 import { PackageJsonGeneratorPlugin } from './vite-plugin-package-json'
 
 export interface ViteFragmentOptions {
-  lib?: Omit<BuildLibraryConfigOptions, 'externals'>
-  dts?: Omit<SimpleDtsOptions, 'entry'>
+  lib?: BuildLibraryConfigOptions
+  dts?: boolean | Omit<SimpleDtsOptions, 'entry'>
   packageJson?: Omit<PackageJsonOptions, 'entry' | 'formats'>
   additionalExternals?: (string | RegExp)[]
   additionalPlugins?: PluginOption[]
@@ -56,32 +56,35 @@ export function configureViteFragment(
     ...options.lib,
     entry: resolvedEntryArray,
     entryRoot,
-    externals,
+    externals: options?.lib?.externals ?? externals,
   }
   const generatedBuildOptions = BuildConfigLib(mergedLibOptions)
 
-  const dtsDefaults: SimpleDtsOptions = {
-    entry: finalEntryArray,
-    entryRoot: mergedLibOptions.entryRoot,
-    sourcemap: mergedLibOptions.sourcemap,
-    outDir: mergedLibOptions.outDir ?? 'dist',
-    excludes: mergedLibOptions.excludes,
+  let dtsPlugin: Plugin | undefined
+  if (options.dts !== false && options.dts !== void 0) {
+    const dtsDefaults: SimpleDtsOptions = {
+      entry: finalEntryArray,
+      entryRoot: mergedLibOptions.entryRoot,
+      sourcemap: mergedLibOptions.sourcemap,
+      outDir: mergedLibOptions.outDir ?? 'dist',
+      excludes: mergedLibOptions.excludes,
+    }
+
+    const finalDtsOptions: SimpleDtsOptions = {
+      ...dtsDefaults,
+      ...(options.dts === true ? dtsDefaults : options.dts),
+    }
+    dtsPlugin = createDtsPlugin({
+      ...finalDtsOptions,
+      outDir: finalDtsOptions.outDir ?? 'dist',
+      sourcemap: finalDtsOptions.sourcemap ?? false,
+      logLevel: 'error',
+    })
   }
 
-  const finalDtsOptions: SimpleDtsOptions = {
-    ...dtsDefaults,
-    ...options.dts,
-  }
-
-  const dtsPlugin = createDtsPlugin({
-    ...finalDtsOptions,
-    outDir: typeof finalDtsOptions.outDir === 'string' ? finalDtsOptions.outDir : 'dist',
-    sourcemap: finalDtsOptions.sourcemap,
-    logLevel: 'error',
-  })
-
-  const packageJsonDefaults: Required<Pick<PackageJsonOptions, 'buildTool'>> = {
-    buildTool: 'npm',
+  const packageJsonDefaults: Omit<PackageJsonOptions, 'entry' | 'formats'> = {
+    buildTool: 'pnpm',
+    dts: options.packageJson?.dts ?? (options.dts !== false && options.dts !== void 0) ?? true,
   }
 
   const finalPackageJsonOptions: PackageJsonOptions = {
@@ -98,7 +101,7 @@ export function configureViteFragment(
     ...generatedBuildOptions,
   }
 
-  const generatedPlugins = [dtsPlugin, packageJsonPlugin] as Plugin[]
+  const generatedPlugins = [dtsPlugin, packageJsonPlugin].filter(Boolean) as Plugin[]
 
   const basePluginsArray = (
     Array.isArray(baseConfig.plugins)

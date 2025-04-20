@@ -34,6 +34,7 @@ export function BuildConfigLib(options: BuildLibraryConfigOptions = {}): BuildOp
         return `[name]${fileNameMap[format as keyof typeof fileNameMap]}`
       },
     },
+    assetsInlineLimit: 0,
     rollupOptions: {
       external: externals,
       output: {

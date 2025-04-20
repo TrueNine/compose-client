@@ -7,6 +7,7 @@ import process from 'node:process'
 
 export interface PackageJsonOptions {
   entry: string[]
+  dts?: boolean
   formats?: LibraryFormats[]
   buildTool?: 'npm' | 'pnpm' | 'yarn'
 }
@@ -16,6 +17,7 @@ function packageJsonContentReplace(content: string, options: Omit<PackageJsonOpt
     entry,
     formats = ['es'],
     buildTool = 'npm',
+    dts = true,
   } = options
 
   if (formats.length === 0) {
@@ -103,11 +105,11 @@ function packageJsonContentReplace(content: string, options: Omit<PackageJsonOpt
     if (hasCjs) {
       exportValue.require = `./${baseOutputPath}.cjs`
     }
-    // --- Generate types entry only if it's a TS/TSX file --- START
-    if (isTypeScriptEntry) {
+    // --- Generate types entry only if it's a TS/TSX file and dts is not false --- START
+    if (dts !== false && isTypeScriptEntry) {
       exportValue.types = `./${baseOutputPath}.d.ts`
     }
-    // --- Generate types entry only if it's a TS/TSX file --- END
+    // --- Generate types entry only if it's a TS/TSX file and dts is not false --- END
 
     // Only add if there are any valid export types
     if (Object.keys(exportValue).length > 0) {
@@ -119,10 +121,13 @@ function packageJsonContentReplace(content: string, options: Omit<PackageJsonOpt
         if (hasCjs) {
           packageJson.main = exportValue.require.substring(2)
         }
-        // Set top-level types directly if main entry is TS
-        if (isTypeScriptEntry) {
+        // Set top-level types directly if main entry is TS and dts is not false
+        if (dts !== false && isTypeScriptEntry) {
           packageJson.types = exportValue.types.substring(2)
           packageJson.typings = exportValue.types.substring(2)
+        } else if (dts === false) {
+          delete packageJson.types
+          delete packageJson.typings
         }
       }
       newExports[exportKey] = exportValue

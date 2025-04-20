@@ -1,7 +1,7 @@
 {
   "name": "@compose/config-vite-fragment",
   "type": "module",
-  "version": "1.0.3",
+  "version": "1.0.8",
   "description": "vite config fragment",
   "author": "TrueNine",
   "license": "private",
