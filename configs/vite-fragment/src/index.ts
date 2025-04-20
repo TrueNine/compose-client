@@ -3,6 +3,7 @@ import type { BuildOptions, Plugin, PluginOption, UserConfig } from 'vite'
 import type { BuildLibraryConfigOptions } from './types'
 import type { SimpleDtsOptions } from './vite-plugin-dts'
 import type { PackageJsonOptions } from './vite-plugin-package-json'
+import { mergeConfig } from 'vite'
 import { Externals as defaultExternals } from './externals'
 import { BuildConfigLib } from './lib'
 import { createDtsPlugin } from './vite-plugin-dts'
@@ -123,5 +124,8 @@ export function configureViteFragment(
     plugins: mergedPlugins,
   }
 
-  return finalConfig
+  return mergeConfig(
+    finalConfig,
+    baseConfig,
+  )
 }
