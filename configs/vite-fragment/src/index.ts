@@ -8,19 +8,10 @@ import { BuildConfigLib } from './lib'
 import { createDtsPlugin } from './vite-plugin-dts'
 import { PackageJsonGeneratorPlugin } from './vite-plugin-package-json'
 
-interface LibOptions extends Omit<BuildLibraryConfigOptions, 'externals'> {
-}
-
-interface DtsOptions extends Omit<SimpleDtsOptions, 'entry'> {
-}
-
-interface PackageJsonGenOptions extends Omit<PackageJsonOptions, 'entry' | 'formats'> {
-}
-
 export interface ViteFragmentOptions {
-  lib?: LibOptions
-  dts?: DtsOptions
-  packageJson?: PackageJsonGenOptions
+  lib?: Omit<BuildLibraryConfigOptions, 'externals'>
+  dts?: Omit<SimpleDtsOptions, 'entry'>
+  packageJson?: Omit<PackageJsonOptions, 'entry' | 'formats'>
   additionalExternals?: (string | RegExp)[]
   additionalPlugins?: PluginOption[]
 }
