@@ -8,8 +8,7 @@ import { BuildConfigLib } from './lib'
 import { createDtsPlugin } from './vite-plugin-dts'
 import { PackageJsonGeneratorPlugin } from './vite-plugin-package-json'
 
-interface LibOptions extends Omit<BuildLibraryConfigOptions, 'externals' | 'entry'> {
-  entry?: string | string[]
+interface LibOptions extends Omit<BuildLibraryConfigOptions, 'externals'> {
 }
 
 interface DtsOptions extends Omit<SimpleDtsOptions, 'entry'> {
@@ -39,6 +38,12 @@ export function configureViteFragment(
     formats: ['es'] as const,
     sourcemap: false,
     name: 'index',
+    fileNameMap: {
+      es: '.js',
+      cjs: '.cjs',
+      umd: '.umd.js',
+      iife: '.iife.js',
+    },
     excludes: ['**/__tests__/**', '**/__test__/**', '**/__build-src__/**', '**/*.spec.ts', '**/*.test.ts'],
   }
 
