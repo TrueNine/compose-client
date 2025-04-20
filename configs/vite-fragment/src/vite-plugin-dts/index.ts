@@ -1,6 +1,8 @@
 import type { Plugin } from 'vite'
 import type { PluginOptions } from 'vite-plugin-dts'
-import * as dts from 'vite-plugin-dts'
+import dtsPluginImport from 'vite-plugin-dts'
+
+const dtsPlugin = (dtsPluginImport as unknown as { default: typeof dtsPluginImport }).default ?? dtsPluginImport
 
 export interface SimpleDtsOptions {
   /**
@@ -93,7 +95,7 @@ export function createDtsPlugin(options: SimpleDtsOptions = {}): Plugin {
     strictOutput: finalOptions.strict,
   }
 
-  return dts.default(dtsPluginConfig)
+  return dtsPlugin(dtsPluginConfig)
 }
 
 // 导出一些常用的预设配置
