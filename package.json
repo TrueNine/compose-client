@@ -9,7 +9,7 @@
     "pnpm": ">=10.8.0"
   },
   "scripts": {
-    "lint": "eslint --fix --config ./configs/tsconfig/eslint.config.ts",
+    "lint": "eslint --fix --config ./configs/tsconfig/eslint.config.mjs",
     "build:configs:eslint9": "nr --dir ./configs/eslint9 build",
     "build:configs:vite-fragment": "nr --dir ./configs/vite-fragment build",
     "build:configs:uno": "nr --dir ./configs/uno build",

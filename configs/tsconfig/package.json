@@ -1,11 +1,11 @@
 {
   "name": "@compose/tsconfig",
   "version": "1.0.3",
+  "exports": {
+    "./tsconfig.json": "./tsconfig.json"
+  },
   "main": "tsconfig.json",
   "scripts": {
     "pub": "pnpm publish --no-git-checks --ignore-scripts"
-  },
-  "exports": {
-    "./tsconfig.json": "./tsconfig.json"
   }
 }
