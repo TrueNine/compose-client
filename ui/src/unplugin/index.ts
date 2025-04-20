@@ -8,8 +8,8 @@ function resolveComponent(name: string): { name: string, from: string, satisfies
   if (/^Y[A-Z]/.exec(name)) {
     return {
       name,
-      from: '@compose/meta-ui-web',
-      satisfies: [`@compose/meta-ui-web/${camelTo(name)}/index.css`],
+      from: '@compose/ui',
+      satisfies: [`@compose/ui/${camelTo(name)}/index.css`],
     }
   }
 }
