@@ -3,7 +3,7 @@ import { antfu } from '@antfu/eslint-config'
 export default antfu({
   type: 'lib',
   pnpm: true,
-  test: false,
+  test: true,
   stylistic: {
     jsx: true,
     indent: 2,

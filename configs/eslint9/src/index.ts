@@ -21,7 +21,7 @@ export default async function eslint9(options: ConfigOptions = {}): Promise<Retu
   const {
     type = 'lib',
     ignores = [],
-    test = false,
+    test = true,
     unocss = false,
     vue = false,
     jsx = false,
