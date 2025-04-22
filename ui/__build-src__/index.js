@@ -8,7 +8,7 @@ import cssnano from 'cssnano'
 import { dest, parallel, series, src } from 'gulp'
 import gulpPostcss from 'gulp-postcss'
 import gulpSass from 'gulp-sass'
-import sass from 'sass'
+import * as sass from 'sass'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
