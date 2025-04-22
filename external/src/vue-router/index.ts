@@ -1,12 +1,14 @@
 import type { AutoRouterConfig, Maybe } from '@compose/types'
 import type { RouteRecordRaw, RouteRecordSingleView } from 'vue-router'
 
-// 常量定义
+// 路径常量
 const STR_EMPTY = ''
 const STR_SLASH = '/'
 
 /**
- * 路由匹配的基础类型
+ * 路由匹配信息
+ * @property fullPath 完整路径
+ * @property parentPath 父级路径
  */
 interface RouteMatch {
   fullPath: string
@@ -14,19 +16,19 @@ interface RouteMatch {
 }
 
 /**
- * 原始路由配置类型
- * 组合了自动路由配置、单视图路由记录和路由匹配类型
+ * 原始路由类型，聚合自动路由配置、单视图路由和匹配信息
  */
 type Raw = AutoRouterConfig & RouteRecordSingleView & RouteMatch
 
 /**
  * 路由匹配函数类型
+ * @param r 路由对象
+ * @returns 是否匹配
  */
 type RouteMatchFn = (r: Raw) => boolean
 
 /**
- * 菜单对象类型
- * 扩展了 Vue Router 的路由记录类型
+ * 菜单对象类型，扩展自 Vue Router 路由记录
  */
 type MenuObject = RouteRecordRaw & {
   uri: string
@@ -41,47 +43,41 @@ type MenuObject = RouteRecordRaw & {
 
 /**
  * 合并两个 URI 路径
- *
- * @param uri1 - 第一个 URI 路径
- * @param uri2 - 第二个 URI 路径
- * @returns 合并后的 URI 路径
- * @example
- * combineURIs('/foo', 'bar') // 返回 '/foo/bar'
- * combineURIs('foo', '/bar') // 返回 '/foo/bar'
+ * @param uri1 路径1
+ * @param uri2 路径2
+ * @returns 合并后的路径
  */
 function combineURIs(uri1: string, uri2: string): string {
-  const normalizedUri1 = uri1.startsWith(STR_SLASH) ? uri1 : STR_SLASH + uri1
-  const trimmedUri1 = normalizedUri1.replace(/\/$/, STR_EMPTY)
-  const trimmedUri2 = uri2.replace(/^\//, STR_EMPTY)
+  const normalizedUri1 = uri1.replace(/^\/+/g, STR_EMPTY).replace(/\/+$/g, STR_EMPTY)
+  const normalizedUri2 = uri2.replace(/^\/+/g, STR_EMPTY).replace(/\/+$/g, STR_EMPTY)
 
-  if (!trimmedUri1 && !trimmedUri2) {
+  if (!normalizedUri1 && !normalizedUri2) {
     return STR_EMPTY
   }
-  if (!trimmedUri1) {
-    return trimmedUri2
+  if (!normalizedUri1) {
+    return normalizedUri2
   }
-
-  const result = `${trimmedUri1}${STR_SLASH}${trimmedUri2}`
-  return result.replace(/\/$/, STR_EMPTY)
+  if (!normalizedUri2) {
+    return normalizedUri1
+  }
+  return `${normalizedUri1}${STR_SLASH}${normalizedUri2}`
 }
 
 /**
- * 根据裁剪路径过滤路由配置
- *
- * @param routes - 路由配置数组
- * @param clipPath - 裁剪路径
- * @param parentPath - 父级路径
- * @returns 过滤后的路由配置数组
+ * 按裁剪路径过滤路由
+ * @param routes 路由数组
+ * @param clipPath 裁剪路径
+ * @param parentPath 父路径
+ * @returns 剩余路由
  */
 function clipRoutes(routes: RouteRecordRaw[], clipPath: string, parentPath = ''): RouteRecordRaw[] {
+  const normalizedClipPath = clipPath.replace(/^\/+/g, STR_EMPTY).replace(/\/+$/g, STR_EMPTY)
+
   for (const route of routes) {
     const fullPath = combineURIs(parentPath, route.path)
-    const hasClipPath = typeof clipPath === 'string' && clipPath.length > 0
-
-    if (fullPath === clipPath || (hasClipPath && fullPath.startsWith(clipPath + STR_SLASH))) {
+    if (fullPath === normalizedClipPath) {
       return route.children ?? []
     }
-
     const children = route.children
     if (Array.isArray(children) && children.length > 0) {
       const clippedChildren = clipRoutes(children, clipPath, fullPath)
@@ -90,17 +86,15 @@ function clipRoutes(routes: RouteRecordRaw[], clipPath: string, parentPath = '')
       }
     }
   }
-
   return []
 }
 
 /**
- * 将路由配置转换为菜单对象
- *
- * @param route - 路由配置
- * @param parentPath - 父级路径
- * @param matchFn - 可选的路由匹配函数
- * @returns 转换后的菜单对象，如果不匹配则返回 null
+ * 路由转菜单对象
+ * @param route 路由配置
+ * @param parentPath 父路径
+ * @param matchFn 匹配函数
+ * @returns 菜单对象或 null
  */
 function routeToMenuObject(
   route: RouteRecordRaw,
@@ -115,7 +109,6 @@ function routeToMenuObject(
       fullPath,
       parentPath,
     } as Raw
-
     if (!matchFn(raw)) {
       return null
     }
@@ -126,29 +119,53 @@ function routeToMenuObject(
     ...route,
     fullPath,
     parentPath,
-    uri: route.path.replace(/^\/+/, STR_EMPTY),
-    name: meta.title as string | undefined,
+    uri: route.path.replace(/^\/+/, ''),
+    name: typeof meta.title === 'string' ? meta.title : void 0,
   }
 
   const children = route.children
-  if (Array.isArray(children) && children.length > 0) {
-    const sub = generateMenuInternal(children, matchFn, null, fullPath)
-    if (sub.length > 0) {
-      menuObj.sub = sub
-    }
+  if (!Array.isArray(children) || children.length === 0) {
+    return menuObj
   }
 
+  const indexRoute = children.find((child): child is RouteRecordRaw & { meta?: Record<string, unknown> } => child.path === STR_EMPTY)
+  if (indexRoute != null) {
+    const indexMeta = (typeof indexRoute.meta === 'object' && indexRoute.meta !== null) ? indexRoute.meta as Record<string, unknown> : {}
+    menuObj.meta = { ...menuObj.meta, ...indexMeta }
+    if (typeof indexMeta.title === 'string') {
+      menuObj.name = indexMeta.title
+    }
+    const remainingChildren = children.filter((child) => child.path !== STR_EMPTY)
+    let indexSub: MenuObject[] = []
+    if (Array.isArray(indexRoute.children) && indexRoute.children.length > 0) {
+      indexSub = generateMenuInternal(indexRoute.children, matchFn, null, fullPath)
+    }
+    let otherSub: MenuObject[] = []
+    if (remainingChildren.length > 0) {
+      otherSub = generateMenuInternal(remainingChildren, matchFn, null, fullPath)
+    }
+    const mergedSub = [...indexSub, ...otherSub]
+    if (mergedSub.length > 0) {
+      menuObj.sub = mergedSub
+    }
+    return menuObj
+  }
+
+  // 无 index 路由，递归所有子路由
+  const sub = generateMenuInternal(children, matchFn, null, fullPath)
+  if (sub.length > 0) {
+    menuObj.sub = sub
+  }
   return menuObj
 }
 
 /**
- * 内部菜单生成函数
- *
- * @param routes - 路由配置数组
- * @param matchFn - 可选的路由匹配函数
- * @param clipPath - 可选的裁剪路径
- * @param parentPath - 父级路径
- * @returns 生成的菜单对象数组
+ * 菜单生成内部实现
+ * @param routes 路由数组
+ * @param matchFn 匹配函数
+ * @param clipPath 裁剪路径
+ * @param parentPath 父路径
+ * @returns 菜单对象数组
  */
 function generateMenuInternal(
   routes: RouteRecordRaw[],
@@ -158,37 +175,17 @@ function generateMenuInternal(
 ): MenuObject[] {
   const hasValidClipPath = typeof clipPath === 'string' && clipPath.length > 0
   const routesToProcess = hasValidClipPath ? clipRoutes(routes, clipPath) : routes
-
   return routesToProcess
     .map((route) => routeToMenuObject(route, parentPath, matchFn))
     .filter((menu): menu is MenuObject => menu !== null)
 }
 
 /**
- * 根据路由配置生成菜单
- *
- * 此函数将 Vue Router 的路由配置转换为菜单对象数组。
- * 支持路由过滤、路径裁剪和自定义匹配规则。
- *
- * @param routes - 路由配置数组
- * @param matchFn - 可选的路由匹配函数，用于过滤路由
- * @param clipPath - 可选的裁剪路径，用于从特定路径开始生成菜单
- * @returns 生成的菜单对象数组
- *
- * @example
- * ```typescript
- * const routes = [
- *   {
- *     path: '/dashboard',
- *     meta: { title: '仪表盘' },
- *     children: [
- *       { path: 'analysis', meta: { title: '分析页' } }
- *     ]
- *   }
- * ]
- *
- * const menu = generateMenu(routes)
- * ```
+ * 路由转菜单入口
+ * @param routes 路由数组
+ * @param matchFn 匹配函数
+ * @param clipPath 裁剪路径
+ * @returns 菜单对象数组
  */
 export function generateMenu(
   routes: RouteRecordRaw[],

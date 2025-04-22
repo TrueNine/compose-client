@@ -1,0 +1,448 @@
+[
+  {
+    "path": "/",
+    "name": "/",
+    "meta": {
+      "title": "首页",
+      "requireLogin": false,
+      "showBottomBar": true
+    }
+  },
+  {
+    "path": "/a",
+    "name": "/a",
+    "children": [
+      {
+        "path": "audit",
+        "children": [
+          {
+            "path": "enterprises",
+            "name": "/a/audit/enterprises",
+            "meta": {
+              "title": "企业审核",
+              "requireLogin": true,
+              "permissions": [
+                "ADMIN"
+              ],
+              "roles": [
+                "ADMIN"
+              ],
+              "showBottomBar": false
+            }
+          },
+          {
+            "path": "user_certs",
+            "name": "/a/audit/user_certs",
+            "meta": {
+              "title": "用户证件审核",
+              "requireLogin": true,
+              "permissions": [
+                "ADMIN"
+              ],
+              "roles": [
+                "ADMIN"
+              ],
+              "showBottomBar": false
+            }
+          }
+        ],
+        "meta": {
+          "title": "审核",
+          "requireLogin": true,
+          "permissions": [
+            "ADMIN"
+          ],
+          "roles": [
+            "ADMIN"
+          ],
+          "showBottomBar": false
+        }
+      },
+      {
+        "path": "blacklist",
+        "children": [
+          {
+            "path": "add",
+            "name": "/a/blacklist/add",
+            "meta": {
+              "title": "添加黑名单",
+              "requireLogin": true,
+              "permissions": [
+                "ADMIN"
+              ],
+              "roles": [
+                "ADMIN"
+              ],
+              "showBottomBar": false
+            }
+          },
+          {
+            "path": "all",
+            "name": "/a/blacklist/all",
+            "meta": {
+              "title": "黑名单列表",
+              "requireLogin": true,
+              "permissions": [
+                "ADMIN"
+              ],
+              "roles": [
+                "ADMIN"
+              ],
+              "showBottomBar": false
+            }
+          }
+        ],
+        "meta": {
+          "title": "黑名单",
+          "requireLogin": true,
+          "permissions": [
+            "ADMIN"
+          ],
+          "roles": [
+            "ADMIN"
+          ],
+          "showBottomBar": false
+        }
+      },
+      {
+        "path": "dashboard",
+        "children": [
+          {
+            "path": "",
+            "name": "/a/dashboard/",
+            "meta": {
+              "title": "首页",
+              "requireLogin": true,
+              "permissions": [
+                "ADMIN"
+              ],
+              "roles": [
+                "ADMIN"
+              ],
+              "showBottomBar": false
+            }
+          }
+        ],
+        "meta": {
+          "title": "首页",
+          "requireLogin": true,
+          "permissions": [
+            "ADMIN"
+          ],
+          "roles": [
+            "ADMIN"
+          ],
+          "showBottomBar": false
+        }
+      },
+      {
+        "path": "sys",
+        "children": [
+          {
+            "path": "acl",
+            "name": "/a/sys/acl",
+            "meta": {
+              "title": "权限管理",
+              "requireLogin": true,
+              "permissions": [
+                "ROOT"
+              ],
+              "roles": [
+                "ROOT"
+              ],
+              "showBottomBar": false
+            }
+          },
+          {
+            "path": "api",
+            "name": "/a/sys/api",
+            "meta": {
+              "title": "API管理",
+              "requireLogin": true,
+              "permissions": [
+                "ROOT"
+              ],
+              "roles": [
+                "ROOT"
+              ],
+              "showBottomBar": false
+            }
+          },
+          {
+            "path": "cache_config",
+            "name": "/a/sys/cache_config",
+            "meta": {
+              "title": "缓存配置",
+              "requireLogin": true,
+              "permissions": [
+                "ROOT"
+              ],
+              "roles": [
+                "ROOT"
+              ],
+              "showBottomBar": false
+            }
+          },
+          {
+            "path": "menu_admin",
+            "name": "/a/sys/menu_admin",
+            "meta": {
+              "title": "菜单管理",
+              "requireLogin": true,
+              "permissions": [
+                "ROOT"
+              ],
+              "roles": [
+                "ROOT"
+              ],
+              "showBottomBar": false
+            }
+          }
+        ],
+        "meta": {
+          "title": "DEV_OPS",
+          "requireLogin": true,
+          "permissions": [
+            "ROOT"
+          ],
+          "roles": [
+            "ROOT"
+          ],
+          "showBottomBar": false
+        }
+      },
+      {
+        "path": "user_info",
+        "children": [
+          {
+            "path": "add",
+            "name": "/a/user_info/add",
+            "meta": {
+              "title": "添加用户",
+              "requireLogin": true,
+              "permissions": [
+                "ADMIN"
+              ],
+              "roles": [
+                "ADMIN"
+              ],
+              "showBottomBar": false
+            }
+          },
+          {
+            "path": "all",
+            "name": "/a/user_info/all",
+            "meta": {
+              "title": "用户列表",
+              "requireLogin": true,
+              "permissions": [
+                "ADMIN"
+              ],
+              "roles": [
+                "ADMIN"
+              ],
+              "showBottomBar": false
+            }
+          },
+          {
+            "path": "details",
+            "name": "/a/user_info/details",
+            "meta": {
+              "title": "用户详情",
+              "requireLogin": true,
+              "permissions": [
+                "ADMIN"
+              ],
+              "roles": [
+                "ADMIN"
+              ],
+              "showBottomBar": false
+            }
+          }
+        ],
+        "meta": {
+          "title": "用户管理",
+          "requireLogin": true,
+          "permissions": [
+            "ADMIN"
+          ],
+          "roles": [
+            "ADMIN"
+          ],
+          "showBottomBar": false
+        }
+      }
+    ],
+    "meta": {
+      "title": "管理后台",
+      "requireLogin": true,
+      "permissions": [
+        "ADMIN"
+      ],
+      "roles": [
+        "ADMIN"
+      ],
+      "showBottomBar": false
+    }
+  },
+  {
+    "path": "/auth",
+    "name": "/auth",
+    "children": [
+      {
+        "path": "",
+        "name": "/auth/",
+        "components": {},
+        "meta": {
+          "title": "认证",
+          "requireLogin": false,
+          "permissions": [],
+          "roles": [],
+          "showBottomBar": false
+        }
+      }
+    ],
+    "meta": {
+      "title": "认证",
+      "requireLogin": false,
+      "permissions": [],
+      "roles": [],
+      "showBottomBar": false
+    }
+  },
+  {
+    "path": "/error",
+    "name": "/error",
+    "meta": {
+      "title": "错误",
+      "requireLogin": false,
+      "permissions": [],
+      "roles": [],
+      "showBottomBar": false
+    }
+  },
+  {
+    "path": "/wxpa",
+    "name": "/wxpa",
+    "children": [
+      {
+        "path": "",
+        "name": "/wxpa/",
+        "meta": {
+          "title": "微信公众号",
+          "requireLogin": false,
+          "showBottomBar": true
+        }
+      },
+      {
+        "path": "auth",
+        "name": "/wxpa/auth",
+        "children": [
+          {
+            "path": "",
+            "name": "/wxpa/auth/",
+            "components": {},
+            "meta": {
+              "title": "登录",
+              "requireLogin": false,
+              "showBottomBar": false
+            }
+          }
+        ],
+        "meta": {
+          "title": "登录",
+          "requireLogin": false,
+          "showBottomBar": false
+        }
+      },
+      {
+        "path": "me",
+        "children": [
+          {
+            "path": "",
+            "name": "/wxpa/me/",
+            "meta": {
+              "title": "个人信息",
+              "requireLogin": true,
+              "showBottomBar": true
+            }
+          },
+          {
+            "path": "certs",
+            "name": "/wxpa/me/certs",
+            "meta": {
+              "title": "个人信息",
+              "requireLogin": true,
+              "showBottomBar": true
+            }
+          },
+          {
+            "path": "details",
+            "name": "/wxpa/me/details",
+            "meta": {
+              "title": "个人信息",
+              "requireLogin": true,
+              "showBottomBar": true
+            }
+          },
+          {
+            "path": "resume",
+            "name": "/wxpa/me/resume",
+            "meta": {
+              "title": "个人信息",
+              "requireLogin": true,
+              "showBottomBar": true
+            }
+          }
+        ],
+        "meta": {
+          "title": "个人信息",
+          "requireLogin": true,
+          "showBottomBar": true
+        }
+      },
+      {
+        "path": "service",
+        "children": [
+          {
+            "path": "",
+            "name": "/wxpa/service/",
+            "meta": {
+              "title": "服务",
+              "requireLogin": false,
+              "showBottomBar": true
+            }
+          },
+          {
+            "path": "blacklist",
+            "name": "/wxpa/service/blacklist",
+            "meta": {
+              "title": "服务",
+              "requireLogin": false,
+              "showBottomBar": true
+            }
+          },
+          {
+            "path": "pack",
+            "name": "/wxpa/service/pack",
+            "meta": {
+              "title": "服务",
+              "requireLogin": false,
+              "showBottomBar": true
+            }
+          }
+        ],
+        "meta": {
+          "title": "服务",
+          "requireLogin": false,
+          "showBottomBar": true
+        }
+      }
+    ],
+    "meta": {
+      "title": "微信公众号",
+      "requireLogin": false,
+      "showBottomBar": true
+    }
+  }
+]
