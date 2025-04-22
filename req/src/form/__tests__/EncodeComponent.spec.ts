@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { decodeHash, encodeQueryParam, queryHash, queryParam, SearchParam } from '../EncodeComponent'
 
-describe('SearchParam', () => {
+describe('searchParam', () => {
   it('append/get/has/size/values/keys', () => {
     const sp = new SearchParam()
     expect(sp.size).toBe(0)
