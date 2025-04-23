@@ -2,6 +2,8 @@ import type { ChildLoggerOptions } from 'pino'
 import dayjs from 'dayjs'
 import pino from 'pino'
 
+// FIXME 当前文件需要移除
+
 const _logger = pino({
   timestamp: () => {
     return dayjs().format('YYYY-MM-DD HH:mm:ss.SSS')

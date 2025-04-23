@@ -9,6 +9,8 @@ import pluralGetSet from 'dayjs/plugin/pluralGetSet'
 import tz from 'dayjs/plugin/timezone'
 import utc from 'dayjs/plugin/utc'
 
+// FIXME 当前文件所有文件需要进行去除副作用优化
+
 export type DayJSNewInstanceOptions = timestamp | Date | dayjs.Dayjs
 
 interface Params {
