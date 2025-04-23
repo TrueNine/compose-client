@@ -115,6 +115,10 @@ function routeToMenuObject(
   }
 
   const { meta = {} } = route
+  if (meta.hidden === true) {
+    return null
+  }
+
   const menuObj: MenuObject = {
     ...route,
     fullPath,

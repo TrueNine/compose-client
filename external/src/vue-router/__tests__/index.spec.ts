@@ -126,3 +126,98 @@ describe('generateMenu - path为空的子路由特殊处理', () => {
     expect(subPaths).toContain('other')
   })
 })
+
+describe('generateMenu - meta.hidden 处理', () => {
+  const DummyComponent: () => null = () => null
+
+  it('路由的 meta.hidden 为 true 时不应出现在菜单中', () => {
+    const routes: RouteRecordRaw[] = [
+      {
+        path: 'visible',
+        component: DummyComponent,
+        meta: { title: '可见路由' },
+      },
+      {
+        path: 'hidden',
+        component: DummyComponent,
+        meta: { title: '隐藏路由', hidden: true },
+      },
+    ]
+    const menu = generateMenu(routes)
+    expect(menu).toHaveLength(1)
+    expect(menu[0].path).toBe('visible')
+    expect(menu[0].name).toBe('可见路由')
+  })
+
+  it('父路由 meta.hidden 为 true 时，其所有子路由都不应出现在菜单中', () => {
+    const routes: RouteRecordRaw[] = [
+      {
+        path: 'parent',
+        component: DummyComponent,
+        meta: { title: '父路由', hidden: true },
+        children: [
+          {
+            path: 'child1',
+            component: DummyComponent,
+            meta: { title: '子路由1' },
+          },
+          {
+            path: 'child2',
+            component: DummyComponent,
+            meta: { title: '子路由2' },
+          },
+        ],
+      },
+    ]
+    const menu = generateMenu(routes)
+    expect(menu).toHaveLength(0)
+  })
+
+  it('子路由 meta.hidden 为 true 时，不影响其他子路由显示', () => {
+    const routes: RouteRecordRaw[] = [
+      {
+        path: 'parent',
+        component: DummyComponent,
+        meta: { title: '父路由' },
+        children: [
+          {
+            path: 'visible',
+            component: DummyComponent,
+            meta: { title: '可见子路由' },
+          },
+          {
+            path: 'hidden',
+            component: DummyComponent,
+            meta: { title: '隐藏子路由', hidden: true },
+          },
+        ],
+      },
+    ]
+    const menu = generateMenu(routes)
+    expect(menu).toHaveLength(1)
+    expect(menu[0].sub).toHaveLength(1)
+    expect(menu[0].sub?.[0].path).toBe('visible')
+  })
+
+  it('meta.hidden 为非 true 值时不应影响菜单生成', () => {
+    const routes: RouteRecordRaw[] = [
+      {
+        path: 'test1',
+        component: DummyComponent,
+        meta: { title: '测试1', hidden: false },
+      },
+      {
+        path: 'test2',
+        component: DummyComponent,
+        meta: { title: '测试2' },
+      },
+      {
+        path: 'test3',
+        component: DummyComponent,
+        meta: { title: '测试3', hidden: null },
+      },
+    ]
+    const menu = generateMenu(routes)
+    expect(menu).toHaveLength(3)
+  })
+})
