@@ -42,7 +42,7 @@ function packageJsonContentReplace(content: string, options: Omit<PackageJsonOpt
     }
   })
   packageJson.scripts = {
-    pub: `${buildTool} publish --no-git-checks --ignore-scripts`,
+    pub: `${buildTool} publish`,
   }
 
   const hasEsm = formats.includes('es')
