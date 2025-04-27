@@ -68,3 +68,5 @@ export default async function eslint9(options: ConfigOptions = {}): Promise<Retu
     formatters: _formatters,
   })
 }
+const r = undefined
+console.error(r)

@@ -108,10 +108,6 @@ export const defaultJsConfig: AntFuJsConfig = {
 
 export const defaultTsConfig: AntFuTsConfig = {
   overrides: {
-    'ts/no-unsafe-assignment': 'off',
-    'ts/no-unsafe-call': 'off',
-    'ts/no-unsafe-argument': 'off',
-    'ts/no-unsafe-return': 'off',
     'ts/member-ordering': ['error'],
     'ts/no-extra-non-null-assertion': 'error',
     'ts/no-non-null-assertion': 'error',
@@ -119,7 +115,7 @@ export const defaultTsConfig: AntFuTsConfig = {
       fixToUnknown: true,
       ignoreRestArgs: true,
     }],
-    'ts/no-namespace': 'off',
+    'ts/no-namespace': 'error',
     'ts/no-unused-vars': [
       'error',
       {
@@ -155,6 +151,10 @@ export const defaultFormatterConfig: AntFuFormatterConfig = {
  */
 export const defaultStrictTsConfig: AntFuTsConfig = {
   overrides: {
+    'ts/no-unsafe-assignment': 'off',
+    'ts/no-unsafe-call': 'off',
+    'ts/no-unsafe-argument': 'off',
+    'ts/no-unsafe-return': 'off',
     'ts/no-floating-promises': 'error',
   },
 }
