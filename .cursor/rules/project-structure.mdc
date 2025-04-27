@@ -1,0 +1,43 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+
+# 项目结构
+应尽量遵循此项目结构，尽力复用代码
+
+```text
+
+.cursor/rules/ #cursor 规则文件
+**/src/ #源代码目录
+└─**/__tests__/ #测试文件
+│└─**/*.spec.ts #测试文件
+└─**/index.ts #当前文件夹入口文件
+└─api/ #网络请求定义
+└─components/ #自定义公共组件（至少被引用5次）
+└─layouts/ #自定义公共布局（至少被引用5次）
+└─pages/ #网页页面（自动路由）
+│└─**/*View.vue #同网页拆分视图，位于同名路由目录下
+└─store/ #pinia 状态管理
+│└─modules/*.ts #状态管理模块
+└─types/ #类型定义（至少被引用10次）
+└─views/ #自定义公共视图（至少被引用5次）
+**/src/__generated/ #jimmer 生成的 client API 代码
+└─services/*.ts #jimmer 生成的 client API 网络请求服务
+└─model/ #jimmer 生成的 client API 模型，网络请求响应需要使用这些类型
+│└─dto/*.ts #jimmer 生成的 client API DTO
+│└─dynamic/*.ts #jimmer 生成的 client API 数据库实体模型 类型定义
+│└─embeddable/*.ts #jimmer 生成的 client API 嵌入式对象 类型定义
+│└─enums/*.ts #jimmer 生成的 client API 枚举 类型定义
+│└─static/*.ts #jimmer 生成的 client API View 类型定义
+.cursorignore #cursorignore 文件
+.editorconfig #editorconfig 格式化文件（严格遵照 editorconfig 配置的格式化规则）
+.gitattributes #.gitattributes 文件
+.gitignore #.gitignore 文件
+LICENSE #许可证文件
+README.md #项目说明文档
+**/package.json #package.json 文件
+eslint.config.* #eslint 配置文件
+vite.config.* #vite 配置文件
+```
