@@ -1,10 +1,10 @@
 import type { VueElement } from 'vue'
 
+import { createApp } from 'vue'
 import { createVuetifyMount, quasarInstall } from '../src/common'
 import { naiveStyleAdaptor } from '../src/index'
-import { createApp } from 'vue'
-
 import App from './App.vue'
+import { Router } from './router'
 import '@mdi/font/css/materialdesignicons.css'
 
 import 'vuetify/styles'
@@ -17,6 +17,7 @@ function setupApp(): void {
   const createdApp = createApp(App as unknown as VueElement)
   quasarInstall(createdApp)
   createdApp.use(a)
+  createdApp.use(Router)
   createdApp.mount('#ROOT')
 }
 
