@@ -1,12 +1,12 @@
 {
   "name": "compose-client",
   "version": "1.0.7",
-  "packageManager": "pnpm@10.8.0",
+  "packageManager": "pnpm@10.10.0",
   "description": "no description",
   "author": "TrueNine",
   "engines": {
     "node": ">=22.14.0",
-    "pnpm": ">=10.8.0"
+    "pnpm": ">=10.10.0"
   },
   "scripts": {
     "lint": "eslint --fix --config ./configs/tsconfig/eslint.config.mjs",
@@ -30,6 +30,7 @@
     "prepare": "run-s lint build"
   },
   "dependencies": {
+    "@antfu/eslint-config": "catalog:",
     "@babel/types": "catalog:",
     "@compose/external": "workspace:^",
     "@compose/psdk-tmap": "workspace:^",
@@ -164,6 +165,7 @@
     "unplugin-auto-import": "catalog:",
     "unplugin-fonts": "catalog:",
     "unplugin-vue-components": "catalog:",
+    "unplugin-vue-router": "catalog:",
     "vee-validate": "catalog:",
     "vinyl": "catalog:",
     "vite": "catalog:",
@@ -185,7 +187,6 @@
     "zod": "catalog:"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "catalog:",
     "@antfu/ni": "catalog:",
     "@compose/config-uno": "workspace:^",
     "@compose/config-vite-fragment": "workspace:^",
