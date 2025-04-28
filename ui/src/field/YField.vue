@@ -22,7 +22,7 @@ const _effectModels = computed(() => {
   for (let i = 0; i < names.length; i++) {
     const name = names[i]
     if (typeof name === 'string') {
-      result[name] = i === 0 ? 'modelValue' : name
+      result[name] = name
     } else {
       Object.assign(result, name)
     }
