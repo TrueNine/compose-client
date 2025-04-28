@@ -9,6 +9,7 @@ import AutoImport from 'unplugin-auto-import/vite'
 import ViteFonts from 'unplugin-fonts/vite'
 import { ElementPlusResolver, NaiveUiResolver, QuasarResolver, VarletUIResolver, Vuetify3Resolver } from 'unplugin-vue-components/resolvers'
 import Components from 'unplugin-vue-components/vite'
+import vueRouterUnplugin from 'unplugin-vue-router/vite'
 import { defineConfig } from 'vite'
 import devTools from 'vite-plugin-vue-devtools'
 import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
@@ -25,6 +26,26 @@ export default defineConfig(
         entry: ['index.ts', 'unplugin/index.ts', 'common/index.ts'],
       },
       additionalPlugins: [
+        vueRouterUnplugin({
+          routesFolder: [
+            {
+              src: 'playground/pages',
+              path: '',
+              exclude: (excluded: string[]) => [...excluded, '**/*View.vue', '**/Page.vue', '**/[A-Z]*.vue'],
+              filePatterns: (filePatterns: string[]) => filePatterns,
+              extensions: (extensions: string[]) => extensions,
+            },
+          ],
+          extensions: ['.vue'],
+          filePatterns: ['**/*'],
+          exclude: [],
+          dts: './playground/typed-router.d.ts',
+          routeBlockLang: 'json5',
+          importMode: 'async',
+          pathParser: {
+            dotNesting: true,
+          },
+        }),
         devTools(),
         vue({
           template: {

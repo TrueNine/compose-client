@@ -1,7 +1,6 @@
 import eslint9 from '@compose/eslint9-config'
 
 export default eslint9({
-  ignores: ['playground/**'],
   unocss: true,
   vue: true,
   jsx: true,
@@ -9,5 +8,13 @@ export default eslint9({
   typescript: {
     strictTypescriptEslint: true,
     tsconfigPath: './tsconfig.json',
+    overrides: {
+      'ts/no-unsafe-assignment': 'off',
+      'ts/no-unsafe-call': 'off',
+      'ts/no-unsafe-member-access': 'off',
+      'ts/no-unsafe-argument': 'off',
+      'ts/no-unsafe-return': 'off',
+      'ts/no-unsafe-function-type': 'off',
+    },
   },
 })

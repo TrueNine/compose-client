@@ -14,9 +14,13 @@ export default mergeConfig(
             include: ['vuetify', 'element-plus'],
           },
         },
-        inline: ['vuetify', 'element-plus'],
       },
-      environment: 'edge-runtime',
+      server: {
+        deps: {
+          inline: ['vuetify', 'element-plus'],
+        },
+      },
+      environment: 'jsdom',
       exclude: [...configDefaults.exclude, 'e2e/*'],
       root: fileURLToPath(new URL('./', import.meta.url)),
     },

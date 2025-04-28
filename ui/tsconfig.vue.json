@@ -13,11 +13,14 @@
       ]
     },
     "types": [
+      "./env.d.ts",
       "./imports-auto.d.ts",
       "./imports-comp.d.ts"
     ]
   },
   "include": [
+    "imports-auto.d.ts",
+    "imports-comp.d.ts",
     "env.d.ts",
     "src/**/*.vue",
     "src/**/*.ts",

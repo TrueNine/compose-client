@@ -39,12 +39,13 @@
     "src"
   ],
   "scripts": {
+    "test": "vitest run",
     "dev": "vite",
     "lint": "eslint --fix",
     "build-c": "vite build",
     "build-g": "gulp -f __build-src__/index.js",
     "type-check": "vue-tsc --noEmit",
-    "build": "run-s type-check lint build-c build-g",
+    "build": "run-s type-check lint test build-c build-g",
     "pub-c": "pnpm --dir dist pub",
     "pub": "run-s build pub-c"
   }

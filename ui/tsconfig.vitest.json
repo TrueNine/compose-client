@@ -1,7 +1,11 @@
 {
-  "extends": "./tsconfig.build.json",
+  "extends": [
+    "./tsconfig.build.json",
+    "./tsconfig.vue.json"
+  ],
   "compilerOptions": {
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.vitest.tsbuildinfo",
+    "jsx": "preserve",
     "lib": [],
     "types": ["node"]
   },
