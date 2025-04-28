@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { defineComponent, nextTick, ref } from 'vue'
+import { z } from 'zod'
 import YForm from '../../form'
 import YField from '../index'
 
@@ -12,8 +13,11 @@ const ChildInputComponent = defineComponent({
     placeholder: String,
     otherProp: String,
     adCode: String,
+    x: String,
+    y: String,
+    z: String,
   },
-  emits: ['update:modelValue', 'update:otherProp', 'update:adCode'],
+  emits: ['update:modelValue', 'update:otherProp', 'update:adCode', 'update:x', 'update:y', 'update:z'],
   setup(props, { emit }) {
     return () => (
       <div>
@@ -37,6 +41,24 @@ const ChildInputComponent = defineComponent({
           onInput={(e: Event) => emit('update:adCode', (e.target as HTMLInputElement).value)}
         />
         <span class="adCode-display">{props.adCode}</span>
+        <input
+          class="x-input"
+          value={props.x}
+          onInput={(e: Event) => emit('update:x', (e.target as HTMLInputElement).value)}
+        />
+        <span class="x-display">{props.x}</span>
+        <input
+          class="y-input"
+          value={props.y}
+          onInput={(e: Event) => emit('update:y', (e.target as HTMLInputElement).value)}
+        />
+        <span class="y-display">{props.y}</span>
+        <input
+          class="z-input"
+          value={props.z}
+          onInput={(e: Event) => emit('update:z', (e.target as HTMLInputElement).value)}
+        />
+        <span class="z-display">{props.z}</span>
       </div>
     )
   },
@@ -45,7 +67,6 @@ const ChildInputComponent = defineComponent({
 afterEach(() => {
   document.body.innerHTML = ''
 })
-
 describe('yFieldTest', () => {
   describe('renderFunctionalityGroup', () => {
     it('正常 渲染 条件时，当 YField 包含默认插槽并在 YForm 内，应正确渲染插槽内容并传递 props', async () => {
@@ -95,11 +116,13 @@ describe('yFieldTest', () => {
 
   describe('modelBindingAndEventsGroup', () => {
     it('正常 输入 条件时，当 name 为字符串，子组件触发 update:modelValue，YForm 数据应更新', async () => {
-      const onSubmit = vi.fn()
+      const onSubmit = vi.fn((values: Record<string, unknown>) => {
+        console.log('onSubmit called with:', JSON.stringify(values, null, 2))
+      })
       const wrapper = mount(YForm, {
         props: {
           initialValues: { email: 'test@example.com' },
-          onSubmit: (values: Record<string, unknown>) => onSubmit(values),
+          onSubmit,
         },
         slots: {
           default: () => (
@@ -149,11 +172,13 @@ describe('yFieldTest', () => {
     })
 
     it('正常 映射 条件时，当 name 为对象，子组件 props 应按对象定义映射', async () => {
-      const onSubmit = vi.fn()
+      const onSubmit = vi.fn((values: Record<string, unknown>) => {
+        console.log('onSubmit called with:', JSON.stringify(values, null, 2))
+      })
       const wrapper = mount(YForm, {
         props: {
           initialValues: { formKey1: 'val1', formKey2: 'val2' },
-          onSubmit: (values: Record<string, unknown>) => onSubmit(values),
+          onSubmit,
         },
         slots: {
           default: () => (
@@ -183,11 +208,13 @@ describe('yFieldTest', () => {
     })
 
     it('边界 映射 条件时，当 name 为混合数组，子组件 props 应按规则映射', async () => {
-      const onSubmit = vi.fn()
+      const onSubmit = vi.fn((values: Record<string, unknown>) => {
+        console.log('onSubmit called with:', JSON.stringify(values, null, 2))
+      })
       const wrapper = mount(YForm, {
         props: {
           initialValues: { keyA: 'valueA', keyB: 'valueB' },
-          onSubmit: (values: Record<string, unknown>) => onSubmit(values),
+          onSubmit,
         },
         slots: {
           default: () => (
@@ -218,7 +245,9 @@ describe('yFieldTest', () => {
 
     it('动态 更新 条件时，当 name prop 动态改变，YField 应能正确响应并更新绑定', async () => {
       const currentName = ref<string | Record<string, string>>('firstName')
-      const onSubmit = vi.fn()
+      const onSubmit = vi.fn((values: Record<string, unknown>) => {
+        console.log('onSubmit called with:', JSON.stringify(values, null, 2))
+      })
 
       const TestComponent = defineComponent({
         setup() {
@@ -226,7 +255,7 @@ describe('yFieldTest', () => {
           return () => (
             <YForm
               initValue={formValues.value}
-              onSubmit={(values: Record<string, unknown>) => onSubmit(values)}
+              onSubmit={onSubmit}
             >
               {{
                 default: () => (
@@ -284,10 +313,12 @@ describe('yFieldTest', () => {
     })
 
     it('事件 映射 条件时，当 name 传入 {addressCode: "adCode"}，子组件应绑定 update:adCode 事件', async () => {
-      const onSubmit = vi.fn()
+      const onSubmit = vi.fn((values: Record<string, unknown>) => {
+        console.log('onSubmit called with:', JSON.stringify(values, null, 2))
+      })
       const wrapper = mount(YForm, {
         props: {
-          onSubmit: (values: Record<string, unknown>) => onSubmit(values),
+          onSubmit,
         },
         slots: {
           default: () => (
@@ -316,6 +347,60 @@ describe('yFieldTest', () => {
 
       await wrapper.find('.submit-button').trigger('submit')
       await nextTick()
+    })
+
+    it('并发 映射 条件时，当 name 传入 {"input.a": "x", "input.b": "y", "input.c": "z"}，子组件所有 onUpdate 事件应正确绑定', async () => {
+      const schema = z.object({
+        input: z.object({
+          a: z.string().optional().default('valueA'),
+          b: z.string().optional().default('valueB'),
+          c: z.string().optional().default('valueC'),
+        }),
+      })
+
+      const onSubmit = vi.fn()
+
+      const wrapper = mount(YForm, {
+        props: {
+          schema,
+          onSubmit,
+          initialValues: {
+            input: {
+              a: 'valueA',
+              b: 'valueB',
+              c: 'valueC',
+            },
+          },
+        },
+        slots: {
+          default: () => (
+            <YField
+              name={{
+                'input.a': 'x',
+                'input.b': 'y',
+                'input.c': 'z',
+              }}
+              label="多字段映射"
+            >
+              <ChildInputComponent />
+            </YField>
+          ),
+          submit: () => (
+            <button type="submit" class="submit-button">提交</button>
+          ),
+        },
+        attachTo: document.body,
+      })
+
+      await nextTick()
+
+      // 验证属性映射
+      const proxy = wrapper.findComponent({ name: 'YFieldProxyComponent' })
+      expect(proxy.props('modelNames')).toEqual({
+        'input.a': 'x',
+        'input.b': 'y',
+        'input.c': 'z',
+      })
     })
   })
 })

@@ -62,8 +62,8 @@ export interface YFormSlotsSubMitProps {
   reset: () => void
 }
 export interface YFormSlots {
-  default: (props: dynamic) => VNode[]
-  submit: (props: YFormSlotsSubMitProps) => VNode[]
+  default?: (props: dynamic) => VNode[]
+  submit?: (props: YFormSlotsSubMitProps) => VNode[]
 }
 export interface YFormInjection {
   getForm: () => FormContext<WritableComputedRef<dynamic, dynamic>>

@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import type { YFormEmits, YFormInjection, YFormProps, YFormSlots } from '@/form/index'
+import type { dynamic } from '@compose/types'
 import { YFormInjectionKey } from '@/form/index'
 import { toTypedSchema as yupToTypedSchema } from '@vee-validate/yup'
 import { toTypedSchema as zodToTypedSchema } from '@vee-validate/zod'
 import { useVModel } from '@vueuse/core'
 import { useForm } from 'vee-validate'
-import { computed, provide, watch } from 'vue'
+import { computed, nextTick, provide, ref, watch } from 'vue'
 import { ObjectSchema } from 'yup'
 import { ZodType } from 'zod'
 
@@ -49,13 +50,36 @@ function handleSubmit(e?: Event) {
   void submitHandler(e)
 }
 
+// 对输入的值进行特殊处理
+function processFormValues(newValue: dynamic) {
+  usedForm.setValues(newValue)
+}
+
+// 防止循环更新的标志
+const isUpdatingFormModelValue = ref(false)
 watch(_modelValue, (v) => {
-  usedForm.setValues(v)
-})
+  if (isUpdatingFormModelValue.value) {
+    return
+  }
+  isUpdatingFormModelValue.value = true
+  processFormValues(v)
+  void nextTick(() => {
+    isUpdatingFormModelValue.value = false
+  })
+}, { deep: true })
 
 watch(usedForm.values, (v) => {
+  // 避免循环更新
+  if (isUpdatingFormModelValue.value || v === _modelValue.value) {
+    return
+  }
+
+  isUpdatingFormModelValue.value = true
   _modelValue.value = v
-})
+  void nextTick(() => {
+    isUpdatingFormModelValue.value = false
+  })
+}, { deep: true })
 
 const exposed: YFormInjection = {
   getForm: () => usedForm,

@@ -166,7 +166,8 @@ describe('yFormTest', () => {
       await nextTick()
       const input = wrapper.find('.test-input')
       await input.setValue('newUser')
-      await nextTick() // 确保更新已经完成
+      // 确保更新已经完成
+      await nextTick()
 
       // 不再直接访问formData，而是检查输入元素的值
       expect((input.element as HTMLInputElement).value).toBe('newUser')

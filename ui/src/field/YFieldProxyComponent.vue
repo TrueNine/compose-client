@@ -2,7 +2,7 @@
 import type { dynamic } from '@compose/types'
 import { maybeArray } from '@compose/shared'
 import { useField } from 'vee-validate'
-import { computed, mergeProps, reactive, ref, toRef } from 'vue'
+import { computed, reactive, ref, toRef } from 'vue'
 
 interface Props {
   component: dynamic
@@ -48,33 +48,48 @@ const effectVModels = computed(() => {
   if (!mounted.value) {
     return {}
   }
-  return _allFields.map((f) => {
+
+  // 首先收集所有基础属性
+  const baseProps = {
+    ...props.component.props ?? {},
+    errorMessages: _allErrors.value,
+    label: props.label,
+    placeholder: props.placeholder,
+  }
+
+  // 然后收集所有事件和值属性，但不覆盖它们
+  const fieldProps: Record<string, any> = {}
+
+  _allFields.forEach((f) => {
     const label = toRef(f.label).value
     if (!label) {
       throw new Error('label is required')
     }
-    return mergeProps(
-      props.component.props ?? {},
-      {
-        'onBlur': (e: Event) => f.handleBlur(e, true),
-        'onReset': () => f.handleReset,
-        [`onUpdate:${label}`]: (v: dynamic) => {
-          f.setValue(v)
-        },
-        'onUpdate:errorMessages': (v: string | string[]) => {
-          f.setErrors(maybeArray(v))
-        },
-      },
-      {
-        [label]: f.value,
-        errorMessages: _allErrors.value,
-        label: props.label,
-        placeholder: props.placeholder,
-      },
-    )
-  }).reduce((acc, cur) => {
-    return { ...acc, ...cur }
-  }, {})
+
+    // 添加值绑定
+    fieldProps[label] = f.value
+
+    // 添加事件监听
+    fieldProps[`onUpdate:${label}`] = (v: dynamic) => {
+      f.setValue(v)
+    }
+  })
+
+  // 添加通用事件
+  const commonEvents = {
+    'onBlur': (e: Event) => _allFields[0].handleBlur(e, true),
+    'onReset': () => _allFields[0].handleReset,
+    'onUpdate:errorMessages': (v: string | string[]) => {
+      _allFields.forEach((f) => f.setErrors(maybeArray(v)))
+    },
+  }
+
+  // 合并所有属性
+  return {
+    ...baseProps,
+    ...fieldProps,
+    ...commonEvents,
+  }
 })
 </script>
 
