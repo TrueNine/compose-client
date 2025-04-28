@@ -1,7 +1,7 @@
 {
   "name": "@compose/eslint9-config",
   "type": "module",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",

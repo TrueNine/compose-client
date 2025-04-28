@@ -1,4 +1,4 @@
-import type { AntFuFormatterConfig, AntFuJsConfig, AntFuStylisticConfig, AntFuTsConfig, AntFuUnocssConfig, AntFuVueConfig } from '../types'
+import type { AntFuFormatterConfig, AntFuJsConfig, AntFuStylisticConfig, AntFuTestConfig, AntFuTsConfig, AntFuUnocssConfig, AntFuVueConfig } from '../types'
 
 export const defaultUnocssConfig: AntFuUnocssConfig = {
   attributify: true,
@@ -168,6 +168,17 @@ export const defaultStylisticConfig: AntFuStylisticConfig = {
     'style/no-multiple-empty-lines': ['error', { max: 1, maxBOF: 0, maxEOF: 0 }],
     'style/brace-style': ['error', '1tbs'],
     'style/arrow-parens': ['error', 'always'],
+  },
+}
+
+export const defaultTestConfig: AntFuTestConfig = {
+  overrides: {
+    'no-console': 'off',
+    'ts/no-unsafe-argument': 'off',
+    'ts/no-unsafe-assignment': 'off',
+    'ts/no-unsafe-member-access': 'off',
+    'ts/no-unsafe-call': 'off',
+    'ts/no-unsafe-return': 'off',
   },
 }
 

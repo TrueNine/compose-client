@@ -1,12 +1,12 @@
 import type { OptionsTypeScriptParserOptions } from '@antfu/eslint-config'
-import type { AntFuFormatterConfig, AntFuJsConfig, AntFuStrictTsConfig, AntFuStylisticConfig, AntFuTsConfig, AntFuUnocssConfig, AntFuVueConfig } from './types'
+import type { AntFuFormatterConfig, AntFuJsConfig, AntFuStrictTsConfig, AntFuStylisticConfig, AntFuTestConfig, AntFuTsConfig, AntFuUnocssConfig, AntFuVueConfig } from './types'
 import { antfu } from '@antfu/eslint-config'
-import { defaultFormatterConfig, defaultJsConfig, defaultStrictTsConfig, defaultStylisticConfig, defaultTsConfig, defaultUnocssConfig, defaultVueConfig, mergeWithDefaults } from './defaults'
+import { defaultFormatterConfig, defaultJsConfig, defaultStrictTsConfig, defaultStylisticConfig, defaultTestConfig, defaultTsConfig, defaultUnocssConfig, defaultVueConfig, mergeWithDefaults } from './defaults'
 
 interface ConfigOptions {
   type?: 'app' | 'lib'
   pnpm?: boolean
-  test?: boolean
+  test?: boolean | AntFuTestConfig
   ignores?: string[]
   jsx?: boolean
   vue?: boolean | AntFuVueConfig
@@ -32,6 +32,7 @@ export default async function eslint9(options: ConfigOptions = {}): Promise<Retu
     formatters = false,
   } = options
 
+  const _test = mergeWithDefaults(test, defaultTestConfig)
   const _unocss = mergeWithDefaults(unocss, defaultUnocssConfig)
   const _vue = mergeWithDefaults(vue, defaultVueConfig)
   const _javascript = mergeWithDefaults(javascript, defaultJsConfig)
@@ -58,7 +59,7 @@ export default async function eslint9(options: ConfigOptions = {}): Promise<Retu
     type,
     ignores,
     pnpm,
-    test,
+    test: _test,
     unocss: _unocss,
     vue: _vue,
     jsx,

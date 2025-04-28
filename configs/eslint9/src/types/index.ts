@@ -36,6 +36,10 @@ export type AntFuStylisticConfig = Exclude<AntFuConfig['stylistic'], boolean | u
 export type AntFuFormatterConfig = Exclude<AntFuConfig['formatters'], boolean | undefined>
 
 /**
+ * test config options
+ */
+export type AntFuTestConfig = Exclude<AntFuConfig['test'], boolean | undefined>
+/**
  * 严格的 typescript config
  */
 export type AntFuStrictTsConfig = AntFuTsConfig & {
