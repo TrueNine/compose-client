@@ -1,8 +1,11 @@
 <script setup lang="ts">
-import type { YFormEmits, YFormProps, YFormSlots } from '@/form/index'
+import type { YFormEmits, YFormInjection, YFormProps, YFormSlots } from '@/form/index'
+import { YFormInjectionKey } from '@/form/index'
 import { toTypedSchema as yupToTypedSchema } from '@vee-validate/yup'
 import { toTypedSchema as zodToTypedSchema } from '@vee-validate/zod'
+import { useVModel } from '@vueuse/core'
 import { useForm } from 'vee-validate'
+import { computed, provide, watch } from 'vue'
 import { ObjectSchema } from 'yup'
 import { ZodType } from 'zod'
 

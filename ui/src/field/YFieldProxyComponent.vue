@@ -2,7 +2,7 @@
 import type { dynamic } from '@compose/types'
 import { maybeArray } from '@compose/shared'
 import { useField } from 'vee-validate'
-import { mergeProps } from 'vue'
+import { computed, mergeProps, reactive, ref, toRef } from 'vue'
 
 interface Props {
   component: dynamic
