@@ -5,6 +5,11 @@ export default eslint9({
   vue: true,
   jsx: true,
   formatters: true,
+  javascript: {
+    overrides: {
+      'no-console': 'off',
+    },
+  },
   typescript: {
     strictTypescriptEslint: true,
     tsconfigPath: './tsconfig.json',
@@ -15,6 +20,7 @@ export default eslint9({
       'ts/no-unsafe-argument': 'off',
       'ts/no-unsafe-return': 'off',
       'ts/no-unsafe-function-type': 'off',
+      'ts/no-unsafe-return': 'off'
     },
   },
 })
