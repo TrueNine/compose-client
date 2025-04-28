@@ -1,7 +1,7 @@
 import type { dynamic } from '@compose/types'
 import type { App } from 'vue'
 
-interface VueComponentInstanceMapping {
+export interface VueComponentInstanceMapping {
   name?: string
   __name?: string
   [key: string]: unknown
