@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils'
-import { afterEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, describe, expect, it } from 'vitest'
 import { defineComponent, markRaw, nextTick, ref } from 'vue'
 import { z } from 'zod'
 import YForm from '../../form'

@@ -1,8 +1,8 @@
 import YField from '@/field/index'
 import YForm from '@/form/index'
 import { mount } from '@vue/test-utils'
-import { afterEach, describe, expect, it, vi } from 'vitest'
-import { defineComponent, nextTick } from 'vue'
+import { afterEach, describe, expect, it } from 'vitest'
+import { nextTick } from 'vue'
 import { ChildInputComponent } from './components/TestComponents'
 
 afterEach(() => {
