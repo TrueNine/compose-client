@@ -50,7 +50,7 @@ export interface YFormEmits extends ModelValueEmits<dynamic> {
   'update:isValid': [ v: boolean]
   'next': [values?: dynamic, step?: number]
   'submit': [values?: dynamic, step?: number]
-  'reset': [values?: dynamic, isValid?: boolean]
+  'reset': [values?: dynamic]
   'update:everyStep': [values?: dynamic, isValid?: boolean]
   'update:step': [v: number]
   'error': [ctx: InvalidSubmissionContext]

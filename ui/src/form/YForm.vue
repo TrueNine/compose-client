@@ -18,89 +18,96 @@ const props = withDefaults(defineProps<YFormProps>(), {
   initValue: void 0,
 })
 
-const emits = defineEmits<YFormEmits>()
+const emit = defineEmits<YFormEmits>()
 defineSlots<YFormSlots>()
-const __schema = useVModel(props, 'schema', emits, { passive: true })
-const _schema = computed(() => {
-  const s = __schema.value
-  if (s instanceof ZodType) {
-    return zodToTypedSchema(s)
+
+// 处理表单验证模式
+const schemaModel = useVModel(props, 'schema', emit, { passive: true })
+const validationSchema = computed(() => {
+  const schema = schemaModel.value
+  if (schema instanceof ZodType) {
+    return zodToTypedSchema(schema)
   }
-  if (s instanceof ObjectSchema) {
-    return yupToTypedSchema(s)
+  if (schema instanceof ObjectSchema) {
+    return yupToTypedSchema(schema)
   }
-  return s
+  return schema
 })
-const _modelValue = useVModel(props, 'modelValue', emits)
-const usedForm = useForm({
+
+// 处理表单数据
+const formValues = useVModel(props, 'modelValue', emit, { passive: true })
+const form = useForm({
   name: props.name,
-  validationSchema: _schema,
-  initialValues: _modelValue,
+  validationSchema,
+  initialValues: formValues,
 })
-const submitHandler = usedForm.handleSubmit(
+
+// 表单提交处理
+const handleFormSubmit = form.handleSubmit(
   (values) => {
-    emits('submit', values, props.step)
+    emit('submit', values, props.step)
   },
   (ctx) => {
-    emits('error', ctx)
+    emit('error', ctx)
   },
 )
 
 function handleSubmit(e?: Event) {
-  void submitHandler(e)
+  void handleFormSubmit(e)
 }
 
 // 对输入的值进行特殊处理
 function processFormValues(newValue: dynamic) {
-  usedForm.setValues(newValue)
+  form.setValues(newValue)
 }
 
 // 防止循环更新的标志
-const isUpdatingFormModelValue = ref(false)
-watch(_modelValue, (v) => {
-  if (isUpdatingFormModelValue.value) {
+const isUpdating = ref(false)
+watch(formValues, (v) => {
+  if (isUpdating.value) {
     return
   }
-  isUpdatingFormModelValue.value = true
+  isUpdating.value = true
   processFormValues(v)
   void nextTick(() => {
-    isUpdatingFormModelValue.value = false
+    isUpdating.value = false
   })
 }, { deep: true })
 
-watch(usedForm.values, (v) => {
+watch(form.values, (v) => {
   // 避免循环更新
-  if (isUpdatingFormModelValue.value || v === _modelValue.value) {
+  if (isUpdating.value || v === formValues.value) {
     return
   }
 
-  isUpdatingFormModelValue.value = true
-  _modelValue.value = v
+  isUpdating.value = true
+  formValues.value = v
   void nextTick(() => {
-    isUpdatingFormModelValue.value = false
+    isUpdating.value = false
   })
 }, { deep: true })
 
-const exposed: YFormInjection = {
-  getForm: () => usedForm,
+const formContext: YFormInjection = {
+  getForm: () => form,
   setFieldValidate: () => {
     throw new Error('Framework UnImplementation setFieldValidate')
   },
   validate: async () => {
-    return (await usedForm.validate()).valid
+    return (await form.validate()).valid
   },
 }
 
-provide(YFormInjectionKey, exposed)
+provide(YFormInjectionKey, formContext)
 
 function handleReset() {
-  usedForm.handleReset()
+  emit('reset', form.values)
+  form.handleReset()
 }
 
 setTimeout(() => {
-  void usedForm.setFieldError('a.b', 'error')
+  void form.setFieldError('a.b', 'error')
 }, 2000)
-defineExpose(exposed)
+defineExpose(formContext)
 </script>
 
 <template>
@@ -110,17 +117,17 @@ defineExpose(exposed)
 >
   <slot
     :reset="handleReset"
-    :submit="submitHandler"
-    :disabled="Object.keys(usedForm.errorBag.value).length >= 1"
-    :isSubmitting="usedForm.isSubmitting.value"
+    :submit="handleFormSubmit"
+    :disabled="Object.keys(form.errorBag.value).length >= 1"
+    :isSubmitting="form.isSubmitting.value"
     name="default"
   />
   <slot
     name="submit"
     :reset="handleReset"
-    :submit="submitHandler"
-    :disabled="Object.keys(usedForm.errorBag.value).length >= 1"
-    :isSubmitting="usedForm.isSubmitting.value"
+    :submit="handleFormSubmit"
+    :disabled="Object.keys(form.errorBag.value).length >= 1"
+    :isSubmitting="form.isSubmitting.value"
   />
 </form>
 </template>

@@ -239,6 +239,41 @@ describe('yFormTest', () => {
       expect(wrapper.emitted('update:modelValue')).toBeTruthy()
       expect(wrapper.emitted('update:modelValue')?.slice(-1)[0]).toEqual([initialData])
     })
+
+    it('应 正确处理 button type="reset" 触发表单重置事件', async () => {
+      const handleReset = vi.fn()
+      const initialData = { username: 'test' }
+      const userSchema = z.object({
+        username: z.string().min(1, '用户名不能为空'),
+      })
+
+      const wrapper = mount(YForm, {
+        props: {
+          modelValue: { ...initialData },
+          onReset: handleReset,
+          validationSchema: userSchema,
+        },
+        slots: {
+          default: () => <button type="reset" class="reset-button">重置</button>,
+        },
+      })
+
+      await wrapper.setProps({ modelValue: { username: 'changed' } })
+      await nextTick()
+      expect(wrapper.props('modelValue')).toEqual({ username: 'changed' })
+
+      // 直接触发表单的reset事件，而不是点击按钮
+      await wrapper.find('form').trigger('reset')
+      await nextTick()
+
+      // 验证reset事件是否被触发
+      expect(wrapper.emitted('reset')).toBeTruthy()
+      // 验证reset事件参数是否正确
+      expect(wrapper.emitted('reset')?.[0]?.[0]).toEqual({ username: 'test' })
+      // 验证handleReset函数是否被调用
+      expect(handleReset).toHaveBeenCalledTimes(1)
+      expect(handleReset).toHaveBeenCalledWith({ username: 'test' })
+    })
   })
 
   describe('特性 字段名映射 时', () => {
