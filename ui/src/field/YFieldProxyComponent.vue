@@ -28,9 +28,6 @@ const _modelNames = computed(() => {
   if (len === 0) {
     return {}
   }
-  if (len === 1) {
-    return { [Object.keys(props.modelNames)[0]]: 'modelValue' }
-  }
   return props.modelNames
 })
 

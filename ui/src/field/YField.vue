@@ -2,7 +2,7 @@
 import type { YFieldEmits, YFieldProps, YFieldSlots } from '@/field/index'
 import { maybeArray } from '@compose/shared'
 import { useVModel } from '@vueuse/core'
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, ref, toValue } from 'vue'
 
 const props = withDefaults(defineProps<YFieldProps>(), {
   modelValue: void 0,
@@ -20,11 +20,13 @@ const _effectModels = computed(() => {
   const names = maybeArray(mo)
   const result: Record<string, string> = {}
   for (let i = 0; i < names.length; i++) {
-    const name = names[i]
+    const name = toValue(names[i])
     if (typeof name === 'string') {
       result[name] = name
     } else {
-      Object.assign(result, name)
+      Object.entries(name).forEach(([key, value]) => {
+        result[key] = value
+      })
     }
   }
   return result
