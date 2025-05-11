@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import type { YSystemBarProps, YVSystemBarEmits, YVSystemBarSlots } from './index'
+import { useVModels } from '@vueuse/core'
+import { computed } from 'vue'
 
 const props = withDefaults(defineProps<YSystemBarProps>(), {
   showAppBar: true,

@@ -1,16 +1,20 @@
 <script setup lang="ts">
+import type { VNode } from 'vue'
+
 import type { YConfigProviderProps } from './index'
 
 import { checkDark, checkLocale } from '@/common/VarletCommon'
 
+import { useDark } from '@vueuse/core'
+import { computed, watch } from 'vue'
+
+import { useTheme } from 'vuetify'
 import {
   ElementPlusDayjs as dayjs,
   ElementPlusEn,
   ElementPlusZhCn,
 } from '../common'
-
 import 'dayjs/locale/zh-cn'
-
 import 'element-plus/theme-chalk/dark/css-vars.css'
 
 const props = withDefaults(defineProps<YConfigProviderProps>(), {
