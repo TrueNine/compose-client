@@ -1,7 +1,7 @@
 import { fileURLToPath, URL } from 'node:url'
 
 import { configureViteFragment } from '@compose/config-vite-fragment'
-import { quasar, transformAssetUrls as quasarTransformAssetUrls } from '@quasar/vite-plugin'
+import { transformAssetUrls as quasarTransformAssetUrls } from '@quasar/vite-plugin'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import unocss from 'unocss/vite'
@@ -60,7 +60,6 @@ export default defineConfig(
         vuetify({
           autoImport: false,
         }),
-        quasar(),
         AutoImport({
           imports: [
             'vue',

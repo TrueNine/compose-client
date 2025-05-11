@@ -1,5 +1,7 @@
 {
-  "extends": ["@compose/tsconfig/tsconfig.json"],
+  "extends": [
+    "@compose/tsconfig/tsconfig.json"
+  ],
   "compilerOptions": {
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.build.tsbuildinfo",
     "jsx": "preserve",
@@ -11,7 +13,6 @@
   "include": [
     "env.d.ts",
     "src/**/*.ts",
-    "src/**/*.d.ts",
-    "src/**/*.vue"
+    "src/**/*.d.ts"
   ]
 }

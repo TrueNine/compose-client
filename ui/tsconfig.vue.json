@@ -1,7 +1,7 @@
 {
   "extends": [
-    "./tsconfig.build.json",
-    "@vue/tsconfig/tsconfig.dom.json"
+    "@vue/tsconfig/tsconfig.dom.json",
+    "./tsconfig.build.json"
   ],
   "compilerOptions": {
     "jsx": "preserve",
@@ -21,11 +21,9 @@
   "include": [
     "imports-auto.d.ts",
     "imports-comp.d.ts",
+    "src/types/**.d.ts",
     "env.d.ts",
     "src/**/*.vue",
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "src/**/*.js",
-    "src/**/*.jsx"
+    "src/**/*.tsx"
   ]
 }
