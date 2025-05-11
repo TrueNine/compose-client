@@ -1,8 +1,6 @@
 export * from './ElementPlusCommon'
-export * from './HighlightJsCommon'
 export { componentInstallToPlugin } from './install'
 export * from './NaiveUICommon'
-export * from './QuasarCommon'
 export * from './VuePropsCommon'
 export * from './VuetifyCommon'
 export * from './Yan100Common'
