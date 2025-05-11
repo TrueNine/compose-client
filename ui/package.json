@@ -1,7 +1,7 @@
 {
   "name": "@compose/ui",
   "type": "module",
-  "version": "1.1.283",
+  "version": "1.1.284",
   "homepage": "https://github.com/TrueNine",
   "repository": {
     "type": "git",
@@ -51,13 +51,13 @@
   },
   "peerDependencies": {
     "@varlet/ui": "latest",
-    "@vee-validate": "latest",
     "@vee-validate/yup": "latest",
     "@vee-validate/zod": "latest",
     "@vueuse/core": "latest",
     "dayjs": "latest",
     "element-plus": "latest",
     "naive-ui": "latest",
+    "vee-validate": "latest",
     "vue": "latest",
     "vuetify": "latest"
   }
