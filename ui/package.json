@@ -50,15 +50,15 @@
     "pub": "run-s build pub-c"
   },
   "peerDependencies": {
-    "@varlet/ui": "latest",
-    "@vee-validate/yup": "latest",
-    "@vee-validate/zod": "latest",
-    "@vueuse/core": "latest",
-    "dayjs": "latest",
-    "element-plus": "latest",
-    "naive-ui": "latest",
-    "vee-validate": "latest",
-    "vue": "latest",
-    "vuetify": "latest"
+    "@varlet/ui": "*",
+    "@vee-validate/yup": "*",
+    "@vee-validate/zod": "*",
+    "@vueuse/core": "*",
+    "dayjs": "*",
+    "element-plus": "*",
+    "naive-ui": "*",
+    "vee-validate": "*",
+    "vue": "*",
+    "vuetify": "*"
   }
 }
