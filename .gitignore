@@ -30,3 +30,9 @@ dist
 ### 某些临时文件
 vite.config.ts.timestamp**
 /playground
+
+### AI Coding ###
+.cursorrules
+/.cursor/
+.cursorignore
+/.lingma/
