@@ -2,7 +2,6 @@ import type { VueElement } from 'vue'
 
 import { createApp } from 'vue'
 import { createVuetifyMount } from '../src/common'
-import { naiveStyleAdaptor } from '../src/index'
 import App from './App.vue'
 import { Router } from './router'
 import '@mdi/font/css/materialdesignicons.css'
@@ -13,7 +12,6 @@ import 'uno.css'
 const a = createVuetifyMount((r) => Object.assign({}, r))
 
 function setupApp(): void {
-  naiveStyleAdaptor()
   const createdApp = createApp(App as unknown as VueElement)
   createdApp.use(a)
   createdApp.use(Router)
