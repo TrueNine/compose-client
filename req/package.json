@@ -1,7 +1,7 @@
 {
   "name": "@compose/req",
   "type": "module",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "requester",
   "author": "TrueNine",
   "license": "private",
@@ -20,8 +20,14 @@
     "lint": "eslint --fix",
     "build-c": "vite build",
     "type-check": "vue-tsc --noEmit",
-    "build": "run-s type-check lint build-c",
-    "pub-c": "pnpm --dir dist pub",
-    "pub": "run-s build pub-c"
+    "build": "run-s type-check lint build-c"
+  },
+  "peerDependencies": {
+    "@compose/shared": "workspace:^",
+    "@compose/types": "workspace:^"
+  },
+  "devDependencies": {
+    "@compose/config-vite": "workspace:^",
+    "jsdom": "catalog:vitest"
   }
 }
