@@ -47,7 +47,7 @@
     "@tsconfig/node22": "catalog:",
     "@types/node": "catalog:types",
     "eslint": "catalog:eslint",
-    "vitest": "catalog:",
+    "vitest": "catalog:vitest",
     "npm-run-all2": "catalog:",
     "typescript": "catalog:",
     "vite": "catalog:vite",
