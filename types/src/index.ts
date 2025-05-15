@@ -29,11 +29,6 @@ export * from './kotlin'
 export * from './map'
 
 /**
- * 外部依赖类型
- */
-export * from './reference'
-
-/**
  * # 网络标记库
  */
 export * from './request'
