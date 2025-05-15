@@ -1,7 +1,7 @@
-import eslint9 from '@compose/eslint9-config'
+import { antfu } from '@antfu/eslint-config'
 
-export default eslint9({
-  pnpm: true,
+export default antfu({
+  pnpm: false,
   ignores: [
     '**/*',
     '!vitest.workspace.ts',

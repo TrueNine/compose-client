@@ -1,7 +1,7 @@
 {
   "name": "@compose/eslint9-config",
   "type": "module",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -25,22 +25,18 @@
     "lint": "eslint --fix",
     "build-c": "vite build",
     "type-check": "vue-tsc --noEmit",
-    "build": "run-s type-check lint build-c",
-    "pub-c": "pnpm --dir dist pub",
-    "pub": "run-s build pub-c"
+    "build": "run-s type-check lint build-c"
   },
   "peerDependencies": {
-    "@antfu/eslint-config": "*",
-    "@eslint/js": "*",
-    "@unocss/eslint-config": "*",
-    "@vue/eslint-config-prettier": "*",
-    "@vue/eslint-config-typescript": "*",
-    "eslint": "*",
-    "eslint-plugin-prettier": "*",
-    "eslint-plugin-vue": "*",
-    "prettier": "*",
-    "typescript-eslint": "*",
-    "vite": "*",
-    "vue-tsc": "*"
+    "@antfu/eslint-config": "catalog:eslint",
+    "@eslint/js": "catalog:eslint",
+    "@unocss/eslint-config": "catalog:unocss",
+    "@vue/eslint-config-prettier": "catalog:eslint",
+    "@vue/eslint-config-typescript": "catalog:eslint",
+    "eslint": "catalog:eslint",
+    "eslint-plugin-prettier": "catalog:eslint",
+    "eslint-plugin-vue": "catalog:eslint",
+    "prettier": "catalog:",
+    "typescript-eslint": "catalog:eslint"
   }
 }

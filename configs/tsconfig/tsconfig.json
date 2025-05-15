@@ -1,7 +1,4 @@
 {
-  "include": [
-    "tsconfig.json"
-  ],
   "compilerOptions": {
     "skipLibCheck": true,
     "strict": true,

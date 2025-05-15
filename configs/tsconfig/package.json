@@ -1,11 +1,20 @@
 {
   "name": "@compose/tsconfig",
-  "version": "1.0.3",
+  "version": "1.0.4",
+  "sideEffects": false,
   "exports": {
+    ".": {
+      "types": "./tsconfig.json",
+      "import": "./tsconfig.json",
+      "require": "./tsconfig.json"
+    },
+    "./*": "./*",
     "./tsconfig.json": "./tsconfig.json"
   },
   "main": "tsconfig.json",
-  "scripts": {
-    "pub": "pnpm publish --no-git-checks --ignore-scripts"
+  "peerDependencies": {
+    "@tsconfig/node22": "catalog:",
+    "@types/node": "catalog:types",
+    "@vue/tsconfig": "catalog:vue"
   }
 }

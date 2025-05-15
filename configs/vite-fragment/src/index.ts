@@ -91,7 +91,7 @@ export function configureViteFragment(
     ...generatedBuildOptions,
   }
 
-  const generatedPlugins = [dtsPlugin].filter(Boolean) as Plugin[]
+  const generatedPlugins = [dtsPlugin].filter(Boolean)
 
   const basePluginsArray = (
     Array.isArray(baseConfig.plugins)

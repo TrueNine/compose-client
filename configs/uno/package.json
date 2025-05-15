@@ -1,7 +1,7 @@
 {
   "name": "@compose/config-uno",
   "type": "module",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "uno css code snippets",
   "author": "TrueNine",
   "license": "private",
@@ -20,8 +20,14 @@
     "build": "run-s type-check lint build-c",
     "lint": "eslint --fix",
     "build-c": "vite build",
-    "type-check": "vue-tsc --noEmit",
-    "pub": "run-s build pub-c",
-    "pub-c": "pnpm --dir ./dist pub"
+    "type-check": "vue-tsc --noEmit"
+  },
+  "peerDependencies": {
+    "@unocss/transformer-attributify-jsx": "catalog:unocss",
+    "@unocss/transformer-compile-class": "catalog:unocss",
+    "unocss": "catalog:unocss"
+  },
+  "devDependencies": {
+    "@compose/config-vite": "workspace:^"
   }
 }

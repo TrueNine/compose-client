@@ -8,7 +8,9 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "types": ["node"]
+    "types": ["node"],
+    "strict": true,
+    "strictNullChecks": true
   },
   "include": [
     "src/**/*.ts",

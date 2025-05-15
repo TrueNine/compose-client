@@ -108,6 +108,10 @@ export const defaultJsConfig: AntFuJsConfig = {
 
 export const defaultTsConfig: AntFuTsConfig = {
   overrides: {
+    'ts/no-unsafe-assignment': 'off',
+    'ts/no-unsafe-call': 'off',
+    'ts/no-unsafe-argument': 'off',
+    'ts/no-unsafe-return': 'off',
     'ts/member-ordering': ['error'],
     'ts/no-extra-non-null-assertion': 'error',
     'ts/no-non-null-assertion': 'error',
