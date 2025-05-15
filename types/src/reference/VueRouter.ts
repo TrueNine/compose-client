@@ -1,6 +1,6 @@
-import type { dynamic } from '@/typescripts'
-
 import type { RouteMeta, RouteRecordRedirectOption } from 'vue-router'
+
+import type { dynamic } from '@/typescripts'
 
 interface AutoRouterPageConfig {
   title?: string
