@@ -1,8 +1,8 @@
 {
   "name": "@compose/shared",
   "type": "module",
-  "version": "1.2.0",
-  "description": "yan100 js dev kit",
+  "version": "1.2.1",
+  "description": "共享工具包",
   "author": "TrueNine",
   "license": "private",
   "homepage": "https://github.com/TrueNine",
@@ -37,16 +37,22 @@
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
-    "dist",
-    "src"
+    "dist"
   ],
   "scripts": {
     "test": "vitest run",
     "lint": "eslint --fix",
     "build-c": "vite build",
     "type-check": "vue-tsc --noEmit",
-    "build": "run-s type-check lint build-c",
-    "pub-c": "pnpm --dir dist pub",
-    "pub": "run-s build pub-c"
+    "build": "run-s type-check lint build-c"
+  },
+  "peerDependencies": {
+    "@compose/types": "workspace:^"
+  },
+  "dependencies": {
+    "@compose/types": "workspace:^"
+  },
+  "devDependencies": {
+    "@compose/config-vite": "workspace:^"
   }
 }
