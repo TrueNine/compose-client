@@ -1,11 +1,11 @@
-import type { YFormSlotsSubMitProps } from '@/form/types'
 import type { dynamic } from '@compose/types'
-import YField from '@/field/index'
-import YForm from '@/form/index'
+import type { YFormSlotsSubMitProps } from '@/form/types'
 import { mount } from '@vue/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import { defineComponent, nextTick, ref } from 'vue'
 import { z } from 'zod'
+import YField from '@/field/index'
+import YForm from '@/form/index'
 
 // 测试用子组件，模拟一个简单的输入控件
 const InputComponent = defineComponent({

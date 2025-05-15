@@ -1,7 +1,7 @@
-import type { FormFieldEmits, FormFieldProps } from '@/common/VuePropsCommon'
 import type { dynamic, Maybe } from '@compose/types'
-
 import type { VNode } from 'vue'
+
+import type { FormFieldEmits, FormFieldProps } from '@/common/VuePropsCommon'
 import { componentInstallToPlugin } from '@/common'
 
 import YField from './YField.vue'

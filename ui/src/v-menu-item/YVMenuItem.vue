@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { YVMenuItemProps, YVMenuItemSlots } from '@/v-menu-item/index'
 import type { bool, late, RouteOption } from '@compose/types'
+import type { YVMenuItemProps, YVMenuItemSlots } from '@/v-menu-item/index'
 
-import YVMenuItem from '@/v-menu-item/YVMenuItem.vue'
 import { isNonNil } from '@compose/shared'
+import YVMenuItem from '@/v-menu-item/YVMenuItem.vue'
 
 const props = withDefaults(defineProps<YVMenuItemProps>(), {
   pathPrefix: '',

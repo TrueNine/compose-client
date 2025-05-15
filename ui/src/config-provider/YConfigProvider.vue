@@ -3,12 +3,12 @@ import type { VNode } from 'vue'
 
 import type { YConfigProviderProps } from './index'
 
-import { checkDark, checkLocale } from '@/common/VarletCommon'
-
 import { useDark } from '@vueuse/core'
-import { computed, watch } from 'vue'
 
+import { computed, watch } from 'vue'
 import { useTheme } from 'vuetify'
+
+import { checkDark, checkLocale } from '@/common/VarletCommon'
 import {
   ElementPlusDayjs as dayjs,
   ElementPlusEn,

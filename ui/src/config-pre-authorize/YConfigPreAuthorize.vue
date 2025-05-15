@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { PreAuthorizeInjection } from '@/common'
 import type { YConfigPreAuthorizeProps } from '.'
-import { PreAuthorizeInjectionSymbol } from '@/common'
+import type { PreAuthorizeInjection } from '@/common'
 import { maybeArray } from '@compose/shared'
+import { PreAuthorizeInjectionSymbol } from '@/common'
 
 const props = withDefaults(defineProps<YConfigPreAuthorizeProps>(), {
   authedProvider: () => false,

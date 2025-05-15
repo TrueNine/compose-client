@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import type { YPreAuthorizeProps } from '.'
 
-import { usePreAuthorize } from '@/common'
-
 import { isNil } from '@compose/shared/tools'
+
+import { usePreAuthorize } from '@/common'
 
 const props = withDefaults(defineProps<YPreAuthorizeProps>(), {
   authed: void 0,
