@@ -28,6 +28,7 @@
   },
   "devDependencies": {
     "@compose/config-vite": "workspace:^",
+    "@types/jsdom": "catalog:vitest",
     "jsdom": "catalog:vitest"
   }
 }
