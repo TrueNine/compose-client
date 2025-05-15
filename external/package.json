@@ -1,8 +1,8 @@
 {
   "name": "@compose/external",
   "type": "module",
-  "version": "31.0.2",
-  "description": "yan100 extensions functions and apis",
+  "version": "31.0.3",
+  "description": "外部 API 封装",
   "author": "TrueNine",
   "license": "private",
   "homepage": "https://github.com/TrueNine",
@@ -56,19 +56,27 @@
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
-    "dist",
-    "src"
+    "dist"
   ],
   "scripts": {
     "test": "vitest run",
     "lint": "eslint --fix",
     "build-c": "vite build",
     "type-check": "vue-tsc --noEmit",
-    "build": "run-s type-check lint build-c",
-    "pub-c": "pnpm --dir dist pub",
-    "pub": "run-s build pub-c"
+    "build": "run-s type-check lint build-c"
+  },
+  "peerDependencies": {
+    "@compose/shared": "workspace:^",
+    "@compose/types": "workspace:^",
+    "@types/lodash-es": "catalog:types",
+    "dayjs": "catalog:",
+    "libarchive.js": "catalog:",
+    "lodash-es": "catalog:",
+    "pdfjs-dist": "catalog:",
+    "vue": "catalog:vue",
+    "vue-router": "catalog:vue"
   },
   "devDependencies": {
-    "@edge-runtime/vm": "catalog:"
+    "@compose/config-vite": "workspace:^"
   }
 }

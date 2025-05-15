@@ -1,5 +1,5 @@
 import { fileURLToPath, URL } from 'node:url'
-import { configureViteFragment } from '@compose/config-vite-fragment'
+import { configureViteFragment } from '@compose/config-vite'
 import { defineConfig } from 'vite'
 
 export default defineConfig(
@@ -14,7 +14,6 @@ export default defineConfig(
           'libarchive-js/index.ts',
           'pdfjs-dist/index.ts',
           'vue/index.ts',
-          'pino/index.ts',
           'vue-router/index.ts',
         ],
       },

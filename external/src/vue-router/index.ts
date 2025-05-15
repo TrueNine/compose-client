@@ -1,5 +1,17 @@
-import type { AutoRouterConfig, Maybe } from '@compose/types'
+import type { Maybe } from '@compose/types'
 import type { RouteRecordRaw, RouteRecordSingleView } from 'vue-router'
+
+/**
+ * 自动路由配置类型
+ * @property meta 路由元信息
+ * @property redirect 路由重定向
+ * @property children 子路由
+ */
+export interface AutoRouterConfig {
+  meta?: Record<string, unknown>
+  redirect?: string
+  children?: RouteRecordRaw[]
+}
 
 // 路径常量
 const STR_EMPTY = ''
