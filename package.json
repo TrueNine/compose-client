@@ -39,7 +39,7 @@
     "build:psdk": "run-p build:psdk:tmap build:psdk:wxpa",
     "build:apps": "run-p build:psdk build:ext build:external build:req build:ui",
     "build": "run-s build:configs build:shareds build:apps",
-    "prepare1": "run-s lint build"
+    "prepare": "run-s lint build"
   },
   "devDependencies": {
     "@compose/eslint9-config": "workspace:*",
