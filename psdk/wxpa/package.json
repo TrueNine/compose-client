@@ -1,7 +1,7 @@
 {
   "name": "@compose/psdk-wxpa",
   "type": "module",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "wxpa js-sdk defined",
   "author": "TrueNine",
   "license": "private",
@@ -20,8 +20,13 @@
     "lint": "eslint --fix",
     "build-c": "vite build",
     "type-check": "vue-tsc --noEmit",
-    "build": "run-s type-check lint build-c",
-    "pub-c": "pnpm --dir dist pub",
-    "pub": "run-s build pub-c"
+    "build": "run-s type-check lint build-c"
+  },
+  "peerDependencies": {
+    "@compose/external": "workspace:^",
+    "@compose/types": "workspace:^"
+  },
+  "devDependencies": {
+    "@compose/config-vite": "workspace:^"
   }
 }
