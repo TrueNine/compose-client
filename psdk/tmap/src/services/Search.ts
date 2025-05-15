@@ -1,5 +1,5 @@
-import type { SearchOptions } from '@/options'
 import type { TMapService } from '../types'
+import type { SearchOptions } from '@/options'
 
 type SearchNearbyOptions = TMapService['SearchNearbyOptions']
 type SearchResult = TMapService['SearchResult']

@@ -1,8 +1,8 @@
-import type { ConfigOptions } from '@/config'
 import type { clip } from '@compose/types'
+import type { ConfigOptions } from '@/config'
 
-import { AllJsApiList } from '@/common/JsApiList'
 import { loadRemoteScriptTag } from '@compose/external/browser/document'
+import { AllJsApiList } from '@/common/JsApiList'
 
 export const WXPA_SCRIPT_URL = 'https://res.wx.qq.com/open/js/jweixin-1.6.0.js'
 

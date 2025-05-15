@@ -1,5 +1,5 @@
-import type { JsApiListMap, OpenTagListMap } from '@/common'
 import type { timestamp } from '@compose/types'
+import type { JsApiListMap, OpenTagListMap } from '@/common'
 
 export interface ConfigOptions {
   debug?: boolean
