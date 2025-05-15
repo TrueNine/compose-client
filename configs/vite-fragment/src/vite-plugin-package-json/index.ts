@@ -1,6 +1,6 @@
-import type { PackageJson } from '@/types'
 import type { OutputAsset } from 'rollup'
 import type { LibraryFormats, Plugin } from 'vite'
+import type { PackageJson } from '@/types'
 import fs from 'node:fs'
 import path from 'node:path'
 import process from 'node:process'

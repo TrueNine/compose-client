@@ -7,11 +7,14 @@ import { mergeConfig } from 'vite'
 import { Externals as defaultExternals } from './externals'
 import { BuildConfigLib } from './lib'
 import { createDtsPlugin } from './vite-plugin-dts'
-import { PackageJsonGeneratorPlugin } from './vite-plugin-package-json'
 
 export interface ViteFragmentOptions {
   lib?: BuildLibraryConfigOptions
   dts?: boolean | Omit<SimpleDtsOptions, 'entry'>
+  /**
+   * @deprecated 不再自动处理 package.json
+   * @see https://pnpm.io/catalogs
+   */
   packageJson?: Omit<PackageJsonOptions, 'entry' | 'formats'>
   additionalExternals?: (string | RegExp)[]
   additionalPlugins?: PluginOption[]
@@ -83,26 +86,12 @@ export function configureViteFragment(
     })
   }
 
-  const packageJsonDefaults: Omit<PackageJsonOptions, 'entry' | 'formats'> = {
-    buildTool: 'pnpm',
-    dts: options.packageJson?.dts ?? (options.dts !== false && options.dts !== void 0) ?? true,
-  }
-
-  const finalPackageJsonOptions: PackageJsonOptions = {
-    ...packageJsonDefaults,
-    ...options.packageJson,
-    entry: resolvedEntryArray,
-    formats: mergedLibOptions.formats,
-  }
-
-  const packageJsonPlugin = PackageJsonGeneratorPlugin(finalPackageJsonOptions as Omit<PackageJsonOptions, 'content'>)
-
   const mergedBuildOptions: BuildOptions = {
     ...baseConfig.build,
     ...generatedBuildOptions,
   }
 
-  const generatedPlugins = [dtsPlugin, packageJsonPlugin].filter(Boolean) as Plugin[]
+  const generatedPlugins = [dtsPlugin].filter(Boolean) as Plugin[]
 
   const basePluginsArray = (
     Array.isArray(baseConfig.plugins)
