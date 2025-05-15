@@ -1,8 +1,8 @@
 import { readFileSync } from 'node:fs'
 
-import { getImageData } from '@/browser/document'
-
 import { describe, it } from 'vitest'
+
+import { getImageData } from '@/browser/document'
 
 describe('browser tests', () => {
   it('test getImageData', async () => {

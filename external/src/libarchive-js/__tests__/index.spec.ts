@@ -1,9 +1,9 @@
 import { readFileSync } from 'node:fs'
 import * as path from 'node:path'
 
-import { extract } from '@/libarchive-js'
-
 import { describe, expect, it } from 'vitest'
+
+import { extract } from '@/libarchive-js'
 
 describe('test libarchive.js', () => {
   it('test libarchive.js', async () => {
