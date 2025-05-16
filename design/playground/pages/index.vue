@@ -46,7 +46,9 @@ function goTo(path: string) {
         color="primary"
         @click="goTo(r.path)"
       >
-        <VIcon color="primary" class="mr-2">{{ getIcon(r.path) }}</VIcon>
+        <VIcon color="primary" class="mr-2">
+          {{ getIcon(r.path) }}
+        </VIcon>
         <VListItemTitle>{{ r.path }}</VListItemTitle>
       </VListItem>
     </VList>
