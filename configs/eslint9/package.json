@@ -1,7 +1,8 @@
 {
   "name": "@compose/eslint9-config",
   "type": "module",
-  "version": "1.0.6",
+  "version": "1.0.7",
+  "license": "LGPL-2.1-or-later",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
