@@ -1,10 +1,10 @@
 {
   "name": "@compose/psdk-wxpa",
   "type": "module",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "wxpa js-sdk defined",
   "author": "TrueNine",
-  "license": "private",
+  "license": "LGPL-2.1-or-later",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
