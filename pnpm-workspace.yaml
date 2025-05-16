@@ -90,6 +90,7 @@ catalogs:
     vue-router: ^4.5.1
     vue-tsc: ^2.2.10
   vuetify:
+    '@mdi/font': ^7.4.47
     vite-plugin-vuetify: ^2.1.1
     vuetify: ^3.8.5
   vueuse:
