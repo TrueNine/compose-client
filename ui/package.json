@@ -57,6 +57,7 @@
     "@iconify-json/ion": "catalog:iconify",
     "@iconify-json/mdi": "catalog:iconify",
     "@iconify-json/simple-icons": "catalog:iconify",
+    "@mdi/font": "catalog:vuetify",
     "@varlet/ui": "catalog:",
     "@vee-validate/yup": "catalog:vee-validate",
     "@vee-validate/zod": "catalog:vee-validate",

@@ -15,10 +15,6 @@
     "vite.config.*",
     "vitest.config.*",
     "uno.config.*",
-    "cypress.config.*",
-    "nightwatch.conf.*",
-    "playwright.config.*",
-    "eslint.config.*",
     "eslint.config.*"
   ]
 }
