@@ -1,0 +1,29 @@
+{
+  "extends": [
+    "@vue/tsconfig/tsconfig.dom.json",
+    "./tsconfig.build.json"
+  ],
+  "compilerOptions": {
+    "jsx": "preserve",
+    "jsxImportSource": "vue",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    },
+    "types": [
+      "./env.d.ts",
+      "./.types/imports-auto.d.ts",
+      "./.types/imports-comp.d.ts"
+    ]
+  },
+  "include": [
+    "./.types/imports-auto.d.ts",
+    "./.types/imports-comp.d.ts",
+    "src/types/**.d.ts",
+    "env.d.ts",
+    "src/**/*.vue",
+    "src/**/*.tsx"
+  ]
+}

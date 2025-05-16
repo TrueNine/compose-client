@@ -1,0 +1,54 @@
+{
+  "name": "@compose/design",
+  "type": "module",
+  "version": "0.0.1",
+  "packageManager": "pnpm@10.11.0",
+  "description": "百研科技 AI UI 设计器",
+  "author": "TrueNine",
+  "license": "LGPL-2.1-or-later",
+  "keywords": [
+    "design",
+    "ui",
+    "design-tool",
+    "ai-design-tool",
+    "ai-ui-design-tool"
+  ],
+  "scripts": {
+    "test": "vitest run",
+    "dev": "vite",
+    "lint": "eslint --fix",
+    "build-c": "vite build",
+    "build-g": "gulp -f __build-src__/index.js",
+    "type-check": "vue-tsc --noEmit",
+    "build": "run-s type-check lint test build-c build-g"
+  },
+  "peerDependencies": {
+    "@mdi/font": "catalog:vuetify",
+    "unocss": "catalog:unocss",
+    "vue": "catalog:vue",
+    "vuetify": "catalog:vuetify"
+  },
+  "devDependencies": {
+    "@compose/config-uno": "workspace:^",
+    "@compose/config-vite": "workspace:^",
+    "@unocss/cli": "catalog:unocss",
+    "@unocss/postcss": "catalog:unocss",
+    "@vitejs/plugin-vue": "catalog:vite",
+    "@vitejs/plugin-vue-jsx": "catalog:vite",
+    "@vue/tsconfig": "catalog:vue",
+    "autoprefixer": "catalog:",
+    "cssnano": "catalog:cssnano",
+    "cssnano-preset-advanced": "catalog:cssnano",
+    "gulp": "catalog:gulp",
+    "gulp-postcss": "catalog:gulp",
+    "gulp-sass": "catalog:gulp",
+    "sass": "catalog:",
+    "unplugin-auto-import": "catalog:",
+    "unplugin-fonts": "catalog:",
+    "unplugin-vue-components": "catalog:",
+    "unplugin-vue-router": "catalog:",
+    "vite-plugin-vue-devtools": "catalog:vite",
+    "vite-plugin-vuetify": "catalog:vuetify",
+    "vue-router": "catalog:vue"
+  }
+}

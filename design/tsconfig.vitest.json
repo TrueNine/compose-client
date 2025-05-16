@@ -1,0 +1,19 @@
+{
+  "extends": [
+    "./tsconfig.build.json",
+    "./tsconfig.vue.json"
+  ],
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.vitest.tsbuildinfo",
+    "jsx": "preserve",
+    "jsxImportSource": "vue",
+    "lib": [],
+    "types": [
+      "node"
+    ]
+  },
+  "include": [
+    "src/**/__tests__/**/*.{spec,test}.{ts,tsx}",
+    "env.d.ts"
+  ]
+}
