@@ -1,7 +1,7 @@
 {
   "name": "@compose/eslint9-config",
   "type": "module",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "license": "LGPL-2.1-or-later",
   "exports": {
     ".": {
