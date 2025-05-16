@@ -1,7 +1,7 @@
 {
   "name": "@compose/config-uno",
   "type": "module",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "uno css code snippets",
   "author": "TrueNine",
   "license": "LGPL-2.1-or-later",
@@ -25,7 +25,8 @@
   "peerDependencies": {
     "@unocss/transformer-attributify-jsx": "catalog:unocss",
     "@unocss/transformer-compile-class": "catalog:unocss",
-    "unocss": "catalog:unocss"
+    "unocss": "catalog:unocss",
+    "vue": "catalog:vue"
   },
   "devDependencies": {
     "@compose/config-vite": "workspace:^"
