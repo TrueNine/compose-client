@@ -1,7 +1,7 @@
 {
   "name": "@compose/config-uno",
   "type": "module",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "uno css code snippets",
   "author": "TrueNine",
   "license": "LGPL-2.1-or-later",
