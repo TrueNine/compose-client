@@ -47,7 +47,7 @@ const DEFAULT_OPTIONS: Required<SimpleDtsOptions> = {
   excludes: [],
   sourcemap: false,
   strict: true,
-  logLevel: 'error',
+  logLevel: 'info',
 }
 
 /**
