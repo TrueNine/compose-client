@@ -23,6 +23,7 @@
     "build": "run-s type-check lint test build-c build-g"
   },
   "peerDependencies": {
+    "@compose/vue": "workspace:^",
     "@mdi/font": "catalog:vuetify",
     "unocss": "catalog:unocss",
     "vue": "catalog:vue",
