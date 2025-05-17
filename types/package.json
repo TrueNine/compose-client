@@ -1,7 +1,7 @@
 {
   "name": "@compose/types",
   "type": "module",
-  "version": "2.1.2",
+  "version": "2.1.3",
   "description": "yan100 client ui kit",
   "author": "TrueNine",
   "license": "LGPL-2.1-or-later",

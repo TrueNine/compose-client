@@ -11,7 +11,7 @@ export * from './datetime'
 /**
  * 枚举类型
  */
-export * from './enums/index copy'
+export * from './enums'
 
 /**
  * 语言 国际化
