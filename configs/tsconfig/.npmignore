@@ -1,1 +1,4 @@
 eslint.config.*
+
+# 忽略 turbo 缓存目录
+.turbo
