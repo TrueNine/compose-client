@@ -34,11 +34,6 @@ export * from './map'
 export * from './request'
 
 /**
- * 与安全相关的一系列定义
- */
-export * from './security'
-
-/**
  * 样式相关定义
  */
 export * from './stylesheet'
