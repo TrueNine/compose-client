@@ -1,9 +1,33 @@
 {
-  "extends": "./tsconfig.vue.json",
+  "extends": [
+    "@vue/tsconfig/tsconfig.dom.json",
+    "./tsconfig.build.json"
+  ],
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.playground.tsbuildinfo",
+    "jsx": "preserve",
+    "jsxImportSource": "vue",
+    "lib": ["ESNext", "DOM"],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    },
+    "types": [
+      "./env.d.ts",
+      "./.types/imports-auto.d.ts",
+      "./.types/imports-comp.d.ts"
+    ]
+  },
   "include": [
-    "./.types/imports-typed-router.d.ts",
+    ".types/imports-auto.d.ts",
+    ".types/imports-comp.d.ts",
+    ".types/imports-typed-router.d.ts",
+    "env.d.ts",
+    "src/types/**.d.ts",
     "playground/**/*.ts",
-    "playground/**/*.tsx",
-    "playground/**/*.vue"
+    "playground/**/*.vue",
+    "playground/**/*.tsx"
   ]
 }

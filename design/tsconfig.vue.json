@@ -4,9 +4,10 @@
     "./tsconfig.build.json"
   ],
   "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.vue.tsbuildinfo",
     "jsx": "preserve",
     "jsxImportSource": "vue",
-    "lib": ["ESNext"],
+    "lib": ["ESNext", "DOM"],
     "baseUrl": ".",
     "paths": {
       "@/*": [
@@ -20,10 +21,9 @@
     ]
   },
   "include": [
-    "./.types/imports-auto.d.ts",
-    "./.types/imports-comp.d.ts",
     "src/types/**.d.ts",
     "env.d.ts",
+    "src/**/*.ts",
     "src/**/*.vue",
     "src/**/*.tsx"
   ]

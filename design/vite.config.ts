@@ -63,14 +63,14 @@ export default defineConfig(
             'vue-router',
           ],
           dts: './.types/imports-auto.d.ts',
-          dirs: ['./src', './playground'],
-          exclude: ['dist/**'],
+          dirs: ['./src/components'],
+          exclude: ['./.types/**', './dist/**', './playground/**'],
         }),
         Components({
           dts: '.types/imports-comp.d.ts',
           deep: true,
-          dirs: ['./src', './playground'],
-          exclude: ['dist/**'],
+          dirs: ['./src/components'],
+          exclude: ['dist/**', './playground/**'],
           resolvers: [Vuetify3Resolver()],
         }),
         ViteFonts({
@@ -84,9 +84,9 @@ export default defineConfig(
           },
         }),
       ],
-      dts: { tsconfigPath: './tsconfig.vue.json' },
-      packageJson: {
-        buildTool: 'pnpm',
+      dts: {
+        logLevel: 'info',
+        tsconfigPath: './tsconfig.vue.json',
       },
     },
     {

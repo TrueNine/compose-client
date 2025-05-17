@@ -13,6 +13,14 @@
     "ai-design-tool",
     "ai-ui-design-tool"
   ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./*": "./dist/*",
+    "./unocss": "./dist/unocss.css"
+  },
   "scripts": {
     "test": "vitest run",
     "dev": "vite",
