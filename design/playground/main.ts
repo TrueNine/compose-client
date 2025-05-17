@@ -7,6 +7,7 @@ import { Router } from './router'
 
 import 'vuetify/styles'
 import 'uno.css'
+import '../src/index.scss'
 import '@mdi/font/css/materialdesignicons.css'
 
 function setupApp(): void {
