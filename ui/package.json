@@ -50,6 +50,7 @@
   "peerDependencies": {
     "@compose/shared": "workspace:^",
     "@compose/types": "workspace:^",
+    "@compose/vue": "workspace:^",
     "@date-io/dayjs": "catalog:",
     "@iconify-json/ant-design": "catalog:iconify",
     "@iconify-json/flag": "catalog:iconify",
