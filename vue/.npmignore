@@ -1,0 +1,10 @@
+node_modules
+src
+env.d.ts
+eslint.config.*
+tsconfig.*
+vite.config.*
+vitest.config.*
+
+# 忽略 turbo 缓存目录
+.turbo
