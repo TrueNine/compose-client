@@ -1,7 +1,7 @@
 import type { App, Plugin } from 'vue'
-import YdDeviceFace from './components/device-face'
+import YdDeviceFace from './components/device-face/index'
 
-export * from './components/device-face'
+export * from './components/device-face/index'
 
 const components = {
   YdDeviceFace,
