@@ -1,13 +1,14 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-
 const drawer = ref(false)
 const router = useRouter()
 const route = useRoute()
 
 // 菜单路径数组
-const menuPaths = ['/mobile', '/pad', '/pc']
+const menuPaths = Array.from(
+  new Set(
+    router.getRoutes().map((r) => router.resolve({ path: r.path }).fullPath),
+  ),
+).toSorted()
 
 const menuRoutes = computed(() =>
   menuPaths.filter((path) => router.getRoutes().some((r) => r.path === path)),
@@ -49,24 +50,7 @@ function goTo(path: string) {
   </VNavigationDrawer>
 
   <VMain>
-    <div class="d-flex mt-4 flex-wrap gap-4">
-      <VCard
-        v-for="path in menuRoutes"
-        :key="path"
-        class="menu-card"
-        :elevation="route.path === path ? 8 : 2"
-        :color="route.path === path ? 'primary' : '#f5faff'"
-        style="width: 200px; cursor: pointer; transition: box-shadow 0.2s;"
-        @click="goTo(path)"
-      >
-        <VCardText class="d-flex align-center justify-center" style="height: 60px;">
-          <VIcon :color="route.path === path ? 'white' : 'primary'" class="mr-2">
-            mdi-menu
-          </VIcon>
-          <span :style="{ color: route.path === path ? '#fff' : '#333', fontWeight: 500 }">{{ path }}</span>
-        </VCardText>
-      </VCard>
-    </div>
+    <RouterView />
   </VMain>
 </VApp>
 </template>
