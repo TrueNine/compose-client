@@ -1,0 +1,43 @@
+{
+  "name": "@compose/vue",
+  "type": "module",
+  "version": "0.0.1",
+  "packageManager": "pnpm@10.11.0",
+  "description": "vue 开发工具包",
+  "author": "TrueNine",
+  "license": "LGPL-2.1-or-later",
+  "keywords": [
+    "vue",
+    "compose",
+    "tool"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./Install": {
+      "types": "./dist/Install.d.ts",
+      "import": "./dist/Install.js"
+    }
+  },
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "test": "vitest run",
+    "lint": "eslint --fix",
+    "build-c": "vite build",
+    "type-check": "vue-tsc --noEmit",
+    "build": "run-s type-check lint test build-c"
+  },
+  "peerDependencies": {
+    "@compose/types": "workspace:^",
+    "vue": "catalog:vue"
+  },
+  "devDependencies": {
+    "@compose/config-vite": "workspace:*"
+  }
+}
