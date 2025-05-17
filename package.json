@@ -22,7 +22,9 @@
     "pnpm": ">=10.11.0"
   },
   "scripts": {
-    "lint": "eslint --fix --config ./configs/tsconfig/eslint.config.mjs",
+    "lint": "turbo lint",
+    "type-check": "turbo type-check",
+    "lint:root": "eslint --fix --config ./configs/tsconfig/eslint.config.mjs",
     "build:configs:eslint9": "pnpm --filter ./configs/eslint9... run build",
     "build:configs:vite-fragment": "pnpm --filter ./configs/vite-fragment... run build",
     "build:configs:uno": "pnpm --filter ./configs/uno... run build",
