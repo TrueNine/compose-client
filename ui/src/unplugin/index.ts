@@ -11,7 +11,7 @@ function resolveComponent(name: string): { name: string, from: string, satisfies
   if (/^Y[A-Z]/.exec(name)) {
     return {
       name,
-      from: '@compose/ui/dist/components',
+      from: '@compose/ui/components',
       satisfies: [`@compose/ui/dist/components/${camelTo(name)}/index.css`],
     }
   }

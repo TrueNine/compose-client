@@ -14,7 +14,7 @@ describe('metaUiWebResolver', () => {
     const result = resolve('YButton')
     expect(result).toBeDefined()
     expect(result?.name).toBe('YButton')
-    expect(result?.from).toBe('@compose/ui/dist/components')
+    expect(result?.from).toBe('@compose/ui/components')
     expect(Array.isArray(result?.satisfies)).toBe(true)
     expect(result?.satisfies[0]).toBe('@compose/ui/dist/components/y-button/index.css')
   })
