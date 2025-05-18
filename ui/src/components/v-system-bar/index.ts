@@ -1,7 +1,7 @@
 import type { bool, dynamic } from '@compose/types'
 import { componentInstallToPlugin } from '@/common'
 
-import YIco from '@/ico'
+import YIco from '@/components/ico'
 import _c from './YVSystemBar.vue'
 
 export interface YSystemBarProps {

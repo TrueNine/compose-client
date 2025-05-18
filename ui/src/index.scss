@@ -1,12 +1,14 @@
-@use './config-provider/index' as *;
-@use './el-sider-menu/index' as *;
-@use './el-sider-menu-item/index' as *;
-@use './v-menu/index' as *;
-@use './ico/index' as *;
-@use './pre-authorize/index' as *;
-@use './config-pre-authorize/index' as *;
-@use './pager/index' as *;
+@use './components/config-provider/index' as *;
+@use './components/el-sider-menu/index' as *;
+@use './components/el-sider-menu-item/index' as *;
+@use './components/v-menu/index' as *;
+@use './components/ico/index' as *;
+@use './components/pre-authorize/index' as *;
+@use './components/config-pre-authorize/index' as *;
+@use './components/pager/index' as *;
 
-@use './form/index' as *;
-@use './field/index' as *;
-@use './field-message/index' as *;
+@use './components/form/index' as *;
+@use './components/field/index' as *;
+@use './components/field-message/index' as *;
+
+@use './components/base.scss' as *;

@@ -8,12 +8,12 @@ import { useDark } from '@vueuse/core'
 import { computed, watch } from 'vue'
 import { useTheme } from 'vuetify'
 
-import { checkDark, checkLocale } from '@/common/VarletCommon'
 import {
   ElementPlusDayjs as dayjs,
   ElementPlusEn,
   ElementPlusZhCn,
-} from '../common'
+} from '@/common'
+import { checkDark, checkLocale } from '@/common/VarletCommon'
 import 'dayjs/locale/zh-cn'
 import 'element-plus/theme-chalk/dark/css-vars.css'
 

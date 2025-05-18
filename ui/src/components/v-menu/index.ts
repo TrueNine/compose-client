@@ -1,9 +1,9 @@
 import type { RouteOption } from '@compose/types'
 import { componentInstallToPlugin } from '@/common'
 
-import YIco from '@/ico'
+import YIco from '@/components/ico'
 
-import YVMenuItem from '@/v-menu-item/YVMenuItem.vue'
+import YVMenuItem from '../v-menu-item/YVMenuItem.vue'
 import _c from './YVMenu.vue'
 
 export interface YVMenuProps {

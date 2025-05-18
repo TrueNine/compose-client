@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { YVMenuEmits, YVMenuProps } from '@/v-menu/index'
+import type { YVMenuEmits, YVMenuProps } from './index'
 
 const props = withDefaults(defineProps<YVMenuProps>(), {
   pathPrefix: '',

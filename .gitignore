@@ -21,6 +21,7 @@ node_modules/
 *imports*.d.ts
 vite.config.ts.**
 vitest.config.ts.**
+.types
 
 # vscode check depd files
 target/

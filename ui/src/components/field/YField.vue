@@ -1,5 +1,5 @@
 <script setup lang="tsx">
-import type { YFieldEmits, YFieldProps, YFieldSlots } from '@/field/index'
+import type { YFieldEmits, YFieldProps, YFieldSlots } from './index'
 import { maybeArray } from '@compose/shared'
 import { useVModel } from '@vueuse/core'
 import { computed, onMounted, ref, toValue } from 'vue'
