@@ -9,10 +9,12 @@ function camelTo(str: string, sep = '-'): string {
 
 function resolveComponent(name: string): { name: string, from: string, satisfies: string[] } | undefined {
   if (/^Y[A-Z]/.exec(name)) {
+    // 组件名如 YBtn -> btn, YConfigProvider -> config-provider
+    const kebabName = camelTo(name.slice(1))
     return {
       name,
-      from: '@compose/ui/components',
-      satisfies: [`@compose/ui/dist/components/${camelTo(name)}/index.css`],
+      from: `@compose/ui/components/${kebabName}`,
+      satisfies: [`@compose/ui/dist/components/${kebabName}/index.css`],
     }
   }
 }
