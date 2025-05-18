@@ -1,7 +1,7 @@
 {
   "name": "@compose/ui",
   "type": "module",
-  "version": "1.1.290",
+  "version": "1.1.291",
   "license": "LGPL-2.1-or-later",
   "homepage": "https://github.com/TrueNine",
   "repository": {
@@ -27,6 +27,10 @@
     "./common": {
       "types": "./dist/common/index.d.ts",
       "import": "./dist/common/index.js"
+    },
+    "./components/*": {
+      "types": "./dist/components/*.d.ts",
+      "import": "./dist/components/*.js"
     },
     "./*": "./*",
     "./**": "./**",
