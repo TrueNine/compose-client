@@ -12,8 +12,8 @@ function resolveComponent(name: string): { name: string, from: string, satisfies
     // 组件名如 YBtn -> btn, YConfigProvider -> config-provider
     const kebabName = camelTo(name.slice(1))
     return {
-      name,
-      from: `@compose/ui/components/${kebabName}`,
+      name: 'default',
+      from: `@compose/ui/components/${kebabName}/index`,
       satisfies: [`@compose/ui/dist/components/${kebabName}/index.css`],
     }
   }
