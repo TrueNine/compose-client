@@ -1,7 +1,7 @@
 {
   "name": "@compose/design",
   "type": "module",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "packageManager": "pnpm@10.11.0",
   "description": "百研科技 AI UI 设计器",
   "author": "TrueNine",
