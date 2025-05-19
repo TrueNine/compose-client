@@ -1,7 +1,7 @@
 {
   "name": "@compose/design",
   "type": "module",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "packageManager": "pnpm@10.11.0",
   "description": "百研科技 AI UI 设计器",
   "author": "TrueNine",
@@ -18,7 +18,9 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
+    "./components/*": "./dist/components/*",
     "./*": "./dist/*",
+    "./index.css": "./dist/index.css",
     "./unocss": "./dist/unocss.css"
   },
   "scripts": {
