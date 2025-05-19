@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { YdDeviceFaceEmits, YdDeviceFaceProps } from './index'
-import './index.scss'
 
 const props = withDefaults(defineProps<YdDeviceFaceProps>(), {
   rotate: 0,
