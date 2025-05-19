@@ -1,17 +1,14 @@
 {
-  "extends": "./tsconfig.node.json",
-  "compilerOptions": {
-    "lib": [
-      "ES2020",
-      "DOM"
-    ],
-    "types": [
-      "node"
-    ]
-  },
-  "include": [
-    "src/**/*",
-    "env.d.ts",
-    "vite.config.ts"
-  ]
+  "references": [
+    {
+      "path": "./tsconfig.build.json"
+    },
+    {
+      "path": "./tsconfig.vitest.json"
+    },
+    {
+      "path": "./tsconfig.config.json"
+    }
+  ],
+  "files": []
 }

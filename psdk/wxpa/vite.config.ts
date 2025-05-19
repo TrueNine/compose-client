@@ -8,7 +8,7 @@ export default defineConfig(
       lib: {
         entry: ['index.ts', 'examples/jweixin.example.js'],
       },
-      dts: { tsconfigPath: './tsconfig.node.json' },
+      dts: { tsconfigPath: './tsconfig.build.json' },
       packageJson: {
         buildTool: 'pnpm',
       },
