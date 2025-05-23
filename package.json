@@ -22,7 +22,6 @@
     "pnpm": ">=10.11.0"
   },
   "scripts": {
-    "lint": "turbo lint",
     "type-check": "turbo type-check",
     "lint:root": "eslint --fix --config ./configs/tsconfig/eslint.config.mjs",
     "build:configs:eslint9": "pnpm --filter ./configs/eslint9... run build",
@@ -33,13 +32,13 @@
     "build:shared": "pnpm --filter ./shared... run build",
     "build:vue": "pnpm --filter ./vue... run build",
     "build:shareds": "run-s build:types build:shared build:vue",
-    "build": "run-s build:configs build:shareds",
-    "prepare": "run-s lint build"
+    "build": "run-s build:configs",
+    "postinstall": "run-s build"
   },
   "devDependencies": {
     "@antfu/eslint-config": "catalog:eslint",
-    "@compose/eslint9-config": "workspace:*",
-    "@compose/tsconfig": "workspace:*",
+    "@compose/eslint9-config": "workspace:^",
+    "@compose/tsconfig": "workspace:^",
     "@tsconfig/node22": "catalog:",
     "@types/node": "catalog:types",
     "eslint": "catalog:eslint",
