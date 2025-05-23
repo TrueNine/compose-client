@@ -28,6 +28,12 @@
     "@compose/shared": "workspace:^",
     "@compose/types": "workspace:^"
   },
+  "dependencies": {
+    "@compose/external": "workspace:^",
+    "@compose/req": "workspace:^",
+    "@compose/shared": "workspace:^",
+    "@compose/types": "workspace:^"
+  },
   "devDependencies": {
     "@compose/config-vite": "workspace:^"
   }

@@ -26,6 +26,10 @@
     "@compose/shared": "workspace:^",
     "@compose/types": "workspace:^"
   },
+  "dependencies": {
+    "@compose/shared": "workspace:^",
+    "@compose/types": "workspace:^"
+  },
   "devDependencies": {
     "@compose/config-vite": "workspace:^",
     "@types/jsdom": "catalog:vitest",

@@ -77,6 +77,16 @@
     "vue-router": "catalog:vue"
   },
   "devDependencies": {
-    "@compose/config-vite": "workspace:^"
+    "@vue/tsconfig": "catalog:vue",
+    "@compose/config-vite": "workspace:^",
+    "@compose/shared": "workspace:^",
+    "@compose/types": "workspace:^",
+    "@types/lodash-es": "catalog:types",
+    "dayjs": "catalog:",
+    "libarchive.js": "catalog:",
+    "lodash-es": "catalog:",
+    "pdfjs-dist": "catalog:",
+    "vue": "catalog:vue",
+    "vue-router": "catalog:vue"
   }
 }

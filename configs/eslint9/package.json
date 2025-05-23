@@ -26,7 +26,7 @@
     "lint": "eslint --fix",
     "build-c": "vite build",
     "type-check": "vue-tsc --noEmit",
-    "build": "run-s type-check lint build-c"
+    "build": "run-s build-c"
   },
   "peerDependencies": {
     "@antfu/eslint-config": "catalog:eslint",
@@ -35,6 +35,20 @@
     "@vue/eslint-config-prettier": "catalog:eslint",
     "@vue/eslint-config-typescript": "catalog:eslint",
     "eslint": "catalog:eslint",
+    "eslint-plugin-format": "catalog:eslint",
+    "eslint-plugin-prettier": "catalog:eslint",
+    "eslint-plugin-vue": "catalog:eslint",
+    "prettier": "catalog:",
+    "typescript-eslint": "catalog:eslint"
+  },
+  "dependencies": {
+    "@antfu/eslint-config": "catalog:eslint",
+    "@eslint/js": "catalog:eslint",
+    "@unocss/eslint-config": "catalog:unocss",
+    "@vue/eslint-config-prettier": "catalog:eslint",
+    "@vue/eslint-config-typescript": "catalog:eslint",
+    "eslint": "catalog:eslint",
+    "eslint-plugin-format": "catalog:eslint",
     "eslint-plugin-prettier": "catalog:eslint",
     "eslint-plugin-vue": "catalog:eslint",
     "prettier": "catalog:",

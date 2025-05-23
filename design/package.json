@@ -39,6 +39,13 @@
     "vue": "catalog:vue",
     "vuetify": "catalog:vuetify"
   },
+  "dependencies": {
+    "@compose/vue": "workspace:^",
+    "@mdi/font": "catalog:vuetify",
+    "unocss": "catalog:unocss",
+    "vue": "catalog:vue",
+    "vuetify": "catalog:vuetify"
+  },
   "devDependencies": {
     "@compose/config-uno": "workspace:^",
     "@compose/config-vite": "workspace:^",

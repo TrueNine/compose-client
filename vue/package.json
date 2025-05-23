@@ -37,6 +37,10 @@
     "@compose/types": "workspace:^",
     "vue": "catalog:vue"
   },
+  "dependencies": {
+    "@compose/types": "workspace:^",
+    "vue": "catalog:vue"
+  },
   "devDependencies": {
     "@compose/config-vite": "workspace:*"
   }

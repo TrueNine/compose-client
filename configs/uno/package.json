@@ -28,6 +28,12 @@
     "unocss": "catalog:unocss",
     "vue": "catalog:vue"
   },
+  "dependencies": {
+    "@unocss/transformer-attributify-jsx": "catalog:unocss",
+    "@unocss/transformer-compile-class": "catalog:unocss",
+    "unocss": "catalog:unocss",
+    "vue": "catalog:vue"
+  },
   "devDependencies": {
     "@compose/config-vite": "workspace:^"
   }
