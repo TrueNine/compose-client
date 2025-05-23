@@ -1,6 +1,6 @@
 import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vite'
-import { configureViteFragment } from '../vite-fragment/src/index'
+import { configureViteFragment } from '../vite/src'
 
 export default defineConfig(
   configureViteFragment(
