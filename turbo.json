@@ -4,11 +4,17 @@
     "lint": {
       "outputs": []
     },
+    "test": {
+      "dependsOn": ["^type-check", "^lint"],
+      "outputs": [
+        "test-results/**"
+      ]
+    },
     "type-check": {
       "outputs": []
     },
     "build": {
-      "dependsOn": ["^build"],
+      "dependsOn": ["^type-check", "^lint", "^test", "^build"],
       "outputs": [
         "dist/**"
       ]
