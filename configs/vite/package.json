@@ -62,7 +62,14 @@
     "vite": "catalog:vite",
     "vite-plugin-dts": "catalog:vite"
   },
+  "dependencies": {
+    "rollup": "catalog:rollup",
+    "typescript": "catalog:",
+    "vite": "catalog:vite",
+    "vite-plugin-dts": "catalog:vite"
+  },
   "devDependencies": {
+    "@compose/eslint9-config": "workspace:^",
     "vite-plugin-dts": "catalog:vite"
   }
 }
