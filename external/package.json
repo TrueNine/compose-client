@@ -77,11 +77,11 @@
     "vue-router": "catalog:vue"
   },
   "devDependencies": {
-    "@vue/tsconfig": "catalog:vue",
     "@compose/config-vite": "workspace:^",
     "@compose/shared": "workspace:^",
     "@compose/types": "workspace:^",
     "@types/lodash-es": "catalog:types",
+    "@vue/tsconfig": "catalog:vue",
     "dayjs": "catalog:",
     "libarchive.js": "catalog:",
     "lodash-es": "catalog:",
