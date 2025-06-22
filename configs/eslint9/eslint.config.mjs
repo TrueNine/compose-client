@@ -19,17 +19,7 @@ export default antfu({
     overrides: {
       'no-inline-comments': 'error',
       'unicorn/no-useless-spread': 'error',
-      'import/extensions': ['error', 'never', {
-        'css': 'always',
-        'svg': 'always',
-        'vue': 'always',
-        'json': 'always',
-        'config.ts': 'always',
-        'jpg': 'always',
-        'png': 'always',
-        'tsx': 'always',
-        'jsx': 'always',
-      }],
+
       'curly': ['error', 'all'],
       'no-undefined': 'error',
       'no-cond-assign': ['error', 'always'],
