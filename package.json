@@ -1,7 +1,7 @@
 {
   "name": "compose-client",
   "version": "1.0.9",
-  "packageManager": "pnpm@10.11.0",
+  "packageManager": "pnpm@10.12.1",
   "description": "百研科技前端开发包",
   "author": "TrueNine",
   "license": "LGPL-2.1-or-later",
@@ -19,7 +19,7 @@
   ],
   "engines": {
     "node": ">=22.14.0",
-    "pnpm": ">=10.11.0"
+    "pnpm": ">=10.12.1"
   },
   "scripts": {
     "type-check": "turbo type-check",
