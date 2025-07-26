@@ -1,4 +1,4 @@
-# @compose/eslint9-config
+# @truenine/eslint9-config
 
 ESLint 9 configuration package for Compose Client projects with TypeScript, Vue, and modern JavaScript support.
 
@@ -16,13 +16,13 @@ ESLint 9 configuration package for Compose Client projects with TypeScript, Vue,
 
 ```bash
 # Using pnpm (recommended)
-pnpm add -D @compose/eslint9-config
+pnpm add -D @truenine/eslint9-config
 
 # Using npm
-npm install --save-dev @compose/eslint9-config
+npm install --save-dev @truenine/eslint9-config
 
 # Using yarn
-yarn add -D @compose/eslint9-config
+yarn add -D @truenine/eslint9-config
 ```
 
 ## Usage
@@ -30,7 +30,7 @@ yarn add -D @compose/eslint9-config
 Create an `eslint.config.mjs` file in your project root:
 
 ```javascript
-import eslint9 from '@compose/eslint9-config'
+import eslint9 from '@truenine/eslint9-config'
 
 export default eslint9({
   // Configuration options
@@ -65,7 +65,7 @@ export default eslint9({
 #### Basic Library Configuration
 
 ```javascript
-import eslint9 from '@compose/eslint9-config'
+import eslint9 from '@truenine/eslint9-config'
 
 export default eslint9({
   type: 'lib',
@@ -77,7 +77,7 @@ export default eslint9({
 #### Vue Application Configuration
 
 ```javascript
-import eslint9 from '@compose/eslint9-config'
+import eslint9 from '@truenine/eslint9-config'
 
 export default eslint9({
   type: 'app',
@@ -91,7 +91,7 @@ export default eslint9({
 #### Strict TypeScript Configuration
 
 ```javascript
-import eslint9 from '@compose/eslint9-config'
+import eslint9 from '@truenine/eslint9-config'
 
 export default eslint9({
   typescript: {
