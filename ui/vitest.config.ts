@@ -11,13 +11,13 @@ export default mergeConfig(
       deps: {
         optimizer: {
           web: {
-            include: ['vuetify', 'element-plus'],
+            include: ['vuetify', 'element-plus', 'zod', '@vee-validate/zod'],
           },
         },
       },
       server: {
         deps: {
-          inline: ['vuetify', 'element-plus'],
+          inline: ['vuetify', 'element-plus', 'zod', '@vee-validate/zod'],
         },
       },
       environment: 'jsdom',
