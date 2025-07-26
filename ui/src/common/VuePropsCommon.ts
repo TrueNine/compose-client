@@ -1,4 +1,4 @@
-import type { StrOrNum } from '@compose/types'
+import type { StrOrNum } from '@truenine/types'
 import type { Schema } from 'yup'
 
 /**

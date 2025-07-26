@@ -1,4 +1,4 @@
-import type { timestamp } from '@compose/types'
+import type { timestamp } from '@truenine/types'
 import type { JsApiListMap, OpenTagListMap } from '@/common'
 
 export interface ConfigOptions {

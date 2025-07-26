@@ -1,5 +1,5 @@
 {
-  "name": "@compose/req",
+  "name": "@truenine/req",
   "type": "module",
   "version": "1.0.2",
   "description": "requester",
@@ -26,15 +26,15 @@
     "build": "vite build"
   },
   "peerDependencies": {
-    "@compose/shared": "workspace:^",
-    "@compose/types": "workspace:^"
+    "@truenine/shared": "workspace:^",
+    "@truenine/types": "workspace:^"
   },
   "dependencies": {
-    "@compose/shared": "workspace:^",
-    "@compose/types": "workspace:^"
+    "@truenine/shared": "workspace:^",
+    "@truenine/types": "workspace:^"
   },
   "devDependencies": {
-    "@compose/config-vite": "workspace:^",
+    "@truenine/config-vite": "workspace:^",
     "@types/jsdom": "catalog:vitest",
     "jsdom": "catalog:vitest"
   }

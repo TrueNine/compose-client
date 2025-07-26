@@ -1,4 +1,4 @@
-import type { dynamic } from '@compose/types'
+import type { dynamic } from '@truenine/types'
 
 import { dayjs } from 'element-plus'
 import elementEnUs from 'element-plus/dist/locale/en.mjs'

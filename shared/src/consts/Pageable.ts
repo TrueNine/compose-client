@@ -1,4 +1,4 @@
-import type { Pq, Pr } from '@compose/types'
+import type { Pq, Pr } from '@truenine/types'
 
 export const PagedWrapper = {
   DEFAULT_MAX: {

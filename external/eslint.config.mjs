@@ -1,4 +1,4 @@
-import eslint9 from '@compose/eslint9-config'
+import eslint9 from '@truenine/eslint9-config'
 
 export default eslint9({
   typescript: {

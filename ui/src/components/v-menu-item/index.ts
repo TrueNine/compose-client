@@ -1,4 +1,4 @@
-import type { dynamic, RouteOption } from '@compose/types'
+import type { dynamic, RouteOption } from '@truenine/types'
 import { componentInstallToPlugin } from '@/common'
 
 import YIco from '@/components/ico/index'

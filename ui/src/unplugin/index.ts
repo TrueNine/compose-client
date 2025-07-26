@@ -13,8 +13,8 @@ function resolveComponent(name: string): { name: string, from: string, satisfies
     const kebabName = camelTo(name.slice(1))
     return {
       name: 'default',
-      from: `@compose/ui/components/${kebabName}/index`,
-      satisfies: [`@compose/ui/dist/components/${kebabName}/index.css`],
+      from: `@truenine/ui/components/${kebabName}/index`,
+      satisfies: [`@truenine/ui/dist/components/${kebabName}/index.css`],
     }
   }
 }
@@ -22,7 +22,7 @@ function resolveComponent(name: string): { name: string, from: string, satisfies
 /**
  * 生成 Meta UI Web 组件自动解析器配置。
  *
- * 用于按需引入 @compose/ui 的组件及其样式，通常配合自动按需引入插件（如 unplugin-vue-components）使用。
+ * 用于按需引入 @truenine/ui 的组件及其样式，通常配合自动按需引入插件（如 unplugin-vue-components）使用。
  *
  * 返回值为解析器对象数组，每个对象包含：
  * - type: 解析类型（此处为 'component'）

@@ -1,4 +1,4 @@
-import type { Pq } from '@compose/types'
+import type { Pq } from '@truenine/types'
 import { describe, expect, it } from 'vitest'
 import { Pw } from '@/consts'
 import { arrayToPage } from '../index'

@@ -1,4 +1,4 @@
-import type { bool, dynamic } from '@compose/types'
+import type { bool, dynamic } from '@truenine/types'
 import { componentInstallToPlugin } from '@/common'
 
 import YIco from '@/components/ico'

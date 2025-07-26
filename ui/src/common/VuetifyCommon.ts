@@ -1,4 +1,4 @@
-import type { late } from '@compose/types'
+import type { late } from '@truenine/types'
 import type { VuetifyOptions } from 'vuetify'
 import DayjsAdaptor from '@date-io/dayjs'
 import DateIoEn from 'dayjs/locale/en'

@@ -1,4 +1,4 @@
-import type { dynamic, late, Maybe } from '@compose/types'
+import type { dynamic, late, Maybe } from '@truenine/types'
 
 /**
  * # 对数组进行去重

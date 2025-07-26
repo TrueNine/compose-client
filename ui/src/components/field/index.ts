@@ -1,4 +1,4 @@
-import type { dynamic, Maybe } from '@compose/types'
+import type { dynamic, Maybe } from '@truenine/types'
 import type { VNode } from 'vue'
 
 import type { FormFieldEmits, FormFieldProps } from '@/common/VuePropsCommon'

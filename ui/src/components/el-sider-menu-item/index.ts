@@ -1,4 +1,4 @@
-import type { bool, RouteOption, StrOrNum } from '@compose/types'
+import type { bool, RouteOption, StrOrNum } from '@truenine/types'
 import { componentInstallToPlugin } from '@/common'
 
 import _c from './YElSiderMenuItem.vue'

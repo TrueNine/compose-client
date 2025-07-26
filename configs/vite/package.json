@@ -1,5 +1,5 @@
 {
-  "name": "@compose/config-vite",
+  "name": "@truenine/config-vite",
   "type": "module",
   "version": "1.0.17",
   "description": "vite config fragment",
@@ -72,7 +72,7 @@
     "vite-plugin-dts": "catalog:vite"
   },
   "devDependencies": {
-    "@compose/eslint9-config": "workspace:^",
+    "@truenine/eslint9-config": "workspace:^",
     "vite-plugin-dts": "catalog:vite"
   }
 }

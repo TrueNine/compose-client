@@ -1,4 +1,4 @@
-import type { f64 } from '@compose/types'
+import type { f64 } from '@truenine/types'
 import type { BaseOption } from '@/common'
 
 export interface GetLocationSuccessResult {

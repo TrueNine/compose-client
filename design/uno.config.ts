@@ -1,4 +1,4 @@
-import { defaultConfig } from '@compose/config-uno'
+import { defaultConfig } from '@truenine/config-uno'
 import { mergeConfigs } from 'unocss'
 
 export default mergeConfigs([defaultConfig()])

@@ -1,4 +1,4 @@
-import type { late } from '@compose/types'
+import type { late } from '@truenine/types'
 
 import { __LOWERS_CHINESE_NUMBER_HEXS, __LOWVERS_CHINESE_NUMBERS, __UPPERS_CHINESE_NUMBER_HEXS, __UPPERS_CHINESE_NUMBERS } from '@/consts'
 

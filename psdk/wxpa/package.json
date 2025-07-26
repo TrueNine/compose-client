@@ -1,5 +1,5 @@
 {
-  "name": "@compose/psdk-wxpa",
+  "name": "@truenine/psdk-wxpa",
   "type": "module",
   "version": "2.0.2",
   "description": "wxpa js-sdk defined",
@@ -26,14 +26,14 @@
     "build": "vite build"
   },
   "peerDependencies": {
-    "@compose/external": "workspace:^",
-    "@compose/types": "workspace:^"
+    "@truenine/external": "workspace:^",
+    "@truenine/types": "workspace:^"
   },
   "dependencies": {
-    "@compose/external": "workspace:^",
-    "@compose/types": "workspace:^"
+    "@truenine/external": "workspace:^",
+    "@truenine/types": "workspace:^"
   },
   "devDependencies": {
-    "@compose/config-vite": "workspace:^"
+    "@truenine/config-vite": "workspace:^"
   }
 }

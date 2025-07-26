@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { bool, late, RouteOption } from '@compose/types'
+import type { bool, late, RouteOption } from '@truenine/types'
 import type { YVMenuItemProps, YVMenuItemSlots } from './index'
 
-import { isNonNil } from '@compose/shared'
+import { isNonNil } from '@truenine/shared'
 
 const props = withDefaults(defineProps<YVMenuItemProps>(), {
   pathPrefix: '',

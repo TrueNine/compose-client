@@ -1,5 +1,5 @@
 {
-  "name": "@compose/config-uno",
+  "name": "@truenine/config-uno",
   "type": "module",
   "version": "1.0.4",
   "description": "uno css code snippets",
@@ -38,6 +38,6 @@
     "vue": "catalog:vue"
   },
   "devDependencies": {
-    "@compose/config-vite": "workspace:^"
+    "@truenine/config-vite": "workspace:^"
   }
 }

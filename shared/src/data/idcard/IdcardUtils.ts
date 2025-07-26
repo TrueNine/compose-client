@@ -1,4 +1,4 @@
-import type { timestamp } from '@compose/types'
+import type { timestamp } from '@truenine/types'
 import { Regexes } from '@/consts/Regexes'
 
 export const IdcardUtils = {

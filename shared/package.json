@@ -1,5 +1,5 @@
 {
-  "name": "@compose/shared",
+  "name": "@truenine/shared",
   "type": "module",
   "version": "1.2.2",
   "description": "共享工具包",
@@ -50,12 +50,12 @@
     "build": "vite build"
   },
   "peerDependencies": {
-    "@compose/types": "workspace:^"
+    "@truenine/types": "workspace:^"
   },
   "dependencies": {
-    "@compose/types": "workspace:^"
+    "@truenine/types": "workspace:^"
   },
   "devDependencies": {
-    "@compose/config-vite": "workspace:^"
+    "@truenine/config-vite": "workspace:^"
   }
 }

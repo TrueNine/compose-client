@@ -1,5 +1,5 @@
 {
-  "name": "@compose/types",
+  "name": "@truenine/types",
   "type": "module",
   "version": "2.1.4",
   "description": "yan100 client ui kit",
@@ -33,6 +33,6 @@
     "build": "vite build"
   },
   "devDependencies": {
-    "@compose/config-vite": "workspace:^"
+    "@truenine/config-vite": "workspace:^"
   }
 }

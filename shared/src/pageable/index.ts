@@ -1,4 +1,4 @@
-import type { asyncable, nil, Pq, Pr, task } from '@compose/types'
+import type { asyncable, nil, Pq, Pr, task } from '@truenine/types'
 
 import { Pw } from '@/consts'
 import { isNil } from '@/tools'

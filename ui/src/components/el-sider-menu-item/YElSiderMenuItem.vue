@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import type { bool, dynamic, RouteOption } from '@compose/types'
+import type { bool, dynamic, RouteOption } from '@truenine/types'
 import type { YElSiderMenuItemProps } from './index'
 
-import { isNonNil } from '@compose/shared'
+import { isNonNil } from '@truenine/shared'
 
 const props = withDefaults(defineProps<YElSiderMenuItemProps>(), {
   collapsed: false,

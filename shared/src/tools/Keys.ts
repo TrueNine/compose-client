@@ -1,4 +1,4 @@
-import type { i32 } from '@compose/types'
+import type { i32 } from '@truenine/types'
 import { STRS_ASCII } from '@/consts/index'
 
 export function generateRandomAsciiString(length: i32 = 32): string {

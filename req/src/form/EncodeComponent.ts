@@ -1,5 +1,5 @@
-import type { BasicType, nilpt } from '@compose/types'
-import { isNonNil, isNonNilString } from '@compose/shared'
+import type { BasicType, nilpt } from '@truenine/types'
+import { isNonNil, isNonNilString } from '@truenine/shared'
 
 /**
  * 表示 URL 查询参数的类

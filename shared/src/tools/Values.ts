@@ -1,4 +1,4 @@
-import type { bool, nilpt } from '@compose/types'
+import type { bool, nilpt } from '@truenine/types'
 
 import { STR_EMPTY } from '@/consts'
 

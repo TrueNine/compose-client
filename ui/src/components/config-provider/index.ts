@@ -1,4 +1,4 @@
-import type { BCP47, i32 } from '@compose/types'
+import type { BCP47, i32 } from '@truenine/types'
 import { componentInstallToPlugin } from '@/common'
 
 import _c from './YConfigProvider.vue'

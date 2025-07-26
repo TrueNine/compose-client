@@ -1,4 +1,4 @@
-import type { dynamic, Maybe } from '@compose/types'
+import type { dynamic, Maybe } from '@truenine/types'
 import type { FormContext, InvalidSubmissionContext, TypedSchema } from 'vee-validate'
 import type { InjectionKey, VNode, WritableComputedRef } from 'vue'
 import type { Schema as YupSchema } from 'yup'

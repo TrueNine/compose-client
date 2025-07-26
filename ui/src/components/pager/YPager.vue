@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { YPagerEmits, YPagerProps } from './index'
 
-import { Pw } from '@compose/shared'
+import { Pw } from '@truenine/shared'
 
 const props = withDefaults(defineProps<YPagerProps>(), {
   modelValue: () => Pw.DEFAULT_MAX,

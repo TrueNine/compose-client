@@ -1,5 +1,5 @@
 {
-  "name": "@compose/external",
+  "name": "@truenine/external",
   "type": "module",
   "version": "31.0.4",
   "description": "外部 API 封装",
@@ -69,8 +69,8 @@
     "build": "vite build"
   },
   "peerDependencies": {
-    "@compose/shared": "workspace:^",
-    "@compose/types": "workspace:^",
+    "@truenine/shared": "workspace:^",
+    "@truenine/types": "workspace:^",
     "@types/lodash-es": "catalog:types",
     "dayjs": "catalog:",
     "libarchive.js": "catalog:",
@@ -80,9 +80,9 @@
     "vue-router": "catalog:vue"
   },
   "devDependencies": {
-    "@compose/config-vite": "workspace:^",
-    "@compose/shared": "workspace:^",
-    "@compose/types": "workspace:^",
+    "@truenine/config-vite": "workspace:^",
+    "@truenine/shared": "workspace:^",
+    "@truenine/types": "workspace:^",
     "@types/lodash-es": "catalog:types",
     "@vue/tsconfig": "catalog:vue",
     "dayjs": "catalog:",

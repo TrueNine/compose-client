@@ -1,4 +1,4 @@
-import type { AddrCode, ChinaDistrictLevel, i64, IChinaAddressDistrict } from '@compose/types'
+import type { AddrCode, ChinaDistrictLevel, i64, IChinaAddressDistrict } from '@truenine/types'
 
 import { STR_EMPTY } from '@/consts'
 

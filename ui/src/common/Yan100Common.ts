@@ -1,4 +1,4 @@
-import type { Maybe } from '@compose/types'
+import type { Maybe } from '@truenine/types'
 import type { ComputedRef, InjectionKey, Ref } from 'vue'
 import { inject } from 'vue'
 

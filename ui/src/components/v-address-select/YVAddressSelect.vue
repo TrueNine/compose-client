@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import type { nil } from '@compose/types'
+import type { nil } from '@truenine/types'
 import type { IComponentAddr, YAddressSelectEmits, YVAddressSelectProps, YVAddressSelectSelectValue } from '.'
 
-import { AddressUtils, des } from '@compose/shared'
+import { AddressUtils, des } from '@truenine/shared'
 import { reactive } from 'vue'
 import {
   clipCode,

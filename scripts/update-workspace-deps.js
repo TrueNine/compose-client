@@ -37,27 +37,27 @@ packages.forEach(packagePath => {
     // 更新 dependencies
     if (packageJson.dependencies) {
       Object.keys(packageJson.dependencies).forEach(dep => {
-        if (dep.startsWith('@compose/') && packageJson.dependencies[dep] === 'workspace:^') {
+        if (dep.startsWith('@truenine/') && packageJson.dependencies[dep] === 'workspace:^') {
           packageJson.dependencies[dep] = 'workspace:*'
           hasChanges = true
         }
       })
     }
-    
+
     // 更新 devDependencies
     if (packageJson.devDependencies) {
       Object.keys(packageJson.devDependencies).forEach(dep => {
-        if (dep.startsWith('@compose/') && packageJson.devDependencies[dep] === 'workspace:^') {
+        if (dep.startsWith('@truenine/') && packageJson.devDependencies[dep] === 'workspace:^') {
           packageJson.devDependencies[dep] = 'workspace:*'
           hasChanges = true
         }
       })
     }
-    
+
     // 更新 peerDependencies
     if (packageJson.peerDependencies) {
       Object.keys(packageJson.peerDependencies).forEach(dep => {
-        if (dep.startsWith('@compose/') && packageJson.peerDependencies[dep] === 'workspace:^') {
+        if (dep.startsWith('@truenine/') && packageJson.peerDependencies[dep] === 'workspace:^') {
           packageJson.peerDependencies[dep] = 'workspace:*'
           hasChanges = true
         }

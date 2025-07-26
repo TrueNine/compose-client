@@ -1,5 +1,5 @@
 {
-  "name": "@compose/ui",
+  "name": "@truenine/ui",
   "type": "module",
   "version": "1.1.293",
   "license": "LGPL-2.1-or-later",
@@ -57,9 +57,6 @@
     "build": "run-s build-c build-g"
   },
   "peerDependencies": {
-    "@compose/shared": "workspace:^",
-    "@compose/types": "workspace:^",
-    "@compose/vue": "workspace:^",
     "@date-io/dayjs": "catalog:",
     "@iconify-json/ant-design": "catalog:iconify",
     "@iconify-json/flag": "catalog:iconify",
@@ -68,6 +65,9 @@
     "@iconify-json/mdi": "catalog:iconify",
     "@iconify-json/simple-icons": "catalog:iconify",
     "@mdi/font": "catalog:vuetify",
+    "@truenine/shared": "workspace:^",
+    "@truenine/types": "workspace:^",
+    "@truenine/vue": "workspace:^",
     "@varlet/ui": "catalog:",
     "@vee-validate/yup": "catalog:vee-validate",
     "@vee-validate/zod": "catalog:vee-validate",
@@ -85,9 +85,6 @@
     "zod": "catalog:vee-validate"
   },
   "dependencies": {
-    "@compose/shared": "workspace:^",
-    "@compose/types": "workspace:^",
-    "@compose/vue": "workspace:^",
     "@date-io/dayjs": "catalog:",
     "@iconify-json/ant-design": "catalog:iconify",
     "@iconify-json/flag": "catalog:iconify",
@@ -96,6 +93,9 @@
     "@iconify-json/mdi": "catalog:iconify",
     "@iconify-json/simple-icons": "catalog:iconify",
     "@mdi/font": "catalog:vuetify",
+    "@truenine/shared": "workspace:^",
+    "@truenine/types": "workspace:^",
+    "@truenine/vue": "workspace:^",
     "@varlet/ui": "catalog:",
     "@vee-validate/yup": "catalog:vee-validate",
     "@vee-validate/zod": "catalog:vee-validate",
@@ -113,8 +113,8 @@
     "zod": "catalog:vee-validate"
   },
   "devDependencies": {
-    "@compose/config-uno": "workspace:^",
-    "@compose/config-vite": "workspace:^",
+    "@truenine/config-uno": "workspace:^",
+    "@truenine/config-vite": "workspace:^",
     "@types/gulp": "catalog:gulp",
     "@types/gulp-autoprefixer": "catalog:gulp",
     "@types/gulp-postcss": "catalog:gulp",

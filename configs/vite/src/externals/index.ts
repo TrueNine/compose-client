@@ -13,7 +13,7 @@ export const Externals = [
   /__build-src__/,
 
   // compose
-  /^@compose/,
+  /^@truenine/,
 
   // vue
   /^vue/,

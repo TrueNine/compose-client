@@ -1,4 +1,4 @@
-import type { BCP47 } from '@compose/types'
+import type { BCP47 } from '@truenine/types'
 import type { StyleVars } from '@varlet/ui'
 import { Locale, StyleProvider, Themes } from '@varlet/ui'
 

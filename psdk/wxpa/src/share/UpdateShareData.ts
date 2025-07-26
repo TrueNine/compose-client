@@ -1,4 +1,4 @@
-import type { HttpUrl } from '@compose/types'
+import type { HttpUrl } from '@truenine/types'
 
 import type { BaseOption } from '@/common'
 

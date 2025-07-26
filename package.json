@@ -46,8 +46,8 @@
   "devDependencies": {
     "@antfu/eslint-config": "catalog:eslint",
     "@changesets/cli": "catalog:",
-    "@compose/eslint9-config": "workspace:^",
-    "@compose/tsconfig": "workspace:^",
+    "@truenine/eslint9-config": "workspace:^",
+    "@truenine/tsconfig": "workspace:^",
     "@tsconfig/node22": "catalog:",
     "@types/node": "catalog:types",
     "eslint": "catalog:eslint",

@@ -1,5 +1,5 @@
 {
-  "name": "@compose/design",
+  "name": "@truenine/design",
   "type": "module",
   "version": "0.0.5",
   "packageManager": "pnpm@10.11.0",
@@ -36,22 +36,22 @@
     "build": "run-s build-c build-g"
   },
   "peerDependencies": {
-    "@compose/vue": "workspace:^",
     "@mdi/font": "catalog:vuetify",
+    "@truenine/vue": "workspace:^",
     "unocss": "catalog:unocss",
     "vue": "catalog:vue",
     "vuetify": "catalog:vuetify"
   },
   "dependencies": {
-    "@compose/vue": "workspace:^",
     "@mdi/font": "catalog:vuetify",
+    "@truenine/vue": "workspace:^",
     "unocss": "catalog:unocss",
     "vue": "catalog:vue",
     "vuetify": "catalog:vuetify"
   },
   "devDependencies": {
-    "@compose/config-uno": "workspace:^",
-    "@compose/config-vite": "workspace:^",
+    "@truenine/config-uno": "workspace:^",
+    "@truenine/config-vite": "workspace:^",
     "@unocss/cli": "catalog:unocss",
     "@unocss/postcss": "catalog:unocss",
     "@vitejs/plugin-vue": "catalog:vite",

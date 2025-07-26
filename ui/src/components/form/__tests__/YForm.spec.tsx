@@ -1,4 +1,4 @@
-import type { dynamic } from '@compose/types'
+import type { dynamic } from '@truenine/types'
 import type { YFormSlotsSubMitProps } from '../types'
 import { mount } from '@vue/test-utils'
 import { describe, expect, it, vi } from 'vitest'

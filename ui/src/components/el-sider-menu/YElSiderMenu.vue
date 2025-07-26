@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { YElSiderMenuEmits, YElSiderMenuProps } from './index'
 
-import { STR_EMPTY, STR_SLASH } from '@compose/shared'
+import { STR_EMPTY, STR_SLASH } from '@truenine/shared'
 
 import YSiderMenuItem from '../el-sider-menu-item'
 

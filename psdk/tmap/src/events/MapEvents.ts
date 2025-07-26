@@ -1,6 +1,12 @@
-import type { nil } from '@compose/types'
+import type { nil } from '@truenine/types'
 import type { LatLng, Point } from '../LatLng'
-import type { ITencentEvent } from './Events'
+import type { ITencentEvent } from './Events'import { clear } from 'console'
+clear
+
+clear
+
+
+clear
 
 /**
  * ## 地图事件类型

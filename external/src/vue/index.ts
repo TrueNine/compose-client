@@ -1,10 +1,10 @@
-import type { clip, dynamic, Maybe } from '@compose/types'
+import type { clip, dynamic, Maybe } from '@truenine/types'
 import type {
   RendererElement,
   RendererNode,
   VNode,
 } from 'vue'
-import { maybeArray } from '@compose/shared'
+import { maybeArray } from '@truenine/shared'
 
 /**
  * 表示 Vue 插槽节点的类型定义

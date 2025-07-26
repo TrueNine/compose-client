@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { dynamic } from '@compose/types'
+import type { dynamic } from '@truenine/types'
 import type { YFormEmits, YFormInjection, YFormProps, YFormSlots } from './index'
 import { toTypedSchema as yupToTypedSchema } from '@vee-validate/yup'
 import { toTypedSchema as zodToTypedSchema } from '@vee-validate/zod'

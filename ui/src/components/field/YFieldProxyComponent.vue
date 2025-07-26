@@ -1,6 +1,6 @@
 <script setup lang="tsx">
-import type { dynamic } from '@compose/types'
-import { maybeArray } from '@compose/shared'
+import type { dynamic } from '@truenine/types'
+import { maybeArray } from '@truenine/shared'
 import { useField } from 'vee-validate'
 import { computed, reactive, ref, toRef } from 'vue'
 

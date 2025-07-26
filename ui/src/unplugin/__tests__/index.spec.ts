@@ -14,9 +14,9 @@ describe('metaUiWebResolver', () => {
     const result = resolve('YButton')
     expect(result).toBeDefined()
     expect(result?.name).toBe('default')
-    expect(result?.from).toBe('@compose/ui/components/button/index')
+    expect(result?.from).toBe('@truenine/ui/components/button/index')
     expect(Array.isArray(result?.satisfies)).toBe(true)
-    expect(result?.satisfies[0]).toBe('@compose/ui/dist/components/button/index.css')
+    expect(result?.satisfies[0]).toBe('@truenine/ui/dist/components/button/index.css')
   })
 
   it('resolve 对不符合规则的组件名应返回 undefined', () => {
@@ -30,8 +30,8 @@ describe('metaUiWebResolver', () => {
   it('resolve 解析不同 Y 开头组件名的 satisfies 路径', () => {
     const { resolve } = resolvers[0]
     const result = resolve('YTestComponent')
-    expect(result?.from).toBe('@compose/ui/components/test-component/index')
-    expect(result?.satisfies[0]).toBe('@compose/ui/dist/components/test-component/index.css')
+    expect(result?.from).toBe('@truenine/ui/components/test-component/index')
+    expect(result?.satisfies[0]).toBe('@truenine/ui/dist/components/test-component/index.css')
     expect(result?.name).toBe('default')
   })
 })

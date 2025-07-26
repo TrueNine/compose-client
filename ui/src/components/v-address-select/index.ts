@@ -1,4 +1,4 @@
-import type { asyncable, i32, i64, late, latenil, str } from '@compose/types'
+import type { asyncable, i32, i64, late, latenil, str } from '@truenine/types'
 
 import { componentInstallToPlugin } from '@/common'
 import _c from './YVAddressSelect.vue'

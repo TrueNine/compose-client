@@ -1,4 +1,4 @@
-import type { dynamic, task } from '@compose/types'
+import type { dynamic, task } from '@truenine/types'
 import type { PDFDocumentProxy, PDFPageProxy } from 'pdfjs-dist'
 import * as pdfjs from 'pdfjs-dist'
 

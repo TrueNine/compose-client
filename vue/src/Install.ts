@@ -1,4 +1,4 @@
-import type { dynamic } from '@compose/types'
+import type { dynamic } from '@truenine/types'
 import type { App } from 'vue'
 
 export interface VueComponentInstanceMapping {

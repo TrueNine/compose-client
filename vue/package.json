@@ -1,5 +1,5 @@
 {
-  "name": "@compose/vue",
+  "name": "@truenine/vue",
   "type": "module",
   "version": "0.0.1",
   "packageManager": "pnpm@10.11.0",
@@ -37,14 +37,14 @@
     "build": "vite build"
   },
   "peerDependencies": {
-    "@compose/types": "workspace:^",
+    "@truenine/types": "workspace:^",
     "vue": "catalog:vue"
   },
   "dependencies": {
-    "@compose/types": "workspace:^",
+    "@truenine/types": "workspace:^",
     "vue": "catalog:vue"
   },
   "devDependencies": {
-    "@compose/config-vite": "workspace:*"
+    "@truenine/config-vite": "workspace:*"
   }
 }
