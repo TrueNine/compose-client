@@ -1,5 +1,5 @@
 {
-  "name": "@compose/eslint9-config",
+  "name": "@truenine/eslint9-config",
   "type": "module",
   "version": "1.0.12",
   "description": "ESLint 9 configuration package for Compose Client projects with TypeScript, Vue, and modern JavaScript support",
