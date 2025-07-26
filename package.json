@@ -33,10 +33,15 @@
     "build:vue": "pnpm --filter ./vue... run build",
     "build:shareds": "run-s build:types build:shared build:vue",
     "build": "run-s build:configs",
-    "postinstall": "run-s build"
+    "postinstall": "run-s build",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "pnpm build && changeset publish",
+    "sync-versions": "node scripts/sync-versions.js"
   },
   "devDependencies": {
     "@antfu/eslint-config": "catalog:eslint",
+    "@changesets/cli": "catalog:",
     "@compose/eslint9-config": "workspace:^",
     "@compose/tsconfig": "workspace:^",
     "@tsconfig/node22": "catalog:",

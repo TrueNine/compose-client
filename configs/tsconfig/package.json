@@ -1,6 +1,8 @@
 {
   "name": "@compose/tsconfig",
   "version": "1.0.5",
+  "description": "TypeScript configuration for compose projects",
+  "author": "TrueNine",
   "license": "LGPL-2.1-or-later",
   "sideEffects": false,
   "exports": {
@@ -13,11 +15,18 @@
     "./tsconfig.json": "./tsconfig.json"
   },
   "main": "tsconfig.json",
+  "files": [
+    "*.json",
+    "tsconfig.json"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
   "peerDependencies": {
-    "typescript": "catalog:",
     "@tsconfig/node22": "catalog:",
     "@types/node": "catalog:types",
-    "@vue/tsconfig": "catalog:vue"
+    "@vue/tsconfig": "catalog:vue",
+    "typescript": "catalog:"
   },
   "devDependencies": {
     "@tsconfig/node22": "catalog:",

@@ -23,6 +23,9 @@
     "./index.css": "./dist/index.css",
     "./unocss": "./dist/unocss.css"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "test": "vitest run",
     "dev": "vite",

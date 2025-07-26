@@ -1,0 +1,28 @@
+{
+  "$schema": "https://unpkg.com/@changesets/config@3.0.3/schema.json",
+  "changelog": "@changesets/cli/changelog",
+  "commit": false,
+  "fixed": [
+    [
+      "@compose/types",
+      "@compose/shared",
+      "@compose/vue",
+      "@compose/ui",
+      "@compose/external",
+      "@compose/req",
+      "@compose/design",
+      "@compose/config-vite",
+      "@compose/config-uno",
+      "@compose/config-eslint9",
+      "@compose/tsconfig",
+      "@compose/psdk-wxpa",
+      "@compose/psdk-tmap",
+      "@compose/ext-chrome"
+    ]
+  ],
+  "linked": [],
+  "access": "public",
+  "baseBranch": "main",
+  "updateInternalDependencies": "patch",
+  "ignore": []
+}
