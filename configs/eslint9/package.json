@@ -67,12 +67,10 @@
   "scripts": {
     "build": "vite build",
     "build-c": "vite build",
-    "clean": "rimraf dist",
     "lint": "eslint --fix",
     "type-check": "vue-tsc --noEmit",
     "test": "vitest run",
-    "test:watch": "vitest",
-    "prepublishOnly": "npm run clean && npm run build"
+    "prepublishOnly": "run-s build"
   },
   "peerDependencies": {
     "@antfu/eslint-config": "catalog:eslint",
