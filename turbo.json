@@ -2,22 +2,95 @@
   "$schema": "https://turborepo.com/schema.json",
   "tasks": {
     "lint": {
-      "outputs": []
-    },
-    "test": {
-      "dependsOn": ["^type-check", "^lint"],
-      "outputs": [
-        "test-results/**"
-      ]
+      "inputs": [
+        "src/**/*.{ts,js,vue,tsx,jsx}",
+        "*.{ts,js,mjs}",
+        "eslint.config.*",
+        ".eslintrc.*"
+      ],
+      "outputs": [],
+      "cache": true
     },
     "type-check": {
-      "outputs": []
+      "inputs": [
+        "src/**/*.{ts,vue,tsx}",
+        "*.ts",
+        "tsconfig*.json"
+      ],
+      "outputs": [],
+      "cache": true
     },
-    "build": {
-      "dependsOn": ["^type-check", "^lint", "^test", "^build"],
+    "test": {
+      "dependsOn": ["type-check", "lint"],
+      "inputs": [
+        "src/**/*.{ts,js,vue,tsx,jsx}",
+        "test/**/*.{ts,js,vue,tsx,jsx}",
+        "*.{ts,js}",
+        "tsconfig*.json",
+        "vite.config.*",
+        "vitest.config.*"
+      ],
+      "outputs": [
+        "test-results/**",
+        "coverage/**"
+      ],
+      "cache": true
+    },
+    "build-c": {
+      "dependsOn": ["^build"],
+      "inputs": [
+        "src/**/*.{ts,js,vue,tsx,jsx}",
+        "*.{ts,js,mjs}",
+        "package.json",
+        "tsconfig*.json",
+        "vite.config.*"
+      ],
       "outputs": [
         "dist/**"
-      ]
+      ],
+      "cache": true
+    },
+    "build-g": {
+      "dependsOn": ["build-c"],
+      "inputs": [
+        "__build-src__/**",
+        "dist/**"
+      ],
+      "outputs": [
+        "dist/**"
+      ],
+      "cache": true
+    },
+    "build": {
+      "dependsOn": ["type-check", "lint", "^build"],
+      "inputs": [
+        "src/**/*.{ts,js,vue,tsx,jsx}",
+        "*.{ts,js,mjs}",
+        "package.json",
+        "tsconfig*.json",
+        "vite.config.*",
+        "__build-src__/**"
+      ],
+      "outputs": [
+        "dist/**"
+      ],
+      "cache": true
+    },
+    "dev": {
+      "dependsOn": ["^build"],
+      "inputs": [
+        "src/**/*.{ts,js,vue,tsx,jsx}",
+        "*.{ts,js,mjs}",
+        "package.json",
+        "tsconfig*.json",
+        "vite.config.*"
+      ],
+      "outputs": [],
+      "cache": false,
+      "persistent": true
     }
-  }
+  },
+  "globalPassThroughEnv": [
+    "NODE_ENV"
+  ]
 }

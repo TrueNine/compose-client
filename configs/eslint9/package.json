@@ -29,7 +29,7 @@
     "lint": "eslint --fix",
     "build-c": "vite build",
     "type-check": "vue-tsc --noEmit",
-    "build": "run-s build-c"
+    "build": "vite build"
   },
   "peerDependencies": {
     "@antfu/eslint-config": "catalog:eslint",

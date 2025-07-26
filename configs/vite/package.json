@@ -57,7 +57,7 @@
     "build-c": "vite build",
     "type-check": "vue-tsc --noEmit",
     "check": "run-p type-check lint",
-    "build": "run-s check build-c"
+    "build": "vite build"
   },
   "peerDependencies": {
     "rollup": "catalog:rollup",

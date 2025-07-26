@@ -54,7 +54,7 @@
     "build-c": "vite build",
     "build-g": "gulp -f __build-src__/index.js",
     "type-check": "vue-tsc --noEmit",
-    "build": "run-s type-check lint test build-c build-g"
+    "build": "run-s build-c build-g"
   },
   "peerDependencies": {
     "@compose/shared": "workspace:^",

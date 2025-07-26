@@ -22,6 +22,9 @@
   "publishConfig": {
     "access": "public"
   },
+  "scripts": {
+    "build": "echo 'No build needed for tsconfig package'"
+  },
   "peerDependencies": {
     "@tsconfig/node22": "catalog:",
     "@types/node": "catalog:types",

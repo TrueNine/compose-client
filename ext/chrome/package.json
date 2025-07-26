@@ -23,7 +23,7 @@
     "build-c": "vite build",
     "lint": "eslint --fix",
     "type-check": "vue-tsc --noEmit",
-    "build": "run-s type-check lint build-c"
+    "build": "vite build"
   },
   "peerDependencies": {
     "@compose/types": "workspace:^",
