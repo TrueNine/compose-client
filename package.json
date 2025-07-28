@@ -49,6 +49,7 @@
     "eslint": "catalog:eslint",
     "npm-run-all2": "catalog:",
     "rollup": "catalog:rollup",
+    "tsdown": "catalog:tsdown",
     "turbo": "catalog:",
     "typescript": "catalog:",
     "vite": "catalog:vite",

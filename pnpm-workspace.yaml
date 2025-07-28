@@ -62,6 +62,8 @@ catalogs:
     '@iconify-json/simple-icons': ^1.2.44
   rollup:
     rollup: ^4.46.0
+  tsdown:
+    tsdown: ^0.13.0
   types:
     '@types/chrome': ^0.1.1
     '@types/lodash-es': ^4.17.12
