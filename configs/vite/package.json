@@ -1,63 +1,79 @@
 {
   "name": "@truenine/config-vite",
   "type": "module",
-  "version": "1.0.17",
+  "version": "1.0.18",
   "description": "vite config fragment",
   "author": "TrueNine",
   "license": "LGPL-2.1-or-later",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
-    "./alias": {
-      "types": "./dist/alias/index.d.ts",
-      "import": "./dist/alias/index.js",
-      "require": "./dist/alias/index.cjs"
+    "./excludes\\index": {
+      "import": "./dist/excludes\\index.js",
+      "require": "./dist/excludes\\index.cjs"
     },
-    "./vite-plugin-package-json": {
-      "types": "./dist/vite-plugin-package-json/index.d.ts",
-      "import": "./dist/vite-plugin-package-json/index.js",
-      "require": "./dist/vite-plugin-package-json/index.cjs"
+    "./externals\\index": {
+      "import": "./dist/externals\\index.js",
+      "require": "./dist/externals\\index.cjs"
     },
-    "./lib": {
-      "types": "./dist/lib/index.d.ts",
-      "import": "./dist/lib/index.js",
-      "require": "./dist/lib/index.cjs"
+    "./lib\\index": {
+      "import": "./dist/lib\\index.js",
+      "require": "./dist/lib\\index.cjs"
     },
-    "./vite-plugin-dts": {
-      "types": "./dist/vite-plugin-dts/index.d.ts",
-      "import": "./dist/vite-plugin-dts/index.js",
-      "require": "./dist/vite-plugin-dts/index.cjs"
+    "./vite-plugin-dts\\index": {
+      "import": "./dist/vite-plugin-dts\\index.js",
+      "require": "./dist/vite-plugin-dts\\index.cjs"
     },
-    "./externals": {
-      "types": "./dist/externals/index.d.ts",
-      "import": "./dist/externals/index.js",
-      "require": "./dist/externals/index.cjs"
+    "./vite-plugin-package-json\\index": {
+      "import": "./dist/vite-plugin-package-json\\index.js",
+      "require": "./dist/vite-plugin-package-json\\index.cjs"
     },
-    "./excludes": {
-      "types": "./dist/excludes/index.d.ts",
-      "import": "./dist/excludes/index.js",
-      "require": "./dist/excludes/index.cjs"
-    },
-    "./*": "./dist/*"
+    "./package.json": "./package.json"
   },
-  "main": "dist/index.cjs",
-  "module": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.cts",
   "files": [
     "dist/**"
   ],
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "exports": {
+      ".": {
+        "import": "./dist/index.js",
+        "require": "./dist/index.cjs"
+      },
+      "./excludes/index": {
+        "import": "./dist/excludes/index.js",
+        "require": "./dist/excludes/index.cjs"
+      },
+      "./externals/index": {
+        "import": "./dist/externals/index.js",
+        "require": "./dist/externals/index.cjs"
+      },
+      "./lib/index": {
+        "import": "./dist/lib/index.js",
+        "require": "./dist/lib/index.cjs"
+      },
+      "./vite-plugin-dts/index": {
+        "import": "./dist/vite-plugin-dts/index.js",
+        "require": "./dist/vite-plugin-dts/index.cjs"
+      },
+      "./vite-plugin-package-json/index": {
+        "import": "./dist/vite-plugin-package-json/index.js",
+        "require": "./dist/vite-plugin-package-json/index.cjs"
+      },
+      "./*": "./*"
+    }
   },
   "scripts": {
     "lint": "eslint --fix",
     "build-c": "vite build",
     "type-check": "vue-tsc --noEmit",
     "check": "run-p type-check lint",
-    "build": "vite build"
+    "build": "tsdown"
   },
   "peerDependencies": {
     "rollup": "catalog:rollup",

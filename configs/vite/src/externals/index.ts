@@ -6,7 +6,7 @@ import { ViteExternals } from './ViteExternals'
 export * from './EslintExternals'
 export * from './NodeExternals'
 
-export const Externals = [
+export const Externals: (string | RegExp)[] = [
   // 既定依赖
   /__tests__/,
   /__test__/,

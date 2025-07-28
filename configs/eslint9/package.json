@@ -35,23 +35,14 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
-    "./types": {
-      "types": "./dist/types/index.d.ts"
-    },
-    "./defaults": {
-      "types": "./dist/defaults/index.d.ts",
-      "import": "./dist/defaults/index.js",
-      "require": "./dist/defaults/index.cjs"
-    },
-    "./*": "./*"
+    "./package.json": "./package.json"
   },
-  "main": "dist/index.cjs",
-  "module": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.cts",
   "files": [
     "LICENSE",
     "README.md",
@@ -62,10 +53,17 @@
   },
   "publishConfig": {
     "access": "public",
-    "registry": "https://registry.npmjs.org/"
+    "registry": "https://registry.npmjs.org/",
+    "exports": {
+      ".": {
+        "import": "./dist/index.js",
+        "require": "./dist/index.cjs"
+      },
+      "./*": "./*"
+    }
   },
   "scripts": {
-    "build": "vite build",
+    "build": "tsdown",
     "build-c": "vite build",
     "lint": "eslint --fix",
     "type-check": "vue-tsc --noEmit",

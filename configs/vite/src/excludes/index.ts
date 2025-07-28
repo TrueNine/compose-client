@@ -1,4 +1,4 @@
-export const Excludes = [
+export const Excludes: string[] = [
   'node_modules',
   'node_modules/*',
   'node_modules/**',

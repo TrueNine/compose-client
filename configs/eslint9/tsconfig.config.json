@@ -13,6 +13,7 @@
   "include": [
     "env.d.ts",
     "vite.config.*",
+    "tsdown.config.*",
     "vitest.config.*",
     "uno.config.*",
     "cypress.config.*",
