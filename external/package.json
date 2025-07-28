@@ -64,9 +64,9 @@
   "scripts": {
     "test": "vitest run",
     "lint": "eslint --fix",
-    "build-c": "vite build",
+    "build-c": "tsdown",
     "type-check": "vue-tsc --noEmit",
-    "build": "vite build"
+    "build": "tsdown"
   },
   "peerDependencies": {
     "@truenine/shared": "workspace:^",

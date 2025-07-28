@@ -5,7 +5,7 @@ import _merge from 'lodash-es/merge'
 
 export {}
 
-export const cloneDeep = _cloneDeep
-export const merge = _merge
-export const isEqual = _isEqual
+export const cloneDeep: typeof _cloneDeep = _cloneDeep
+export const merge: typeof _merge = _merge
+export const isEqual: typeof _isEqual = _isEqual
 export const cloneDeepWith: typeof _cloneDeepWith = _cloneDeepWith

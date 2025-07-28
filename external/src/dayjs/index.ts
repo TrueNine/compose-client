@@ -26,11 +26,11 @@ dayjs.extend(duration)
 dayjs.extend(pluralGetSet)
 dayjs.extend(isBetween)
 
-export const DEFAULT_TZ = dayjs.tz.guess()
-export const DEFAULT_UTC = DEFAULT_TZ === 'UTC'
-export const DEFAULT_ZONE_OFFSET = dayjs().utcOffset() * 60 * 1000
+export const DEFAULT_TZ: string = dayjs.tz.guess()
+export const DEFAULT_UTC: boolean = DEFAULT_TZ === 'UTC'
+export const DEFAULT_ZONE_OFFSET: number = dayjs().utcOffset() * 60 * 1000
 
-export const DayJs = dayjs
+export const DayJs: typeof dayjs = dayjs
 
 function getDefaultParam(date: DayJSNewInstanceOptions, p?: Params, format?: string): rq<Params> {
   return {

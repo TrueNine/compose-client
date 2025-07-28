@@ -37,7 +37,7 @@ interface PDFOperatorList {
 let __workSrc: string | undefined
 let __worker: Worker | undefined
 
-export const PdfJs = pdfjs
+export const PdfJs: typeof pdfjs = pdfjs
 
 /**
  * 初始化 PDF.js 配置
