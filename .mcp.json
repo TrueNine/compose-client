@@ -1,32 +1,40 @@
 {
-  "mcpServers": {
-    "context7": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@upstash/context7-mcp@latest"
-      ]
-    },
-    "Sequential-thinking": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@modelcontextprotocol/server-sequential-thinking"
-      ]
-    },
-    "broswertools": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@browsermcp/mcp@latest"
-      ]
-    },
-    "Playwright": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@playwright/mcp@latest"
-      ]
+    "mcpServers": {
+        "context7": {
+            "command": "cmd",
+            "args": [
+                "/c",
+                "npx",
+                "-y",
+                "@upstash/context7-mcp@latest"
+            ]
+        },
+        "Sequential-thinking": {
+            "command": "cmd",
+            "args": [
+                "/c",
+                "npx",
+                "-y",
+                "@modelcontextprotocol/server-sequential-thinking"
+            ]
+        },
+        "broswertools": {
+            "command": "cmd",
+            "args": [
+                "/c",
+                "npx",
+                "-y",
+                "@browsermcp/mcp@latest"
+            ]
+        },
+        "Playwright": {
+            "command": "cmd",
+            "args": [
+                "/c",
+                "npx",
+                "-y",
+                "@playwright/mcp@latest"
+            ]
+        }
     }
-  }
 }
