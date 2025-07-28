@@ -1,4 +1,4 @@
-import { componentInstallToPlugin } from '@truenine/vue/Install'
+import { componentInstallToPlugin } from '@truenine/vue'
 import YdDeviceFace from './YdDeviceFace.vue'
 
 export interface YdDeviceFaceProps {
