@@ -1,7 +1,9 @@
 node_modules
-src
+.turbo
+
 env.d.ts
 eslint.config.*
 tsconfig.*
+tsdown.config.*
 vite.config.*
 vitest.config.*
