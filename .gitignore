@@ -40,3 +40,6 @@ vite.config.ts.timestamp**
 
 ### .turbo ###
 .turbo
+
+### AI Coding ###
+.claude

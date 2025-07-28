@@ -14,14 +14,14 @@ catalog:
   '@changesets/cli': ^2.29.5
   '@date-io/dayjs': ^3.2.0
   '@tsconfig/node22': ^22.0.2
-  '@varlet/ui': ^3.11.0
+  '@varlet/ui': ^3.11.1
   autoprefixer: ^10.4.21
   dayjs: ^1.11.13
   element-plus: ^2.10.4
   libarchive.js: ^2.0.2
   lodash-es: ^4.17.21
   npm-run-all2: ^8.0.4
-  pdfjs-dist: ^5.3.93
+  pdfjs-dist: ^5.4.54
   prettier: ^3.6.2
   sass: ^1.89.2
   turbo: ^2.5.5
@@ -61,7 +61,7 @@ catalogs:
     '@iconify-json/mdi': ^1.2.3
     '@iconify-json/simple-icons': ^1.2.44
   rollup:
-    rollup: ^4.46.0
+    rollup: ^4.46.1
   tsdown:
     tsdown: ^0.13.0
   types:
@@ -82,7 +82,7 @@ catalogs:
     yup: ^1.6.1
     zod: ^4.0.10
   vite:
-    '@vitejs/plugin-vue': ^6.0.0
+    '@vitejs/plugin-vue': ^6.0.1
     '@vitejs/plugin-vue-jsx': ^5.0.1
     vite: ^7.0.6
     vite-plugin-dts: ^4.5.4
@@ -102,4 +102,4 @@ catalogs:
     vite-plugin-vuetify: ^2.1.1
     vuetify: ^3.9.2
   vueuse:
-    '@vueuse/core': ^13.5.0
+    '@vueuse/core': ^13.6.0
