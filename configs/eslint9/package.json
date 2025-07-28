@@ -1,7 +1,7 @@
 {
   "name": "@truenine/eslint9-config",
   "type": "module",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "ESLint 9 configuration package for Compose Client projects with TypeScript, Vue, and modern JavaScript support",
   "author": {
     "name": "TrueNine",
@@ -70,7 +70,8 @@
     "lint": "eslint --fix",
     "type-check": "vue-tsc --noEmit",
     "test": "vitest run",
-    "prepublishOnly": "run-s build"
+    "copy-license": "node -e \"require('fs').copyFileSync('../../LICENSE', './LICENSE')\"",
+    "prepublishOnly": "run-s copy-license build"
   },
   "peerDependencies": {
     "@antfu/eslint-config": "catalog:eslint",

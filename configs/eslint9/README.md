@@ -133,10 +133,6 @@ Install the [ESLint extension](https://marketplace.visualstudio.com/items?itemNa
 }
 ```
 
-## License
-
-[LGPL-2.1-or-later](../../LICENSE)
-
 ## Contributing
 
 Contributions are welcome! Please read our [contributing guidelines](../../README.md) for details.
