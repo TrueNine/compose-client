@@ -18,7 +18,7 @@
     "wxpa"
   ],
   "engines": {
-    "node": ">=22.14.0",
+    "node": ">=24.4.1",
     "pnpm": ">=10.13.1"
   },
   "scripts": {
@@ -37,11 +37,7 @@
     "build:vue": "pnpm --filter ./vue... run build",
     "build:shareds": "run-s build:types build:shared build:vue",
     "build:legacy": "run-s build:configs",
-    "postinstall": "turbo run build",
-    "changeset": "changeset",
-    "version-packages": "changeset version",
-    "release": "pnpm build && changeset publish",
-    "sync-versions": "node scripts/sync-versions.js"
+    "postinstall": "turbo run build"
   },
   "devDependencies": {
     "@antfu/eslint-config": "catalog:eslint",

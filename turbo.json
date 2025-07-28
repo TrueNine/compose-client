@@ -2,6 +2,7 @@
   "$schema": "https://turborepo.com/schema.json",
   "tasks": {
     "lint": {
+      "dependsOn": ["^build"],
       "inputs": [
         "src/**/*.{ts,js,vue,tsx,jsx}",
         "*.{ts,js,mjs}",
@@ -12,6 +13,7 @@
       "cache": true
     },
     "type-check": {
+      "dependsOn": ["^build"],
       "inputs": [
         "src/**/*.{ts,vue,tsx}",
         "*.ts",
@@ -21,7 +23,7 @@
       "cache": true
     },
     "test": {
-      "dependsOn": ["type-check", "lint"],
+      "dependsOn": ["^build", "type-check", "lint"],
       "inputs": [
         "src/**/*.{ts,js,vue,tsx,jsx}",
         "test/**/*.{ts,js,vue,tsx,jsx}",
