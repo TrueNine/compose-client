@@ -2,80 +2,87 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## 项目概述
+## 开发环境要求
 
-这是一个基于 PNPM Workspace 的 TypeScript/Vue3 monorepo 项目，由百研科技开发的前端工具库集合，包含多个子包：
+- **Node.js**: 24.4.1+
+- **PNPM**: 10.13.1+
+- **Turbo**: 2.5.5+
+- **TypeScript**: 5.8.3+
 
-- **configs/**: ESLint、TypeScript、UnoCSS、Vite 配置包
-- **shared/**: 共享工具库（字符串、数组、异步等工具函数）
-- **types/**: TypeScript 类型定义
-- **ui/**: Vue3 组件库（支持 Element Plus、Vuetify、Varlet）
-- **vue/**: Vue3 安装和基础工具
-- **external/**: 外部库封装（dayjs、lodash-es、vue-router等）
-- **req/**: HTTP 请求工具（基于 ky）
-- **psdk/**: 平台 SDK（腾讯地图、微信公众号）
-- **ext/**: 浏览器扩展相关
-- **design/**: 设计系统组件
+## 常用开发命令
 
-## 架构特点
+### 根目录命令
+```bash
+# 构建整个项目
+pnpm build
 
-### Monorepo 管理
-- 使用 PNPM workspace 管理依赖
-- Turbo 用于构建缓存和并行执行
-- 统一的 catalog 依赖版本管理
+# 运行所有包的测试
+pnpm test
 
-### 包依赖关系
-- `types` 包被其他所有包依赖，提供基础类型定义
-- `shared` 包提供通用工具函数，被 UI 包依赖
-- `vue` 包提供 Vue3 基础安装逻辑
-- `configs/*` 包提供构建和代码质量配置
+# 运行所有包的 lint 检查
+pnpm lint
 
-### 构建系统
-- 使用 Vite 构建所有包
-- 支持 ESM 和 CJS 双输出格式
-- 统一的 TypeScript 配置继承
-- UnoCSS 作为 CSS 框架
+# 运行所有包的类型检查
+pnpm type-check
 
-### UI 组件库架构
-- 支持多个 UI 框架：Element Plus、Vuetify、Varlet
-- 使用 Vee-validate + Yup/Zod 进行表单验证
-- 组件采用 Vue 3 Composition API
-- 支持 TypeScript 严格模式
+# 启动开发服务器（有 playground 的包）
+pnpm dev
 
-### 测试策略
-- 使用 Vitest 进行单元测试
-- JSDOM 环境用于 Vue 组件测试
-- 每个包都有独立的测试配置
-
-## 开发约定
-
-### 包结构
-每个子包都遵循相同的结构：
-```
-package/
-├── src/                # 源代码
-├── dist/              # 构建输出
-├── __tests__/         # 测试文件
-├── package.json       # 包配置
-├── vite.config.ts     # Vite 配置
-├── vitest.config.ts   # 测试配置
-└── tsconfig.json      # TS 配置
+# 安装依赖并构建所有包
+pnpm install
 ```
 
-### 版本管理
-- 根包版本：1.0.9
-- 子包使用 workspace:^ 引用内部依赖
-- catalog 统一管理外部依赖版本
+### 单个测试文件
+```bash
+# 在包目录中运行特定测试文件
+npx vitest run path/to/test.spec.ts
 
-### 构建流程
-每个包的标准构建流程：`type-check → lint → test → build-c`
+# 或在根目录使用 turbo
+turbo run test --filter=package-name
+```
 
-## 技术栈
-- **语言**: TypeScript 5.8+
-- **框架**: Vue 3.5+
-- **构建**: Vite 6+ + Rollup
-- **测试**: Vitest 3+
-- **样式**: UnoCSS + SCSS
-- **代码质量**: ESLint 9 + @antfu/eslint-config
-- **包管理**: PNPM 10.13.1+
-- **Node**: 24.0.1+
+## 项目架构
+
+### 整体结构
+这是一个 **monorepo** 项目，使用 PNPM Workspace + Turbo 构建系统。所有包都是 ESM 模块，使用 TypeScript 编写。
+
+### 核心包结构
+- **configs/**: 构建配置包（eslint9, tsconfig, uno, vite）
+- **types/**: 全局类型定义和 TypeScript 工具类型
+- **shared/**: 通用工具函数和常量
+- **vue/**: Vue3 基础工具和安装器
+- **external/**: 第三方库封装（dayjs, lodash-es, vue-router 等）
+
+### 业务包结构
+- **ui/**: Vue3 组件库（基于 Element Plus, Vuetify, Varlet）
+- **design/**: 设计器系统组件
+- **req/**: 网络请求工具（基于 ky）
+- **psdk/**: 平台 SDK（tmap 腾讯地图, wxpa 微信公众号）
+- **ext/**: 浏览器扩展（chrome）
+
+### 构建工具
+- **Turbo**: 任务编排和缓存
+- **TSDown**: TypeScript 编译（configs, shared, types, req, vue, external, psdk, ext）
+- **Vite**: 构建工具（ui, design - 有 playground 的包）
+- **Vitest**: 测试框架（所有包统一配置）
+
+### 依赖管理
+使用 **PNPM Catalog** 统一版本管理，workspace 包通过 `workspace:^` 引用。
+
+### 包发布
+packages 通过 `@truenine/` 作用域发布到 npm，采用 LGPL-2.1-or-later 协议。
+
+## 开发注意事项
+
+### 测试规范
+- 使用 Vitest + jsdom 环境
+- 组件测试使用 @vue/test-utils
+- 测试文件放在 `__tests__` 目录或 `.spec.ts` 后缀
+
+### 构建产物
+- **dist/**: 构建输出目录
+- **TSDown**: 生成 cjs + esm 双格式，包含 sourcemap 和 dts
+- **Vite**: 生成 esm 格式，支持 CSS 提取
+
+### Playground
+ui 和 design 包含 playground 目录用于开发调试，使用 Vue Router 管理页面。
