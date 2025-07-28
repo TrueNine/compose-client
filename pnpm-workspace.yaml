@@ -11,7 +11,7 @@ packages:
   - ui
 
 catalog:
-  '@changesets/cli': ^2.27.9
+  '@changesets/cli': ^2.29.5
   '@date-io/dayjs': ^3.2.0
   '@tsconfig/node22': ^22.0.2
   '@varlet/ui': ^3.11.0
@@ -61,7 +61,7 @@ catalogs:
     '@iconify-json/mdi': ^1.2.3
     '@iconify-json/simple-icons': ^1.2.44
   rollup:
-    rollup: ^4.45.1
+    rollup: ^4.46.0
   types:
     '@types/chrome': ^0.1.1
     '@types/lodash-es': ^4.17.12
@@ -84,7 +84,7 @@ catalogs:
     '@vitejs/plugin-vue-jsx': ^5.0.1
     vite: ^7.0.6
     vite-plugin-dts: ^4.5.4
-    vite-plugin-vue-devtools: ^7.7.7
+    vite-plugin-vue-devtools: ^8.0.0
   vitest:
     '@types/jsdom': ^21.1.7
     jsdom: ^26.1.0
