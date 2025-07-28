@@ -5,14 +5,14 @@ import { STR_EMPTY } from '@/consts'
 type AddrLevel = Record<ChinaDistrictLevel, string>
 
 export class AddressUtils implements IChinaAddressDistrict {
-  static TWO_ZERO = '00' as `${number}`
-  static ERROR_DIG = [0, 1, 3, 5, 7, 8, 10, 11]
-  static GLOBAL_CODE = AddressUtils.TWO_ZERO
-  static THREE_ZERO = '000'
+  static TWO_ZERO = '00' as const
+  static ERROR_DIG = [0, 1, 3, 5, 7, 8, 10, 11] as const
+  static GLOBAL_CODE: `${number}` = AddressUtils.TWO_ZERO
+  static THREE_ZERO = '000' as const
   level: i64
   leaf?: boolean = false
   code: AddrCode
-  name = STR_EMPTY
+  name: string = STR_EMPTY
   addrLevel: AddrLevel
   private readonly _formatError: boolean
 
@@ -50,7 +50,7 @@ export class AddressUtils implements IChinaAddressDistrict {
 
   constructor(code: string) {
     this._formatError = false
-    if (code.length > 12 || code.length < 2 || AddressUtils.ERROR_DIG.includes(code.length)) {
+    if (code.length > 12 || code.length < 2 || AddressUtils.ERROR_DIG.includes(code.length as 0 | 1 | 3 | 5 | 7 | 8 | 10 | 11)) {
       this._formatError = true
       this.code = AddressUtils.GLOBAL_CODE
     }

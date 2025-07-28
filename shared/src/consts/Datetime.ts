@@ -1,3 +1,5 @@
+import type { timestamp } from '@truenine/types'
+
 export const ISO8601TimeZone = {
   ASIA_SHANGHAI: 'Asia/Shanghai' as const,
   UTC: 'UTC' as const,
@@ -17,23 +19,23 @@ export const ISO8601Format = {
 /**
  * ## 一秒的毫秒数
  */
-export const SECOND_MILLIS = 1000
+export const SECOND_MILLIS: timestamp = 1000
 
 /**
  * ## 一分钟的毫秒数
  */
-export const MINUTE_MILLIS = 60 * SECOND_MILLIS
+export const MINUTE_MILLIS: timestamp = 60 * SECOND_MILLIS
 
 /**
  * ## 一小时的毫秒数
  */
-export const HOUR_MILLIS = 60 * MINUTE_MILLIS
+export const HOUR_MILLIS: timestamp = 60 * MINUTE_MILLIS
 
 /**
  * ## 一天的毫秒数
  */
-export const DAY_MILLIS = 24 * HOUR_MILLIS
+export const DAY_MILLIS: timestamp = 24 * HOUR_MILLIS
 /**
  * ## 一周的毫秒数
  */
-export const WEEK_MILLIS = 7 * DAY_MILLIS
+export const WEEK_MILLIS: timestamp = 7 * DAY_MILLIS

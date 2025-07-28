@@ -23,4 +23,4 @@ export const PagedWrapper = {
 /**
  * ## PagedWrapper 的简写形式
  */
-export const Pw = PagedWrapper
+export const Pw: typeof PagedWrapper = PagedWrapper

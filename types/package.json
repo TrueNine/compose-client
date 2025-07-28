@@ -12,14 +12,12 @@
     "directory": "api-types"
   },
   "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
-    "./*": "./*"
+    ".": "./dist/index.js",
+    "./package.json": "./package.json"
   },
-  "module": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
@@ -28,9 +26,9 @@
   },
   "scripts": {
     "lint": "eslint --fix",
-    "build-c": "vite build",
+    "build-c": "tsdown",
     "type-check": "vue-tsc --noEmit",
-    "build": "vite build"
+    "build": "tsdown"
   },
   "devDependencies": {
     "@truenine/config-vite": "workspace:^"

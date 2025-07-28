@@ -15,6 +15,7 @@
     "vite.config.*",
     "vitest.config.*",
     "uno.config.*",
+    "tsdown.config.*",
     "cypress.config.*",
     "nightwatch.conf.*",
     "playwright.config.*",

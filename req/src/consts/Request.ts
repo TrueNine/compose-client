@@ -68,9 +68,24 @@ export const Headers = {
 }
 
 /**
+ * Content type configuration interface
+ */
+interface ContentTypeConfig {
+  [key: string]: string
+}
+
+/**
+ * Content types structure interface
+ */
+interface ContentTypesStructure {
+  formType: ContentTypeConfig
+  jsonType: ContentTypeConfig
+}
+
+/**
  * http Content-Type
  */
-export const ContentTypes = {
+export const ContentTypes: ContentTypesStructure = {
   formType: {
     [Headers.contentType]: MediaTypes.urlEncode,
   },

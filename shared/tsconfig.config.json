@@ -17,6 +17,7 @@
     "uno.config.*",
     "cypress.config.*",
     "nightwatch.conf.*",
+    "tsdown.config.*",
     "playwright.config.*",
     "eslint.config.*",
     "eslint.config.*"

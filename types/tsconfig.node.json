@@ -15,6 +15,7 @@
     "src/**/*.ts",
     "src/**/*.d.ts",
     "env.d.ts",
-    "vite.config.ts"
+    "vite.config.*",
+    "tsdown.config.*"
   ]
 }

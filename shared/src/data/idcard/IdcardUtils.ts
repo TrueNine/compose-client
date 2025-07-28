@@ -2,7 +2,7 @@ import type { timestamp } from '@truenine/types'
 import { Regexes } from '@/consts/Regexes'
 
 export const IdcardUtils = {
-  getInfo(idcard: string) {
+  getInfo(idcard: string): { adCode: string, gender: boolean, birthday: timestamp } | undefined {
     const trimIdcard = idcard.trim().substring(0, 18)
     const year = Number(trimIdcard.substring(6, 10))
     const month = Number(trimIdcard.substring(10, 12))

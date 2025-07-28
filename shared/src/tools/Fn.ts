@@ -37,4 +37,4 @@ export function TODO(todoText = 'Not Implemented todos'): never {
   throw new Error(todoText)
 }
 
-export const FIXME = TODO
+export const FIXME: typeof TODO = TODO

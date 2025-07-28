@@ -6,24 +6,20 @@
   "author": "TrueNine",
   "license": "LGPL-2.1-or-later",
   "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
-    },
-    "./*": "./*"
+    ".": "./dist/index.js",
+    "./package.json": "./package.json"
   },
-  "main": "dist/index.cjs",
-  "module": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "publishConfig": {
     "access": "public"
   },
   "scripts": {
     "lint": "eslint --fix",
-    "build-c": "vite build",
+    "build-c": "tsdown",
     "type-check": "vue-tsc --noEmit",
-    "build": "vite build"
+    "build": "tsdown"
   },
   "peerDependencies": {
     "@truenine/shared": "workspace:^",

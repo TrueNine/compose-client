@@ -12,30 +12,15 @@
     "directory": "shared"
   },
   "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
-    "./consts": {
-      "types": "./dist/consts/index.d.ts",
-      "import": "./dist/consts/index.js"
-    },
-    "./pageable": {
-      "types": "./dist/pageable/index.d.ts",
-      "import": "./dist/pageable/index.js"
-    },
-    "./data": {
-      "types": "./dist/data/index.d.ts",
-      "import": "./dist/data/index.js"
-    },
-    "./tools": {
-      "types": "./dist/tools/index.d.ts",
-      "import": "./dist/tools/index.js"
-    },
-    "./*": "./*"
+    ".": "./dist/index.js",
+    "./consts\\index": "./dist/consts\\index.js",
+    "./data\\index": "./dist/data\\index.js",
+    "./tools\\index": "./dist/tools\\index.js",
+    "./package.json": "./package.json"
   },
-  "module": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
@@ -45,9 +30,9 @@
   "scripts": {
     "test": "vitest run",
     "lint": "eslint --fix",
-    "build-c": "vite build",
+    "build-c": "tsdown",
     "type-check": "vue-tsc --noEmit",
-    "build": "vite build"
+    "build": "tsdown"
   },
   "peerDependencies": {
     "@truenine/types": "workspace:^"
