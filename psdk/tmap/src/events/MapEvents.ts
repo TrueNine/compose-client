@@ -1,12 +1,6 @@
 import type { nil } from '@truenine/types'
 import type { LatLng, Point } from '../LatLng'
-import type { ITencentEvent } from './Events'import { clear } from 'console'
-clear
-
-clear
-
-
-clear
+import type { ITencentEvent } from './Events'
 
 /**
  * ## 地图事件类型
