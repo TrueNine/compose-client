@@ -4,6 +4,7 @@
     "pnpm *",
     "Start-Job *",
     "ren *",
-    "Rename-Item *"
+    "Rename-Item *",
+    "npx *"
   ]
 }

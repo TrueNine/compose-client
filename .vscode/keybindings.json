@@ -1,0 +1,10 @@
+[
+  {
+    "key": "f2",
+    "command": "editor.action.marker.next"
+  },
+  {
+    "key": "alt+shift+f",
+    "command": "eslint.executeAutofix"
+  }
+]
