@@ -4,6 +4,7 @@
   ],
   "compilerOptions": {
     "skipLibCheck": true,
+    "isolatedDeclarations": true,
     "strict": true,
     "strictNullChecks": true,
     "removeComments": false,

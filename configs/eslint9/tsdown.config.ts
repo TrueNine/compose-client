@@ -11,6 +11,7 @@ export default defineConfig({
   },
   dts: {
     sourcemap: true,
-    isolatedDeclarations: true,
+
+    tsconfig: './tsconfig.build.json',
   },
 })

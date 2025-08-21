@@ -1,7 +1,7 @@
 import type { OptionsTypeScriptParserOptions } from '@antfu/eslint-config'
-import type { AntFuFormatterConfig, AntFuJsConfig, AntFuStrictTsConfig, AntFuStylisticConfig, AntFuTestConfig, AntFuTsConfig, AntFuUnocssConfig, AntFuVueConfig } from './types'
+import type { AntFuFormatterConfig, AntFuJsConfig, AntFuStrictTsConfig, AntFuStylisticConfig, AntFuTestConfig, AntFuTsConfig, AntFuUnocssConfig, AntFuVueConfig } from './types/index'
 import { antfu } from '@antfu/eslint-config'
-import { defaultFormatterConfig, defaultJsConfig, defaultStrictTsConfig, defaultStylisticConfig, defaultTestConfig, defaultTsConfig, defaultUnocssConfig, defaultVueConfig, mergeWithDefaults } from './defaults'
+import { defaultFormatterConfig, defaultJsConfig, defaultStrictTsConfig, defaultStylisticConfig, defaultTestConfig, defaultTsConfig, defaultUnocssConfig, defaultVueConfig, mergeWithDefaults } from './defaults/index'
 
 interface ConfigOptions {
   type?: 'app' | 'lib'
