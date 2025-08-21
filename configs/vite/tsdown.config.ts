@@ -10,7 +10,7 @@ const config: UserConfig = defineConfig({
     './src/excludes/index.ts',
     './src/lib/index.ts',
   ],
-  tsconfig: './tsconfig.build.json',
+  tsconfig: './tsconfig.lib.json',
   platform: 'node',
   sourcemap: true,
   unbundle: true,

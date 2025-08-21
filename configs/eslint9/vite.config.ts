@@ -9,7 +9,7 @@ export default defineConfig(
         entry: ['index.ts', 'defaults/index.ts'],
         formats: ['es', 'cjs'],
       },
-      dts: { tsconfigPath: './tsconfig.build.json' },
+      dts: { tsconfigPath: './tsconfig.lib.json' },
       packageJson: {
         buildTool: 'pnpm',
       },

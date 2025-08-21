@@ -42,8 +42,5 @@
     "@unocss/transformer-compile-class": "catalog:unocss",
     "unocss": "catalog:unocss",
     "vue": "catalog:vue"
-  },
-  "devDependencies": {
-    "@truenine/config-vite": "workspace:^"
   }
 }
