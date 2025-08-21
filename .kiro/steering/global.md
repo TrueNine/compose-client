@@ -1,5 +1,5 @@
 ---
-alwaysApply: true
+inclusion: always
 ---
 
 **Mandatory Rules**
