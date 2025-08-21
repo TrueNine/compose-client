@@ -4,6 +4,7 @@
     "@truenine/tsconfig/tsconfig.json"
   ],
   "compilerOptions": {
+
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.build.tsbuildinfo",
     "baseUrl": ".",
     "module": "ESNext",

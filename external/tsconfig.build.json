@@ -8,7 +8,7 @@
     "lib": [
       "ESNext",
       "DOM",
-      "WebWorker"
+      "webworker"
     ],
     "baseUrl": ".",
     "module": "ESNext",

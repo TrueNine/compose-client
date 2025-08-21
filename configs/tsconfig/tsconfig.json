@@ -3,8 +3,10 @@
     "tsconfig.json"
   ],
   "compilerOptions": {
+    "incremental": true,
     "skipLibCheck": true,
     "isolatedDeclarations": true,
+    "declaration": true,
     "strict": true,
     "strictNullChecks": true,
     "removeComments": false,
