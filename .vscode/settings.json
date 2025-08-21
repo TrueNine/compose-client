@@ -2,6 +2,8 @@
   "kiroAgent.configureMCP": "Enabled",
   "kiroAgent.trustedCommands": [
     "pnpm *",
-    "Start-Job *"
+    "Start-Job *",
+    "ren *",
+    "Rename-Item *"
   ]
 }
