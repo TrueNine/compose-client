@@ -64,7 +64,6 @@
   "scripts": {
     "test": "vitest run",
     "lint": "eslint --fix",
-    "build-c": "tsdown",
     "type-check": "vue-tsc --noEmit",
     "build": "tsdown"
   },
@@ -80,6 +79,7 @@
     "vue-router": "catalog:vue"
   },
   "devDependencies": {
+    "@edge-runtime/vm": "^5.0.0",
     "@truenine/config-vite": "workspace:^",
     "@truenine/shared": "workspace:^",
     "@truenine/types": "workspace:^",

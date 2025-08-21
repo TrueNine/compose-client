@@ -1,9 +1,10 @@
 {
   "extends": [
     "@vue/tsconfig/tsconfig.dom.json",
-    "./tsconfig.build.json"
+    "./tsconfig.app.json"
   ],
   "compilerOptions": {
+    "composite": true,
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.vue.tsbuildinfo",
     "jsx": "preserve",
     "jsxImportSource": "vue",

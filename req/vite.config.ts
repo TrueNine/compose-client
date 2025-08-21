@@ -8,7 +8,7 @@ export default defineConfig(
       lib: {
         entry: ['index.ts'],
       },
-      dts: { tsconfigPath: './tsconfig.build.json' },
+      dts: { tsconfigPath: './tsconfig.lib.json' },
       packageJson: {
         buildTool: 'pnpm',
       },

@@ -1,8 +1,9 @@
+import type { UserConfig } from 'vite'
 import { fileURLToPath, URL } from 'node:url'
 import { configureViteFragment } from '@truenine/config-vite'
 import { defineConfig } from 'vite'
 
-export default defineConfig(
+const config: UserConfig = defineConfig(
   configureViteFragment(
     {
       lib: {
@@ -22,3 +23,5 @@ export default defineConfig(
     },
   ),
 )
+
+export default config

@@ -13,4 +13,5 @@ export default defineConfig({
     sourcemap: true,
     isolatedDeclarations: true,
   },
+  tsconfig: './tsconfig.lib.json',
 })

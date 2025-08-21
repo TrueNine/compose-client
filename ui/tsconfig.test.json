@@ -1,6 +1,6 @@
 {
   "extends": [
-    "./tsconfig.build.json",
+    "./tsconfig.app.json",
     "./tsconfig.vue.json"
   ],
   "compilerOptions": {

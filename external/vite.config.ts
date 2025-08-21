@@ -17,7 +17,7 @@ export default defineConfig(
           'vue-router/index.ts',
         ],
       },
-      dts: { tsconfigPath: './tsconfig.build.json' },
+      dts: { tsconfigPath: './tsconfig.lib.json' },
       packageJson: {
         buildTool: 'pnpm',
       },

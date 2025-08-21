@@ -1,7 +1,7 @@
 {
   "extends": [
     "@vue/tsconfig/tsconfig.dom.json",
-    "./tsconfig.build.json"
+    "./tsconfig.app.json"
   ],
   "compilerOptions": {
     "jsx": "preserve",

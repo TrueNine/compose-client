@@ -11,7 +11,7 @@ export default defineConfig(
         ],
         formats: ['es'],
       },
-      dts: { tsconfigPath: './tsconfig.build.json' },
+      dts: { tsconfigPath: './tsconfig.lib.json' },
       packageJson: {
         buildTool: 'pnpm',
       },

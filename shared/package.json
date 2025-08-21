@@ -30,7 +30,6 @@
   "scripts": {
     "test": "vitest run",
     "lint": "eslint --fix",
-    "build-c": "tsdown",
     "type-check": "vue-tsc --noEmit",
     "build": "tsdown"
   },

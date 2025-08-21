@@ -1,7 +1,7 @@
 {
   "extends": "@tsconfig/node22/tsconfig.json",
   "compilerOptions": {
-    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.config.tsbuildinfo",
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.tools.tsbuildinfo",
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "types": [
@@ -14,9 +14,9 @@
     "env.d.ts",
     "vite.config.*",
     "vitest.config.*",
-    "tsdown.config.*",
     "uno.config.*",
     "cypress.config.*",
+    "tsdown.config.*",
     "nightwatch.conf.*",
     "playwright.config.*",
     "eslint.config.*",

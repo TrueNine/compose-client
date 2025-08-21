@@ -1,6 +1,6 @@
 import { defineConfig } from 'tsdown'
 
-export default defineConfig({
+const _default_1: import('tsdown').UserConfig & import('tsdown').UserConfigFn = defineConfig({
   entry: ['./src/index.ts'],
   platform: 'neutral',
   sourcemap: true,
@@ -12,5 +12,7 @@ export default defineConfig({
   dts: {
     sourcemap: true,
     isolatedDeclarations: true,
+    tsconfig: './tsconfig.node.json',
   },
 })
+export default _default_1

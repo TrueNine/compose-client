@@ -4,6 +4,6 @@ export default eslint9({
   test: true,
   typescript: {
     strictTypescriptEslint: true,
-    tsconfigPath: './tsconfig.json',
+    tsconfigPath: './tsconfig.lib.json',
   },
 })

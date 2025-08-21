@@ -15,6 +15,7 @@ export default defineConfig({
   sourcemap: true,
   unbundle: true,
   format: ['esm'],
+  tsconfig: './tsconfig.lib.json',
   dts: {
     sourcemap: true,
     isolatedDeclarations: true,

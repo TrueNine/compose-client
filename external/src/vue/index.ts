@@ -36,7 +36,7 @@ function _findSlotNodesBy(
   const slotNodes = maybeArray(slotNode)
   slotNodes.forEach((currentNode) => {
     const componentType = currentNode.type as Record<string, string>
-    currentNode.actualName = componentType.name || componentType.__name
+    currentNode.actualName = componentType.name ?? componentType.__name ?? ''
 
     if (compareFn(currentNode)) {
       accumulator.push(currentNode)

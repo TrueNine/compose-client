@@ -205,17 +205,19 @@ export async function extractPdfImages<T = string>(
     }
 
     const firstImageIndex = imageOperatorIndices[0]
-    const args = operatorList.argsArray[firstImageIndex]
+    const args = operatorList.argsArray[firstImageIndex] as unknown[]
 
     if (!Array.isArray(args) || args.length === 0 || typeof args[0] !== 'string') {
       throw new Error('Invalid image operator arguments')
     }
 
     const imageRefName = args[0]
-    const imageData = await safeGetObject(imageRefName, page)
-    if (!isValidPDFImageData(imageData)) {
+    const imageDataRaw = await safeGetObject(imageRefName, page)
+    if (!isValidPDFImageData(imageDataRaw)) {
       throw new Error('Invalid PDF image data')
     }
+    // 类型检查通过后，可以安全地进行类型断言
+    const imageData = imageDataRaw
 
     return imageData
   })

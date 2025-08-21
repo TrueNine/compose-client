@@ -51,10 +51,8 @@
     "test": "vitest run",
     "dev": "vite",
     "lint": "eslint --fix",
-    "build-c": "vite build",
-    "build-g": "gulp -f __build-src__/index.js",
     "type-check": "vue-tsc --noEmit",
-    "build": "run-s build-c build-g"
+    "build": "vite build && gulp -f __build-src__/index.js"
   },
   "peerDependencies": {
     "@date-io/dayjs": "catalog:",

@@ -1,14 +1,18 @@
 {
-  "extends": ["@truenine/tsconfig/tsconfig.json"],
+  "extends": [
+    "@truenine/tsconfig/tsconfig.json"
+  ],
   "compilerOptions": {
+    "composite": true,
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.build.tsbuildinfo",
+    "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     }
   },
   "include": [
-    "src/**/*.ts",
-    "src/**/*.d.ts"
+    "env.d.ts",
+    "src/**/*.ts"
   ]
 }
