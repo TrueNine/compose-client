@@ -1,7 +1,7 @@
 {
   "name": "compose-client",
   "version": "1.0.9",
-  "packageManager": "pnpm@10.13.1",
+  "packageManager": "pnpm@10.14.0",
   "description": "百研科技前端开发包",
   "author": "TrueNine",
   "license": "LGPL-2.1-or-later",
@@ -18,8 +18,9 @@
     "wxpa"
   ],
   "engines": {
-    "node": ">=24.4.1",
-    "pnpm": ">=10.13.1"
+    "node": ">=24.5.0",
+    "pnpm": ">=10.15.0",
+    "trubo": ">=2.5.5"
   },
   "scripts": {
     "build": "turbo run build",
@@ -36,8 +37,7 @@
     "build:shared": "pnpm --filter ./shared... run build",
     "build:vue": "pnpm --filter ./vue... run build",
     "build:shareds": "run-s build:types build:shared build:vue",
-    "build:legacy": "run-s build:configs",
-    "postinstall": "turbo run build"
+    "build:legacy": "run-s build:configs"
   },
   "devDependencies": {
     "@antfu/eslint-config": "catalog:eslint",
