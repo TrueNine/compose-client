@@ -25,7 +25,7 @@ catalog:
   prettier: ^3.6.2
   sass: ^1.89.2
   turbo: ^2.5.5
-  typescript: ^5.8.3
+  typescript: ^5.9.2
   unplugin-auto-import: ^19.3.0
   unplugin-fonts: ^1.4.0
   unplugin-vue-components: ^28.8.0
@@ -36,11 +36,11 @@ catalogs:
     cssnano: ^7.1.0
     cssnano-preset-advanced: ^7.0.8
   eslint:
-    '@antfu/eslint-config': ^5.0.0
+    '@antfu/eslint-config': ^5.2.0
     '@eslint/js': ^9.32.0
     '@vue/eslint-config-prettier': ^10.2.0
     '@vue/eslint-config-typescript': ^14.6.0
-    eslint: ^9.32.0
+    eslint: ^9.33.0
     eslint-plugin-format: ^1.0.1
     eslint-plugin-prettier: ^5.5.3
     eslint-plugin-vue: ^10.3.0
@@ -61,13 +61,13 @@ catalogs:
     '@iconify-json/mdi': ^1.2.3
     '@iconify-json/simple-icons': ^1.2.44
   rollup:
-    rollup: ^4.46.1
+    rollup: ^4.46.2
   tsdown:
-    tsdown: ^0.13.0
+    tsdown: ^0.13.4
   types:
     '@types/chrome': ^0.1.1
     '@types/lodash-es': ^4.17.12
-    '@types/node': ^24.1.0
+    '@types/node': ^24.2.1
   unocss:
     '@unocss/cli': ^66.3.3
     '@unocss/eslint-config': ^66.3.3
@@ -84,7 +84,7 @@ catalogs:
   vite:
     '@vitejs/plugin-vue': ^6.0.1
     '@vitejs/plugin-vue-jsx': ^5.0.1
-    vite: ^7.0.6
+    vite: ^7.1.1
     vite-plugin-dts: ^4.5.4
     vite-plugin-vue-devtools: ^8.0.0
   vitest:
@@ -96,7 +96,7 @@ catalogs:
     '@vue/tsconfig': ^0.7.0
     vue: ^3.5.18
     vue-router: ^4.5.1
-    vue-tsc: ^3.0.4
+    vue-tsc: ^3.0.5
   vuetify:
     '@mdi/font': ^7.4.47
     vite-plugin-vuetify: ^2.1.1
