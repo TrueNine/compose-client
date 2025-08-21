@@ -63,7 +63,7 @@ catalogs:
   rollup:
     rollup: ^4.47.1
   tsdown:
-    tsdown: ^0.13.5
+    tsdown: ^0.14.1
   types:
     '@types/chrome': ^0.1.4
     '@types/lodash-es': ^4.17.12
