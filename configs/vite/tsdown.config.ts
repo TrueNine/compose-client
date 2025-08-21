@@ -1,6 +1,7 @@
+import type { UserConfig } from 'tsdown'
 import { defineConfig } from 'tsdown'
 
-export default defineConfig({
+const config: UserConfig = defineConfig({
   entry: [
     './src/index.ts',
     './src/vite-plugin-dts/index.ts',
@@ -9,6 +10,7 @@ export default defineConfig({
     './src/excludes/index.ts',
     './src/lib/index.ts',
   ],
+  tsconfig: './tsconfig.build.json',
   platform: 'node',
   sourcemap: true,
   unbundle: true,
@@ -18,6 +20,7 @@ export default defineConfig({
   },
   dts: {
     sourcemap: true,
-    isolatedDeclarations: true,
   },
 })
+
+export default config
