@@ -204,14 +204,7 @@ export function createDevBuildOptimization(): UserConfig {
       // 开发模式不内联资源
       assetsInlineLimit: 0,
       // 启用监听模式支持
-      watch: {
-        // 排除不需要监听的文件
-        exclude: [
-          'node_modules/**',
-          'dist/**',
-          '.git/**',
-        ],
-      },
+      watch: null,
     },
   }
 }
