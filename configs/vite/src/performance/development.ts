@@ -1,4 +1,5 @@
 import type { UserConfig } from 'vite'
+import process from 'node:process'
 import { mergeConfig } from 'vite'
 
 /**
@@ -28,7 +29,6 @@ export interface DevelopmentOptimizationOptions {
  */
 export function createDevServerOptimization(options: DevelopmentOptimizationOptions = {}): UserConfig {
   const {
-    enableFastRefresh = true,
     enableSmartHMR = true,
     enableFsCache = true,
     port = 3000,
@@ -41,7 +41,7 @@ export function createDevServerOptimization(options: DevelopmentOptimizationOpti
     server: {
       port,
       open,
-      https,
+      ...(https ? { https: {} } : {}),
       proxy,
       // 启用 CORS
       cors: true,
@@ -67,21 +67,23 @@ export function createDevServerOptimization(options: DevelopmentOptimizationOpti
         depth: 99,
       },
       // 优化 HMR 配置
-      hmr: enableSmartHMR ? {
-        // 启用 HMR 端口
-        port: port + 1,
-        // 禁用错误覆盖层以提升性能
-        overlay: false,
-        // 设置 HMR 客户端日志级别
-        clientLogLevel: 'error',
-      } : false,
+      hmr: enableSmartHMR
+        ? {
+            // 启用 HMR 端口
+            port: port + 1,
+            // 禁用错误覆盖层以提升性能
+            overlay: false,
+          }
+        : false,
       // 启用文件系统缓存
-      fs: enableFsCache ? {
-        // 允许访问工作区根目录
-        allow: ['..'],
-        // 严格模式，提升安全性
-        strict: true,
-      } : undefined,
+      fs: enableFsCache
+        ? {
+            // 允许访问工作区根目录
+            allow: ['..'],
+            // 严格模式，提升安全性
+            strict: true,
+          }
+        : {},
       // 预热常用文件以提升启动速度
       warmup: {
         clientFiles: [
@@ -174,8 +176,6 @@ export function createDevDepsOptimization(options: DevelopmentOptimizationOption
         // 开发模式启用源码映射
         sourcemap: true,
       },
-      // 设置合理的缓存目录
-      cacheDir: 'node_modules/.vite/deps',
       // 启用依赖发现优化
       holdUntilCrawlEnd: true,
     },
@@ -201,7 +201,8 @@ export function createDevBuildOptimization(): UserConfig {
       // 开发模式使用更快的 CSS 处理
       cssMinify: false,
       // 优化资源内联限制
-      assetsInlineLimit: 0, // 开发模式不内联资源
+      // 开发模式不内联资源
+      assetsInlineLimit: 0,
       // 启用监听模式支持
       watch: {
         // 排除不需要监听的文件
@@ -226,17 +227,11 @@ export function createDevCssOptimization(): UserConfig {
       // CSS 预处理器选项
       preprocessorOptions: {
         scss: {
-          // 启用现代 API
-          api: 'modern-compiler',
-          // 开发模式使用更快的输出样式
-          outputStyle: 'expanded',
-          // 启用源码映射
-          sourceMap: true,
+          // 开发模式优化配置
+          charset: false,
         },
         sass: {
-          api: 'modern-compiler',
-          outputStyle: 'expanded',
-          sourceMap: true,
+          charset: false,
         },
         less: {
           // 启用 JavaScript
@@ -328,7 +323,8 @@ export function createMonorepoDevelopmentOptimization(options: DevelopmentOptimi
       },
       // 启用跨包的文件服务
       fs: {
-        allow: ['../..'], // 允许访问 monorepo 根目录
+        // 允许访问 monorepo 根目录
+        allow: ['../..'],
       },
     },
     optimizeDeps: {
@@ -365,8 +361,8 @@ export function createHMROptimization(options: { enableVueHMR?: boolean, enableR
     server: {
       hmr: {
         // 优化 HMR 性能
-        overlay: false, // 禁用错误覆盖层
-        clientLogLevel: 'error', // 只显示错误日志
+        // 禁用错误覆盖层
+        overlay: false,
       },
     },
   }
@@ -416,7 +412,9 @@ export function createFastDevelopmentOptimization(options: DevelopmentOptimizati
     },
     optimizeDeps: {
       // 强制预构建常用依赖
-      force: false, // 开发模式不强制重新构建
+      // 强制预构建常用依赖
+      // 开发模式不强制重新构建
+      force: false,
       // 更激进的依赖包含策略
       include: [
         'vue',
@@ -450,13 +448,13 @@ export function createSmartDevelopmentOptimization(options: DevelopmentOptimizat
   // 检测项目类型
   const isMonorepo = process.cwd().includes('packages')
     || process.cwd().includes('apps')
-    || !!process.env.PNPM_WORKSPACE_ROOT
+    || (process.env.PNPM_WORKSPACE_ROOT != null)
 
-  const isVueProject = process.env.npm_package_dependencies_vue
-    || process.env.npm_package_devDependencies_vue
+  const isVueProject = (process.env.npm_package_dependencies_vue != null)
+    || (process.env.npm_package_devDependencies_vue != null)
 
-  const isReactProject = process.env.npm_package_dependencies_react
-    || process.env.npm_package_devDependencies_react
+  const isReactProject = (process.env.npm_package_dependencies_react != null)
+    || (process.env.npm_package_devDependencies_react != null)
 
   // 基础配置
   const config = isMonorepo
@@ -466,7 +464,7 @@ export function createSmartDevelopmentOptimization(options: DevelopmentOptimizat
   // 添加框架特定的 HMR 优化
   const hmrConfig = createHMROptimization({
     enableVueHMR: !!isVueProject,
-    enableReactHMR: !(isReactProject == null),
+    enableReactHMR: isReactProject,
   })
 
   return mergeConfig(config, hmrConfig)

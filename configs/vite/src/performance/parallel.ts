@@ -20,9 +20,10 @@ export interface ParallelOptimizationOptions {
  */
 export function getOptimalConcurrency(maxConcurrency?: number): number {
   const cpuCount = cpus().length
-  const defaultConcurrency = Math.max(1, cpuCount - 1) // 保留一个核心给系统
+  // 保留一个核心给系统
+  const defaultConcurrency = Math.max(1, cpuCount - 1)
 
-  if (maxConcurrency) {
+  if (maxConcurrency != null && maxConcurrency > 0) {
     return Math.min(maxConcurrency, cpuCount)
   }
 
@@ -37,7 +38,6 @@ export function createParallelOptimization(options: ParallelOptimizationOptions 
     maxConcurrency,
     enableWorkerThreads = true,
     enableParallelCss = true,
-    enableParallelTypeCheck = true,
   } = options
 
   const concurrency = getOptimalConcurrency(maxConcurrency)
@@ -92,7 +92,6 @@ export function createParallelOptimization(options: ParallelOptimizationOptions 
  */
 export function createDevParallelOptimization(options: ParallelOptimizationOptions = {}): UserConfig {
   const baseConfig = createParallelOptimization(options)
-  const concurrency = getOptimalConcurrency(options.maxConcurrency)
 
   return {
     ...baseConfig,
@@ -135,7 +134,8 @@ export function createProdParallelOptimization(options: ParallelOptimizationOpti
     build: {
       ...baseConfig.build,
       // 生产环境并行优化
-      minify: 'esbuild', // esbuild 支持并行压缩
+      // esbuild 支持并行压缩
+      minify: 'esbuild',
       // 启用并行构建
       rollupOptions: {
         ...baseConfig.build?.rollupOptions,

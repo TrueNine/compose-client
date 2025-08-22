@@ -1,6 +1,6 @@
 import { getExternals } from './Common'
 
-export const ViteExternals = [
+export const ViteExternals: (string | RegExp)[] = [
   ...getExternals([
     'vite',
     'fast-global',

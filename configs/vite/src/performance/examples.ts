@@ -1,4 +1,5 @@
 import type { UserConfig } from 'vite'
+import process from 'node:process'
 import { mergeConfig } from 'vite'
 
 import { configureViteFragment } from '../index'
@@ -83,12 +84,14 @@ export function createMonorepoPackagePerformanceExample(): UserConfig {
       preset: 'monorepo',
       options: {
         enableEsbuildOptimization: true,
-        enableChunkOptimization: false, // 库项目通常不需要复杂的代码分割
+        // 库项目通常不需要复杂的代码分割
+        enableChunkOptimization: false,
         enableDepsOptimization: true,
         cache: {
           enableFsCache: true,
           enableDepsCache: true,
-          cacheDir: '../../node_modules/.vite', // 使用 monorepo 根目录的缓存
+          // 使用 monorepo 根目录的缓存
+          cacheDir: '../../node_modules/.vite',
         },
         parallel: {
           enableWorkerThreads: true,
@@ -140,7 +143,8 @@ export function createFastDevelopmentPerformanceExample(): UserConfig {
       enableWorkerThreads: true,
       enableParallelCss: false,
       enableParallelTypeCheck: false,
-      maxConcurrency: 2, // 减少并发以提升启动速度
+      // 减少并发以提升启动速度
+      maxConcurrency: 2,
     },
   })
 }

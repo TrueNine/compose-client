@@ -57,8 +57,6 @@ export function createCacheOptimization(options: CacheOptimizationOptions = {}):
       ...config.optimizeDeps,
       // 强制重新优化依赖
       force: forceClearCache,
-      // 缓存目录
-      cacheDir: `${cacheDir}/deps`,
       // 启用依赖哈希
       holdUntilCrawlEnd: true,
     }
@@ -92,10 +90,8 @@ export function createTypeScriptCacheOptimization(): UserConfig {
       // 启用 TypeScript 缓存
       tsconfigRaw: {
         compilerOptions: {
-          // 启用增量编译
-          incremental: true,
-          // 指定构建信息文件位置
-          tsBuildInfoFile: 'node_modules/.cache/typescript/tsbuildinfo',
+          // 优化 TypeScript 编译选项
+          target: 'ES2020',
         },
       },
     },

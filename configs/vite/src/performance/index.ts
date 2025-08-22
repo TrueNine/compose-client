@@ -21,12 +21,9 @@ export interface VitePerformanceOptions {
 /**
  * 创建 esbuild 优化配置
  */
-export function createEsbuildOptimization(): BuildOptions['esbuild'] {
+export function createEsbuildOptimization(): UserConfig['esbuild'] {
   return {
     target: 'es2020',
-    minify: true,
-    treeShaking: true,
-    // 启用更快的转换
     keepNames: false,
     // 优化 JSX 转换
     jsxFactory: 'h',
@@ -39,7 +36,7 @@ export function createEsbuildOptimization(): BuildOptions['esbuild'] {
 /**
  * 创建代码分割优化配置
  */
-export function createChunkOptimization(options: VitePerformanceOptions = {}): BuildOptions['rollupOptions'] {
+export function createChunkOptimization(): BuildOptions['rollupOptions'] {
   return {
     output: {
       // 优化 chunk 分割策略
@@ -75,8 +72,8 @@ export function createChunkOptimization(options: VitePerformanceOptions = {}): B
       // 设置 chunk 文件名格式
       chunkFileNames: (chunkInfo) => {
         const facadeModuleId = chunkInfo.facadeModuleId
-        if (facadeModuleId != null && facadeModuleId !== void 0) {
-          const name = facadeModuleId.split('/').pop()?.replace(/\.[^.]*$/, '') || 'chunk'
+        if (facadeModuleId != null) {
+          const name = (facadeModuleId.split('/').pop()?.replace(/\.[^.]*$/, '')) ?? 'chunk'
           return `chunks/${name}-[hash].js`
         }
         return 'chunks/[name]-[hash].js'
@@ -180,12 +177,12 @@ export function createVitePerformanceConfig(options: VitePerformanceOptions = {}
       cssMinify: true,
     },
     // esbuild 配置
-    esbuild: enableEsbuildOptimization ? createEsbuildOptimization() : undefined,
+    esbuild: enableEsbuildOptimization ? createEsbuildOptimization() : {},
   }
 
   // 添加代码分割优化
   if (enableChunkOptimization) {
-    config.build!.rollupOptions = createChunkOptimization(options)
+    config.build!.rollupOptions = createChunkOptimization()
   }
 
   // 添加依赖预构建优化
@@ -223,7 +220,7 @@ export function createProductionPerformanceConfig(options: VitePerformanceOption
       },
     },
     // 生产环境禁用开发服务器优化
-    server: undefined,
+    server: {},
   }
 }
 
