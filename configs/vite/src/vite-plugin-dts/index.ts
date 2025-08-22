@@ -47,7 +47,7 @@ const DEFAULT_OPTIONS: Required<SimpleDtsOptions> = {
   excludes: [],
   sourcemap: false,
   strict: true,
-  logLevel: 'info',
+  logLevel: 'error',
 }
 
 /**
@@ -93,9 +93,30 @@ export function createDtsPlugin(options: SimpleDtsOptions = {}): Plugin {
     staticImport: true,
     logLevel: finalOptions.logLevel,
     strictOutput: finalOptions.strict,
+
+    // 错误处理 - 确保 dts 生成错误时构建失败
+    rollupOptions: {
+      onwarn: (warning: { code?: string, message?: string }, warn: (warning: { code?: string, message?: string }) => void) => {
+        // 将所有警告提升为错误
+        if (warning.code === 'PLUGIN_WARNING' || warning.code === 'UNRESOLVED_IMPORT') {
+          throw new Error(`DTS generation failed: ${warning.message ?? 'Unknown error'}`)
+        }
+        warn(warning)
+      },
+    },
+
+    // 使用 beforeWriteFile 钩子来验证生成的文件
+    beforeWriteFile: (filePath: string, content: string) => {
+      if (!content || content.trim().length === 0) {
+        throw new Error(`DTS generation failed: Empty declaration file generated for ${filePath}`)
+      }
+      return { filePath, content }
+    },
   }
 
-  return dtsPlugin(dtsPluginConfig)
+  const plugin = dtsPlugin(dtsPluginConfig)
+
+  return plugin
 }
 
 // 导出一些常用的预设配置

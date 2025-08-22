@@ -82,7 +82,8 @@ export function configureViteFragment(
       ...finalDtsOptions,
       outDir: finalDtsOptions.outDir ?? 'dist',
       sourcemap: finalDtsOptions.sourcemap ?? false,
-      logLevel: 'info',
+      logLevel: 'error',
+      strict: true,
     })
   }
 
