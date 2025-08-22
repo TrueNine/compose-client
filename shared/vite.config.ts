@@ -18,6 +18,26 @@ export default defineConfig(
       packageJson: {
         buildTool: 'pnpm',
       },
+      // 启用性能优化配置
+      performance: {
+        enabled: true,
+        preset: 'monorepo',
+        options: {
+          enableEsbuildOptimization: true,
+          enableChunkOptimization: false, // 工具库不需要复杂的代码分割
+          enableDepsOptimization: true,
+          chunkSizeWarningLimit: 600,
+          cache: {
+            enableFsCache: true,
+            enableDepsCache: true,
+          },
+          parallel: {
+            enableWorkerThreads: true,
+            enableParallelCss: false,
+            maxConcurrency: 4,
+          },
+        },
+      },
     },
     {
       resolve: {

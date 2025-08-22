@@ -1,5 +1,6 @@
 {
   "name": "compose-client",
+  "type": "module",
   "version": "1.0.9",
   "packageManager": "pnpm@10.15.0",
   "description": "百研科技前端开发包",
@@ -23,12 +24,21 @@
     "trubo": ">=2.5.6"
   },
   "scripts": {
-    "build": "turbo run build",
-    "lint": "turbo run lint",
-    "test": "turbo run test",
-    "type-check": "turbo run type-check",
-    "dev": "turbo run dev",
-    "lint:root": "eslint --fix --config ./configs/tsconfig/eslint.config.mjs"
+    "build": "turbo run build --output-logs=new-only",
+    "build:fast": "turbo run build --force --output-logs=new-only",
+    "build:legacy": "turbo run build --concurrency=12 --output-logs=new-only",
+    "lint": "turbo run lint --output-logs=new-only",
+    "lint:legacy": "turbo run lint --concurrency=16 --output-logs=new-only",
+    "test": "turbo run test --output-logs=new-only",
+    "test:legacy": "turbo run test --concurrency=10 --output-logs=new-only",
+    "type-check": "turbo run type-check --output-logs=new-only",
+    "type-check:legacy": "turbo run type-check --concurrency=8 --output-logs=new-only",
+    "dev": "turbo run dev --output-logs=new-only",
+    "dev:single": "turbo run dev --concurrency=1 --output-logs=new-only",
+    "dev:legacy": "turbo run dev --concurrency=6 --output-logs=new-only",
+    "lint:root": "eslint --fix --cache --cache-location .eslintcache --config ./configs/tsconfig/eslint.config.mjs",
+    "ci:build": "turbo run build lint type-check test --output-logs=errors-only --no-daemon",
+    "ci:quick": "turbo run build lint type-check --output-logs=errors-only --no-daemon"
   },
   "devDependencies": {
     "@antfu/eslint-config": "catalog:eslint",

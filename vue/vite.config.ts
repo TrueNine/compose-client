@@ -15,6 +15,26 @@ export default defineConfig(
       packageJson: {
         buildTool: 'pnpm',
       },
+      // 启用性能优化配置
+      performance: {
+        enabled: true,
+        preset: process.env.NODE_ENV === 'development' ? 'fast-dev' : 'monorepo',
+        options: {
+          enableEsbuildOptimization: true,
+          enableChunkOptimization: false, // 库项目不需要复杂的代码分割
+          enableDepsOptimization: true,
+          chunkSizeWarningLimit: 500,
+          cache: {
+            enableFsCache: true,
+            enableDepsCache: true,
+          },
+          parallel: {
+            enableWorkerThreads: true,
+            enableParallelCss: false, // Vue 组件库通常不需要复杂的 CSS 并行处理
+            maxConcurrency: process.env.NODE_ENV === 'development' ? 2 : 4,
+          },
+        },
+      },
     },
     {
       resolve: {

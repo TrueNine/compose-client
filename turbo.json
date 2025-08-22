@@ -1,98 +1,166 @@
 {
   "$schema": "https://turborepo.com/schema.json",
+  "globalDependencies": [
+    "pnpm-workspace.yaml",
+    "pnpm-lock.yaml",
+    "package.json",
+    ".npmrc",
+    "turbo.json",
+    "vitest.workspace.ts",
+    ".editorconfig"
+  ],
+  "globalEnv": [
+    "NODE_ENV",
+    "CI",
+    "TURBO_TOKEN",
+    "TURBO_TEAM"
+  ],
+  "globalPassThroughEnv": [
+    "NODE_ENV",
+    "CI",
+    "TURBO_TOKEN",
+    "TURBO_TEAM"
+  ],
+  "ui": "stream",
+  "daemon": false,
   "tasks": {
     "lint": {
-      "dependsOn": ["^build"],
+      "dependsOn": [],
       "inputs": [
         "src/**/*.{ts,js,vue,tsx,jsx}",
         "*.{ts,js,mjs}",
         "eslint.config.*",
-        ".eslintrc.*"
+        ".eslintrc.*",
+        "package.json"
       ],
-      "outputs": [],
-      "cache": true
+      "outputs": [
+        ".eslintcache/**"
+      ],
+      "cache": true,
+      "env": [
+        "NODE_ENV"
+      ],
+      "passThroughEnv": [
+        "ESLINT_USE_FLAT_CONFIG"
+      ]
     },
     "type-check": {
-      "dependsOn": ["^build"],
+      "dependsOn": [],
       "inputs": [
         "src/**/*.{ts,vue,tsx}",
         "*.ts",
-        "tsconfig*.json"
+        "tsconfig*.json",
+        "package.json"
       ],
-      "outputs": [],
-      "cache": true
+      "outputs": [
+        ".tsbuildinfo",
+        "dist/**/*.d.ts"
+      ],
+      "cache": true,
+      "env": [
+        "NODE_ENV"
+      ]
     },
     "test": {
-      "dependsOn": ["^build", "type-check", "lint"],
+      "dependsOn": [],
       "inputs": [
         "src/**/*.{ts,js,vue,tsx,jsx}",
         "test/**/*.{ts,js,vue,tsx,jsx}",
         "*.{ts,js}",
         "tsconfig*.json",
         "vite.config.*",
-        "vitest.config.*"
+        "vitest.config.*",
+        "package.json"
       ],
       "outputs": [
         "test-results/**",
-        "coverage/**"
+        "coverage/**",
+        ".vitest/**"
       ],
-      "cache": true
+      "cache": true,
+      "env": [
+        "NODE_ENV",
+        "CI"
+      ]
     },
     "build-c": {
-      "dependsOn": ["^build"],
+      "dependsOn": [
+        "^build"
+      ],
       "inputs": [
-        "src/**/*.{ts,js,vue,tsx,jsx}",
-        "*.{ts,js,mjs}",
-        "package.json",
-        "tsconfig*.json",
-        "vite.config.*"
-      ],
-      "outputs": [
-        "dist/**"
-      ],
-      "cache": true
-    },
-    "build-g": {
-      "dependsOn": ["build-c"],
-      "inputs": [
-        "__build-src__/**",
-        "dist/**"
-      ],
-      "outputs": [
-        "dist/**"
-      ],
-      "cache": true
-    },
-    "build": {
-      "dependsOn": ["type-check", "lint", "^build"],
-      "inputs": [
-        "src/**/*.{ts,js,vue,tsx,jsx}",
+        "src/**/*.{ts,js,vue,tsx,jsx,css,scss,sass}",
         "*.{ts,js,mjs}",
         "package.json",
         "tsconfig*.json",
         "vite.config.*",
-        "__build-src__/**"
+        "uno.config.*"
       ],
       "outputs": [
         "dist/**"
       ],
-      "cache": true
+      "cache": true,
+      "env": [
+        "NODE_ENV"
+      ]
     },
-    "dev": {
-      "dependsOn": ["^build"],
+    "build-g": {
+      "dependsOn": [
+        "build-c"
+      ],
       "inputs": [
-        "src/**/*.{ts,js,vue,tsx,jsx}",
+        "__build-src__/**",
+        "dist/**",
+        "package.json"
+      ],
+      "outputs": [
+        "dist/**"
+      ],
+      "cache": true,
+      "env": [
+        "NODE_ENV"
+      ]
+    },
+    "build": {
+      "dependsOn": [
+        "^build"
+      ],
+      "inputs": [
+        "src/**/*.{ts,js,vue,tsx,jsx,css,scss,sass}",
         "*.{ts,js,mjs}",
         "package.json",
         "tsconfig*.json",
-        "vite.config.*"
+        "vite.config.*",
+        "__build-src__/**",
+        "uno.config.*",
+        "tsdown.config.*"
+      ],
+      "outputs": [
+        "dist/**",
+        ".tsbuildinfo"
+      ],
+      "cache": true,
+      "env": [
+        "NODE_ENV"
+      ]
+    },
+    "dev": {
+      "dependsOn": [
+        "^build"
+      ],
+      "inputs": [
+        "src/**/*.{ts,js,vue,tsx,jsx,css,scss,sass}",
+        "*.{ts,js,mjs}",
+        "package.json",
+        "tsconfig*.json",
+        "vite.config.*",
+        "uno.config.*"
       ],
       "outputs": [],
       "cache": false,
-      "persistent": true
+      "persistent": true,
+      "env": [
+        "NODE_ENV"
+      ]
     }
-  },
-  "globalPassThroughEnv": [
-    "NODE_ENV"
-  ]
+  }
 }
