@@ -18,4 +18,5 @@ export interface YPagerEmits extends ModelValueEmits<Pq> {
   'update:pageSize': [v: number]
 }
 
-export default componentInstallToPlugin(_c)
+const YPager: any = componentInstallToPlugin(_c)
+export default YPager

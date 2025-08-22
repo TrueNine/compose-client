@@ -9,4 +9,5 @@ export interface YConfigPreAuthorizeProps {
   anonymousProvider?: () => boolean
 }
 
-export default componentInstallToPlugin(_c)
+const YConfigPreAuthorize: any = componentInstallToPlugin(_c)
+export default YConfigPreAuthorize

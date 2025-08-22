@@ -16,4 +16,5 @@ export interface YElSiderMenuProps {
 
 export type YElSiderMenuEmits = (e: 'update:routeTable', v: RouteOption[]) => void
 
-export default componentInstallToPlugin(_c, { YSiderMenuItem })
+const YElSiderMenu: any = componentInstallToPlugin(_c, { YSiderMenuItem })
+export default YElSiderMenu

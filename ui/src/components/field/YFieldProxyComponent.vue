@@ -74,8 +74,8 @@ const effectVModels = computed(() => {
 
   // 添加通用事件
   const commonEvents = {
-    'onBlur': (e: Event) => _allFields[0].handleBlur(e, true),
-    'onReset': () => _allFields[0].handleReset,
+    'onBlur': (e: Event) => _allFields[0]?.handleBlur(e, true),
+    'onReset': () => _allFields[0]?.handleReset,
     'onUpdate:errorMessages': (v: string | string[]) => {
       _allFields.forEach((f) => f.setErrors(maybeArray(v)))
     },

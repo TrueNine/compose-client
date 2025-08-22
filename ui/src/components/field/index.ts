@@ -31,4 +31,5 @@ export interface YFieldSlots {
   default: () => VNode[]
 }
 
-export default componentInstallToPlugin(YField, { YFieldProxyComponent })
+const YFieldPlugin: any = componentInstallToPlugin(YField, { YFieldProxyComponent })
+export default YFieldPlugin

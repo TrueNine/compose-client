@@ -9,4 +9,5 @@ export interface YDebugCodeProps {
   lang?: CodeLang
   title?: string | null
 }
-export default componentInstallToPlugin(_c)
+const YDebugCode: any = componentInstallToPlugin(_c)
+export default YDebugCode

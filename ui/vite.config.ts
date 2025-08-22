@@ -24,6 +24,26 @@ export default defineConfig(
         sourcemap: true,
         entry: ['index.ts', 'unplugin/index.ts', 'common/index.ts'],
       },
+      // 启用性能优化配置
+      performance: {
+        enabled: true,
+        preset: 'monorepo',
+        options: {
+          enableEsbuildOptimization: true,
+          enableChunkOptimization: false, // 库项目不需要复杂的代码分割
+          enableDepsOptimization: true,
+          chunkSizeWarningLimit: 800,
+          cache: {
+            enableFsCache: true,
+            enableDepsCache: true,
+          },
+          parallel: {
+            enableWorkerThreads: true,
+            enableParallelCss: true,
+            maxConcurrency: 4,
+          },
+        },
+      },
       additionalPlugins: [
         vueRouterUnplugin({
           routesFolder: [

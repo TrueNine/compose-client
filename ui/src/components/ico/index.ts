@@ -6,4 +6,5 @@ export interface YIcoProps {
   tag?: keyof HTMLElementTagNameMap
 }
 
-export default componentInstallToPlugin(_c)
+const YIco: any = componentInstallToPlugin(_c)
+export default YIco

@@ -9,4 +9,5 @@ export interface YConfigProviderProps {
   elementPlusZIndex?: i32
 }
 
-export default componentInstallToPlugin(_c)
+const YConfigProvider: any = componentInstallToPlugin(_c)
+export default YConfigProvider

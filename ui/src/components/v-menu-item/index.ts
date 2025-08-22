@@ -30,4 +30,5 @@ export interface YVMenuItemSlots {
   icon: (data: IconSlotData) => dynamic
 }
 
-export default componentInstallToPlugin<typeof _c>(_c, { YIco })
+const YVMenuItem: any = componentInstallToPlugin(_c, { YIco })
+export default YVMenuItem

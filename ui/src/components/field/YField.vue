@@ -24,7 +24,7 @@ const _effectModels = computed(() => {
     if (typeof name === 'string') {
       result[name] = name
     } else {
-      Object.entries(name).forEach(([key, value]) => {
+      Object.entries(name ?? {}).forEach(([key, value]) => {
         result[key] = value
       })
     }

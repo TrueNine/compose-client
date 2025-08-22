@@ -20,4 +20,5 @@ export interface YVMenuEmits {
   (e: 'update:opened', opened: boolean): void
 }
 
-export default componentInstallToPlugin(_c, { YVMenuItem, YIco })
+const YVMenu: any = componentInstallToPlugin(_c, { YVMenuItem, YIco })
+export default YVMenu

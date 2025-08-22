@@ -29,4 +29,5 @@ export interface YVSystemBarSlots {
   'settings-drawer': (p: { settingsMenuOpened: bool }) => dynamic
 }
 
-export default componentInstallToPlugin(_c, { YIco })
+const YVSystemBar: any = componentInstallToPlugin(_c, { YIco })
+export default YVSystemBar

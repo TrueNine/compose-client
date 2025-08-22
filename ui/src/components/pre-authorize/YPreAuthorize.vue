@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { YPreAuthorizeProps } from '.'
 
-import { isNil } from '@truenine/shared/tools'
+import { isNil } from '@truenine/shared'
 
 import { usePreAuthorize } from '@/common'
 

@@ -11,4 +11,5 @@ export interface YElSiderMenuItemProps {
   idxKey?: StrOrNum
 }
 
-export default componentInstallToPlugin(_c)
+const YElSiderMenuItem: any = componentInstallToPlugin(_c)
+export default YElSiderMenuItem

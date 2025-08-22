@@ -3,7 +3,8 @@ import type { nil } from '@truenine/types'
 import type { IComponentAddr, YAddressSelectEmits, YVAddressSelectProps, YVAddressSelectSelectValue } from '.'
 
 import { AddressUtils, des } from '@truenine/shared'
-import { reactive } from 'vue'
+import { useVModel, watchThrottled } from '@vueuse/core'
+import { computed, onMounted, reactive, ref, watch } from 'vue'
 import {
   clipCode,
   getAdCodeLevel,
@@ -108,36 +109,36 @@ async function cacheAndUpdate(code: string) {
   const prevKey = keyNames[curIdx]
 
   const cache = getCache(padCode)
-  const pt = addressCacheData[prevKey].find((e) => pad(e.code) === padCode)
+  const pt = addressCacheData[prevKey!]?.find((e: IComponentAddr) => pad(e.code) === padCode)
 
   // ready next addresses
   let fullPath = ''
   if (level < emitsDeepLevel.value) {
-    addressCacheData[currentKey]
+    addressCacheData[currentKey!]
       = cache
         ?? (await props[currentFnKey]?.(pt))
           ?.sort(sortFn)
           .filter((e) => e != null)
-          .map((e) => e)
+          .map((e: IComponentAddr) => e)
           ?? []
 
     saveCache(
       padCode,
-      addressCacheData[currentKey].map((e) => e),
+      addressCacheData[currentKey!]?.map((e: IComponentAddr) => e) ?? [],
     )
   }
 
   // append fullPath
   for (let i = 0; i < max; i++) {
     const key = keyNames[i]
-    const item = selected.value[key]
+    const item = selected.value[key!]
     if (item?.name) {
       fullPath += item.name
     }
   }
 
-  selected.value[prevKey] = addressCacheData[prevKey].find((e) => pad(e.code) === padCode)
-  selected.value[currentKey] = defaultSelected[currentKey]
+  selected.value[prevKey!] = addressCacheData[prevKey!]?.find((e: IComponentAddr) => pad(e.code) === padCode)
+  selected.value[currentKey!] = defaultSelected[currentKey!]
 
   _fullPath.value = fullPath
   _selectedLevel.value = level
