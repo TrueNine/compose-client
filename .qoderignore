@@ -1,0 +1,14 @@
+/.git/
+/.idea/
+/.vscode/
+
+/.kiro/
+/.augment/
+/.claude/
+/.codebuddy/
+/.cursor/
+
+/CLAUDE.md
+/GEMINE.md
+/README.md
+LICENSE
