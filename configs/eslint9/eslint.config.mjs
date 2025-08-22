@@ -4,6 +4,7 @@ export default antfu({
   type: 'lib',
   pnpm: true,
   test: true,
+  ignores: ['README.md'],
   stylistic: {
     jsx: true,
     indent: 2,

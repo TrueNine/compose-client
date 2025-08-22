@@ -3,7 +3,7 @@ import type { AntFuFormatterConfig, AntFuJsConfig, AntFuStrictTsConfig, AntFuSty
 import { antfu } from '@antfu/eslint-config'
 import { defaultFormatterConfig, defaultJsConfig, defaultStrictTsConfig, defaultStylisticConfig, defaultTestConfig, defaultTsConfig, defaultUnocssConfig, defaultVueConfig, mergeWithDefaults } from './defaults/index'
 
-interface ConfigOptions {
+export interface ConfigOptions {
   type?: 'app' | 'lib'
   pnpm?: boolean
   test?: boolean | AntFuTestConfig
