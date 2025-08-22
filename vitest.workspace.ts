@@ -8,7 +8,7 @@ export default defineWorkspace([
   './shared/vitest.config.ts',
   './external/vitest.config.ts',
   './design/vitest.config.ts',
-  './configs/vite-fragment/vite.config.ts',
+  './configs/vite/vite.config.ts',
   './configs/eslint9/vite.config.ts',
   './configs/uno/vite.config.ts',
   './ext/chrome/vite.config.ts',
