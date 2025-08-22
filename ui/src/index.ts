@@ -73,10 +73,12 @@ export {
   YVSystemBar,
 }
 
-export default {
-  install: (app: App) => {
+const plugin = {
+  install: (app: App): void => {
     Object.entries(components).forEach(([_name, component]) => {
       app.use(component as Plugin<[]>)
     })
   },
 }
+
+export default plugin
