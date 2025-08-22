@@ -1,12 +1,70 @@
 import type { BuildOptions, Plugin, PluginOption, UserConfig } from 'vite'
 
+// 导入性能优化相关类型
+import type { FullPerformanceOptions, PerformancePreset } from './performance/presets'
 import type { BuildLibraryConfigOptions } from './types'
 import type { SimpleDtsOptions } from './vite-plugin-dts'
 import type { PackageJsonOptions } from './vite-plugin-package-json'
 import { mergeConfig } from 'vite'
 import { Externals as defaultExternals } from './externals'
 import { BuildConfigLib } from './lib'
+
+import { createPerformancePreset } from './performance/presets'
 import { createDtsPlugin } from './vite-plugin-dts'
+
+// 导出性能优化相关功能
+export type { VitePerformanceOptions } from './performance'
+export {
+  createChunkOptimization,
+  createDepsOptimization,
+  createDevelopmentPerformanceConfig,
+  createEsbuildOptimization,
+  createProductionPerformanceConfig,
+  createVitePerformanceConfig,
+} from './performance'
+export type { CacheOptimizationOptions } from './performance/cache'
+export {
+  createBuildCacheOptimization,
+  createCacheOptimization,
+  createTypeScriptCacheOptimization,
+} from './performance/cache'
+
+export type { DevelopmentOptimizationOptions } from './performance/development'
+
+export {
+  createDevBuildOptimization,
+  createDevCssOptimization,
+  createDevDepsOptimization,
+  createDevelopmentOptimization,
+  createDevEnvOptimization,
+  createFastDevelopmentOptimization,
+  createHMROptimization,
+  createMonorepoDevelopmentOptimization,
+  createSmartDevelopmentOptimization,
+} from './performance/development'
+
+export type { ParallelOptimizationOptions } from './performance/parallel'
+
+export {
+  createDevParallelOptimization,
+  createMonorepoParallelOptimization,
+  createParallelOptimization,
+  createProdParallelOptimization,
+  getOptimalConcurrency,
+} from './performance/parallel'
+
+export type { FullPerformanceOptions, PerformancePreset } from './performance/presets'
+export {
+  createAggressivePreset,
+  createBasicPreset,
+  createDevelopmentPreset,
+  createFastDevPreset,
+  createMaximumPreset,
+  createMonorepoPreset,
+  createPerformancePreset,
+  createProductionPreset,
+  createSmartPreset,
+} from './performance/presets'
 
 export interface ViteFragmentOptions {
   lib?: BuildLibraryConfigOptions
@@ -18,6 +76,15 @@ export interface ViteFragmentOptions {
   packageJson?: Omit<PackageJsonOptions, 'entry' | 'formats'>
   additionalExternals?: (string | RegExp)[]
   additionalPlugins?: PluginOption[]
+  /** 性能优化配置 */
+  performance?: {
+    /** 性能优化预设 */
+    preset?: PerformancePreset
+    /** 自定义性能优化选项 */
+    options?: FullPerformanceOptions
+    /** 是否启用性能优化 */
+    enabled?: boolean
+  }
 }
 
 export function configureViteFragment(
@@ -108,10 +175,19 @@ export function configureViteFragment(
     ...(options.additionalPlugins ?? []),
   ]
 
-  const finalConfig: UserConfig = {
+  let finalConfig: UserConfig = {
     ...baseConfig,
     build: mergedBuildOptions,
     plugins: mergedPlugins,
+  }
+
+  // 应用性能优化配置
+  if (options.performance?.enabled !== false) {
+    const performanceConfig = createPerformancePreset(
+      options.performance?.preset || 'basic',
+      options.performance?.options || {},
+    )
+    finalConfig = mergeConfig(finalConfig, performanceConfig)
   }
 
   return mergeConfig(
