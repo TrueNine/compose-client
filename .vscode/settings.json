@@ -5,6 +5,15 @@
     "Start-Job *",
     "ren *",
     "Rename-Item *",
-    "npx *"
+    "npx *",
+    "node *",
+    "turbo *",
+    "copy *",
+    "turbo run build lint type-check --dry=json | jq '.tasks | length'",
+    "$result *",
+    "echo *",
+    "npm *",
+    "timeout *",
+    "Start-Job -ScriptBlock { pnpm run dev } | Wait-Job -Timeout 10 | Receive-Job"
   ]
 }
