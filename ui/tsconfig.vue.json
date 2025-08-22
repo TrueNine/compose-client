@@ -16,7 +16,8 @@
       "./env.d.ts",
       "./.types/imports-auto.d.ts",
       "./.types/imports-comp.d.ts"
-    ]
+    ],
+    "isolatedDeclarations": false
   },
   "include": [
     ".types/imports-auto.d.ts",
@@ -24,6 +25,7 @@
     "src/types/**.d.ts",
     "env.d.ts",
     "src/**/*.vue",
-    "src/**/*.tsx"
+    "src/**/*.tsx",
+    "src/**/*.ts"
   ]
 }

@@ -2,6 +2,8 @@ import { fileURLToPath, URL } from 'node:url'
 import { configureViteFragment } from '@truenine/config-vite'
 import { defineConfig } from 'vite'
 
+const process = require('process')
+
 export default defineConfig(
   configureViteFragment(
     {
@@ -21,7 +23,8 @@ export default defineConfig(
         preset: process.env.NODE_ENV === 'development' ? 'fast-dev' : 'monorepo',
         options: {
           enableEsbuildOptimization: true,
-          enableChunkOptimization: false, // 库项目不需要复杂的代码分割
+          // 库项目不需要复杂的代码分割
+          enableChunkOptimization: false,
           enableDepsOptimization: true,
           chunkSizeWarningLimit: 500,
           cache: {
@@ -30,7 +33,8 @@ export default defineConfig(
           },
           parallel: {
             enableWorkerThreads: true,
-            enableParallelCss: false, // Vue 组件库通常不需要复杂的 CSS 并行处理
+            // Vue 组件库通常不需要复杂的 CSS 并行处理
+            enableParallelCss: false,
             maxConcurrency: process.env.NODE_ENV === 'development' ? 2 : 4,
           },
         },
