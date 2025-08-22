@@ -1,13 +1,13 @@
 import type { UserConfig } from 'vite'
-import { mergeConfig } from 'vite'
+import type { CacheOptimizationOptions } from './cache'
 
 import type { VitePerformanceOptions } from './index'
-import type { CacheOptimizationOptions } from './cache'
 import type { ParallelOptimizationOptions } from './parallel'
-import { createVitePerformanceConfig, createProductionPerformanceConfig, createDevelopmentPerformanceConfig } from './index'
+import { mergeConfig } from 'vite'
 import { createCacheOptimization } from './cache'
-import { createParallelOptimization, createDevParallelOptimization, createProdParallelOptimization, createMonorepoParallelOptimization } from './parallel'
 import { createDevelopmentOptimization, createFastDevelopmentOptimization, createMonorepoDevelopmentOptimization } from './development'
+import { createDevelopmentPerformanceConfig, createProductionPerformanceConfig, createVitePerformanceConfig } from './index'
+import { createDevParallelOptimization, createMonorepoParallelOptimization, createParallelOptimization, createProdParallelOptimization } from './parallel'
 
 /**
  * 性能优化预设类型
@@ -326,8 +326,8 @@ export function createSmartPreset(options: FullPerformanceOptions = {}): UserCon
 
   // 检测是否为 monorepo 项目
   const isMonorepo = process.cwd().includes('packages')
-                    || process.cwd().includes('apps')
-                    || !(process.env.PNPM_WORKSPACE_ROOT == null)
+    || process.cwd().includes('apps')
+    || !(process.env.PNPM_WORKSPACE_ROOT == null)
 
   let preset: PerformancePreset = 'basic'
 

@@ -267,13 +267,13 @@ export function createDevEnvOptimization(): UserConfig {
   return {
     define: {
       // 开发模式环境变量
-      __DEV__: JSON.stringify(true),
-      __PROD__: JSON.stringify(false),
-      __TEST__: JSON.stringify(false),
+      '__DEV__': JSON.stringify(true),
+      '__PROD__': JSON.stringify(false),
+      '__TEST__': JSON.stringify(false),
       // 启用开发工具
-      __VUE_OPTIONS_API__: JSON.stringify(true),
-      __VUE_PROD_DEVTOOLS__: JSON.stringify(true),
-      __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: JSON.stringify(true),
+      '__VUE_OPTIONS_API__': JSON.stringify(true),
+      '__VUE_PROD_DEVTOOLS__': JSON.stringify(true),
+      '__VUE_PROD_HYDRATION_MISMATCH_DETAILS__': JSON.stringify(true),
       // 性能监控
       'process.env.NODE_ENV': JSON.stringify('development'),
     },
@@ -358,7 +358,7 @@ export function createMonorepoDevelopmentOptimization(options: DevelopmentOptimi
 /**
  * 创建热重载优化配置
  */
-export function createHMROptimization(options: { enableVueHMR?: boolean; enableReactHMR?: boolean } = {}): UserConfig {
+export function createHMROptimization(options: { enableVueHMR?: boolean, enableReactHMR?: boolean } = {}): UserConfig {
   const { enableVueHMR = true, enableReactHMR = false } = options
 
   const config: UserConfig = {
@@ -448,18 +448,18 @@ export function createFastDevelopmentOptimization(options: DevelopmentOptimizati
  */
 export function createSmartDevelopmentOptimization(options: DevelopmentOptimizationOptions = {}): UserConfig {
   // 检测项目类型
-  const isMonorepo = process.cwd().includes('packages') ||
-                    process.cwd().includes('apps') ||
-                    !!process.env.PNPM_WORKSPACE_ROOT
+  const isMonorepo = process.cwd().includes('packages')
+    || process.cwd().includes('apps')
+    || !!process.env.PNPM_WORKSPACE_ROOT
 
-  const isVueProject = process.env.npm_package_dependencies_vue ||
-                      process.env.npm_package_devDependencies_vue
+  const isVueProject = process.env.npm_package_dependencies_vue
+    || process.env.npm_package_devDependencies_vue
 
-  const isReactProject = process.env.npm_package_dependencies_react ||
-                        process.env.npm_package_devDependencies_react
+  const isReactProject = process.env.npm_package_dependencies_react
+    || process.env.npm_package_devDependencies_react
 
   // 基础配置
-  let config = isMonorepo
+  const config = isMonorepo
     ? createMonorepoDevelopmentOptimization(options)
     : createDevelopmentOptimization(options)
 
