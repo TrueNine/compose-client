@@ -54,7 +54,6 @@
     "turbo": "catalog:",
     "typescript": "catalog:",
     "vite": "catalog:vite",
-    "vitest": "catalog:vitest",
-    "vue-tsc": "catalog:vue"
+    "vitest": "catalog:vitest"
   }
 }

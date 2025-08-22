@@ -28,8 +28,7 @@
   "scripts": {
     "build": "tsdown",
     "lint": "eslint --fix",
-    "build-c": "tsdown",
-    "type-check": "vue-tsc --noEmit"
+    "type-check": "tsc --noEmit -p tsconfig.lib.json"
   },
   "peerDependencies": {
     "@unocss/transformer-attributify-jsx": "catalog:unocss",

@@ -48,6 +48,7 @@
     "vuetify": "catalog:vuetify"
   },
   "devDependencies": {
+    "vue-tsc": "catalog:vue",
     "@truenine/config-uno": "workspace:^",
     "@truenine/config-vite": "workspace:^",
     "@unocss/cli": "catalog:unocss",

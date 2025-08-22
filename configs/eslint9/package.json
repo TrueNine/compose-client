@@ -64,9 +64,8 @@
   },
   "scripts": {
     "build": "tsdown",
-    "build-c": "vite build",
     "lint": "eslint --fix",
-    "type-check": "vue-tsc --noEmit",
+    "type-check": "tsc --noEmit -p tsconfig.lib.json",
     "test": "vitest run",
     "copy-license": "node -e \"require('fs').copyFileSync('../../LICENSE', './LICENSE')\"",
     "prepublishOnly": "run-s copy-license build"
