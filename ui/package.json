@@ -135,6 +135,7 @@
     "unplugin-vue-components": "catalog:",
     "unplugin-vue-router": "catalog:",
     "vite-plugin-vue-devtools": "catalog:vite",
-    "vue-router": "catalog:vue"
+    "vue-router": "catalog:vue",
+    "vue-tsc": "catalog:vue"
   }
 }
