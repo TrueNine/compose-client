@@ -204,7 +204,7 @@ export async function extractPdfImages<T = string>(
       throw new Error('No image operators found in PDF page')
     }
 
-    const firstImageIndex = imageOperatorIndices[0]
+    const firstImageIndex = imageOperatorIndices[0]!
     const args = operatorList.argsArray[firstImageIndex] as unknown[]
 
     if (!Array.isArray(args) || args.length === 0 || typeof args[0] !== 'string') {
