@@ -4,6 +4,7 @@
   ],
   "compilerOptions": {
     "incremental": true,
+    "composite": true,
     "skipLibCheck": true,
     "isolatedDeclarations": true,
     "declaration": true,
