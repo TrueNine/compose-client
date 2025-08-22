@@ -23,7 +23,7 @@ const undefinedName = 'NameUndefined'
 export function componentInstallToPlugin<T extends VueComponentInstanceMapping>(
   component: T,
   otherComponent?: Record<string, unknown>,
-): T {
+): SFCWithInstall<T> & T {
   let primaryComponent = component as unknown as SFCWithInstall<T>
   const otherSecondaryComponentInstallers: Record<string, SFCWithInstall<T>> = {}
 
@@ -52,5 +52,5 @@ export function componentInstallToPlugin<T extends VueComponentInstanceMapping>(
     })
   }
 
-  return primaryComponent as T
+  return primaryComponent as SFCWithInstall<T> & T
 }
