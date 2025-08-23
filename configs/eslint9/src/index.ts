@@ -17,6 +17,10 @@ export interface ConfigOptions {
   stylistic?: boolean | AntFuStylisticConfig
 }
 
+export async function applyPreset(options: ConfigOptions = {}): Promise<ReturnType<typeof antfu>> {
+  return eslint9(options)
+}
+
 export default async function eslint9(options: ConfigOptions = {}): Promise<ReturnType<typeof antfu>> {
   const {
     type = 'lib',

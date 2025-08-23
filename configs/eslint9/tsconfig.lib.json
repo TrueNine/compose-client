@@ -1,28 +1,21 @@
 {
-  "extends": [
-    "@tsconfig/node22/tsconfig.json",
-    "@truenine/tsconfig/tsconfig.json"
-  ],
+  "extends": ["@truenine/tsconfig/tsconfig.json"],
   "compilerOptions": {
-
-    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.build.tsbuildinfo",
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.lib.tsbuildinfo",
     "baseUrl": ".",
     "module": "ESNext",
     "moduleResolution": "bundler",
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
+      "@/*": ["./src/*"]
     },
-    "types": [
-      "node"
-    ],
-    "strict": true,
-    "strictNullChecks": true,
-    "isolatedDeclarations": true
+    "types": ["node"],
+    "noEmit": false
   },
   "include": [
-    "src/**/*.ts",
-    "src/**/*.d.ts"
+    "src/**/*",
+    "env.d.ts"
+  ],
+  "exclude": [
+    "src/**/*.spec.*"
   ]
 }

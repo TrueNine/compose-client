@@ -3,24 +3,21 @@
   "compilerOptions": {
     "incremental": true,
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.config.tsbuildinfo",
+    "baseUrl": ".",
     "module": "ESNext",
-    "moduleResolution": "Bundler",
-    "types": [
-      "node"
-    ],
-    "allowImportingTsExtensions": true,
-    "noEmit": true
+    "moduleResolution": "bundler",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "types": ["node"],
+    "noEmit": false,
+    "isolatedDeclarations": false
   },
   "include": [
     "env.d.ts",
     "vite.config.*",
-    "tsdown.config.*",
     "vitest.config.*",
-    "uno.config.*",
-    "cypress.config.*",
-    "nightwatch.conf.*",
-    "playwright.config.*",
     "eslint.config.*",
-    "eslint.config.*"
+    "tsdown.config.*"
   ]
 }
