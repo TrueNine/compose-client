@@ -1,23 +1,13 @@
 import { defineConfig } from 'tsdown'
 
 export default defineConfig({
-  entry: [
-    './src/index.ts',
-    './src/browser/document.ts',
-    './src/lodash-es/index.ts',
-    './src/dayjs/index.ts',
-    './src/libarchive-js/index.ts',
-    './src/pdfjs-dist/index.ts',
-    './src/vue/index.ts',
-    './src/vue-router/index.ts',
-  ],
+  entry: ['./src/**/*', '!**/*.{spec,test}.*', '!**/__tests__/**'],
   platform: 'neutral',
   sourcemap: true,
   unbundle: true,
   format: ['esm'],
-  tsconfig: './tsconfig.lib.json',
   dts: {
     sourcemap: true,
-    isolatedDeclarations: true,
+    tsconfig: './tsconfig.lib.json',
   },
 })
