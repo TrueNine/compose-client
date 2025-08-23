@@ -18,7 +18,7 @@
   "scripts": {
     "lint": "eslint --fix",
     "build-c": "tsdown",
-    "type-check": "tsc --noEmit",
+    "type-check": "tsc --noEmit -p tsconfig.lib.json",
     "build": "tsdown"
   },
   "peerDependencies": {
