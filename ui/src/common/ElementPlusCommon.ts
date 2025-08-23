@@ -1,8 +1,8 @@
 import type { dynamic } from '@truenine/types'
 
 import { dayjs } from 'element-plus'
-import elementEnUs from 'element-plus/dist/locale/en.mjs'
-import elementZhCn from 'element-plus/dist/locale/zh-cn.mjs'
+import elementEnUs from 'element-plus/lib/locale/lang/en'
+import elementZhCn from 'element-plus/lib/locale/lang/zh-cn'
 
 const zhCn: dynamic = elementZhCn
 const en: dynamic = elementEnUs

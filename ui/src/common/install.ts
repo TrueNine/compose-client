@@ -7,7 +7,7 @@ export interface VueComponentInstanceMapping {
   [key: string]: unknown
 }
 
-type SFCWithInstall<T = dynamic> = T & VueComponentInstanceMapping & {
+export type SFCWithInstall<T = dynamic> = T & VueComponentInstanceMapping & {
   install: (app: App) => void
 }
 
