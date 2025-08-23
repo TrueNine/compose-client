@@ -27,10 +27,7 @@
   "scripts": {
     "test": "vitest run",
     "lint": "eslint --fix",
-    "type-check": "vue-tsc --noEmit",
+    "type-check": "tsc --noEmit -p tsconfig.lib.json",
     "build": "tsdown"
-  },
-  "devDependencies": {
-    "@truenine/config-vite": "workspace:^"
   }
 }
