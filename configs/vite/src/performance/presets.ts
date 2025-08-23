@@ -109,7 +109,6 @@ export function createMaximumPreset(options: FullPerformanceOptions = {}): UserC
     enableWorkerThreads: true,
     enableParallelCss: true,
     enableParallelTypeCheck: true,
-    maxConcurrency: null,
     ...options.parallel,
   })
 
