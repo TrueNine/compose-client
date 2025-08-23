@@ -18,7 +18,7 @@
   "scripts": {
     "test": "vitest run",
     "lint": "eslint --fix",
-    "type-check": "vue-tsc --noEmit",
+    "type-check": "tsc --noEmit",
     "build": "tsdown"
   },
   "peerDependencies": {
