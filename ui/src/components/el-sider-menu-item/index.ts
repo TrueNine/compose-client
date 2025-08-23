@@ -1,4 +1,5 @@
 import type { bool, RouteOption, StrOrNum } from '@truenine/types'
+import type { SFCWithInstall } from '@/common/install'
 import { componentInstallToPlugin } from '@/common'
 
 import _c from './YElSiderMenuItem.vue'
@@ -11,5 +12,7 @@ export interface YElSiderMenuItemProps {
   idxKey?: StrOrNum
 }
 
-const YElSiderMenuItem: any = componentInstallToPlugin(_c)
+export type YElSiderMenuItemEmits = Record<string, never>
+
+const YElSiderMenuItem: SFCWithInstall<typeof _c> = componentInstallToPlugin(_c)
 export default YElSiderMenuItem

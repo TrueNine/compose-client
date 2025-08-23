@@ -1,5 +1,6 @@
-import { componentInstallToPlugin } from '@/common'
+import type { SFCWithInstall } from '@/common/install'
 
+import { componentInstallToPlugin } from '@/common'
 import _c from './YDebugCode.vue'
 
 export type CodeLang = 'javascript' | 'json' | 'kotlin' | 'java'
@@ -9,5 +10,9 @@ export interface YDebugCodeProps {
   lang?: CodeLang
   title?: string | null
 }
-const YDebugCode: any = componentInstallToPlugin(_c)
+
+export type YDebugCodeEmits = Record<string, never>
+
+const YDebugCode: SFCWithInstall<typeof _c> = componentInstallToPlugin(_c)
+
 export default YDebugCode

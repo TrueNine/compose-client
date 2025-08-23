@@ -1,4 +1,5 @@
 import type { RouteOption } from '@truenine/types'
+import type { SFCWithInstall } from '@/common/install'
 import { componentInstallToPlugin } from '@/common'
 
 import YIco from '@/components/ico'
@@ -20,5 +21,5 @@ export interface YVMenuEmits {
   (e: 'update:opened', opened: boolean): void
 }
 
-const YVMenu: any = componentInstallToPlugin(_c, { YVMenuItem, YIco })
+const YVMenu: SFCWithInstall<typeof _c> = componentInstallToPlugin(_c, { YVMenuItem, YIco })
 export default YVMenu

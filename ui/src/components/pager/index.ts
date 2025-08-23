@@ -1,5 +1,6 @@
 import type { clip, i32, nil, Pq, Pr } from '@truenine/types'
 import type { ModelValueEmits, ModelValueProps } from '@/common'
+import type { SFCWithInstall } from '@/common/install'
 
 import { componentInstallToPlugin } from '@/common'
 
@@ -18,5 +19,5 @@ export interface YPagerEmits extends ModelValueEmits<Pq> {
   'update:pageSize': [v: number]
 }
 
-const YPager: any = componentInstallToPlugin(_c)
+const YPager: SFCWithInstall<typeof _c> = componentInstallToPlugin(_c)
 export default YPager

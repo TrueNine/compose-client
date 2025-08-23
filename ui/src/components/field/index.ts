@@ -1,5 +1,6 @@
 import type { dynamic, Maybe } from '@truenine/types'
 import type { VNode } from 'vue'
+import type { SFCWithInstall } from '@/common/install'
 
 import type { FormFieldEmits, FormFieldProps } from '@/common/VuePropsCommon'
 import { componentInstallToPlugin } from '@/common'
@@ -31,5 +32,5 @@ export interface YFieldSlots {
   default: () => VNode[]
 }
 
-const YFieldPlugin: any = componentInstallToPlugin(YField, { YFieldProxyComponent })
+const YFieldPlugin: SFCWithInstall<typeof YField> = componentInstallToPlugin(YField, { YFieldProxyComponent })
 export default YFieldPlugin

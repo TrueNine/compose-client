@@ -1,5 +1,6 @@
-import { componentInstallToPlugin } from '@/common'
+import type { SFCWithInstall } from '@/common/install'
 
+import { componentInstallToPlugin } from '@/common'
 import _c from './YConfigPreAuthorize.vue'
 
 export interface YConfigPreAuthorizeProps {
@@ -9,5 +10,7 @@ export interface YConfigPreAuthorizeProps {
   anonymousProvider?: () => boolean
 }
 
-const YConfigPreAuthorize: any = componentInstallToPlugin(_c)
+export type YConfigPreAuthorizeEmits = Record<string, never>
+
+const YConfigPreAuthorize: SFCWithInstall<typeof _c> = componentInstallToPlugin(_c)
 export default YConfigPreAuthorize

@@ -31,7 +31,7 @@ const validationSchema = computed(() => {
     } catch (error) {
       // In test environment, if zodToTypedSchema fails due to proxy issues,
       // create a simple validation function that uses the schema directly
-      if (process.env.NODE_ENV === 'test' || process.env.VITEST) {
+      if (import.meta.env.NODE_ENV === 'test' || import.meta.env.VITEST) {
         return {
           __type: 'VeeTypedSchema',
           async: false,
@@ -76,7 +76,7 @@ const formConfig = computed(() => {
   // Only add validationSchema if it's not a problematic Zod schema in test environment
   const schema = validationSchema.value
   if (schema) {
-    if (process.env.NODE_ENV === 'test' || process.env.VITEST) {
+    if (import.meta.env.NODE_ENV === 'test' || import.meta.env.VITEST) {
       // In test environment, only add schema if it's not a Zod schema or if it's our custom wrapper
       if (!(schema as any).__type || (schema as any).__type === 'VeeTypedSchema') {
         config.validationSchema = schema

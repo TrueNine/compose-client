@@ -1,4 +1,5 @@
 import type { bool, dynamic } from '@truenine/types'
+import type { SFCWithInstall } from '@/common/install'
 import { componentInstallToPlugin } from '@/common'
 
 import YIco from '@/components/ico'
@@ -29,5 +30,5 @@ export interface YVSystemBarSlots {
   'settings-drawer': (p: { settingsMenuOpened: bool }) => dynamic
 }
 
-const YVSystemBar: any = componentInstallToPlugin(_c, { YIco })
+const YVSystemBar: SFCWithInstall<typeof _c> = componentInstallToPlugin(_c, { YIco })
 export default YVSystemBar

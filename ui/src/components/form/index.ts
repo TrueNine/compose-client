@@ -1,8 +1,11 @@
-import type { DefineComponent } from 'vue'
-import type { YFormEmits, YFormProps } from './types'
+import type { YFormEmits, YFormProps, YFormSlots } from './types'
+import type { SFCWithInstall } from '@/common/install'
+
 import { componentInstallToPlugin } from '@/common'
+
 import YFormComponent from './YForm.vue'
 
 export * from './types'
-const YForm: any = componentInstallToPlugin(YFormComponent as unknown as DefineComponent<YFormProps, YFormEmits>)
+
+const YForm: SFCWithInstall<typeof YFormComponent> = componentInstallToPlugin(YFormComponent)
 export default YForm

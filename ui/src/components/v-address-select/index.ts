@@ -1,5 +1,5 @@
 import type { asyncable, i32, i64, late, latenil, str } from '@truenine/types'
-import type { DefineComponent } from 'vue'
+import type { SFCWithInstall } from '@/common/install'
 
 import { componentInstallToPlugin } from '@/common'
 import _c from './YVAddressSelect.vue'
@@ -119,5 +119,5 @@ export function clipCode(code: string, level: i32): string {
   }
 }
 
-const YVAddressSelect: DefineComponent<YVAddressSelectProps, YAddressSelectEmits> = componentInstallToPlugin(_c as DefineComponent<YVAddressSelectProps, YAddressSelectEmits>)
+const YVAddressSelect: SFCWithInstall<typeof _c> = componentInstallToPlugin(_c)
 export default YVAddressSelect

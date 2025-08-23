@@ -1,4 +1,5 @@
 import type { dynamic, RouteOption } from '@truenine/types'
+import type { SFCWithInstall } from '@/common/install'
 import { componentInstallToPlugin } from '@/common'
 
 import YIco from '@/components/ico/index'
@@ -30,5 +31,7 @@ export interface YVMenuItemSlots {
   icon: (data: IconSlotData) => dynamic
 }
 
-const YVMenuItem: any = componentInstallToPlugin(_c, { YIco })
+export type YVMenuItemEmits = Record<string, never>
+
+const YVMenuItem: SFCWithInstall<typeof _c> = componentInstallToPlugin(_c, { YIco })
 export default YVMenuItem
