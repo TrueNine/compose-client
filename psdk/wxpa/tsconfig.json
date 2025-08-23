@@ -4,10 +4,10 @@
       "path": "./tsconfig.lib.json"
     },
     {
-      "path": "./tsconfig.test.json"
+      "path": "./tsconfig.config.json"
     },
     {
-      "path": "./tsconfig.tools.json"
+      "path": "./tsconfig.test.json"
     }
   ],
   "files": []
