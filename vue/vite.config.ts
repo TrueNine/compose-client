@@ -1,51 +1,10 @@
 import { fileURLToPath, URL } from 'node:url'
-import { configureViteFragment } from '@truenine/config-vite'
 import { defineConfig } from 'vite'
 
-const process = require('process')
-
-export default defineConfig(
-  configureViteFragment(
-    {
-      lib: {
-        entry: [
-          'index.ts',
-        ],
-        formats: ['es'],
-      },
-      dts: { tsconfigPath: './tsconfig.lib.json' },
-      packageJson: {
-        buildTool: 'pnpm',
-      },
-      // 启用性能优化配置
-      performance: {
-        enabled: true,
-        preset: process.env.NODE_ENV === 'development' ? 'fast-dev' : 'monorepo',
-        options: {
-          enableEsbuildOptimization: true,
-          // 库项目不需要复杂的代码分割
-          enableChunkOptimization: false,
-          enableDepsOptimization: true,
-          chunkSizeWarningLimit: 500,
-          cache: {
-            enableFsCache: true,
-            enableDepsCache: true,
-          },
-          parallel: {
-            enableWorkerThreads: true,
-            // Vue 组件库通常不需要复杂的 CSS 并行处理
-            enableParallelCss: false,
-            maxConcurrency: process.env.NODE_ENV === 'development' ? 2 : 4,
-          },
-        },
-      },
+export default defineConfig({
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
-    {
-      resolve: {
-        alias: {
-          '@': fileURLToPath(new URL('./src', import.meta.url)),
-        },
-      },
-    },
-  ),
-)
+  },
+})

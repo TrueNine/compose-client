@@ -13,6 +13,7 @@
   ],
   "exports": {
     ".": "./dist/index.js",
+    "./Install": "./dist/Install.js",
     "./package.json": "./package.json"
   },
   "main": "./dist/index.js",
@@ -27,7 +28,7 @@
   "scripts": {
     "test": "vitest run",
     "lint": "eslint --fix",
-    "type-check": "vue-tsc --noEmit",
+    "type-check": "tsc --noEmit -p tsconfig.lib.json",
     "build": "tsdown"
   },
   "peerDependencies": {
@@ -37,8 +38,5 @@
   "dependencies": {
     "@truenine/types": "workspace:^",
     "vue": "catalog:vue"
-  },
-  "devDependencies": {
-    "@truenine/config-vite": "workspace:*"
   }
 }
