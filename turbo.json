@@ -142,25 +142,6 @@
       "env": [
         "NODE_ENV"
       ]
-    },
-    "dev": {
-      "dependsOn": [
-        "^build"
-      ],
-      "inputs": [
-        "src/**/*.{ts,js,vue,tsx,jsx,css,scss,sass}",
-        "*.{ts,js,mjs}",
-        "package.json",
-        "tsconfig*.json",
-        "vite.config.*",
-        "uno.config.*"
-      ],
-      "outputs": [],
-      "cache": false,
-      "persistent": true,
-      "env": [
-        "NODE_ENV"
-      ]
     }
   }
 }

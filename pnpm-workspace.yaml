@@ -1,6 +1,5 @@
 packages:
   - vue
-  - design
   - configs/*
   - shared
   - external
