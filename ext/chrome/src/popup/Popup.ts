@@ -24,7 +24,21 @@ export class MessageSender {
   public static async sendToRuntimeChannel<T = unknown, R = unknown>(
     msg: ChannelTypedMessage<T>,
   ): task<R> {
-    return chrome.runtime.sendMessage(msg)
+    // 检查 Chrome API 是否可用
+    if (typeof chrome === 'undefined' || typeof chrome.runtime === 'undefined') {
+      throw new TypeError('Chrome runtime API is not available')
+    }
+
+    return new Promise((resolve, reject) => {
+      chrome.runtime.sendMessage(msg, (response: R) => {
+        // 检查是否有运行时错误
+        if (chrome.runtime.lastError) {
+          reject(new Error(chrome.runtime.lastError.message))
+          return
+        }
+        resolve(response)
+      })
+    })
   }
 
   /**
@@ -36,6 +50,12 @@ export class MessageSender {
     msgId: string,
     receiver: (msg: ChannelTypedMessage<T>) => asyncable<void>,
   ): void {
+    // 检查 Chrome API 是否可用
+    if (typeof chrome === 'undefined' || typeof chrome.runtime === 'undefined') {
+      console.error('Chrome runtime API is not available')
+      return
+    }
+
     chrome.runtime.onMessage.addListener((message: unknown) => {
       if (isChannelTypedMessage<T>(message) && message.msgId === msgId) {
         void receiver(message)
