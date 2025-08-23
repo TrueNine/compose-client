@@ -15,6 +15,7 @@
     "npm *",
     "timeout *",
     "Start-Job -ScriptBlock { pnpm run dev } | Wait-Job -Timeout 10 | Receive-Job",
-    "Remove-Item *"
+    "Remove-Item *",
+    "Test-Path *"
   ]
 }
