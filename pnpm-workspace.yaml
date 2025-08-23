@@ -92,6 +92,7 @@ catalogs:
     '@types/jsdom': ^21.1.7
     jsdom: ^26.1.0
     vitest: ^3.2.4
+    happy-dom: ^18.0.1
   vue:
     '@vue/test-utils': ^2.4.6
     '@vue/tsconfig': ^0.8.1
