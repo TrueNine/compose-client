@@ -3,7 +3,15 @@ import { afterEach, describe, expect, it } from 'vitest'
 import { nextTick } from 'vue'
 import YForm from '../../form/index'
 import YField from '../index'
+import YFieldProxyComponent from '../YFieldProxyComponent.vue'
 import { ChildInputComponent } from './components/TestComponents'
+
+const globalComponents = {
+  components: {
+    YField,
+    YFieldProxyComponent,
+  },
+}
 
 afterEach(() => {
   document.body.innerHTML = ''
@@ -20,6 +28,7 @@ describe('yFieldTest', () => {
         slots: {
           default: () => <ChildInputComponent />,
         },
+        global: globalComponents,
       })
 
       await nextTick()
@@ -38,6 +47,7 @@ describe('yFieldTest', () => {
         slots: {
           default: () => <ChildInputComponent />,
         },
+        global: globalComponents,
       })
 
       await nextTick()
@@ -59,6 +69,7 @@ describe('yFieldTest', () => {
             </YField>
           ),
         },
+        global: globalComponents,
         attachTo: document.body,
       })
 
@@ -82,6 +93,7 @@ describe('yFieldTest', () => {
             </YField>
           ),
         },
+        global: globalComponents,
         attachTo: document.body,
       })
 
@@ -113,6 +125,7 @@ describe('yFieldTest', () => {
             </YField>
           ),
         },
+        global: globalComponents,
         attachTo: document.body,
       })
 

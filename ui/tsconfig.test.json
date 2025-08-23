@@ -12,7 +12,7 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "types": ["vitest/globals", "@vue/test-utils", "jsdom", "node", "./.types/imports-auto", "./.types/imports-comp"]
+    "types": ["vitest/globals", "@vue/test-utils", "jsdom", "node"]
   },
   "include": [
     "src/**/__tests__/**/*.{spec,test}.{ts,tsx}",

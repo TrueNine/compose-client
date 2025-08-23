@@ -10,7 +10,7 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "types": ["vite/client", "node", "@vueuse/core", "./.types/imports-auto", "./.types/imports-comp"],
+    "types": ["vite/client", "node", "@vueuse/core"],
     "noUnusedLocals": false,
     "noUnusedParameters": false
   },

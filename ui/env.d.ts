@@ -1,12 +1,14 @@
 /// <reference types="vite/client" />
 /// <reference types="vue/jsx" />
+/// <reference types="vitest" />
 /// <reference types="@vueuse/core" />
+/// <reference types="unplugin-vue-router/client" />
 
 // Vue SFC 类型声明
 declare module '*.vue' {
   import type { DefineComponent } from 'vue'
 
-  const component: DefineComponent<{}, {}, any>
+  const component: DefineComponent<object, object, any>
   export default component
 }
 
@@ -42,14 +44,4 @@ declare global {
   const useVModel: typeof import('@vueuse/core')['useVModel']
   const useRouter: typeof import('vue-router')['useRouter']
   const useRoute: typeof import('vue-router')['useRoute']
-}
-/// <reference types="vue/jsx" />
-/// <reference types="vitest" />
-/// <reference types="unplugin-vue-router/client" />
-
-declare module '*.vue' {
-  import type { DefineComponent } from 'vue'
-
-  const component: DefineComponent<object, object, any>
-  export default component
 }

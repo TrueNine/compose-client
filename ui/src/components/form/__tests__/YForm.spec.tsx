@@ -5,7 +5,15 @@ import { describe, expect, it, vi } from 'vitest'
 import { defineComponent, nextTick, ref } from 'vue'
 import { z } from 'zod'
 import YField from '../../field/index'
+import YFieldProxyComponent from '../../field/YFieldProxyComponent.vue'
 import YForm from '../index'
+
+const globalComponents = {
+  components: {
+    YField,
+    YFieldProxyComponent,
+  },
+}
 
 // 测试用子组件，模拟一个简单的输入控件
 const InputComponent = defineComponent({
@@ -127,7 +135,9 @@ describe('yFormTest', () => {
         },
       })
 
-      const wrapper = mount(TestComponent)
+      const wrapper = mount(TestComponent, {
+        global: globalComponents,
+      })
       await nextTick()
       expect(wrapper.findAllComponents(YField).length).toBe(2)
       expect(wrapper.findAll('.test-input').length).toBe(2)
@@ -162,7 +172,9 @@ describe('yFormTest', () => {
         },
       })
 
-      const wrapper = mount(TestComponent)
+      const wrapper = mount(TestComponent, {
+        global: globalComponents,
+      })
       await nextTick()
       const input = wrapper.find('.test-input')
       await input.setValue('newUser')
@@ -202,6 +214,7 @@ describe('yFormTest', () => {
           default: () => [],
           submit: ({ submit }) => <button onClick={submit}>提交</button>,
         },
+        global: globalComponents,
       })
 
       await wrapper.find('button').trigger('click')
@@ -225,6 +238,7 @@ describe('yFormTest', () => {
           default: () => [],
           submit: ({ reset }) => <button class="reset-btn" onClick={reset}>重置</button>,
         },
+        global: globalComponents,
       })
 
       await wrapper.setProps({ modelValue: { username: 'changed' } })
@@ -256,6 +270,7 @@ describe('yFormTest', () => {
         slots: {
           default: () => <button type="reset" class="reset-button">重置</button>,
         },
+        global: globalComponents,
       })
 
       await wrapper.setProps({ modelValue: { username: 'changed' } })
@@ -306,7 +321,9 @@ describe('yFormTest', () => {
         },
       })
 
-      const wrapper = mount(TestComponent)
+      const wrapper = mount(TestComponent, {
+        global: globalComponents,
+      })
       await nextTick()
 
       const inputComp = wrapper.findComponent(InputComponent)
@@ -368,7 +385,9 @@ describe('yFormTest', () => {
         },
       })
 
-      const wrapper = mount(TestComponent)
+      const wrapper = mount(TestComponent, {
+        global: globalComponents,
+      })
       await nextTick()
 
       const multiInput = wrapper.findComponent(MultiInputComponent)

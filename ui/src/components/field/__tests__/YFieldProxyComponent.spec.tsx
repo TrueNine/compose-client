@@ -7,6 +7,13 @@ import YField from '../index'
 import YFieldProxyComponent from '../YFieldProxyComponent.vue'
 import { ChildInputComponent } from './components/TestComponents'
 
+const globalComponents = {
+  components: {
+    YField,
+    YFieldProxyComponent,
+  },
+}
+
 afterEach(() => {
   document.body.innerHTML = ''
 })
@@ -23,6 +30,7 @@ describe('yFieldProxyComponentTest', () => {
             </YField>
           ),
         },
+        global: globalComponents,
       })
 
       await nextTick()
@@ -40,6 +48,7 @@ describe('yFieldProxyComponentTest', () => {
             </YField>
           ),
         },
+        global: globalComponents,
       })
 
       await nextTick()
@@ -60,6 +69,7 @@ describe('yFieldProxyComponentTest', () => {
             </YField>
           ),
         },
+        global: globalComponents,
       })
 
       await nextTick()
@@ -80,6 +90,7 @@ describe('yFieldProxyComponentTest', () => {
             </YField>
           ),
         },
+        global: globalComponents,
       })
 
       await nextTick()
@@ -105,7 +116,9 @@ describe('yFieldProxyComponentTest', () => {
         },
       })
 
-      const wrapper = mount(TestComponent)
+      const wrapper = mount(TestComponent, {
+        global: globalComponents,
+      })
       await nextTick()
 
       // 单字符串默认映射到 modelValue
@@ -177,6 +190,7 @@ describe('yFieldProxyComponentTest', () => {
             </YField>
           ),
         },
+        global: globalComponents,
       })
 
       await nextTick()

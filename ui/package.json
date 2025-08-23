@@ -89,9 +89,6 @@
     "zod": "catalog:vee-validate"
   },
   "devDependencies": {
-    "vite-plugin-vuetify": "catalog:vuetify",
-    "@vitejs/plugin-vue": "catalog:vite",
-    "@vitejs/plugin-vue-jsx": "catalog:vite",
     "@truenine/config-uno": "workspace:^",
     "@truenine/config-vite": "workspace:^",
     "@types/gulp": "catalog:gulp",
@@ -101,6 +98,8 @@
     "@types/jsdom": "catalog:vitest",
     "@unocss/cli": "catalog:unocss",
     "@unocss/postcss": "catalog:unocss",
+    "@vitejs/plugin-vue": "catalog:vite",
+    "@vitejs/plugin-vue-jsx": "catalog:vite",
     "@vue/test-utils": "catalog:vue",
     "@vue/tsconfig": "catalog:vue",
     "autoprefixer": "catalog:",
@@ -109,6 +108,7 @@
     "gulp": "catalog:gulp",
     "gulp-postcss": "catalog:gulp",
     "gulp-sass": "catalog:gulp",
+    "happy-dom": "^18.0.1",
     "jsdom": "catalog:vitest",
     "sass": "catalog:",
     "unplugin-auto-import": "catalog:",
@@ -117,6 +117,7 @@
     "unplugin-vue-components": "catalog:",
     "unplugin-vue-router": "catalog:",
     "vite-plugin-vue-devtools": "catalog:vite",
+    "vite-plugin-vuetify": "catalog:vuetify",
     "vue-router": "catalog:vue",
     "vue-tsc": "catalog:vue"
   }
