@@ -86,9 +86,5 @@
     "typescript": "catalog:",
     "vite": "catalog:vite",
     "vite-plugin-dts": "catalog:vite"
-  },
-  "devDependencies": {
-    "@truenine/eslint9-config": "workspace:^",
-    "vite-plugin-dts": "catalog:vite"
   }
 }

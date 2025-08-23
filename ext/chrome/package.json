@@ -26,7 +26,6 @@
     "@types/chrome": "catalog:types"
   },
   "devDependencies": {
-    "@truenine/config-vite": "workspace:^",
     "@truenine/types": "workspace:^",
     "@types/chrome": "catalog:types"
   }

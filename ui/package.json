@@ -90,7 +90,6 @@
   },
   "devDependencies": {
     "@truenine/config-uno": "workspace:^",
-    "@truenine/config-vite": "workspace:^",
     "@types/gulp": "catalog:gulp",
     "@types/gulp-autoprefixer": "catalog:gulp",
     "@types/gulp-postcss": "catalog:gulp",

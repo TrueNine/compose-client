@@ -30,7 +30,6 @@
     "@truenine/types": "workspace:^"
   },
   "devDependencies": {
-    "@truenine/config-vite": "workspace:^",
     "@types/jsdom": "catalog:vitest",
     "jsdom": "catalog:vitest"
   }

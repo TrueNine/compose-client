@@ -28,8 +28,5 @@
   "dependencies": {
     "@truenine/external": "workspace:^",
     "@truenine/types": "workspace:^"
-  },
-  "devDependencies": {
-    "@truenine/config-vite": "workspace:^"
   }
 }

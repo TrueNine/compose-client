@@ -33,13 +33,11 @@
   "peerDependencies": {
     "@unocss/transformer-attributify-jsx": "catalog:unocss",
     "@unocss/transformer-compile-class": "catalog:unocss",
-    "unocss": "catalog:unocss",
-    "vue": "catalog:vue"
+    "unocss": "catalog:unocss"
   },
   "dependencies": {
     "@unocss/transformer-attributify-jsx": "catalog:unocss",
     "@unocss/transformer-compile-class": "catalog:unocss",
-    "unocss": "catalog:unocss",
-    "vue": "catalog:vue"
+    "unocss": "catalog:unocss"
   }
 }

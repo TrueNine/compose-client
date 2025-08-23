@@ -32,8 +32,5 @@
     "@truenine/req": "workspace:^",
     "@truenine/shared": "workspace:^",
     "@truenine/types": "workspace:^"
-  },
-  "devDependencies": {
-    "@truenine/config-vite": "workspace:^"
   }
 }
