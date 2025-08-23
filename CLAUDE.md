@@ -59,11 +59,11 @@ turbo run dev --filter=@truenine/design
 
 ### Turbo Task Dependencies
 - **build**: depends on type-check, lint, ^build
-- **build-c**: depends on ^build (compilation step for TSDown packages)
+- **build-c**: depends on ^build (compilation step for TSDown packages)  
 - **build-g**: depends on build-c (post-processing step for UI packages)
-- **test**: depends on ^build, type-check, lint  
-- **lint**: depends on ^build
-- **type-check**: depends on ^build
+- **test**: depends on ^build, type-check, lint
+- **lint**: no dependencies
+- **type-check**: no dependencies
 
 ## Project Architecture
 
