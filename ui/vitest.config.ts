@@ -1,10 +1,10 @@
-import Vue from '@vitejs/plugin-vue'
-import VueJsx from '@vitejs/plugin-vue-jsx'
+import type { InlineConfig } from 'vitest'
+import { resolve } from 'node:path'
+import { mergeConfig } from 'vite'
 import { defineConfig } from 'vitest/config'
-import { resolve } from 'path'
+import { e as viteConfig } from './vite.config'
 
-export default defineConfig({
-  plugins: [Vue(), VueJsx()],
+const vitestConfig = defineConfig({
   resolve: {
     alias: {
       '@': resolve(__dirname, './src'),
@@ -12,5 +12,11 @@ export default defineConfig({
   },
   test: {
     environment: 'happy-dom',
+    globals: false,
+    setupFiles: [],
   },
 })
+
+const mergedConfig: InlineConfig = mergeConfig(viteConfig, vitestConfig)
+
+export default mergedConfig

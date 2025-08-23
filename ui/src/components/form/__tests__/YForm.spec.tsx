@@ -212,7 +212,7 @@ describe('yFormTest', () => {
         },
         slots: {
           default: () => [],
-          submit: ({ submit }) => <button onClick={submit}>提交</button>,
+          submit: ({ submit }: { submit: () => void }) => <button onClick={submit}>提交</button>,
         },
         global: globalComponents,
       })
@@ -236,14 +236,14 @@ describe('yFormTest', () => {
         },
         slots: {
           default: () => [],
-          submit: ({ reset }) => <button class="reset-btn" onClick={reset}>重置</button>,
+          submit: ({ reset }: { reset: () => void }) => <button class="reset-btn" onClick={reset}>重置</button>,
         },
         global: globalComponents,
       })
 
       await wrapper.setProps({ modelValue: { username: 'changed' } })
       await nextTick()
-      expect(wrapper.props('modelValue')).toEqual({ username: 'changed' })
+      expect((wrapper.props() as any).modelValue).toEqual({ username: 'changed' })
 
       await wrapper.find('.reset-btn').trigger('click')
       await nextTick()
@@ -275,7 +275,7 @@ describe('yFormTest', () => {
 
       await wrapper.setProps({ modelValue: { username: 'changed' } })
       await nextTick()
-      expect(wrapper.props('modelValue')).toEqual({ username: 'changed' })
+      expect((wrapper.props() as any).modelValue).toEqual({ username: 'changed' })
 
       // 直接触发表单的reset事件，而不是点击按钮
       await wrapper.find('form').trigger('reset')

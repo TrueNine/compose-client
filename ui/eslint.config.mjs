@@ -10,4 +10,7 @@ export default eslint9({
     strictTypescriptEslint: true,
     tsconfigPath: './tsconfig.json',
   },
+  ignores: [
+    'playground/**/*',
+  ],
 })

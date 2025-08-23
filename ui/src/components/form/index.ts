@@ -1,4 +1,3 @@
-import type { YFormEmits, YFormProps, YFormSlots } from './types'
 import type { SFCWithInstall } from '@/common/install'
 
 import { componentInstallToPlugin } from '@/common'

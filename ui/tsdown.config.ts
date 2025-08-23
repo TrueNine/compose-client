@@ -43,7 +43,7 @@ export const e: UserConfig = defineConfig({
   format: ['esm'],
   sourcemap: false,
   dts: {
-    tsconfig: './tsconfig.build-only.json',
+    tsconfig: './tsconfig.build.json',
     sourcemap: false,
     vue: true,
   },

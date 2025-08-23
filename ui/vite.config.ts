@@ -1,15 +1,15 @@
+import type { UserConfig } from 'vite'
 import Vue from '@vitejs/plugin-vue'
 import VueJsx from '@vitejs/plugin-vue-jsx'
 import unocss from 'unocss/vite'
+
+import AutoImport from 'unplugin-auto-import/vite'
 import { ElementPlusResolver, VarletUIResolver, Vuetify3Resolver } from 'unplugin-vue-components/resolvers'
+import Components from 'unplugin-vue-components/vite'
 
 import { defineConfig } from 'vite'
 import devTools from 'vite-plugin-vue-devtools'
 import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
-
-import type { UserConfig } from 'vite'
-import AutoImport from 'unplugin-auto-import/vite'
-import Components from 'unplugin-vue-components/vite'
 
 export const e: UserConfig = defineConfig({
   plugins: [
@@ -40,17 +40,6 @@ export const e: UserConfig = defineConfig({
       ],
     }),
   ],
-  entry: [
-    './src/index.ts',
-  ],
-  platform: 'neutral',
-  format: ['esm'],
-  sourcemap: false,
-  dts: {
-    tsconfig: 'tsconfig.lib.json',
-    sourcemap: false,
-    vue: true,
-  },
 })
 
 export default e

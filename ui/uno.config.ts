@@ -1,4 +1,7 @@
+import type { UserConfig } from 'unocss'
 import { defaultConfig } from '@truenine/config-uno'
 import { mergeConfigs } from 'unocss'
 
-export default mergeConfigs([defaultConfig()])
+const config: UserConfig = mergeConfigs([defaultConfig()])
+
+export default config

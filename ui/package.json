@@ -108,7 +108,7 @@
     "gulp": "catalog:gulp",
     "gulp-postcss": "catalog:gulp",
     "gulp-sass": "catalog:gulp",
-    "happy-dom": "^18.0.1",
+    "happy-dom": "catalog:vitest",
     "jsdom": "catalog:vitest",
     "sass": "catalog:",
     "unplugin-auto-import": "catalog:",
