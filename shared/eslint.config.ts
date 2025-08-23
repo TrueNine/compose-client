@@ -1,4 +1,4 @@
-import eslint9, { applyPreset } from '@truenine/eslint9-config'
+import eslint9 from '@truenine/eslint9-config'
 
 export default eslint9({
   type: 'lib',

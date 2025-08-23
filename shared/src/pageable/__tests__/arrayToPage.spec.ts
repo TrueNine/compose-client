@@ -1,6 +1,6 @@
 import type { Pq } from '@truenine/types'
 import { describe, expect, it } from 'vitest'
-import { Pw } from '@/consts'
+import { Pw } from '../../consts'
 import { arrayToPage } from '../index'
 
 // 辅助函数：生成分页参数

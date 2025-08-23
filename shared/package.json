@@ -13,9 +13,9 @@
   },
   "exports": {
     ".": "./dist/index.js",
-    "./consts\\index": "./dist/consts\\index.js",
-    "./data\\index": "./dist/data\\index.js",
-    "./tools\\index": "./dist/tools\\index.js",
+    "./consts/index": "./dist/consts/index.js",
+    "./data/index": "./dist/data/index.js",
+    "./tools/index": "./dist/tools/index.js",
     "./package.json": "./package.json"
   },
   "main": "./dist/index.js",
@@ -30,7 +30,7 @@
   "scripts": {
     "test": "vitest run",
     "lint": "eslint --fix",
-    "type-check": "vue-tsc --noEmit",
+    "type-check": "tsc --noEmit -p tsconfig.lib.json",
     "build": "tsdown"
   },
   "peerDependencies": {
@@ -38,8 +38,5 @@
   },
   "dependencies": {
     "@truenine/types": "workspace:^"
-  },
-  "devDependencies": {
-    "@truenine/config-vite": "workspace:^"
   }
 }
