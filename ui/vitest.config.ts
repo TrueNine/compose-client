@@ -1,28 +1,9 @@
-import { fileURLToPath } from 'node:url'
+import Vue from '@vitejs/plugin-vue'
+import { defineConfig } from 'vitest/config'
 
-import { configDefaults, defineConfig, mergeConfig } from 'vitest/config'
-
-import viteConfig from './vite.config.ts'
-
-export default mergeConfig(
-  viteConfig,
-  defineConfig({
-    test: {
-      deps: {
-        optimizer: {
-          web: {
-            include: ['vuetify', 'element-plus', 'zod', '@vee-validate/zod'],
-          },
-        },
-      },
-      server: {
-        deps: {
-          inline: ['vuetify', 'element-plus', 'zod', '@vee-validate/zod'],
-        },
-      },
-      environment: 'jsdom',
-      exclude: [...configDefaults.exclude, 'e2e/*'],
-      root: fileURLToPath(new URL('./', import.meta.url)),
-    },
-  }),
-)
+export default defineConfig({
+  plugins: [Vue()],
+  test: {
+    environment: 'happy-dom',
+  },
+})

@@ -1,19 +1,13 @@
 {
   "references": [
     {
-      "path": "./tsconfig.app.json"
+      "path": "./tsconfig.lib.json"
     },
     {
       "path": "./tsconfig.test.json"
     },
     {
       "path": "./tsconfig.tools.json"
-    },
-    {
-      "path": "./tsconfig.vue.json"
-    },
-    {
-      "path": "./tsconfig.dev.json"
     }
   ],
   "files": []

@@ -1,0 +1,35 @@
+{
+  "extends": "@truenine/tsconfig/tsconfig.json",
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.lib.tsbuildinfo",
+    "jsx": "preserve",
+    "jsxImportSource": "vue",
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "baseUrl": ".",
+    "moduleResolution": "Bundler",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "types": ["vite/client", "node", "@vueuse/core", "./.types/imports-auto", "./.types/imports-comp"],
+    "noUnusedLocals": false,
+    "noUnusedParameters": false
+  },
+  "include": [
+    "src/**/*",
+    "common/**/*",
+    "unplugin/**/*",
+    ".types/**/*",
+    "env.d.ts"
+  ],
+  "exclude": [
+    "playground/**/*",
+    "node_modules",
+    "dist",
+    "**/*.test.*",
+    "**/*.spec.*",
+    "**/__tests__/**/*"
+  ],
+  "vueCompilerOptions": {
+    "target": 3.3
+  }
+}

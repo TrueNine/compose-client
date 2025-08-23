@@ -13,6 +13,7 @@ const config: UserConfig = defineConfig({
   tsconfig: './tsconfig.lib.json',
   platform: 'node',
   sourcemap: true,
+  fromVite: true,
   unbundle: true,
   format: ['cjs', 'esm'],
   exports: {

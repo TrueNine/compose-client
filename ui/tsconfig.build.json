@@ -1,43 +1,48 @@
 {
-  "extends": [
-    "@truenine/tsconfig/tsconfig.json"
-  ],
   "compilerOptions": {
-    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.build.tsbuildinfo",
+    "target": "ES2020",
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "allowJs": false,
+    "skipLibCheck": true,
+    "skipLibCheck": true,
+    "esModuleInterop": false,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "declarationDir": "./dist",
     "jsx": "preserve",
+    "jsxImportSource": "vue",
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     },
-    "isolatedDeclarations": false,
-    "skipLibCheck": true,
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
-    "noEmit": false,
-    "declaration": true,
-    "emitDeclarationOnly": true,
-    "declarationDir": "./dist",
-    "types": [
-      "node",
-      "./.types/imports-auto.d.ts",
-      "./.types/imports-comp.d.ts"
-    ]
+    "types": ["vite/client", "node", "@vueuse/core", "./.types/imports-auto", "./.types/imports-comp"],
+    "isolatedDeclarations": true
   },
   "include": [
-    "env.d.ts",
-    "src/**/*.ts",
-    "src/**/*.d.ts",
-    "src/**/*.vue",
-    "src/**/*.tsx"
+    "src",
+    "common",
+    "unplugin",
+    ".types",
+    ".types/imports-auto.d.ts",
+    ".types/imports-comp.d.ts",
+    "env.d.ts"
   ],
   "exclude": [
     "node_modules",
     "dist",
     "playground",
-    "**/*.test.ts",
-    "**/*.test.tsx",
-    "**/*.spec.ts",
-    "**/*.spec.tsx",
-    "**/__tests__/**"
-  ]
+    "**/*.test.*",
+    "**/*.spec.*",
+    "**/__tests__"
+  ],
+  "vueCompilerOptions": {
+    "target": 3.3
+  }
 }

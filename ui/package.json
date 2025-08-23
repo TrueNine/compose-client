@@ -16,31 +16,11 @@
     "*.vue"
   ],
   "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
-    "./unplugin": {
-      "types": "./dist/unplugin/index.d.ts",
-      "import": "./dist/unplugin/index.js"
-    },
-    "./common": {
-      "types": "./dist/common/index.d.ts",
-      "import": "./dist/common/index.js"
-    },
-    "./components/*": {
-      "types": "./dist/components/*.d.ts",
-      "import": "./dist/components/*.js"
-    },
-    "./*": "./*",
-    "./**": "./**",
-    "./unocss.css": "./dist/unocss.css",
-    "./index.css": "./dist/index.css",
-    "./base.css": "./dist/base.css",
-    "./dist/*": "./dist/*"
+    ".": "./dist/index.js",
+    "./package.json": "./package.json"
   },
-  "module": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
@@ -51,8 +31,8 @@
     "test": "vitest run",
     "dev": "vite",
     "lint": "eslint --fix",
-    "type-check": "vue-tsc --noEmit",
-    "build": "vite build && gulp -f __build-src__/index.js"
+    "type-check": "vue-tsc --noEmit -p tsconfig.lib.json",
+    "build": "tsdown"
   },
   "peerDependencies": {
     "@date-io/dayjs": "catalog:",
@@ -75,6 +55,7 @@
     "dayjs": "catalog:",
     "element-plus": "catalog:",
     "unocss": "catalog:unocss",
+    "unplugin-vue-jsx": "catalog:tsdown",
     "vee-validate": "catalog:vee-validate",
     "vite-plugin-vuetify": "catalog:vuetify",
     "vue": "catalog:vue",
@@ -97,20 +78,20 @@
     "@varlet/ui": "catalog:",
     "@vee-validate/yup": "catalog:vee-validate",
     "@vee-validate/zod": "catalog:vee-validate",
-    "@vitejs/plugin-vue": "catalog:vite",
-    "@vitejs/plugin-vue-jsx": "catalog:vite",
     "@vueuse/core": "catalog:vueuse",
     "dayjs": "catalog:",
     "element-plus": "catalog:",
     "unocss": "catalog:unocss",
     "vee-validate": "catalog:vee-validate",
-    "vite-plugin-vuetify": "catalog:vuetify",
     "vue": "catalog:vue",
     "vuetify": "catalog:vuetify",
     "yup": "catalog:vee-validate",
     "zod": "catalog:vee-validate"
   },
   "devDependencies": {
+    "vite-plugin-vuetify": "catalog:vuetify",
+    "@vitejs/plugin-vue": "catalog:vite",
+    "@vitejs/plugin-vue-jsx": "catalog:vite",
     "@truenine/config-uno": "workspace:^",
     "@truenine/config-vite": "workspace:^",
     "@types/gulp": "catalog:gulp",
@@ -132,6 +113,7 @@
     "sass": "catalog:",
     "unplugin-auto-import": "catalog:",
     "unplugin-fonts": "catalog:",
+    "unplugin-vue": "^7.0.1",
     "unplugin-vue-components": "catalog:",
     "unplugin-vue-router": "catalog:",
     "vite-plugin-vue-devtools": "catalog:vite",

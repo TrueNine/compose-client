@@ -1,17 +1,14 @@
-import Vue from '@vitejs/plugin-vue'
-import VueJsx from '@vitejs/plugin-vue-jsx'
-import unocss from 'unocss/vite'
-import { ElementPlusResolver, VarletUIResolver, Vuetify3Resolver } from 'unplugin-vue-components/resolvers'
-
-import { defineConfig } from 'vite'
-import devTools from 'vite-plugin-vue-devtools'
-import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
-
-import type { UserConfig } from 'vite'
+import type { UserConfig } from 'tsdown'
+import { defineConfig } from 'tsdown'
 import AutoImport from 'unplugin-auto-import/vite'
+import { ElementPlusResolver, VarletUIResolver, Vuetify3Resolver } from 'unplugin-vue-components/resolvers'
 import Components from 'unplugin-vue-components/vite'
+import VueJsx from 'unplugin-vue-jsx/rolldown'
+import Vue from 'unplugin-vue/rolldown'
+import { transformAssetUrls } from 'vite-plugin-vuetify'
 
 export const e: UserConfig = defineConfig({
+  unbundle: true,
   plugins: [
     Vue({
       template: {
@@ -20,10 +17,7 @@ export const e: UserConfig = defineConfig({
         },
       },
     }),
-    devTools(),
     VueJsx(),
-    unocss(),
-    vuetify(),
     AutoImport({
       imports: ['vue', '@vueuse/core'],
       dts: '.types/auto-imports.d.ts',
@@ -42,6 +36,8 @@ export const e: UserConfig = defineConfig({
   ],
   entry: [
     './src/index.ts',
+    './src/unplugin/index.ts',
+    './src/common/index.ts',
   ],
   platform: 'neutral',
   format: ['esm'],

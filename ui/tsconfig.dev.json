@@ -1,9 +1,0 @@
-{
-  "extends": "./tsconfig.vue.json",
-  "include": [
-    "./.types/imports-typed-router.d.ts",
-    "playground/**/*.ts",
-    "playground/**/*.tsx",
-    "playground/**/*.vue"
-  ]
-}

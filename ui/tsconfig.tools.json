@@ -1,21 +1,19 @@
 {
-  "extends": "@tsconfig/node22/tsconfig.json",
+  "extends": "@truenine/tsconfig/tsconfig.json",
   "compilerOptions": {
-    "incremental": true,
-    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.config.tsbuildinfo",
-    "module": "ESNext",
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.tools.tsbuildinfo",
+    "lib": ["ESNext"],
     "moduleResolution": "Bundler",
-    "types": [
-      "node"
-    ],
-    "allowImportingTsExtensions": true,
-    "noEmit": true
+    "types": ["node"],
+    "allowImportingTsExtensions": true
   },
   "include": [
     "env.d.ts",
     "vite.config.*",
     "vitest.config.*",
     "uno.config.*",
-    "eslint.config.*"
+    "eslint.config.*",
+    "tsdown.config.*",
+    "*.config.*"
   ]
 }
