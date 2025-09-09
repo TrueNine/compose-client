@@ -2,8 +2,8 @@
   "name": "compose-client",
   "type": "module",
   "version": "1.0.9",
-  "packageManager": "pnpm@10.15.0",
-  "description": "百研科技前端开发包",
+  "packageManager": "pnpm@10.15.1",
+  "description": "yan100 dev kit",
   "author": "TrueNine",
   "license": "LGPL-2.1-or-later",
   "keywords": [
