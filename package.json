@@ -38,7 +38,8 @@
     "dev:legacy": "turbo run dev --concurrency=6 --output-logs=new-only",
     "lint:root": "eslint --fix --cache --cache-location .eslintcache --config ./configs/tsconfig/eslint.config.mjs",
     "ci:build": "turbo run build lint type-check test --output-logs=errors-only --no-daemon",
-    "ci:quick": "turbo run build lint type-check --output-logs=errors-only --no-daemon"
+    "ci:quick": "turbo run build lint type-check --output-logs=errors-only --no-daemon",
+    "postinstall": "pnpm turbo build --no-daemon"
   },
   "devDependencies": {
     "@antfu/eslint-config": "catalog:eslint",
