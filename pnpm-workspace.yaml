@@ -58,16 +58,16 @@ catalogs:
     '@iconify-json/fluent': ^1.2.30
     '@iconify-json/ion': ^1.2.6
     '@iconify-json/mdi': ^1.2.3
-    '@iconify-json/simple-icons': ^1.2.50
+    '@iconify-json/simple-icons': ^1.2.52
   rollup:
     rollup: ^4.50.1
   tsdown:
-    tsdown: ^0.15.0
+    tsdown: ^0.15.1
     unplugin-vue-jsx: ^0.6.1
   types:
-    '@types/chrome': ^0.1.9
+    '@types/chrome': ^0.1.11
     '@types/lodash-es': ^4.17.12
-    '@types/node': ^24.3.1
+    '@types/node': ^24.4.0
   unocss:
     '@unocss/cli': ^66.5.1
     '@unocss/eslint-config': ^66.5.1
@@ -80,27 +80,27 @@ catalogs:
     '@vee-validate/zod': ^4.15.1
     vee-validate: ^4.15.1
     yup: ^1.7.0
-    zod: ^4.1.5
+    zod: ^4.1.8
   vite:
     '@vitejs/plugin-vue': ^6.0.1
     '@vitejs/plugin-vue-jsx': ^5.1.1
     vite: ^7.1.5
     vite-plugin-dts: ^4.5.4
-    vite-plugin-vue-devtools: ^8.0.1
+    vite-plugin-vue-devtools: ^8.0.2
   vitest:
     '@types/jsdom': ^21.1.7
     happy-dom: ^18.0.1
-    jsdom: ^26.1.0
+    jsdom: ^27.0.0
     vitest: ^3.2.4
   vue:
     '@vue/test-utils': ^2.4.6
     '@vue/tsconfig': ^0.8.1
     vue: ^3.5.21
     vue-router: ^4.5.1
-    vue-tsc: ^3.0.6
+    vue-tsc: ^3.0.7
   vuetify:
     '@mdi/font': ^7.4.47
     vite-plugin-vuetify: ^2.1.2
-    vuetify: ^3.9.7
+    vuetify: ^3.10.0
   vueuse:
     '@vueuse/core': ^13.9.0
