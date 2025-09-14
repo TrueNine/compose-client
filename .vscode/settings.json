@@ -1,21 +1,23 @@
 {
-  "kiroAgent.configureMCP": "Enabled",
-  "kiroAgent.trustedCommands": [
-    "pnpm *",
-    "Start-Job *",
-    "ren *",
-    "Rename-Item *",
-    "npx *",
-    "node *",
-    "turbo *",
-    "copy *",
-    "turbo run build lint type-check --dry=json | jq '.tasks | length'",
-    "$result *",
-    "echo *",
-    "npm *",
-    "timeout *",
-    "Start-Job -ScriptBlock { pnpm run dev } | Wait-Job -Timeout 10 | Receive-Job",
-    "Remove-Item *",
-    "Test-Path *"
-  ]
+  "files.watcherExclude": {
+    "**/.idea": true,
+    "**/routeTree.gen.ts": true
+  },
+  "search.exclude": {
+    "**/.idea": true,
+    "**/routeTree.gen.ts": true
+  },
+  "files.readonlyInclude": {
+    "**/.idea": true,
+    "**/routeTree.gen.ts": true
+  },
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.patterns": {
+    "tsconfig.json": "tsconfig.*.json, env.d.ts",
+    "vite.config.*": "jsconfig*, vitest.config.*, cypress.config.*, playwright.config.*",
+    "package.json": "package-lock.json, pnpm*, .yarnrc*, yarn*, .eslint*, eslint*, .oxlint*, oxlint*, .prettier*, prettier*, .editorconfig"
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit"
+  }
 }
