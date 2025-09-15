@@ -1,6 +1,6 @@
 import type { Result as LighthouseResult } from 'lighthouse'
 import type { LighthouseReport } from './types.js'
-import { runLighthouseAudit } from './index.js'
+import { runLighthouseAudit } from './core.js'
 import { AuditCategory } from './types.js'
 
 // === Best Practices Report Types ===

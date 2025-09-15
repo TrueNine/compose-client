@@ -168,15 +168,14 @@ async function launchNewBrowser(): Promise<Browser> {
     logger.error('Failed to launch browser:', error)
 
     // Clean up resources
-    if (browser != null) {
-      try {
-        await browser.close()
-      } catch (closeError: unknown) {
-        logger.error('Error closing browser:', closeError)
-      }
-      headlessBrowserInstance = null
-      launchedBrowserWSEndpoint = null
+
+    try {
+      await browser?.close()
+    } catch (closeError: unknown) {
+      logger.error('Error closing browser:', closeError)
     }
+    headlessBrowserInstance = null
+    launchedBrowserWSEndpoint = null
 
     // Clean up the temporary directory
     try {
@@ -688,6 +687,20 @@ export function scheduleBrowserCleanup(): void {
  * Connects to a headless browser for web operations
  * @param url The URL to navigate to
  * @param options Connection and emulation options
+ * @param options.blockResources Whether to block resources like images, CSS, etc.
+ * @param options.customResourceBlockList Custom list of resource types to block
+ * @param options.emulateDevice Device type to emulate (mobile, tablet, desktop)
+ * @param options.emulateNetworkCondition Network condition to emulate
+ * @param options.viewport Viewport dimensions
+ * @param options.viewport.width Viewport width in pixels
+ * @param options.viewport.height Viewport height in pixels
+ * @param options.headers Custom HTTP headers to send with requests
+ * @param options.locale Browser locale setting
+ * @param options.timezoneId Timezone identifier
+ * @param options.userAgent Custom user agent string
+ * @param options.waitForSelector Selector to wait for after navigation
+ * @param options.waitForTimeout Timeout for waiting operations
+ * @param options.cookies Cookies to set in the browser
  * @returns Promise resolving to browser, port, and page objects
  */
 export async function connectToHeadlessBrowser(
