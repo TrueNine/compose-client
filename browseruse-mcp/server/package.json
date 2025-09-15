@@ -7,6 +7,7 @@
     "name": "TrueNine",
     "email": "truenine304520@gmail.com"
   },
+  "license": "LGPL-2.1-or-later",
   "funding": {
     "type": "github",
     "url": "https://github.com/sponsors/TrueNine"
@@ -20,7 +21,6 @@
   "bugs": {
     "url": "https://github.com/TrueNine/compose-client/issues"
   },
-  "license": "LGPL-2.1-or-later",
   "keywords": [
     "browser",
     "debugging",
@@ -29,21 +29,21 @@
     "chrome",
     "extension"
   ],
-  "engines": {
-    "node": ">=18.0.0"
-  },
-  "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org/"
+  "main": "dist/BrowserConnector.cjs",
+  "bin": {
+    "browseruse-server": "./dist/BrowserConnector.cjs"
   },
   "files": [
     "LICENSE",
     "README.md",
     "dist"
   ],
-  "main": "dist/BrowserConnector.cjs",
-  "bin": {
-    "browseruse-server": "./dist/BrowserConnector.cjs"
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   },
   "scripts": {
     "lint": "eslint --fix",
