@@ -19,5 +19,6 @@
   },
   "editor.codeActionsOnSave": {
     "source.fixAll": "explicit"
-  }
+  },
+  "claudeCodeChat.permissions.yoloMode": true
 }
