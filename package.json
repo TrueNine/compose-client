@@ -47,7 +47,7 @@
     "@truenine/eslint9-config": "workspace:^",
     "@truenine/tsconfig": "workspace:^",
     "@tsconfig/node22": "catalog:",
-    "@types/node": "catalog:types",
+    "@types/node": "catalog:node",
     "eslint": "catalog:eslint",
     "npm-run-all2": "catalog:",
     "rollup": "catalog:rollup",

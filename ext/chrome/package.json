@@ -16,17 +16,16 @@
     "access": "public"
   },
   "scripts": {
-    "build-c": "tsdown",
     "lint": "eslint --fix",
     "type-check": "tsc --noEmit -p tsconfig.lib.json",
     "build": "tsdown"
   },
   "peerDependencies": {
     "@truenine/types": "workspace:^",
-    "@types/chrome": "catalog:types"
+    "@types/chrome": "catalog:chrome"
   },
   "devDependencies": {
     "@truenine/types": "workspace:^",
-    "@types/chrome": "catalog:types"
+    "@types/chrome": "catalog:chrome"
   }
 }

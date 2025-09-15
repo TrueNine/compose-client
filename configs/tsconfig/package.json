@@ -27,13 +27,13 @@
   },
   "peerDependencies": {
     "@tsconfig/node22": "catalog:",
-    "@types/node": "catalog:types",
+    "@types/node": "catalog:node",
     "@vue/tsconfig": "catalog:vue",
     "typescript": "catalog:"
   },
   "devDependencies": {
     "@tsconfig/node22": "catalog:",
-    "@types/node": "catalog:types",
+    "@types/node": "catalog:node",
     "@vue/tsconfig": "catalog:vue"
   }
 }
