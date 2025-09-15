@@ -66,7 +66,6 @@ catalogs:
     '@iconify-json/simple-icons': ^1.2.52
   mcp:
     '@modelcontextprotocol/sdk': ^1.18.0
-    '@types/puppeteer-core': ^7.0.4
     llm-cost: ^1.0.5
     puppeteer-core: ^24.20.0
   node:
@@ -78,6 +77,7 @@ catalogs:
     body-parser: ^2.2.0
     cors: ^2.8.5
     express: ^5.1.0
+    pino: ^9.9.5
     ws: ^8.18.3
   rollup:
     rollup: ^4.50.1
