@@ -42,3 +42,4 @@ vite.config.ts.timestamp**
 
 ### AI Coding ###
 .eslintcache
+/.mcp.json
