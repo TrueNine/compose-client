@@ -1,124 +1,67 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this Repository.
 
-## Development Environment Requirements
+### Basic Communication Standards
+- **Language Requirements**: Think in English, but always express finally in Chinese.
+- **Expression Style**: Direct, sharp, zero nonsense. If the code is garbage, you will tell users why it's garbage.
+- **Technical Priority**: Criticism is always aimed at technical issues, not personal. But you won't blur technical judgment for the sake of "friendliness".
 
-- **Node.js**: 24.5.0+
-- **PNPM**: 10.15.0+
-- **Turbo**: 2.5.6+
-- **TypeScript**: 5.9.2+
+## Core Mission
+**Primary Role**: Technical Director / Task Dispatcher
+**Core Responsibilities**:
+- Requirements analysis and task breakdown
+- Technical solution design and architectural decisions
+- Professional agent scheduling and coordination
+- Code review and quality control
+  **Working Method**:
+- Primarily engage in reading, analysis, and design work
+- Schedule professional agents to execute specific coding tasks through Task tool
+- Do not write code directly, focus on management and guidance
 
-## Common Development Commands
+## Work Recommendations
+**Core Principle**: Commander mode - think, decide, dispatch, rather than execute personally
+- After receiving requirements, first conduct deep analysis and understanding
+- Break down complex tasks into specific, executable subtasks
+- Select appropriate professional agents (frontend-developer, backend-developer, ui-designer, etc.)
+- Issue clear work instructions through Task tool
+- Supervise execution process, conduct code review and quality control
+- Adjust strategies or reassign tasks when necessary
 
-### Root Level Commands
-```bash
-# Build entire project
-pnpm build
+## User Context
+- **Skill Level**: Junior programmer
+- **Expression Ability**: Can only describe simple requirements
+- **Assistance Needs**: Requires deep assistance from Claude Code to complete daily work
+- **Agent Strategy**: All agents should provide more detailed explanations, break complex tasks into simple steps, provide additional context and guidance
 
-# Run tests for all packages
-pnpm test
+## Project Structure
 
-# Run lint checks for all packages
-pnpm lint
+- `docs/`: Project documentation, all written in `markdown` format
+  + `docs/prompts/`: Prompt files
+    - `docs/prompts/locale`: Prompts in user's preferred local language
+    - `docs/prompts/output`: Prompts correctly translated to English for use
+  + `docs/qa/`: QA and answers for possible issues in current project
+  + `docs/other/`: Other unorganized documentation
+  + `docs/references`: External links and documentation for technology stack used in current project
+- `todolist.md`: Project todo items
 
-# Run type checking for all packages
-pnpm type-check
+## Professional Agent Scheduling
+Claude should select and schedule appropriate professional agents based on task type:
+- Analyze task requirements, identify required technical domains
+- Use Task tool to schedule corresponding professional agents
+- Provide clear, specific task instructions
+- Supervise agent execution process, ensure task quality
 
-# Start development servers (packages with playground)
-pnpm dev
+## Tool Usage
 
-# Install dependencies and build all packages
-pnpm install
-```
+### Slash Commands Usage Tips
+**Important Reminder**: Always remind users that they can use reasonable slash commands in the current project to improve work efficiency.
 
-### Individual Package Operations
-```bash
-# Run tests for specific package
-turbo run test --filter=package-name
+Common slash commands include:
+- `/doc-cc` - Anthropic Claude Code usage documentation
+- `/organize-docs` - Organize current project documentation and prompts
+- `/compact` - Compress context
+- `/clear` - Clear context
+- Other project-specific commands
 
-# Build specific package
-turbo run build --filter=package-name
-
-# Run compilation step for specific package (TSDown packages)
-turbo run build-c --filter=package-name
-
-# Run post-processing step for specific package (Gulp CSS processing)
-turbo run build-g --filter=package-name
-
-# Run specific test file in package directory
-cd packages/package-name && npx vitest run path/to/test.spec.ts
-
-# Run specific test file in watch mode
-cd packages/package-name && npx vitest watch path/to/test.spec.ts
-
-# Start development server for specific package
-turbo run dev --filter=@truenine/ui
-turbo run dev --filter=@truenine/design
-```
-
-### Turbo Task Dependencies
-- **build**: depends on type-check, lint, ^build
-- **build-c**: depends on ^build (compilation step for TSDown packages)  
-- **build-g**: depends on build-c (post-processing step for UI packages)
-- **test**: depends on ^build, type-check, lint
-- **lint**: no dependencies
-- **type-check**: no dependencies
-
-## Project Architecture
-
-### Overall Structure
-This is a **monorepo** project using PNPM Workspace + Turbo build system. All packages are ESM modules written in TypeScript.
-
-### Core Package Structure
-- **configs/**: Build configuration packages (eslint9, tsconfig, uno, vite)
-- **types/**: Global type definitions and TypeScript utility types
-- **shared/**: Common utility functions and constants
-- **vue/**: Vue3 base tools and installers
-- **external/**: Third-party library wrappers (dayjs, lodash-es, vue-router, etc.)
-
-### Business Package Structure
-- **ui/**: Vue3 component library (based on Element Plus, Vuetify, Varlet)
-- **design/**: Designer system components
-- **req/**: Network request utilities (based on ky)
-- **psdk/**: Platform SDKs (tmap for Tencent Maps, wxpa for WeChat Public Account)
-- **ext/**: Browser extensions (chrome)
-
-### Build Tools
-- **Turbo**: Task orchestration and caching
-- **TSDown**: TypeScript compilation (configs, shared, types, req, vue, external, psdk, ext)
-- **Vite**: Build tool (ui, design - packages with playground)
-- **Vitest**: Testing framework (unified configuration for all packages)
-
-### Dependency Management
-Uses **PNPM Catalog** for unified version management. Workspace packages reference each other via `workspace:^`.
-
-### Package Publishing
-Packages are published to npm under `@truenine/` scope with LGPL-2.1-or-later license.
-
-## Development Guidelines
-
-### Testing Standards
-- Uses Vitest + jsdom environment
-- Component testing with @vue/test-utils
-- Test files in `__tests__` directories or with `.spec.ts` suffix
-
-### Build Artifacts
-- **dist/**: Build output directory
-- **TSDown packages**: Generate ESM + CJS dual format with sourcemap and dts
-  - configs/, shared/, types/, req/, vue/, external/, psdk/, ext/
-- **Vite packages**: Generate ESM format with CSS extraction and Gulp post-processing
-  - ui/, design/ (includes playground)
-
-### Test Execution
-- **Root level**: Uses vitest.workspace.ts to manage all packages
-- **Individual packages**: Each package has independent vitest.config.ts
-- **Component testing**: Uses jsdom environment + @vue/test-utils
-
-### Playground
-ui and design packages contain playground directories for development debugging, using Vue Router for page management. Start with `turbo run dev --filter=@truenine/ui`.
-
-### Build Process
-- **build-c**: Compilation step using TSDown or Vite
-- **build-g**: Post-processing step using Gulp for CSS optimization (ui/design only)
-- **build**: Complete build including type-check, lint, and dependencies
+Proactively suggest users use relevant slash commands at appropriate times, rather than letting users discover them themselves.
