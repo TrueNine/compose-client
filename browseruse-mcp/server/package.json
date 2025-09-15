@@ -1,5 +1,5 @@
 {
-  "name": "@truenine/browseruse-server",
+  "name": "@truenine/browseruse-mcp-server",
   "type": "module",
   "version": "0.0.1",
   "description": "A browseruse mcp server",
@@ -50,6 +50,9 @@
     "type-check": "tsc --noEmit -p tsconfig.lib.json",
     "build": "tsdown"
   },
+  "peerDependencies": {
+    "chrome-launcher": "catalog:chrome"
+  },
   "dependencies": {
     "@modelcontextprotocol/sdk": "catalog:mcp",
     "body-parser": "catalog:node",
@@ -60,9 +63,6 @@
     "pino": "catalog:node",
     "puppeteer-core": "catalog:mcp",
     "ws": "catalog:node"
-  },
-  "optionalDependencies": {
-    "chrome-launcher": "catalog:chrome"
   },
   "devDependencies": {
     "@types/body-parser": "catalog:node",

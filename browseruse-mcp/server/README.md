@@ -16,14 +16,14 @@ A Model Context Protocol (MCP) server that provides browser automation and web p
 ### Installation
 
 ```bash
-npm install @truenine/browseruse-server
+npm install @truenine/browseruse-mcp-server
 ```
 
 ### Usage
 
 #### As CLI Tool
 ```bash
-npx -y @truenine/browseruse-server
+npx -y @truenine/browseruse-mcp-server
 ```
 
 #### Programmatic Usage
