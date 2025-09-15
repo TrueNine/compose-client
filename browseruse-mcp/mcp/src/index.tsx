@@ -2,13 +2,14 @@
 
 import fs from 'node:fs'
 import path from 'node:path'
+import process from 'node:process'
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'
 
 // Create the MCP server
 const server = new McpServer({
-  name: 'Browser Tools MCP',
-  version: '1.2.0',
+  name: 'Browseruse MCP',
+  version: '0.0.1',
 })
 
 // Track the discovered server connection
@@ -19,9 +20,9 @@ let serverDiscovered = false
 // Function to get the default port from environment variable or default
 function getDefaultServerPort(): number {
   // Check environment variable first
-  if (process.env.BROWSER_TOOLS_PORT) {
+  if (process.env.BROWSER_TOOLS_PORT != null) {
     const envPort = Number.parseInt(process.env.BROWSER_TOOLS_PORT, 10)
-    if (!isNaN(envPort) && envPort > 0) {
+    if (!Number.isNaN(envPort) && envPort > 0) {
       return envPort
     }
   }
@@ -31,7 +32,7 @@ function getDefaultServerPort(): number {
     const portFilePath = path.join(__dirname, '.port')
     if (fs.existsSync(portFilePath)) {
       const port = Number.parseInt(fs.readFileSync(portFilePath, 'utf8').trim(), 10)
-      if (!isNaN(port) && port > 0) {
+      if (!Number.isNaN(port) && port > 0) {
         return port
       }
     }
@@ -46,7 +47,7 @@ function getDefaultServerPort(): number {
 // Function to get default server host from environment variable or default
 function getDefaultServerHost(): string {
   // Check environment variable first
-  if (process.env.BROWSER_TOOLS_HOST) {
+  if (process.env.BROWSER_TOOLS_HOST != null) {
     return process.env.BROWSER_TOOLS_HOST
   }
 

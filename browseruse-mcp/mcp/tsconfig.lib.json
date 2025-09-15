@@ -9,7 +9,7 @@
       "@/*": ["./src/*"]
     },
     "types": ["node", "chrome"],
-    "noEmit": false
+    "jsx": "react"
   },
   "include": [
     "src/**/*",
