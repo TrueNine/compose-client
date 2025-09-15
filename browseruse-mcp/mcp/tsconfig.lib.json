@@ -2,14 +2,13 @@
   "extends": ["@truenine/tsconfig/tsconfig.json"],
   "compilerOptions": {
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.lib.tsbuildinfo",
+    "jsx": "react",
     "baseUrl": ".",
     "module": "ESNext",
     "moduleResolution": "bundler",
     "paths": {
       "@/*": ["./src/*"]
-    },
-    "types": ["node", "chrome"],
-    "jsx": "react"
+    }
   },
   "include": [
     "src/**/*",
