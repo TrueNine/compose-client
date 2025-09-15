@@ -29,6 +29,7 @@
     "express": "catalog:node",
     "lighthouse": "catalog:chrome",
     "llm-cost": "catalog:mcp",
+    "pino": "catalog:node",
     "puppeteer-core": "catalog:mcp",
     "ws": "catalog:node"
   },
@@ -41,7 +42,6 @@
     "@types/cors": "catalog:node",
     "@types/express": "catalog:node",
     "@types/node": "catalog:node",
-    "@types/puppeteer-core": "catalog:mcp",
     "@types/ws": "catalog:node"
   }
 }
