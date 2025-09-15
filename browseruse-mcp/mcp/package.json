@@ -1,8 +1,8 @@
 {
-  "name": "@truenine/browseruse-mcp-server",
+  "name": "@truenine/browseruse-mcp-client",
   "type": "module",
-  "version": "0.0.3",
-  "description": "A browseruse mcp server",
+  "version": "0.0.1",
+  "description": "A browseruse mcp client",
   "author": {
     "name": "TrueNine",
     "email": "truenine304520@gmail.com"
@@ -29,10 +29,10 @@
     "chrome",
     "extension"
   ],
-  "main": "dist/BrowserConnector.cjs",
-  "types": "dist/BrowserConnector.d.cts",
+  "main": "dist/index.cjs",
+  "types": "dist/index.d.cts",
   "bin": {
-    "browseruse-mcp-server": "./dist/BrowserConnector.cjs"
+    "browseruse-mcp-client": "./dist/index.cjs"
   },
   "files": [
     "LICENSE",
