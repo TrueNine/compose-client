@@ -30,13 +30,15 @@
     "extension"
   ],
   "main": "dist/BrowserConnector.cjs",
+  "types": "dist/BrowserConnector.d.cts",
   "bin": {
     "browseruse-server": "./dist/BrowserConnector.cjs"
   },
   "files": [
     "LICENSE",
     "README.md",
-    "dist"
+    "dist",
+    "src"
   ],
   "engines": {
     "node": ">=24.8.0"
