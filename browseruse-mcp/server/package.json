@@ -1,0 +1,47 @@
+{
+  "name": "@truenine/browseruse-server",
+  "type": "module",
+  "version": "0.0.1",
+  "description": "A browseruse mcp server",
+  "author": "TrueNine",
+  "license": "LGPL-2.1-or-later",
+  "keywords": [
+    "browser",
+    "debugging",
+    "logging",
+    "screenshots",
+    "chrome",
+    "extension"
+  ],
+  "main": "dist/BrowserConnector.cjs",
+  "bin": {
+    "browseruse-server": "./dist/BrowserConnector.cjs"
+  },
+  "scripts": {
+    "lint": "eslint --fix",
+    "type-check": "tsc --noEmit -p tsconfig.lib.json",
+    "build": "tsdown"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "catalog:mcp",
+    "body-parser": "catalog:node",
+    "cors": "catalog:node",
+    "express": "catalog:node",
+    "lighthouse": "catalog:chrome",
+    "llm-cost": "catalog:mcp",
+    "puppeteer-core": "catalog:mcp",
+    "ws": "catalog:node"
+  },
+  "optionalDependencies": {
+    "chrome-launcher": "catalog:chrome"
+  },
+  "devDependencies": {
+    "@types/body-parser": "catalog:node",
+    "@types/chrome": "catalog:chrome",
+    "@types/cors": "catalog:node",
+    "@types/express": "catalog:node",
+    "@types/node": "catalog:node",
+    "@types/puppeteer-core": "catalog:mcp",
+    "@types/ws": "catalog:node"
+  }
+}
