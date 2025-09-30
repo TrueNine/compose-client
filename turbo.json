@@ -18,9 +18,16 @@
   ],
   "ui": "stream",
   "daemon": true,
+  "boundaries": {
+    "implicitDependencies": [
+      "@truenine/eslint9-config"
+    ]
+  },
   "tasks": {
     "lint": {
-      "dependsOn": [],
+      "dependsOn": [
+        "^build"
+      ],
       "inputs": [
         "src/**/*.{ts,js,vue,tsx,jsx}",
         "eslint.config.*",
@@ -31,7 +38,9 @@
       "persistent": false
     },
     "type-check": {
-      "dependsOn": [],
+      "dependsOn": [
+        "^build"
+      ],
       "inputs": [
         "src/**/*.{ts,vue,tsx}",
         "tsconfig*.json",
@@ -63,8 +72,7 @@
     "build": {
       "dependsOn": [
         "^build",
-        "type-check",
-        "lint"
+        "type-check"
       ],
       "inputs": [
         "src/**/*.{ts,js,vue,tsx,jsx,css,scss,sass}",
