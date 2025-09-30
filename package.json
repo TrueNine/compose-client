@@ -23,6 +23,19 @@
     "pnpm": ">=10.17.1",
     "trubo": ">=2.5.8"
   },
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/TrueNine"
+  },
+  "homepage": "https://github.com/TrueNine/compose-client#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TrueNine/compose-client.git",
+    "directory": "configs/eslint9"
+  },
+  "bugs": {
+    "url": "https://github.com/TrueNine/compose-client/issues"
+  },
   "scripts": {
     "build": "turbo run build --output-logs=new-only",
     "build:fast": "turbo run build --force --output-logs=new-only",
