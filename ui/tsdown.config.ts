@@ -22,7 +22,7 @@ export const e: UserConfig = defineConfig({
       imports: ['vue', '@vueuse/core'],
       dts: '.types/auto-imports.d.ts',
       eslintrc: {
-        enabled: true,
+        enabled: false,
       },
     }),
     Components({
