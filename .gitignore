@@ -6,7 +6,6 @@ yarn-debug.log*
 yarn-error.log*
 
 # ide
-.idea
 *.suo
 *.ntvs*
 *.njsproj
