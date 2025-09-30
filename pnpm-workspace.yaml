@@ -17,38 +17,38 @@ catalog:
   '@varlet/ui': ^3.11.4
   autoprefixer: ^10.4.21
   dayjs: ^1.11.18
-  element-plus: ^2.11.2
+  element-plus: ^2.11.4
   libarchive.js: ^2.0.2
   lodash-es: ^4.17.21
   npm-run-all2: ^8.0.4
   pdfjs-dist: ^5.4.149
   prettier: ^3.6.2
-  sass: ^1.92.1
-  turbo: ^2.5.6
+  sass: ^1.93.2
+  turbo: ^2.5.8
   typescript: ^5.9.2
-  unplugin-auto-import: ^20.1.0
+  unplugin-auto-import: ^20.2.0
   unplugin-fonts: ^1.4.0
-  unplugin-vue-components: ^29.0.0
+  unplugin-vue-components: ^29.1.0
   unplugin-vue-router: ^0.15.0
 
 catalogs:
   chrome:
-    '@types/chrome': ^0.1.11
-    chrome-launcher: ^1.2.0
+    '@types/chrome': ^0.1.14
+    chrome-launcher: ^1.2.1
     lighthouse: ^12.8.2
   cssnano:
     cssnano: ^7.1.1
     cssnano-preset-advanced: ^7.0.9
   eslint:
-    '@antfu/eslint-config': ^5.3.0
-    '@eslint/js': ^9.35.0
+    '@antfu/eslint-config': ^5.4.1
+    '@eslint/js': ^9.36.0
     '@vue/eslint-config-prettier': ^10.2.0
     '@vue/eslint-config-typescript': ^14.6.0
-    eslint: ^9.35.0
-    eslint-plugin-format: ^1.0.1
+    eslint: ^9.36.0
+    eslint-plugin-format: ^1.0.2
     eslint-plugin-prettier: ^5.5.4
-    eslint-plugin-vue: ^10.4.0
-    typescript-eslint: ^8.43.0
+    eslint-plugin-vue: ^10.5.0
+    typescript-eslint: ^8.45.0
   gulp:
     '@types/gulp': ^4.0.17
     '@types/gulp-autoprefixer': ^0.0.37
@@ -60,65 +60,65 @@ catalogs:
   iconify:
     '@iconify-json/ant-design': ^1.2.5
     '@iconify-json/flag': ^1.2.9
-    '@iconify-json/fluent': ^1.2.30
+    '@iconify-json/fluent': ^1.2.32
     '@iconify-json/ion': ^1.2.6
     '@iconify-json/mdi': ^1.2.3
-    '@iconify-json/simple-icons': ^1.2.52
+    '@iconify-json/simple-icons': ^1.2.53
   mcp:
-    '@modelcontextprotocol/sdk': ^1.18.0
+    '@modelcontextprotocol/sdk': ^1.18.2
     llm-cost: ^1.0.5
-    puppeteer-core: ^24.20.0
+    puppeteer-core: ^24.22.3
   node:
     '@types/body-parser': ^1.19.6
     '@types/cors': ^2.8.19
     '@types/express': ^5.0.3
-    '@types/node': ^24.4.0
+    '@types/node': ^24.6.0
     '@types/ws': ^8.18.1
     body-parser: ^2.2.0
     cors: ^2.8.5
     express: ^5.1.0
-    pino: ^9.9.5
+    pino: ^9.12.0
     ws: ^8.18.3
   rollup:
-    rollup: ^4.50.1
+    rollup: ^4.52.3
   tsdown:
-    tsdown: ^0.15.1
+    tsdown: ^0.15.6
     unplugin-vue-jsx: ^0.6.1
   types:
     '@types/lodash-es': ^4.17.12
   unocss:
-    '@unocss/cli': ^66.5.1
-    '@unocss/eslint-config': ^66.5.1
-    '@unocss/postcss': ^66.5.1
-    '@unocss/transformer-attributify-jsx': ^66.5.1
-    '@unocss/transformer-compile-class': ^66.5.1
-    unocss: ^66.5.1
+    '@unocss/cli': ^66.5.2
+    '@unocss/eslint-config': ^66.5.2
+    '@unocss/postcss': ^66.5.2
+    '@unocss/transformer-attributify-jsx': ^66.5.2
+    '@unocss/transformer-compile-class': ^66.5.2
+    unocss: ^66.5.2
   vee-validate:
     '@vee-validate/yup': ^4.15.1
     '@vee-validate/zod': ^4.15.1
     vee-validate: ^4.15.1
-    yup: ^1.7.0
-    zod: ^4.1.8
+    yup: ^1.7.1
+    zod: ^4.1.11
   vite:
     '@vitejs/plugin-vue': ^6.0.1
     '@vitejs/plugin-vue-jsx': ^5.1.1
-    vite: ^7.1.5
+    vite: ^7.1.7
     vite-plugin-dts: ^4.5.4
     vite-plugin-vue-devtools: ^8.0.2
   vitest:
-    '@types/jsdom': ^21.1.7
-    happy-dom: ^18.0.1
+    '@types/jsdom': ^27.0.0
+    happy-dom: ^19.0.2
     jsdom: ^27.0.0
     vitest: ^3.2.4
   vue:
     '@vue/test-utils': ^2.4.6
     '@vue/tsconfig': ^0.8.1
-    vue: ^3.5.21
+    vue: ^3.5.22
     vue-router: ^4.5.1
-    vue-tsc: ^3.0.7
+    vue-tsc: ^3.1.0
   vuetify:
     '@mdi/font': ^7.4.47
     vite-plugin-vuetify: ^2.1.2
-    vuetify: ^3.10.0
+    vuetify: ^3.10.3
   vueuse:
     '@vueuse/core': ^13.9.0
