@@ -1,5 +1,0 @@
-- [ ] pino 关于 node 的日志模块抽离
-- [ ] pino 彩色日志
-- [ ] 深度测试 mcp 以及 mcp server
-- [ ] 集成 chrome extension 集成
-- [ ] 优化 `CLAUDE.locale.md` 中的提示词
