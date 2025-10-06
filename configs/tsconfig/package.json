@@ -1,6 +1,6 @@
 {
   "name": "@truenine/tsconfig",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "TypeScript configuration for compose projects",
   "author": "TrueNine",
   "license": "LGPL-2.1-or-later",
