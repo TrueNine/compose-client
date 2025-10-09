@@ -112,7 +112,7 @@
     "sass": "catalog:",
     "unplugin-auto-import": "catalog:",
     "unplugin-fonts": "catalog:",
-    "unplugin-vue": "^7.0.1",
+    "unplugin-vue": "catalog:tsdown",
     "unplugin-vue-components": "catalog:",
     "unplugin-vue-router": "catalog:",
     "vite-plugin-vue-devtools": "catalog:vite",
