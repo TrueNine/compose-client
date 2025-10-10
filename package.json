@@ -56,6 +56,7 @@
     "postinstall": "pnpm turbo build --no-daemon"
   },
   "devDependencies": {
+    "@truenine/toolchain-versions-catalogs-versions": "workspace:^",
     "@antfu/eslint-config": "catalog:eslint",
     "@changesets/cli": "catalog:",
     "@truenine/eslint9-config": "workspace:^",

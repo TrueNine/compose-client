@@ -1,0 +1,38 @@
+{
+  "name": "@truenine/toolchain-versions-catalogs-versions",
+  "version": "0.0.1",
+  "description": "toolchain-versions-catalogs-versions",
+  "author": "TrueNine",
+  "license": "LGPL-2.1-or-later",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./package.json",
+      "import": "./package.json",
+      "require": "./package.json"
+    },
+    "./*": "./*",
+    "./package.json": "./package.json"
+  },
+  "main": "package.json",
+  "files": [
+    "*.json",
+    "package.json"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "echo 'No build needed for tsconfig package'"
+  },
+  "peerDependencies": {
+    "npm": "catalog:",
+    "yarn": "catalog:",
+    "pnpm": "catalog:"
+  },
+  "devDependencies": {
+    "@tsconfig/node22": "catalog:",
+    "@types/node": "catalog:node",
+    "@vue/tsconfig": "catalog:vue"
+  }
+}
