@@ -2,7 +2,7 @@
   "name": "compose-client",
   "type": "module",
   "version": "1.0.9",
-  "packageManager": "pnpm@10.18.1",
+  "packageManager": "pnpm@10.18.2",
   "description": "yan100 dev kit",
   "author": "TrueNine",
   "license": "LGPL-2.1-or-later",
@@ -19,8 +19,8 @@
     "wxpa"
   ],
   "engines": {
-    "node": ">=24.9.0",
-    "pnpm": ">=10.18.1",
+    "node": ">=24.10.0",
+    "pnpm": ">=10.18.2",
     "npm": ">=10.6.2",
     "trubo": ">=2.5.8"
   },
