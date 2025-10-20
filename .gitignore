@@ -43,5 +43,6 @@ vite.config.ts.timestamp**
 .eslintcache
 /.mcp.json
 .claude
+.factory
 CLAUDE.md
 AGENTS.md
