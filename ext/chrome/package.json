@@ -27,5 +27,8 @@
   "devDependencies": {
     "@truenine/types": "workspace:^",
     "@types/chrome": "catalog:chrome"
+  },
+  "dependencies": {
+    "typescript": "catalog:"
   }
 }

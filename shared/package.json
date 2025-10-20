@@ -37,6 +37,7 @@
     "@truenine/types": "workspace:^"
   },
   "dependencies": {
-    "@truenine/types": "workspace:^"
+    "@truenine/types": "workspace:^",
+    "typescript": "catalog:"
   }
 }

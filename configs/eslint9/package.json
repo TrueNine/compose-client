@@ -94,6 +94,7 @@
     "eslint-plugin-prettier": "catalog:eslint",
     "eslint-plugin-vue": "catalog:eslint",
     "prettier": "catalog:",
+    "typescript": "catalog:",
     "typescript-eslint": "catalog:eslint"
   }
 }

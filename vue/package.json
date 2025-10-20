@@ -37,6 +37,7 @@
   },
   "dependencies": {
     "@truenine/types": "workspace:^",
+    "typescript": "catalog:",
     "vue": "catalog:vue"
   }
 }

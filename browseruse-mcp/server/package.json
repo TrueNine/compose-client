@@ -64,6 +64,7 @@
     "llm-cost": "catalog:mcp",
     "pino": "catalog:node",
     "puppeteer-core": "catalog:mcp",
+    "typescript": "catalog:",
     "ws": "catalog:node"
   },
   "devDependencies": {

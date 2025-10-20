@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "@truenine/external": "workspace:^",
-    "@truenine/types": "workspace:^"
+    "@truenine/types": "workspace:^",
+    "typescript": "catalog:"
   }
 }
