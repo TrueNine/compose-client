@@ -1,24 +1,65 @@
 {
-  "files.watcherExclude": {
-    "**/.idea": true,
-    "**/routeTree.gen.ts": true
+  "editor.rulers": [
+    2,
+    4,
+    80,
+    160
+  ],
+  "explorer.excludeGitIgnore": false,
+  "files.exclude": {
+    "**/character": true,
+    "**/books": true,
+    "**/countries": true,
+    "**/.playwright-mcp": true,
+    "**/pnpm-lock.yaml": true
   },
   "search.exclude": {
-    "**/.idea": true,
-    "**/routeTree.gen.ts": true
-  },
-  "files.readonlyInclude": {
-    "**/.idea": true,
-    "**/routeTree.gen.ts": true
+    "**/.gradle": true,
+    "**/books": true,
+    "**/countries": true,
+    "**/.obsidian": true,
+    "**/character": true,
+    "**/build": true
   },
   "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.expand": false,
   "explorer.fileNesting.patterns": {
-    "tsconfig.json": "tsconfig.*.json, env.d.ts",
-    "vite.config.*": "jsconfig*, vitest.config.*, cypress.config.*, playwright.config.*",
-    "package.json": "package-lock.json, pnpm*, .yarnrc*, yarn*, .eslint*, eslint*, .oxlint*, oxlint*, .prettier*, prettier*, .editorconfig"
+    "build.gradle.kts": "settings.gradle.kts, gradlew, gradlew.bat, gradle.properties",
+    "tsconfig.json": "tsconfig.*.json, tsconfig.tsbuildinfo, tsconfig.*.tsbuildinfo",
+    "vite.config.ts": "vitest.config.ts, env.d.ts",
+    "README.md": "LICENSE, TODO.md, .editorconfig, CODEBUDDY.md, .gitignore, .gitattributes",
+    ".gitignore": "LICENSE, TODO.md, .editorconfig, CODEBUDDY.md, .gitattributes",
+    ".env.example": ".env, .env.*",
+    "AGENTS.md": "CLAUDE.md"
   },
-  "editor.codeActionsOnSave": {
-    "source.fixAll": "explicit"
+  "[markdown]": {
+    "editor.wordWrap": "off"
   },
-  "claudeCodeChat.permissions.yoloMode": true
+  "workbench.sideBar.location": "left",
+  "workbench.colorCustomizations": {
+    "editorGroup.border": "#2273c3",
+    "editorGroup.dropBackground": "#2273c333",
+    "focusBorder": "#2273c3",
+    "tab.activeBorder": "#2273c3",
+    "tab.activeBorderTop": "#2273c3",
+    "editorGroupHeader.tabsBorder": "#2273c3",
+    "panel.border": "#2273c3",
+    "sideBar.border": "#2273c3",
+    "editor.lineHighlightBorder": "#2273c3",
+    "activityBar.activeBorder": "#2273c3",
+    "titleBar.activeBackground": "#2273c3",
+    "titleBar.activeForeground": "#ffffff",
+    "titleBar.inactiveBackground": "#1c5ea0",
+    "titleBar.inactiveForeground": "#a8ccf0",
+    "titleBar.border": "#2273c3",
+    "editor.background": "#081a2b",
+    "sideBar.background": "#081a2b",
+    "activityBar.background": "#081a2b",
+    "panel.background": "#081a2b",
+    "editorGutter.background": "#081a2b",
+    "statusBar.background": "#2273c3",
+    "statusBar.foreground": "#ffffff",
+    "editorGroupHeader.tabsBackground": "#081a2b",
+    "tab.inactiveBackground": "#081a2b"
+  }
 }
