@@ -46,3 +46,6 @@ vite.config.ts.timestamp**
 .factory
 CLAUDE.md
 AGENTS.md
+.cursor/
+.qoder/
+.codebuddy/
