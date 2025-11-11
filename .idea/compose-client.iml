@@ -28,6 +28,8 @@
       <excludeFolder url="file://$MODULE_DIR$/ui/.turbo" />
       <excludeFolder url="file://$MODULE_DIR$/ui/.types" />
       <excludeFolder url="file://$MODULE_DIR$/vue/.turbo" />
+      <excludeFolder url="file://$MODULE_DIR$/.codebuddy" />
+      <excludeFolder url="file://$MODULE_DIR$/.qoder" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
