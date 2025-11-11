@@ -1,7 +1,7 @@
 {
   "name": "@truenine/config-uno",
   "type": "module",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "uno css code snippets",
   "author": "TrueNine",
   "license": "LGPL-2.1-or-later",
