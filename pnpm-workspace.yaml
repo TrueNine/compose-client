@@ -23,10 +23,10 @@ catalog:
   npm: ^11.6.2
   npm-run-all2: ^8.0.4
   pdfjs-dist: ^5.4.296
-  pnpm: ^10.18.2
+  pnpm: ^10.21.0
   prettier: ^3.6.2
   sass: ^1.93.2
-  turbo: ^2.5.8
+  turbo: ^2.6.1
   typescript: ^5.9.3
   unplugin-auto-import: ^20.2.0
   unplugin-fonts: ^1.4.0
