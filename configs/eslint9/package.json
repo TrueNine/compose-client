@@ -73,6 +73,7 @@
   "peerDependencies": {
     "@antfu/eslint-config": "catalog:eslint",
     "@eslint/js": "catalog:eslint",
+    "@next/eslint-plugin-next": "catalog:eslint",
     "@unocss/eslint-config": "catalog:unocss",
     "@vue/eslint-config-prettier": "catalog:eslint",
     "@vue/eslint-config-typescript": "catalog:eslint",
@@ -86,6 +87,7 @@
   "dependencies": {
     "@antfu/eslint-config": "catalog:eslint",
     "@eslint/js": "catalog:eslint",
+    "@next/eslint-plugin-next": "catalog:eslint",
     "@unocss/eslint-config": "catalog:unocss",
     "@vue/eslint-config-prettier": "catalog:eslint",
     "@vue/eslint-config-typescript": "catalog:eslint",

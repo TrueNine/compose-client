@@ -197,11 +197,11 @@ export const defaultTestConfig: AntFuTestConfig = {
  */
 export function mergeWithDefaults<T extends object>(
   value?: boolean | T | null,
-  defaults?: T
+  defaults?: T,
 ): T
 export function mergeWithDefaults<T extends object>(
   value?: boolean | T | null,
-  defaults?: boolean
+  defaults?: boolean,
 ): boolean | T
 export function mergeWithDefaults<T extends object>(
   value?: boolean | T | null,

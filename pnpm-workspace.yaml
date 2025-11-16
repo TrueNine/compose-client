@@ -13,17 +13,18 @@ packages:
 catalog:
   '@changesets/cli': ^2.29.7
   '@date-io/dayjs': ^3.2.0
-  '@tsconfig/node22': ^22.0.2
+  '@next/eslint-plugin-next': ^16.0.3
+  '@tsconfig/node22': ^22.0.4
   '@varlet/ui': ^3.12.1
   autoprefixer: ^10.4.22
   dayjs: ^1.11.19
-  element-plus: ^2.11.7
+  element-plus: ^2.11.8
   libarchive.js: ^2.0.2
   lodash-es: ^4.17.21
   npm: ^11.6.2
   npm-run-all2: ^8.0.4
   pdfjs-dist: ^5.4.394
-  pnpm: ^10.21.0
+  pnpm: ^10.22.0
   prettier: ^3.6.2
   sass: ^1.94.0
   turbo: ^2.6.1
@@ -31,18 +32,19 @@ catalog:
   unplugin-auto-import: ^20.2.0
   unplugin-fonts: ^1.4.0
   unplugin-vue-components: ^30.0.0
-  unplugin-vue-router: ^0.16.1
+  unplugin-vue-router: ^0.17.0
   yarn: ^1.22.22
 
 catalogs:
   chrome:
-    '@types/chrome': ^0.1.27
+    '@types/chrome': ^0.1.29
     chrome-launcher: ^1.2.1
     lighthouse: ^13.0.1
   cssnano:
     cssnano: ^7.1.2
     cssnano-preset-advanced: ^7.0.10
   eslint:
+    '@next/eslint-plugin-next': ^16.0.3
     '@antfu/eslint-config': ^6.2.0
     '@eslint/js': ^9.39.1
     '@vue/eslint-config-prettier': ^10.2.0
@@ -68,14 +70,14 @@ catalogs:
     '@iconify-json/mdi': ^1.2.3
     '@iconify-json/simple-icons': ^1.2.58
   mcp:
-    '@modelcontextprotocol/sdk': ^1.21.1
+    '@modelcontextprotocol/sdk': ^1.22.0
     llm-cost: ^1.0.5
-    puppeteer-core: ^24.29.1
+    puppeteer-core: ^24.30.0
   node:
     '@types/body-parser': ^1.19.6
     '@types/cors': ^2.8.19
     '@types/express': ^5.0.5
-    '@types/node': ^24.10.0
+    '@types/node': ^24.10.1
     '@types/ws': ^8.18.1
     body-parser: ^2.2.0
     cors: ^2.8.5
@@ -85,8 +87,8 @@ catalogs:
   rollup:
     rollup: ^4.53.2
   tsdown:
-    tsdown: ^0.16.2
-    unplugin-vue: ^7.0.4
+    tsdown: ^0.16.4
+    unplugin-vue: ^7.0.7
     unplugin-vue-jsx: ^0.6.1
   types:
     '@types/lodash-es': ^4.17.12
@@ -112,17 +114,39 @@ catalogs:
   vitest:
     '@types/jsdom': ^27.0.0
     happy-dom: ^20.0.10
-    jsdom: ^27.1.0
-    vitest: ^4.0.8
+    jsdom: ^27.2.0
+    vitest: ^4.0.9
   vue:
     '@vue/test-utils': ^2.4.6
     '@vue/tsconfig': ^0.8.1
     vue: ^3.5.24
     vue-router: ^4.6.3
-    vue-tsc: ^3.1.3
+    vue-tsc: ^3.1.4
   vuetify:
     '@mdi/font': ^7.4.47
     vite-plugin-vuetify: ^2.1.2
-    vuetify: ^3.10.10
+    vuetify: ^3.10.11
   vueuse:
     '@vueuse/core': ^14.0.0
+  conflicts_@next/eslint-plugin-next_h16_0_:
+    '@next/eslint-plugin-next': ^16.0.
+  conflicts_@next/eslint-plugin-next_h16_0:
+    '@next/eslint-plugin-next': ^16.0
+  conflicts_@next/eslint-plugin-next_h16:
+    '@next/eslint-plugin-next': ^16
+  conflicts_@next/eslint-plugin-next_h:
+    '@next/eslint-plugin-next': ^
+  conflicts_@next/eslint-plugin-next_:
+    '@next/eslint-plugin-next': ''
+  conflicts_@next/eslint-plugin-next_ca:
+    '@next/eslint-plugin-next': ca
+  conflicts_@next/eslint-plugin-next_ca't:
+    '@next/eslint-plugin-next': ca't
+  conflicts_@next/eslint-plugin-next_cata:
+    '@next/eslint-plugin-next': cata
+  conflicts_@next/eslint-plugin-next_catalo:
+    '@next/eslint-plugin-next': catalo
+  conflicts_@next/eslint-plugin-next_ca'ta'lo'g:
+    '@next/eslint-plugin-next': ca'ta'lo'g
+  conflicts_@next/eslint-plugin-next_catalog:
+    '@next/eslint-plugin-next': catalog
