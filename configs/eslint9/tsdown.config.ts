@@ -5,7 +5,7 @@ export default defineConfig({
   platform: 'neutral',
   sourcemap: true,
   unbundle: true,
-  format: ['esm'],
+  format: ['esm', 'cjs'],
   dts: {
     sourcemap: true,
     tsconfig: './tsconfig.lib.json',

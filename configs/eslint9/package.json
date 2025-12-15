@@ -1,7 +1,7 @@
 {
   "name": "@truenine/eslint9-config",
   "type": "module",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "description": "ESLint 9 configuration package for Compose Client projects with TypeScript, Vue, and modern JavaScript support",
   "author": {
     "name": "TrueNine",
@@ -48,9 +48,6 @@
     "README.md",
     "dist"
   ],
-  "engines": {
-    "node": ">=18.0.0"
-  },
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/",
