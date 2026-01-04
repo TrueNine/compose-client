@@ -8,6 +8,28 @@
       <excludeFolder url="file://$MODULE_DIR$/.claude" />
       <excludeFolder url="file://$MODULE_DIR$/.turbo" />
       <excludeFolder url="file://$MODULE_DIR$/.vscode" />
+      <excludeFolder url="file://$MODULE_DIR$/.cursor" />
+      <excludeFolder url="file://$MODULE_DIR$/.factory" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/inspectionProfiles" />
+      <excludeFolder url="file://$MODULE_DIR$/browseruse-mcp/mcp/.turbo" />
+      <excludeFolder url="file://$MODULE_DIR$/browseruse-mcp/server/.turbo" />
+      <excludeFolder url="file://$MODULE_DIR$/configs/eslint9/.turbo" />
+      <excludeFolder url="file://$MODULE_DIR$/configs/toolchain-versions-catalogs-versions/.turbo" />
+      <excludeFolder url="file://$MODULE_DIR$/configs/tsconfig/.turbo" />
+      <excludeFolder url="file://$MODULE_DIR$/configs/uno/.turbo" />
+      <excludeFolder url="file://$MODULE_DIR$/configs/vite/.turbo" />
+      <excludeFolder url="file://$MODULE_DIR$/ext/chrome/.turbo" />
+      <excludeFolder url="file://$MODULE_DIR$/external/.turbo" />
+      <excludeFolder url="file://$MODULE_DIR$/psdk/tmap/.turbo" />
+      <excludeFolder url="file://$MODULE_DIR$/psdk/wxpa/.turbo" />
+      <excludeFolder url="file://$MODULE_DIR$/req/.turbo" />
+      <excludeFolder url="file://$MODULE_DIR$/shared/.turbo" />
+      <excludeFolder url="file://$MODULE_DIR$/types/.turbo" />
+      <excludeFolder url="file://$MODULE_DIR$/ui/.turbo" />
+      <excludeFolder url="file://$MODULE_DIR$/ui/.types" />
+      <excludeFolder url="file://$MODULE_DIR$/vue/.turbo" />
+      <excludeFolder url="file://$MODULE_DIR$/.codebuddy" />
+      <excludeFolder url="file://$MODULE_DIR$/.qoder" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

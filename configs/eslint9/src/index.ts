@@ -9,6 +9,8 @@ export interface ConfigOptions {
   test?: boolean | AntFuTestConfig
   ignores?: string[]
   jsx?: boolean
+  nextjs?: boolean
+  react?: boolean
   vue?: boolean | AntFuVueConfig
   formatters?: boolean | AntFuFormatterConfig
   javascript?: AntFuJsConfig
@@ -26,6 +28,8 @@ export default async function eslint9(options: ConfigOptions = {}): Promise<Retu
     type = 'lib',
     ignores = [],
     test = true,
+    nextjs = false,
+    react = false,
     unocss = false,
     vue = false,
     jsx = false,
@@ -72,6 +76,8 @@ export default async function eslint9(options: ConfigOptions = {}): Promise<Retu
     test: _test,
     unocss: _unocss,
     vue: _vue,
+    nextjs,
+    react,
     jsx,
     typescript: _typescript,
     javascript: _javascript,

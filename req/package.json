@@ -27,7 +27,8 @@
   },
   "dependencies": {
     "@truenine/shared": "workspace:^",
-    "@truenine/types": "workspace:^"
+    "@truenine/types": "workspace:^",
+    "typescript": "catalog:"
   },
   "devDependencies": {
     "@types/jsdom": "catalog:vitest",

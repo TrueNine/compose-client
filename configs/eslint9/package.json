@@ -1,7 +1,7 @@
 {
   "name": "@truenine/eslint9-config",
   "type": "module",
-  "version": "1.0.17",
+  "version": "1.0.20",
   "description": "ESLint 9 configuration package for Compose Client projects with TypeScript, Vue, and modern JavaScript support",
   "author": {
     "name": "TrueNine",
@@ -48,9 +48,6 @@
     "README.md",
     "dist"
   ],
-  "engines": {
-    "node": ">=18.0.0"
-  },
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/",
@@ -73,6 +70,7 @@
   "peerDependencies": {
     "@antfu/eslint-config": "catalog:eslint",
     "@eslint/js": "catalog:eslint",
+    "@next/eslint-plugin-next": "catalog:eslint",
     "@unocss/eslint-config": "catalog:unocss",
     "@vue/eslint-config-prettier": "catalog:eslint",
     "@vue/eslint-config-typescript": "catalog:eslint",
@@ -86,6 +84,7 @@
   "dependencies": {
     "@antfu/eslint-config": "catalog:eslint",
     "@eslint/js": "catalog:eslint",
+    "@next/eslint-plugin-next": "catalog:eslint",
     "@unocss/eslint-config": "catalog:unocss",
     "@vue/eslint-config-prettier": "catalog:eslint",
     "@vue/eslint-config-typescript": "catalog:eslint",
@@ -94,6 +93,7 @@
     "eslint-plugin-prettier": "catalog:eslint",
     "eslint-plugin-vue": "catalog:eslint",
     "prettier": "catalog:",
+    "typescript": "catalog:",
     "typescript-eslint": "catalog:eslint"
   }
 }

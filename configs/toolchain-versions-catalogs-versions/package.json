@@ -27,12 +27,15 @@
   },
   "peerDependencies": {
     "npm": "catalog:",
-    "yarn": "catalog:",
-    "pnpm": "catalog:"
+    "pnpm": "catalog:",
+    "yarn": "catalog:"
   },
   "devDependencies": {
     "@tsconfig/node22": "catalog:",
     "@types/node": "catalog:node",
     "@vue/tsconfig": "catalog:vue"
+  },
+  "dependencies": {
+    "typescript": "catalog:"
   }
 }
