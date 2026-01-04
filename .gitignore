@@ -32,6 +32,8 @@ vite.config.ts.timestamp**
 
 ### AI Coding ###
 .cursorrules
+.qoderignore
+.warpindexignore
 /.cursor/
 .cursorignore
 /.lingma/
@@ -40,8 +42,13 @@ vite.config.ts.timestamp**
 .turbo
 
 ### AI Coding ###
+.factory/
+.skills/
+.windsurf/
 .eslintcache
 /.mcp.json
 .claude
 CLAUDE.md
 AGENTS.md
+GEMINI.md
+WARP.md
