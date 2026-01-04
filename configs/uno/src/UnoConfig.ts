@@ -1,7 +1,6 @@
 import type { UserConfig } from 'unocss'
 import type { ThemeConfig } from './Theme'
-import transformerCompileClass from '@unocss/transformer-compile-class'
-import { defineConfig, presetIcons, presetMini, presetWind3, presetWind4 } from 'unocss'
+import { defineConfig, presetIcons, presetMini, presetWind3, presetWind4, transformerCompileClass } from 'unocss'
 
 import { breakpoints } from './Breakpoints'
 import { unoRules } from './Rules'

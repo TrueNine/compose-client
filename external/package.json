@@ -78,6 +78,9 @@
     "vue": "catalog:vue",
     "vue-router": "catalog:vue"
   },
+  "dependencies": {
+    "typescript": "catalog:"
+  },
   "devDependencies": {
     "@edge-runtime/vm": "^5.0.0",
     "@truenine/config-vite": "workspace:^",
@@ -91,8 +94,5 @@
     "pdfjs-dist": "catalog:",
     "vue": "catalog:vue",
     "vue-router": "catalog:vue"
-  },
-  "dependencies": {
-    "typescript": "catalog:"
   }
 }
