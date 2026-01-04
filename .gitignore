@@ -24,7 +24,10 @@ vitest.config.ts.**
 # vscode check depd files
 target/
 .agent/
-dist
+.kiro/
+.idea/
+.vscode/
+dist/
 
 ### 某些临时文件
 vite.config.ts.timestamp**
