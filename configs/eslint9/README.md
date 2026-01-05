@@ -1,31 +1,31 @@
-# ESLint 9 配置包
+# ESLint 9 Configuration Package
 
-这是一个针对 Compose Client 项目优化的 ESLint 9 配置包，提供了缓存优化、性能调优和规则优化功能。
+An ESLint 9 configuration package optimised for Compose Client projects, providing cache optimisation, performance tuning, and rule optimisation features.
 
-## 功能特性
+## Features
 
-### 🚀 性能优化
-- **智能缓存**: 支持 metadata 和 content 两种缓存策略
-- **并行处理**: 自动利用多核 CPU 进行并行检查
-- **规则优化**: 可选择跳过性能影响大的规则
-- **渐进式检查**: 优先检查关键文件
+### 🚀 Performance Optimisation
+- **Smart Caching**: Supports metadata and content caching strategies
+- **Parallel Processing**: Automatically utilises multi-core CPUs for parallel linting
+- **Rule Optimisation**: Optionally skip performance-heavy rules
+- **Progressive Checking**: Prioritise critical files
 
-### 📋 预设配置
-- **performance**: 性能优先，适用于大型项目或 CI 环境
-- **quality**: 质量优先，适用于小型项目或开发环境
-- **balanced**: 平衡配置，默认推荐
-- **ci**: CI 环境专用配置
-- **dev**: 开发环境友好配置
-- **library**: 库项目严格配置
+### 📋 Presets
+- **performance**: Performance-first, for large projects or CI environments
+- **quality**: Quality-first, for small projects or development environments
+- **balanced**: Balanced configuration, recommended default
+- **ci**: CI environment specific configuration
+- **dev**: Development-friendly configuration
+- **library**: Strict configuration for library projects
 
-### 🎯 智能忽略
-- 自动忽略构建产物、缓存目录、压缩文件等
-- 可配置的关键文件优先检查
-- 支持自定义忽略模式
+### 🎯 Smart Ignoring
+- Auto-ignore build artifacts, cache directories, minified files, etc.
+- Configurable critical file priority checking
+- Custom ignore pattern support
 
-## 使用方法
+## Usage
 
-### 基础用法
+### Basic Usage
 
 ```javascript
 // eslint.config.mjs
@@ -40,7 +40,7 @@ export default eslint9({
 })
 ```
 
-### 使用预设配置
+### Using Presets
 
 ```javascript
 // eslint.config.mjs
@@ -52,12 +52,12 @@ export default eslint9({
     strictTypescriptEslint: true,
     tsconfigPath: './tsconfig.json',
   },
-  // 使用平衡预设
+  // Use balanced preset
   ...applyPreset('balanced'),
 })
 ```
 
-### 自定义配置
+### Custom Configuration
 
 ```javascript
 // eslint.config.mjs
@@ -70,17 +70,17 @@ export default eslint9({
     strictTypescriptEslint: true,
     tsconfigPath: './tsconfig.json',
   },
-  // 自定义缓存配置
+  // Custom cache configuration
   cache: {
     location: '.eslintcache',
     strategy: 'metadata',
   },
-  // 性能优化配置
+  // Performance optimisation configuration
   performance: {
     parallel: true,
     skipExpensiveRules: false,
   },
-  // 规则优化配置
+  // Rule optimisation configuration
   ruleOptimization: {
     progressive: true,
     criticalFirst: true,
@@ -92,88 +92,88 @@ export default eslint9({
 })
 ```
 
-## 配置选项
+## Configuration Options
 
-### 缓存配置 (cache)
+### Cache Configuration (cache)
 
 ```typescript
 cache?: boolean | {
-  /** 缓存位置，默认为 .eslintcache */
+  /** Cache location, defaults to .eslintcache */
   location?: string
-  /** 缓存策略，默认为 metadata */
+  /** Cache strategy, defaults to metadata */
   strategy?: 'metadata' | 'content'
 }
 ```
 
-### 性能配置 (performance)
+### Performance Configuration (performance)
 
 ```typescript
 performance?: {
-  /** 启用并行处理，默认为 true */
+  /** Enable parallel processing, defaults to true */
   parallel?: boolean
-  /** 最大并行数，默认为 CPU 核心数 */
+  /** Max parallel count, defaults to CPU core count */
   maxParallel?: number
-  /** 忽略性能影响大的规则 */
+  /** Skip performance-heavy rules */
   skipExpensiveRules?: boolean
 }
 ```
 
-### 规则优化配置 (ruleOptimization)
+### Rule Optimisation Configuration (ruleOptimization)
 
 ```typescript
 ruleOptimization?: {
-  /** 是否启用渐进式检查 */
+  /** Enable progressive checking */
   progressive?: boolean
-  /** 关键文件优先检查 */
+  /** Critical files first */
   criticalFirst?: boolean
-  /** 跳过性能影响大的规则 */
+  /** Skip performance-heavy rules */
   skipExpensive?: boolean
-  /** 自定义规则覆盖 */
+  /** Custom rule overrides */
   customOverrides?: Record<string, string>
 }
 ```
 
-## 预设配置详情
+## Preset Details
 
-### Performance 预设
-适用于大型项目或 CI 环境，优先考虑检查速度：
-- 启用 metadata 缓存策略
-- 跳过性能影响大的规则
-- 启用渐进式检查
+### Performance Preset
+For large projects or CI environments, prioritising check speed:
+- Metadata caching strategy enabled
+- Skip performance-heavy rules
+- Progressive checking enabled
 
-### Quality 预设
-适用于小型项目或开发环境，优先考虑代码质量：
-- 启用 content 缓存策略
-- 保留所有质量检查规则
-- 严格的错误级别
+### Quality Preset
+For small projects or development environments, prioritising code quality:
+- Content caching strategy enabled
+- All quality check rules retained
+- Strict error levels
 
-### Balanced 预设
-默认推荐配置，平衡性能和质量：
-- metadata 缓存策略
-- 适中的规则严格程度
-- 启用关键文件优先检查
+### Balanced Preset
+Recommended default, balancing performance and quality:
+- Metadata caching strategy
+- Moderate rule strictness
+- Critical file priority checking enabled
 
-### CI 预设
-专为持续集成环境优化：
-- 跳过耗时规则
-- 只保留关键错误检查
-- 忽略测试文件
+### CI Preset
+Optimised for continuous integration environments:
+- Skip time-consuming rules
+- Only critical error checks retained
+- Test files ignored
 
-### Dev 预设
-开发环境友好配置：
-- 更宽松的规则设置
-- 允许 console 和 debugger
-- 警告级别而非错误级别
+### Dev Preset
+Development-friendly configuration:
+- More lenient rule settings
+- console and debugger allowed
+- Warning level instead of error level
 
-### Library 预设
-适用于开源库或组件库：
-- 最严格的规则设置
-- 要求完整的类型注解
-- 强制文档注释
+### Library Preset
+For open-source libraries or component libraries:
+- Strictest rule settings
+- Complete type annotations required
+- Documentation comments enforced
 
-## 性能优化建议
+## Performance Optimisation Tips
 
-### 1. 启用缓存
+### 1. Enable Caching
 ```bash
 # package.json
 {
@@ -183,13 +183,13 @@ ruleOptimization?: {
 }
 ```
 
-### 2. 使用合适的预设
-- 开发环境使用 `dev` 预设
-- CI 环境使用 `ci` 预设
-- 生产库使用 `library` 预设
+### 2. Use Appropriate Presets
+- Use `dev` preset for development
+- Use `ci` preset for CI environments
+- Use `library` preset for production libraries
 
-### 3. 配置忽略模式
-确保 `.eslintignore` 或配置中包含不需要检查的文件：
+### 3. Configure Ignore Patterns
+Ensure `.eslintignore` or config includes files that don't need checking:
 ```
 dist/
 build/
@@ -199,8 +199,8 @@ node_modules/
 *.min.js
 ```
 
-### 4. 渐进式检查
-对于大型项目，启用渐进式检查：
+### 4. Progressive Checking
+For large projects, enable progressive checking:
 ```javascript
 ruleOptimization: {
   progressive: true,
@@ -208,22 +208,22 @@ ruleOptimization: {
 }
 ```
 
-## 故障排除
+## Troubleshooting
 
-### 缓存问题
-如果遇到缓存相关问题，可以清理缓存：
+### Cache Issues
+If encountering cache-related issues, clear the cache:
 ```bash
 rm -rf .eslintcache
 ```
 
-### 性能问题
-如果检查速度过慢，可以：
-1. 启用 `skipExpensiveRules` 选项
-2. 使用 `performance` 预设
-3. 增加忽略模式
+### Performance Issues
+If checking is too slow:
+1. Enable `skipExpensiveRules` option
+2. Use `performance` preset
+3. Add more ignore patterns
 
-### 规则冲突
-如果遇到规则冲突，可以通过 `customOverrides` 覆盖：
+### Rule Conflicts
+If encountering rule conflicts, override via `customOverrides`:
 ```javascript
 ruleOptimization: {
   customOverrides: {
@@ -232,10 +232,10 @@ ruleOptimization: {
 }
 ```
 
-## 更新日志
+## Changelog
 
 ### v1.0.0
-- 初始版本
-- 支持缓存优化
-- 提供预设配置
-- 集成规则优化器
+- Initial release
+- Cache optimisation support
+- Preset configurations provided
+- Rule optimiser integrated
