@@ -1,22 +1,27 @@
 import type { OptionsTypeScriptParserOptions } from '@antfu/eslint-config'
-import type { AntFuFormatterConfig, AntFuJsConfig, AntFuStrictTsConfig, AntFuStylisticConfig, AntFuTestConfig, AntFuTsConfig, AntFuUnocssConfig, AntFuVueConfig } from './types/index'
+import type { AntFuConfig, AntFuStrictTsConfig, AntFuTsConfig } from './types'
 import { antfu } from '@antfu/eslint-config'
-import { defaultFormatterConfig, defaultJsConfig, defaultStrictTsConfig, defaultStylisticConfig, defaultTestConfig, defaultTsConfig, defaultUnocssConfig, defaultVueConfig, mergeWithDefaults } from './defaults/index'
+import {
+  defaultFormatterConfig,
+  defaultJsConfig,
+  defaultStrictTsConfig,
+  defaultStylisticConfig,
+  defaultTestConfig,
+  defaultTsConfig,
+  defaultUnocssConfig,
+  defaultVueConfig,
+} from './defaults'
+import { mergeWithDefaults } from './utils'
 
-export interface ConfigOptions {
-  type?: 'app' | 'lib'
-  pnpm?: boolean
-  test?: boolean | AntFuTestConfig
-  ignores?: string[]
-  jsx?: boolean
-  nextjs?: boolean
-  react?: boolean
-  vue?: boolean | AntFuVueConfig
-  formatters?: boolean | AntFuFormatterConfig
-  javascript?: AntFuJsConfig
+/**
+ * Extends AntFuConfig to allow users to pass any options supported by antfu()
+ * while providing sensible defaults for common options
+ */
+export interface ConfigOptions extends Omit<AntFuConfig, 'typescript'> {
+  /**
+   * TypeScript config, supports strict mode with `strictTypescriptEslint: true`
+   */
   typescript?: boolean | AntFuStrictTsConfig | AntFuTsConfig
-  unocss?: boolean | AntFuUnocssConfig
-  stylistic?: boolean | AntFuStylisticConfig
 }
 
 export async function applyPreset(options: ConfigOptions = {}): Promise<ReturnType<typeof antfu>> {
@@ -38,6 +43,8 @@ export default async function eslint9(options: ConfigOptions = {}): Promise<Retu
     javascript = defaultJsConfig,
     typescript = defaultTsConfig,
     formatters = false,
+    // Extract remaining options to pass through to antfu
+    ...restOptions
   } = options
 
   const _test = mergeWithDefaults(test, defaultTestConfig)
@@ -46,30 +53,26 @@ export default async function eslint9(options: ConfigOptions = {}): Promise<Retu
   const _javascript = mergeWithDefaults(javascript, defaultJsConfig)
   const _stylistic = mergeWithDefaults(stylistic, defaultStylisticConfig)
   const _formatters = mergeWithDefaults(formatters, defaultFormatterConfig)
-  let _typescript = typescript
 
-  // 如果 type 为 'app'，强制 pnpm 为 false
-  let _pnpm = pnpm
-  if (type === 'app') {
-    _pnpm = false
-  }
+  let _typescript = typescript
+  const _pnpm = type === 'app' ? false : pnpm
 
   // 严格 ts 模式
-  if (
-    _typescript !== null
-    && typeof _typescript === 'object'
-    && 'strictTypescriptEslint' in _typescript
-    && _typescript.strictTypescriptEslint === true
-  ) {
-    _typescript = mergeWithDefaults(typescript, defaultStrictTsConfig)
-    if (typeof _typescript === 'object' && 'tsconfigPath' in _typescript) {
-      (_typescript as OptionsTypeScriptParserOptions).parserOptions = {
+  if (isStrictTsConfig(_typescript)) {
+    const merged = mergeWithDefaults(_typescript as AntFuTsConfig, defaultStrictTsConfig)
+    if (typeof merged === 'object' && 'tsconfigPath' in merged) {
+      (merged as OptionsTypeScriptParserOptions).parserOptions = {
         projectService: true,
       }
     }
+    _typescript = merged
   }
 
   return antfu({
+    // Pass through any additional options from user
+    ...restOptions,
+    // Apply our defaults (these override restOptions if duplicated)
+    markdown: true,
     type,
     ignores,
     pnpm: _pnpm,
@@ -84,4 +87,13 @@ export default async function eslint9(options: ConfigOptions = {}): Promise<Retu
     stylistic: _stylistic,
     formatters: _formatters,
   })
+}
+
+function isStrictTsConfig(config: unknown): config is AntFuStrictTsConfig {
+  return (
+    config !== null
+    && typeof config === 'object'
+    && 'strictTypescriptEslint' in config
+    && (config as AntFuStrictTsConfig).strictTypescriptEslint === true
+  )
 }

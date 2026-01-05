@@ -1,7 +1,7 @@
 {
   "name": "@truenine/ext-chrome",
   "type": "module",
-  "version": "1.0.3",
+  "version": "2026.10106.100",
   "description": "chrome 扩展程序 开发库",
   "author": "TrueNine",
   "license": "LGPL-2.1-or-later",
