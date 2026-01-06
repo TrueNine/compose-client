@@ -1,7 +1,7 @@
 {
   "name": "@truenine/psdk-tmap",
   "type": "module",
-  "version": "2026.10106.100",
+  "version": "2026.10107.100",
   "description": "tencent map webgl js sdk",
   "author": "TrueNine",
   "license": "LGPL-2.1-or-later",

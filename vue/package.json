@@ -1,7 +1,7 @@
 {
   "name": "@truenine/vue",
   "type": "module",
-  "version": "2026.10106.100",
+  "version": "2026.10107.100",
   "packageManager": "pnpm@10.11.0",
   "description": "vue 开发工具包",
   "author": "TrueNine",
