@@ -337,13 +337,9 @@ export function createSmartPreset(options: FullPerformanceOptions = {}): UserCon
 
   let preset: PerformancePreset = 'basic'
 
-  if (isMonorepo) {
-    preset = 'monorepo'
-  } else if (isDev) {
-    preset = 'development'
-  } else if (isProd || isCI) {
-    preset = 'production'
-  }
+  if (isMonorepo) preset = 'monorepo'
+  else if (isDev) preset = 'development'
+  else if (isProd || isCI) preset = 'production'
 
   return createPerformancePreset(preset, options)
 }

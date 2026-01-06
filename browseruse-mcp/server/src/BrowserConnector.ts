@@ -64,17 +64,12 @@ function convertPathForCurrentPlatform(inputPath: string): string {
   const platform = os.platform()
 
   // If no path provided, return as is
-  if (!inputPath) {
-    return inputPath
-  }
+  if (!inputPath) return inputPath
 
   logger.info(`Converting path "${inputPath}" for platform: ${platform}`)
 
   // Windows-specific conversion
-  if (platform === 'win32') {
-    // Convert forward slashes to backslashes
-    return inputPath.replace(/\//g, '\\')
-  }
+  if (platform === 'win32') return inputPath.replace(/\//g, '\\')
 
   // Linux/Mac-specific conversion
   if (platform === 'linux' || platform === 'darwin') {
@@ -293,12 +288,8 @@ function processLogsWithSettings(logs: LogEntry[]): LogEntry[] {
 
     if (log.type === 'network-request') {
       // Handle headers visibility
-      if (!currentSettings.showRequestHeaders) {
-        delete processedLog.requestHeaders
-      }
-      if (!currentSettings.showResponseHeaders) {
-        delete processedLog.responseHeaders
-      }
+      if (!currentSettings.showRequestHeaders) delete processedLog.requestHeaders
+      if (!currentSettings.showResponseHeaders) delete processedLog.responseHeaders
     }
 
     return processedLog
@@ -312,9 +303,7 @@ function calculateLogSize(log: LogEntry): number {
 
 // Helper to truncate logs based on character limit
 function truncateLogsToQueryLimit(logs: LogEntry[]): LogEntry[] {
-  if (logs.length === 0) {
-    return logs
-  }
+  if (logs.length === 0) return logs
 
   // First process logs according to current settings
   const processedLogs = processLogsWithSettings(logs)
@@ -707,9 +696,7 @@ export class BrowserConnector {
               && this.urlRequestCallbacks.has(data.requestId)
             ) {
               const callback = this.urlRequestCallbacks.get(data.requestId)
-              if (callback !== null && callback !== void 0) {
-                callback(String(data.url))
-              }
+              if (callback !== null && callback !== void 0) callback(String(data.url))
               this.urlRequestCallbacks.delete(data.requestId)
             }
           }
@@ -772,9 +759,7 @@ export class BrowserConnector {
 
       ws.on('close', () => {
         logger.info('Chrome extension disconnected')
-        if (this.activeConnection === ws) {
-          this.activeConnection = null
-        }
+        if (this.activeConnection === ws) this.activeConnection = null
       })
     })
 
@@ -823,11 +808,8 @@ export class BrowserConnector {
           })
         } catch (error: unknown) {
           logger.error('Error saving screenshot:', error)
-          if (error instanceof Error) {
-            res.status(500).json({ error: error.message })
-          } else {
-            res.status(500).json({ error: 'An unknown error occurred' })
-          }
+          if (error instanceof Error) res.status(500).json({ error: error.message })
+          else res.status(500).json({ error: 'An unknown error occurred' })
         }
       },
     )
@@ -973,9 +955,7 @@ export class BrowserConnector {
 
       logger.info(`Browser Connector: Using path: ${targetPath}`)
 
-      if (base64Data == null) {
-        throw new Error('No screenshot data received from Chrome extension')
-      }
+      if (base64Data == null) throw new Error('No screenshot data received from Chrome extension')
 
       try {
         fs.mkdirSync(targetPath, { recursive: true })
@@ -1397,9 +1377,7 @@ export class BrowserConnector {
         const interfaces = networkInterfaces[interfaceName]
         if (interfaces) {
           interfaces.forEach((iface: NetworkInterface) => {
-            if (!iface.internal && iface.family === 'IPv4') {
-              logger.info(`  - http://${iface.address}:${PORT}`)
-            }
+            if (!iface.internal && iface.family === 'IPv4') logger.info(`  - http://${iface.address}:${PORT}`)
           })
         }
       })

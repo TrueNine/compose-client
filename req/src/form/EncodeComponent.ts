@@ -68,9 +68,7 @@ export class SearchParam {
 
   toString(): string {
     // 使用缓存提升性能
-    if (this._cachedString !== null) {
-      return this._cachedString
-    }
+    if (this._cachedString !== null) return this._cachedString
 
     this._cachedString = Array.from(this._root)
       .map(([k, v]) => {
@@ -113,17 +111,13 @@ export class SearchParam {
    */
   static fromString(queryString: string): SearchParam {
     const params = new SearchParam()
-    if (!queryString) {
-      return params
-    }
+    if (!queryString) return params
 
     const cleanQuery = queryString.startsWith('?') ? queryString.slice(1) : queryString
 
     cleanQuery.split('&').forEach(pair => {
       const [key, value] = pair.split('=').map(decodeURIComponent)
-      if (key) {
-        params.append(key, value)
-      }
+      if (key) params.append(key, value)
     })
 
     return params
@@ -154,29 +148,21 @@ export class SearchParam {
  * @returns 返回带 `?` 前缀的查询字符串，如果没有有效参数则返回空字符串
  */
 export function encodeQueryParam(...cards: nilpt<object>[]): string {
-  if (!cards.length) {
-    return ''
-  }
+  if (!cards.length) return ''
 
   const params: Array<[string, string]> = []
   const validCards = cards.filter(isNonNil)
 
-  if (!validCards.length) {
-    return ''
-  }
+  if (!validCards.length) return ''
 
   for (const card of validCards) {
     const entries = Object.entries(card as Record<string, unknown>)
     for (const [key, value] of entries) {
-      if (value == null) {
-        continue
-      }
+      if (value == null) continue
       const encodedKey = encodeURIComponent(key)
       if (Array.isArray(value)) {
         for (const v of value) {
-          if (v != null) {
-            params.push([encodedKey, encodeURIComponent(String(v))])
-          }
+          if (v != null) params.push([encodedKey, encodeURIComponent(String(v))])
         }
       } else if (typeof value === 'string') {
         params.push([encodedKey, encodeURIComponent(value)])
@@ -208,28 +194,20 @@ export function encodeQueryParam(...cards: nilpt<object>[]): string {
  * @returns 返回带 `?` 前缀的查询字符串，如果没有有效参数则返回空字符串
  */
 export function queryParam(...cards: nilpt<object>[]): string {
-  if (!cards.length) {
-    return ''
-  }
+  if (!cards.length) return ''
 
   const params: Array<[string, string]> = []
   const validCards = cards.filter(isNonNil)
 
-  if (!validCards.length) {
-    return ''
-  }
+  if (!validCards.length) return ''
 
   for (const card of validCards) {
     const entries = Object.entries(card as Record<string, unknown>)
     for (const [key, value] of entries) {
-      if (value == null) {
-        continue
-      }
+      if (value == null) continue
       if (Array.isArray(value)) {
         for (const v of value) {
-          if (v != null) {
-            params.push([key, String(v)])
-          }
+          if (v != null) params.push([key, String(v)])
         }
       } else if (typeof value === 'object') {
         // 嵌套对象只处理一层，输出空字符串
@@ -257,28 +235,20 @@ export function queryParam(...cards: nilpt<object>[]): string {
  * @returns 返回带 `#` 前缀的 hash 字符串，如果没有有效参数则返回空字符串
  */
 export function queryHash(...cards: nilpt<object>[]): string {
-  if (!cards.length) {
-    return ''
-  }
+  if (!cards.length) return ''
 
   const params: Array<[string, string]> = []
   const validCards = cards.filter(isNonNil)
 
-  if (!validCards.length) {
-    return ''
-  }
+  if (!validCards.length) return ''
 
   for (const card of validCards) {
     const entries = Object.entries(card as Record<string, unknown>)
     for (const [key, value] of entries) {
-      if (value == null) {
-        continue
-      }
+      if (value == null) continue
       if (Array.isArray(value)) {
         for (const v of value) {
-          if (v != null) {
-            params.push([key, String(v)])
-          }
+          if (v != null) params.push([key, String(v)])
         }
       } else if (typeof value === 'object') {
         params.push([key, ''])
@@ -307,26 +277,18 @@ export function queryHash(...cards: nilpt<object>[]): string {
 export function decodeHash(hash?: string | null): Record<string, string> {
   const result: Record<string, string> = {}
 
-  if (!isNonNilString(hash)) {
-    return result
-  }
+  if (!isNonNilString(hash)) return result
 
   // 此时我们已经确认 hash 是非空字符串
   const rawInput = (hash as string).startsWith('#') ? (hash as string).slice(1) : hash as string
-  if (!isNonNilString(rawInput)) {
-    return result
-  }
+  if (!isNonNilString(rawInput)) return result
 
   const pairs = (rawInput).split('&')
   for (const pair of pairs) {
-    if (!isNonNilString(pair)) {
-      continue
-    }
+    if (!isNonNilString(pair)) continue
 
     const [key, value] = pair.split('=')
-    if (isNonNilString(key)) {
-      result[key] = isNonNilString(value) ? value : ''
-    }
+    if (isNonNilString(key)) result[key] = isNonNilString(value) ? value : ''
   }
 
   return result

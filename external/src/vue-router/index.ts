@@ -63,15 +63,9 @@ function combineURIs(uri1: string, uri2: string): string {
   const normalizedUri1 = uri1.replace(/^\/+/g, STR_EMPTY).replace(/\/+$/g, STR_EMPTY)
   const normalizedUri2 = uri2.replace(/^\/+/g, STR_EMPTY).replace(/\/+$/g, STR_EMPTY)
 
-  if (!normalizedUri1 && !normalizedUri2) {
-    return STR_EMPTY
-  }
-  if (!normalizedUri1) {
-    return normalizedUri2
-  }
-  if (!normalizedUri2) {
-    return normalizedUri1
-  }
+  if (!normalizedUri1 && !normalizedUri2) return STR_EMPTY
+  if (!normalizedUri1) return normalizedUri2
+  if (!normalizedUri2) return normalizedUri1
   return `${normalizedUri1}${STR_SLASH}${normalizedUri2}`
 }
 
@@ -87,15 +81,11 @@ function clipRoutes(routes: RouteRecordRaw[], clipPath: string, parentPath = '')
 
   for (const route of routes) {
     const fullPath = combineURIs(parentPath, route.path)
-    if (fullPath === normalizedClipPath) {
-      return route.children ?? []
-    }
+    if (fullPath === normalizedClipPath) return route.children ?? []
     const children = route.children
     if (Array.isArray(children) && children.length > 0) {
       const clippedChildren = clipRoutes(children, clipPath, fullPath)
-      if (clippedChildren.length > 0) {
-        return clippedChildren
-      }
+      if (clippedChildren.length > 0) return clippedChildren
     }
   }
   return []
@@ -121,15 +111,11 @@ function routeToMenuObject(
       fullPath,
       parentPath,
     } as Raw
-    if (!matchFn(raw)) {
-      return null
-    }
+    if (!matchFn(raw)) return null
   }
 
   const { meta = {} } = route
-  if (meta.hidden === true) {
-    return null
-  }
+  if (meta.hidden === true) return null
 
   const menuObj: MenuObject = {
     ...route,
@@ -140,38 +126,28 @@ function routeToMenuObject(
   }
 
   const children = route.children
-  if (!Array.isArray(children) || children.length === 0) {
-    return menuObj
-  }
+  if (!Array.isArray(children) || children.length === 0) return menuObj
 
   const indexRoute = children.find((child): child is RouteRecordRaw & { meta?: Record<string, unknown> } => child.path === STR_EMPTY)
   if (indexRoute != null) {
     const indexMeta = (typeof indexRoute.meta === 'object' && indexRoute.meta !== null) ? indexRoute.meta as Record<string, unknown> : {}
     menuObj.meta = { ...menuObj.meta, ...indexMeta }
-    if (typeof indexMeta.title === 'string') {
-      menuObj.name = indexMeta.title
-    }
+    if (typeof indexMeta.title === 'string') menuObj.name = indexMeta.title
     const remainingChildren = children.filter(child => child.path !== STR_EMPTY)
     let indexSub: MenuObject[] = []
     if (Array.isArray(indexRoute.children) && indexRoute.children.length > 0) {
       indexSub = generateMenuInternal(indexRoute.children, matchFn, null, fullPath)
     }
     let otherSub: MenuObject[] = []
-    if (remainingChildren.length > 0) {
-      otherSub = generateMenuInternal(remainingChildren, matchFn, null, fullPath)
-    }
+    if (remainingChildren.length > 0) otherSub = generateMenuInternal(remainingChildren, matchFn, null, fullPath)
     const mergedSub = [...indexSub, ...otherSub]
-    if (mergedSub.length > 0) {
-      menuObj.sub = mergedSub
-    }
+    if (mergedSub.length > 0) menuObj.sub = mergedSub
     return menuObj
   }
 
   // 无 index 路由，递归所有子路由
   const sub = generateMenuInternal(children, matchFn, null, fullPath)
-  if (sub.length > 0) {
-    menuObj.sub = sub
-  }
+  if (sub.length > 0) menuObj.sub = sub
   return menuObj
 }
 

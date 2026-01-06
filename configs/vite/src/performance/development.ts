@@ -116,9 +116,7 @@ export function createDevServerOptimization(options: DevelopmentOptimizationOpti
 export function createDevDepsOptimization(options: DevelopmentOptimizationOptions = {}): UserConfig {
   const { enableDepsPreBundling = true } = options
 
-  if (!enableDepsPreBundling) {
-    return {}
-  }
+  if (!enableDepsPreBundling) return {}
 
   return {
     optimizeDeps: {

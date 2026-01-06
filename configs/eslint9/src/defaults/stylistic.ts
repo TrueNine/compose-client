@@ -7,15 +7,18 @@ export const defaultStylisticConfig: AntFuStylisticConfig = {
   semi: false,
   overrides: {
     'style/no-multiple-empty-lines': ['error', { max: 1, maxBOF: 0, maxEOF: 0 }],
-    'style/brace-style': ['error', '1tbs'],
+    'style/brace-style': 'off',
     'style/arrow-parens': ['error', 'as-needed'],
     'curly': ['error', 'multi-line', 'consistent'],
+    'antfu/if-newline': 'off',
+    'antfu/curly': 'off',
   },
 }
 
 export const defaultFormatterConfig: AntFuFormatterConfig = {
   css: 'prettier',
   html: 'prettier',
+  markdown: 'prettier',
   prettierOptions: {
     printWidth: 160,
     tabWidth: 2,

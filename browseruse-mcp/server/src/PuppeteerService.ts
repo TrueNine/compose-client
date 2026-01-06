@@ -262,9 +262,7 @@ async function setCustomBrowserExecutable(launchOptions: Record<string, unknown>
           = currentConfig.customBrowserPaths[browser]
 
         // Set product to firefox if using Firefox browser
-        if (browser === 'firefox') {
-          launchOptions.product = 'firefox'
-        }
+        if (browser === 'firefox') launchOptions.product = 'firefox'
 
         logger.info(
           `Using custom ${browser} path: `,
@@ -746,9 +744,7 @@ export async function connectToHeadlessBrowser(
     // Get or create a browser instance
     const browser = await getHeadlessBrowserInstance()
 
-    if (launchedBrowserWSEndpoint === null) {
-      throw new Error('Failed to retrieve WebSocket endpoint for browser')
-    }
+    if (launchedBrowserWSEndpoint === null) throw new Error('Failed to retrieve WebSocket endpoint for browser')
 
     // Extract port from WebSocket endpoint
     const port = Number.parseInt(
@@ -832,9 +828,7 @@ export async function connectToHeadlessBrowser(
       }
 
       await page.setViewport(viewport)
-      if (userAgent !== void 0) {
-        await page.setUserAgent(userAgent)
-      }
+      if (userAgent !== void 0) await page.setUserAgent(userAgent)
 
       logger.info(`Emulating ${options.emulateDevice} device`)
     }
@@ -904,11 +898,8 @@ export async function connectToHeadlessBrowser(
       page.on('request', request => {
         // Block unnecessary resources to speed up loading
         const resourceType = request.resourceType()
-        if (resourceTypesToBlock.includes(resourceType)) {
-          void request.abort()
-        } else {
-          void request.continue()
-        }
+        if (resourceTypesToBlock.includes(resourceType)) void request.abort()
+        else void request.continue()
       })
 
       logger.info(

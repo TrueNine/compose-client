@@ -8,9 +8,7 @@ export const IdcardUtils = {
     const month = Number(trimIdcard.substring(10, 12))
     const day = Number(trimIdcard.substring(12, 14))
     const d = new Date(year, month - 1, day)
-    if (d.getTime() >= Date.now()) {
-      return void 0
-    }
+    if (d.getTime() >= Date.now()) return void 0
 
     const birthday = d.getTime()
 

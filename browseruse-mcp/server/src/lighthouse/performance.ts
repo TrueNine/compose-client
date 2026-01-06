@@ -166,9 +166,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
 
   auditRefs.forEach(ref => {
     const audit = audits[ref.id]
-    if (audit == null) {
-      return
-    }
+    if (audit == null) return
 
     if (audit.scoreDisplayMode === 'manual') {
       manualCount++
@@ -177,11 +175,8 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
     } else if (audit.scoreDisplayMode === 'notApplicable') {
       notApplicableCount++
     } else if (audit.score != null) {
-      if (audit.score >= 0.9) {
-        passedCount++
-      } else {
-        failedCount++
-      }
+      if (audit.score >= 0.9) passedCount++
+      else failedCount++
     }
   })
 
@@ -227,9 +222,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
           if (firstTableItem.node != null) {
             const node = firstTableItem.node as Record<string, unknown>
 
-            if (node.selector != null) {
-              metric.element_selector = String(node.selector)
-            }
+            if (node.selector != null) metric.element_selector = String(node.selector)
 
             // Determine element type based on path or selector
             const path = node.path
@@ -241,9 +234,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
 
                 // Try to extract image name from selector
                 const imgMatch = selector.match(/img\.[^> ]+/)
-                if (imgMatch != null && metric.element_url == null) {
-                  metric.element_url = imgMatch[0]
-                }
+                if (imgMatch != null && metric.element_url == null) metric.element_url = imgMatch[0]
               } else if (
                 String(path).includes(',SPAN') || String(path).includes(',P') || String(path).includes(',H')
               ) {
@@ -271,9 +262,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
               const snippet = node.snippet
               if (snippet != null) {
                 const match = String(snippet).match(/src="([^"]+)"/)
-                if (match != null && match[1] != null) {
-                  metric.element_url = match[1]
-                }
+                if (match != null && match[1] != null) metric.element_url = match[1]
               }
             } else if (String(node.nodeLabel).startsWith('<video')) {
               metric.element_type = 'video'
@@ -283,9 +272,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
               metric.element_type = 'text'
             }
 
-            if (node.selector != null) {
-              metric.element_selector = String(node.selector)
-            }
+            if (node.selector != null) metric.element_selector = String(node.selector)
           }
         }
       }
@@ -327,9 +314,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
             }
             if (itemObj.node != null && typeof itemObj.node === 'object') {
               const nodeObj = itemObj.node as Record<string, unknown>
-              if (nodeObj.selector != null) {
-                metric.element_selector = String(nodeObj.selector)
-              }
+              if (nodeObj.selector != null) metric.element_selector = String(nodeObj.selector)
             }
             break
           }
@@ -461,13 +446,9 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
     let impact: 'critical' | 'serious' | 'moderate' | 'minor' = 'moderate'
     const savings = Math.round(rbrAudit.numericValue ?? 0)
 
-    if (savings > 2000) {
-      impact = 'critical'
-    } else if (savings > 1000) {
-      impact = 'serious'
-    } else if (savings < 300) {
-      impact = 'minor'
-    }
+    if (savings > 2000) impact = 'critical'
+    else if (savings > 1000) impact = 'serious'
+    else if (savings < 300) impact = 'minor'
 
     const opportunity: AIOptimizedOpportunity = {
       id: 'render_blocking_resources',
@@ -497,9 +478,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
         })
     }
 
-    if (opportunity.resources.length > 0) {
-      opportunities.push(opportunity)
-    }
+    if (opportunity.resources.length > 0) opportunities.push(opportunity)
   }
 
   if (audits['uses-http2'] != null) {
@@ -509,13 +488,9 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
     let impact: 'critical' | 'serious' | 'moderate' | 'minor' = 'moderate'
     const savings = Math.round(http2Audit.numericValue ?? 0)
 
-    if (savings > 2000) {
-      impact = 'critical'
-    } else if (savings > 1000) {
-      impact = 'serious'
-    } else if (savings < 300) {
-      impact = 'minor'
-    }
+    if (savings > 2000) impact = 'critical'
+    else if (savings > 1000) impact = 'serious'
+    else if (savings < 300) impact = 'minor'
 
     const opportunity: AIOptimizedOpportunity = {
       id: 'http2',
@@ -542,9 +517,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
         })
     }
 
-    if (opportunity.resources.length > 0) {
-      opportunities.push(opportunity)
-    }
+    if (opportunity.resources.length > 0) opportunities.push(opportunity)
   }
 
   // After extracting all metrics and opportunities, collect page stats
@@ -581,23 +554,13 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
         // Count by mime type
         const mimeType = resourceObj.mimeType != null ? String(resourceObj.mimeType) : ''
         const url = resourceObj.url != null ? String(resourceObj.url) : ''
-        if (mimeType.includes('javascript') || url.endsWith('.js')) {
-          jsCount++
-        } else if (mimeType.includes('css') || url.endsWith('.css')) {
-          cssCount++
-        } else if (
-          mimeType.includes('image')
-          || /\.(?:jpg|jpeg|png|gif|webp|svg)$/i.test(url)
-        ) {
-          imgCount++
-        } else if (
-          mimeType.includes('font')
-          || /\.(?:woff|woff2|ttf|otf|eot)$/i.test(url)
-        ) {
-          fontCount++
-        } else {
-          otherCount++
-        }
+        if (mimeType.includes('javascript') || url.endsWith('.js')) jsCount++
+        else if (mimeType.includes('css') || url.endsWith('.css')) cssCount++
+        else if (mimeType.includes('image')
+          || /\.(?:jpg|jpeg|png|gif|webp|svg)$/i.test(url)) imgCount++
+        else if (mimeType.includes('font')
+          || /\.(?:woff|woff2|ttf|otf|eot)$/i.test(url)) fontCount++
+        else otherCount++
       })
 
       // Calculate third-party size
@@ -607,9 +570,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
         if (isObjectWithItems(thirdPartyDetails)) {
           thirdPartyDetails.items.forEach((item: unknown) => {
             const itemObj = item as Record<string, unknown>
-            if (itemObj.transferSize != null) {
-              thirdPartySizeKb += Math.round(Number(itemObj.transferSize) / 1024)
-            }
+            if (itemObj.transferSize != null) thirdPartySizeKb += Math.round(Number(itemObj.transferSize) / 1024)
           })
         }
       }
@@ -641,25 +602,15 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
   const prioritized_recommendations: string[] = []
 
   // Add key recommendations based on failed audits with high impact
-  if (audits['render-blocking-resources']?.score === 0) {
-    prioritized_recommendations.push('Eliminate render-blocking resources')
-  }
+  if (audits['render-blocking-resources']?.score === 0) prioritized_recommendations.push('Eliminate render-blocking resources')
 
-  if (audits['uses-responsive-images']?.score === 0) {
-    prioritized_recommendations.push('Properly size images')
-  }
+  if (audits['uses-responsive-images']?.score === 0) prioritized_recommendations.push('Properly size images')
 
-  if (audits['uses-optimized-images']?.score === 0) {
-    prioritized_recommendations.push('Efficiently encode images')
-  }
+  if (audits['uses-optimized-images']?.score === 0) prioritized_recommendations.push('Efficiently encode images')
 
-  if (audits['uses-text-compression']?.score === 0) {
-    prioritized_recommendations.push('Enable text compression')
-  }
+  if (audits['uses-text-compression']?.score === 0) prioritized_recommendations.push('Enable text compression')
 
-  if (audits['uses-http2']?.score === 0) {
-    prioritized_recommendations.push('Use HTTP/2')
-  }
+  if (audits['uses-http2']?.score === 0) prioritized_recommendations.push('Use HTTP/2')
 
   // Add more specific recommendations based on Core Web Vitals
   if (audits['largest-contentful-paint'] != null && (audits['largest-contentful-paint'].score ?? 1) < 0.5) {

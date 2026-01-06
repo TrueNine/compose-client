@@ -144,25 +144,16 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
       notApplicableCount++
     } else if (audit.score !== null) {
       // Binary pass/fail
-      if (audit.score >= 0.9) {
-        passedCount++
-      } else {
-        failedCount++
-      }
+      if (audit.score >= 0.9) passedCount++
+      else failedCount++
     }
 
-    if (ref.group === void 0) {
-      return
-    }
+    if (ref.group === void 0) return
     // Initialize category if not exists
-    if (!(ref.group in categories)) {
-      categories[ref.group] = { score: 0, issues_count: 0 }
-    }
+    if (!(ref.group in categories)) categories[ref.group] = { score: 0, issues_count: 0 }
 
     // Update category score and issues count
-    if (audit.score !== null && audit.score < 0.9) {
-      categories[ref.group].issues_count++
-    }
+    if (audit.score !== null && audit.score < 0.9) categories[ref.group].issues_count++
   })
 
   // Second pass: process failed audits into AI-friendly format
@@ -178,13 +169,9 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
 
       // Determine impact level based on score and weight
       let impact: 'critical' | 'serious' | 'moderate' | 'minor' = 'moderate'
-      if (audit.score === 0) {
-        impact = 'critical'
-      } else if (audit.score !== null && audit.score <= 0.5) {
-        impact = 'serious'
-      } else if (audit.score !== null && audit.score > 0.7) {
-        impact = 'minor'
-      }
+      if (audit.score === 0) impact = 'critical'
+      else if (audit.score !== null && audit.score <= 0.5) impact = 'serious'
+      else if (audit.score !== null && audit.score > 0.7) impact = 'minor'
 
       // Create elements array
       const elements: AIAccessibilityElement[] = []
@@ -223,9 +210,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
               elements.push(element)
 
               // Add to critical elements if impact is critical or serious
-              if (impact === 'critical' || impact === 'serious') {
-                criticalElements.push(element)
-              }
+              if (impact === 'critical' || impact === 'serious') criticalElements.push(element)
             }
           })
         }
@@ -290,13 +275,9 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
     )
   }
 
-  if (issues.some(issue => issue.id === 'document-title')) {
-    prioritized_recommendations.push('Add a descriptive page title')
-  }
+  if (issues.some(issue => issue.id === 'document-title')) prioritized_recommendations.push('Add a descriptive page title')
 
-  if (issues.some(issue => issue.id === 'image-alt')) {
-    prioritized_recommendations.push('Add alt text to all images')
-  }
+  if (issues.some(issue => issue.id === 'image-alt')) prioritized_recommendations.push('Add alt text to all images')
 
   // Create the report content
   const reportContent: AccessibilityReportContent = {

@@ -41,12 +41,8 @@ const mockScript: MockScript = {
 // 模拟 document 对象
 const documentMock = {
   createElement: vi.fn((tag: string) => {
-    if (tag === 'a') {
-      return mockAnchor
-    }
-    if (tag === 'script') {
-      return mockScript
-    }
+    if (tag === 'a') return mockAnchor
+    if (tag === 'script') return mockScript
     return {}
   }),
   body: {
@@ -305,9 +301,7 @@ describe('document.ts 文件函数测试', () => {
 
       // 模拟图片加载完成
       const mockImage = (globalThis.Image as unknown as ReturnType<typeof vi.fn>).mock.results[0].value as MockImage
-      if (mockImage.onload) {
-        mockImage.onload()
-      }
+      if (mockImage.onload) mockImage.onload()
 
       // 等待Promise解析
       const result = await imagePromise
@@ -332,9 +326,7 @@ describe('document.ts 文件函数测试', () => {
 
       // 模拟图片加载失败
       const mockImage = (globalThis.Image as unknown as ReturnType<typeof vi.fn>).mock.results[0].value as MockImage
-      if (mockImage.onerror) {
-        mockImage.onerror()
-      }
+      if (mockImage.onerror) mockImage.onerror()
 
       // 等待Promise解析，并在之后验证调用
       await imagePromise

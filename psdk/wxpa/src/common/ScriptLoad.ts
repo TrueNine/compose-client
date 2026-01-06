@@ -11,9 +11,7 @@ export function loadWxpaJsSdk(
   configOptions?: clip<ConfigOptions, 'jsApiList'>,
 ): HTMLScriptElement {
   const script = loadRemoteScriptTag(WXPA_SCRIPT_URL, 'head', void 0, () => {
-    if (configOptions) {
-      wx.config({ ...configOptions, jsApiList: AllJsApiList })
-    }
+    if (configOptions) wx.config({ ...configOptions, jsApiList: AllJsApiList })
     wx.ready(() => {
       lazy?.()
     })

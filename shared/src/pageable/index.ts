@@ -20,9 +20,7 @@ export async function loopPageAll<T>(loopFn: (loopPq: Pq) => asyncable<nil<Pr<T>
     d: [],
     t: 0,
   }
-  if (isNil(initDataList) || initPageSize <= 1 || initTotal === 0 || initTotal <= (initPageParam.s ?? 0)) {
-    return initDataList
-  }
+  if (isNil(initDataList) || initPageSize <= 1 || initTotal === 0 || initTotal <= (initPageParam.s ?? 0)) return initDataList
   const resultDataList: T[] = [...initDataList]
   let nextPq: nil<Pq> = { ...initPageParam, o: (initPageParam.o ?? 0) + 1 }
   while (nextPq !== null) {
@@ -39,9 +37,7 @@ export async function loopPageAll<T>(loopFn: (loopPq: Pq) => asyncable<nil<Pr<T>
  * @param pq 分页参数
  */
 export function arrayToPage<T>(arr: T[], pq: Pq = Pw.DEFAULT_MAX): Pr<T> {
-  if (!arr.length) {
-    return Pw.empty()
-  }
+  if (!arr.length) return Pw.empty()
 
   const minPageSize = Math.min(arr.length, pq.s ?? arr.length)
   const safeOffset = Math.max(0, pq.o ?? 0)

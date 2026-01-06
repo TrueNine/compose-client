@@ -25,17 +25,11 @@ export function withEmpty(input?: string): string {
  * @returns 是否为空
  */
 export function isNil(value?: nilpt<unknown>): bool {
-  if (value == null) {
-    return true
-  }
+  if (value == null) return true
 
-  if (typeof value === 'string' && !isNonNilString(value)) {
-    return true
-  }
+  if (typeof value === 'string' && !isNonNilString(value)) return true
 
-  if (Array.isArray(value)) {
-    return value.length === 0 || value.every(isNil)
-  }
+  if (Array.isArray(value)) return value.length === 0 || value.every(isNil)
 
   return typeof value === 'object' && Object.keys(value).length === 0
 }
@@ -93,9 +87,7 @@ export function dlv<T = unknown>(
   let current: unknown = obj
 
   for (const key of keys) {
-    if (current == null || typeof current !== 'object') {
-      return defaultValue
-    }
+    if (current == null || typeof current !== 'object') return defaultValue
     current = (current as Record<string, unknown>)[key]
   }
 
@@ -127,9 +119,7 @@ export function deepResolve<T extends Record<string, unknown> | unknown[]>(
   } = options
 
   function processValue<V>(value: V, depth: number): V {
-    if (value == null || typeof value !== 'object') {
-      return value
-    }
+    if (value == null || typeof value !== 'object') return value
 
     const isArray = Array.isArray(value)
     const result: Record<string, unknown> | unknown[] = isArray ? [] : {}

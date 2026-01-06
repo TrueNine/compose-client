@@ -24,28 +24,16 @@ export function mergeWithDefaults<T extends object>(
   defaults: boolean | T | null | undefined,
 ): boolean | T {
   if (defaults === false || defaults === null || defaults === void 0) {
-    if (value === true) {
-      return true
-    }
-    if (value === false || value === null) {
-      return false
-    }
+    if (value === true) return true
+    if (value === false || value === null) return false
     return value as T
   }
 
-  if (value === void 0) {
-    return defaults
-  }
-  if (value === false || value === null) {
-    return false
-  }
-  if (value === true) {
-    return defaults
-  }
+  if (value === void 0) return defaults
+  if (value === false || value === null) return false
+  if (value === true) return defaults
 
-  if (typeof value === 'object' && typeof defaults === 'object') {
-    return { ...defaults, ...value }
-  }
+  if (typeof value === 'object' && typeof defaults === 'object') return { ...defaults, ...value }
 
   return value
 }

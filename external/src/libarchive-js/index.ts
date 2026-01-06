@@ -21,9 +21,7 @@ export function setWorker(worker: Worker): void {
 
 export function init(): void {
   const archiveOptions: ArchiveOptions = {}
-  if (__archiveWorker) {
-    archiveOptions.workerUrl = __archiveUrl
-  }
+  if (__archiveWorker) archiveOptions.workerUrl = __archiveUrl
   if (__archiveWorker) {
     const worker = __archiveWorker
     archiveOptions.getWorker = () => worker

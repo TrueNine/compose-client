@@ -99,9 +99,7 @@ export function createDtsPlugin(options: SimpleDtsOptions = {}): Plugin {
 
     // 使用 beforeWriteFile 钩子来验证生成的文件
     beforeWriteFile: (filePath: string, content: string) => {
-      if (!content || content.trim().length === 0) {
-        throw new Error(`DTS generation failed: Empty declaration file generated for ${filePath}`)
-      }
+      if (!content || content.trim().length === 0) throw new Error(`DTS generation failed: Empty declaration file generated for ${filePath}`)
       return { filePath, content }
     },
   }

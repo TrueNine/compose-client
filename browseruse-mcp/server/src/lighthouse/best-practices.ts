@@ -148,17 +148,11 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
   Object.values(audits).forEach(audit => {
     const { score, scoreDisplayMode } = audit
 
-    if (scoreDisplayMode === 'manual') {
-      manualCount++
-    } else if (scoreDisplayMode === 'informative') {
-      informativeCount++
-    } else if (scoreDisplayMode === 'notApplicable') {
-      notApplicableCount++
-    } else if (score === 1) {
-      passedCount++
-    } else if (score !== null && score < 1) {
-      failedCount++
-    }
+    if (scoreDisplayMode === 'manual') manualCount++
+    else if (scoreDisplayMode === 'informative') informativeCount++
+    else if (scoreDisplayMode === 'notApplicable') notApplicableCount++
+    else if (score === 1) passedCount++
+    else if (score !== null && score < 1) failedCount++
   })
 
   // Process failed audits into AI-friendly format
@@ -168,15 +162,10 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
     const score = typeof ref.score === 'number' ? ref.score : 0
 
     // Use a more reliable approach to determine impact
-    if (score === 0) {
-      impact = 'critical'
-    } else if (score < 0.5) {
-      impact = 'serious'
-    } else if (score < 0.9) {
-      impact = 'moderate'
-    } else {
-      impact = 'minor'
-    }
+    if (score === 0) impact = 'critical'
+    else if (score < 0.5) impact = 'serious'
+    else if (score < 0.9) impact = 'moderate'
+    else impact = 'minor'
 
     // Categorize the issue
     let category = 'other'
@@ -243,18 +232,10 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
         // Different audits have different detail structures
         const detail: Record<string, string> = {}
 
-        if (typeof item.name === 'string') {
-          detail.name = item.name
-        }
-        if (typeof item.version === 'string') {
-          detail.version = item.version
-        }
-        if (typeof item.issue === 'string') {
-          detail.issue = item.issue
-        }
-        if (item.value !== void 0) {
-          detail.value = String(item.value)
-        }
+        if (typeof item.name === 'string') detail.name = item.name
+        if (typeof item.version === 'string') detail.version = item.version
+        if (typeof item.issue === 'string') detail.issue = item.issue
+        if (item.value !== void 0) detail.value = String(item.value)
 
         // For JS libraries, extract name and version
         if (
@@ -268,9 +249,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
 
         // Add other generic properties that might exist
         for (const [key, value] of Object.entries(item)) {
-          if (!detail[key] && typeof value === 'string') {
-            detail[key] = value
-          }
+          if (!detail[key] && typeof value === 'string') detail[key] = value
         }
 
         issue.details.push(detail)

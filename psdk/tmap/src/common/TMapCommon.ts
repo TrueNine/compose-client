@@ -46,31 +46,19 @@ export function initTencentMapWebGlScript(
   options: CreateTencentMapOptions = _default,
 ): InitResult | null {
   // 验证必要参数
-  if (typeof options.loadQuery !== 'string') {
-    return null
-  }
+  if (typeof options.loadQuery !== 'string') return null
   const query = options.loadQuery.trim()
-  if (!query) {
-    return null
-  }
+  if (!query) return null
 
   const containerTag = options.containerTag
-  if (!containerTag) {
-    return null
-  }
+  if (!containerTag) return null
 
-  if (typeof options.mapContainerId !== 'string') {
-    return null
-  }
+  if (typeof options.mapContainerId !== 'string') return null
   const containerId = options.mapContainerId.trim()
-  if (!containerId) {
-    return null
-  }
+  if (!containerId) return null
 
   const section = document.querySelector(query)
-  if (!section) {
-    return null
-  }
+  if (!section) return null
 
   const src = loadRemoteScriptTag(
     `${WEBGL_JS_URL}${queryParam({

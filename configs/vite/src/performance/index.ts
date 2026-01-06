@@ -44,27 +44,17 @@ export function createChunkOptimization(): BuildOptions['rollupOptions'] {
         // 将 node_modules 中的依赖分离到 vendor chunk
         if (id.includes('node_modules')) {
           // 大型库单独分包
-          if (id.includes('vue') || id.includes('@vue')) {
-            return 'vue-vendor'
-          }
-          if (id.includes('lodash') || id.includes('ramda')) {
-            return 'utility-vendor'
-          }
-          if (id.includes('axios') || id.includes('fetch')) {
-            return 'http-vendor'
-          }
+          if (id.includes('vue') || id.includes('@vue')) return 'vue-vendor'
+          if (id.includes('lodash') || id.includes('ramda')) return 'utility-vendor'
+          if (id.includes('axios') || id.includes('fetch')) return 'http-vendor'
           return 'vendor'
         }
 
         // 将工具函数分离
-        if (id.includes('/utils/') || id.includes('/helpers/')) {
-          return 'utils'
-        }
+        if (id.includes('/utils/') || id.includes('/helpers/')) return 'utils'
 
         // 将组件分离
-        if (id.includes('/components/')) {
-          return 'components'
-        }
+        if (id.includes('/components/')) return 'components'
       },
       // 优化输出配置
       compact: true,
@@ -181,14 +171,10 @@ export function createVitePerformanceConfig(options: VitePerformanceOptions = {}
   }
 
   // 添加代码分割优化
-  if (enableChunkOptimization) {
-    config.build!.rollupOptions = createChunkOptimization()
-  }
+  if (enableChunkOptimization) config.build!.rollupOptions = createChunkOptimization()
 
   // 添加依赖预构建优化
-  if (enableDepsOptimization) {
-    config.optimizeDeps = createDepsOptimization()
-  }
+  if (enableDepsOptimization) config.optimizeDeps = createDepsOptimization()
 
   // 添加开发服务器优化
   config.server = createDevServerOptimization()

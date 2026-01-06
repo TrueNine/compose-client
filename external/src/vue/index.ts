@@ -38,14 +38,10 @@ function _findSlotNodesBy(
     const componentType = currentNode.type as Record<string, string>
     currentNode.actualName = componentType.name ?? componentType.__name ?? ''
 
-    if (compareFn(currentNode)) {
-      accumulator.push(currentNode)
-    }
+    if (compareFn(currentNode)) accumulator.push(currentNode)
 
     const nodeChildren = currentNode.children
-    if (nodeChildren != null && typeof nodeChildren === 'object') {
-      _findSlotNodesBy(nodeChildren as unknown as SlotNode, compareFn, accumulator)
-    }
+    if (nodeChildren != null && typeof nodeChildren === 'object') _findSlotNodesBy(nodeChildren as unknown as SlotNode, compareFn, accumulator)
   })
   return accumulator
 }

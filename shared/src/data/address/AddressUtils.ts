@@ -21,18 +21,14 @@ export class AddressUtils implements IChinaAddressDistrict {
   }
 
   get serialArray(): string[] {
-    if (this._formatError) {
-      return []
-    }
+    if (this._formatError) return []
     return [this.addrLevel.province, this.addrLevel.city, this.addrLevel.district, this.addrLevel.town, this.addrLevel.village].filter(
       e => e !== AddressUtils.TWO_ZERO && e !== AddressUtils.THREE_ZERO && e !== STR_EMPTY,
     )
   }
 
   get pad(): string {
-    if (this._formatError) {
-      return STR_EMPTY
-    }
+    if (this._formatError) return STR_EMPTY
     return this.code.padEnd(12, '0')
   }
 
@@ -40,9 +36,7 @@ export class AddressUtils implements IChinaAddressDistrict {
    * 获取裁剪后的 code
    */
   get clipCode(): string {
-    if (this._formatError) {
-      return STR_EMPTY
-    }
+    if (this._formatError) return STR_EMPTY
     const codeLengths = [2, 4, 6, 9]
     const length = codeLengths[this.level - 1] || 12
     return this.code.slice(0, length)
@@ -64,21 +58,11 @@ export class AddressUtils implements IChinaAddressDistrict {
       village: this.code.slice(9, 12),
     }
     let l = 0
-    if (this.addrLevel.province !== AddressUtils.TWO_ZERO) {
-      l += 1
-    }
-    if (this.addrLevel.city !== AddressUtils.TWO_ZERO) {
-      l += 1
-    }
-    if (this.addrLevel.district !== AddressUtils.TWO_ZERO) {
-      l += 1
-    }
-    if (this.addrLevel.town !== AddressUtils.THREE_ZERO) {
-      l += 1
-    }
-    if (this.addrLevel.village !== AddressUtils.THREE_ZERO) {
-      l += 1
-    }
+    if (this.addrLevel.province !== AddressUtils.TWO_ZERO) l += 1
+    if (this.addrLevel.city !== AddressUtils.TWO_ZERO) l += 1
+    if (this.addrLevel.district !== AddressUtils.TWO_ZERO) l += 1
+    if (this.addrLevel.town !== AddressUtils.THREE_ZERO) l += 1
+    if (this.addrLevel.village !== AddressUtils.THREE_ZERO) l += 1
     this.level = l
   }
 }

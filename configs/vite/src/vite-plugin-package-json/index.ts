@@ -20,12 +20,8 @@ function packageJsonContentReplace(content: string, options: Omit<PackageJsonOpt
     dts = true,
   } = options
 
-  if (formats.length === 0) {
-    return void 0
-  }
-  if (content === '' || content === null || content === void 0) {
-    return void 0
-  }
+  if (formats.length === 0) return void 0
+  if (content === '' || content === null || content === void 0) return void 0
 
   let packageJson: PackageJson
   try {
@@ -37,9 +33,7 @@ function packageJsonContentReplace(content: string, options: Omit<PackageJsonOpt
   }
   const keysToDelete = ['scripts', 'files', 'types', 'typings', 'main', 'module', 'types', 'typings', 'exports'] as const
   keysToDelete.forEach(key => {
-    if (key in packageJson) {
-      delete packageJson[key]
-    }
+    if (key in packageJson) delete packageJson[key]
   })
   packageJson.scripts = {
     pub: `${buildTool} publish`,
@@ -53,11 +47,8 @@ function packageJsonContentReplace(content: string, options: Omit<PackageJsonOpt
   delete packageJson.types
   delete packageJson.typings
 
-  if (hasEsm) {
-    packageJson.type = 'module'
-  } else if (hasCjs) {
-    packageJson.type = 'commonjs'
-  }
+  if (hasEsm) packageJson.type = 'module'
+  else if (hasCjs) packageJson.type = 'commonjs'
 
   const newExports: Record<string, any> = {}
 
@@ -91,36 +82,22 @@ function packageJsonContentReplace(content: string, options: Omit<PackageJsonOpt
     // --- Determine if types should be generated for this entry --- END
 
     // --- Clean leading slash if relativeDir was empty initially --- START
-    if (exportKey.startsWith('./.')) {
-      exportKey = exportKey.substring(2)
-    }
-    if (exportKey === './') {
-      exportKey = '.'
-    }
+    if (exportKey.startsWith('./.')) exportKey = exportKey.substring(2)
+    if (exportKey === './') exportKey = '.'
 
     const exportValue: Record<string, string> = {}
-    if (hasEsm) {
-      exportValue.import = `./${baseOutputPath}.js`
-    }
-    if (hasCjs) {
-      exportValue.require = `./${baseOutputPath}.cjs`
-    }
+    if (hasEsm) exportValue.import = `./${baseOutputPath}.js`
+    if (hasCjs) exportValue.require = `./${baseOutputPath}.cjs`
     // --- Generate types entry only if it's a TS/TSX file and dts is not false --- START
-    if (dts !== false && isTypeScriptEntry) {
-      exportValue.types = `./${baseOutputPath}.d.ts`
-    }
+    if (dts !== false && isTypeScriptEntry) exportValue.types = `./${baseOutputPath}.d.ts`
     // --- Generate types entry only if it's a TS/TSX file and dts is not false --- END
 
     // Only add if there are any valid export types
     if (Object.keys(exportValue).length > 0) {
       // If the key is '.', also set top-level fields
       if (exportKey === '.') {
-        if (hasEsm) {
-          packageJson.module = exportValue.import.substring(2)
-        }
-        if (hasCjs) {
-          packageJson.main = exportValue.require.substring(2)
-        }
+        if (hasEsm) packageJson.module = exportValue.import.substring(2)
+        if (hasCjs) packageJson.main = exportValue.require.substring(2)
         // Set top-level types directly if main entry is TS and dts is not false
         if (dts !== false && isTypeScriptEntry) {
           packageJson.types = exportValue.types.substring(2)
@@ -154,9 +131,7 @@ export function PackageJsonGeneratorPlugin(options: Omit<PackageJsonOptions, 'co
 
   const packageJsonContent = packageJsonContentReplace(originalContent, options)
 
-  if (packageJsonContent === void 0) {
-    throw new Error('Failed to parse or process package.json content')
-  }
+  if (packageJsonContent === void 0) throw new Error('Failed to parse or process package.json content')
 
   return {
     name: 'vite-plugin-package-json-generator',

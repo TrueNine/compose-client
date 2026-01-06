@@ -23,9 +23,7 @@ export function getOptimalConcurrency(maxConcurrency?: number): number {
   // 保留一个核心给系统
   const defaultConcurrency = Math.max(1, cpuCount - 1)
 
-  if (maxConcurrency != null && maxConcurrency > 0) {
-    return Math.min(maxConcurrency, cpuCount)
-  }
+  if (maxConcurrency != null && maxConcurrency > 0) return Math.min(maxConcurrency, cpuCount)
 
   return defaultConcurrency
 }

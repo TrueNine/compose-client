@@ -35,25 +35,17 @@ export function loadRemoteScriptTag(
   loadFn?: () => void,
 ): HTMLScriptElement | null {
   // 确保在浏览器环境中执行
-  if (typeof document === 'undefined') {
-    return null
-  }
+  if (typeof document === 'undefined') return null
   // 先查找是否已存在相同 src 的 script 标签，若存在直接返回
   const exist = document.querySelector<HTMLScriptElement>(`script[src='${src}']`)
-  if (exist !== null) {
-    return exist
-  }
+  if (exist !== null) return exist
   // 创建 script 标签并设置属性
   const scriptTag = document.createElement('script')
   scriptTag.src = src
   scriptTag.setAttribute('charset', 'utf-8')
-  if (typeof loadFn === 'function') {
-    scriptTag.addEventListener('load', loadFn)
-  }
+  if (typeof loadFn === 'function') scriptTag.addEventListener('load', loadFn)
   const parent = document.querySelector(appendTag)
-  if (parent === null) {
-    return null
-  }
+  if (parent === null) return null
   parent.appendChild(beforeEach(scriptTag))
   return scriptTag
 }

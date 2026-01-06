@@ -25,20 +25,15 @@ async function main(): Promise<void> {
     logger.error('Attempting initial server discovery on startup...')
     const discovered = await discoverServer()
 
-    if (discovered) {
-      logger.error('Successfully discovered server on startup')
-    } else {
-      logger.error('Initial server discovery failed. Will try again when tools are used.')
-    }
+    if (discovered) logger.error('Successfully discovered server on startup')
+    else logger.error('Initial server discovery failed. Will try again when tools are used.')
 
     const transport = new StdioServerTransport()
 
     const originalStdoutWrite = process.stdout.write.bind(process.stdout)
 
     process.stdout.write = (chunk: any, encoding?: any, callback?: any): boolean => {
-      if (typeof chunk === 'string' && !chunk.startsWith('{')) {
-        return true
-      }
+      if (typeof chunk === 'string' && !chunk.startsWith('{')) return true
       // eslint-disable-next-line ts/no-unsafe-argument
       return originalStdoutWrite(chunk, encoding, callback)
     }

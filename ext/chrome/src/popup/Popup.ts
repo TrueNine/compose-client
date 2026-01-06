@@ -25,9 +25,7 @@ export class MessageSender {
     msg: ChannelTypedMessage<T>,
   ): task<R> {
     // 检查 Chrome API 是否可用
-    if (typeof chrome === 'undefined' || typeof chrome.runtime === 'undefined') {
-      throw new TypeError('Chrome runtime API is not available')
-    }
+    if (typeof chrome === 'undefined' || typeof chrome.runtime === 'undefined') throw new TypeError('Chrome runtime API is not available')
 
     return new Promise((resolve, reject) => {
       chrome.runtime.sendMessage(msg, (response: R) => {
@@ -57,9 +55,7 @@ export class MessageSender {
     }
 
     chrome.runtime.onMessage.addListener((message: unknown) => {
-      if (isChannelTypedMessage<T>(message) && message.msgId === msgId) {
-        void receiver(message)
-      }
+      if (isChannelTypedMessage<T>(message) && message.msgId === msgId) void receiver(message)
     })
   }
 }

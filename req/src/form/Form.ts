@@ -46,9 +46,7 @@ export function toFormPathData(formContent: Record<string, unknown>, parentExpre
     }
   })
   return _resultArr.map(it => {
-    if (it.name.startsWith('.')) {
-      it.name = it.name.slice(1)
-    }
+    if (it.name.startsWith('.')) it.name = it.name.slice(1)
     return it
   })
 }

@@ -66,11 +66,8 @@ export function timeMillis(date: DayJSNewInstanceOptions, p?: Params): number {
     _p.utc = true
     _p.tz = ISO8601TimeZone.UTC
     const dg = timestampToTimeTimestamp(_p.date, _p)
-    if (dg === void 0) {
-      return Number.NaN
-    } else {
-      return dg
-    }
+    if (dg === void 0) return Number.NaN
+    else return dg
   }
 }
 
@@ -107,13 +104,9 @@ export function formatTime(date: DayJSNewInstanceOptions, p?: Params): string {
 function timestampToTimeTimestamp(ts: timestamp | Date | dayjs.Dayjs, p?: Params): late<number> {
   const _p = getDefaultParam(ts, p, ISO8601Format.datetime)
   let dj: dayjs.Dayjs
-  if (typeof ts === 'number' || typeof ts === 'string') {
-    dj = DayJs(ts, { utc: _p.utc }, true).tz(_p.tz)
-  } else if (ts instanceof Date) {
-    dj = DayJs(ts, { utc: _p.utc }, true).tz(_p.tz)
-  } else {
-    dj = ts.tz(_p.tz)
-  }
+  if (typeof ts === 'number' || typeof ts === 'string') dj = DayJs(ts, { utc: _p.utc }, true).tz(_p.tz)
+  else if (ts instanceof Date) dj = DayJs(ts, { utc: _p.utc }, true).tz(_p.tz)
+  else dj = ts.tz(_p.tz)
   const hMs = dj.hour() * 3600000
   const mMs = dj.minute() * 60000
   const sMs = dj.second() * 1000
@@ -129,21 +122,13 @@ export function isToday(to: DayJSNewInstanceOptions, qua = 1, unit: DurationUnit
 
 export function formatToday(to: Dayjs): string {
   const now = DayJs()
-  if (isToday(to, 0)) {
-    return to.format('HH:mm')
-  }
+  if (isToday(to, 0)) return to.format('HH:mm')
   if (to.isBefore(now)) {
-    if (isToday(to)) {
-      return `昨天 ${to.format('HH:mm')}`
-    } else if (isToday(to, 0, 'month')) {
-      return to.format('MM-DD')
-    } else if (isToday(to, 0, 'year')) {
-      return to.format('MM-DD')
-    } else if (to.year() >= 2000) {
-      return to.format('YY-MM-DD')
-    } else {
-      return to.format('YYYY-MM-DD')
-    }
+    if (isToday(to)) return `昨天 ${to.format('HH:mm')}`
+    else if (isToday(to, 0, 'month')) return to.format('MM-DD')
+    else if (isToday(to, 0, 'year')) return to.format('MM-DD')
+    else if (to.year() >= 2000) return to.format('YY-MM-DD')
+    else return to.format('YYYY-MM-DD')
   } else {
     return to.format('YYYY-MM-DD')
   }

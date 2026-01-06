@@ -19,18 +19,14 @@ let serverDiscovered = false
 export function getDefaultServerPort(): number {
   if (process.env.BROWSER_TOOLS_PORT != null) {
     const envPort = Number.parseInt(process.env.BROWSER_TOOLS_PORT, 10)
-    if (!Number.isNaN(envPort) && envPort > 0) {
-      return envPort
-    }
+    if (!Number.isNaN(envPort) && envPort > 0) return envPort
   }
 
   try {
     const portFilePath = path.join(__dirname, '.port')
     if (fs.existsSync(portFilePath)) {
       const port = Number.parseInt(fs.readFileSync(portFilePath, 'utf8').trim(), 10)
-      if (!Number.isNaN(port) && port > 0) {
-        return port
-      }
+      if (!Number.isNaN(port) && port > 0) return port
     }
   } catch (err) {
     logger.error('Error reading port file:', err)
@@ -40,9 +36,7 @@ export function getDefaultServerPort(): number {
 }
 
 export function getDefaultServerHost(): string {
-  if (process.env.BROWSER_TOOLS_HOST != null) {
-    return process.env.BROWSER_TOOLS_HOST
-  }
+  if (process.env.BROWSER_TOOLS_HOST != null) return process.env.BROWSER_TOOLS_HOST
   return DEFAULT_HOST
 }
 
@@ -54,9 +48,7 @@ export async function discoverServer(): Promise<boolean> {
   const ports = [defaultPort]
 
   for (let p = PORT_RANGE_START; p <= PORT_RANGE_END; p++) {
-    if (p !== defaultPort) {
-      ports.push(p)
-    }
+    if (p !== defaultPort) ports.push(p)
   }
 
   logger.info(`Will try hosts: ${hosts.join(', ')}`)

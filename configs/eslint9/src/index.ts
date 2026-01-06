@@ -1,4 +1,5 @@
 import type { OptionsTypeScriptParserOptions } from '@antfu/eslint-config'
+import type { Linter } from 'eslint'
 import type { AntFuConfig, AntFuStrictTsConfig, AntFuTsConfig } from './types'
 import { antfu } from '@antfu/eslint-config'
 import {
@@ -11,7 +12,11 @@ import {
   defaultUnocssConfig,
   defaultVueConfig,
 } from './defaults'
+import { plugin } from './plugin'
 import { mergeWithDefaults } from './utils'
+
+export { plugin }
+export * from './rules'
 
 /**
  * Extends AntFuConfig to allow users to pass any options supported by antfu()
@@ -86,7 +91,19 @@ export default async function eslint9(options: ConfigOptions = {}): Promise<Retu
     javascript: _javascript,
     stylistic: _stylistic,
     formatters: _formatters,
-  })
+  }, {
+    name: '@truenine/eslint-plugin',
+    plugins: {
+      '@truenine': plugin,
+    },
+    rules: {
+      '@truenine/prefer-single-line-if': 'warn',
+      'antfu/if-newline': 'off',
+      'antfu/curly': 'off',
+      'style/brace-style': 'off',
+      'curly': ['error', 'multi-line', 'consistent'],
+    },
+  } as Linter.Config)
 }
 
 function isStrictTsConfig(config: unknown): config is AntFuStrictTsConfig {

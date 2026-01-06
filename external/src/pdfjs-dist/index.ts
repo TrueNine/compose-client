@@ -164,9 +164,7 @@ export async function safeGetObject(objId: string, proxy: PDFPageProxy): Promise
       resolve(data)
     })
     setTimeout(() => {
-      if (isErr) {
-        reject(new Error(`read PDF objId ${objId} mil 2000 timeout`))
-      }
+      if (isErr) reject(new Error(`read PDF objId ${objId} mil 2000 timeout`))
     }, 2000)
   })
 }
@@ -200,22 +198,16 @@ export async function extractPdfImages<T = string>(
       .map((operator, index): number | null => (operator === PdfJs.OPS.paintImageXObject ? index : null))
       .filter((index): index is number => index !== null)
 
-    if (imageOperatorIndices.length === 0) {
-      throw new Error('No image operators found in PDF page')
-    }
+    if (imageOperatorIndices.length === 0) throw new Error('No image operators found in PDF page')
 
     const firstImageIndex = imageOperatorIndices[0]
     const args = operatorList.argsArray[firstImageIndex]
 
-    if (!Array.isArray(args) || args.length === 0 || typeof args[0] !== 'string') {
-      throw new Error('Invalid image operator arguments')
-    }
+    if (!Array.isArray(args) || args.length === 0 || typeof args[0] !== 'string') throw new Error('Invalid image operator arguments')
 
     const imageRefName = args[0]
     const imageDataRaw = await safeGetObject(imageRefName, page)
-    if (!isValidPDFImageData(imageDataRaw)) {
-      throw new Error('Invalid PDF image data')
-    }
+    if (!isValidPDFImageData(imageDataRaw)) throw new Error('Invalid PDF image data')
     // 类型检查通过后，可以安全地进行类型断言
     const imageData = imageDataRaw
 

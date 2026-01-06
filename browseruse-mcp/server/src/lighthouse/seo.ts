@@ -136,9 +136,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
   // First pass: count audits by type and initialize categories
   auditRefs.forEach(ref => {
     const audit = audits[ref.id]
-    if (audit == null) {
-      return
-    }
+    if (audit == null) return
 
     // Count by scoreDisplayMode
     if (audit.scoreDisplayMode === 'manual') {
@@ -149,11 +147,8 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
       notApplicableCount++
     } else if (audit.score != null) {
       // Binary pass/fail
-      if (audit.score >= 0.9) {
-        passedCount++
-      } else {
-        failedCount++
-      }
+      if (audit.score >= 0.9) passedCount++
+      else failedCount++
     }
 
     // Categorize the issue
@@ -183,9 +178,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
     }
 
     // Update category score and issues count
-    if (audit.score != null && audit.score < 0.9) {
-      categories[category].issues_count++
-    }
+    if (audit.score != null && audit.score < 0.9) categories[category].issues_count++
   })
 
   // Second pass: process failed audits into AI-friendly format
@@ -201,13 +194,9 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
 
       // Determine impact level based on score and weight
       let impact: 'critical' | 'serious' | 'moderate' | 'minor' = 'moderate'
-      if (audit.score === 0) {
-        impact = 'critical'
-      } else if (audit.score != null && audit.score <= 0.5) {
-        impact = 'serious'
-      } else if (audit.score != null && audit.score > 0.7) {
-        impact = 'minor'
-      }
+      if (audit.score === 0) impact = 'critical'
+      else if (audit.score != null && audit.score <= 0.5) impact = 'serious'
+      else if (audit.score != null && audit.score > 0.7) impact = 'minor'
 
       // Categorize the issue
       let category = 'other'
@@ -255,21 +244,13 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
             // Type-safe property access for unknown item
             const itemObj = item as Record<string, unknown>
 
-            if (itemObj.selector != null) {
-              detail.selector = String(itemObj.selector)
-            }
+            if (itemObj.selector != null) detail.selector = String(itemObj.selector)
 
-            if (itemObj.value != null) {
-              detail.value = String(itemObj.value)
-            }
+            if (itemObj.value != null) detail.value = String(itemObj.value)
 
-            if (itemObj.issue != null) {
-              detail.issue = String(itemObj.issue)
-            }
+            if (itemObj.issue != null) detail.issue = String(itemObj.issue)
 
-            if (Object.keys(detail).length > 0) {
-              details.push(detail)
-            }
+            if (Object.keys(detail).length > 0) details.push(detail)
           })
         }
       }
@@ -298,9 +279,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
     .filter(([_, data]) => data.issues_count > 0)
     .sort(([_, a], [__, b]) => b.issues_count - a.issues_count)
     .forEach(([category, data]) => {
-      if (data.issues_count === 0) {
-        return
-      }
+      if (data.issues_count === 0) return
 
       let recommendation: string
 
@@ -340,9 +319,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
     )
   }
 
-  if (issues.some(issue => issue.id === 'canonical')) {
-    prioritized_recommendations.push('Implement proper canonical tags')
-  }
+  if (issues.some(issue => issue.id === 'canonical')) prioritized_recommendations.push('Implement proper canonical tags')
 
   // Create the report content
   const reportContent: SEOReportContent = {
