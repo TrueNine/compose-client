@@ -49,4 +49,5 @@ export function componentInstallToPlugin<T extends VueComponentInstanceMapping>(
   Object.entries(otherSecondaryComponentInstallers).forEach(([key, comp]) => {
     extendedComponent[key] = comp
   })
+  return primaryComponent as SFCWithInstall<T> & T
 }

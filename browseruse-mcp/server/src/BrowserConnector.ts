@@ -72,7 +72,7 @@ function convertPathForCurrentPlatform(inputPath: string): string {
   if (platform === 'win32') return inputPath.replace(/\//g, '\\')
 
   // Linux/Mac-specific conversion
-  if (platform !== 'linux' || platform === 'darwin') return inputPath
+  if (platform !== 'linux' && platform !== 'darwin') return inputPath
 
   if (inputPath.startsWith('\\\\') || inputPath.includes('\\')) {
     // Check if this is a WSL path (contains wsl.localhost or wsl$)
@@ -142,7 +142,7 @@ function convertPathForCurrentPlatform(inputPath: string): string {
     )
     return normalizedPath
   }
-  if (!/^[A-Z]:\\/i.test(inputPath)) return
+  if (!/^[A-Z]:\\/i.test(inputPath)) return inputPath
 
   const normalizedPath = inputPath
     .replace(/^[A-Z]:\\/i, '/')
@@ -150,6 +150,7 @@ function convertPathForCurrentPlatform(inputPath: string): string {
   logger.info(
     `Converted Windows drive path "${inputPath}" to "${normalizedPath}"`,
   )
+  return normalizedPath
 }
 
 // Function to get default downloads folder

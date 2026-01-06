@@ -81,4 +81,5 @@ export function initTencentMapWebGlScript(
     const handle = window.TMap
     callback(mapContainer, handle, ev)
   })
+  return { src, mapContainer }
 }
