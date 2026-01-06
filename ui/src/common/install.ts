@@ -33,9 +33,7 @@ export function componentInstallToPlugin<T extends VueComponentInstanceMapping>(
     }
   }
 
-  if (primaryComponent.name == null) {
-    primaryComponent = { ...primaryComponent, name: primaryComponent.__name }
-  }
+  if (primaryComponent.name == null) primaryComponent = { ...primaryComponent, name: primaryComponent.__name }
 
   primaryComponent.install = (app: App) => {
     const allInstallComponents = [primaryComponent, ...Object.values(otherSecondaryComponentInstallers)]
