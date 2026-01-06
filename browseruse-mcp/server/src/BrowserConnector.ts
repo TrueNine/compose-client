@@ -773,7 +773,7 @@ export class BrowserConnector {
           }
 
           // Use provided path or default to downloads folder
-          const targetPath = outputPath != null ? outputPath : getDefaultDownloadsFolder()
+          const targetPath = outputPath ?? getDefaultDownloadsFolder()
           logger.info(`Using screenshot path: ${targetPath}`)
 
           // Remove the data:image/png;base64, prefix
