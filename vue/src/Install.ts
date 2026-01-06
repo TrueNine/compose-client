@@ -25,35 +25,31 @@ export function componentInstallToPlugin<T extends VueComponentInstanceMapping>(
   let primaryComponent = component as unknown as SFCWithInstall<T>
   const otherSecondaryComponentInstallers: Record<string, SFCWithInstall<T>> = {}
 
-  if (otherComponent) {
-    for (const [key, comp] of Object.entries(otherComponent)) {
-      otherSecondaryComponentInstallers[key] = comp as SFCWithInstall<T>
-    }
+  if (!otherComponent) return primaryComponent
+
+  for (const [key, comp] of Object.entries(otherComponent)) {
+    otherSecondaryComponentInstallers[key] = comp as SFCWithInstall<T>
   }
 
-  if (primaryComponent.name == null) {
-    primaryComponent = { ...primaryComponent, name: primaryComponent.__name }
-  }
+  if (primaryComponent.name == null) primaryComponent = { ...primaryComponent, name: primaryComponent.__name }
 
   primaryComponent.install = (app: App) => {
     const allInstallComponents = [primaryComponent, ...Object.values(otherSecondaryComponentInstallers)]
     for (const toInstallComponent of allInstallComponents) {
       const { name = void 0, __name = void 0 } = toInstallComponent
       const resolvedName = (name ?? __name)
-      if (typeof resolvedName !== 'string' || !resolvedName) {
-        throw new Error('组件缺少有效的 name 或 __name 属性，无法注册到 app.component')
-      }
+      if (typeof resolvedName !== 'string' || !resolvedName) throw new Error('组件缺少有效的 name 或 __name 属性，无法注册到 app.component')
 
       app.component(resolvedName, toInstallComponent)
     }
   }
 
-  if (Object.keys(otherSecondaryComponentInstallers).length > 0) {
-    const extendedComponent = primaryComponent as unknown as Record<string, unknown>
-    Object.entries(otherSecondaryComponentInstallers).forEach(([key, comp]) => {
-      extendedComponent[key] = comp
-    })
-  }
+  if (Object.keys(otherSecondaryComponentInstallers).length === 0) return primaryComponent
+
+  const extendedComponent = primaryComponent as unknown as Record<string, unknown>
+  Object.entries(otherSecondaryComponentInstallers).forEach(([key, comp]) => {
+    extendedComponent[key] = comp
+  })
 
   return primaryComponent as T
 }
