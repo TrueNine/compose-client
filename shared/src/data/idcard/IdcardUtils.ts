@@ -18,8 +18,7 @@ export const IdcardUtils = {
         gender: Number(trimIdcard.substring(16, 17)) % 2 === 0,
         birthday: birthday satisfies timestamp,
       }
-    } else {
-      return void 0
     }
+    else return void 0
   },
 }

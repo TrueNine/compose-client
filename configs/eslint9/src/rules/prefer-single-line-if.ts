@@ -13,20 +13,27 @@ const rule: Rule.RuleModule = {
     schema: [],
     messages: {
       preferSingleLine: 'If-else chain with simple statements should be single-line format',
+      preferSingleLineBranch: 'Simple if/else branch should be single-line format',
     },
   },
   create(context) {
     const sourceCode = context.sourceCode
 
+    /* eslint-disable ts/no-unsafe-member-access, ts/no-unsafe-assignment */
     function getSingleStatement(node: Rule.Node | null | undefined): Rule.Node | null {
       if (!node) return null
-      if (node.type === 'BlockStatement' && 'body' in node) {
-        const body = node.body as Rule.Node[]
-        if (body.length === 1) return body[0]
-        return null
-      }
-      return node
+      if (node.type !== 'BlockStatement') return node
+
+      const body = (node as any).body
+      if (!Array.isArray(body) || body.length !== 1) return null
+      return body[0] as Rule.Node
     }
+
+    function hasComments(node: Rule.Node): boolean {
+      const comments = sourceCode.getCommentsInside(node)
+      return comments.length > 0
+    }
+    /* eslint-enable ts/no-unsafe-member-access, ts/no-unsafe-assignment */
 
     function isSimpleStatement(stmt: Rule.Node | null): boolean {
       if (!stmt) return false
@@ -53,24 +60,40 @@ const rule: Rule.RuleModule = {
       return { conditions, finalElse: current }
     }
 
+    function canBranchBeSimplified(consequent: Rule.Node, test: Rule.Node): boolean {
+      if (consequent.type !== 'BlockStatement') return false
+      if (!isNodeSingleLine(test)) return false
+      if (hasComments(consequent)) return false
+
+      const stmt = getSingleStatement(consequent)
+      if (!stmt || !isSimpleStatement(stmt)) return false
+      if (!isNodeSingleLine(stmt)) return false
+
+      const condText = sourceCode.getText(test)
+      const stmtText = sourceCode.getText(stmt)
+      const lineLength = `if (${condText}) ${stmtText}`.length
+      return lineLength < MAX_LINE_LENGTH - 20
+    }
+
     function canConvertToSingleLine(node: Rule.Node): boolean {
       const { conditions, finalElse } = collectIfChain(node)
 
       for (const cond of conditions) {
         if (!('consequent' in cond) || !('test' in cond)) return false
 
-        // Check if condition itself spans multiple lines
         const test = cond.test as Rule.Node
         if (!isNodeSingleLine(test)) return false
 
-        const stmt = getSingleStatement(cond.consequent as Rule.Node)
-        if (!stmt || !isSimpleStatement(stmt)) return false
+        const consequent = cond.consequent as Rule.Node
+        if (hasComments(consequent)) return false
 
-        // Check if statement spans multiple lines
+        const stmt = getSingleStatement(consequent)
+        if (!stmt || !isSimpleStatement(stmt)) return false
         if (!isNodeSingleLine(stmt)) return false
       }
 
       if (finalElse) {
+        if (hasComments(finalElse)) return false
         const stmt = getSingleStatement(finalElse)
         if (!stmt || !isSimpleStatement(stmt)) return false
         if (!isNodeSingleLine(stmt)) return false
@@ -87,11 +110,10 @@ const rule: Rule.RuleModule = {
         lines.push(`${prefix} (${condText}) ${stmtText}`)
       }
 
-      if (finalElse) {
-        const stmt = getSingleStatement(finalElse)!
-        lines.push(`else ${sourceCode.getText(stmt)}`)
-      }
+      if (!finalElse) return lines.every(line => line.length < MAX_LINE_LENGTH - 20)
 
+      const stmt = getSingleStatement(finalElse)!
+      lines.push(`else ${sourceCode.getText(stmt)}`)
       return lines.every(line => line.length < MAX_LINE_LENGTH - 20)
     }
 
@@ -117,40 +139,125 @@ const rule: Rule.RuleModule = {
       return true
     }
 
+    function isBranchAlreadySingleLine(consequent: Rule.Node, ifNode: Rule.Node): boolean {
+      if (consequent.type === 'BlockStatement') return false
+      return ifNode.loc?.start.line === consequent.loc?.end.line
+    }
+
     return {
       IfStatement(node) {
         const parent = node.parent
+        // Skip if this is part of an else-if chain (will be handled by the root if)
         if (parent?.type === 'IfStatement' && 'alternate' in parent && parent.alternate === node) return
 
-        if (isAlreadySingleLine(node)) return
-        if (!canConvertToSingleLine(node)) return
+        // First, try to convert the entire chain
+        if (!isAlreadySingleLine(node) && canConvertToSingleLine(node)) {
+          context.report({
+            node,
+            messageId: 'preferSingleLine',
+            fix(fixer) {
+              const { conditions, finalElse } = collectIfChain(node)
+              const indent = ' '.repeat(node.loc?.start.column ?? 0)
+              const lines: string[] = []
 
+              for (let i = 0; i < conditions.length; i++) {
+                const cond = conditions[i]
+                if (!('consequent' in cond) || !('test' in cond)) continue
+                const stmt = getSingleStatement(cond.consequent as Rule.Node)!
+                const condText = sourceCode.getText(cond.test as Rule.Node)
+                let stmtText = sourceCode.getText(stmt)
+
+                if (!stmtText.endsWith(';') && !stmtText.endsWith('}')) stmtText = stmtText.trimEnd()
+
+                const prefix = i === 0 ? 'if' : `${indent}else if`
+                lines.push(`${prefix} (${condText}) ${stmtText}`)
+              }
+
+              if (!finalElse) return fixer.replaceText(node, lines.join('\n'))
+
+              const stmt = getSingleStatement(finalElse)!
+              let stmtText = sourceCode.getText(stmt)
+              if (!stmtText.endsWith(';') && !stmtText.endsWith('}')) stmtText = stmtText.trimEnd()
+              lines.push(`${indent}else ${stmtText}`)
+              return fixer.replaceText(node, lines.join('\n'))
+            },
+          })
+          return
+        }
+
+        // If entire chain can't be converted, try to simplify individual branches
+        // We need to rebuild the entire chain to avoid syntax errors
+        const { conditions, finalElse } = collectIfChain(node)
+
+        // Check which branches can be simplified
+        const branchSimplifiable: boolean[] = []
+        for (const cond of conditions) {
+          if (!('consequent' in cond) || !('test' in cond)) {
+            branchSimplifiable.push(false)
+            continue
+          }
+          const consequent = cond.consequent as Rule.Node
+          const test = cond.test as Rule.Node
+          const canSimplify = !isBranchAlreadySingleLine(consequent, cond) && canBranchBeSimplified(consequent, test)
+          branchSimplifiable.push(canSimplify)
+        }
+
+        let finalElseSimplifiable = false
+        if (finalElse && finalElse.type === 'BlockStatement' && !hasComments(finalElse)) {
+          const stmt = getSingleStatement(finalElse)
+          if (stmt && isSimpleStatement(stmt) && isNodeSingleLine(stmt)) {
+            const stmtText = sourceCode.getText(stmt)
+            finalElseSimplifiable = stmtText.length < MAX_LINE_LENGTH - 20
+          }
+        }
+
+        // Due to `curly: ['error', 'multi-line']` rule (without 'consistent'),
+        // we can simplify individual branches independently
+
+        // Check if there's anything to simplify
+        const hasSimplifiableBranch = branchSimplifiable.some(Boolean) || finalElseSimplifiable
+        if (!hasSimplifiableBranch) return
+
+        // Report on the root node and rebuild the entire chain
         context.report({
           node,
-          messageId: 'preferSingleLine',
+          messageId: 'preferSingleLineBranch',
           fix(fixer) {
-            const { conditions, finalElse } = collectIfChain(node)
             const indent = ' '.repeat(node.loc?.start.column ?? 0)
             const lines: string[] = []
 
             for (let i = 0; i < conditions.length; i++) {
               const cond = conditions[i]
               if (!('consequent' in cond) || !('test' in cond)) continue
-              const stmt = getSingleStatement(cond.consequent as Rule.Node)!
-              const condText = sourceCode.getText(cond.test as Rule.Node)
-              let stmtText = sourceCode.getText(stmt)
 
-              if (!stmtText.endsWith(';') && !stmtText.endsWith('}')) stmtText = stmtText.trimEnd()
-
+              const consequent = cond.consequent as Rule.Node
+              const test = cond.test as Rule.Node
+              const condText = sourceCode.getText(test)
               const prefix = i === 0 ? 'if' : `${indent}else if`
-              lines.push(`${prefix} (${condText}) ${stmtText}`)
+
+              if (branchSimplifiable[i]) {
+                // Simplify this branch
+                const stmt = getSingleStatement(consequent)!
+                let stmtText = sourceCode.getText(stmt)
+                if (!stmtText.endsWith(';') && !stmtText.endsWith('}')) stmtText = stmtText.trimEnd()
+                lines.push(`${prefix} (${condText}) ${stmtText}`)
+              } else {
+                // Keep original format (already single-line without braces)
+                const consequentText = sourceCode.getText(consequent)
+                lines.push(`${prefix} (${condText}) ${consequentText}`)
+              }
             }
 
             if (finalElse) {
-              const stmt = getSingleStatement(finalElse)!
-              let stmtText = sourceCode.getText(stmt)
-              if (!stmtText.endsWith(';') && !stmtText.endsWith('}')) stmtText = stmtText.trimEnd()
-              lines.push(`${indent}else ${stmtText}`)
+              if (finalElseSimplifiable) {
+                const stmt = getSingleStatement(finalElse)!
+                let stmtText = sourceCode.getText(stmt)
+                if (!stmtText.endsWith(';') && !stmtText.endsWith('}')) stmtText = stmtText.trimEnd()
+                lines.push(`${indent}else ${stmtText}`)
+              } else {
+                const elseText = sourceCode.getText(finalElse)
+                lines.push(`${indent}else ${elseText}`)
+              }
             }
 
             return fixer.replaceText(node, lines.join('\n'))

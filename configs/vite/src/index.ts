@@ -180,16 +180,18 @@ export function configureViteFragment(
   }
 
   // 应用性能优化配置
-  if (options.performance?.enabled !== false) {
-    const performanceConfig = createPerformancePreset(
-      options.performance?.preset || 'basic',
-      options.performance?.options || {},
+  if (options.performance?.enabled === false) {
+    return mergeConfig(
+      finalConfig,
+      baseConfig,
     )
-    finalConfig = mergeConfig(finalConfig, performanceConfig)
   }
 
-  return mergeConfig(
-    finalConfig,
-    baseConfig,
+  const performanceConfig = createPerformancePreset(
+    options.performance?.preset || 'basic',
+    options.performance?.options || {},
   )
+  finalConfig = mergeConfig(finalConfig, performanceConfig)
+
+  return finalConfig
 }

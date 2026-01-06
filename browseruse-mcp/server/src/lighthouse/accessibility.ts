@@ -136,13 +136,10 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
   auditRefs.forEach(ref => {
     const audit = audits[ref.id]
     // Count by scoreDisplayMode
-    if (audit.scoreDisplayMode === 'manual') {
-      manualCount++
-    } else if (audit.scoreDisplayMode === 'informative') {
-      informativeCount++
-    } else if (audit.scoreDisplayMode === 'notApplicable') {
-      notApplicableCount++
-    } else if (audit.score !== null) {
+    if (audit.scoreDisplayMode === 'manual') manualCount++
+    else if (audit.scoreDisplayMode === 'informative') informativeCount++
+    else if (audit.scoreDisplayMode === 'notApplicable') notApplicableCount++
+    else if (audit.score !== null) {
       // Binary pass/fail
       if (audit.score >= 0.9) passedCount++
       else failedCount++
@@ -193,25 +190,21 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
             const itemObj = item as Record<string, unknown>
             const node = itemObj.node as Record<string, unknown> | undefined
 
-            if (node) {
-              const element: AIAccessibilityElement = {
-                selector: String(node.selector),
-                snippet: node.snippet != null ? String(node.snippet) : void 0,
-                label: node.nodeLabel != null ? String(node.nodeLabel) : void 0,
-                issue_description: node.explanation != null ? String(node.explanation) : (itemObj.explanation != null ? String(itemObj.explanation) : void 0),
-              }
+            if (!node) return
 
-              if (itemObj.value != null) {
-                element.value = typeof itemObj.value === 'string' || typeof itemObj.value === 'number'
-                  ? itemObj.value
-                  : String(itemObj.value)
-              }
-
-              elements.push(element)
-
-              // Add to critical elements if impact is critical or serious
-              if (impact === 'critical' || impact === 'serious') criticalElements.push(element)
+            const element: AIAccessibilityElement = {
+              selector: String(node.selector),
+              snippet: node.snippet != null ? String(node.snippet) : void 0,
+              label: node.nodeLabel != null ? String(node.nodeLabel) : void 0,
+              issue_description: node.explanation != null ? String(node.explanation) : (itemObj.explanation != null ? String(itemObj.explanation) : void 0),
             }
+            if (itemObj.value != null) {
+              element.value = typeof itemObj.value === 'string' || typeof itemObj.value === 'number'
+                ? itemObj.value
+                : String(itemObj.value)
+            }
+            elements.push(element)
+            if (impact === 'critical' || impact === 'serious') criticalElements.push(element)
           })
         }
       }

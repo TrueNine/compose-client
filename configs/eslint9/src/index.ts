@@ -98,10 +98,11 @@ export default async function eslint9(options: ConfigOptions = {}): Promise<Retu
     },
     rules: {
       '@truenine/prefer-single-line-if': 'warn',
+      '@truenine/prefer-guard-clause': ['warn', { minStatements: 2 }],
       'antfu/if-newline': 'off',
       'antfu/curly': 'off',
       'style/brace-style': 'off',
-      'curly': ['error', 'multi-line', 'consistent'],
+      'curly': ['error', 'multi-line'],
     },
   } as Linter.Config)
 }

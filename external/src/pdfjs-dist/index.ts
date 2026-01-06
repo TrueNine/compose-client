@@ -53,10 +53,10 @@ export function init(): typeof pdfjs {
     pdfjs.GlobalWorkerOptions.workerSrc = __workSrc
     PdfJs.GlobalWorkerOptions.workerSrc = __workSrc
   }
-  if (__worker) {
-    pdfjs.GlobalWorkerOptions.workerPort = __worker
-    PdfJs.GlobalWorkerOptions.workerPort = __worker
-  }
+  if (!__worker) return PdfJs
+
+  pdfjs.GlobalWorkerOptions.workerPort = __worker
+  PdfJs.GlobalWorkerOptions.workerPort = __worker
   return PdfJs
 }
 

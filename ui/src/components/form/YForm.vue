@@ -78,9 +78,8 @@ const formConfig = computed(() => {
       // In test environment, only add schema if it's not a Zod schema or if it's our custom wrapper
       if (!(schema as any).__type || (schema as any).__type === 'VeeTypedSchema') config.validationSchema = schema
       // For Zod schemas in tests, we'll handle validation manually
-    } else {
-      config.validationSchema = schema
     }
+    else config.validationSchema = schema
   }
 
   return config

@@ -40,9 +40,7 @@ const usedDefaultSlot = computed(() => !!slots.default)
 <template v-if="usedDefaultSlot">
   <template v-for="(c, _) in slots.default()" :key="_">
     <YFieldProxyComponent
-      :label="props.label"
-      :placeholder="props.placeholder"
-      :component="c"
+      :label="props.label" :placeholder="props.placeholder" :component="c"
       :modelNames="_effectModels"
     />
   </template>

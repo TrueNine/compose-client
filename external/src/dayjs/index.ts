@@ -129,7 +129,6 @@ export function formatToday(to: Dayjs): string {
     else if (isToday(to, 0, 'year')) return to.format('MM-DD')
     else if (to.year() >= 2000) return to.format('YY-MM-DD')
     else return to.format('YYYY-MM-DD')
-  } else {
-    return to.format('YYYY-MM-DD')
   }
+  else return to.format('YYYY-MM-DD')
 }

@@ -168,13 +168,10 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
     const audit = audits[ref.id]
     if (audit == null) return
 
-    if (audit.scoreDisplayMode === 'manual') {
-      manualCount++
-    } else if (audit.scoreDisplayMode === 'informative') {
-      informativeCount++
-    } else if (audit.scoreDisplayMode === 'notApplicable') {
-      notApplicableCount++
-    } else if (audit.score != null) {
+    if (audit.scoreDisplayMode === 'manual') manualCount++
+    else if (audit.scoreDisplayMode === 'informative') informativeCount++
+    else if (audit.scoreDisplayMode === 'notApplicable') notApplicableCount++
+    else if (audit.score != null) {
       if (audit.score >= 0.9) passedCount++
       else failedCount++
     }
@@ -235,11 +232,8 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
                 // Try to extract image name from selector
                 const imgMatch = selector.match(/img\.[^> ]+/)
                 if (imgMatch != null && metric.element_url == null) metric.element_url = imgMatch[0]
-              } else if (
-                String(path).includes(',SPAN') || String(path).includes(',P') || String(path).includes(',H')
-              ) {
-                metric.element_type = 'text'
               }
+              else if (String(path).includes(',SPAN') || String(path).includes(',P') || String(path).includes(',H')) metric.element_type = 'text'
             }
 
             // Try to extract text content if available
@@ -264,13 +258,10 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
                 const match = String(snippet).match(/src="([^"]+)"/)
                 if (match != null && match[1] != null) metric.element_url = match[1]
               }
-            } else if (String(node.nodeLabel).startsWith('<video')) {
-              metric.element_type = 'video'
-            } else if (String(node.nodeLabel).startsWith('<h')) {
-              metric.element_type = 'heading'
-            } else {
-              metric.element_type = 'text'
             }
+            else if (String(node.nodeLabel).startsWith('<video')) metric.element_type = 'video'
+            else if (String(node.nodeLabel).startsWith('<h')) metric.element_type = 'heading'
+            else metric.element_type = 'text'
 
             if (node.selector != null) metric.element_selector = String(node.selector)
           }
@@ -466,15 +457,14 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
         .slice(0, itemLimit)
         .forEach((item: unknown) => {
           const itemObj = item as Record<string, unknown>
-          if (itemObj.url != null) {
-            // Extract file name from full URL
-            const url = String(itemObj.url)
-            const fileName = url.split('/').pop() ?? url
-            opportunity.resources.push({
-              url: fileName,
-              savings_ms: Math.round(itemObj.wastedMs != null ? Number(itemObj.wastedMs) : 0),
-            })
-          }
+          if (itemObj.url == null) return
+
+          const url = String(itemObj.url)
+          const fileName = url.split('/').pop() ?? url
+          opportunity.resources.push({
+            url: fileName,
+            savings_ms: Math.round(itemObj.wastedMs != null ? Number(itemObj.wastedMs) : 0),
+          })
         })
     }
 
@@ -508,12 +498,11 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
         .slice(0, itemLimit)
         .forEach((item: unknown) => {
           const itemObj = item as Record<string, unknown>
-          if (itemObj.url != null) {
-            // Extract file name from full URL
-            const url = String(itemObj.url)
-            const fileName = url.split('/').pop() ?? url
-            opportunity.resources.push({ url: fileName })
-          }
+          if (itemObj.url == null) return
+
+          const url = String(itemObj.url)
+          const fileName = url.split('/').pop() ?? url
+          opportunity.resources.push({ url: fileName })
         })
     }
 

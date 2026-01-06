@@ -8,14 +8,13 @@ function camelTo(str: string, sep = '-'): string {
 }
 
 function resolveComponent(name: string): { name: string, from: string, satisfies: string[] } | undefined {
-  if (/^Y[A-Z]/.exec(name)) {
-    // 组件名如 YBtn -> btn, YConfigProvider -> config-provider
-    const kebabName = camelTo(name.slice(1))
-    return {
-      name: 'default',
-      from: `@truenine/ui/components/${kebabName}/index`,
-      satisfies: [`@truenine/ui/dist/components/${kebabName}/index.css`],
-    }
+  if (!/^Y[A-Z]/.exec(name)) return
+
+  const _kebabName = camelTo(name.slice(1))
+  return {
+    name,
+    from: '@truenine/ui',
+    satisfies: [],
   }
 }
 

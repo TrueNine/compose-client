@@ -190,10 +190,10 @@ describe('yFormTest', () => {
 
       // 或者检查事件的最新值
       const emitEvents = formComponent.emitted('update:modelValue')
-      if (emitEvents && emitEvents.length > 0) {
-        const lastEvent = emitEvents[emitEvents.length - 1]
-        expect(lastEvent[0]).toHaveProperty('username', 'newUser')
-      }
+      if (emitEvents && emitEvents.length <= 0) return
+
+      const lastEvent = emitEvents[emitEvents.length - 1]
+      expect(lastEvent[0]).toHaveProperty('username', 'newUser')
     })
   })
 
@@ -344,15 +344,13 @@ describe('yFormTest', () => {
       const formEl = wrapper.find('form')
       expect(formEl.exists()).toBe(true)
 
-      if (formEl.exists()) {
-        await formEl.trigger('submit')
-        await nextTick()
-        await new Promise(resolve => setTimeout(resolve, 100))
+      if (!formEl.exists()) return
 
-        expect(handleSubmit).toHaveBeenCalledTimes(1)
-        // 应该使用修改后的值作为预期，因为我们已经改变了输入值
-        expect(handleSubmit).toHaveBeenCalledWith({ formKey: 'changedValue' })
-      }
+      await formEl.trigger('submit')
+      await nextTick()
+      await new Promise(resolve => setTimeout(resolve, 100))
+      expect(handleSubmit).toHaveBeenCalledTimes(1)
+      expect(handleSubmit).toHaveBeenCalledWith({ formKey: 'changedValue' })
     })
 
     it('应 支持 YField :name 为数组时的多重映射', async () => {
@@ -421,15 +419,14 @@ describe('yFormTest', () => {
       const formEl = wrapper.find('form')
       expect(formEl.exists()).toBe(true)
 
-      if (formEl.exists()) {
-        await formEl.trigger('submit')
-        await nextTick()
-        await nextTick()
-        await new Promise(resolve => setTimeout(resolve, 100))
+      if (!formEl.exists()) return
 
-        expect(handleSubmit).toHaveBeenCalledTimes(1)
-        expect(handleSubmit).toHaveBeenCalledWith({ key1: 'newVal1', key2: 'newVal2' })
-      }
+      await formEl.trigger('submit')
+      await nextTick()
+      await nextTick()
+      await new Promise(resolve => setTimeout(resolve, 100))
+      expect(handleSubmit).toHaveBeenCalledTimes(1)
+      expect(handleSubmit).toHaveBeenCalledWith({ key1: 'newVal1', key2: 'newVal2' })
     })
   })
 })

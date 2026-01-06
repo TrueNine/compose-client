@@ -4,7 +4,7 @@ export const defaultJsConfig: AntFuJsConfig = {
   overrides: {
     'no-inline-comments': 'error',
     'unicorn/no-useless-spread': 'error',
-    'curly': ['error', 'multi-line', 'consistent'],
+    'curly': ['error', 'multi-line'],
     'no-undefined': 'off',
     'no-cond-assign': ['error', 'always'],
     'no-constant-condition': 'error',

@@ -87,10 +87,10 @@ export class SearchParam {
    * @param value 参数值
    */
   append(name: string, value: BasicType): this {
-    if (name && value != null) {
-      this._cachedString = null
-      this._root.set(name, value)
-    }
+    if (name && value == null) return this
+
+    this._cachedString = null
+    this._root.set(name, value)
     return this
   }
 
@@ -164,14 +164,13 @@ export function encodeQueryParam(...cards: nilpt<object>[]): string {
         for (const v of value) {
           if (v != null) params.push([encodedKey, encodeURIComponent(String(v))])
         }
-      } else if (typeof value === 'string') {
-        params.push([encodedKey, encodeURIComponent(value)])
-      } else if (typeof value === 'object') {
+      }
+      else if (typeof value === 'string') params.push([encodedKey, encodeURIComponent(value)])
+      else if (typeof value === 'object') {
         // 嵌套对象只处理一层，输出空字符串
         params.push([encodedKey, ''])
-      } else {
-        params.push([encodedKey, String(value)])
       }
+      else params.push([encodedKey, String(value)])
     }
   }
 
@@ -209,12 +208,12 @@ export function queryParam(...cards: nilpt<object>[]): string {
         for (const v of value) {
           if (v != null) params.push([key, String(v)])
         }
-      } else if (typeof value === 'object') {
+      }
+      else if (typeof value === 'object') {
         // 嵌套对象只处理一层，输出空字符串
         params.push([key, ''])
-      } else {
-        params.push([key, String(value)])
       }
+      else params.push([key, String(value)])
     }
   }
 
@@ -250,11 +249,9 @@ export function queryHash(...cards: nilpt<object>[]): string {
         for (const v of value) {
           if (v != null) params.push([key, String(v)])
         }
-      } else if (typeof value === 'object') {
-        params.push([key, ''])
-      } else {
-        params.push([key, String(value)])
       }
+      else if (typeof value === 'object') params.push([key, ''])
+      else params.push([key, String(value)])
     }
   }
 

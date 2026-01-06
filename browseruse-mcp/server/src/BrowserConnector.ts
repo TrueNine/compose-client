@@ -72,92 +72,84 @@ function convertPathForCurrentPlatform(inputPath: string): string {
   if (platform === 'win32') return inputPath.replace(/\//g, '\\')
 
   // Linux/Mac-specific conversion
-  if (platform === 'linux' || platform === 'darwin') {
-    // Check if this is a Windows UNC path (starts with \\)
-    if (inputPath.startsWith('\\\\') || inputPath.includes('\\')) {
-      // Check if this is a WSL path (contains wsl.localhost or wsl$)
-      if (inputPath.includes('wsl.localhost') || inputPath.includes('wsl$')) {
-        // Extract the path after the distribution name
-        // Handle both \\wsl.localhost\Ubuntu\path and \\wsl$\Ubuntu\path formats
-        const parts = inputPath.split('\\').filter(part => part.length > 0)
-        logger.info('Path parts:', parts)
+  if (platform !== 'linux' || platform === 'darwin') return inputPath
 
-        // Find the index after the distribution name
-        const distNames = [
-          'Ubuntu',
-          'Debian',
-          'kali',
-          'openSUSE',
-          'SLES',
-          'Fedora',
-        ]
+  if (inputPath.startsWith('\\\\') || inputPath.includes('\\')) {
+    // Check if this is a WSL path (contains wsl.localhost or wsl$)
+    if (inputPath.includes('wsl.localhost') || inputPath.includes('wsl$')) {
+      // Extract the path after the distribution name
+      // Handle both \\wsl.localhost\Ubuntu\path and \\wsl$\Ubuntu\path formats
+      const parts = inputPath.split('\\').filter(part => part.length > 0)
+      logger.info('Path parts:', parts)
 
-        // Find the distribution name in the path
-        let distIndex = -1
-        for (const dist of distNames) {
-          const index = parts.findIndex(
-            part => part === dist || part.toLowerCase() === dist.toLowerCase(),
-          )
-          if (index !== -1) {
-            distIndex = index
-            break
-          }
-        }
+      // Find the index after the distribution name
+      const distNames = [
+        'Ubuntu',
+        'Debian',
+        'kali',
+        'openSUSE',
+        'SLES',
+        'Fedora',
+      ]
 
-        if (distIndex !== -1 && distIndex + 1 < parts.length) {
-          // Reconstruct the path as a native Linux path
-          const linuxPath = `/${parts.slice(distIndex + 1).join('/')}`
-          logger.info(
-            `Converted Windows WSL path "${inputPath}" to Linux path "${linuxPath}"`,
-          )
-          return linuxPath
-        }
-
-        // If we couldn't find a distribution name but it's clearly a WSL path,
-        // try to extract everything after wsl.localhost or wsl$
-        const wslIndex = parts.findIndex(
-          part =>
-            part === 'wsl.localhost'
-            || part === 'wsl$'
-            || part.toLowerCase() === 'wsl.localhost'
-            || part.toLowerCase() === 'wsl$',
+      // Find the distribution name in the path
+      let distIndex = -1
+      for (const dist of distNames) {
+        const index = parts.findIndex(
+          part => part === dist || part.toLowerCase() === dist.toLowerCase(),
         )
-
-        if (wslIndex !== -1 && wslIndex + 2 < parts.length) {
-          // Skip the WSL prefix and distribution name
-          const linuxPath = `/${parts.slice(wslIndex + 2).join('/')}`
-          logger.info(
-            `Converted Windows WSL path "${inputPath}" to Linux path "${linuxPath}"`,
-          )
-          return linuxPath
+        if (index !== -1) {
+          distIndex = index
+          break
         }
       }
 
-      // For non-WSL Windows paths, just normalize the slashes
-      const normalizedPath = inputPath
-        .replace(/\\\\/g, '/')
-        .replace(/\\/g, '/')
-      logger.info(
-        `Converted Windows UNC path "${inputPath}" to "${normalizedPath}"`,
+      if (distIndex !== -1 && distIndex + 1 < parts.length) {
+        // Reconstruct the path as a native Linux path
+        const linuxPath = `/${parts.slice(distIndex + 1).join('/')}`
+        logger.info(
+          `Converted Windows WSL path "${inputPath}" to Linux path "${linuxPath}"`,
+        )
+        return linuxPath
+      }
+
+      // If we couldn't find a distribution name but it's clearly a WSL path,
+      // try to extract everything after wsl.localhost or wsl$
+      const wslIndex = parts.findIndex(
+        part =>
+          part === 'wsl.localhost'
+          || part === 'wsl$'
+          || part.toLowerCase() === 'wsl.localhost'
+          || part.toLowerCase() === 'wsl$',
       )
-      return normalizedPath
+
+      if (wslIndex !== -1 && wslIndex + 2 < parts.length) {
+        // Skip the WSL prefix and distribution name
+        const linuxPath = `/${parts.slice(wslIndex + 2).join('/')}`
+        logger.info(
+          `Converted Windows WSL path "${inputPath}" to Linux path "${linuxPath}"`,
+        )
+        return linuxPath
+      }
     }
 
-    // Handle Windows drive letters (e.g., C:\path\to\file)
-    if (/^[A-Z]:\\/i.test(inputPath)) {
-      // Convert Windows drive path to Linux/Mac compatible path
-      const normalizedPath = inputPath
-        .replace(/^[A-Z]:\\/i, '/')
-        .replace(/\\/g, '/')
-      logger.info(
-        `Converted Windows drive path "${inputPath}" to "${normalizedPath}"`,
-      )
-      return normalizedPath
-    }
+    // For non-WSL Windows paths, just normalize the slashes
+    const normalizedPath = inputPath
+      .replace(/\\\\/g, '/')
+      .replace(/\\/g, '/')
+    logger.info(
+      `Converted Windows UNC path "${inputPath}" to "${normalizedPath}"`,
+    )
+    return normalizedPath
   }
+  if (!/^[A-Z]:\\/i.test(inputPath)) return
 
-  // Return the original path if no conversion was needed or possible
-  return inputPath
+  const normalizedPath = inputPath
+    .replace(/^[A-Z]:\\/i, '/')
+    .replace(/\\/g, '/')
+  logger.info(
+    `Converted Windows drive path "${inputPath}" to "${normalizedPath}"`,
+  )
 }
 
 // Function to get default downloads folder
@@ -286,11 +278,10 @@ function processLogsWithSettings(logs: LogEntry[]): LogEntry[] {
   return logs.map(log => {
     const processedLog = { ...log }
 
-    if (log.type === 'network-request') {
-      // Handle headers visibility
-      if (!currentSettings.showRequestHeaders) delete processedLog.requestHeaders
-      if (!currentSettings.showResponseHeaders) delete processedLog.responseHeaders
-    }
+    if (log.type !== 'network-request') return processedLog
+
+    if (!currentSettings.showRequestHeaders) delete processedLog.requestHeaders
+    if (!currentSettings.showResponseHeaders) delete processedLog.responseHeaders
 
     return processedLog
   })
@@ -734,10 +725,10 @@ export class BrowserConnector {
               })
               // Clear all callbacks
               screenshotCallbacks.clear()
-            } else {
-              logger.info('No callbacks found for screenshot')
             }
-          } else if (data.type === 'screenshot-error') {
+            else logger.info('No callbacks found for screenshot')
+          }
+          else if (data.type === 'screenshot-error') {
             // Handle screenshot error
             logger.info('Received screenshot error:', data.error)
             const callbacks = Array.from(screenshotCallbacks.values())
@@ -749,9 +740,8 @@ export class BrowserConnector {
               // Clear all callbacks
               screenshotCallbacks.clear()
             }
-          } else {
-            logger.info('Unhandled message type:', data.type)
           }
+          else logger.info('Unhandled message type:', data.type)
         } catch (error: unknown) {
           logger.error('Error processing WebSocket message:', error)
         }
@@ -905,17 +895,17 @@ export class BrowserConnector {
 
         // Set timeout to clean up if we don't get a response
         setTimeout(() => {
-          if (screenshotCallbacks.has(requestId)) {
-            logger.info(
-              `Browser Connector: Screenshot capture timed out for requestId: ${requestId}`,
-            )
-            screenshotCallbacks.delete(requestId)
-            reject(
-              new Error(
-                'Screenshot capture timed out - no response from Chrome extension',
-              ),
-            )
-          }
+          if (!screenshotCallbacks.has(requestId)) return
+
+          logger.info(
+            `Browser Connector: Screenshot capture timed out for requestId: ${requestId}`,
+          )
+          screenshotCallbacks.delete(requestId)
+          reject(
+            new Error(
+              'Screenshot capture timed out - no response from Chrome extension',
+            ),
+          )
         }, 10000)
       })
 
@@ -966,8 +956,7 @@ export class BrowserConnector {
           err,
         )
         throw new Error(
-          `Failed to create screenshot directory: ${
-            err instanceof Error ? err.message : String(err)
+          `Failed to create screenshot directory: ${err instanceof Error ? err.message : String(err)
           }`,
         )
       }
@@ -990,8 +979,7 @@ export class BrowserConnector {
           err,
         )
         throw new Error(
-          `Failed to save screenshot: ${
-            err instanceof Error ? err.message : String(err)
+          `Failed to save screenshot: ${err instanceof Error ? err.message : String(err)
           }`,
         )
       }
@@ -1394,9 +1382,8 @@ export class BrowserConnector {
         logger.error(
           `This might indicate another process started using this port after our check.`,
         )
-      } else {
-        logger.error(`Server error:`, err)
       }
+      else logger.error(`Server error:`, err)
       process.exit(1)
     })
 

@@ -62,11 +62,10 @@ export function createChunkOptimization(): BuildOptions['rollupOptions'] {
       // 设置 chunk 文件名格式
       chunkFileNames: chunkInfo => {
         const facadeModuleId = chunkInfo.facadeModuleId
-        if (facadeModuleId != null) {
-          const name = (facadeModuleId.split('/').pop()?.replace(/\.[^.]*$/, '')) ?? 'chunk'
-          return `chunks/${name}-[hash].js`
-        }
-        return 'chunks/[name]-[hash].js'
+        if (facadeModuleId == null) return 'chunks/[name]-[hash].js'
+
+        const name = (facadeModuleId.split('/').pop()?.replace(/\.[^.]*$/, '')) ?? 'chunk'
+        return `chunks/${name}-[hash].js`
       },
       entryFileNames: 'entries/[name]-[hash].js',
       assetFileNames: 'assets/[name]-[hash].[ext]',

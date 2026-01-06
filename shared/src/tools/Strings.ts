@@ -36,11 +36,10 @@ export function numberToChinese(num?: number, upperCase = false): late<string> {
     k++
   }
 
-  if (a.length > 1) {
-    re += BB[6]
-    for (let i = 0; i < a[1].length; i++) {
-      re += AA[a[1].charAt(i) as unknown as number]
-    }
+  if (a.length <= 1) return re
+
+  re += BB[6]
+  for (let i = 0; i < a[1].length; i++) {
+    re += AA[a[1].charAt(i) as unknown as number]
   }
-  return re
 }

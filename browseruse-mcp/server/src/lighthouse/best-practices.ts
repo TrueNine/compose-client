@@ -267,9 +267,8 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
       // More issues = lower score, max penalty of 25 points per issue
       const penalty = Math.min(100, issueCount * 25)
       categories[category].score = Math.max(0, 100 - penalty)
-    } else {
-      categories[category].score = 100
     }
+    else categories[category].score = 100
   })
 
   // Generate prioritized recommendations

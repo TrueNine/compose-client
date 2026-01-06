@@ -73,14 +73,12 @@ export function initTencentMapWebGlScript(
   mapContainer.id = containerId
   section.appendChild(mapContainer)
 
-  if (callback) {
-    const tMap = window.TMap
-    callback(mapContainer, tMap)
-    src.addEventListener('load', (ev: Event) => {
-      const handle = window.TMap
-      callback(mapContainer, handle, ev)
-    })
-  }
+  if (!callback) return { src, mapContainer }
 
-  return { src, mapContainer }
+  const tMap = window.TMap
+  callback(mapContainer, tMap)
+  src.addEventListener('load', (ev: Event) => {
+    const handle = window.TMap
+    callback(mapContainer, handle, ev)
+  })
 }

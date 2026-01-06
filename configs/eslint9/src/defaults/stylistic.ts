@@ -9,7 +9,7 @@ export const defaultStylisticConfig: AntFuStylisticConfig = {
     'style/no-multiple-empty-lines': ['error', { max: 1, maxBOF: 0, maxEOF: 0 }],
     'style/brace-style': 'off',
     'style/arrow-parens': ['error', 'as-needed'],
-    'curly': ['error', 'multi-line', 'consistent'],
+    'curly': ['error', 'multi-line'],
     'antfu/if-newline': 'off',
     'antfu/curly': 'off',
   },

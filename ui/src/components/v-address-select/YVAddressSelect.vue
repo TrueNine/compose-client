@@ -173,9 +173,8 @@ const codingLoad = ref(false)
  * @param code adCode
  */
 async function watchChangeCode(code: string) {
-  if (code && !loading.value && !codingLoad.value) {
-    await loadCode(code)
-  } else {
+  if (code && !loading.value && !codingLoad.value) await loadCode(code)
+  else {
     if (!loading.value && !codingLoad.value) {
       _selectedLevel.value = 0
       _fullPath.value = ''

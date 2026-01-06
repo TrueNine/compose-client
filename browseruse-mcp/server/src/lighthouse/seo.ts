@@ -139,13 +139,10 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
     if (audit == null) return
 
     // Count by scoreDisplayMode
-    if (audit.scoreDisplayMode === 'manual') {
-      manualCount++
-    } else if (audit.scoreDisplayMode === 'informative') {
-      informativeCount++
-    } else if (audit.scoreDisplayMode === 'notApplicable') {
-      notApplicableCount++
-    } else if (audit.score != null) {
+    if (audit.scoreDisplayMode === 'manual') manualCount++
+    else if (audit.scoreDisplayMode === 'informative') informativeCount++
+    else if (audit.scoreDisplayMode === 'notApplicable') notApplicableCount++
+    else if (audit.score != null) {
       // Binary pass/fail
       if (audit.score >= 0.9) passedCount++
       else failedCount++

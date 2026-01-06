@@ -93,22 +93,21 @@ function packageJsonContentReplace(content: string, options: Omit<PackageJsonOpt
     // --- Generate types entry only if it's a TS/TSX file and dts is not false --- END
 
     // Only add if there are any valid export types
-    if (Object.keys(exportValue).length > 0) {
-      // If the key is '.', also set top-level fields
-      if (exportKey === '.') {
-        if (hasEsm) packageJson.module = exportValue.import.substring(2)
-        if (hasCjs) packageJson.main = exportValue.require.substring(2)
-        // Set top-level types directly if main entry is TS and dts is not false
-        if (dts !== false && isTypeScriptEntry) {
-          packageJson.types = exportValue.types.substring(2)
-          packageJson.typings = exportValue.types.substring(2)
-        } else if (dts === false) {
-          delete packageJson.types
-          delete packageJson.typings
-        }
+    if (Object.keys(exportValue).length <= 0) return
+
+    if (exportKey === '.') {
+      if (hasEsm) packageJson.module = exportValue.import.substring(2)
+      if (hasCjs) packageJson.main = exportValue.require.substring(2)
+      // Set top-level types directly if main entry is TS and dts is not false
+      if (dts !== false && isTypeScriptEntry) {
+        packageJson.types = exportValue.types.substring(2)
+        packageJson.typings = exportValue.types.substring(2)
+      } else if (dts === false) {
+        delete packageJson.types
+        delete packageJson.typings
       }
-      newExports[exportKey] = exportValue
     }
+    newExports[exportKey] = exportValue
   })
 
   newExports['./package.json'] = './package.json'

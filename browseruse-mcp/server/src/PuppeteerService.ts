@@ -369,9 +369,8 @@ async function findBrowserExecutablePath(): Promise<string> {
     if (chromePath) {
       logger.info(`Chrome found via chrome-launcher: ${chromePath}`)
       return chromePath
-    } else {
-      logger.info('Chrome launched but couldn\'t determine executable path')
     }
+    else logger.info('Chrome launched but couldn\'t determine executable path')
   } catch (error: unknown) {
     // Check if it's a ChromeNotInstalledError
     const errorMessage = error instanceof Error ? error.message : String(error)
@@ -646,11 +645,11 @@ function setupBrowserCleanupHandlers(
  * Cancels any scheduled browser cleanup
  */
 function cancelScheduledCleanup(): void {
-  if (browserCleanupTimeout) {
-    logger.info('Cancelling scheduled browser cleanup')
-    clearTimeout(browserCleanupTimeout)
-    browserCleanupTimeout = null
-  }
+  if (!browserCleanupTimeout) return
+
+  logger.info('Cancelling scheduled browser cleanup')
+  clearTimeout(browserCleanupTimeout)
+  browserCleanupTimeout = null
 }
 
 /**
@@ -661,22 +660,21 @@ export function scheduleBrowserCleanup(): void {
   cancelScheduledCleanup()
 
   // Only schedule cleanup if we have an active browser instance
-  if (headlessBrowserInstance) {
-    logger.info(
-      `Scheduling browser cleanup in ${BROWSER_CLEANUP_TIMEOUT / 1000} seconds`,
-    )
+  if (!headlessBrowserInstance) return
 
-    browserCleanupTimeout = setTimeout(() => {
-      logger.info('Executing scheduled browser cleanup')
-      if (headlessBrowserInstance) {
-        logger.info('Closing headless browser instance')
-        void headlessBrowserInstance.close()
-        headlessBrowserInstance = null
-        launchedBrowserWSEndpoint = null
-      }
-      browserCleanupTimeout = null
-    }, BROWSER_CLEANUP_TIMEOUT)
-  }
+  logger.info(
+    `Scheduling browser cleanup in ${BROWSER_CLEANUP_TIMEOUT / 1000} seconds`,
+  )
+  browserCleanupTimeout = setTimeout(() => {
+    logger.info('Executing scheduled browser cleanup')
+    if (headlessBrowserInstance) {
+      logger.info('Closing headless browser instance')
+      void headlessBrowserInstance.close()
+      headlessBrowserInstance = null
+      launchedBrowserWSEndpoint = null
+    }
+    browserCleanupTimeout = null
+  }, BROWSER_CLEANUP_TIMEOUT)
 }
 
 // ===== Public Browser Connection API =====
