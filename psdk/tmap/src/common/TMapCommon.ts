@@ -71,7 +71,7 @@ export function initTencentMapWebGlScript(
   // 创建一个id容器
   const mapContainer: HTMLElement = document.createElement(containerTag)
   mapContainer.id = containerId
-  section.appendChild(mapContainer)
+  section.append(mapContainer)
 
   if (!callback) return { src, mapContainer }
 

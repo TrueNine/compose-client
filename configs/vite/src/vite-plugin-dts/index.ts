@@ -59,7 +59,7 @@ export function createDtsPlugin(options: SimpleDtsOptions = {}): Plugin {
   // 收集所有入口文件的后缀
   const extensions = new Set(
     finalOptions.entry.map(entry => {
-      const match = entry.match(/\.([^.]+)$/)
+      const match = /\.([^.]+)$/.exec(entry)
       return match ? match[1] : 'ts'
     }),
   )

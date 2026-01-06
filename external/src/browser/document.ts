@@ -11,7 +11,7 @@ function getDownloadElement(): HTMLAnchorElement {
       downloadElement = document.createElement('a')
       downloadElement.style.display = 'none'
 
-      document.body.appendChild(downloadElement)
+      document.body.append(downloadElement)
     }
     else throw new TypeError('无法创建下载元素：不在浏览器环境中')
   }
@@ -41,11 +41,11 @@ export function loadRemoteScriptTag(
   // 创建 script 标签并设置属性
   const scriptTag = document.createElement('script')
   scriptTag.src = src
-  scriptTag.setAttribute('charset', 'utf-8')
+  scriptTag.setAttribute('charset', 'utf8')
   if (typeof loadFn === 'function') scriptTag.addEventListener('load', loadFn)
   const parent = document.querySelector(appendTag)
   if (parent === null) return null
-  parent.appendChild(beforeEach(scriptTag))
+  parent.append(beforeEach(scriptTag))
   return scriptTag
 }
 

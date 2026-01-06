@@ -156,7 +156,43 @@ export default async function eslint9(options: ConfigOptions = {}): Promise<Retu
       // 使用 Date.now() 代替 new Date().getTime()
       'unicorn/prefer-date-now': 'error',
       // 使用 export from 代替 import + export
-      'unicorn/prefer-export-from': 'error',
+      'unicorn/prefer-export-from': 'warn',
+      // 简单 if-else 转三元表达式
+      'unicorn/prefer-ternary': 'error',
+      // a ? a : b → a || b
+      'unicorn/prefer-logical-operator-over-ternary': 'error',
+      // match() → test() 用于布尔检查
+      'unicorn/prefer-regexp-test': 'error',
+      // 现代 DOM API
+      'unicorn/prefer-modern-dom-apis': 'error',
+      // getElementById → querySelector
+      'unicorn/prefer-query-selector': 'error',
+      // appendChild → append
+      'unicorn/prefer-dom-node-append': 'error',
+      // removeChild → remove
+      'unicorn/prefer-dom-node-remove': 'error',
+      // innerText → textContent
+      'unicorn/prefer-dom-node-text-content': 'error',
+      // EventEmitter → EventTarget
+      'unicorn/prefer-event-target': 'error',
+      // 类型检查抛出 TypeError
+      'unicorn/prefer-type-error': 'error',
+      // charCodeAt → codePointAt
+      'unicorn/prefer-code-point': 'error',
+      // 现代 Math API (Math.hypot, Math.log10 等)
+      'unicorn/prefer-modern-math-apis': 'error',
+      // 使用 structuredClone 代替 JSON.parse(JSON.stringify())
+      'unicorn/prefer-structured-clone': 'error',
+      // 使用 node: 协议导入 Node.js 内置模块
+      'unicorn/prefer-node-protocol': 'error',
+      // 使用 Array#toSorted/toReversed/toSpliced (不修改原数组)
+      'unicorn/prefer-array-index-of': 'error',
+      // 使用 Reflect.apply 代替 Function.prototype.apply
+      'unicorn/prefer-reflect-apply': 'error',
+      // 使用 Set#size 代替转数组后 .length
+      'unicorn/prefer-set-size': 'error',
+      // 使用 String#codePointAt 代替 charCodeAt
+      'unicorn/text-encoding-identifier-case': 'error',
     },
   } as Linter.Config, {
     // TypeScript 专用规则（需要类型信息）
@@ -167,6 +203,22 @@ export default async function eslint9(options: ConfigOptions = {}): Promise<Retu
       '@typescript-eslint/prefer-optional-chain': 'error',
       // 优先使用 nullish coalescing (??) 代替 ||
       '@typescript-eslint/prefer-nullish-coalescing': 'error',
+      // 使用 includes 代替 indexOf (TS 版本)
+      '@typescript-eslint/prefer-includes': 'error',
+      // 使用 startsWith/endsWith (TS 版本)
+      '@typescript-eslint/prefer-string-starts-ends-with': 'error',
+      // 使用 for-of 代替 for 循环
+      '@typescript-eslint/prefer-for-of': 'error',
+      // 函数返回 Promise 时使用 async
+      '@typescript-eslint/promise-function-async': 'error',
+      // 使用 Array<T>.reduce 时提供初始值
+      '@typescript-eslint/prefer-reduce-type-parameter': 'error',
+      // 使用 RegExp#exec 代替 String#match (性能更好)
+      '@typescript-eslint/prefer-regexp-exec': 'error',
+      // 使用 this 参数代替 bind
+      '@typescript-eslint/unbound-method': 'off',
+      // 关闭 switch 穷举检查（对 switch(true) 和部分枚举类型误报太多）
+      '@typescript-eslint/switch-exhaustiveness-check': 'off',
     },
   } as Linter.Config)
 }

@@ -92,8 +92,7 @@ export async function runBestPracticesAudit(
     return extractAIOptimizedData(lhr, url)
   } catch (error: unknown) {
     throw new Error(
-      `Best Practices audit failed: ${
-        error instanceof Error ? error.message : String(error)
+      `Best Practices audit failed: ${error instanceof Error ? error.message : String(error)
       }`,
     )
   }
@@ -148,11 +147,24 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
   Object.values(audits).forEach(audit => {
     const { score, scoreDisplayMode } = audit
 
-    if (scoreDisplayMode === 'manual') manualCount++
-    else if (scoreDisplayMode === 'informative') informativeCount++
-    else if (scoreDisplayMode === 'notApplicable') notApplicableCount++
-    else if (score === 1) passedCount++
-    else if (score !== null && score < 1) failedCount++
+    switch (scoreDisplayMode) {
+      case 'manual': {
+        manualCount++
+        break
+      }
+      case 'informative': {
+        informativeCount++
+        break
+      }
+      case 'notApplicable': {
+        notApplicableCount++
+        break
+      }
+      default: {
+        if (score === 1) passedCount++
+        else if (score !== null && score < 1) failedCount++
+      }
+    }
   })
 
   // Process failed audits into AI-friendly format
@@ -227,7 +239,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
       const detailItems = refDetails.items.slice(0, itemLimit)
 
       detailItems.forEach((item: Record<string, unknown>) => {
-        issue.details = issue.details || []
+        issue.details ??= []
 
         // Different audits have different detail structures
         const detail: Record<string, string> = {}

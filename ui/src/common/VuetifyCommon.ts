@@ -27,4 +27,6 @@ function createVuetifyMount(optFn: (o?: VuetifyOptions) => late<VuetifyOptions>)
   return createVuetify(Object.assign(opt, optFn(opt)))
 }
 
-export { createVuetifyMount, en as VuetifyEn, zhCn as VuetifyZhCn }
+export { createVuetifyMount }
+
+export { en as VuetifyEn, zhHans as VuetifyZhCn } from 'vuetify/locale'

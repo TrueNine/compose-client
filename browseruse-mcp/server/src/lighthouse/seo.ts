@@ -91,8 +91,7 @@ export async function runSEOAudit(url: string): Promise<AIOptimizedSEOReport> {
     return extractAIOptimizedData(lhr, url)
   } catch (error: unknown) {
     throw new Error(
-      `SEO audit failed: ${
-        error instanceof Error ? error.message : String(error)
+      `SEO audit failed: ${error instanceof Error ? error.message : String(error)
       }`,
     )
   }
@@ -103,7 +102,7 @@ export async function runSEOAudit(url: string): Promise<AIOptimizedSEOReport> {
  */
 function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimizedSEOReport {
   const categoryData = lhr.categories[AuditCategory.SEO]
-  const audits = lhr.audits != null ? lhr.audits : {}
+  const audits = lhr.audits ?? {}
 
   // Add metadata
   const metadata = {
@@ -131,7 +130,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
   let notApplicableCount = 0
 
   // Process audit refs
-  const auditRefs = categoryData?.auditRefs != null ? categoryData.auditRefs : []
+  const auditRefs = categoryData?.auditRefs ?? []
 
   // First pass: count audits by type and initialize categories
   auditRefs.forEach(ref => {
@@ -139,39 +138,58 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
     if (audit == null) return
 
     // Count by scoreDisplayMode
-    if (audit.scoreDisplayMode === 'manual') manualCount++
-    else if (audit.scoreDisplayMode === 'informative') informativeCount++
-    else if (audit.scoreDisplayMode === 'notApplicable') notApplicableCount++
-    else if (audit.score != null) {
-      // Binary pass/fail
-      if (audit.score >= 0.9) passedCount++
-      else failedCount++
+    switch (audit.scoreDisplayMode) {
+      case 'manual': {
+        manualCount++
+        break
+      }
+      case 'informative': {
+        informativeCount++
+        break
+      }
+      case 'notApplicable': {
+        notApplicableCount++
+        break
+      }
+      default: {
+        if (audit.score != null) {
+          // Binary pass/fail
+          if (audit.score >= 0.9) passedCount++
+          else failedCount++
+        }
+      }
     }
 
     // Categorize the issue
     let category = 'other'
-    if (
-      ref.id.includes('crawl') === true
-      || ref.id.includes('http') === true
-      || ref.id.includes('redirect') === true
-      || ref.id.includes('robots') === true
-    ) {
-      category = 'crawlability'
-    } else if (
-      ref.id.includes('viewport') === true
-      || ref.id.includes('font-size') === true
-      || ref.id.includes('tap-targets') === true
-    ) {
-      category = 'mobile'
-    } else if (
-      ref.id.includes('document') === true
-      || ref.id.includes('meta') === true
-      || ref.id.includes('description') === true
-      || ref.id.includes('canonical') === true
-      || ref.id.includes('title') === true
-      || ref.id.includes('link') === true
-    ) {
-      category = 'content'
+    switch (true) {
+      case ref.id.includes('crawl'):
+      case ref.id.includes('http'):
+      case ref.id.includes('redirect'):
+      case ref.id.includes('robots'): {
+        category = 'crawlability'
+
+        break
+      }
+      case ref.id.includes('viewport'):
+      case ref.id.includes('font-size'):
+      case ref.id.includes('tap-targets'): {
+        category = 'mobile'
+
+        break
+      }
+      case ref.id.includes('document'):
+      case ref.id.includes('meta'):
+      case ref.id.includes('description'):
+      case ref.id.includes('canonical'):
+      case ref.id.includes('title'):
+      case ref.id.includes('link'): {
+        category = 'content'
+
+        break
+      }
+      default:
+        break
     }
 
     // Update category score and issues count
@@ -197,28 +215,34 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
 
       // Categorize the issue
       let category = 'other'
-      if (
-        ref.id.includes('crawl') === true
-        || ref.id.includes('http') === true
-        || ref.id.includes('redirect') === true
-        || ref.id.includes('robots') === true
-      ) {
-        category = 'crawlability'
-      } else if (
-        ref.id.includes('viewport') === true
-        || ref.id.includes('font-size') === true
-        || ref.id.includes('tap-targets') === true
-      ) {
-        category = 'mobile'
-      } else if (
-        ref.id.includes('document') === true
-        || ref.id.includes('meta') === true
-        || ref.id.includes('description') === true
-        || ref.id.includes('canonical') === true
-        || ref.id.includes('title') === true
-        || ref.id.includes('link') === true
-      ) {
-        category = 'content'
+      switch (true) {
+        case ref.id.includes('crawl'):
+        case ref.id.includes('http'):
+        case ref.id.includes('redirect'):
+        case ref.id.includes('robots'): {
+          category = 'crawlability'
+
+          break
+        }
+        case ref.id.includes('viewport'):
+        case ref.id.includes('font-size'):
+        case ref.id.includes('tap-targets'): {
+          category = 'mobile'
+
+          break
+        }
+        case ref.id.includes('document'):
+        case ref.id.includes('meta'):
+        case ref.id.includes('description'):
+        case ref.id.includes('canonical'):
+        case ref.id.includes('title'):
+        case ref.id.includes('link'): {
+          category = 'content'
+
+          break
+        }
+        default:
+          break
       }
 
       // Extract details
@@ -266,7 +290,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
     })
 
   // Calculate overall score
-  const score = Math.round((categoryData?.score != null ? categoryData.score : 0) * 100)
+  const score = Math.round((categoryData?.score ?? 0) * 100)
 
   // Generate prioritized recommendations
   const prioritized_recommendations: string[] = []

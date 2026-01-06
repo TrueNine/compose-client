@@ -398,200 +398,211 @@ async function findBrowserExecutablePath(): Promise<string> {
   logger.info(`Attempting to detect browser executable path on ${platform}...`)
 
   // Platform-specific detection strategies
-  if (platform === 'win32') {
+  switch (platform) {
+    case 'win32': {
     // Windows - try registry detection for Chrome
-    let registryPath = null
-    try {
-      logger.info('Checking Windows registry for Chrome...')
-      // Try HKLM first
-      const regOutput = execSync(
-        'reg query "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\chrome.exe" /ve',
-        { encoding: 'utf8' },
-      )
-
-      // Extract path from registry output
-      const match = regOutput.match(/REG_(?:SZ|EXPAND_SZ)\s+(\S+)/i)
-      if (match?.[1] != null && match[1] !== '') {
-        registryPath = match[1].replaceAll('\\"', '')
-        // Verify the path exists
-        if (fs.existsSync(registryPath)) {
-          logger.info(`Found Chrome via HKLM registry: ${registryPath}`)
-          return registryPath
-        }
-      }
-    } catch {
-      // Try HKCU if HKLM fails
+      let registryPath = null
       try {
-        logger.info('Checking user registry for Chrome...')
+        logger.info('Checking Windows registry for Chrome...')
+        // Try HKLM first
         const regOutput = execSync(
-          'reg query "HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\chrome.exe" /ve',
+          'reg query "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\chrome.exe" /ve',
           { encoding: 'utf8' },
         )
 
         // Extract path from registry output
-        const match = regOutput.match(/REG_(?:SZ|EXPAND_SZ)\s+(\S+)/i)
+        const match = /REG_(?:SZ|EXPAND_SZ)\s+(\S+)/i.exec(regOutput)
         if (match?.[1] != null && match[1] !== '') {
           registryPath = match[1].replaceAll('\\"', '')
           // Verify the path exists
           if (fs.existsSync(registryPath)) {
-            logger.info(`Found Chrome via HKCU registry: ${registryPath}`)
+            logger.info(`Found Chrome via HKLM registry: ${registryPath}`)
             return registryPath
           }
         }
       } catch {
-        logger.info(
-          'Failed to find Chrome via registry, continuing with path checks',
-        )
+      // Try HKCU if HKLM fails
+        try {
+          logger.info('Checking user registry for Chrome...')
+          const regOutput = execSync(
+            'reg query "HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\chrome.exe" /ve',
+            { encoding: 'utf8' },
+          )
+
+          // Extract path from registry output
+          const match = /REG_(?:SZ|EXPAND_SZ)\s+(\S+)/i.exec(regOutput)
+          if (match?.[1] != null && match[1] !== '') {
+            registryPath = match[1].replaceAll('\\"', '')
+            // Verify the path exists
+            if (fs.existsSync(registryPath)) {
+              logger.info(`Found Chrome via HKCU registry: ${registryPath}`)
+              return registryPath
+            }
+          }
+        } catch {
+          logger.info(
+            'Failed to find Chrome via registry, continuing with path checks',
+          )
+        }
       }
-    }
 
-    // Try to find Chrome through BLBeacon registry key (version info)
-    try {
-      logger.info('Checking Chrome BLBeacon registry...')
-      const regOutput = execSync(
-        'reg query "HKEY_CURRENT_USER\\Software\\Google\\Chrome\\BLBeacon" /v version',
-        { encoding: 'utf8' },
-      )
+      // Try to find Chrome through BLBeacon registry key (version info)
+      try {
+        logger.info('Checking Chrome BLBeacon registry...')
+        const regOutput = execSync(
+          'reg query "HKEY_CURRENT_USER\\Software\\Google\\Chrome\\BLBeacon" /v version',
+          { encoding: 'utf8' },
+        )
 
-      if (regOutput) {
-        const p = await import('node:process')
-        // If BLBeacon exists, Chrome is likely installed in the default location
-        const programFiles = p.env.PROGRAMFILES ?? 'C:\\Program Files'
-        const programFilesX86 = p.env['PROGRAMFILES(X86)'] ?? 'C:\\Program Files (x86)'
+        if (regOutput) {
+          const p = await import('node:process')
+          // If BLBeacon exists, Chrome is likely installed in the default location
+          const programFiles = p.env.PROGRAMFILES ?? 'C:\\Program Files'
+          const programFilesX86 = p.env['PROGRAMFILES(X86)'] ?? 'C:\\Program Files (x86)'
 
-        const defaultChromePaths = [
+          const defaultChromePaths = [
+            path.join(programFiles, 'Google\\Chrome\\Application\\chrome.exe'),
+            path.join(programFilesX86, 'Google\\Chrome\\Application\\chrome.exe'),
+          ]
+
+          for (const chromePath of defaultChromePaths) {
+            if (fs.existsSync(chromePath)) {
+              logger.info(
+                `Found Chrome via BLBeacon registry hint: ${chromePath}`,
+              )
+              return chromePath
+            }
+          }
+        }
+      } catch {
+        logger.info('Failed to find Chrome via BLBeacon registry')
+      }
+      const p = await import('node:process')
+      // Continue with regular path checks
+      const programFiles = p.env.PROGRAMFILES ?? 'C:\\Program Files'
+      const programFilesX86 = p.env['PROGRAMFILES(X86)'] ?? 'C:\\Program Files (x86)'
+
+      // Common Windows browser paths
+      const winBrowserPaths = {
+        chrome: [
           path.join(programFiles, 'Google\\Chrome\\Application\\chrome.exe'),
           path.join(programFilesX86, 'Google\\Chrome\\Application\\chrome.exe'),
-        ]
-
-        for (const chromePath of defaultChromePaths) {
-          if (fs.existsSync(chromePath)) {
-            logger.info(
-              `Found Chrome via BLBeacon registry hint: ${chromePath}`,
-            )
-            return chromePath
-          }
-        }
+        ],
+        edge: [
+          path.join(programFiles, 'Microsoft\\Edge\\Application\\msedge.exe'),
+          path.join(programFilesX86, 'Microsoft\\Edge\\Application\\msedge.exe'),
+        ],
+        brave: [
+          path.join(
+            programFiles,
+            'BraveSoftware\\Brave-Browser\\Application\\brave.exe',
+          ),
+          path.join(
+            programFilesX86,
+            'BraveSoftware\\Brave-Browser\\Application\\brave.exe',
+          ),
+        ],
+        firefox: [
+          path.join(programFiles, 'Mozilla Firefox\\firefox.exe'),
+          path.join(programFilesX86, 'Mozilla Firefox\\firefox.exe'),
+        ],
       }
-    } catch {
-      logger.info('Failed to find Chrome via BLBeacon registry')
-    }
-    const p = await import('node:process')
-    // Continue with regular path checks
-    const programFiles = p.env.PROGRAMFILES ?? 'C:\\Program Files'
-    const programFilesX86 = p.env['PROGRAMFILES(X86)'] ?? 'C:\\Program Files (x86)'
 
-    // Common Windows browser paths
-    const winBrowserPaths = {
-      chrome: [
-        path.join(programFiles, 'Google\\Chrome\\Application\\chrome.exe'),
-        path.join(programFilesX86, 'Google\\Chrome\\Application\\chrome.exe'),
-      ],
-      edge: [
-        path.join(programFiles, 'Microsoft\\Edge\\Application\\msedge.exe'),
-        path.join(programFilesX86, 'Microsoft\\Edge\\Application\\msedge.exe'),
-      ],
-      brave: [
-        path.join(
-          programFiles,
-          'BraveSoftware\\Brave-Browser\\Application\\brave.exe',
-        ),
-        path.join(
-          programFilesX86,
-          'BraveSoftware\\Brave-Browser\\Application\\brave.exe',
-        ),
-      ],
-      firefox: [
-        path.join(programFiles, 'Mozilla Firefox\\firefox.exe'),
-        path.join(programFilesX86, 'Mozilla Firefox\\firefox.exe'),
-      ],
-    }
-
-    // Check each browser in preferred order
-    for (const browser of preferredBrowsers) {
-      const paths = winBrowserPaths[browser as keyof typeof winBrowserPaths] ?? []
-      for (const browserPath of paths) {
-        if (fs.existsSync(browserPath)) {
-          logger.info(`Found ${browser} at ${browserPath}`)
-          return browserPath
-        }
-      }
-    }
-  } else if (platform === 'darwin') {
-    // macOS browser paths
-    const macBrowserPaths = {
-      chrome: ['/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'],
-      edge: ['/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge'],
-      brave: ['/Applications/Brave Browser.app/Contents/MacOS/Brave Browser'],
-      firefox: ['/Applications/Firefox.app/Contents/MacOS/firefox'],
-      safari: ['/Applications/Safari.app/Contents/MacOS/Safari'],
-    }
-
-    // Check each browser in preferred order
-    for (const browser of preferredBrowsers) {
-      const paths
-        = macBrowserPaths[browser as keyof typeof macBrowserPaths] ?? []
-      for (const browserPath of paths) {
-        if (fs.existsSync(browserPath)) {
-          logger.info(`Found ${browser} at ${browserPath}`)
-          // Safari is detected but not supported by Puppeteer
-          if (browser === 'safari') {
-            logger.info(
-              'Safari detected but not supported by Puppeteer. Continuing search...',
-            )
-            continue
-          }
-          return browserPath
-        }
-      }
-    }
-  } else if (platform === 'linux') {
-    // Linux browser commands
-    const linuxBrowserCommands = {
-      chrome: ['google-chrome', 'chromium', 'chromium-browser'],
-      edge: ['microsoft-edge'],
-      brave: ['brave-browser'],
-      firefox: ['firefox'],
-    }
-
-    // Check each browser in preferred order
-    for (const browser of preferredBrowsers) {
-      const commands = linuxBrowserCommands[browser as keyof typeof linuxBrowserCommands] ?? []
-      for (const cmd of commands) {
-        try {
-          // Use more universal commands for Linux to find executables
-          // command -v works in most shells, fallback to which or type
-          const browserPath = execSync(
-            `command -v ${cmd} || which ${cmd} || type -p ${cmd} 2>/dev/null`,
-            { encoding: 'utf8' },
-          ).trim()
-
-          if (browserPath && fs.existsSync(browserPath)) {
+      // Check each browser in preferred order
+      for (const browser of preferredBrowsers) {
+        const paths = winBrowserPaths[browser as keyof typeof winBrowserPaths] ?? []
+        for (const browserPath of paths) {
+          if (fs.existsSync(browserPath)) {
             logger.info(`Found ${browser} at ${browserPath}`)
             return browserPath
           }
-        } catch {
-          // Command not found, continue to next
         }
       }
+
+      break
     }
-
-    // Additional check for unusual locations on Linux
-    const alternativeLocations = [
-      '/usr/bin/google-chrome',
-      '/usr/bin/chromium',
-      '/usr/bin/chromium-browser',
-      '/snap/bin/chromium',
-      '/snap/bin/google-chrome',
-      '/opt/google/chrome/chrome',
-    ]
-
-    for (const location of alternativeLocations) {
-      if (fs.existsSync(location)) {
-        logger.info(`Found browser at alternative location: ${location}`)
-        return location
+    case 'darwin': {
+    // macOS browser paths
+      const macBrowserPaths = {
+        chrome: ['/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'],
+        edge: ['/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge'],
+        brave: ['/Applications/Brave Browser.app/Contents/MacOS/Brave Browser'],
+        firefox: ['/Applications/Firefox.app/Contents/MacOS/firefox'],
+        safari: ['/Applications/Safari.app/Contents/MacOS/Safari'],
       }
+
+      // Check each browser in preferred order
+      for (const browser of preferredBrowsers) {
+        const paths
+          = macBrowserPaths[browser as keyof typeof macBrowserPaths] ?? []
+        for (const browserPath of paths) {
+          if (fs.existsSync(browserPath)) {
+            logger.info(`Found ${browser} at ${browserPath}`)
+            // Safari is detected but not supported by Puppeteer
+            if (browser === 'safari') {
+              logger.info(
+                'Safari detected but not supported by Puppeteer. Continuing search...',
+              )
+              continue
+            }
+            return browserPath
+          }
+        }
+      }
+
+      break
     }
+    case 'linux': {
+    // Linux browser commands
+      const linuxBrowserCommands = {
+        chrome: ['google-chrome', 'chromium', 'chromium-browser'],
+        edge: ['microsoft-edge'],
+        brave: ['brave-browser'],
+        firefox: ['firefox'],
+      }
+
+      // Check each browser in preferred order
+      for (const browser of preferredBrowsers) {
+        const commands = linuxBrowserCommands[browser as keyof typeof linuxBrowserCommands] ?? []
+        for (const cmd of commands) {
+          try {
+          // Use more universal commands for Linux to find executables
+          // command -v works in most shells, fallback to which or type
+            const browserPath = execSync(
+              `command -v ${cmd} || which ${cmd} || type -p ${cmd} 2>/dev/null`,
+              { encoding: 'utf8' },
+            ).trim()
+
+            if (browserPath && fs.existsSync(browserPath)) {
+              logger.info(`Found ${browser} at ${browserPath}`)
+              return browserPath
+            }
+          } catch {
+          // Command not found, continue to next
+          }
+        }
+      }
+
+      // Additional check for unusual locations on Linux
+      const alternativeLocations = [
+        '/usr/bin/google-chrome',
+        '/usr/bin/chromium',
+        '/usr/bin/chromium-browser',
+        '/snap/bin/chromium',
+        '/snap/bin/google-chrome',
+        '/opt/google/chrome/chrome',
+      ]
+
+      for (const location of alternativeLocations) {
+        if (fs.existsSync(location)) {
+          logger.info(`Found browser at alternative location: ${location}`)
+          return location
+        }
+      }
+
+      break
+    }
+  // No default
   }
 
   throw new Error(

@@ -78,7 +78,7 @@ function packageJsonContentReplace(content: string, options: Omit<PackageJsonOpt
     }
 
     // --- Determine if types should be generated for this entry --- START
-    const isTypeScriptEntry = entryPath.match(/\.tsx?$/)
+    const isTypeScriptEntry = /\.tsx?$/.exec(entryPath)
     // --- Determine if types should be generated for this entry --- END
 
     // --- Clean leading slash if relativeDir was empty initially --- START
@@ -121,7 +121,7 @@ export function PackageJsonGeneratorPlugin(options: Omit<PackageJsonOptions, 'co
   let originalContent: string
   try {
     const packageJsonPath = path.resolve(process.cwd(), 'package.json')
-    originalContent = fs.readFileSync(packageJsonPath, 'utf-8')
+    originalContent = fs.readFileSync(packageJsonPath, 'utf8')
   } catch (error) {
     throw new Error(`Failed to read package.json from ${process.cwd()}`, {
       cause: error,

@@ -936,9 +936,7 @@ export class BrowserConnector {
       let targetPath = customPath
 
       // If no path provided by extension, fall back to defaults
-      if (targetPath == null) {
-        targetPath = currentSettings.screenshotPath ?? getDefaultDownloadsFolder()
-      }
+      targetPath ??= currentSettings.screenshotPath ?? getDefaultDownloadsFolder()
 
       // Convert the path for the current platform
       targetPath = convertPathForCurrentPlatform(targetPath)

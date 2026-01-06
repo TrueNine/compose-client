@@ -132,8 +132,7 @@ export async function runPerformanceAudit(
     return extractAIOptimizedData(lhr, url)
   } catch (error: unknown) {
     throw new Error(
-      `Performance audit failed: ${
-        error instanceof Error ? error.message : String(error)
+      `Performance audit failed: ${error instanceof Error ? error.message : String(error)
       }`,
     )
   }
@@ -168,12 +167,25 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
     const audit = audits[ref.id]
     if (audit == null) return
 
-    if (audit.scoreDisplayMode === 'manual') manualCount++
-    else if (audit.scoreDisplayMode === 'informative') informativeCount++
-    else if (audit.scoreDisplayMode === 'notApplicable') notApplicableCount++
-    else if (audit.score != null) {
-      if (audit.score >= 0.9) passedCount++
-      else failedCount++
+    switch (audit.scoreDisplayMode) {
+      case 'manual': {
+        manualCount++
+        break
+      }
+      case 'informative': {
+        informativeCount++
+        break
+      }
+      case 'notApplicable': {
+        notApplicableCount++
+        break
+      }
+      default: {
+        if (audit.score != null) {
+          if (audit.score >= 0.9) passedCount++
+          else failedCount++
+        }
+      }
     }
   })
 
@@ -230,7 +242,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
                 metric.element_type = 'image'
 
                 // Try to extract image name from selector
-                const imgMatch = selector.match(/img\.[^> ]+/)
+                const imgMatch = /img\.[^> ]+/.exec(selector)
                 if (imgMatch != null && metric.element_url == null) metric.element_url = imgMatch[0]
               }
               else if (String(path).includes(',SPAN') || String(path).includes(',P') || String(path).includes(',H')) metric.element_type = 'text'
@@ -255,7 +267,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
               // Try to extract image URL from the node snippet
               const { snippet } = node
               if (snippet != null) {
-                const match = String(snippet).match(/src="([^"]+)"/)
+                const match = /src="([^"]+)"/.exec(String(snippet))
                 if (match?.[1] != null) metric.element_url = match[1]
               }
             }
@@ -297,9 +309,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
           if (itemObj.url != null || (itemObj.node != null && typeof itemObj.node === 'object' && (itemObj.node as Record<string, unknown>).path != null)) {
             if (itemObj.url != null) {
               metric.element_url = String(itemObj.url)
-              metric.element_type = String(itemObj.url).match(
-                /\.(?:jpg|jpeg|png|gif|webp|svg)$/i,
-              ) != null
+              metric.element_type = (/\.(?:jpg|jpeg|png|gif|webp|svg)$/i.exec(String(itemObj.url))) != null
                 ? 'image'
                 : 'resource'
             }
@@ -341,7 +351,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
 
         if (isObjectWithItems(networkDetails)) {
           // Get all image resources loaded close to the LCP time
-          const lcpTime = lcp.numericValue != null ? lcp.numericValue : 0
+          const lcpTime = lcp.numericValue ?? 0
           const imageResources = networkDetails.items
             .filter(
               (item: unknown) => {
@@ -350,7 +360,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
                   && itemObj.mimeType != null
                   && String(itemObj.mimeType).startsWith('image/')
                   && itemObj.endTime != null
-                // Within 500ms of LCP
+                  // Within 500ms of LCP
                   && Math.abs(Number(itemObj.endTime) - lcpTime) < 500
               },
             )

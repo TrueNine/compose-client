@@ -78,7 +78,7 @@ function sortFn(a?: nil<IComponentAddr>, b?: nil<IComponentAddr>) {
   return 0
 }
 
-const checkList = [2, 4, 6, 9, 12]
+const checkList = new Set([2, 4, 6, 9, 12])
 const keyNames: (keyof YVAddressSelectSelectValue)[] = ['province', 'city', 'district', 'town', 'village']
 const fnNames = ['findProvinces', 'findCities', 'findDistricts', 'findTowns', 'findVillages', 'findByCode']
 const loading = ref<boolean>(false)
@@ -86,7 +86,7 @@ const loading = ref<boolean>(false)
 async function cacheAndUpdate(code: string) {
   loading.value = true
   if (code.length < 2 || code.length > 12) return
-  if (!checkList.includes(code.length)) return
+  if (!checkList.has(code.length)) return
   const padCode = pad(code)
   const level = getAdCodeLevel(code)
 

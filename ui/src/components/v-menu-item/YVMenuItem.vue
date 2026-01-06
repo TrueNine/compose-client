@@ -16,7 +16,7 @@ const _value = computed(() => {
   const parentPath = props.parentPath ?? ``
   const prefix = props.pathPrefix || ``
   const value = props.route.uri ?? ``
-  return `/${prefix}/${parentPath}/${value}`.replace(/\/+/g, '/')
+  return `/${prefix}/${parentPath}/${value}`.replaceAll(/\/+/g, '/')
 })
 
 const _menuIconClass = computed(() => _route.value.iconName ?? 'i-mdi:menu-open')
@@ -34,7 +34,7 @@ async function routeTo() {
 }
 
 function urlJoin(...args: late<string>[]) {
-  return args.filter(Boolean).join('/').replace(/\/+/g, '/')
+  return args.filter(Boolean).join('/').replaceAll(/\/+/g, '/')
 }
 </script>
 

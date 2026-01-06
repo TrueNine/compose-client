@@ -15,25 +15,23 @@ export function registerBrowserTools(server: McpServer): void {
 
       const result = await response.json() as ApiResponse
 
-      if (response.ok) {
-        return {
-          content: [
-            {
-              type: 'text',
-              text: 'Successfully saved screenshot',
-            },
-          ],
-        }
-      } else {
-        return {
-          content: [
-            {
-              type: 'text',
-              text: `Error taking screenshot: ${result.error ?? 'Unknown error'}`,
-            },
-          ],
-        }
-      }
+      return response.ok
+        ? {
+            content: [
+              {
+                type: 'text',
+                text: 'Successfully saved screenshot',
+              },
+            ],
+          }
+        : {
+            content: [
+              {
+                type: 'text',
+                text: `Error taking screenshot: ${result.error ?? 'Unknown error'}`,
+              },
+            ],
+          }
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : String(error)
       return {

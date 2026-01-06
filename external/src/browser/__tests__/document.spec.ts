@@ -111,7 +111,7 @@ describe('document.ts 文件函数测试', () => {
     } as unknown as typeof URL
 
     // 模拟 console.error
-    consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+    consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => { })
   })
 
   afterEach(() => {
@@ -147,7 +147,7 @@ describe('document.ts 文件函数测试', () => {
       expect(result).toBe(mockScript)
       expect(documentMock.createElement).toHaveBeenCalledWith('script')
       expect(mockScript.src).toBe('https://example.com/script.js')
-      expect(mockScript.setAttribute).toHaveBeenCalledWith('charset', 'utf-8')
+      expect(mockScript.setAttribute).toHaveBeenCalledWith('charset', 'utf8')
       expect(mockScript.addEventListener).toHaveBeenCalledWith('load', loadFn)
       expect(documentMock.querySelector).toHaveBeenCalledWith('head')
       expect(beforeEachFn).toHaveBeenCalledWith(mockScript)

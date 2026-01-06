@@ -20,22 +20,22 @@ import YVSystemBar from './components/v-system-bar'
 export * from './common'
 export * from './components/config-pre-authorize'
 export * from './components/config-provider'
+export { default as YConfigProvider } from './components/config-provider'
 export * from './components/debug-code'
+export { default as YDebugCode } from './components/debug-code'
 export * from './components/el-sider-menu'
+export { default as YElSiderMenu } from './components/el-sider-menu'
 export * from './components/el-sider-menu-item'
+export { default as YElSiderMenuItem } from './components/el-sider-menu-item/index'
+
 export * from './components/field'
+export { default as YField } from './components/field'
 export * from './components/field-message'
+export { default as YFieldMessage } from './components/field-message'
+
 export * from './components/form'
+export { default as YForm } from './components/form'
 export * from './components/ico'
-
-export * from './components/pager'
-export * from './components/pre-authorize'
-export * from './components/v-address-select'
-export * from './components/v-menu'
-
-export * from './components/v-menu-item'
-export * from './components/v-system-bar'
-export * from './unplugin'
 
 const components = {
   YConfigProvider,
@@ -55,24 +55,6 @@ const components = {
   YPager,
 } as Record<string, unknown>
 
-export {
-  YConfigPreAuthorize,
-  YConfigProvider,
-  YDebugCode,
-  YElSiderMenu,
-  YElSiderMenuItem,
-  YField,
-  YFieldMessage,
-  YForm,
-  YIco,
-  YPager,
-  YPreAuthorize,
-  YVAddressSelect,
-  YVMenu,
-  YVMenuItem,
-  YVSystemBar,
-}
-
 const plugin = {
   install: (app: App): void => {
     Object.entries(components).forEach(([_name, component]) => {
@@ -82,3 +64,20 @@ const plugin = {
 }
 
 export default plugin
+
+export { default as YIco } from './components/ico'
+export * from './components/pager'
+export { default as YPager } from './components/pager'
+export * from './components/pre-authorize'
+export * from './components/v-address-select'
+export { default as YVAddressSelect } from './components/v-address-select'
+export * from './components/v-menu'
+export { default as YVMenu } from './components/v-menu'
+export * from './components/v-menu-item'
+export { default as YVMenuItem } from './components/v-menu-item'
+export * from './components/v-system-bar'
+export { default as YVSystemBar } from './components/v-system-bar'
+export * from './unplugin'
+
+export { default as YConfigPreAuthorize } from '@/components/config-pre-authorize'
+export { default as YPreAuthorize } from '@/components/pre-authorize'

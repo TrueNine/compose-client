@@ -21,7 +21,7 @@ import type { Search } from './services'
 
 export interface TMapService {
   Search: {
-    new (): Search
+    new(): Search
   }
   SearchErrorResult: SearchErrorResult
   SearchResult: SearchResult
@@ -69,21 +69,17 @@ declare global {
   }
 }
 
+export type { MapStyleIds } from './Constants'
+
+export type { MapEvents, MultiMarkerEvents } from './events'
+
+export type { LatLngDataTyping, PointDataTyping } from './LatLng'
+export type { EaseOptions, InfoWindowOptions, MapOptions, MultiMarkerOptions, PointGeometry } from './options'
 export type {
-  EaseOptions,
-  InfoWindowOptions,
-  LatLngDataTyping,
-  MapEvents,
-  MapOptions,
-  MapStyleIds,
-  MultiMarkerEvents,
-  MultiMarkerOptions,
-  PointDataTyping,
-  PointGeometry,
   SearchErrorResult,
   SearchNearbyOptions,
   SearchOptions,
   SearchRegionOptions,
   SearchResult,
   ViewMode,
-}
+} from './options/service'

@@ -4,11 +4,11 @@ function camelTo(str: string, sep = '-'): string {
   // Example: YButton -> yButton, YTestComponent -> yTestComponent
   const firstCharLower = str.charAt(0).toLowerCase() + str.slice(1)
   // Example: yButton -> y-button, yTestComponent -> y-test-component
-  return firstCharLower.replace(/([a-z0-9])([A-Z])/g, `$1${sep}$2`).toLowerCase()
+  return firstCharLower.replaceAll(/([a-z0-9])([A-Z])/g, `$1${sep}$2`).toLowerCase()
 }
 
 function resolveComponent(name: string): { name: string, from: string, satisfies: string[] } | undefined {
-  if (!/^Y[A-Z]/.exec(name)) return
+  if (!/^Y[A-Z]/.test(name)) return
 
   const _kebabName = camelTo(name.slice(1))
   return {
@@ -42,7 +42,7 @@ export function MetaUiWebResolver(): { type: string, resolve: (name: string) => 
   ]
 }
 
-const _vLabsComponentNames = [
+const _vLabsComponentNames = new Set([
   'VCalendar',
   'VNumberInput',
   'VPicker',
@@ -52,13 +52,13 @@ const _vLabsComponentNames = [
   'VStepperVertical',
   'VTimePicker',
   'VTreeview',
-]
+])
 export function Vuetify3LabsLabResolver(useLabs = true): { type: string, resolve: (name: string) => { name: string, from: string } | undefined } {
   return {
     type: 'component',
     resolve: (name: string) => {
-      if (/^V[A-Z]/.exec(name)) {
-        return { name, from: useLabs && _vLabsComponentNames.includes(name) ? 'vuetify/labs/components' : 'vuetify/components' }
+      if (/^V[A-Z]/.test(name)) {
+        return { name, from: useLabs && _vLabsComponentNames.has(name) ? 'vuetify/labs/components' : 'vuetify/components' }
       }
     },
   }

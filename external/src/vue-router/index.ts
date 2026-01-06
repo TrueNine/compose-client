@@ -60,8 +60,8 @@ type MenuObject = RouteRecordRaw & {
  * @returns 合并后的路径
  */
 function combineURIs(uri1: string, uri2: string): string {
-  const normalizedUri1 = uri1.replace(/^\/+/g, STR_EMPTY).replace(/\/+$/g, STR_EMPTY)
-  const normalizedUri2 = uri2.replace(/^\/+/g, STR_EMPTY).replace(/\/+$/g, STR_EMPTY)
+  const normalizedUri1 = uri1.replaceAll(/^\/+/g, STR_EMPTY).replaceAll(/\/+$/g, STR_EMPTY)
+  const normalizedUri2 = uri2.replaceAll(/^\/+/g, STR_EMPTY).replaceAll(/\/+$/g, STR_EMPTY)
 
   if (!normalizedUri1 && !normalizedUri2) return STR_EMPTY
   if (!normalizedUri1) return normalizedUri2
@@ -77,7 +77,7 @@ function combineURIs(uri1: string, uri2: string): string {
  * @returns 剩余路由
  */
 function clipRoutes(routes: RouteRecordRaw[], clipPath: string, parentPath = ''): RouteRecordRaw[] {
-  const normalizedClipPath = clipPath.replace(/^\/+/g, STR_EMPTY).replace(/\/+$/g, STR_EMPTY)
+  const normalizedClipPath = clipPath.replaceAll(/^\/+/g, STR_EMPTY).replaceAll(/\/+$/g, STR_EMPTY)
 
   for (const route of routes) {
     const fullPath = combineURIs(parentPath, route.path)

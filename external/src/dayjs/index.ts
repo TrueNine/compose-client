@@ -66,8 +66,7 @@ export function timeMillis(date: DayJSNewInstanceOptions, p?: Params): number {
     _p.utc = true
     _p.tz = ISO8601TimeZone.UTC
     const dg = timestampToTimeTimestamp(_p.date, _p)
-    if (dg === void 0) return Number.NaN
-    else return dg
+    return dg === void 0 ? Number.NaN : dg
   }
 }
 

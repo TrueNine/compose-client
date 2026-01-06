@@ -136,13 +136,24 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
   auditRefs.forEach(ref => {
     const audit = audits[ref.id]
     // Count by scoreDisplayMode
-    if (audit.scoreDisplayMode === 'manual') manualCount++
-    else if (audit.scoreDisplayMode === 'informative') informativeCount++
-    else if (audit.scoreDisplayMode === 'notApplicable') notApplicableCount++
-    else if (audit.score !== null) {
+    switch (audit.scoreDisplayMode) {
+      case 'manual': {
+        manualCount++
+        break
+      }
+      case 'informative': {
+        informativeCount++
+        break
+      }
+      case 'notApplicable': {
+        notApplicableCount++
+        break
+      }
+      default: if (audit.score !== null) {
       // Binary pass/fail
-      if (audit.score >= 0.9) passedCount++
-      else failedCount++
+        if (audit.score >= 0.9) passedCount++
+        else failedCount++
+      }
     }
 
     if (ref.group === void 0) return

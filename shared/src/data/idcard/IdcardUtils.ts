@@ -12,13 +12,12 @@ export const IdcardUtils = {
 
     const birthday = d.getTime()
 
-    if (Regexes.CHINA_ID_CARD.test(trimIdcard)) {
-      return {
-        adCode: trimIdcard.slice(0, 6),
-        gender: Number(trimIdcard.slice(16, 17)) % 2 === 0,
-        birthday: birthday satisfies timestamp,
-      }
-    }
-    else return void 0
+    return Regexes.CHINA_ID_CARD.test(trimIdcard)
+      ? {
+          adCode: trimIdcard.slice(0, 6),
+          gender: Number(trimIdcard.slice(16, 17)) % 2 === 0,
+          birthday: birthday satisfies timestamp,
+        }
+      : void 0
   },
 }
