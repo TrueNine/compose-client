@@ -69,7 +69,7 @@ function convertPathForCurrentPlatform(inputPath: string): string {
   logger.info(`Converting path "${inputPath}" for platform: ${platform}`)
 
   // Windows-specific conversion
-  if (platform === 'win32') return inputPath.replace(/\//g, '\\')
+  if (platform === 'win32') return inputPath.replaceAll('/', '\\')
 
   // Linux/Mac-specific conversion
   if (platform !== 'linux' && platform !== 'darwin') return inputPath
@@ -135,8 +135,8 @@ function convertPathForCurrentPlatform(inputPath: string): string {
 
     // For non-WSL Windows paths, just normalize the slashes
     const normalizedPath = inputPath
-      .replace(/\\\\/g, '/')
-      .replace(/\\/g, '/')
+      .replaceAll('\\\\', '/')
+      .replaceAll('\\', '/')
     logger.info(
       `Converted Windows UNC path "${inputPath}" to "${normalizedPath}"`,
     )
@@ -146,7 +146,7 @@ function convertPathForCurrentPlatform(inputPath: string): string {
 
   const normalizedPath = inputPath
     .replace(/^[A-Z]:\\/i, '/')
-    .replace(/\\/g, '/')
+    .replaceAll('\\', '/')
   logger.info(
     `Converted Windows drive path "${inputPath}" to "${normalizedPath}"`,
   )
@@ -331,11 +331,11 @@ app.post('/extension-log', (req, res) => {
   logger.info('Request body:', {
     dataType: bodyObj != null && bodyData != null ? bodyData.type : null,
     timestamp: bodyObj != null && bodyData != null ? bodyData.timestamp : null,
-    hasSettings: bodyObj != null && bodyObj.settings != null,
+    hasSettings: bodyObj?.settings != null,
   })
 
-  const data = bodyObj.data
-  const settings = bodyObj.settings
+  const { data } = bodyObj
+  const { settings } = bodyObj
 
   // Update settings if provided
   if (settings != null) {
@@ -376,7 +376,7 @@ app.post('/extension-log', (req, res) => {
       logger.info('Adding console log:', {
         level: dataObj.level,
         message:
-          String(dataObj.message).substring(0, 100)
+          String(dataObj.message).slice(0, 100)
           + (String(dataObj.message).length > 100 ? '...' : ''),
         timestamp: dataObj.timestamp,
       })
@@ -392,7 +392,7 @@ app.post('/extension-log', (req, res) => {
       logger.info('Adding console error:', {
         level: dataObj.level,
         message:
-          String(dataObj.message).substring(0, 100)
+          String(dataObj.message).slice(0, 100)
           + (String(dataObj.message).length > 100 ? '...' : ''),
         timestamp: dataObj.timestamp,
       })
@@ -497,7 +497,7 @@ app.post('/selected-element', (req, res) => {
 })
 
 app.get('/selected-element', (_req, res) => {
-  res.json(selectedElement != null ? selectedElement : { message: 'No element selected' })
+  res.json(selectedElement ?? { message: 'No element selected' })
 })
 
 app.get('/.port', (_req, res) => {
@@ -714,7 +714,7 @@ export class BrowserConnector {
             logger.info('Screenshot path from extension:', data.path)
             logger.info('Auto-paste setting from extension:', data.autoPaste)
             // Get the most recent callback since we're not using requestId anymore
-            const callbacks = Array.from(screenshotCallbacks.values())
+            const callbacks = [...screenshotCallbacks.values()]
             if (callbacks.length > 0) {
               const callback = callbacks[0]
               logger.info('Found callback, resolving promise')
@@ -732,7 +732,7 @@ export class BrowserConnector {
           else if (data.type === 'screenshot-error') {
             // Handle screenshot error
             logger.info('Received screenshot error:', data.error)
-            const callbacks = Array.from(screenshotCallbacks.values())
+            const callbacks = [...screenshotCallbacks.values()]
             if (callbacks.length > 0) {
               const callback = callbacks[0]
               callback.reject(
@@ -784,7 +784,7 @@ export class BrowserConnector {
           logger.info(`Created/verified directory: ${targetPath}`)
 
           // Generate a unique filename using timestamp
-          const timestamp = new Date().toISOString().replace(/[:.]/g, '-')
+          const timestamp = new Date().toISOString().replaceAll(/[:.]/g, '-')
           const filename = `screenshot-${timestamp}.png`
           const fullPath = path.join(targetPath, filename)
           logger.info(`Saving screenshot to: ${fullPath}`)
@@ -891,7 +891,7 @@ export class BrowserConnector {
         screenshotCallbacks.set(requestId, { resolve, reject })
         logger.info(
           'Browser Connector: Current callbacks:',
-          Array.from(screenshotCallbacks.keys()),
+          [...screenshotCallbacks.keys()],
         )
 
         // Set timeout to clean up if we don't get a response
@@ -937,8 +937,7 @@ export class BrowserConnector {
 
       // If no path provided by extension, fall back to defaults
       if (targetPath == null) {
-        targetPath
-          = currentSettings.screenshotPath != null ? currentSettings.screenshotPath : getDefaultDownloadsFolder()
+        targetPath = currentSettings.screenshotPath ?? getDefaultDownloadsFolder()
       }
 
       // Convert the path for the current platform
@@ -962,7 +961,7 @@ export class BrowserConnector {
         )
       }
 
-      const timestamp = new Date().toISOString().replace(/[:.]/g, '-')
+      const timestamp = new Date().toISOString().replaceAll(/[:.]/g, '-')
       const filename = `screenshot-${timestamp}.png`
       const fullPath = path.join(targetPath, filename)
       logger.info(`Browser Connector: Full screenshot path: ${fullPath}`)
@@ -1175,8 +1174,7 @@ export class BrowserConnector {
 
       // Send close message to client if connection is active
       if (
-        this.activeConnection != null
-        && this.activeConnection.readyState === WebSocket.OPEN
+        this.activeConnection?.readyState === WebSocket.OPEN
       ) {
         logger.info('Notifying client to close connection...')
         try {

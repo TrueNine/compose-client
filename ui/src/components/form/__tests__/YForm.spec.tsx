@@ -192,7 +192,7 @@ describe('yFormTest', () => {
       const emitEvents = formComponent.emitted('update:modelValue')
       if (emitEvents && emitEvents.length <= 0) return
 
-      const lastEvent = emitEvents[emitEvents.length - 1]
+      const lastEvent = emitEvents.at(-1)
       expect(lastEvent[0]).toHaveProperty('username', 'newUser')
     })
   })
@@ -251,7 +251,7 @@ describe('yFormTest', () => {
       await nextTick()
 
       expect(wrapper.emitted('update:modelValue')).toBeTruthy()
-      expect(wrapper.emitted('update:modelValue')?.slice(-1)[0]).toEqual([initialData])
+      expect(wrapper.emitted('update:modelValue')?.at(-1)).toEqual([initialData])
     })
 
     it('应 正确处理 button type="reset" 触发表单重置事件', async () => {
@@ -405,7 +405,7 @@ describe('yFormTest', () => {
       // 检查事件的最新值
       const emitEvents = formComponent.emitted('update:modelValue')
       if (emitEvents && emitEvents.length > 0) {
-        const lastEvent = emitEvents[emitEvents.length - 1]
+        const lastEvent = emitEvents.at(-1)
         expect(lastEvent[0]).toHaveProperty('key1', 'newVal1')
         expect(lastEvent[0]).toHaveProperty('key2', 'newVal2')
       }

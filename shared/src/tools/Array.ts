@@ -5,7 +5,7 @@ import type { dynamic, late, Maybe } from '@truenine/types'
  * @param arr 数组
  */
 export function arrayDistinct<T>(arr: T[]): T[] {
-  return Array.from(new Set(arr))
+  return [...new Set(arr)]
 }
 
 /**
@@ -39,7 +39,7 @@ export function arrayDiff<T>(a: T[], b: T[]): T[] {
   const setB = new Set(b)
   const first = setA.size >= setB.size ? setA : setB
   const last = setA.size < setB.size ? setA : setB
-  return Array.from(first).filter(i => !last.has(i))
+  return [...first].filter(i => !last.has(i))
 }
 
 /**

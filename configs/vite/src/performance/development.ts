@@ -69,7 +69,7 @@ export function createDevServerOptimization(options: DevelopmentOptimizationOpti
       // 优化 HMR 配置
       hmr: enableSmartHMR
         ? {
-            // 启用 HMR 端口
+          // 启用 HMR 端口
             port: port + 1,
             // 禁用错误覆盖层以提升性能
             overlay: false,
@@ -78,7 +78,7 @@ export function createDevServerOptimization(options: DevelopmentOptimizationOpti
       // 启用文件系统缓存
       fs: enableFsCache
         ? {
-            // 允许访问工作区根目录
+          // 允许访问工作区根目录
             allow: ['..'],
             // 严格模式，提升安全性
             strict: true,
@@ -321,11 +321,11 @@ export function createMonorepoDevelopmentOptimization(options: DevelopmentOptimi
     optimizeDeps: {
       // Monorepo 中的依赖优化
       include: [
-        ...baseConfig.optimizeDeps?.include || [],
+        ...(baseConfig.optimizeDeps?.include ?? []),
         // 包含 workspace 依赖
       ],
       exclude: [
-        ...baseConfig.optimizeDeps?.exclude || [],
+        ...(baseConfig.optimizeDeps?.exclude ?? []),
         // 排除本地 workspace 包
         '@truenine/*',
         'workspace:*',

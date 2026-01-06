@@ -46,78 +46,76 @@ export interface JsApiListMap {
   openCard: never
 }
 
-export const AllJsApiList: (keyof JsApiListMap)[] = Array.from(
-  new Set([
-    'updateAppMessageShareData',
+export const AllJsApiList: (keyof JsApiListMap)[] = [...new Set([
+  'updateAppMessageShareData',
 
-    'updateTimelineShareData',
+  'updateTimelineShareData',
 
-    'onMenuShareTimeline',
+  'onMenuShareTimeline',
 
-    'onMenuShareAppMessage',
+  'onMenuShareAppMessage',
 
-    'onMenuShareQQ',
+  'onMenuShareQQ',
 
-    'onMenuShareWeibo',
+  'onMenuShareWeibo',
 
-    'onMenuShareQZone',
+  'onMenuShareQZone',
 
-    'startRecord',
+  'startRecord',
 
-    'stopRecord',
+  'stopRecord',
 
-    'onVoiceRecordEnd',
+  'onVoiceRecordEnd',
 
-    'playVoice',
+  'playVoice',
 
-    'pauseVoice',
+  'pauseVoice',
 
-    'stopVoice',
+  'stopVoice',
 
-    'onVoicePlayEnd',
+  'onVoicePlayEnd',
 
-    'uploadVoice',
+  'uploadVoice',
 
-    'downloadVoice',
+  'downloadVoice',
 
-    'chooseImage',
+  'chooseImage',
 
-    'previewImage',
+  'previewImage',
 
-    'uploadImage',
+  'uploadImage',
 
-    'downloadImage',
+  'downloadImage',
 
-    'translateVoice',
+  'translateVoice',
 
-    'getNetworkType',
+  'getNetworkType',
 
-    'openLocation',
+  'openLocation',
 
-    'getLocation',
+  'getLocation',
 
-    'hideOptionMenu',
+  'hideOptionMenu',
 
-    'showOptionMenu',
+  'showOptionMenu',
 
-    'hideMenuItems',
+  'hideMenuItems',
 
-    'showMenuItems',
+  'showMenuItems',
 
-    'hideAllNonBaseMenuItem',
+  'hideAllNonBaseMenuItem',
 
-    'showAllNonBaseMenuItem',
+  'showAllNonBaseMenuItem',
 
-    'closeWindow',
+  'closeWindow',
 
-    'scanQRCode',
+  'scanQRCode',
 
-    'openProductSpecificView',
+  'openProductSpecificView',
 
-    'addCard',
+  'addCard',
 
-    'chooseCard',
+  'chooseCard',
 
-    'openCard',
-  ]),
-)
+  'openCard',
+])]

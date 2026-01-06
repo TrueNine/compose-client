@@ -182,7 +182,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
   auditRefs
     .filter(ref => {
       const audit = audits[ref.id]
-      return audit != null && audit.score != null && audit.score < 0.9
+      return audit?.score != null && audit.score < 0.9
     })
     .sort((a, b) => (b.weight || 0) - (a.weight || 0))
     // No limit on failed audits - we'll filter dynamically based on impact

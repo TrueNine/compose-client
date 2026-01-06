@@ -65,7 +65,7 @@ export function createDtsPlugin(options: SimpleDtsOptions = {}): Plugin {
   )
 
   // 生成包含所有后缀的 glob 模式
-  const includes = Array.from(extensions).map(ext =>
+  const includes = [...extensions].map(ext =>
     `${finalOptions.entryRoot}/**/*.${ext}`,
   )
 

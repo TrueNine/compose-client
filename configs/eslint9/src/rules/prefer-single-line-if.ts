@@ -17,14 +17,14 @@ const rule: Rule.RuleModule = {
     },
   },
   create(context) {
-    const sourceCode = context.sourceCode
+    const { sourceCode } = context
 
-    /* eslint-disable ts/no-unsafe-member-access, ts/no-unsafe-assignment */
+    /* eslint-disable ts/no-unsafe-assignment */
     function getSingleStatement(node: Rule.Node | null | undefined): Rule.Node | null {
       if (!node) return null
       if (node.type !== 'BlockStatement') return node
 
-      const body = (node as any).body
+      const { body } = node as any
       if (!Array.isArray(body) || body.length !== 1) return null
       return body[0] as Rule.Node
     }
@@ -33,7 +33,7 @@ const rule: Rule.RuleModule = {
       const comments = sourceCode.getCommentsInside(node)
       return comments.length > 0
     }
-    /* eslint-enable ts/no-unsafe-member-access, ts/no-unsafe-assignment */
+    /* eslint-enable ts/no-unsafe-assignment */
 
     function isSimpleStatement(stmt: Rule.Node | null): boolean {
       if (!stmt) return false
@@ -146,7 +146,7 @@ const rule: Rule.RuleModule = {
 
     return {
       IfStatement(node) {
-        const parent = node.parent
+        const { parent } = node
         // Skip if this is part of an else-if chain (will be handled by the root if)
         if (parent?.type === 'IfStatement' && 'alternate' in parent && parent.alternate === node) return
 

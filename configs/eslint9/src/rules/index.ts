@@ -7,4 +7,5 @@ export const rules: Record<string, Rule.RuleModule> = {
   'prefer-single-line-if': preferSingleLineIf,
 }
 
-export { preferGuardClause, preferSingleLineIf }
+export { default as preferGuardClause } from './prefer-guard-clause'
+export { default as preferSingleLineIf } from './prefer-single-line-if'

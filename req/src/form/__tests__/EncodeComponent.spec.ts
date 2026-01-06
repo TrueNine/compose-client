@@ -11,8 +11,8 @@ describe('searchParam', () => {
     expect(sp.get('a')).toBe(1)
     expect(sp.get('b')).toBe('2')
     expect(sp.has('a')).toBe(true)
-    expect(Array.from(sp.keys())).toEqual(['a', 'b'])
-    expect(Array.from(sp.values())).toEqual([1, '2'])
+    expect([...sp.keys()]).toEqual(['a', 'b'])
+    expect([...sp.values()]).toEqual([1, '2'])
   })
 
   it('delete/clear', () => {

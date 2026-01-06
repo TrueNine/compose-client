@@ -5,4 +5,4 @@ export interface OpenTagListMap {
   'wx-open-audio': never
 }
 
-export const OpenTagList: (keyof OpenTagListMap)[] = Array.from(new Set(['wx-open-launch-weapp', 'wx-open-launch-app', 'wx-open-subscribe', 'wx-open-audio']))
+export const OpenTagList: (keyof OpenTagListMap)[] = [...new Set(['wx-open-launch-weapp', 'wx-open-launch-app', 'wx-open-subscribe', 'wx-open-audio'])]

@@ -70,7 +70,7 @@ export class SearchParam {
     // 使用缓存提升性能
     if (this._cachedString !== null) return this._cachedString
 
-    this._cachedString = Array.from(this._root)
+    this._cachedString = [...this._root]
       .map(([k, v]) => {
         const key = encodeURIComponent(k.toString())
         const value = v != null ? encodeURIComponent(v.toString()) : ''

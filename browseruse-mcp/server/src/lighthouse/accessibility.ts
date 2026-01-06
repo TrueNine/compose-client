@@ -183,7 +183,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
           && Array.isArray((details as { items: unknown[] }).items)
         ) {
           const detailsWithItems = details as { items: unknown[] }
-          const items = detailsWithItems.items
+          const { items } = detailsWithItems
           // Apply limits based on impact level
           const itemLimit = DETAIL_LIMITS[impact]
           items.slice(0, itemLimit).forEach(item => {

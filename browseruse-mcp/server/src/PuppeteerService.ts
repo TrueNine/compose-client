@@ -196,7 +196,7 @@ function createTempUserDataDir(): string {
   const tempDir = os.tmpdir()
   const uniqueId = `${Date.now().toString()}-${Math.random()
     .toString(36)
-    .substring(2)}`
+    .slice(2)}`
   const userDataDir = path.join(tempDir, `browser-debug-profile-${uniqueId}`)
   fs.mkdirSync(userDataDir, { recursive: true })
   logger.info(`Using temporary user data directory: ${userDataDir}`)
@@ -246,7 +246,7 @@ async function setCustomBrowserExecutable(launchOptions: Record<string, unknown>
     currentConfig.customBrowserPaths
     && Object.keys(currentConfig.customBrowserPaths).length > 0
   ) {
-    const preferredBrowsers = currentConfig.preferredBrowsers || [
+    const preferredBrowsers = currentConfig.preferredBrowsers ?? [
       'chrome',
       'edge',
       'brave',
@@ -387,8 +387,8 @@ async function findBrowserExecutablePath(): Promise<string> {
 
   // If chrome-launcher failed, use manual detection
 
-  const platform = process.platform
-  const preferredBrowsers = currentConfig.preferredBrowsers || [
+  const { platform } = process
+  const preferredBrowsers = currentConfig.preferredBrowsers ?? [
     'chrome',
     'edge',
     'brave',
@@ -411,8 +411,8 @@ async function findBrowserExecutablePath(): Promise<string> {
 
       // Extract path from registry output
       const match = regOutput.match(/REG_(?:SZ|EXPAND_SZ)\s+(\S+)/i)
-      if (match && match[1]) {
-        registryPath = match[1].replace(/\\"/g, '')
+      if (match?.[1] != null && match[1] !== '') {
+        registryPath = match[1].replaceAll('\\"', '')
         // Verify the path exists
         if (fs.existsSync(registryPath)) {
           logger.info(`Found Chrome via HKLM registry: ${registryPath}`)
@@ -430,8 +430,8 @@ async function findBrowserExecutablePath(): Promise<string> {
 
         // Extract path from registry output
         const match = regOutput.match(/REG_(?:SZ|EXPAND_SZ)\s+(\S+)/i)
-        if (match && match[1]) {
-          registryPath = match[1].replace(/\\"/g, '')
+        if (match?.[1] != null && match[1] !== '') {
+          registryPath = match[1].replaceAll('\\"', '')
           // Verify the path exists
           if (fs.existsSync(registryPath)) {
             logger.info(`Found Chrome via HKCU registry: ${registryPath}`)
@@ -726,8 +726,7 @@ export async function connectToHeadlessBrowser(
   page: Page
 }> {
   logger.info(
-    `Connecting to headless browser for ${url}${
-      options.blockResources ? ' (blocking non-essential resources)' : ''
+    `Connecting to headless browser for ${url}${options.blockResources ? ' (blocking non-essential resources)' : ''
     }`,
   )
 
@@ -793,7 +792,7 @@ export async function connectToHeadlessBrowser(
     } else if (options.emulateDevice) {
       // Set common device emulation presets
       let viewport
-      let userAgent = options.userAgent
+      let { userAgent } = options
 
       switch (options.emulateDevice) {
         case 'mobile':
@@ -890,7 +889,7 @@ export async function connectToHeadlessBrowser(
     // Check if we should block resources based on the options
     if (options.blockResources) {
       const resourceTypesToBlock = options.customResourceBlockList
-        || currentConfig.blockResourceTypes || ['image', 'font', 'media']
+        ?? currentConfig.blockResourceTypes ?? ['image', 'font', 'media']
 
       await page.setRequestInterception(true)
       page.on('request', request => {
@@ -925,8 +924,7 @@ export async function connectToHeadlessBrowser(
   } catch (error: unknown) {
     logger.error('Failed to connect to headless browser:', error)
     throw new Error(
-      `Failed to connect to headless browser: ${
-        error instanceof Error ? error.message : String(error)
+      `Failed to connect to headless browser: ${error instanceof Error ? error.message : String(error)
       }`,
     )
   }

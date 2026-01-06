@@ -188,8 +188,8 @@ export function configureViteFragment(
   }
 
   const performanceConfig = createPerformancePreset(
-    options.performance?.preset || 'basic',
-    options.performance?.options || {},
+    options.performance?.preset ?? 'basic',
+    options.performance?.options ?? {},
   )
   finalConfig = mergeConfig(finalConfig, performanceConfig)
 

@@ -3,7 +3,7 @@ import type { late } from '@truenine/types'
 import { __LOWERS_CHINESE_NUMBER_HEXS, __LOWVERS_CHINESE_NUMBERS, __UPPERS_CHINESE_NUMBER_HEXS, __UPPERS_CHINESE_NUMBERS } from '@/consts'
 
 export function camelTo(str: string, sep = '-'): string {
-  return str.replace(/([a-z0-9])([A-Z])/g, `$1${sep}$2`).toLowerCase()
+  return str.replaceAll(/([a-z0-9])([A-Z])/g, `$1${sep}$2`).toLowerCase()
 }
 
 export function numberToChinese(num?: number, upperCase = false): late<string> {
@@ -13,7 +13,7 @@ export function numberToChinese(num?: number, upperCase = false): late<string> {
   if (num == null) return void 0
   if (!/^\d*(?:\.\d*)?$/.test(num.toString())) return void 0
 
-  const a: string[] = num.toString().replace(/^0*/g, '').split('.')
+  const a: string[] = num.toString().replaceAll(/^0*/g, '').split('.')
   let k = 0
   let re = ''
 

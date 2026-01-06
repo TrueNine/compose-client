@@ -82,7 +82,7 @@ function packageJsonContentReplace(content: string, options: Omit<PackageJsonOpt
     // --- Determine if types should be generated for this entry --- END
 
     // --- Clean leading slash if relativeDir was empty initially --- START
-    if (exportKey.startsWith('./.')) exportKey = exportKey.substring(2)
+    if (exportKey.startsWith('./.')) exportKey = exportKey.slice(2)
     if (exportKey === './') exportKey = '.'
 
     const exportValue: Record<string, string> = {}
@@ -96,12 +96,12 @@ function packageJsonContentReplace(content: string, options: Omit<PackageJsonOpt
     if (Object.keys(exportValue).length <= 0) return
 
     if (exportKey === '.') {
-      if (hasEsm) packageJson.module = exportValue.import.substring(2)
-      if (hasCjs) packageJson.main = exportValue.require.substring(2)
+      if (hasEsm) packageJson.module = exportValue.import.slice(2)
+      if (hasCjs) packageJson.main = exportValue.require.slice(2)
       // Set top-level types directly if main entry is TS and dts is not false
       if (dts !== false && isTypeScriptEntry) {
-        packageJson.types = exportValue.types.substring(2)
-        packageJson.typings = exportValue.types.substring(2)
+        packageJson.types = exportValue.types.slice(2)
+        packageJson.typings = exportValue.types.slice(2)
       } else if (dts === false) {
         delete packageJson.types
         delete packageJson.typings

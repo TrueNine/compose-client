@@ -82,7 +82,7 @@ function clipRoutes(routes: RouteRecordRaw[], clipPath: string, parentPath = '')
   for (const route of routes) {
     const fullPath = combineURIs(parentPath, route.path)
     if (fullPath === normalizedClipPath) return route.children ?? []
-    const children = route.children
+    const { children } = route
     if (Array.isArray(children) && children.length > 0) {
       const clippedChildren = clipRoutes(children, clipPath, fullPath)
       if (clippedChildren.length > 0) return clippedChildren
@@ -125,7 +125,7 @@ function routeToMenuObject(
     name: typeof meta.title === 'string' ? meta.title : void 0,
   }
 
-  const children = route.children
+  const { children } = route
   if (!Array.isArray(children) || children.length === 0) return menuObj
 
   const indexRoute = children.find((child): child is RouteRecordRaw & { meta?: Record<string, unknown> } => child.path === STR_EMPTY)

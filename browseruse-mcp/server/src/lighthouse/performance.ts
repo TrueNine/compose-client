@@ -203,7 +203,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
     // Enhanced LCP element detection
 
     // 1. Try from largest-contentful-paint-element audit
-    if (lcpElement != null && lcpElement.details != null) {
+    if (lcpElement?.details != null) {
       const lcpDetails = lcpElement.details as unknown
 
       // First attempt - try to get directly from items
@@ -222,7 +222,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
             if (node.selector != null) metric.element_selector = String(node.selector)
 
             // Determine element type based on path or selector
-            const path = node.path
+            const { path } = node
             const selector = node.selector != null ? String(node.selector) : ''
 
             if (path != null) {
@@ -238,7 +238,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
 
             // Try to extract text content if available
             if (node.nodeLabel != null) {
-              metric.element_content = String(node.nodeLabel).substring(
+              metric.element_content = String(node.nodeLabel).slice(
                 0,
                 100,
               )
@@ -253,10 +253,10 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
             if (String(node.nodeLabel).startsWith('<img')) {
               metric.element_type = 'image'
               // Try to extract image URL from the node snippet
-              const snippet = node.snippet
+              const { snippet } = node
               if (snippet != null) {
                 const match = String(snippet).match(/src="([^"]+)"/)
-                if (match != null && match[1] != null) metric.element_url = match[1]
+                if (match?.[1] != null) metric.element_url = match[1]
               }
             }
             else if (String(node.nodeLabel).startsWith('<video')) metric.element_type = 'video'
@@ -271,7 +271,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
 
     // 2. Try from lcp-lazy-loaded audit
     const lcpImageAudit = audits['lcp-lazy-loaded']
-    if (lcpImageAudit != null && lcpImageAudit.details != null) {
+    if (lcpImageAudit?.details != null) {
       const lcpImageDetails = lcpImageAudit.details as unknown
 
       if (
@@ -315,7 +315,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
 
     // 4. Check for specific audit that might contain image info
     const largestImageAudit = audits['largest-image-paint']
-    if (largestImageAudit != null && largestImageAudit.details != null) {
+    if (largestImageAudit?.details != null) {
       const imageDetails = largestImageAudit.details as unknown
 
       if (
@@ -336,7 +336,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
     if (metric.element_url == null) {
       const networkRequests = audits['network-requests']
 
-      if (networkRequests != null && networkRequests.details != null) {
+      if (networkRequests?.details != null) {
         const networkDetails = networkRequests.details as unknown
 
         if (isObjectWithItems(networkDetails)) {

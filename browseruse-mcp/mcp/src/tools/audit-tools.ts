@@ -40,10 +40,10 @@ export function registerAuditTools(server: McpServer): void {
 
       // eslint-disable-next-line ts/strict-boolean-expressions
       if (json.report) {
-        // eslint-disable-next-line ts/no-unsafe-assignment, ts/no-unsafe-member-access
-        const metadata = (json as any).metadata
-        // eslint-disable-next-line ts/no-unsafe-assignment, ts/no-unsafe-member-access
-        const report = (json as any).report
+        // eslint-disable-next-line ts/no-unsafe-assignment
+        const { metadata } = json as any
+        // eslint-disable-next-line ts/no-unsafe-assignment
+        const { report } = json as any
         // eslint-disable-next-line ts/no-unsafe-assignment
         const flattened = {
           ...metadata,
@@ -117,10 +117,10 @@ export function registerAuditTools(server: McpServer): void {
 
       // eslint-disable-next-line ts/strict-boolean-expressions
       if (json.report) {
-        // eslint-disable-next-line ts/no-unsafe-assignment, ts/no-unsafe-member-access
-        const metadata = (json as any).metadata
-        // eslint-disable-next-line ts/no-unsafe-assignment, ts/no-unsafe-member-access
-        const report = (json as any).report
+        // eslint-disable-next-line ts/no-unsafe-assignment
+        const { metadata } = json as any
+        // eslint-disable-next-line ts/no-unsafe-assignment
+        const { report } = json as any
         // eslint-disable-next-line ts/no-unsafe-assignment
         const flattened = {
           ...metadata,
@@ -245,10 +245,10 @@ export function registerAuditTools(server: McpServer): void {
 
       // eslint-disable-next-line ts/strict-boolean-expressions
       if (json.report) {
-        // eslint-disable-next-line ts/no-unsafe-assignment, ts/no-unsafe-member-access
-        const metadata = (json as any).metadata
-        // eslint-disable-next-line ts/no-unsafe-assignment, ts/no-unsafe-member-access
-        const report = (json as any).report
+        // eslint-disable-next-line ts/no-unsafe-assignment
+        const { metadata } = json as any
+        // eslint-disable-next-line ts/no-unsafe-assignment
+        const { report } = json as any
         // eslint-disable-next-line ts/no-unsafe-assignment
         const flattened = {
           ...metadata,

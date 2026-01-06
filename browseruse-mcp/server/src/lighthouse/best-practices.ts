@@ -134,7 +134,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
   // Process failed audits (score < 1)
   const failedAudits = Object.entries(audits)
     .filter(([, audit]) => {
-      const score = audit.score
+      const { score } = audit
       return (
         score !== null
         && score < 1

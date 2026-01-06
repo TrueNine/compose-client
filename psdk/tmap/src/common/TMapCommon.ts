@@ -50,7 +50,7 @@ export function initTencentMapWebGlScript(
   const query = options.loadQuery.trim()
   if (!query) return null
 
-  const containerTag = options.containerTag
+  const { containerTag } = options
   if (!containerTag) return null
 
   if (typeof options.mapContainerId !== 'string') return null
