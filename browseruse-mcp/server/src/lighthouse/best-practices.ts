@@ -145,7 +145,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
     .map(([auditId, audit]) => ({ auditId, ...audit }))
 
   // Update counters
-  Object.values(audits).forEach((audit) => {
+  Object.values(audits).forEach(audit => {
     const { score, scoreDisplayMode } = audit
 
     if (scoreDisplayMode === 'manual') {
@@ -281,7 +281,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
   })
 
   // Calculate category scores (0-100)
-  Object.keys(categories).forEach((category) => {
+  Object.keys(categories).forEach(category => {
     // Simplified scoring: if there are issues in this category, score is reduced proportionally
     const issueCount = categories[category].issues_count
     if (issueCount > 0) {

@@ -13,14 +13,12 @@ const props = withDefaults(defineProps<YPagerProps>(), {
 const emits = defineEmits<YPagerEmits>()
 
 const _modelValue = useVModel(props, 'modelValue', emits, { passive: true })
-watch(_modelValue, (v) => {
-  emits('change', v)
-})
+watch(_modelValue, v => emits('change', v))
 
 const maxPage = computed(() => props.pr?.p ?? 1)
 const modelOffset = computed({
   get: () => 1 + (_modelValue.value.o ?? 0),
-  set: (v) => {
+  set: v => {
     _modelValue.value = { ...props.modelValue, o: v - 1 }
   },
 })

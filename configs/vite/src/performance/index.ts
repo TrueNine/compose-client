@@ -70,7 +70,7 @@ export function createChunkOptimization(): BuildOptions['rollupOptions'] {
       compact: true,
       minifyInternalExports: true,
       // 设置 chunk 文件名格式
-      chunkFileNames: (chunkInfo) => {
+      chunkFileNames: chunkInfo => {
         const facadeModuleId = chunkInfo.facadeModuleId
         if (facadeModuleId != null) {
           const name = (facadeModuleId.split('/').pop()?.replace(/\.[^.]*$/, '')) ?? 'chunk'

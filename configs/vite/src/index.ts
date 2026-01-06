@@ -113,7 +113,7 @@ export function configureViteFragment(
   const finalEntryArray = Array.isArray(userOrDefaultEntry) ? userOrDefaultEntry : [userOrDefaultEntry]
 
   const entryRoot = options.lib?.entryRoot ?? libDefaults.entryRoot ?? 'src'
-  const resolvedEntryArray = finalEntryArray.map((entryPath) => {
+  const resolvedEntryArray = finalEntryArray.map(entryPath => {
     if (entryPath.startsWith('./') || entryPath.startsWith('/') || entryRoot === '.') {
       return entryPath
     }

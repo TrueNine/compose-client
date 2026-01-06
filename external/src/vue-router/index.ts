@@ -151,7 +151,7 @@ function routeToMenuObject(
     if (typeof indexMeta.title === 'string') {
       menuObj.name = indexMeta.title
     }
-    const remainingChildren = children.filter((child) => child.path !== STR_EMPTY)
+    const remainingChildren = children.filter(child => child.path !== STR_EMPTY)
     let indexSub: MenuObject[] = []
     if (Array.isArray(indexRoute.children) && indexRoute.children.length > 0) {
       indexSub = generateMenuInternal(indexRoute.children, matchFn, null, fullPath)
@@ -192,7 +192,7 @@ function generateMenuInternal(
   const hasValidClipPath = typeof clipPath === 'string' && clipPath.length > 0
   const routesToProcess = hasValidClipPath ? clipRoutes(routes, clipPath) : routes
   return routesToProcess
-    .map((route) => routeToMenuObject(route, parentPath, matchFn))
+    .map(route => routeToMenuObject(route, parentPath, matchFn))
     .filter((menu): menu is MenuObject => menu !== null)
 }
 

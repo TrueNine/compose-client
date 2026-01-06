@@ -164,7 +164,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
   let informativeCount = 0
   let notApplicableCount = 0
 
-  auditRefs.forEach((ref) => {
+  auditRefs.forEach(ref => {
     const audit = audits[ref.id]
     if (audit == null) {
       return

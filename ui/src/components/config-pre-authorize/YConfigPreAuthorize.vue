@@ -23,14 +23,14 @@ const state = computed(() => ({
 const impl = computed<PreAuthorizeInjection>(() => ({
   isAuthed: () => state.value.authed,
   isAnonymous: () => state.value.anonymous,
-  requirePermissions: (permissions) =>
-    state.value.authed && state.value.permissions.some((p) => permissions.includes(p)),
-  requireRoles: (roles) =>
-    state.value.authed && state.value.roles.some((r) => roles.includes(r)),
-  hasAnyPermissions: (permissions) =>
-    state.value.permissions.some((p) => permissions.includes(p)),
-  hasAnyRoles: (roles) =>
-    state.value.roles.some((r) => roles.includes(r)),
+  requirePermissions: permissions =>
+    state.value.authed && state.value.permissions.some(p => permissions.includes(p)),
+  requireRoles: roles =>
+    state.value.authed && state.value.roles.some(r => roles.includes(r)),
+  hasAnyPermissions: permissions =>
+    state.value.permissions.some(p => permissions.includes(p)),
+  hasAnyRoles: roles =>
+    state.value.roles.some(r => roles.includes(r)),
   permissions: computed(() => state.value.permissions),
   roles: computed(() => state.value.roles),
   authed: computed(() => state.value.authed),

@@ -36,7 +36,7 @@ function packageJsonContentReplace(content: string, options: Omit<PackageJsonOpt
     })
   }
   const keysToDelete = ['scripts', 'files', 'types', 'typings', 'main', 'module', 'types', 'typings', 'exports'] as const
-  keysToDelete.forEach((key) => {
+  keysToDelete.forEach(key => {
     if (key in packageJson) {
       delete packageJson[key]
     }
@@ -61,7 +61,7 @@ function packageJsonContentReplace(content: string, options: Omit<PackageJsonOpt
 
   const newExports: Record<string, any> = {}
 
-  entry.forEach((entryPath) => {
+  entry.forEach(entryPath => {
     // Normalize entry path, remove src/ prefix if present, remove extension
     const baseName = path.basename(entryPath).replace(/\.[jt]sx?$/, '')
     const dirName = path.dirname(entryPath)

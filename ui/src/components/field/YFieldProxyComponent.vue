@@ -38,7 +38,7 @@ const _allFields = reactive(
     }),
 )
 const _allErrors = computed(() => {
-  return _allFields.map((e) => e.errorMessage).filter((e): e is string => Boolean(e))
+  return _allFields.map(e => e.errorMessage).filter((e): e is string => Boolean(e))
 })
 
 const effectVModels = computed(() => {
@@ -57,7 +57,7 @@ const effectVModels = computed(() => {
   // 然后收集所有事件和值属性，但不覆盖它们
   const fieldProps: Record<string, any> = {}
 
-  _allFields.forEach((f) => {
+  _allFields.forEach(f => {
     const label = toRef(f.label).value
     if (!label) {
       throw new Error('label is required')
@@ -77,7 +77,7 @@ const effectVModels = computed(() => {
     'onBlur': (e: Event) => _allFields[0]?.handleBlur(e, true),
     'onReset': () => _allFields[0]?.handleReset,
     'onUpdate:errorMessages': (v: string | string[]) => {
-      _allFields.forEach((f) => f.setErrors(maybeArray(v)))
+      _allFields.forEach(f => f.setErrors(maybeArray(v)))
     },
   }
 

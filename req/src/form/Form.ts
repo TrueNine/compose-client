@@ -13,9 +13,9 @@ export function toFormPathData(formContent: Record<string, unknown>, parentExpre
         _resultArr.push({ name: `${parentExpression}.${k}`, value: v.toString() })
       } else if (Array.isArray(v) || v instanceof Uint8Array || v instanceof Uint16Array || v instanceof Uint32Array) {
         if (v.length > 0) {
-          const v1 = v.filter((e1) => e1 === 0 || (e1 != null && e1 !== STR_EMPTY))
-          const isObjArray = v1.every((e1) => e1 !== null && typeof e1 === 'object')
-          const isBlobArray = v1.every((e1) => e1 instanceof Blob)
+          const v1 = v.filter(e1 => e1 === 0 || (e1 != null && e1 !== STR_EMPTY))
+          const isObjArray = v1.every(e1 => e1 !== null && typeof e1 === 'object')
+          const isBlobArray = v1.every(e1 => e1 instanceof Blob)
           if (isObjArray && !isBlobArray) {
             v1.forEach((arrayEntity, i) => {
               if (arrayEntity !== null && typeof arrayEntity === 'object') {
@@ -45,7 +45,7 @@ export function toFormPathData(formContent: Record<string, unknown>, parentExpre
       }
     }
   })
-  return _resultArr.map((it) => {
+  return _resultArr.map(it => {
     if (it.name.startsWith('.')) {
       it.name = it.name.slice(1)
     }
@@ -56,7 +56,7 @@ export function toFormPathData(formContent: Record<string, unknown>, parentExpre
 export function form(formContent: Record<string, unknown>): FormData {
   const f = new FormData()
 
-  toFormPathData(formContent).forEach((it) => {
+  toFormPathData(formContent).forEach(it => {
     f.append(it.name, it.value)
   })
 

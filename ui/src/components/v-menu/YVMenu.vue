@@ -14,7 +14,7 @@ const _value = useVModel(props, 'value', emits, { passive: true })
 
 const _v = computed({
   get: () => [_value.value],
-  set: (v) => (_value.value = v[0]),
+  set: v => (_value.value = v[0]),
 })
 </script>
 

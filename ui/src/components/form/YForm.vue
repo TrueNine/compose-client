@@ -94,10 +94,10 @@ const form = useForm(formConfig.value)
 
 // 表单提交处理
 const handleFormSubmit = form.handleSubmit(
-  (values) => {
+  values => {
     emit('submit', values, props.step)
   },
-  (ctx) => {
+  ctx => {
     emit('error', ctx)
   },
 )
@@ -113,7 +113,7 @@ function processFormValues(newValue: dynamic) {
 
 // 防止循环更新的标志
 const isUpdating = ref(false)
-watch(formValues, (v) => {
+watch(formValues, v => {
   if (isUpdating.value) {
     return
   }
@@ -124,7 +124,7 @@ watch(formValues, (v) => {
   })
 }, { deep: true })
 
-watch(form.values, (v) => {
+watch(form.values, v => {
   // 避免循环更新
   if (isUpdating.value || v === formValues.value) {
     return

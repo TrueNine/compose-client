@@ -781,7 +781,7 @@ export async function connectToHeadlessBrowser(
     // Set cookies if provided
     if (options.cookies && options.cookies.length > 0) {
       const urlObj = new URL(url)
-      const cookiesWithDomain = options.cookies.map((cookie) => ({
+      const cookiesWithDomain = options.cookies.map(cookie => ({
         ...cookie,
         domain: cookie.domain ?? urlObj.hostname,
         path: cookie.path ?? '/',
@@ -841,7 +841,7 @@ export async function connectToHeadlessBrowser(
 
     // Set locale and timezone if provided
     if (options.locale !== void 0) {
-      await page.evaluateOnNewDocument((locale) => {
+      await page.evaluateOnNewDocument(locale => {
         Object.defineProperty(navigator, 'language', { get: () => locale })
         Object.defineProperty(navigator, 'languages', { get: () => [locale] })
       }, options.locale)
@@ -901,7 +901,7 @@ export async function connectToHeadlessBrowser(
         || currentConfig.blockResourceTypes || ['image', 'font', 'media']
 
       await page.setRequestInterception(true)
-      page.on('request', (request) => {
+      page.on('request', request => {
         // Block unnecessary resources to speed up loading
         const resourceType = request.resourceType()
         if (resourceTypesToBlock.includes(resourceType)) {

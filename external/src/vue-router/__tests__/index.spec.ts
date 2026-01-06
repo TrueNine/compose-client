@@ -23,10 +23,10 @@ describe('generateMenu - routers.json 数据', (): void => {
     const menu = generateMenu(aRoutes)
     expect(menu.length).toBeGreaterThan(0)
     // 检查典型子路由
-    const audit = menu.find((m) => m.path === 'audit')
+    const audit = menu.find(m => m.path === 'audit')
     expect(audit).toBeDefined()
     expect(audit?.sub?.length).toBeGreaterThan(0)
-    const enterprises = audit?.sub?.find((m) => m.path === 'enterprises')
+    const enterprises = audit?.sub?.find(m => m.path === 'enterprises')
     expect(enterprises).toMatchObject({
       name: '企业审核',
       path: 'enterprises',
@@ -54,8 +54,8 @@ describe('generateMenu - routers.json 数据', (): void => {
   it('应该正确处理 /wxpa 下的多级嵌套', () => {
     const menu = generateMenu(wxpaRoutes)
     expect(menu.length).toBeGreaterThan(0)
-    const me = menu.find((m) => m.path === 'me')
-    expect(me?.sub?.some((s) => s.path === 'certs')).toBe(true)
+    const me = menu.find(m => m.path === 'me')
+    expect(me?.sub?.some(s => s.path === 'certs')).toBe(true)
   })
 })
 
@@ -120,7 +120,7 @@ describe('generateMenu - path为空的子路由特殊处理', () => {
     const menu = generateMenu(routes)
     expect(menu[0].name).toBe('首页')
     // sub 应包含 sub1、sub2、other
-    const subPaths = Array.isArray(menu[0].sub) ? menu[0].sub.map((s) => s.path) : []
+    const subPaths = Array.isArray(menu[0].sub) ? menu[0].sub.map(s => s.path) : []
     expect(subPaths).toContain('sub1')
     expect(subPaths).toContain('sub2')
     expect(subPaths).toContain('other')

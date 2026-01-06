@@ -38,7 +38,7 @@ const _permissionsExp = computed(() => {
   if (isNil(props.permissions)) {
     return true
   } else {
-    return _handle.permissions.value.length && props.permissions.every((p) => _handle.permissions.value.includes(p))
+    return _handle.permissions.value.length && props.permissions.every(p => _handle.permissions.value.includes(p))
   }
 })
 
@@ -46,7 +46,7 @@ const _rolesExp = computed(() => {
   if (isNil(props.roles)) {
     return true
   } else {
-    return props.roles.every((r) => _handle.permissions.value.includes(r))
+    return props.roles.every(r => _handle.permissions.value.includes(r))
   }
 })
 
@@ -54,7 +54,7 @@ const _hasPermissionsExp = computed(() => {
   if (isNil(props.hasAnyPermissions)) {
     return true
   } else {
-    return _handle.permissions.value.length && _handle.permissions.value.some((p) => props.hasAnyPermissions.includes(p))
+    return _handle.permissions.value.length && _handle.permissions.value.some(p => props.hasAnyPermissions.includes(p))
   }
 })
 
@@ -62,7 +62,7 @@ const _hasRolesExp = computed(() => {
   if (isNil(props.hasAnyRoles)) {
     return true
   } else {
-    return _handle.roles.value.some((r) => props.hasAnyRoles.includes(r))
+    return _handle.roles.value.some(r => props.hasAnyRoles.includes(r))
   }
 })
 

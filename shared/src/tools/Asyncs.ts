@@ -5,8 +5,8 @@ export async function promiseAll<T extends Record<string, Promise<unknown>>>(
   if (entries.length === 0) {
     return null
   }
-  const propertyNames = entries.map((entry) => entry[0])
-  const promiseValues = entries.map((entry) => entry[1] as T[keyof T])
+  const propertyNames = entries.map(entry => entry[0])
+  const promiseValues = entries.map(entry => entry[1] as T[keyof T])
 
   const resolvedValues = await Promise.all(promiseValues)
   return Object.fromEntries(propertyNames.map((name, index) => [name, resolvedValues[index]])) as { [K in keyof T]: Awaited<T[K]> }

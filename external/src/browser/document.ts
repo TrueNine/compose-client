@@ -31,7 +31,7 @@ function getDownloadElement(): HTMLAnchorElement {
 export function loadRemoteScriptTag(
   src: string,
   appendTag: 'head' | 'body' = 'body',
-  beforeEach: (scriptTag: HTMLScriptElement) => HTMLScriptElement = (b) => b,
+  beforeEach: (scriptTag: HTMLScriptElement) => HTMLScriptElement = b => b,
   loadFn?: () => void,
 ): HTMLScriptElement | null {
   // 确保在浏览器环境中执行
@@ -104,7 +104,7 @@ export async function getImageData(file: Blob): Promise<HTMLImageElement> {
   const url = URL.createObjectURL(file)
   const img = new Image()
 
-  return new Promise<HTMLImageElement>((resolve) => {
+  return new Promise<HTMLImageElement>(resolve => {
     img.onload = () => {
       URL.revokeObjectURL(url)
       resolve(img)

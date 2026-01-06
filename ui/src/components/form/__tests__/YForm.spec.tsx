@@ -247,7 +247,7 @@ describe('yFormTest', () => {
 
       await wrapper.find('.reset-btn').trigger('click')
       await nextTick()
-      await new Promise((resolve) => setTimeout(resolve, 0))
+      await new Promise(resolve => setTimeout(resolve, 0))
       await nextTick()
 
       expect(wrapper.emitted('update:modelValue')).toBeTruthy()
@@ -347,7 +347,7 @@ describe('yFormTest', () => {
       if (formEl.exists()) {
         await formEl.trigger('submit')
         await nextTick()
-        await new Promise((resolve) => setTimeout(resolve, 100))
+        await new Promise(resolve => setTimeout(resolve, 100))
 
         expect(handleSubmit).toHaveBeenCalledTimes(1)
         // 应该使用修改后的值作为预期，因为我们已经改变了输入值
@@ -425,7 +425,7 @@ describe('yFormTest', () => {
         await formEl.trigger('submit')
         await nextTick()
         await nextTick()
-        await new Promise((resolve) => setTimeout(resolve, 100))
+        await new Promise(resolve => setTimeout(resolve, 100))
 
         expect(handleSubmit).toHaveBeenCalledTimes(1)
         expect(handleSubmit).toHaveBeenCalledWith({ key1: 'newVal1', key2: 'newVal2' })

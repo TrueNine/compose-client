@@ -118,7 +118,7 @@ async function cacheAndUpdate(code: string) {
       = cache
         ?? (await props[currentFnKey]?.(pt))
           ?.sort(sortFn)
-          .filter((e) => e != null)
+          .filter(e => e != null)
           .map((e: IComponentAddr) => e)
           ?? []
 
@@ -148,7 +148,7 @@ async function cacheAndUpdate(code: string) {
 
 watch(
   () => selected.value.province,
-  async (v) => {
+  async v => {
     if (v && v.code !== '') {
       await cacheAndUpdate(v.code)
     }
@@ -157,7 +157,7 @@ watch(
 
 watch(
   () => selected.value.city,
-  async (v) => {
+  async v => {
     if (v && v.code !== '') {
       await cacheAndUpdate(v.code)
     }
@@ -166,7 +166,7 @@ watch(
 
 watch(
   () => selected.value.district,
-  async (v) => {
+  async v => {
     if (v && v.code !== '' && !loading.value) {
       await cacheAndUpdate(v.code)
     }
@@ -175,7 +175,7 @@ watch(
 
 watch(
   () => selected.value.town,
-  async (v) => {
+  async v => {
     if (v && v.code !== '') {
       await cacheAndUpdate(v.code)
     }
@@ -184,7 +184,7 @@ watch(
 
 watch(
   () => selected.value.village,
-  async (v) => {
+  async v => {
     if (v && v.code !== '') {
       await cacheAndUpdate(v.code)
     }

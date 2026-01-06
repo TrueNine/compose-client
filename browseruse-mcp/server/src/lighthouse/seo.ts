@@ -134,7 +134,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
   const auditRefs = categoryData?.auditRefs != null ? categoryData.auditRefs : []
 
   // First pass: count audits by type and initialize categories
-  auditRefs.forEach((ref) => {
+  auditRefs.forEach(ref => {
     const audit = audits[ref.id]
     if (audit == null) {
       return
@@ -190,13 +190,13 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
 
   // Second pass: process failed audits into AI-friendly format
   auditRefs
-    .filter((ref) => {
+    .filter(ref => {
       const audit = audits[ref.id]
       return audit != null && audit.score != null && audit.score < 0.9
     })
     .sort((a, b) => (b.weight || 0) - (a.weight || 0))
     // No limit on failed audits - we'll filter dynamically based on impact
-    .forEach((ref) => {
+    .forEach(ref => {
       const audit = audits[ref.id]
 
       // Determine impact level based on score and weight
@@ -245,7 +245,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
           // Determine item limit based on impact
           const itemLimit = DETAIL_LIMITS[impact]
 
-          auditDetails.items.slice(0, itemLimit).forEach((item) => {
+          auditDetails.items.slice(0, itemLimit).forEach(item => {
             const detail: {
               selector?: string
               value?: string
@@ -322,25 +322,25 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
     })
 
   // Add specific high-impact recommendations
-  if (issues.some((issue) => issue.id === 'meta-description')) {
+  if (issues.some(issue => issue.id === 'meta-description')) {
     prioritized_recommendations.push(
       'Add a meta description to improve click-through rate',
     )
   }
 
-  if (issues.some((issue) => issue.id === 'document-title')) {
+  if (issues.some(issue => issue.id === 'document-title')) {
     prioritized_recommendations.push(
       'Add a descriptive page title with keywords',
     )
   }
 
-  if (issues.some((issue) => issue.id === 'hreflang')) {
+  if (issues.some(issue => issue.id === 'hreflang')) {
     prioritized_recommendations.push(
       'Fix hreflang implementation for international SEO',
     )
   }
 
-  if (issues.some((issue) => issue.id === 'canonical')) {
+  if (issues.some(issue => issue.id === 'canonical')) {
     prioritized_recommendations.push('Implement proper canonical tags')
   }
 

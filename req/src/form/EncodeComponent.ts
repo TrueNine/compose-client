@@ -119,7 +119,7 @@ export class SearchParam {
 
     const cleanQuery = queryString.startsWith('?') ? queryString.slice(1) : queryString
 
-    cleanQuery.split('&').forEach((pair) => {
+    cleanQuery.split('&').forEach(pair => {
       const [key, value] = pair.split('=').map(decodeURIComponent)
       if (key) {
         params.append(key, value)

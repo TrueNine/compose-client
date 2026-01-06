@@ -186,5 +186,5 @@ export function des<T extends Record<string, unknown>>(obj: T): T {
  * @param arr - 源数组
  */
 export function aDes<T extends Record<string, unknown>>(arr: T[] | readonly T[]): T[] {
-  return arr.map((item) => ({ ...item }))
+  return arr.map(item => ({ ...item }))
 }

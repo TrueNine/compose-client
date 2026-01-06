@@ -28,7 +28,7 @@ export function cartesianProduct<T = unknown>(spec: Record<string, T[]>, current
     nextCombination[currentKey] = value
     result.push(...cartesianProduct(spec, currentIndex + 1, nextCombination))
   }
-  return result.filter((e) => Object.keys(e).length !== 0)
+  return result.filter(e => Object.keys(e).length !== 0)
 }
 
 /**
@@ -41,7 +41,7 @@ export function arrayDiff<T>(a: T[], b: T[]): T[] {
   const setB = new Set(b)
   const first = setA.size >= setB.size ? setA : setB
   const last = setA.size < setB.size ? setA : setB
-  return Array.from(first).filter((i) => !last.has(i))
+  return Array.from(first).filter(i => !last.has(i))
 }
 
 /**
@@ -62,7 +62,7 @@ export function arrayDiff<T>(a: T[], b: T[]): T[] {
  */
 export function combineToMap<T, K, V>(arr: T[], keyHandle: (t: T) => K, valueHandle: (t: T) => V): Map<K, V[]> {
   const result = new Map<K, V[]>()
-  arr.forEach((item) => {
+  arr.forEach(item => {
     const _k = keyHandle(item)
     if (result.has(_k)) {
       result.get(_k)?.push(valueHandle(item))
@@ -109,7 +109,7 @@ export function mergeToMap<T extends object>(key: keyof T, arr: T[]): { [key in 
   if (!arr.length) {
     return {} as { [key in keyof T]: T[] }
   }
-  const ks = arr.map((e) => ({
+  const ks = arr.map(e => ({
     key: (e[key]?.toString() ?? '') as keyof T,
     value: e,
   }))

@@ -34,7 +34,7 @@ function _findSlotNodesBy(
   accumulator: SlotNode[] = [],
 ): SlotNode[] {
   const slotNodes = maybeArray(slotNode)
-  slotNodes.forEach((currentNode) => {
+  slotNodes.forEach(currentNode => {
     const componentType = currentNode.type as Record<string, string>
     currentNode.actualName = componentType.name ?? componentType.__name ?? ''
 
@@ -72,7 +72,7 @@ export function findSlotNodesBy(
 ): SlotNode[] {
   const resultNodes: SlotNode[] = []
   const validNodes = maybeArray(targetNode).filter(Boolean) as SlotNode[]
-  validNodes.forEach((slotNode) => resultNodes.push(..._findSlotNodesBy(slotNode, compareFn)))
+  validNodes.forEach(slotNode => resultNodes.push(..._findSlotNodesBy(slotNode, compareFn)))
   return resultNodes
 }
 
@@ -95,8 +95,8 @@ export function findSlotNodesByName(
 ): SlotNode[] {
   const resultNodes: SlotNode[] = []
   const validNodes = maybeArray(targetNode).filter(Boolean) as SlotNode[]
-  validNodes.forEach((slotNode) =>
-    resultNodes.push(..._findSlotNodesBy(slotNode, (node) => node.actualName === componentName)),
+  validNodes.forEach(slotNode =>
+    resultNodes.push(..._findSlotNodesBy(slotNode, node => node.actualName === componentName)),
   )
   return resultNodes
 }

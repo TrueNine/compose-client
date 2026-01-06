@@ -58,14 +58,14 @@ export function createDtsPlugin(options: SimpleDtsOptions = {}): Plugin {
 
   // 收集所有入口文件的后缀
   const extensions = new Set(
-    finalOptions.entry.map((entry) => {
+    finalOptions.entry.map(entry => {
       const match = entry.match(/\.([^.]+)$/)
       return match ? match[1] : 'ts'
     }),
   )
 
   // 生成包含所有后缀的 glob 模式
-  const includes = Array.from(extensions).map((ext) =>
+  const includes = Array.from(extensions).map(ext =>
     `${finalOptions.entryRoot}/**/*.${ext}`,
   )
 

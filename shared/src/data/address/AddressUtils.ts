@@ -25,7 +25,7 @@ export class AddressUtils implements IChinaAddressDistrict {
       return []
     }
     return [this.addrLevel.province, this.addrLevel.city, this.addrLevel.district, this.addrLevel.town, this.addrLevel.village].filter(
-      (e) => e !== AddressUtils.TWO_ZERO && e !== AddressUtils.THREE_ZERO && e !== STR_EMPTY,
+      e => e !== AddressUtils.TWO_ZERO && e !== AddressUtils.THREE_ZERO && e !== STR_EMPTY,
     )
   }
 

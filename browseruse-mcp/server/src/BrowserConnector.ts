@@ -84,7 +84,7 @@ function convertPathForCurrentPlatform(inputPath: string): string {
       if (inputPath.includes('wsl.localhost') || inputPath.includes('wsl$')) {
         // Extract the path after the distribution name
         // Handle both \\wsl.localhost\Ubuntu\path and \\wsl$\Ubuntu\path formats
-        const parts = inputPath.split('\\').filter((part) => part.length > 0)
+        const parts = inputPath.split('\\').filter(part => part.length > 0)
         logger.info('Path parts:', parts)
 
         // Find the index after the distribution name
@@ -101,7 +101,7 @@ function convertPathForCurrentPlatform(inputPath: string): string {
         let distIndex = -1
         for (const dist of distNames) {
           const index = parts.findIndex(
-            (part) => part === dist || part.toLowerCase() === dist.toLowerCase(),
+            part => part === dist || part.toLowerCase() === dist.toLowerCase(),
           )
           if (index !== -1) {
             distIndex = index
@@ -121,7 +121,7 @@ function convertPathForCurrentPlatform(inputPath: string): string {
         // If we couldn't find a distribution name but it's clearly a WSL path,
         // try to extract everything after wsl.localhost or wsl$
         const wslIndex = parts.findIndex(
-          (part) =>
+          part =>
             part === 'wsl.localhost'
             || part === 'wsl$'
             || part.toLowerCase() === 'wsl.localhost'
@@ -288,7 +288,7 @@ app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }))
 
 // Helper to process logs based on settings
 function processLogsWithSettings(logs: LogEntry[]): LogEntry[] {
-  return logs.map((log) => {
+  return logs.map(log => {
     const processedLog = { ...log }
 
     if (log.type === 'network-request') {
@@ -869,7 +869,7 @@ export class BrowserConnector {
         logger.info(
           `Waiting for URL (attempt ${attempt + 1}/${maxAttempts})...`,
         )
-        await new Promise((resolve) => setTimeout(resolve, waitTime))
+        await new Promise(resolve => setTimeout(resolve, waitTime))
       }
 
       // If we reach here, no URL became available after waiting
@@ -1201,7 +1201,7 @@ export class BrowserConnector {
 
   // Add shutdown method
   public async shutdown(): Promise<void> {
-    return new Promise<void>((resolve) => {
+    return new Promise<void>(resolve => {
       logger.info('Shutting down WebSocket server...')
 
       // Send close message to client if connection is active
@@ -1393,7 +1393,7 @@ export class BrowserConnector {
       const networkInterfaces = os.networkInterfaces()
       logger.info('\nAvailable on the following network addresses:')
 
-      Object.keys(networkInterfaces).forEach((interfaceName) => {
+      Object.keys(networkInterfaces).forEach(interfaceName => {
         const interfaces = networkInterfaces[interfaceName]
         if (interfaces) {
           interfaces.forEach((iface: NetworkInterface) => {
@@ -1432,7 +1432,7 @@ export class BrowserConnector {
 
         // Then close the HTTP server
         await new Promise<void>((resolve, reject) => {
-          server.close((err) => {
+          server.close(err => {
             if (err) {
               logger.error('Error closing HTTP server:', err)
               reject(err)

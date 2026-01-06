@@ -133,7 +133,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
   const auditRefs = categoryData?.auditRefs ?? []
 
   // First pass: count audits by type and initialize categories
-  auditRefs.forEach((ref) => {
+  auditRefs.forEach(ref => {
     const audit = audits[ref.id]
     // Count by scoreDisplayMode
     if (audit.scoreDisplayMode === 'manual') {
@@ -167,13 +167,13 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
 
   // Second pass: process failed audits into AI-friendly format
   auditRefs
-    .filter((ref) => {
+    .filter(ref => {
       const audit = audits[ref.id]
       return audit.score !== null && audit.score < 0.9
     })
     .sort((a, b) => (b.weight || 0) - (a.weight || 0))
     // No limit on number of failed audits - we'll show them all
-    .forEach((ref) => {
+    .forEach(ref => {
       const audit = audits[ref.id]
 
       // Determine impact level based on score and weight
@@ -202,7 +202,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
           const items = detailsWithItems.items
           // Apply limits based on impact level
           const itemLimit = DETAIL_LIMITS[impact]
-          items.slice(0, itemLimit).forEach((item) => {
+          items.slice(0, itemLimit).forEach(item => {
             const itemObj = item as Record<string, unknown>
             const node = itemObj.node as Record<string, unknown> | undefined
 
@@ -284,17 +284,17 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
     })
 
   // Add specific high-impact recommendations
-  if (issues.some((issue) => issue.id === 'color-contrast')) {
+  if (issues.some(issue => issue.id === 'color-contrast')) {
     prioritized_recommendations.push(
       'Fix low contrast text for better readability',
     )
   }
 
-  if (issues.some((issue) => issue.id === 'document-title')) {
+  if (issues.some(issue => issue.id === 'document-title')) {
     prioritized_recommendations.push('Add a descriptive page title')
   }
 
-  if (issues.some((issue) => issue.id === 'image-alt')) {
+  if (issues.some(issue => issue.id === 'image-alt')) {
     prioritized_recommendations.push('Add alt text to all images')
   }
 

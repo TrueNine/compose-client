@@ -194,7 +194,7 @@ export async function extractPdfImages<T = string>(
 ): task<T[]> {
   const pdfArrayBuffer = await pdfFile.arrayBuffer()
   const pdfDocument = await PdfJs.getDocument(pdfArrayBuffer).promise
-  const extractedImages: PDFImageData[] = await resolvePages(pdfDocument, async (page) => {
+  const extractedImages: PDFImageData[] = await resolvePages(pdfDocument, async page => {
     const operatorList = await page.getOperatorList() as PDFOperatorList
     const imageOperatorIndices = operatorList.fnArray
       .map((operator, index): number | null => (operator === PdfJs.OPS.paintImageXObject ? index : null))
@@ -223,7 +223,7 @@ export async function extractPdfImages<T = string>(
   })
 
   return Promise.all(
-    extractedImages.map(async (imageData) => {
+    extractedImages.map(async imageData => {
       return (await (resolve ?? resolveImage)(imageData)) as T
     }),
   )
