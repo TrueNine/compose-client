@@ -5,12 +5,14 @@ An ESLint 9 configuration package optimised for Compose Client projects, providi
 ## Features
 
 ### 🚀 Performance Optimisation
+
 - **Smart Caching**: Supports metadata and content caching strategies
 - **Parallel Processing**: Automatically utilises multi-core CPUs for parallel linting
 - **Rule Optimisation**: Optionally skip performance-heavy rules
 - **Progressive Checking**: Prioritise critical files
 
 ### 📋 Presets
+
 - **performance**: Performance-first, for large projects or CI environments
 - **quality**: Quality-first, for small projects or development environments
 - **balanced**: Balanced configuration, recommended default
@@ -19,6 +21,7 @@ An ESLint 9 configuration package optimised for Compose Client projects, providi
 - **library**: Strict configuration for library projects
 
 ### 🎯 Smart Ignoring
+
 - Auto-ignore build artifacts, cache directories, minified files, etc.
 - Configurable critical file priority checking
 - Custom ignore pattern support
@@ -136,37 +139,49 @@ ruleOptimization?: {
 ## Preset Details
 
 ### Performance Preset
+
 For large projects or CI environments, prioritising check speed:
+
 - Metadata caching strategy enabled
 - Skip performance-heavy rules
 - Progressive checking enabled
 
 ### Quality Preset
+
 For small projects or development environments, prioritising code quality:
+
 - Content caching strategy enabled
 - All quality check rules retained
 - Strict error levels
 
 ### Balanced Preset
+
 Recommended default, balancing performance and quality:
+
 - Metadata caching strategy
 - Moderate rule strictness
 - Critical file priority checking enabled
 
 ### CI Preset
+
 Optimised for continuous integration environments:
+
 - Skip time-consuming rules
 - Only critical error checks retained
 - Test files ignored
 
 ### Dev Preset
+
 Development-friendly configuration:
+
 - More lenient rule settings
 - console and debugger allowed
 - Warning level instead of error level
 
 ### Library Preset
+
 For open-source libraries or component libraries:
+
 - Strictest rule settings
 - Complete type annotations required
 - Documentation comments enforced
@@ -174,6 +189,7 @@ For open-source libraries or component libraries:
 ## Performance Optimisation Tips
 
 ### 1. Enable Caching
+
 ```bash
 # package.json
 {
@@ -184,12 +200,15 @@ For open-source libraries or component libraries:
 ```
 
 ### 2. Use Appropriate Presets
+
 - Use `dev` preset for development
 - Use `ci` preset for CI environments
 - Use `library` preset for production libraries
 
 ### 3. Configure Ignore Patterns
+
 Ensure `.eslintignore` or config includes files that don't need checking:
+
 ```
 dist/
 build/
@@ -200,7 +219,9 @@ node_modules/
 ```
 
 ### 4. Progressive Checking
+
 For large projects, enable progressive checking:
+
 ```javascript
 ruleOptimization: {
   progressive: true,
@@ -211,19 +232,25 @@ ruleOptimization: {
 ## Troubleshooting
 
 ### Cache Issues
+
 If encountering cache-related issues, clear the cache:
+
 ```bash
 rm -rf .eslintcache
 ```
 
 ### Performance Issues
+
 If checking is too slow:
+
 1. Enable `skipExpensiveRules` option
 2. Use `performance` preset
 3. Add more ignore patterns
 
 ### Rule Conflicts
+
 If encountering rule conflicts, override via `customOverrides`:
+
 ```javascript
 ruleOptimization: {
   customOverrides: {
@@ -235,6 +262,7 @@ ruleOptimization: {
 ## Changelog
 
 ### v1.0.0
+
 - Initial release
 - Cache optimisation support
 - Preset configurations provided
