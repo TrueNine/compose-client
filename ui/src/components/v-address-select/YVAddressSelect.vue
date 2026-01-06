@@ -71,18 +71,10 @@ const _adCode = useVModel(props, 'adCode', emits, { passive: true })
 const _selectedLevel = useVModel(props, 'selectedLevel', emits, { passive: true, defaultValue: 0 })
 
 function sortFn(a?: nil<IComponentAddr>, b?: nil<IComponentAddr>) {
-  if (a === null || a === void 0) {
-    return 1
-  }
-  if (b === null || b === void 0) {
-    return -1
-  }
-  if (a.code < b.code) {
-    return -1
-  }
-  if (a.code > b.code) {
-    return 1
-  }
+  if (a === null || a === void 0) return 1
+  if (b === null || b === void 0) return -1
+  if (a.code < b.code) return -1
+  if (a.code > b.code) return 1
   return 0
 }
 
@@ -93,12 +85,8 @@ const loading = ref<boolean>(false)
 
 async function cacheAndUpdate(code: string) {
   loading.value = true
-  if (code.length < 2 || code.length > 12) {
-    return
-  }
-  if (!checkList.includes(code.length)) {
-    return
-  }
+  if (code.length < 2 || code.length > 12) return
+  if (!checkList.includes(code.length)) return
   const padCode = pad(code)
   const level = getAdCodeLevel(code)
 
@@ -132,9 +120,7 @@ async function cacheAndUpdate(code: string) {
   for (let i = 0; i < max; i++) {
     const key = keyNames[i]
     const item = selected.value[key!]
-    if (item?.name) {
-      fullPath += item.name
-    }
+    if (item?.name) fullPath += item.name
   }
 
   selected.value[prevKey!] = addressCacheData[prevKey!]?.find((e: IComponentAddr) => pad(e.code) === padCode)
@@ -149,45 +135,35 @@ async function cacheAndUpdate(code: string) {
 watch(
   () => selected.value.province,
   async v => {
-    if (v && v.code !== '') {
-      await cacheAndUpdate(v.code)
-    }
+    if (v && v.code !== '') await cacheAndUpdate(v.code)
   },
 )
 
 watch(
   () => selected.value.city,
   async v => {
-    if (v && v.code !== '') {
-      await cacheAndUpdate(v.code)
-    }
+    if (v && v.code !== '') await cacheAndUpdate(v.code)
   },
 )
 
 watch(
   () => selected.value.district,
   async v => {
-    if (v && v.code !== '' && !loading.value) {
-      await cacheAndUpdate(v.code)
-    }
+    if (v && v.code !== '' && !loading.value) await cacheAndUpdate(v.code)
   },
 )
 
 watch(
   () => selected.value.town,
   async v => {
-    if (v && v.code !== '') {
-      await cacheAndUpdate(v.code)
-    }
+    if (v && v.code !== '') await cacheAndUpdate(v.code)
   },
 )
 
 watch(
   () => selected.value.village,
   async v => {
-    if (v && v.code !== '') {
-      await cacheAndUpdate(v.code)
-    }
+    if (v && v.code !== '') await cacheAndUpdate(v.code)
   },
 )
 const codingLoad = ref(false)

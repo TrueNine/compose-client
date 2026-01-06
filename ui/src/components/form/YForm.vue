@@ -57,9 +57,7 @@ const validationSchema = computed(() => {
       throw error
     }
   }
-  if (schema instanceof ObjectSchema) {
-    return yupToTypedSchema(schema)
-  }
+  if (schema instanceof ObjectSchema) return yupToTypedSchema(schema)
   return schema
 })
 
@@ -78,9 +76,7 @@ const formConfig = computed(() => {
   if (schema) {
     if (import.meta.env.NODE_ENV === 'test' || import.meta.env.VITEST) {
       // In test environment, only add schema if it's not a Zod schema or if it's our custom wrapper
-      if (!(schema as any).__type || (schema as any).__type === 'VeeTypedSchema') {
-        config.validationSchema = schema
-      }
+      if (!(schema as any).__type || (schema as any).__type === 'VeeTypedSchema') config.validationSchema = schema
       // For Zod schemas in tests, we'll handle validation manually
     } else {
       config.validationSchema = schema
@@ -114,9 +110,7 @@ function processFormValues(newValue: dynamic) {
 // 防止循环更新的标志
 const isUpdating = ref(false)
 watch(formValues, v => {
-  if (isUpdating.value) {
-    return
-  }
+  if (isUpdating.value) return
   isUpdating.value = true
   processFormValues(v)
   void nextTick(() => {
@@ -126,9 +120,7 @@ watch(formValues, v => {
 
 watch(form.values, v => {
   // 避免循环更新
-  if (isUpdating.value || v === formValues.value) {
-    return
-  }
+  if (isUpdating.value || v === formValues.value) return
 
   isUpdating.value = true
   formValues.value = v

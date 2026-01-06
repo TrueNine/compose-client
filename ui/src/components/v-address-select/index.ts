@@ -85,20 +85,11 @@ export function getAdCodeLevel(code: string): number {
     village: padCode.slice(9, 12),
   }
   let level = 0
-  if (obj.province !== '00') {
-    level = 2
-  }
-  if (obj.city !== '00') {
-    level = 3
-  }
-  if (obj.district !== '00') {
-    level = 4
-  }
-  if (obj.town !== '000') {
-    level = 5
-  } else if (obj.village !== '000') {
-    level = 5
-  }
+  if (obj.province !== '00') level = 2
+  if (obj.city !== '00') level = 3
+  if (obj.district !== '00') level = 4
+  if (obj.town !== '000') level = 5
+  else if (obj.village !== '000') level = 5
   return level
 }
 

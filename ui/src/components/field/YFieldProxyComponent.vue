@@ -19,15 +19,11 @@ const props = withDefaults(
   },
 )
 const mounted = ref(false)
-if (!mounted.value) {
-  mounted.value = true
-}
+if (!mounted.value) mounted.value = true
 
 const _modelNames = computed(() => {
   const len = Object.keys(props.modelNames).length
-  if (len === 0) {
-    return {}
-  }
+  if (len === 0) return {}
   return props.modelNames
 })
 
@@ -42,9 +38,7 @@ const _allErrors = computed(() => {
 })
 
 const effectVModels = computed(() => {
-  if (!mounted.value) {
-    return {}
-  }
+  if (!mounted.value) return {}
 
   // 首先收集所有基础属性
   const baseProps = {
@@ -59,9 +53,7 @@ const effectVModels = computed(() => {
 
   _allFields.forEach(f => {
     const label = toRef(f.label).value
-    if (!label) {
-      throw new Error('label is required')
-    }
+    if (!label) throw new Error('label is required')
 
     // 添加值绑定
     fieldProps[label] = f.value

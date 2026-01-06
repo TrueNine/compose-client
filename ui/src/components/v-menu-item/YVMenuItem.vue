@@ -34,9 +34,7 @@ function isSub(opt: RouteOption): bool {
 const router = useRouter()
 
 async function routeTo() {
-  if (props.routeMode && !props.route.disabled) {
-    await router.push(_value.value)
-  }
+  if (props.routeMode && !props.route.disabled) await router.push(_value.value)
 }
 
 function urlJoin(...args: late<string>[]) {
