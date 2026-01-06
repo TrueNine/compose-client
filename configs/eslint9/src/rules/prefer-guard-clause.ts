@@ -115,6 +115,10 @@ const rule: Rule.RuleModule = {
           // Skip if return statement is multi-line (complex return)
           if (isMultiLine(returnNode)) return
 
+          // Check if the if block ends with a return statement
+          const lastBlockStmt = blockBody.at(-1)
+          const blockEndsWithReturn = lastBlockStmt?.type === 'ReturnStatement'
+
           context.report({
             node,
             messageId: 'preferGuardClause',
@@ -129,8 +133,11 @@ const rule: Rule.RuleModule = {
                 .join(`\n${indent}`)
 
               const formattedReturn = formatReturnStatement(returnText, indent)
-              // After guard clause, we need to keep the original return at the end
-              const result = `if (${invertedCondition}) ${formattedReturn}\n\n${indent}${bodyText}\n${indent}${returnText}`
+
+              // If block already ends with return, don't append the fallback return
+              const result = blockEndsWithReturn
+                ? `if (${invertedCondition}) ${formattedReturn}\n\n${indent}${bodyText}`
+                : `if (${invertedCondition}) ${formattedReturn}\n\n${indent}${bodyText}\n${indent}${returnText}`
 
               const nodeRange = node.range as [number, number] | undefined
               const returnRange = returnNode.range

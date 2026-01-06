@@ -46,7 +46,7 @@ export interface JsApiListMap {
   openCard: never
 }
 
-export const AllJsApiList: (keyof JsApiListMap)[] = [...new Set([
+export const AllJsApiList: (keyof JsApiListMap)[] = [...new Set<keyof JsApiListMap>([
   'updateAppMessageShareData',
 
   'updateTimelineShareData',

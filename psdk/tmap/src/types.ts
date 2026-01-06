@@ -81,5 +81,5 @@ export type {
   SearchOptions,
   SearchRegionOptions,
   SearchResult,
-  ViewMode,
 } from './options/service'
+export type { ViewMode } from './Constants'
