@@ -133,9 +133,7 @@ const formContext: YFormInjection = {
   setFieldValidate: () => {
     throw new Error('Framework UnImplementation setFieldValidate')
   },
-  validate: async () => {
-    return (await form.validate()).valid
-  },
+  validate: async () => (await form.validate()).valid,
 }
 
 provide(YFormInjectionKey, formContext)

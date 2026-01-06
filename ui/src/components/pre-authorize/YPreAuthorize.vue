@@ -46,9 +46,7 @@ const _hasRolesExp = computed(() => {
   else return _handle.roles.value.some(r => props.hasAnyRoles.includes(r))
 })
 
-const _exp = computed(() => {
-  return _authExp.value && _anonymousExp.value && _permissionsExp.value && _rolesExp.value && _hasPermissionsExp.value && _hasRolesExp.value
-})
+const _exp = computed(() => _authExp.value && _anonymousExp.value && _permissionsExp.value && _rolesExp.value && _hasPermissionsExp.value && _hasRolesExp.value)
 </script>
 
 <template v-if="_exp">

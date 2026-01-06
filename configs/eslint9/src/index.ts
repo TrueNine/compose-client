@@ -103,6 +103,8 @@ export default async function eslint9(options: ConfigOptions = {}): Promise<Retu
       'antfu/curly': 'off',
       'style/brace-style': 'off',
       'curly': ['error', 'multi-line'],
+      // 箭头函数单行时去掉大括号
+      'arrow-body-style': ['error', 'as-needed'],
     },
   } as Linter.Config)
 }

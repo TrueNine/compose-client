@@ -114,24 +114,20 @@ export const dtsPresets = {
   /**
    * 库模式预设
    */
-  lib: (customOptions: SimpleDtsOptions = {}): Plugin => {
-    return createDtsPlugin({
-      entry: ['index.ts'],
-      sourcemap: true,
-      strict: true,
-      ...customOptions,
-    })
-  },
+  lib: (customOptions: SimpleDtsOptions = {}): Plugin => createDtsPlugin({
+    entry: ['index.ts'],
+    sourcemap: true,
+    strict: true,
+    ...customOptions,
+  }),
 
   /**
    * 应用模式预设
    */
-  app: (customOptions: SimpleDtsOptions = {}): Plugin => {
-    return createDtsPlugin({
-      entry: ['main.ts', 'index.ts'],
-      sourcemap: false,
-      strict: false,
-      ...customOptions,
-    })
-  },
+  app: (customOptions: SimpleDtsOptions = {}): Plugin => createDtsPlugin({
+    entry: ['main.ts', 'index.ts'],
+    sourcemap: false,
+    strict: false,
+    ...customOptions,
+  }),
 }

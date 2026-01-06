@@ -167,10 +167,9 @@ export function createMonorepoParallelOptimization(options: ParallelOptimization
       rollupOptions: {
         ...baseConfig.build?.rollupOptions,
         // 优化外部依赖处理以支持并行构建
-        external: (id: string) => {
+        external: (id: string) =>
           // 将 workspace 包标记为外部依赖，支持并行构建
-          return id.startsWith('@truenine/') || id.startsWith('workspace:')
-        },
+          id.startsWith('@truenine/') || id.startsWith('workspace:'),
       },
     },
   }

@@ -190,9 +190,7 @@ onMounted(async () => {
 
   addressCacheData.province = r.filter((e): e is IComponentAddr => Boolean(e))
 
-  addressCacheData.province.sort((a, b) => {
-    return a.code.localeCompare(b.code)
-  })
+  addressCacheData.province.sort((a, b) => a.code.localeCompare(b.code))
   await watchChangeCode(props.adCode)
 })
 

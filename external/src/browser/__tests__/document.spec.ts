@@ -271,13 +271,11 @@ describe('document.ts 文件函数测试', () => {
       originalImage = globalThis.Image
 
       // 模拟 Image 构造函数
-      globalThis.Image = vi.fn().mockImplementation(() => {
-        return {
-          onload: null,
-          onerror: null,
-          src: '',
-        } as MockImage
-      }) as unknown as typeof Image
+      globalThis.Image = vi.fn().mockImplementation(() => ({
+        onload: null,
+        onerror: null,
+        src: '',
+      } as MockImage)) as unknown as typeof Image
     })
 
     afterEach(() => {

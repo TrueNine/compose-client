@@ -21,9 +21,7 @@ const {
   settingsMenuOpened: _settingsMenuOpened,
 } = useVModels(props, emits, { passive: true })
 const progressClr = computed(() => _progressLoading.value && _progress.value === 0)
-const useRight = computed(() => {
-  return !!slots['right-btn']
-})
+const useRight = computed(() => !!slots['right-btn'])
 </script>
 
 <template>

@@ -19,12 +19,8 @@ const _value = computed(() => {
   return `/${prefix}/${parentPath}/${value}`.replace(/\/+/g, '/')
 })
 
-const _menuIconClass = computed(() => {
-  return _route.value.iconName ?? 'i-mdi:menu-open'
-})
-const _title = computed(() => {
-  return (_route.value.name || _route.value.uri) ?? ''
-})
+const _menuIconClass = computed(() => _route.value.iconName ?? 'i-mdi:menu-open')
+const _title = computed(() => (_route.value.name || _route.value.uri) ?? '')
 const _hidden = computed(() => !!props.route.hidden)
 
 function isSub(opt: RouteOption): bool {

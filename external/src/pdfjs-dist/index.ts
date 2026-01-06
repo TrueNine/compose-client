@@ -215,9 +215,7 @@ export async function extractPdfImages<T = string>(
   })
 
   return Promise.all(
-    extractedImages.map(async imageData => {
-      return (await (resolve ?? resolveImage)(imageData)) as T
-    }),
+    extractedImages.map(async imageData => (await (resolve ?? resolveImage)(imageData)) as T),
   )
 }
 

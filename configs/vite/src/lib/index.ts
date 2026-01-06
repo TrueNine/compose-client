@@ -31,9 +31,7 @@ export function BuildConfigLib(options: BuildLibraryConfigOptions = {}): BuildOp
       entry,
       formats,
       name,
-      fileName: (format: string) => {
-        return `[name]${fileNameMap[format as keyof typeof fileNameMap]}`
-      },
+      fileName: (format: string) => `[name]${fileNameMap[format as keyof typeof fileNameMap]}`,
     },
     assetsInlineLimit: 0,
     rollupOptions: {
