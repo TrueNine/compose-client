@@ -16,9 +16,9 @@
     "access": "public"
   },
   "scripts": {
-    "lint": "eslint --fix",
+    "lintfix": "eslint --fix",
     "build-c": "tsdown",
-    "type-check": "tsc --noEmit -p tsconfig.lib.json",
+    "typecheck": "tsc --noEmit -p tsconfig.lib.json",
     "build": "tsdown"
   },
   "peerDependencies": {

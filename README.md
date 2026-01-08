@@ -41,10 +41,10 @@ pnpm test
 pnpm dev
 
 # Type checking
-pnpm type-check
+pnpm typecheck
 
 # Lint checks
-pnpm lint
+pnpm lintfix
 ```
 
 ## 📁 Project Structure
@@ -114,9 +114,9 @@ pnpm test                     # Run all tests
 pnpm test:legacy              # Concurrent testing (10 tasks)
 
 # Code quality
-pnpm lint                     # Lint checks
-pnpm type-check              # Type checking
-pnpm lint:root               # Root directory lint check
+pnpm lintfix                     # Lint checks
+pnpm typecheck              # Type checking
+pnpm lintfix:root               # Root directory lint check
 
 # Development servers
 pnpm dev                      # Start all development servers
@@ -152,12 +152,12 @@ turbo run dev --filter=@truenine/design
 - **Turbo**: Task orchestration and caching
 
 ### Build Dependencies
-- **build**: depends on type-check, lint, ^build
+- **build**: depends on typecheck, lintfix, ^build
 - **build-c**: compilation step, depends on ^build
 - **build-g**: post-processing step, depends on build-c
-- **test**: depends on ^build, type-check, lint
-- **lint**: depends on ^build
-- **type-check**: no dependencies, can run in parallel
+- **test**: depends on ^build, typecheck, lintfix
+- **lintfix**: depends on ^build
+- **typecheck**: no dependencies, can run in parallel
 
 ### Output Formats
 - **TSDown packages**: Generate ESM + CJS dual format with sourcemap and dts files

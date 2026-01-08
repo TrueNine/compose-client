@@ -69,10 +69,10 @@
     }
   },
   "scripts": {
-    "lint": "eslint --fix",
+    "lintfix": "eslint --fix",
     "build-c": "vite build",
-    "type-check": "tsc --noEmit -p tsconfig.lib.json",
-    "check": "run-p type-check lint",
+    "typecheck": "tsc --noEmit -p tsconfig.lib.json",
+    "check": "run-p typecheck lintfix",
     "build": "tsdown"
   },
   "peerDependencies": {

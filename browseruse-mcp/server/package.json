@@ -48,8 +48,8 @@
     "registry": "https://registry.npmjs.org/"
   },
   "scripts": {
-    "lint": "eslint --fix",
-    "type-check": "tsc --noEmit -p tsconfig.lib.json",
+    "lintfix": "eslint --fix",
+    "typecheck": "tsc --noEmit -p tsconfig.lib.json",
     "build": "tsdown"
   },
   "peerDependencies": {

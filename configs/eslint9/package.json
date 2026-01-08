@@ -61,11 +61,11 @@
   },
   "scripts": {
     "build": "tsdown",
-    "lint": "eslint --fix",
-    "type-check": "tsc --noEmit -p tsconfig.lib.json",
+    "lintfix": "eslint --fix",
+    "typecheck": "tsc --noEmit -p tsconfig.lib.json",
     "test": "vitest run",
-    "copy-license": "node -e \"require('fs').copyFileSync('../../LICENSE', './LICENSE')\"",
-    "prepublishOnly": "run-s copy-license build"
+    "copylicense": "node -e \"require('fs').copyFileSync('../../LICENSE', './LICENSE')\"",
+    "prepublishOnly": "run-s copylicense build"
   },
   "peerDependencies": {
     "@antfu/eslint-config": "catalog:eslint",

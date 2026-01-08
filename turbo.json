@@ -24,7 +24,7 @@
     ]
   },
   "tasks": {
-    "lint": {
+    "lintfix": {
       "dependsOn": [
         "^build"
       ],
@@ -37,7 +37,7 @@
       "cache": true,
       "persistent": false
     },
-    "type-check": {
+    "typecheck": {
       "dependsOn": [
         "^build"
       ],
@@ -72,7 +72,7 @@
     "build": {
       "dependsOn": [
         "^build",
-        "type-check"
+        "typecheck"
       ],
       "inputs": [
         "src/**/*.{ts,js,vue,tsx,jsx,css,scss,sass}",
