@@ -48,6 +48,22 @@ const rule: Rule.RuleModule = {
       return node.loc?.start.line === node.loc?.end.line
     }
 
+    function normalizeConditionText(text: string): string {
+      // 将多行条件压缩成单行，处理 || 和 && 分隔的情况
+      return text
+        .split('\n')
+        .map(line => line.trim())
+        .join(' ')
+        .replace(/\s+/g, ' ')
+        .trim()
+    }
+
+    function canConditionBeSingleLine(test: Rule.Node): boolean {
+      const condText = normalizeConditionText(sourceCode.getText(test))
+      // 条件本身不能太长
+      return condText.length < MAX_LINE_LENGTH - 40
+    }
+
     function collectIfChain(node: Rule.Node): { conditions: Rule.Node[], finalElse: Rule.Node | null } {
       const conditions: Rule.Node[] = []
       let current: Rule.Node | null = node
@@ -62,17 +78,17 @@ const rule: Rule.RuleModule = {
 
     function canBranchBeSimplified(consequent: Rule.Node, test: Rule.Node): boolean {
       if (consequent.type !== 'BlockStatement') return false
-      if (!isNodeSingleLine(test)) return false
+      if (!canConditionBeSingleLine(test)) return false
       if (hasComments(consequent)) return false
 
       const stmt = getSingleStatement(consequent)
       if (!stmt || !isSimpleStatement(stmt)) return false
       if (!isNodeSingleLine(stmt)) return false
 
-      const condText = sourceCode.getText(test)
+      const condText = normalizeConditionText(sourceCode.getText(test))
       const stmtText = sourceCode.getText(stmt)
       const lineLength = `if (${condText}) ${stmtText}`.length
-      return lineLength < MAX_LINE_LENGTH - 20
+      return lineLength < MAX_LINE_LENGTH
     }
 
     function canConvertToSingleLine(node: Rule.Node): boolean {
@@ -82,7 +98,7 @@ const rule: Rule.RuleModule = {
         if (!('consequent' in cond) || !('test' in cond)) return false
 
         const test = cond.test as Rule.Node
-        if (!isNodeSingleLine(test)) return false
+        if (!canConditionBeSingleLine(test)) return false
 
         const consequent = cond.consequent as Rule.Node
         if (hasComments(consequent)) return false
@@ -104,17 +120,17 @@ const rule: Rule.RuleModule = {
         const cond = conditions[i]
         if (!('consequent' in cond) || !('test' in cond)) continue
         const stmt = getSingleStatement(cond.consequent as Rule.Node)!
-        const condText = sourceCode.getText(cond.test as Rule.Node)
+        const condText = normalizeConditionText(sourceCode.getText(cond.test as Rule.Node))
         const stmtText = sourceCode.getText(stmt)
         const prefix = i === 0 ? 'if' : 'else if'
         lines.push(`${prefix} (${condText}) ${stmtText}`)
       }
 
-      if (!finalElse) return lines.every(line => line.length < MAX_LINE_LENGTH - 20)
+      if (!finalElse) return lines.every(line => line.length < MAX_LINE_LENGTH)
 
       const stmt = getSingleStatement(finalElse)!
       lines.push(`else ${sourceCode.getText(stmt)}`)
-      return lines.every(line => line.length < MAX_LINE_LENGTH - 20)
+      return lines.every(line => line.length < MAX_LINE_LENGTH)
     }
 
     function isAlreadySingleLine(node: Rule.Node): boolean {
@@ -164,7 +180,7 @@ const rule: Rule.RuleModule = {
                 const cond = conditions[i]
                 if (!('consequent' in cond) || !('test' in cond)) continue
                 const stmt = getSingleStatement(cond.consequent as Rule.Node)!
-                const condText = sourceCode.getText(cond.test as Rule.Node)
+                const condText = normalizeConditionText(sourceCode.getText(cond.test as Rule.Node))
                 let stmtText = sourceCode.getText(stmt)
 
                 if (!stmtText.endsWith(';') && !stmtText.endsWith('}')) stmtText = stmtText.trimEnd()

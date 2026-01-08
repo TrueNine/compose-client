@@ -97,6 +97,7 @@ export default async function eslint9(options: ConfigOptions = {}): Promise<Retu
     },
     rules: {
       '@truenine/prefer-single-line-if': 'warn',
+      '@truenine/prefer-single-line-control': 'warn',
       '@truenine/prefer-guard-clause': ['warn', { minStatements: 2 }],
       'antfu/if-newline': 'off',
       'antfu/curly': 'off',
@@ -117,6 +118,37 @@ export default async function eslint9(options: ConfigOptions = {}): Promise<Retu
       'prefer-exponentiation-operator': 'error',
       // 使用 Object.hasOwn 代替 Object.prototype.hasOwnProperty.call
       'prefer-object-has-own': 'error',
+      // ===== 减少字符数的规则 =====
+      // 不需要的 else（return 后）
+      'no-else-return': ['error', { allowElseIf: false }],
+      // 合并连续变量声明
+      'one-var': ['error', { initialized: 'never', uninitialized: 'consecutive' }],
+      // 简化布尔表达式 !!x → Boolean(x) 或直接用
+      'no-extra-boolean-cast': 'error',
+      // 移除不必要的 return await
+      'no-return-await': 'error',
+      // 移除无用的 catch
+      'no-useless-catch': 'error',
+      // 移除无用的 return
+      'no-useless-return': 'error',
+      // 移除无用的 constructor
+      'no-useless-constructor': 'error',
+      // 移除无用的 rename { a: a } → { a }
+      'no-useless-rename': 'error',
+      // 移除无用的 computed key { ['a']: 1 } → { a: 1 }
+      'no-useless-computed-key': 'error',
+      // 移除无用的 concat 'a' + '' → 'a'
+      'no-useless-concat': 'error',
+      // 移除无用的 escape
+      'no-useless-escape': 'error',
+      // 移除无用的 call/apply
+      'no-useless-call': 'error',
+      // 移除多余括号
+      'no-extra-parens': ['error', 'all', {
+        nestedBinaryExpressions: false,
+        ignoreJSX: 'multi-line',
+        enforceForArrowConditionals: false,
+      }],
       // 使用 includes 代替 indexOf !== -1
       'unicorn/prefer-includes': 'error',
       // 使用 startsWith/endsWith 代替正则
@@ -219,6 +251,25 @@ export default async function eslint9(options: ConfigOptions = {}): Promise<Retu
       '@typescript-eslint/unbound-method': 'off',
       // 关闭 switch 穷举检查（对 switch(true) 和部分枚举类型误报太多）
       '@typescript-eslint/switch-exhaustiveness-check': 'off',
+      // ===== 减少字符数的 TS 规则 =====
+      // Array<T> → T[]
+      '@typescript-eslint/array-type': ['error', { default: 'array' }],
+      // 移除无用的类型断言
+      '@typescript-eslint/no-unnecessary-type-assertion': 'error',
+      // 移除无用的类型约束 <T extends unknown>
+      '@typescript-eslint/no-unnecessary-type-constraint': 'error',
+      // 移除无用的类型参数
+      '@typescript-eslint/no-unnecessary-type-arguments': 'error',
+      // 移除无用的 boolean 比较 x === true → x
+      '@typescript-eslint/no-unnecessary-boolean-literal-compare': 'error',
+      // 移除无用的条件 if (alwaysTrue)
+      '@typescript-eslint/no-unnecessary-condition': 'off',
+      // 简化 namespace 导入
+      '@typescript-eslint/no-namespace': 'error',
+      // 使用简短的函数类型 { (): void } → () => void
+      '@typescript-eslint/prefer-function-type': 'error',
+      // as const 代替字面量类型
+      '@typescript-eslint/prefer-as-const': 'error',
     },
   } as Linter.Config)
 }
