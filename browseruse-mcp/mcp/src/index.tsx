@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 
 import process from 'node:process'
-import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
-import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'
-import { logger } from '@/logger'
-import { registerAuditTools } from '@/tools/audit-tools'
-import { registerBrowserTools } from '@/tools/browser-tools'
-import { registerCompositeTools } from '@/tools/composite-tools'
-import { registerLoggingTools } from '@/tools/logging-tools'
-import { discoverServer } from '@/utils/server-discovery'
+import {McpServer} from '@modelcontextprotocol/sdk/server/mcp.js'
+import {StdioServerTransport} from '@modelcontextprotocol/sdk/server/stdio.js'
+import {logger} from '@/logger'
+import {registerAuditTools} from '@/tools/audit-tools'
+import {registerBrowserTools} from '@/tools/browser-tools'
+import {registerCompositeTools} from '@/tools/composite-tools'
+import {registerLoggingTools} from '@/tools/logging-tools'
+import {discoverServer} from '@/utils/server-discovery'
 
 const server = new McpServer({
   name: 'Browseruse MCP',

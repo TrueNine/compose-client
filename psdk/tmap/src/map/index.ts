@@ -1,8 +1,8 @@
-import type { MapStyleIds, ViewMode } from '../Constants'
-import type { MapEvents } from '../events'
-import type { LatLng, LatLngDataTyping } from '../LatLng'
-import type { EaseOptions } from '../options/EaseOptions'
-import type { MapOptions } from '../options/MapOptions'
+import type {MapStyleIds, ViewMode} from '../Constants'
+import type {MapEvents} from '../events'
+import type {LatLng, LatLngDataTyping} from '../LatLng'
+import type {EaseOptions} from '../options/EaseOptions'
+import type {MapOptions} from '../options/MapOptions'
 
 export declare class Map {
   constructor(html: string | HTMLElement, mode: MapOptions)

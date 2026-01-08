@@ -1,4 +1,4 @@
-import { defineComponent } from 'vue'
+import {defineComponent} from 'vue'
 
 export const ChildInputComponent = defineComponent({
   name: 'ChildInputComponent',
@@ -13,7 +13,7 @@ export const ChildInputComponent = defineComponent({
     z: String,
   },
   emits: ['update:modelValue', 'update:otherProp', 'update:adCode', 'update:x', 'update:y', 'update:z'],
-  setup(props, { emit }) {
+  setup(props, {emit}) {
     return () => (
       <div>
         <span class="label-display">{props.label}</span>

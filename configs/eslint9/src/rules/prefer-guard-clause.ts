@@ -1,4 +1,4 @@
-import type { Rule } from 'eslint'
+import type {Rule} from 'eslint'
 
 interface RuleOptions {
   minStatements?: number
@@ -29,12 +29,12 @@ const rule: Rule.RuleModule = {
     },
   },
   create(context) {
-    const { sourceCode } = context
+    const {sourceCode} = context
     const options = (context.options[0] ?? {}) as RuleOptions
     const minStatements = options.minStatements ?? 2
 
     function isFunctionBody(node: Rule.Node): boolean {
-      const { parent } = node
+      const {parent} = node
       if (parent == null) return false
       return parent.type === 'FunctionDeclaration'
         || parent.type === 'FunctionExpression'
@@ -88,7 +88,7 @@ const rule: Rule.RuleModule = {
         if (node.alternate != null) return
 
         // Skip if already processed as part of if-else chain
-        const { parent } = node
+        const {parent} = node
         if (parent?.type === 'IfStatement' && parent.alternate === node) return
 
         // Must be in a block
@@ -163,7 +163,7 @@ const rule: Rule.RuleModule = {
 
         if (funcParent != null) {
           // Check if function has return type annotation
-          const { returnType } = funcParent
+          const {returnType} = funcParent
           if (returnType != null) {
             const returnTypeText = sourceCode.getText(returnType)
             // If return type is not void/undefined, we can't just use 'return'

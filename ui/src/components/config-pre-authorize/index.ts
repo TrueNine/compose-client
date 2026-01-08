@@ -1,6 +1,6 @@
-import type { SFCWithInstall } from '@/common/install'
+import type {SFCWithInstall} from '@/common/install'
 
-import { componentInstallToPlugin } from '@/common'
+import {componentInstallToPlugin} from '@/common'
 import _c from './YConfigPreAuthorize.vue'
 
 export interface YConfigPreAuthorizeProps {

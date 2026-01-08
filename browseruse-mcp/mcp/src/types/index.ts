@@ -1,11 +1,11 @@
 // MCP Tool Response Types
 export interface McpToolResponse {
   [x: string]: unknown
-  content: Array<{
+  content: {
     type: 'text'
     text: string
     [key: string]: unknown
-  }>
+  }[]
   isError?: boolean
 }
 

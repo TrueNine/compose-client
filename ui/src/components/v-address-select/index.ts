@@ -1,7 +1,7 @@
-import type { asyncable, i32, i64, late, latenil, str } from '@truenine/types'
-import type { SFCWithInstall } from '@/common/install'
+import type {asyncable, i32, i64, late, latenil, str} from '@truenine/types'
+import type {SFCWithInstall} from '@/common/install'
 
-import { componentInstallToPlugin } from '@/common'
+import {componentInstallToPlugin} from '@/common'
 import _c from './YVAddressSelect.vue'
 
 export type ISelectLevel = 'province' | 'city' | 'district' | 'town' | 'village'
@@ -95,18 +95,12 @@ export function getAdCodeLevel(code: string): number {
 
 export function clipCode(code: string, level: i32): string {
   switch (level) {
-    case 1:
-      return code.slice(0, 2)
-    case 2:
-      return code.slice(0, 4)
-    case 3:
-      return code.slice(0, 6)
-    case 4:
-      return code.slice(0, 9)
-    case 5:
-      return code.slice(0, 12)
-    default:
-      return code
+    case 1: return code.slice(0, 2)
+    case 2: return code.slice(0, 4)
+    case 3: return code.slice(0, 6)
+    case 4: return code.slice(0, 9)
+    case 5: return code.slice(0, 12)
+    default: return code
   }
 }
 

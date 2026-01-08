@@ -1,7 +1,7 @@
-import { EslintExternals } from './EslintExternals'
-import { NodeExternals } from './NodeExternals'
-import { TypescriptExternals } from './TypescriptExternals'
-import { ViteExternals } from './ViteExternals'
+import {EslintExternals} from './EslintExternals'
+import {NodeExternals} from './NodeExternals'
+import {TypescriptExternals} from './TypescriptExternals'
+import {ViteExternals} from './ViteExternals'
 
 export * from './EslintExternals'
 export * from './NodeExternals'

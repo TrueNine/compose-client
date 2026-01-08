@@ -1,8 +1,8 @@
 <script setup lang="tsx">
-import type { YFieldEmits, YFieldProps, YFieldSlots } from './index'
-import { maybeArray } from '@truenine/shared'
-import { useVModel } from '@vueuse/core'
-import { computed, onMounted, ref, toValue } from 'vue'
+import type {YFieldEmits, YFieldProps, YFieldSlots} from './index'
+import {maybeArray} from '@truenine/shared'
+import {useVModel} from '@vueuse/core'
+import {computed, onMounted, ref, toValue} from 'vue'
 
 const props = withDefaults(defineProps<YFieldProps>(), {
   modelValue: void 0,
@@ -10,11 +10,11 @@ const props = withDefaults(defineProps<YFieldProps>(), {
 const emits = defineEmits<YFieldEmits>()
 const slots = defineSlots<YFieldSlots>()
 
-const _names = useVModel(props, 'name', emits, { passive: true })
+const _names = useVModel(props, 'name', emits, {passive: true})
 
 const _effectModels = computed(() => {
   const mo = _names.value
-  if (typeof mo === 'string') return { [mo]: 'modelValue' }
+  if (typeof mo === 'string') return {[mo]: 'modelValue'}
   const names = maybeArray(mo)
   const result: Record<string, string> = {}
   for (let i = 0; i < names.length; i++) {

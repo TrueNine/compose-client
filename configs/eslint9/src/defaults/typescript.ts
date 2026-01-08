@@ -1,4 +1,4 @@
-import type { AntFuTsConfig } from '../types'
+import type {AntFuTsConfig} from '../types'
 
 export const defaultTsConfig: AntFuTsConfig = {
   overrides: {

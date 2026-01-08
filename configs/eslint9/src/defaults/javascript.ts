@@ -1,4 +1,4 @@
-import type { AntFuJsConfig } from '../types'
+import type {AntFuJsConfig} from '../types'
 
 export const defaultJsConfig: AntFuJsConfig = {
   overrides: {

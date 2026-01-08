@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { YElSiderMenuEmits, YElSiderMenuProps } from './index'
+import type {YElSiderMenuEmits, YElSiderMenuProps} from './index'
 
-import { STR_EMPTY, STR_SLASH } from '@truenine/shared'
+import {STR_EMPTY, STR_SLASH} from '@truenine/shared'
 
 import YSiderMenuItem from '../el-sider-menu-item'
 
@@ -15,7 +15,7 @@ const props = withDefaults(defineProps<YElSiderMenuProps>(), {
 const emits = defineEmits<YElSiderMenuEmits>()
 
 const prefix = computed(() => (props.pathPrefix ? props.pathPrefix + STR_SLASH : STR_EMPTY))
-const menus = useVModel(props, 'routeTable', emits, { passive: true })
+const menus = useVModel(props, 'routeTable', emits, {passive: true})
 
 // @unocss-include
 </script>

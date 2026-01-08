@@ -1,5 +1,5 @@
-import type { LatLngDataTyping, PointDataTyping } from '../LatLng'
-import type { Map } from '../map'
+import type {LatLngDataTyping, PointDataTyping} from '../LatLng'
+import type {Map} from '../map'
 
 export interface InfoWindowOptions {
   map: Map

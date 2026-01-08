@@ -1,5 +1,5 @@
-import type { MapStyleIds } from '../Constants'
-import type { LatLngDataTyping } from '../LatLng'
+import type {MapStyleIds} from '../Constants'
+import type {LatLngDataTyping} from '../LatLng'
 
 /**
  * # 点图形数据

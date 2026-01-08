@@ -1,13 +1,13 @@
-import type { nil } from '@truenine/types'
-import type { LatLng, Point } from '../LatLng'
-import type { ITencentEvent } from './Events'
+import type {nil} from '@truenine/types'
+import type {LatLng, Point} from '../LatLng'
+import type {ITencentEvent} from './Events'
 
 /**
  * ## 地图事件类型
  */
 export interface MapEvent<K extends string> extends ITencentEvent<K, Event, EventTarget> {
   latLng: LatLng
-  poi: { name: string }
+  poi: {name: string}
   point: nil<Point>
 }
 

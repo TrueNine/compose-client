@@ -1,10 +1,10 @@
-import { mount } from '@vue/test-utils'
-import { afterEach, describe, expect, it } from 'vitest'
-import { nextTick } from 'vue'
+import {mount} from '@vue/test-utils'
+import {afterEach, describe, expect, it} from 'vitest'
+import {nextTick} from 'vue'
 import YForm from '../../form/index'
 import YField from '../index'
 import YFieldProxyComponent from '../YFieldProxyComponent.vue'
-import { ChildInputComponent } from './components/TestComponents'
+import {ChildInputComponent} from './components/TestComponents'
 
 const globalComponents = {
   components: {
@@ -60,7 +60,7 @@ describe('yFieldTest', () => {
     it('正常 表单结构 条件时，应生成正确的YFieldProxyComponent', async () => {
       const wrapper = mount(YForm, {
         props: {
-          initValue: { email: 'test@example.com' },
+          initValue: {email: 'test@example.com'},
         },
         slots: {
           default: () => (
@@ -76,19 +76,19 @@ describe('yFieldTest', () => {
       await nextTick()
 
       // 获取字段代理组件并验证它包含正确的modelNames
-      const proxy = wrapper.findComponent({ name: 'YFieldProxyComponent' })
+      const proxy = wrapper.findComponent({name: 'YFieldProxyComponent'})
       expect(proxy.exists()).toBe(true)
-      expect(proxy.props('modelNames')).toEqual({ email: 'modelValue' })
+      expect(proxy.props('modelNames')).toEqual({email: 'modelValue'})
     })
 
     it('正常 字段映射 条件时，应将表单对象字段映射到代理组件', async () => {
       const wrapper = mount(YForm, {
         props: {
-          initValue: { address: { code: '110000' } },
+          initValue: {address: {code: '110000'}},
         },
         slots: {
           default: () => (
-            <YField name={{ 'address.code': 'adCode' }} label="地址编码">
+            <YField name={{'address.code': 'adCode'}} label="地址编码">
               <ChildInputComponent />
             </YField>
           ),
@@ -100,9 +100,9 @@ describe('yFieldTest', () => {
       await nextTick()
 
       // 获取字段代理组件并验证它包含正确的modelNames
-      const proxy = wrapper.findComponent({ name: 'YFieldProxyComponent' })
+      const proxy = wrapper.findComponent({name: 'YFieldProxyComponent'})
       expect(proxy.exists()).toBe(true)
-      expect(proxy.props('modelNames')).toEqual({ 'address.code': 'adCode' })
+      expect(proxy.props('modelNames')).toEqual({'address.code': 'adCode'})
     })
   })
 
@@ -112,13 +112,13 @@ describe('yFieldTest', () => {
       const wrapper = mount(YForm, {
         props: {
           initValue: {
-            coord: { x: '100', y: '200' },
+            coord: {x: '100', y: '200'},
           },
         },
         slots: {
           default: () => (
             <YField
-              name={{ 'coord.x': 'x', 'coord.y': 'y' }}
+              name={{'coord.x': 'x', 'coord.y': 'y'}}
               label="坐标"
             >
               <ChildInputComponent />
@@ -132,9 +132,9 @@ describe('yFieldTest', () => {
       await nextTick()
 
       // 验证字段代理组件的modelNames映射
-      const proxy = wrapper.findComponent({ name: 'YFieldProxyComponent' })
+      const proxy = wrapper.findComponent({name: 'YFieldProxyComponent'})
       expect(proxy.exists()).toBe(true)
-      expect(proxy.props('modelNames')).toEqual({ 'coord.x': 'x', 'coord.y': 'y' })
+      expect(proxy.props('modelNames')).toEqual({'coord.x': 'x', 'coord.y': 'y'})
     })
   })
 })

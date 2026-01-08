@@ -1,6 +1,6 @@
-import type { dynamic, RouteOption } from '@truenine/types'
-import type { SFCWithInstall } from '@/common/install'
-import { componentInstallToPlugin } from '@/common'
+import type {dynamic, RouteOption} from '@truenine/types'
+import type {SFCWithInstall} from '@/common/install'
+import {componentInstallToPlugin} from '@/common'
 
 import YIco from '@/components/ico/index'
 
@@ -33,5 +33,5 @@ export interface YVMenuItemSlots {
 
 export type YVMenuItemEmits = Record<string, never>
 
-const YVMenuItem: SFCWithInstall<typeof _c> = componentInstallToPlugin(_c, { YIco })
+const YVMenuItem: SFCWithInstall<typeof _c> = componentInstallToPlugin(_c, {YIco})
 export default YVMenuItem

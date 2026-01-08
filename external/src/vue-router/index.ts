@@ -1,5 +1,5 @@
-import type { Maybe } from '@truenine/types'
-import type { RouteRecordRaw, RouteRecordSingleView } from 'vue-router'
+import type {Maybe} from '@truenine/types'
+import type {RouteRecordRaw, RouteRecordSingleView} from 'vue-router'
 
 /**
  * 自动路由配置类型
@@ -82,7 +82,7 @@ function clipRoutes(routes: RouteRecordRaw[], clipPath: string, parentPath = '')
   for (const route of routes) {
     const fullPath = combineURIs(parentPath, route.path)
     if (fullPath === normalizedClipPath) return route.children ?? []
-    const { children } = route
+    const {children} = route
     if (Array.isArray(children) && children.length > 0) {
       const clippedChildren = clipRoutes(children, clipPath, fullPath)
       if (clippedChildren.length > 0) return clippedChildren
@@ -114,7 +114,7 @@ function routeToMenuObject(
     if (!matchFn(raw)) return null
   }
 
-  const { meta = {} } = route
+  const {meta = {}} = route
   if (meta.hidden === true) return null
 
   const menuObj: MenuObject = {
@@ -125,19 +125,17 @@ function routeToMenuObject(
     name: typeof meta.title === 'string' ? meta.title : void 0,
   }
 
-  const { children } = route
+  const {children} = route
   if (!Array.isArray(children) || children.length === 0) return menuObj
 
-  const indexRoute = children.find((child): child is RouteRecordRaw & { meta?: Record<string, unknown> } => child.path === STR_EMPTY)
+  const indexRoute = children.find((child): child is RouteRecordRaw & {meta?: Record<string, unknown>} => child.path === STR_EMPTY)
   if (indexRoute != null) {
-    const indexMeta = (typeof indexRoute.meta === 'object' && indexRoute.meta !== null) ? indexRoute.meta as Record<string, unknown> : {}
-    menuObj.meta = { ...menuObj.meta, ...indexMeta }
+    const indexMeta = typeof indexRoute.meta === 'object' && indexRoute.meta !== null ? indexRoute.meta as Record<string, unknown> : {}
+    menuObj.meta = {...menuObj.meta, ...indexMeta}
     if (typeof indexMeta.title === 'string') menuObj.name = indexMeta.title
     const remainingChildren = children.filter(child => child.path !== STR_EMPTY)
     let indexSub: MenuObject[] = []
-    if (Array.isArray(indexRoute.children) && indexRoute.children.length > 0) {
-      indexSub = generateMenuInternal(indexRoute.children, matchFn, null, fullPath)
-    }
+    if (Array.isArray(indexRoute.children) && indexRoute.children.length > 0) indexSub = generateMenuInternal(indexRoute.children, matchFn, null, fullPath)
     let otherSub: MenuObject[] = []
     if (remainingChildren.length > 0) otherSub = generateMenuInternal(remainingChildren, matchFn, null, fullPath)
     const mergedSub = [...indexSub, ...otherSub]

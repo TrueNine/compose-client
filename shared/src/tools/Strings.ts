@@ -1,6 +1,6 @@
-import type { late } from '@truenine/types'
+import type {late} from '@truenine/types'
 
-import { __LOWERS_CHINESE_NUMBER_HEXS, __LOWVERS_CHINESE_NUMBERS, __UPPERS_CHINESE_NUMBER_HEXS, __UPPERS_CHINESE_NUMBERS } from '@/consts'
+import {__LOWERS_CHINESE_NUMBER_HEXS, __LOWVERS_CHINESE_NUMBERS, __UPPERS_CHINESE_NUMBER_HEXS, __UPPERS_CHINESE_NUMBERS} from '@/consts'
 
 export function camelTo(str: string, sep = '-'): string {
   return str.replaceAll(/([a-z0-9])([A-Z])/g, `$1${sep}$2`).toLowerCase()
@@ -19,11 +19,9 @@ export function numberToChinese(num?: number, upperCase = false): late<string> {
 
   for (let i = a[0].length - 1; i >= 0; i--) {
     switch (k) {
-      case 0:
-        re = BB[7] + re
-        break
+      case 0: re = BB[7] + re; break
       case 4:
-        if (!new RegExp(`0{4}\\d{${(a[0].length - i - 1).toString()}}$`).test(a[0])) re = BB[4] + re
+        if (!new RegExp(`0{4}\\d{${(a[0].length - i - 1).toString()}}`).test(a[0])) re = BB[4] + re
         break
       case 8:
         re = BB[5] + re
@@ -39,7 +37,6 @@ export function numberToChinese(num?: number, upperCase = false): late<string> {
   if (a.length <= 1) return re
 
   re += BB[6]
-  for (let i = 0; i < a[1].length; i++) {
-    re += AA[a[1].charAt(i) as unknown as number]
-  }
+  for (let i = 0; i < a[1].length; i++) re += AA[a[1].charAt(i) as unknown as number]
+  return re
 }

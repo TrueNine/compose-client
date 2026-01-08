@@ -1,16 +1,16 @@
-import type { clip, dynamic, Maybe } from '@truenine/types'
+import type {clip, dynamic, Maybe} from '@truenine/types'
 import type {
   RendererElement,
   RendererNode,
   VNode,
 } from 'vue'
-import { maybeArray } from '@truenine/shared'
+import {maybeArray} from '@truenine/shared'
 
 /**
  * 表示 Vue 插槽节点的类型定义
  * 继承自 Vue 的 VNode，并添加了 actualName 可选属性用于存储实际组件名
  */
-type SlotNode = VNode<RendererNode, RendererElement, Record<string, dynamic>> & { actualName?: string }
+type SlotNode = VNode<RendererNode, RendererElement, Record<string, dynamic>> & {actualName?: string}
 
 /**
  * 从 SlotNode 类型中排除 children 属性的类型

@@ -1,7 +1,7 @@
-import type { Result as LighthouseResult } from 'lighthouse'
-import type { LighthouseReport } from './types.js'
-import { runLighthouseAudit } from './core.js'
-import { AuditCategory } from './types.js'
+import type {Result as LighthouseResult} from 'lighthouse'
+import type {LighthouseReport} from './types.js'
+import {runLighthouseAudit} from './core.js'
+import {AuditCategory} from './types.js'
 
 // === Best Practices Report Types ===
 
@@ -62,7 +62,7 @@ interface AIBestPracticesIssue {
 }
 
 interface BestPracticesAuditDetails {
-  items?: Array<Record<string, unknown>>
+  items?: Record<string, unknown>[]
   // e.g., "table"
   type?: string
 }
@@ -115,12 +115,12 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
 
   // Process audit results
   const issues: AIBestPracticesIssue[] = []
-  const categories: Record<string, { score: number, issues_count: number }> = {
-    'security': { score: 0, issues_count: 0 },
-    'trust': { score: 0, issues_count: 0 },
-    'user-experience': { score: 0, issues_count: 0 },
-    'browser-compat': { score: 0, issues_count: 0 },
-    'other': { score: 0, issues_count: 0 },
+  const categories: Record<string, {score: number, issues_count: number}> = {
+    'security': {score: 0, issues_count: 0},
+    'trust': {score: 0, issues_count: 0},
+    'user-experience': {score: 0, issues_count: 0},
+    'browser-compat': {score: 0, issues_count: 0},
+    'other': {score: 0, issues_count: 0},
   }
 
   // Counters for audit types
@@ -133,7 +133,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
   // Process failed audits (score < 1)
   const failedAudits = Object.entries(audits)
     .filter(([, audit]) => {
-      const { score } = audit
+      const {score} = audit
       return (
         score !== null
         && score < 1
@@ -141,25 +141,16 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
         && audit.scoreDisplayMode !== 'notApplicable'
       )
     })
-    .map(([auditId, audit]) => ({ auditId, ...audit }))
+    .map(([auditId, audit]) => ({auditId, ...audit}))
 
   // Update counters
   Object.values(audits).forEach(audit => {
-    const { score, scoreDisplayMode } = audit
+    const {score, scoreDisplayMode} = audit
 
     switch (scoreDisplayMode) {
-      case 'manual': {
-        manualCount++
-        break
-      }
-      case 'informative': {
-        informativeCount++
-        break
-      }
-      case 'notApplicable': {
-        notApplicableCount++
-        break
-      }
+      case 'manual': manualCount++; break
+      case 'informative': informativeCount++; break
+      case 'notApplicable': notApplicableCount++; break
       default: {
         if (score === 1) passedCount++
         else if (score !== null && score < 1) failedCount++
@@ -294,20 +285,11 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
       let recommendation: string
 
       switch (category) {
-        case 'security':
-          recommendation = `Address ${data.issues_count} security issues: vulnerabilities, CSP, deprecations`
-          break
-        case 'trust':
-          recommendation = `Fix ${data.issues_count} trust & legitimacy issues: doctype, charset`
-          break
-        case 'user-experience':
-          recommendation = `Improve ${data.issues_count} user experience issues: console errors, user interactions`
-          break
-        case 'browser-compat':
-          recommendation = `Resolve ${data.issues_count} browser compatibility issues: outdated libraries, vendor prefixes`
-          break
-        default:
-          recommendation = `Fix ${data.issues_count} other best practice issues`
+        case 'security': recommendation = `Address ${data.issues_count} security issues: vulnerabilities, CSP, deprecations`; break
+        case 'trust': recommendation = `Fix ${data.issues_count} trust & legitimacy issues: doctype, charset`; break
+        case 'user-experience': recommendation = `Improve ${data.issues_count} user experience issues: console errors, user interactions`; break
+        case 'browser-compat': recommendation = `Resolve ${data.issues_count} browser compatibility issues: outdated libraries, vendor prefixes`; break
+        default: recommendation = `Fix ${data.issues_count} other best practice issues`
       }
 
       prioritized_recommendations.push(recommendation)
@@ -317,7 +299,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
   return {
     metadata,
     report: {
-      score: ((categoryData?.score) != null) ? Math.round(categoryData.score * 100) : 0,
+      score: categoryData?.score != null ? Math.round(categoryData.score * 100) : 0,
       audit_counts: {
         failed: failedCount,
         passed: passedCount,

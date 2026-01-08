@@ -1,9 +1,9 @@
-import type { Flags, Result as LighthouseResult } from 'lighthouse'
-import type { LighthouseConfig } from './types.js'
+import type {Flags, Result as LighthouseResult} from 'lighthouse'
+import type {LighthouseConfig} from './types.js'
 import lighthouse from 'lighthouse'
-import { logger } from '@/logger'
-import { connectToHeadlessBrowser, scheduleBrowserCleanup } from '@/PuppeteerService'
-import { AuditCategory } from './types.js'
+import {logger} from '@/logger'
+import {connectToHeadlessBrowser, scheduleBrowserCleanup} from '@/PuppeteerService'
+import {AuditCategory} from './types.js'
 
 /**
  * Creates a Lighthouse configuration object
@@ -32,7 +32,7 @@ export function createLighthouseConfig(
       settings: {
         onlyCategories: categories,
         emulatedFormFactor: 'desktop',
-        throttling: { cpuSlowdownMultiplier: 1 },
+        throttling: {cpuSlowdownMultiplier: 1},
       },
     },
   }
@@ -68,14 +68,14 @@ export async function runLighthouseAudit(
     // For performance audits, we want to load all resources
     // For accessibility or other audits, we can block non-essential resources
     try {
-      const { port } = await connectToHeadlessBrowser(url, {
+      const {port} = await connectToHeadlessBrowser(url, {
         blockResources: !isPerformanceAudit,
       })
 
       logger.info(`Connected to browser on port: ${port}`)
 
       // Create Lighthouse config
-      const { flags, config } = createLighthouseConfig(categories)
+      const {flags, config} = createLighthouseConfig(categories)
       flags.port = port
 
       logger.info(

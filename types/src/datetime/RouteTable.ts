@@ -1,4 +1,4 @@
-import type { HexColor } from '@/stylesheet'
+import type {HexColor} from '@/stylesheet'
 
 interface RouteOptionStyle {
   iconName?: string

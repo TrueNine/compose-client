@@ -1,7 +1,7 @@
-import type { BuildOptions } from 'vite'
-import type { BuildLibraryConfigOptions } from '../types'
+import type {BuildOptions} from 'vite'
+import type {BuildLibraryConfigOptions} from '../types'
 
-import { Externals } from '../externals'
+import {Externals} from '../externals'
 
 export function BuildConfigLib(options: BuildLibraryConfigOptions = {}): BuildOptions {
   const {

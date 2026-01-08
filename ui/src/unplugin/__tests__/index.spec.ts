@@ -1,5 +1,5 @@
-import { describe, expect, it } from 'vitest'
-import { MetaUiWebResolver } from '../index'
+import {describe, expect, it} from 'vitest'
+import {MetaUiWebResolver} from '../index'
 
 describe('metaUiWebResolver', () => {
   const resolvers = MetaUiWebResolver()
@@ -10,7 +10,7 @@ describe('metaUiWebResolver', () => {
   })
 
   it('resolve 能正确解析以 Y 开头的组件名', () => {
-    const { resolve } = resolvers[0]
+    const {resolve} = resolvers[0]
     const result = resolve('YButton')
     expect(result).toBeDefined()
     expect(result?.name).toBe('default')
@@ -20,7 +20,7 @@ describe('metaUiWebResolver', () => {
   })
 
   it('resolve 对不符合规则的组件名应返回 undefined', () => {
-    const { resolve } = resolvers[0]
+    const {resolve} = resolvers[0]
     expect(resolve('Button')).toBeUndefined()
     expect(resolve('yButton')).toBeUndefined()
     expect(resolve('VButton')).toBeUndefined()
@@ -28,7 +28,7 @@ describe('metaUiWebResolver', () => {
   })
 
   it('resolve 解析不同 Y 开头组件名的 satisfies 路径', () => {
-    const { resolve } = resolvers[0]
+    const {resolve} = resolvers[0]
     const result = resolve('YTestComponent')
     expect(result?.from).toBe('@truenine/ui/components/test-component/index')
     expect(result?.satisfies[0]).toBe('@truenine/ui/dist/components/test-component/index.css')

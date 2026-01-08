@@ -1,11 +1,11 @@
-import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
-import type { ApiResponse, McpToolResponse } from '@/types'
-import { getDiscoveredConnection, withServerConnection } from '@/utils/server-discovery'
+import type {McpServer} from '@modelcontextprotocol/sdk/server/mcp.js'
+import type {ApiResponse, McpToolResponse} from '@/types'
+import {getDiscoveredConnection, withServerConnection} from '@/utils/server-discovery'
 
 export function registerLoggingTools(server: McpServer): void {
   server.tool('getConsoleLogs', 'Check our browser logs', {}, async () => withServerConnection(async (): Promise<McpToolResponse> => {
     try {
-      const { host, port } = getDiscoveredConnection()
+      const {host, port} = getDiscoveredConnection()
       const response = await fetch(`http://${host}:${port}/logger-logs`)
       const json = await response.json() as ApiResponse
 
@@ -32,7 +32,7 @@ export function registerLoggingTools(server: McpServer): void {
 
   server.tool('getConsoleErrors', 'Check our browsers logger errors', {}, async () => withServerConnection(async (): Promise<McpToolResponse> => {
     try {
-      const { host, port } = getDiscoveredConnection()
+      const {host, port} = getDiscoveredConnection()
       const response = await fetch(`http://${host}:${port}/logger-errors`)
       const json = await response.json() as ApiResponse
 
@@ -59,7 +59,7 @@ export function registerLoggingTools(server: McpServer): void {
 
   server.tool('getNetworkErrors', 'Check our network ERROR logs', {}, async () => withServerConnection(async (): Promise<McpToolResponse> => {
     try {
-      const { host, port } = getDiscoveredConnection()
+      const {host, port} = getDiscoveredConnection()
       const response = await fetch(`http://${host}:${port}/network-errors`)
       const json = await response.json() as ApiResponse
 
@@ -88,7 +88,7 @@ export function registerLoggingTools(server: McpServer): void {
 
   server.tool('getNetworkLogs', 'Check ALL our network logs', {}, async () => withServerConnection(async (): Promise<McpToolResponse> => {
     try {
-      const { host, port } = getDiscoveredConnection()
+      const {host, port} = getDiscoveredConnection()
       const response = await fetch(`http://${host}:${port}/network-success`)
       const json = await response.json() as ApiResponse
 

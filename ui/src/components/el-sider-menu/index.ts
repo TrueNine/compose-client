@@ -1,7 +1,7 @@
-import type { RouteOption } from '@truenine/types'
-import type { SFCWithInstall } from '@/common/install'
+import type {RouteOption} from '@truenine/types'
+import type {SFCWithInstall} from '@/common/install'
 
-import { componentInstallToPlugin } from '@/common'
+import {componentInstallToPlugin} from '@/common'
 
 import YSiderMenuItem from '../el-sider-menu-item'
 import _c from './YElSiderMenu.vue'
@@ -17,5 +17,5 @@ export interface YElSiderMenuProps {
 
 export type YElSiderMenuEmits = (e: 'update:routeTable', v: RouteOption[]) => void
 
-const YElSiderMenu: SFCWithInstall<typeof _c> = componentInstallToPlugin(_c, { YSiderMenuItem })
+const YElSiderMenu: SFCWithInstall<typeof _c> = componentInstallToPlugin(_c, {YSiderMenuItem})
 export default YElSiderMenu

@@ -1,4 +1,4 @@
-import type { StaticShortcut } from 'unocss'
+import type {StaticShortcut} from 'unocss'
 
 export function shortCuts(): StaticShortcut[] {
   return [

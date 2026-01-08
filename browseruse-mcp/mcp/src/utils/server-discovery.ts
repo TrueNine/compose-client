@@ -1,4 +1,4 @@
-import type { ApiResponse, ServerConnection } from '@/types'
+import type {ApiResponse, ServerConnection} from '@/types'
 import fs from 'node:fs'
 import path from 'node:path'
 import process from 'node:process'
@@ -10,7 +10,7 @@ import {
   PORT_RANGE_START,
   SERVER_SIGNATURE,
 } from '@/config/constants'
-import { logger } from '@/logger'
+import {logger} from '@/logger'
 
 let discoveredHost = DEFAULT_HOST
 let discoveredPort = DEFAULT_PORT
@@ -147,5 +147,5 @@ export async function withServerConnection<T>(
 }
 
 export function getDiscoveredConnection(): ServerConnection {
-  return { host: discoveredHost, port: discoveredPort, discovered: serverDiscovered }
+  return {host: discoveredHost, port: discoveredPort, discovered: serverDiscovered}
 }

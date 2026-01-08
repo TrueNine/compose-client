@@ -1,5 +1,5 @@
-import type { UserConfig } from 'vite'
-import { cpus } from 'node:os'
+import type {UserConfig} from 'vite'
+import {cpus} from 'node:os'
 
 /**
  * 并行构建优化配置选项

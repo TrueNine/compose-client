@@ -28,7 +28,7 @@ npx -y @truenine/browseruse-mcp-server
 
 #### Programmatic Usage
 ```javascript
-import { BrowserConnector } from '@truenine/browseruse-server'
+import {BrowserConnector} from '@truenine/browseruse-server'
 
 const connector = new BrowserConnector()
 await connector.start()

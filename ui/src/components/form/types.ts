@@ -1,9 +1,9 @@
-import type { dynamic, Maybe } from '@truenine/types'
-import type { FormContext, InvalidSubmissionContext, TypedSchema } from 'vee-validate'
-import type { InjectionKey, VNode } from 'vue'
-import type { Schema as YupSchema } from 'yup'
-import type { ZodSchema } from 'zod'
-import type { ModelValueEmits, ModelValueProps } from '@/common'
+import type {dynamic, Maybe} from '@truenine/types'
+import type {FormContext, InvalidSubmissionContext, TypedSchema} from 'vee-validate'
+import type {InjectionKey, VNode} from 'vue'
+import type {Schema as YupSchema} from 'yup'
+import type {ZodSchema} from 'zod'
+import type {ModelValueEmits, ModelValueProps} from '@/common'
 
 interface FormAttribute {
   method?: string

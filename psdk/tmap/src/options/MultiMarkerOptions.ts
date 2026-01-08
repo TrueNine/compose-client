@@ -1,4 +1,4 @@
-import type { Map } from '../map'
+import type {Map} from '../map'
 /**
  * # MultiMarker的配置参数
  */

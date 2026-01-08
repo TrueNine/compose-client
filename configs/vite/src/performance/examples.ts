@@ -1,10 +1,10 @@
-import type { UserConfig } from 'vite'
+import type {UserConfig} from 'vite'
 import process from 'node:process'
-import { mergeConfig } from 'vite'
+import {mergeConfig} from 'vite'
 
-import { configureViteFragment } from '../index'
-import { createSmartDevelopmentOptimization } from './development'
-import { createPerformancePreset, createSmartPreset } from './presets'
+import {configureViteFragment} from '../index'
+import {createSmartDevelopmentOptimization} from './development'
+import {createPerformancePreset, createSmartPreset} from './presets'
 
 /**
  * 基础库项目的性能优化配置示例

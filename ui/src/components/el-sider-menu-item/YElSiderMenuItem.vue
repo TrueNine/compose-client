@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import type { bool, dynamic, RouteOption } from '@truenine/types'
-import type { YElSiderMenuItemProps } from './index'
+import type {bool, dynamic, RouteOption} from '@truenine/types'
+import type {YElSiderMenuItemProps} from './index'
 
-import { isNonNil } from '@truenine/shared'
+import {isNonNil} from '@truenine/shared'
 
 const props = withDefaults(defineProps<YElSiderMenuItemProps>(), {
   collapsed: false,
@@ -12,8 +12,8 @@ const props = withDefaults(defineProps<YElSiderMenuItemProps>(), {
 })
 
 defineSlots<{
-  icon: (props: { item: RouteOption }) => dynamic
-  title: (props: { item: RouteOption }) => dynamic
+  icon: (props: {item: RouteOption}) => dynamic
+  title: (props: {item: RouteOption}) => dynamic
 }>()
 
 function isSub(opt: RouteOption): bool {

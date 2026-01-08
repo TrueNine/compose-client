@@ -1,11 +1,11 @@
-import type { UserConfig } from 'tsdown'
-import { defineConfig } from 'tsdown'
+import type {UserConfig} from 'tsdown'
+import {defineConfig} from 'tsdown'
 import AutoImport from 'unplugin-auto-import/vite'
-import { ElementPlusResolver, VarletUIResolver, Vuetify3Resolver } from 'unplugin-vue-components/resolvers'
+import {ElementPlusResolver, VarletUIResolver, Vuetify3Resolver} from 'unplugin-vue-components/resolvers'
 import Components from 'unplugin-vue-components/vite'
 import VueJsx from 'unplugin-vue-jsx/rolldown'
 import Vue from 'unplugin-vue/rolldown'
-import { transformAssetUrls } from 'vite-plugin-vuetify'
+import {transformAssetUrls} from 'vite-plugin-vuetify'
 
 export const e: UserConfig = defineConfig({
   unbundle: true,

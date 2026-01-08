@@ -1,6 +1,6 @@
-import type { AddrCode, ChinaDistrictLevel, i64, IChinaAddressDistrict } from '@truenine/types'
+import type {AddrCode, ChinaDistrictLevel, i64, IChinaAddressDistrict} from '@truenine/types'
 
-import { STR_EMPTY } from '@/consts'
+import {STR_EMPTY} from '@/consts'
 
 type AddrLevel = Record<ChinaDistrictLevel, string>
 

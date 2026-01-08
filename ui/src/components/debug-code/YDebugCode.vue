@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { YDebugCodeProps } from './index'
+import type {YDebugCodeProps} from './index'
 
 const props = withDefaults(defineProps<YDebugCodeProps>(), {
   wrap: true,

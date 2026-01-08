@@ -1,10 +1,10 @@
-import type { dynamic } from '@truenine/types'
+import type {dynamic} from '@truenine/types'
 
-import type { CheckJsApiOption } from './basic'
-import type { ConfigOptions } from './config'
-import type { ChooseImageOption, PreviewImageOption } from './image'
-import type { GetLocationOption } from './location'
-import type { OnMenuShareTimelineOption, UpdateAppMessageShareDataOption, UpdateTimelineShareDataOption } from './share'
+import type {CheckJsApiOption} from './basic'
+import type {ConfigOptions} from './config'
+import type {ChooseImageOption, PreviewImageOption} from './image'
+import type {GetLocationOption} from './location'
+import type {OnMenuShareTimelineOption, UpdateAppMessageShareDataOption, UpdateTimelineShareDataOption} from './share'
 
 export * from './common'
 export * from './config'

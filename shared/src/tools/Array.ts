@@ -1,4 +1,4 @@
-import type { dynamic, late, Maybe } from '@truenine/types'
+import type {dynamic, late, Maybe} from '@truenine/types'
 
 /**
  * # 对数组进行去重
@@ -22,7 +22,7 @@ export function cartesianProduct<T = unknown>(spec: Record<string, T[]>, current
   const currentValues = spec[currentKey]
   const result: Record<string, T>[] = []
   for (const value of currentValues) {
-    const nextCombination = { ...currentCombination }
+    const nextCombination = {...currentCombination}
     nextCombination[currentKey] = value
     result.push(...cartesianProduct(spec, currentIndex + 1, nextCombination))
   }
@@ -90,9 +90,7 @@ export function maybeReadonlyArray<T = dynamic>(maybe: Maybe<T>): readonly T[] {
  * @param end 结束
  */
 export function* range(start: number, end: number): Generator<number, void, unknown> {
-  for (let i = start; i <= end; i++) {
-    yield i
-  }
+  for (let i = start; i <= end; i++) yield i
 }
 
 /**
@@ -100,8 +98,8 @@ export function* range(start: number, end: number): Generator<number, void, unkn
  * @param key 作为 key 的字段
  * @param arr 需合并的对象数组
  */
-export function mergeToMap<T extends object>(key: keyof T, arr: T[]): { [key in keyof T]: T[] } {
-  if (!arr.length) return {} as { [key in keyof T]: T[] }
+export function mergeToMap<T extends object>(key: keyof T, arr: T[]): {[key in keyof T]: T[]} {
+  if (!arr.length) return {} as {[key in keyof T]: T[]}
   const ks = arr.map(e => ({
     key: (e[key]?.toString() ?? '') as keyof T,
     value: e,
@@ -112,8 +110,8 @@ export function mergeToMap<T extends object>(key: keyof T, arr: T[]): { [key in 
       else acc[cur.key] = [cur.value]
       return acc
     },
-    {} as { [key in keyof T]: T[] | undefined },
-  ) as { [key in keyof T]: T[] }
+    {} as {[key in keyof T]: T[] | undefined},
+  ) as {[key in keyof T]: T[]}
 }
 
 /**

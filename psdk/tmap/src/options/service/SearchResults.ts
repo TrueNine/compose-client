@@ -1,4 +1,4 @@
-import type { LatLng } from '../../LatLng'
+import type {LatLng} from '../../LatLng'
 
 export interface SearchResult {
   /**

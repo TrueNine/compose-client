@@ -1,5 +1,5 @@
-import { describe, expect, it } from 'vitest'
-import { decodeHash, encodeQueryParam, queryHash, queryParam, SearchParam } from '../EncodeComponent'
+import {describe, expect, it} from 'vitest'
+import {decodeHash, encodeQueryParam, queryHash, queryParam, SearchParam} from '../EncodeComponent'
 
 describe('searchParam', () => {
   it('append/get/has/size/values/keys', () => {
@@ -40,7 +40,7 @@ describe('searchParam', () => {
 
   it('appendAll', () => {
     const sp = new SearchParam()
-    sp.appendAll({ a: 1, b: '2' })
+    sp.appendAll({a: 1, b: '2'})
     expect(sp.get('a')).toBe(1)
     expect(sp.get('b')).toBe('2')
   })
@@ -66,12 +66,12 @@ describe('searchParam', () => {
 
 describe('encodeQueryParam', () => {
   it('基本用例', () => {
-    expect(encodeQueryParam({ a: 1, b: '2' })).toBe('?a=1&b=2')
-    expect(encodeQueryParam({ tags: ['a', 'b'] })).toBe('?tags=a&tags=b')
-    expect(encodeQueryParam({ name: '测试' })).toBe('?name=%E6%B5%8B%E8%AF%95')
+    expect(encodeQueryParam({a: 1, b: '2'})).toBe('?a=1&b=2')
+    expect(encodeQueryParam({tags: ['a', 'b']})).toBe('?tags=a&tags=b')
+    expect(encodeQueryParam({name: '测试'})).toBe('?name=%E6%B5%8B%E8%AF%95')
   })
   it('多对象合并', () => {
-    expect(encodeQueryParam({ a: 1 }, { b: 2 })).toBe('?a=1&b=2')
+    expect(encodeQueryParam({a: 1}, {b: 2})).toBe('?a=1&b=2')
   })
   it('空对象/无效参数', () => {
     expect(encodeQueryParam()).toBe('')
@@ -79,18 +79,18 @@ describe('encodeQueryParam', () => {
     expect(encodeQueryParam({})).toBe('')
   })
   it('嵌套对象只处理一层', () => {
-    expect(encodeQueryParam({ a: { b: 1 } })).toBe('?a=')
+    expect(encodeQueryParam({a: {b: 1}})).toBe('?a=')
   })
 })
 
 describe('queryParam', () => {
   it('基本用例', () => {
-    expect(queryParam({ a: 1, b: '2' })).toBe('?a=1&b=2')
-    expect(queryParam({ tags: ['a', 'b'] })).toBe('?tags=a&tags=b')
-    expect(queryParam({ name: '测试' })).toBe('?name=测试')
+    expect(queryParam({a: 1, b: '2'})).toBe('?a=1&b=2')
+    expect(queryParam({tags: ['a', 'b']})).toBe('?tags=a&tags=b')
+    expect(queryParam({name: '测试'})).toBe('?name=测试')
   })
   it('多对象合并', () => {
-    expect(queryParam({ a: 1 }, { b: 2 })).toBe('?a=1&b=2')
+    expect(queryParam({a: 1}, {b: 2})).toBe('?a=1&b=2')
   })
   it('空对象/无效参数', () => {
     expect(queryParam()).toBe('')
@@ -98,14 +98,14 @@ describe('queryParam', () => {
     expect(queryParam({})).toBe('')
   })
   it('嵌套对象只处理一层', () => {
-    expect(queryParam({ a: { b: 1 } })).toBe('?a=')
+    expect(queryParam({a: {b: 1}})).toBe('?a=')
   })
 })
 
 describe('queryHash', () => {
   it('基本用例', () => {
-    expect(queryHash({ a: 1 })).toBe('#a=1')
-    expect(queryHash({ tags: ['a', 'b'] })).toBe('#tags=a&tags=b')
+    expect(queryHash({a: 1})).toBe('#a=1')
+    expect(queryHash({tags: ['a', 'b']})).toBe('#tags=a&tags=b')
   })
   it('空对象', () => {
     expect(queryHash()).toBe('')
@@ -115,8 +115,8 @@ describe('queryHash', () => {
 
 describe('decodeHash', () => {
   it('基本用例', () => {
-    expect(decodeHash('#a=1&b=2')).toEqual({ a: '1', b: '2' })
-    expect(decodeHash('a=1&b=2')).toEqual({ a: '1', b: '2' })
+    expect(decodeHash('#a=1&b=2')).toEqual({a: '1', b: '2'})
+    expect(decodeHash('a=1&b=2')).toEqual({a: '1', b: '2'})
   })
   it('空字符串/无效输入', () => {
     expect(decodeHash('')).toEqual({})
@@ -124,9 +124,9 @@ describe('decodeHash', () => {
     expect(decodeHash(null)).toEqual({})
   })
   it('缺失值', () => {
-    expect(decodeHash('#a=1&b')).toEqual({ a: '1', b: '' })
+    expect(decodeHash('#a=1&b')).toEqual({a: '1', b: ''})
   })
   it('多余#', () => {
-    expect(decodeHash('##a=1')).toEqual({ '#a': '1' })
+    expect(decodeHash('##a=1')).toEqual({'#a': '1'})
   })
 })

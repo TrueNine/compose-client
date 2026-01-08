@@ -1,6 +1,6 @@
-import type { BCP47, i32 } from '@truenine/types'
-import type { SFCWithInstall } from '@/common/install'
-import { componentInstallToPlugin } from '@/common'
+import type {BCP47, i32} from '@truenine/types'
+import type {SFCWithInstall} from '@/common/install'
+import {componentInstallToPlugin} from '@/common'
 
 import _c from './YConfigProvider.vue'
 

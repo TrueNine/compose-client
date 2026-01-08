@@ -1,9 +1,9 @@
-import type { dynamic } from '@truenine/types'
-import type { YFormSlotsSubMitProps } from '../types'
-import { mount } from '@vue/test-utils'
-import { describe, expect, it, vi } from 'vitest'
-import { defineComponent, nextTick, ref } from 'vue'
-import { z } from 'zod'
+import type {dynamic} from '@truenine/types'
+import type {YFormSlotsSubMitProps} from '../types'
+import {mount} from '@vue/test-utils'
+import {describe, expect, it, vi} from 'vitest'
+import {defineComponent, nextTick, ref} from 'vue'
+import {z} from 'zod'
 import YField from '../../field/index'
 import YFieldProxyComponent from '../../field/YFieldProxyComponent.vue'
 import YForm from '../index'
@@ -27,7 +27,7 @@ const InputComponent = defineComponent({
     },
   },
   emits: ['update:modelValue'],
-  setup(props, { emit }) {
+  setup(props, {emit}) {
     const handleInput = (e: Event) => {
       emit('update:modelValue', (e.target as HTMLInputElement).value)
     }
@@ -55,7 +55,7 @@ const InputComponent = defineComponent({
 const MultiInputComponent = defineComponent({
   props: ['key1', 'value2'],
   emits: ['update:key1', 'update:value2'],
-  setup(props, { emit }) {
+  setup(props, {emit}) {
     const handleInput1 = (e: Event) => {
       emit('update:key1', (e.target as HTMLInputElement).value)
     }
@@ -121,7 +121,7 @@ describe('yFormTest', () => {
 
       const TestComponent = defineComponent({
         setup() {
-          const formData = ref({ username: '', password: '' })
+          const formData = ref({username: '', password: ''})
           return () => (
             <YForm v-model={formData.value} schema={userSchema}>
               <YField name="username" label="用户名">
@@ -151,7 +151,7 @@ describe('yFormTest', () => {
 
       const TestComponent = defineComponent({
         setup() {
-          const formData = ref({ username: 'initial' })
+          const formData = ref({username: 'initial'})
 
           // 添加监听函数以便验证值是否更新
           const handleUpdate = (newVal: any) => {
@@ -206,44 +206,44 @@ describe('yFormTest', () => {
 
       const wrapper = mount(YForm, {
         props: {
-          modelValue: { username: 'test' },
+          modelValue: {username: 'test'},
           onSubmit: handleSubmit,
           validationSchema: userSchema,
         },
         slots: {
           default: () => [],
-          submit: ({ submit }: { submit: () => void }) => <button onClick={submit}>提交</button>,
+          submit: ({submit }: {submit: () => void}) => <button onClick={submit}>提交</button>,
         },
         global: globalComponents,
       })
 
       await wrapper.find('button').trigger('click')
       expect(wrapper.emitted('submit')).toBeTruthy()
-      expect(wrapper.emitted('submit')?.[0]?.[0]).toEqual({ username: 'test' })
+      expect(wrapper.emitted('submit')?.[0]?.[0]).toEqual({username: 'test'})
     })
 
     it('应 在调用 reset 插槽函数时重置表单值', async () => {
-      const initialData = { username: 'test' }
+      const initialData = {username: 'test'}
       const userSchema = z.object({
         username: z.string().min(1, '用户名不能为空'),
       })
 
       const wrapper = mount(YForm, {
         props: {
-          modelValue: { ...initialData },
-          initialValues: { ...initialData },
+          modelValue: {...initialData},
+          initialValues: {...initialData},
           validationSchema: userSchema,
         },
         slots: {
           default: () => [],
-          submit: ({ reset }: { reset: () => void }) => <button class="reset-btn" onClick={reset}>重置</button>,
+          submit: ({reset }: {reset: () => void}) => <button class="reset-btn" onClick={reset}>重置</button>,
         },
         global: globalComponents,
       })
 
-      await wrapper.setProps({ modelValue: { username: 'changed' } })
+      await wrapper.setProps({modelValue: {username: 'changed'}})
       await nextTick()
-      expect((wrapper.props() as any).modelValue).toEqual({ username: 'changed' })
+      expect((wrapper.props() as any).modelValue).toEqual({username: 'changed'})
 
       await wrapper.find('.reset-btn').trigger('click')
       await nextTick()
@@ -256,14 +256,14 @@ describe('yFormTest', () => {
 
     it('应 正确处理 button type="reset" 触发表单重置事件', async () => {
       const handleReset = vi.fn()
-      const initialData = { username: 'test' }
+      const initialData = {username: 'test'}
       const userSchema = z.object({
         username: z.string().min(1, '用户名不能为空'),
       })
 
       const wrapper = mount(YForm, {
         props: {
-          modelValue: { ...initialData },
+          modelValue: {...initialData},
           onReset: handleReset,
           validationSchema: userSchema,
         },
@@ -273,9 +273,9 @@ describe('yFormTest', () => {
         global: globalComponents,
       })
 
-      await wrapper.setProps({ modelValue: { username: 'changed' } })
+      await wrapper.setProps({modelValue: {username: 'changed'}})
       await nextTick()
-      expect((wrapper.props() as any).modelValue).toEqual({ username: 'changed' })
+      expect((wrapper.props() as any).modelValue).toEqual({username: 'changed'})
 
       // 直接触发表单的reset事件，而不是点击按钮
       await wrapper.find('form').trigger('reset')
@@ -284,10 +284,10 @@ describe('yFormTest', () => {
       // 验证reset事件是否被触发
       expect(wrapper.emitted('reset')).toBeTruthy()
       // 验证reset事件参数是否正确
-      expect(wrapper.emitted('reset')?.[0]?.[0]).toEqual({ username: 'test' })
+      expect(wrapper.emitted('reset')?.[0]?.[0]).toEqual({username: 'test'})
       // 验证handleReset函数是否被调用
       expect(handleReset).toHaveBeenCalledTimes(1)
-      expect(handleReset).toHaveBeenCalledWith({ username: 'test' })
+      expect(handleReset).toHaveBeenCalledWith({username: 'test'})
     })
   })
 
@@ -300,7 +300,7 @@ describe('yFormTest', () => {
 
       const TestComponent = defineComponent({
         setup() {
-          const formData = ref({ formKey: 'initialValue' })
+          const formData = ref({formKey: 'initialValue'})
           const onSubmit = (values: dynamic) => {
             console.log('提交表单数据：', values)
             handleSubmit(values)
@@ -308,13 +308,12 @@ describe('yFormTest', () => {
 
           return () => (
             <YForm v-model={formData.value} schema={mappedSchema} onSubmit={onSubmit}>
-              <YField name={{ formKey: 'modelValue' }} label="映射字段">
+              <YField name={{formKey: 'modelValue'}} label="映射字段">
                 <InputComponent />
               </YField>
               {{
-                default: () => (
-                  <button class="submit-btn" type="submit">提交</button>
-                ),
+                default: () =>
+                  <button class="submit-btn" type="submit">提交</button>,
               }}
             </YForm>
           )
@@ -350,7 +349,7 @@ describe('yFormTest', () => {
       await nextTick()
       await new Promise(resolve => setTimeout(resolve, 100))
       expect(handleSubmit).toHaveBeenCalledTimes(1)
-      expect(handleSubmit).toHaveBeenCalledWith({ formKey: 'changedValue' })
+      expect(handleSubmit).toHaveBeenCalledWith({formKey: 'changedValue'})
     })
 
     it('应 支持 YField :name 为数组时的多重映射', async () => {
@@ -362,7 +361,7 @@ describe('yFormTest', () => {
 
       const TestComponent = defineComponent({
         setup() {
-          const formData = ref({ key1: 'val1', key2: 'val2' })
+          const formData = ref({key1: 'val1', key2: 'val2'})
           const onSubmit = (values: dynamic) => {
             console.log('提交表单数据：', values)
             handleSubmit(values)
@@ -370,13 +369,12 @@ describe('yFormTest', () => {
 
           return () => (
             <YForm v-model={formData.value} schema={multiMapSchema} onSubmit={onSubmit}>
-              <YField name={['key1', { key2: 'value2' }]} label="多重映射">
+              <YField name={['key1', {key2: 'value2'}]} label="多重映射">
                 <MultiInputComponent />
               </YField>
               {{
-                submit: () => (
-                  <button class="submit-btn" type="submit">提交</button>
-                ),
+                submit: () =>
+                  <button class="submit-btn" type="submit">提交</button>,
               }}
             </YForm>
           )
@@ -426,7 +424,7 @@ describe('yFormTest', () => {
       await nextTick()
       await new Promise(resolve => setTimeout(resolve, 100))
       expect(handleSubmit).toHaveBeenCalledTimes(1)
-      expect(handleSubmit).toHaveBeenCalledWith({ key1: 'newVal1', key2: 'newVal2' })
+      expect(handleSubmit).toHaveBeenCalledWith({key1: 'newVal1', key2: 'newVal2'})
     })
   })
 })

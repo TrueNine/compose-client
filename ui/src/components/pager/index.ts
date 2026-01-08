@@ -1,8 +1,8 @@
-import type { clip, i32, nil, Pq, Pr } from '@truenine/types'
-import type { ModelValueEmits, ModelValueProps } from '@/common'
-import type { SFCWithInstall } from '@/common/install'
+import type {clip, i32, nil, Pq, Pr} from '@truenine/types'
+import type {ModelValueEmits, ModelValueProps} from '@/common'
+import type {SFCWithInstall} from '@/common/install'
 
-import { componentInstallToPlugin } from '@/common'
+import {componentInstallToPlugin} from '@/common'
 
 import _c from './YPager.vue'
 

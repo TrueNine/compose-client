@@ -1,6 +1,6 @@
-import type { BCP47 } from '@truenine/types'
-import type { StyleVars } from '@varlet/ui'
-import { Locale, StyleProvider, Themes } from '@varlet/ui'
+import type {BCP47} from '@truenine/types'
+import type {StyleVars} from '@varlet/ui'
+import {Locale, StyleProvider, Themes} from '@varlet/ui'
 
 Locale.add('zh-CN', Locale.zhCN)
 

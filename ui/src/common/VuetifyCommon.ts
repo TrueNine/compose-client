@@ -1,10 +1,10 @@
-import type { late } from '@truenine/types'
-import type { VuetifyOptions } from 'vuetify'
+import type {late} from '@truenine/types'
+import type {VuetifyOptions} from 'vuetify'
 import DayjsAdaptor from '@date-io/dayjs'
 import DateIoEn from 'dayjs/locale/en'
 import DateIoZhCn from 'dayjs/locale/zh-cn'
-import { createVuetify } from 'vuetify'
-import { en, zhHans as zhCn } from 'vuetify/locale'
+import {createVuetify} from 'vuetify'
+import {en, zhHans as zhCn} from 'vuetify/locale'
 
 function createVuetifyMount(optFn: (o?: VuetifyOptions) => late<VuetifyOptions>): ReturnType<typeof createVuetify> {
   const opt = {
@@ -27,6 +27,6 @@ function createVuetifyMount(optFn: (o?: VuetifyOptions) => late<VuetifyOptions>)
   return createVuetify(Object.assign(opt, optFn(opt)))
 }
 
-export { createVuetifyMount }
+export {createVuetifyMount}
 
-export { en as VuetifyEn, zhHans as VuetifyZhCn } from 'vuetify/locale'
+export {en as VuetifyEn, zhHans as VuetifyZhCn} from 'vuetify/locale'

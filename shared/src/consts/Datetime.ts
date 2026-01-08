@@ -1,4 +1,4 @@
-import type { timestamp } from '@truenine/types'
+import type {timestamp} from '@truenine/types'
 
 export const ISO8601TimeZone = {
   ASIA_SHANGHAI: 'Asia/Shanghai' as const,

@@ -1,7 +1,7 @@
-import type { TMapSDK } from '../types'
-import { loadRemoteScriptTag } from '@truenine/external/browser/document'
-import { queryParam } from '@truenine/req'
-import { WEBGL_JS_URL } from '@/Constants'
+import type {TMapSDK} from '../types'
+import {loadRemoteScriptTag} from '@truenine/external/browser/document'
+import {queryParam} from '@truenine/req'
+import {WEBGL_JS_URL} from '@/Constants'
 
 /**
  * [附加库加载类型](https://lbs.qq.com/webApi/javascriptGL/glGuide/glBasic#3)
@@ -50,7 +50,7 @@ export function initTencentMapWebGlScript(
   const query = options.loadQuery.trim()
   if (!query) return null
 
-  const { containerTag } = options
+  const {containerTag} = options
   if (!containerTag) return null
 
   if (typeof options.mapContainerId !== 'string') return null
@@ -73,7 +73,7 @@ export function initTencentMapWebGlScript(
   mapContainer.id = containerId
   section.append(mapContainer)
 
-  if (!callback) return { src, mapContainer }
+  if (!callback) return {src, mapContainer}
 
   const tMap = window.TMap
   callback(mapContainer, tMap)
@@ -81,5 +81,5 @@ export function initTencentMapWebGlScript(
     const handle = window.TMap
     callback(mapContainer, handle, ev)
   })
-  return { src, mapContainer }
+  return {src, mapContainer}
 }

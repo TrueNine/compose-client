@@ -1,4 +1,4 @@
-import type { AntFuVueConfig } from '../types'
+import type {AntFuVueConfig} from '../types'
 
 export const defaultVueConfig: AntFuVueConfig = {
   vueVersion: 3,
@@ -10,7 +10,7 @@ export const defaultVueConfig: AntFuVueConfig = {
         component: 'always',
       },
     }],
-    'vue/html-comment-content-spacing': ['error', 'always', { exceptions: [] }],
+    'vue/html-comment-content-spacing': ['error', 'always', {exceptions: []}],
     'vue/html-comment-indent': ['error', 2],
     'vue/html-indent': ['error', 2, {
       baseIndent: 0,
@@ -27,7 +27,7 @@ export const defaultVueConfig: AntFuVueConfig = {
     ],
     'vue/block-order': [
       'error',
-      { order: ['script', 'template', 'style'] },
+      {order: ['script', 'template', 'style']},
     ],
     'vue/attributes-order': [
       'error',
@@ -47,8 +47,8 @@ export const defaultVueConfig: AntFuVueConfig = {
         ],
       },
     ],
-    'vue/v-on-event-hyphenation': ['error', 'never', { autofix: true }],
-    'vue/attribute-hyphenation': ['error', 'never', { ignoreTags: ['i-', 'v-', 'v-bind'] }],
+    'vue/v-on-event-hyphenation': ['error', 'never', {autofix: true}],
+    'vue/attribute-hyphenation': ['error', 'never', {ignoreTags: ['i-', 'v-', 'v-bind']}],
     'vue/prop-name-casing': ['error', 'camelCase'],
     'vue/component-name-in-template-casing': [
       'error',

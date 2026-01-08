@@ -1,5 +1,5 @@
 export * from './ElementPlusCommon'
-export { componentInstallToPlugin } from './install'
+export {componentInstallToPlugin} from './install'
 export * from './VuePropsCommon'
 export * from './VuetifyCommon'
 export * from './Yan100Common'

@@ -1,14 +1,14 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest'
 
 // 导入需要测试的模块
-import { download, downloadBlob, getImageData, loadRemoteScriptTag } from '../document'
+import {download, downloadBlob, getImageData, loadRemoteScriptTag} from '../document'
 
 // 定义类型
 interface MockAnchor {
   href: string
   download: string
   click: ReturnType<typeof vi.fn>
-  style: { display: string }
+  style: {display: string}
 }
 
 interface MockScript {
@@ -28,7 +28,7 @@ const mockAnchor: MockAnchor = {
   href: '',
   download: '',
   click: vi.fn(),
-  style: { display: 'none' },
+  style: {display: 'none'},
 }
 
 // 模拟脚本元素
@@ -121,7 +121,7 @@ describe('document.ts 文件函数测试', () => {
   describe('loadRemoteScriptTag 函数测试', () => {
     it('已存在相同src的script标签时直接返回该标签', () => {
       // 模拟已存在的 script 标签
-      const existingScript = { src: 'https://example.com/script.js' }
+      const existingScript = {src: 'https://example.com/script.js'}
       documentMock.querySelector.mockReturnValue(existingScript)
 
       const result = loadRemoteScriptTag('https://example.com/script.js')
@@ -134,7 +134,7 @@ describe('document.ts 文件函数测试', () => {
 
     it('创建新的script标签并添加到指定位置', () => {
       // 模拟不存在相同src的script标签，但存在父元素
-      const parentElement = { appendChild: vi.fn() }
+      const parentElement = {appendChild: vi.fn()}
       documentMock.querySelector.mockReturnValueOnce(null).mockReturnValueOnce(parentElement)
 
       // 创建回调函数
@@ -187,7 +187,7 @@ describe('document.ts 文件函数测试', () => {
   describe('downloadBlob 函数测试', () => {
     it('成功下载Blob数据', () => {
       // 创建测试用的Blob
-      const testBlob = new Blob(['test content'], { type: 'text/plain' })
+      const testBlob = new Blob(['test content'], {type: 'text/plain'})
 
       // 执行函数
       downloadBlob(testBlob, 'test.txt')
@@ -201,7 +201,7 @@ describe('document.ts 文件函数测试', () => {
 
     it('下载Blob时使用默认文件名', () => {
       // 创建测试用的Blob
-      const testBlob = new Blob(['test content'], { type: 'text/plain' })
+      const testBlob = new Blob(['test content'], {type: 'text/plain'})
 
       // 执行函数
       downloadBlob(testBlob)
@@ -213,7 +213,7 @@ describe('document.ts 文件函数测试', () => {
 
     it('下载失败时捕获并记录错误', () => {
       // 创建测试用的Blob
-      const testBlob = new Blob(['test content'], { type: 'text/plain' })
+      const testBlob = new Blob(['test content'], {type: 'text/plain'})
 
       // 修改mock实现抛出错误
       mockAnchor.click.mockImplementationOnce(() => {
@@ -285,7 +285,7 @@ describe('document.ts 文件函数测试', () => {
 
     it('成功加载图片并返回图片元素', async () => {
       // 创建测试用的Blob
-      const imageBlob = new Blob(['fake image data'], { type: 'image/png' })
+      const imageBlob = new Blob(['fake image data'], {type: 'image/png'})
 
       // 模拟图片加载成功
       const createObjectURLFn = vi.fn(() => 'blob:image-url')
@@ -313,7 +313,7 @@ describe('document.ts 文件函数测试', () => {
 
     it('图片加载失败时返回新的空图片元素', async () => {
       // 创建测试用的Blob
-      const imageBlob = new Blob(['fake image data'], { type: 'image/png' })
+      const imageBlob = new Blob(['fake image data'], {type: 'image/png'})
 
       // 设置spy以便验证调用
       const revokeObjectURLSpy = vi.fn()

@@ -1,19 +1,19 @@
-import type { BuildOptions, Plugin, PluginOption, UserConfig } from 'vite'
+import type {BuildOptions, Plugin, PluginOption, UserConfig} from 'vite'
 
 // 导入性能优化相关类型
-import type { FullPerformanceOptions, PerformancePreset } from './performance/presets'
-import type { BuildLibraryConfigOptions } from './types'
-import type { SimpleDtsOptions } from './vite-plugin-dts'
-import type { PackageJsonOptions } from './vite-plugin-package-json'
-import { mergeConfig } from 'vite'
-import { Externals as defaultExternals } from './externals'
-import { BuildConfigLib } from './lib'
+import type {FullPerformanceOptions, PerformancePreset} from './performance/presets'
+import type {BuildLibraryConfigOptions} from './types'
+import type {SimpleDtsOptions} from './vite-plugin-dts'
+import type {PackageJsonOptions} from './vite-plugin-package-json'
+import {mergeConfig} from 'vite'
+import {Externals as defaultExternals} from './externals'
+import {BuildConfigLib} from './lib'
 
-import { createPerformancePreset } from './performance/presets'
-import { createDtsPlugin } from './vite-plugin-dts'
+import {createPerformancePreset} from './performance/presets'
+import {createDtsPlugin} from './vite-plugin-dts'
 
 // 导出性能优化相关功能
-export type { VitePerformanceOptions } from './performance'
+export type {VitePerformanceOptions} from './performance'
 export {
   createChunkOptimization,
   createDepsOptimization,
@@ -22,14 +22,14 @@ export {
   createProductionPerformanceConfig,
   createVitePerformanceConfig,
 } from './performance'
-export type { CacheOptimizationOptions } from './performance/cache'
+export type {CacheOptimizationOptions} from './performance/cache'
 export {
   createBuildCacheOptimization,
   createCacheOptimization,
   createTypeScriptCacheOptimization,
 } from './performance/cache'
 
-export type { DevelopmentOptimizationOptions } from './performance/development'
+export type {DevelopmentOptimizationOptions} from './performance/development'
 
 export {
   createDevBuildOptimization,
@@ -43,7 +43,7 @@ export {
   createSmartDevelopmentOptimization,
 } from './performance/development'
 
-export type { ParallelOptimizationOptions } from './performance/parallel'
+export type {ParallelOptimizationOptions} from './performance/parallel'
 
 export {
   createDevParallelOptimization,
@@ -53,7 +53,7 @@ export {
   getOptimalConcurrency,
 } from './performance/parallel'
 
-export type { FullPerformanceOptions, PerformancePreset } from './performance/presets'
+export type {FullPerformanceOptions, PerformancePreset} from './performance/presets'
 export {
   createAggressivePreset,
   createBasicPreset,
@@ -91,9 +91,9 @@ export function configureViteFragment(
   options: ViteFragmentOptions = {},
   baseConfig: UserConfig = {},
 ): UserConfig {
-  const externals = [...defaultExternals, ...(options.additionalExternals ?? [])]
+  const externals = [...defaultExternals, ...options.additionalExternals ?? []]
 
-  const libDefaults: Partial<BuildLibraryConfigOptions> & { entry: string[] } = {
+  const libDefaults: Partial<BuildLibraryConfigOptions> & {entry: string[]} = {
     entry: ['./src/index.ts'],
     entryRoot: 'src',
     outDir: 'dist',
@@ -141,7 +141,7 @@ export function configureViteFragment(
 
     const finalDtsOptions: SimpleDtsOptions = {
       ...dtsDefaults,
-      ...(options.dts === true ? dtsDefaults : options.dts),
+      ...options.dts === true ? dtsDefaults : options.dts,
     }
     dtsPlugin = createDtsPlugin({
       ...finalDtsOptions,
@@ -170,7 +170,7 @@ export function configureViteFragment(
   const mergedPlugins: PluginOption[] = [
     ...basePluginsNormalized,
     ...generatedPlugins,
-    ...(options.additionalPlugins ?? []),
+    ...options.additionalPlugins ?? [],
   ]
 
   let finalConfig: UserConfig = {

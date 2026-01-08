@@ -1,6 +1,6 @@
-import type { bool, RouteOption, StrOrNum } from '@truenine/types'
-import type { SFCWithInstall } from '@/common/install'
-import { componentInstallToPlugin } from '@/common'
+import type {bool, RouteOption, StrOrNum} from '@truenine/types'
+import type {SFCWithInstall} from '@/common/install'
+import {componentInstallToPlugin} from '@/common'
 
 import _c from './YElSiderMenuItem.vue'
 

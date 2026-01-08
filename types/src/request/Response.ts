@@ -1,5 +1,5 @@
-import type { IPageRequestParam } from '@/request/Request'
-import type { i32, i64 } from '@/typescripts'
+import type {IPageRequestParam} from '@/request/Request'
+import type {i32, i64} from '@/typescripts'
 
 /**
  * 错误消息统一返回格式

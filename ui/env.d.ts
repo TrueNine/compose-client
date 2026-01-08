@@ -6,7 +6,7 @@
 
 // Vue SFC 类型声明
 declare module '*.vue' {
-  import type { DefineComponent } from 'vue'
+  import type {DefineComponent} from 'vue'
 
   const component: DefineComponent<object, object, any>
   export default component
@@ -25,23 +25,23 @@ declare module 'element-plus/dist/locale/zh-cn.mjs' {
 
 // Vue 组合式 API 全局导入
 declare global {
-  const computed: typeof import('vue')['computed']
-  const ref: typeof import('vue')['ref']
-  const reactive: typeof import('vue')['reactive']
-  const watch: typeof import('vue')['watch']
-  const watchEffect: typeof import('vue')['watchEffect']
-  const provide: typeof import('vue')['provide']
-  const inject: typeof import('vue')['inject']
-  const nextTick: typeof import('vue')['nextTick']
-  const onMounted: typeof import('vue')['onMounted']
-  const onUnmounted: typeof import('vue')['onUnmounted']
-  const defineProps: typeof import('vue')['defineProps']
-  const defineEmits: typeof import('vue')['defineEmits']
-  const defineExpose: typeof import('vue')['defineExpose']
-  const withDefaults: typeof import('vue')['withDefaults']
+  const computed: typeof import('vue')['computed'],
+    ref: typeof import('vue')['ref'],
+    reactive: typeof import('vue')['reactive'],
+    watch: typeof import('vue')['watch'],
+    watchEffect: typeof import('vue')['watchEffect'],
+    provide: typeof import('vue')['provide'],
+    inject: typeof import('vue')['inject'],
+    nextTick: typeof import('vue')['nextTick'],
+    onMounted: typeof import('vue')['onMounted'],
+    onUnmounted: typeof import('vue')['onUnmounted'],
+    defineProps: typeof import('vue')['defineProps'],
+    defineEmits: typeof import('vue')['defineEmits'],
+    defineExpose: typeof import('vue')['defineExpose'],
+    withDefaults: typeof import('vue')['withDefaults'],
 
-  // VueUse 函数
-  const useVModel: typeof import('@vueuse/core')['useVModel']
-  const useRouter: typeof import('vue-router')['useRouter']
-  const useRoute: typeof import('vue-router')['useRoute']
+    // VueUse 函数
+    useVModel: typeof import('@vueuse/core')['useVModel'],
+    useRouter: typeof import('vue-router')['useRouter'],
+    useRoute: typeof import('vue-router')['useRoute']
 }

@@ -1,12 +1,12 @@
-import type { Browser, NetworkConditions, Page } from 'puppeteer-core'
-import { execSync } from 'node:child_process'
+import type {Browser, NetworkConditions, Page} from 'puppeteer-core'
+import {execSync} from 'node:child_process'
 import fs from 'node:fs'
 import os from 'node:os'
 import path from 'node:path'
 import process from 'node:process'
 import * as ChromeLauncher from 'chrome-launcher'
 import puppeteer from 'puppeteer-core'
-import { logger } from '@/logger'
+import {logger} from '@/logger'
 
 // ===== Configuration Types and Defaults =====
 
@@ -57,7 +57,7 @@ const DEFAULT_CONFIG: PuppeteerServiceConfig = {
 // ===== Global State =====
 
 // Current active configuration
-let currentConfig: PuppeteerServiceConfig = { ...DEFAULT_CONFIG }
+let currentConfig: PuppeteerServiceConfig = {...DEFAULT_CONFIG}
 
 // Browser instance management
 let headlessBrowserInstance: Browser | null = null
@@ -80,15 +80,10 @@ let detectedBrowserPath: string | null = null
 export function configurePuppeteerService(
   config: Partial<PuppeteerServiceConfig>,
 ): void {
-  currentConfig = { ...DEFAULT_CONFIG, ...config }
+  currentConfig = {...DEFAULT_CONFIG, ...config}
 
   // Update the timeout if it was changed
-  if (
-    config.browserCleanupTimeout != null
-    && config.browserCleanupTimeout !== BROWSER_CLEANUP_TIMEOUT
-  ) {
-    BROWSER_CLEANUP_TIMEOUT = config.browserCleanupTimeout
-  }
+  if (config.browserCleanupTimeout != null && config.browserCleanupTimeout !== BROWSER_CLEANUP_TIMEOUT) BROWSER_CLEANUP_TIMEOUT = config.browserCleanupTimeout
 
   logger.info('Puppeteer service configured:', currentConfig)
 }
@@ -179,7 +174,7 @@ async function launchNewBrowser(): Promise<Browser> {
 
     // Clean up the temporary directory
     try {
-      fs.rmSync(userDataDir, { recursive: true, force: true })
+      fs.rmSync(userDataDir, {recursive: true, force: true})
     } catch (fsError: unknown) {
       logger.error('Error removing temporary directory:', fsError)
     }
@@ -198,7 +193,7 @@ function createTempUserDataDir(): string {
     .toString(36)
     .slice(2)}`
   const userDataDir = path.join(tempDir, `browser-debug-profile-${uniqueId}`)
-  fs.mkdirSync(userDataDir, { recursive: true })
+  fs.mkdirSync(userDataDir, {recursive: true})
   logger.info(`Using temporary user data directory: ${userDataDir}`)
   return userDataDir
 }
@@ -339,18 +334,18 @@ async function findBrowserExecutablePath(): Promise<string> {
 
       // This will actually return the real Chrome path for us
       // chrome-launcher has this inside but doesn't expose it directly
-      const p = (await import('node:process'))
+      const p = await import('node:process')
       const possiblePaths = [
         p.env.CHROME_PATH,
         // Common paths by OS
-        ...(process.platform === 'darwin'
+        ...process.platform === 'darwin'
           ? ['/Applications/Google Chrome.app/Contents/MacOS/Google Chrome']
           : process.platform === 'win32'
             ? [
                 `${p.env.PROGRAMFILES}\\Google\\Chrome\\Application\\chrome.exe`,
                 `${p.env['PROGRAMFILES(X86)']}\\Google\\Chrome\\Application\\chrome.exe`,
               ]
-            : ['/usr/bin/google-chrome']),
+            : ['/usr/bin/google-chrome'],
       ].filter(Boolean)
 
       // Use the first valid path
@@ -370,7 +365,7 @@ async function findBrowserExecutablePath(): Promise<string> {
       logger.info(`Chrome found via chrome-launcher: ${chromePath}`)
       return chromePath
     }
-    else logger.info('Chrome launched but couldn\'t determine executable path')
+    logger.info('Chrome launched but couldn\'t determine executable path')
   } catch (error: unknown) {
     // Check if it's a ChromeNotInstalledError
     const errorMessage = error instanceof Error ? error.message : String(error)
@@ -387,7 +382,7 @@ async function findBrowserExecutablePath(): Promise<string> {
 
   // If chrome-launcher failed, use manual detection
 
-  const { platform } = process
+  const {platform} = process
   const preferredBrowsers = currentConfig.preferredBrowsers ?? [
     'chrome',
     'edge',
@@ -407,7 +402,7 @@ async function findBrowserExecutablePath(): Promise<string> {
         // Try HKLM first
         const regOutput = execSync(
           'reg query "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\chrome.exe" /ve',
-          { encoding: 'utf8' },
+          {encoding: 'utf8'},
         )
 
         // Extract path from registry output
@@ -426,7 +421,7 @@ async function findBrowserExecutablePath(): Promise<string> {
           logger.info('Checking user registry for Chrome...')
           const regOutput = execSync(
             'reg query "HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\chrome.exe" /ve',
-            { encoding: 'utf8' },
+            {encoding: 'utf8'},
           )
 
           // Extract path from registry output
@@ -451,7 +446,7 @@ async function findBrowserExecutablePath(): Promise<string> {
         logger.info('Checking Chrome BLBeacon registry...')
         const regOutput = execSync(
           'reg query "HKEY_CURRENT_USER\\Software\\Google\\Chrome\\BLBeacon" /v version',
-          { encoding: 'utf8' },
+          {encoding: 'utf8'},
         )
 
         if (regOutput) {
@@ -570,7 +565,7 @@ async function findBrowserExecutablePath(): Promise<string> {
           // command -v works in most shells, fallback to which or type
             const browserPath = execSync(
               `command -v ${cmd} || which ${cmd} || type -p ${cmd} 2>/dev/null`,
-              { encoding: 'utf8' },
+              {encoding: 'utf8'},
             ).trim()
 
             if (browserPath && fs.existsSync(browserPath)) {
@@ -631,7 +626,7 @@ function setupBrowserCleanupHandlers(
       if (!headlessBrowserInstance) {
         logger.info(`Cleaning up temporary directory: ${userDataDir}`)
         try {
-          fs.rmSync(userDataDir, { recursive: true, force: true })
+          fs.rmSync(userDataDir, {recursive: true, force: true})
           logger.info(`Successfully removed directory: ${userDataDir}`)
         } catch (error: unknown) {
           logger.error(`Failed to remove directory ${userDataDir}:`, error)
@@ -717,18 +712,18 @@ export async function connectToHeadlessBrowser(
     customResourceBlockList?: string[]
     emulateDevice?: 'mobile' | 'tablet' | 'desktop'
     emulateNetworkCondition?: 'slow3G' | 'fast3G' | '4G' | 'offline'
-    viewport?: { width: number, height: number }
+    viewport?: {width: number, height: number}
     locale?: string
     timezoneId?: string
     userAgent?: string
     waitForSelector?: string
     waitForTimeout?: number
-    cookies?: Array<{
+    cookies?: {
       name: string
       value: string
       domain?: string
       path?: string
-    }>
+    }[]
     headers?: Record<string, string>
   } = {},
 ): Promise<{
@@ -803,7 +798,7 @@ export async function connectToHeadlessBrowser(
     } else if (options.emulateDevice) {
       // Set common device emulation presets
       let viewport
-      let { userAgent } = options
+      let {userAgent} = options
 
       switch (options.emulateDevice) {
         case 'mobile':
@@ -844,8 +839,8 @@ export async function connectToHeadlessBrowser(
     // Set locale and timezone if provided
     if (options.locale !== void 0) {
       await page.evaluateOnNewDocument(locale => {
-        Object.defineProperty(navigator, 'language', { get: () => locale })
-        Object.defineProperty(navigator, 'languages', { get: () => [locale] })
+        Object.defineProperty(navigator, 'language', {get: () => locale})
+        Object.defineProperty(navigator, 'languages', {get: () => [locale]})
       }, options.locale)
       logger.info(`Set locale to ${options.locale}`)
     }
@@ -884,11 +879,8 @@ export async function connectToHeadlessBrowser(
             upload: (2 * 1024 * 1024) / 8,
           }
           break
-        case 'offline':
-          networkConditions = { download: 0, latency: 0, upload: 0, offline: true }
-          break
-        default:
-          networkConditions = { download: 0, latency: 0, upload: 0, offline: false }
+        case 'offline': networkConditions = {download: 0, latency: 0, upload: 0, offline: true}; break
+        default: networkConditions = {download: 0, latency: 0, upload: 0, offline: false}
       }
 
       await page.emulateNetworkConditions(networkConditions)
@@ -931,7 +923,7 @@ export async function connectToHeadlessBrowser(
       }
     }
 
-    return { browser, port, page }
+    return {browser, port, page}
   } catch (error: unknown) {
     logger.error('Failed to connect to headless browser:', error)
     throw new Error(

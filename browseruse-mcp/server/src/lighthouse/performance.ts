@@ -1,15 +1,15 @@
-import type { Result as LighthouseResult } from 'lighthouse'
-import type { LighthouseReport } from './types.js'
-import { runLighthouseAudit } from './core.js'
-import { AuditCategory } from './types.js'
+import type {Result as LighthouseResult} from 'lighthouse'
+import type {LighthouseReport} from './types.js'
+import {runLighthouseAudit} from './core.js'
+import {AuditCategory} from './types.js'
 
 // Type guard function
-function isObjectWithItems(value: unknown): value is { items: unknown[] } {
+function isObjectWithItems(value: unknown): value is {items: unknown[]} {
   return (
     value != null
     && typeof value === 'object'
     && 'items' in value
-    && Array.isArray((value as { items: unknown }).items)
+    && Array.isArray((value as {items: unknown}).items)
   )
 }
 
@@ -71,7 +71,7 @@ interface AIOptimizedOpportunity {
   savings_ms: number
   // Severity classification
   severity?: 'critical' | 'serious' | 'moderate' | 'minor'
-  resources: Array<{
+  resources: {
     // Resource URL
     url: string
     // Individual resource savings
@@ -82,7 +82,7 @@ interface AIOptimizedOpportunity {
     type?: string
     // Whether this is a third-party resource
     is_third_party?: boolean
-  }>
+  }[]
 }
 
 // Page stats for AI analysis
@@ -168,18 +168,9 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
     if (audit == null) return
 
     switch (audit.scoreDisplayMode) {
-      case 'manual': {
-        manualCount++
-        break
-      }
-      case 'informative': {
-        informativeCount++
-        break
-      }
-      case 'notApplicable': {
-        notApplicableCount++
-        break
-      }
+      case 'manual': manualCount++; break
+      case 'informative': informativeCount++; break
+      case 'notApplicable': notApplicableCount++; break
       default: {
         if (audit.score != null) {
           if (audit.score >= 0.9) passedCount++
@@ -234,7 +225,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
             if (node.selector != null) metric.element_selector = String(node.selector)
 
             // Determine element type based on path or selector
-            const { path } = node
+            const {path} = node
             const selector = node.selector != null ? String(node.selector) : ''
 
             if (path != null) {
@@ -265,7 +256,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
             if (String(node.nodeLabel).startsWith('<img')) {
               metric.element_type = 'image'
               // Try to extract image URL from the node snippet
-              const { snippet } = node
+              const {snippet} = node
               if (snippet != null) {
                 const match = /src="([^"]+)"/.exec(String(snippet))
                 if (match?.[1] != null) metric.element_url = match[1]
@@ -309,7 +300,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
           if (itemObj.url != null || (itemObj.node != null && typeof itemObj.node === 'object' && (itemObj.node as Record<string, unknown>).path != null)) {
             if (itemObj.url != null) {
               metric.element_url = String(itemObj.url)
-              metric.element_type = (/\.(?:jpg|jpeg|png|gif|webp|svg)$/i.exec(String(itemObj.url))) != null
+              metric.element_type = /\.(?:jpg|jpeg|png|gif|webp|svg)$/i.exec(String(itemObj.url)) != null
                 ? 'image'
                 : 'resource'
             }
@@ -512,7 +503,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
 
           const url = String(itemObj.url)
           const fileName = url.split('/').pop() ?? url
-          opportunity.resources.push({ url: fileName })
+          opportunity.resources.push({url: fileName})
         })
     }
 
@@ -555,10 +546,8 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
         const url = resourceObj.url != null ? String(resourceObj.url) : ''
         if (mimeType.includes('javascript') || url.endsWith('.js')) jsCount++
         else if (mimeType.includes('css') || url.endsWith('.css')) cssCount++
-        else if (mimeType.includes('image')
-          || /\.(?:jpg|jpeg|png|gif|webp|svg)$/i.test(url)) imgCount++
-        else if (mimeType.includes('font')
-          || /\.(?:woff|woff2|ttf|otf|eot)$/i.test(url)) fontCount++
+        else if (mimeType.includes('image') || /\.(?:jpg|jpeg|png|gif|webp|svg)$/i.test(url)) imgCount++
+        else if (mimeType.includes('font') || /\.(?:woff|woff2|ttf|otf|eot)$/i.test(url)) fontCount++
         else otherCount++
       })
 
@@ -576,9 +565,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
 
       // Get main thread blocking time
       let mainThreadBlockingTimeMs = 0
-      if (mainThreadWork?.numericValue != null && mainThreadWork.numericValue !== 0) {
-        mainThreadBlockingTimeMs = Math.round(mainThreadWork.numericValue)
-      }
+      if (mainThreadWork?.numericValue != null && mainThreadWork.numericValue !== 0) mainThreadBlockingTimeMs = Math.round(mainThreadWork.numericValue)
 
       // Create page stats object
       page_stats = {

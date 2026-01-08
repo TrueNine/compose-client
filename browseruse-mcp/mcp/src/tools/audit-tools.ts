@@ -1,13 +1,13 @@
-import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
-import type { ApiResponse, AuditRequest, McpToolResponse } from '@/types'
-import { AuditCategory } from '@/config/constants'
-import { logger } from '@/logger'
-import { getDiscoveredConnection, withServerConnection } from '@/utils/server-discovery'
+import type {McpServer} from '@modelcontextprotocol/sdk/server/mcp.js'
+import type {ApiResponse, AuditRequest, McpToolResponse} from '@/types'
+import {AuditCategory} from '@/config/constants'
+import {logger} from '@/logger'
+import {getDiscoveredConnection, withServerConnection} from '@/utils/server-discovery'
 
 export function registerAuditTools(server: McpServer): void {
   server.tool('runAccessibilityAudit', 'Run an accessibility audit on the current page', {}, async () => withServerConnection(async (): Promise<McpToolResponse> => {
     try {
-      const { host, port } = getDiscoveredConnection()
+      const {host, port} = getDiscoveredConnection()
       logger.info(`Sending POST request to http://${host}:${port}/accessibility-audit`)
 
       const requestBody: AuditRequest = {
@@ -41,9 +41,9 @@ export function registerAuditTools(server: McpServer): void {
       // eslint-disable-next-line ts/strict-boolean-expressions
       if (json.report) {
         // eslint-disable-next-line ts/no-unsafe-assignment
-        const { metadata } = json as any
+        const {metadata} = json as any
         // eslint-disable-next-line ts/no-unsafe-assignment
-        const { report } = json as any
+        const {report} = json as any
         // eslint-disable-next-line ts/no-unsafe-assignment
         const flattened = {
           ...metadata,
@@ -58,15 +58,14 @@ export function registerAuditTools(server: McpServer): void {
             },
           ],
         }
-      } else {
-        return {
-          content: [
-            {
-              type: 'text',
-              text: JSON.stringify(json, null, 2),
-            },
-          ],
-        }
+      }
+      return {
+        content: [
+          {
+            type: 'text',
+            text: JSON.stringify(json, null, 2),
+          },
+        ],
       }
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : String(error)
@@ -84,7 +83,7 @@ export function registerAuditTools(server: McpServer): void {
 
   server.tool('runPerformanceAudit', 'Run a performance audit on the current page', {}, async () => withServerConnection(async (): Promise<McpToolResponse> => {
     try {
-      const { host, port } = getDiscoveredConnection()
+      const {host, port} = getDiscoveredConnection()
       logger.info(`Sending POST request to http://${host}:${port}/performance-audit`)
 
       const requestBody: AuditRequest = {
@@ -118,9 +117,9 @@ export function registerAuditTools(server: McpServer): void {
       // eslint-disable-next-line ts/strict-boolean-expressions
       if (json.report) {
         // eslint-disable-next-line ts/no-unsafe-assignment
-        const { metadata } = json as any
+        const {metadata} = json as any
         // eslint-disable-next-line ts/no-unsafe-assignment
-        const { report } = json as any
+        const {report} = json as any
         // eslint-disable-next-line ts/no-unsafe-assignment
         const flattened = {
           ...metadata,
@@ -135,15 +134,14 @@ export function registerAuditTools(server: McpServer): void {
             },
           ],
         }
-      } else {
-        return {
-          content: [
-            {
-              type: 'text',
-              text: JSON.stringify(json, null, 2),
-            },
-          ],
-        }
+      }
+      return {
+        content: [
+          {
+            type: 'text',
+            text: JSON.stringify(json, null, 2),
+          },
+        ],
       }
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : String(error)
@@ -161,7 +159,7 @@ export function registerAuditTools(server: McpServer): void {
 
   server.tool('runSEOAudit', 'Run an SEO audit on the current page', {}, async () => withServerConnection(async (): Promise<McpToolResponse> => {
     try {
-      const { host, port } = getDiscoveredConnection()
+      const {host, port} = getDiscoveredConnection()
       logger.info(`Sending POST request to http://${host}:${port}/seo-audit`)
 
       const requestBody: AuditRequest = {
@@ -216,7 +214,7 @@ export function registerAuditTools(server: McpServer): void {
 
   server.tool('runBestPracticesAudit', 'Run a best practices audit on the current page', {}, async () => withServerConnection(async (): Promise<McpToolResponse> => {
     try {
-      const { host, port } = getDiscoveredConnection()
+      const {host, port} = getDiscoveredConnection()
       logger.info(`Sending POST request to http://${host}:${port}/best-practices-audit`)
 
       const requestBody: Omit<AuditRequest, 'category'> = {
@@ -246,9 +244,9 @@ export function registerAuditTools(server: McpServer): void {
       // eslint-disable-next-line ts/strict-boolean-expressions
       if (json.report) {
         // eslint-disable-next-line ts/no-unsafe-assignment
-        const { metadata } = json as any
+        const {metadata} = json as any
         // eslint-disable-next-line ts/no-unsafe-assignment
-        const { report } = json as any
+        const {report} = json as any
         // eslint-disable-next-line ts/no-unsafe-assignment
         const flattened = {
           ...metadata,
@@ -263,15 +261,14 @@ export function registerAuditTools(server: McpServer): void {
             },
           ],
         }
-      } else {
-        return {
-          content: [
-            {
-              type: 'text',
-              text: JSON.stringify(json, null, 2),
-            },
-          ],
-        }
+      }
+      return {
+        content: [
+          {
+            type: 'text',
+            text: JSON.stringify(json, null, 2),
+          },
+        ],
       }
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : String(error)

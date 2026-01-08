@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { bool, late, RouteOption } from '@truenine/types'
-import type { YVMenuItemProps, YVMenuItemSlots } from './index'
+import type {bool, late, RouteOption} from '@truenine/types'
+import type {YVMenuItemProps, YVMenuItemSlots} from './index'
 
-import { isNonNil } from '@truenine/shared'
-import { useRouter } from 'vue-router'
+import {isNonNil} from '@truenine/shared'
+import {useRouter} from 'vue-router'
 
 const props = withDefaults(defineProps<YVMenuItemProps>(), {
   pathPrefix: '',

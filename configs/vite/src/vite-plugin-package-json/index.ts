@@ -1,6 +1,6 @@
-import type { OutputAsset } from 'rollup'
-import type { LibraryFormats, Plugin } from 'vite'
-import type { PackageJson } from '@/types'
+import type {OutputAsset} from 'rollup'
+import type {LibraryFormats, Plugin} from 'vite'
+import type {PackageJson} from '@/types'
 import fs from 'node:fs'
 import path from 'node:path'
 import process from 'node:process'
@@ -89,7 +89,7 @@ function packageJsonContentReplace(content: string, options: Omit<PackageJsonOpt
     if (hasEsm) exportValue.import = `./${baseOutputPath}.js`
     if (hasCjs) exportValue.require = `./${baseOutputPath}.cjs`
     // --- Generate types entry only if it's a TS/TSX file and dts is not false --- START
-    if (dts !== false && isTypeScriptEntry) exportValue.types = `./${baseOutputPath}.d.ts`
+    if (dts && isTypeScriptEntry) exportValue.types = `./${baseOutputPath}.d.ts`
     // --- Generate types entry only if it's a TS/TSX file and dts is not false --- END
 
     // Only add if there are any valid export types
@@ -99,10 +99,10 @@ function packageJsonContentReplace(content: string, options: Omit<PackageJsonOpt
       if (hasEsm) packageJson.module = exportValue.import.slice(2)
       if (hasCjs) packageJson.main = exportValue.require.slice(2)
       // Set top-level types directly if main entry is TS and dts is not false
-      if (dts !== false && isTypeScriptEntry) {
+      if (dts && isTypeScriptEntry) {
         packageJson.types = exportValue.types.slice(2)
         packageJson.typings = exportValue.types.slice(2)
-      } else if (dts === false) {
+      } else if (!dts) {
         delete packageJson.types
         delete packageJson.typings
       }

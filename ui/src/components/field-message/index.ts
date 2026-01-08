@@ -1,5 +1,5 @@
-import type { SFCWithInstall } from '@/common/install'
-import { componentInstallToPlugin } from '@/common'
+import type {SFCWithInstall} from '@/common/install'
+import {componentInstallToPlugin} from '@/common'
 
 import YFieldMessageSfc from './YFieldMessage.vue'
 

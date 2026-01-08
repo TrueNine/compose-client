@@ -1,5 +1,5 @@
-import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
-import type { McpToolResponse } from '@/types'
+import type {McpServer} from '@modelcontextprotocol/sdk/server/mcp.js'
+import type {McpToolResponse} from '@/types'
 
 export function registerCompositeTools(server: McpServer): void {
   server.tool('runNextJSAudit', 'Run a comprehensive NextJS SEO audit and optimization', {}, async (): Promise<McpToolResponse> => ({

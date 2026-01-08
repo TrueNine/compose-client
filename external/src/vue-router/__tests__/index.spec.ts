@@ -1,12 +1,12 @@
-import type { RouteRecordRaw } from 'vue-router'
-import { describe, expect, it } from 'vitest'
-import { generateMenu } from '../index'
+import type {RouteRecordRaw} from 'vue-router'
+import {describe, expect, it} from 'vitest'
+import {generateMenu} from '../index'
 import routers from './routers.json'
 
 // 选取部分典型路由用于测试
 const rootRoutes: RouteRecordRaw[] = routers as RouteRecordRaw[]
-const aRoutes: RouteRecordRaw[] = (rootRoutes.find((r: RouteRecordRaw) => r.path === '/a')?.children ?? [])
-const wxpaRoutes: RouteRecordRaw[] = (rootRoutes.find((r: RouteRecordRaw) => r.path === '/wxpa')?.children ?? [])
+const aRoutes: RouteRecordRaw[] = rootRoutes.find((r: RouteRecordRaw) => r.path === '/a')?.children ?? []
+const wxpaRoutes: RouteRecordRaw[] = rootRoutes.find((r: RouteRecordRaw) => r.path === '/wxpa')?.children ?? []
 
 describe('generateMenu - routers.json 数据', (): void => {
   it('应该正确转换根路由', () => {
@@ -68,9 +68,9 @@ describe('generateMenu - path为空的子路由特殊处理', () => {
         path: 'only-index',
         component: DummyComponent,
         children: [
-          { path: '', meta: { title: '首页' }, component: DummyComponent },
+          {path: '', meta: {title: '首页'}, component: DummyComponent},
         ],
-        meta: { title: '父级' },
+        meta: {title: '父级'},
       },
     ]
     const menu = generateMenu(routes)
@@ -84,10 +84,10 @@ describe('generateMenu - path为空的子路由特殊处理', () => {
         path: 'mix',
         component: DummyComponent,
         children: [
-          { path: '', meta: { title: '首页', extra: 'index' }, component: DummyComponent },
-          { path: 'other', meta: { title: '其他' }, component: DummyComponent },
+          {path: '', meta: {title: '首页', extra: 'index'}, component: DummyComponent},
+          {path: 'other', meta: {title: '其他'}, component: DummyComponent},
         ],
-        meta: { title: '父级' },
+        meta: {title: '父级'},
       },
     ]
     const menu = generateMenu(routes)
@@ -105,16 +105,16 @@ describe('generateMenu - path为空的子路由特殊处理', () => {
         children: [
           {
             path: '',
-            meta: { title: '首页' },
+            meta: {title: '首页'},
             component: DummyComponent,
             children: [
-              { path: 'sub1', meta: { title: '子1' }, component: DummyComponent },
-              { path: 'sub2', meta: { title: '子2' }, component: DummyComponent },
+              {path: 'sub1', meta: {title: '子1'}, component: DummyComponent},
+              {path: 'sub2', meta: {title: '子2'}, component: DummyComponent},
             ],
           },
-          { path: 'other', meta: { title: '其他' }, component: DummyComponent },
+          {path: 'other', meta: {title: '其他'}, component: DummyComponent},
         ],
-        meta: { title: '父级' },
+        meta: {title: '父级'},
       },
     ]
     const menu = generateMenu(routes)
@@ -135,12 +135,12 @@ describe('generateMenu - meta.hidden 处理', () => {
       {
         path: 'visible',
         component: DummyComponent,
-        meta: { title: '可见路由' },
+        meta: {title: '可见路由'},
       },
       {
         path: 'hidden',
         component: DummyComponent,
-        meta: { title: '隐藏路由', hidden: true },
+        meta: {title: '隐藏路由', hidden: true},
       },
     ]
     const menu = generateMenu(routes)
@@ -154,17 +154,17 @@ describe('generateMenu - meta.hidden 处理', () => {
       {
         path: 'parent',
         component: DummyComponent,
-        meta: { title: '父路由', hidden: true },
+        meta: {title: '父路由', hidden: true},
         children: [
           {
             path: 'child1',
             component: DummyComponent,
-            meta: { title: '子路由1' },
+            meta: {title: '子路由1'},
           },
           {
             path: 'child2',
             component: DummyComponent,
-            meta: { title: '子路由2' },
+            meta: {title: '子路由2'},
           },
         ],
       },
@@ -178,17 +178,17 @@ describe('generateMenu - meta.hidden 处理', () => {
       {
         path: 'parent',
         component: DummyComponent,
-        meta: { title: '父路由' },
+        meta: {title: '父路由'},
         children: [
           {
             path: 'visible',
             component: DummyComponent,
-            meta: { title: '可见子路由' },
+            meta: {title: '可见子路由'},
           },
           {
             path: 'hidden',
             component: DummyComponent,
-            meta: { title: '隐藏子路由', hidden: true },
+            meta: {title: '隐藏子路由', hidden: true},
           },
         ],
       },
@@ -204,17 +204,17 @@ describe('generateMenu - meta.hidden 处理', () => {
       {
         path: 'test1',
         component: DummyComponent,
-        meta: { title: '测试1', hidden: false },
+        meta: {title: '测试1', hidden: false},
       },
       {
         path: 'test2',
         component: DummyComponent,
-        meta: { title: '测试2' },
+        meta: {title: '测试2'},
       },
       {
         path: 'test3',
         component: DummyComponent,
-        meta: { title: '测试3', hidden: null },
+        meta: {title: '测试3', hidden: null},
       },
     ]
     const menu = generateMenu(routes)

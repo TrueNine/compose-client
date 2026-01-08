@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { YSystemBarProps, YVSystemBarEmits, YVSystemBarSlots } from './index'
-import { useVModels } from '@vueuse/core'
-import { computed } from 'vue'
+import type {YSystemBarProps, YVSystemBarEmits, YVSystemBarSlots} from './index'
+import {useVModels} from '@vueuse/core'
+import {computed} from 'vue'
 
 const props = withDefaults(defineProps<YSystemBarProps>(), {
   showAppBar: true,
@@ -19,7 +19,7 @@ const {
   progress: _progress,
   progressLoading: _progressLoading,
   settingsMenuOpened: _settingsMenuOpened,
-} = useVModels(props, emits, { passive: true })
+} = useVModels(props, emits, {passive: true})
 const progressClr = computed(() => _progressLoading.value && _progress.value === 0)
 const useRight = computed(() => !!slots['right-btn'])
 </script>

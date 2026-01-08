@@ -1,5 +1,5 @@
-import { describe, expect, it } from 'vitest'
-import eslint9, { applyPreset } from './index'
+import {describe, expect, it} from 'vitest'
+import eslint9, {applyPreset} from './index'
 
 describe('eslint9-config', () => {
   it('should export default function', () => {

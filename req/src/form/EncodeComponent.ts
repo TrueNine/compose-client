@@ -1,5 +1,5 @@
-import type { BasicType, nilpt } from '@truenine/types'
-import { isNonNil, isNonNilString } from '@truenine/shared'
+import type {BasicType, nilpt} from '@truenine/types'
+import {isNonNil, isNonNilString} from '@truenine/shared'
 
 /**
  * 表示 URL 查询参数的类
@@ -150,7 +150,7 @@ export class SearchParam {
 export function encodeQueryParam(...cards: nilpt<object>[]): string {
   if (!cards.length) return ''
 
-  const params: Array<[string, string]> = []
+  const params: [string, string][] = []
   const validCards = cards.filter(isNonNil)
 
   if (!validCards.length) return ''
@@ -195,7 +195,7 @@ export function encodeQueryParam(...cards: nilpt<object>[]): string {
 export function queryParam(...cards: nilpt<object>[]): string {
   if (!cards.length) return ''
 
-  const params: Array<[string, string]> = []
+  const params: [string, string][] = []
   const validCards = cards.filter(isNonNil)
 
   if (!validCards.length) return ''
@@ -236,7 +236,7 @@ export function queryParam(...cards: nilpt<object>[]): string {
 export function queryHash(...cards: nilpt<object>[]): string {
   if (!cards.length) return ''
 
-  const params: Array<[string, string]> = []
+  const params: [string, string][] = []
   const validCards = cards.filter(isNonNil)
 
   if (!validCards.length) return ''
@@ -280,7 +280,7 @@ export function decodeHash(hash?: string | null): Record<string, string> {
   const rawInput = (hash as string).startsWith('#') ? (hash as string).slice(1) : hash as string
   if (!isNonNilString(rawInput)) return result
 
-  const pairs = (rawInput).split('&')
+  const pairs = rawInput.split('&')
   for (const pair of pairs) {
     if (!isNonNilString(pair)) continue
 

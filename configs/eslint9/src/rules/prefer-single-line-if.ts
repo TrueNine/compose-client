@@ -1,4 +1,4 @@
-import type { Rule } from 'eslint'
+import type {Rule} from 'eslint'
 
 const MAX_LINE_LENGTH = 160
 
@@ -17,14 +17,14 @@ const rule: Rule.RuleModule = {
     },
   },
   create(context) {
-    const { sourceCode } = context
+    const {sourceCode} = context
 
     /* eslint-disable ts/no-unsafe-assignment */
     function getSingleStatement(node: Rule.Node | null | undefined): Rule.Node | null {
       if (!node) return null
       if (node.type !== 'BlockStatement') return node
 
-      const { body } = node as any
+      const {body} = node as any
       if (!Array.isArray(body) || body.length !== 1) return null
       return body[0] as Rule.Node
     }
@@ -54,7 +54,7 @@ const rule: Rule.RuleModule = {
         .split('\n')
         .map(line => line.trim())
         .join(' ')
-        .replace(/\s+/g, ' ')
+        .replaceAll(/\s+/g, ' ')
         .trim()
     }
 
@@ -64,7 +64,7 @@ const rule: Rule.RuleModule = {
       return condText.length < MAX_LINE_LENGTH - 40
     }
 
-    function collectIfChain(node: Rule.Node): { conditions: Rule.Node[], finalElse: Rule.Node | null } {
+    function collectIfChain(node: Rule.Node): {conditions: Rule.Node[], finalElse: Rule.Node | null} {
       const conditions: Rule.Node[] = []
       let current: Rule.Node | null = node
 
@@ -73,7 +73,7 @@ const rule: Rule.RuleModule = {
         current = ('alternate' in current ? current.alternate : null) as Rule.Node | null
       }
 
-      return { conditions, finalElse: current }
+      return {conditions, finalElse: current}
     }
 
     function canBranchBeSimplified(consequent: Rule.Node, test: Rule.Node): boolean {
@@ -92,7 +92,7 @@ const rule: Rule.RuleModule = {
     }
 
     function canConvertToSingleLine(node: Rule.Node): boolean {
-      const { conditions, finalElse } = collectIfChain(node)
+      const {conditions, finalElse} = collectIfChain(node)
 
       for (const cond of conditions) {
         if (!('consequent' in cond) || !('test' in cond)) return false
@@ -134,7 +134,7 @@ const rule: Rule.RuleModule = {
     }
 
     function isAlreadySingleLine(node: Rule.Node): boolean {
-      const { conditions, finalElse } = collectIfChain(node)
+      const {conditions, finalElse} = collectIfChain(node)
 
       for (const cond of conditions) {
         if (!('consequent' in cond)) return false
@@ -162,7 +162,7 @@ const rule: Rule.RuleModule = {
 
     return {
       IfStatement(node) {
-        const { parent } = node
+        const {parent} = node
         // Skip if this is part of an else-if chain (will be handled by the root if)
         if (parent?.type === 'IfStatement' && 'alternate' in parent && parent.alternate === node) return
 
@@ -172,7 +172,7 @@ const rule: Rule.RuleModule = {
             node,
             messageId: 'preferSingleLine',
             fix(fixer) {
-              const { conditions, finalElse } = collectIfChain(node)
+              const {conditions, finalElse} = collectIfChain(node)
               const indent = ' '.repeat(node.loc?.start.column ?? 0)
               const lines: string[] = []
 
@@ -203,7 +203,7 @@ const rule: Rule.RuleModule = {
 
         // If entire chain can't be converted, try to simplify individual branches
         // We need to rebuild the entire chain to avoid syntax errors
-        const { conditions, finalElse } = collectIfChain(node)
+        const {conditions, finalElse} = collectIfChain(node)
 
         // Check which branches can be simplified
         const branchSimplifiable: boolean[] = []

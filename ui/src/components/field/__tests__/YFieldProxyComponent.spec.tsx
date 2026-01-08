@@ -1,11 +1,11 @@
-import { mount } from '@vue/test-utils'
-import { afterEach, describe, expect, it } from 'vitest'
-import { defineComponent, markRaw, nextTick, ref } from 'vue'
-import { z } from 'zod'
+import {mount} from '@vue/test-utils'
+import {afterEach, describe, expect, it} from 'vitest'
+import {defineComponent, markRaw, nextTick, ref} from 'vue'
+import {z} from 'zod'
 import YForm from '../../form'
 import YField from '../index'
 import YFieldProxyComponent from '../YFieldProxyComponent.vue'
-import { ChildInputComponent } from './components/TestComponents'
+import {ChildInputComponent} from './components/TestComponents'
 
 const globalComponents = {
   components: {
@@ -22,7 +22,7 @@ describe('yFieldProxyComponentTest', () => {
   describe('模型名称映射Group', () => {
     it('正常 单字段 条件时，当name为字符串，modelNames应包含modelValue映射', async () => {
       const wrapper = mount(YForm, {
-        props: { initValue: { email: 'test@example.com' } },
+        props: {initValue: {email: 'test@example.com'}},
         slots: {
           default: () => (
             <YField name="email" label="邮箱">
@@ -34,13 +34,13 @@ describe('yFieldProxyComponentTest', () => {
       })
 
       await nextTick()
-      const proxy = wrapper.findComponent({ name: 'YFieldProxyComponent' })
-      expect(proxy.props('modelNames')).toEqual({ email: 'modelValue' })
+      const proxy = wrapper.findComponent({name: 'YFieldProxyComponent'})
+      expect(proxy.props('modelNames')).toEqual({email: 'modelValue'})
     })
 
     it('正常 映射 条件时，当name为字符串数组，modelNames应按默认规则映射', async () => {
       const wrapper = mount(YForm, {
-        props: { initValue: { prop1: 'value1', prop2: 'value2' } },
+        props: {initValue: {prop1: 'value1', prop2: 'value2'}},
         slots: {
           default: () => (
             <YField name={['prop1', 'prop2']} label="多属性">
@@ -52,17 +52,17 @@ describe('yFieldProxyComponentTest', () => {
       })
 
       await nextTick()
-      const proxy = wrapper.findComponent({ name: 'YFieldProxyComponent' })
-      expect(proxy.props('modelNames')).toEqual({ prop1: 'prop1', prop2: 'prop2' })
+      const proxy = wrapper.findComponent({name: 'YFieldProxyComponent'})
+      expect(proxy.props('modelNames')).toEqual({prop1: 'prop1', prop2: 'prop2'})
     })
 
     it('正常 映射 条件时，当name为对象，modelNames应按对象定义映射', async () => {
       const wrapper = mount(YForm, {
-        props: { initValue: { formKey1: 'val1', formKey2: 'val2' } },
+        props: {initValue: {formKey1: 'val1', formKey2: 'val2'}},
         slots: {
           default: () => (
             <YField
-              name={{ formKey1: 'modelValue', formKey2: 'otherProp' }}
+              name={{formKey1: 'modelValue', formKey2: 'otherProp'}}
               label="对象映射"
             >
               <ChildInputComponent />
@@ -73,17 +73,17 @@ describe('yFieldProxyComponentTest', () => {
       })
 
       await nextTick()
-      const proxy = wrapper.findComponent({ name: 'YFieldProxyComponent' })
-      expect(proxy.props('modelNames')).toEqual({ formKey1: 'modelValue', formKey2: 'otherProp' })
+      const proxy = wrapper.findComponent({name: 'YFieldProxyComponent'})
+      expect(proxy.props('modelNames')).toEqual({formKey1: 'modelValue', formKey2: 'otherProp'})
     })
 
     it('边界 映射 条件时，当name为混合数组，modelNames应按规则映射', async () => {
       const wrapper = mount(YForm, {
-        props: { initValue: { keyA: 'valueA', keyB: 'valueB' } },
+        props: {initValue: {keyA: 'valueA', keyB: 'valueB'}},
         slots: {
           default: () => (
             <YField
-              name={['keyA', { keyB: 'otherProp' }]}
+              name={['keyA', {keyB: 'otherProp'}]}
               label="混合映射"
             >
               <ChildInputComponent />
@@ -94,8 +94,8 @@ describe('yFieldProxyComponentTest', () => {
       })
 
       await nextTick()
-      const proxy = wrapper.findComponent({ name: 'YFieldProxyComponent' })
-      expect(proxy.props('modelNames')).toEqual({ keyA: 'keyA', keyB: 'otherProp' })
+      const proxy = wrapper.findComponent({name: 'YFieldProxyComponent'})
+      expect(proxy.props('modelNames')).toEqual({keyA: 'keyA', keyB: 'otherProp'})
     })
   })
 
@@ -105,7 +105,7 @@ describe('yFieldProxyComponentTest', () => {
 
       const TestComponent = defineComponent({
         setup() {
-          const formValues = ref({ firstName: 'InitialFirst', lastName: 'InitialLast', addr: 'Addr1' })
+          const formValues = ref({firstName: 'InitialFirst', lastName: 'InitialLast', addr: 'Addr1'})
           return () => (
             <YForm initValue={formValues.value}>
               <YField name={currentName.value} label="动态字段">
@@ -122,36 +122,36 @@ describe('yFieldProxyComponentTest', () => {
       await nextTick()
 
       // 单字符串默认映射到 modelValue
-      let proxy = wrapper.findComponent({ name: 'YFieldProxyComponent' })
-      expect(proxy.props('modelNames')).toEqual({ firstName: 'modelValue' })
+      let proxy = wrapper.findComponent({name: 'YFieldProxyComponent'})
+      expect(proxy.props('modelNames')).toEqual({firstName: 'modelValue'})
 
       // 切换为字符串
       currentName.value = 'lastName'
       await nextTick()
 
-      proxy = wrapper.findComponent({ name: 'YFieldProxyComponent' })
-      expect(proxy.props('modelNames')).toEqual({ lastName: 'modelValue' })
+      proxy = wrapper.findComponent({name: 'YFieldProxyComponent'})
+      expect(proxy.props('modelNames')).toEqual({lastName: 'modelValue'})
 
       // 切换为对象
-      currentName.value = { firstName: 'modelValue', lastName: 'otherProp' }
+      currentName.value = {firstName: 'modelValue', lastName: 'otherProp'}
       await nextTick()
 
-      proxy = wrapper.findComponent({ name: 'YFieldProxyComponent' })
-      expect(proxy.props('modelNames')).toEqual({ firstName: 'modelValue', lastName: 'otherProp' })
+      proxy = wrapper.findComponent({name: 'YFieldProxyComponent'})
+      expect(proxy.props('modelNames')).toEqual({firstName: 'modelValue', lastName: 'otherProp'})
 
       // 切换为数组
       currentName.value = ['firstName', 'lastName']
       await nextTick()
 
-      proxy = wrapper.findComponent({ name: 'YFieldProxyComponent' })
-      expect(proxy.props('modelNames')).toEqual({ firstName: 'firstName', lastName: 'lastName' })
+      proxy = wrapper.findComponent({name: 'YFieldProxyComponent'})
+      expect(proxy.props('modelNames')).toEqual({firstName: 'firstName', lastName: 'lastName'})
 
       // 切换为混合数组
-      currentName.value = ['firstName', { lastName: 'otherProp' }, { addr: 'adCode' }]
+      currentName.value = ['firstName', {lastName: 'otherProp'}, {addr: 'adCode'}]
       await nextTick()
 
-      proxy = wrapper.findComponent({ name: 'YFieldProxyComponent' })
-      expect(proxy.props('modelNames')).toEqual({ firstName: 'firstName', lastName: 'otherProp', addr: 'adCode' })
+      proxy = wrapper.findComponent({name: 'YFieldProxyComponent'})
+      expect(proxy.props('modelNames')).toEqual({firstName: 'firstName', lastName: 'otherProp', addr: 'adCode'})
     })
   })
 
@@ -194,7 +194,7 @@ describe('yFieldProxyComponentTest', () => {
       })
 
       await nextTick()
-      const proxy = wrapper.findComponent({ name: 'YFieldProxyComponent' })
+      const proxy = wrapper.findComponent({name: 'YFieldProxyComponent'})
       expect(proxy.props('modelNames')).toEqual({
         'input.a': 'x',
         'input.b': 'y',
@@ -212,7 +212,7 @@ describe('yFieldProxyComponentTest', () => {
       const wrapper = mount(YFieldProxyComponent, {
         props: {
           component: TestComponent,
-          modelNames: { addressCode: 'adCode' },
+          modelNames: {addressCode: 'adCode'},
         },
       })
 
@@ -222,7 +222,7 @@ describe('yFieldProxyComponentTest', () => {
       const vm = wrapper.vm as any
 
       // 断言 _modelNames 保持与传入的 modelNames 一致
-      expect(vm._modelNames).toEqual({ addressCode: 'adCode' })
+      expect(vm._modelNames).toEqual({addressCode: 'adCode'})
     })
   })
 })

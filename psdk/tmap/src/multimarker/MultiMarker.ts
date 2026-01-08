@@ -1,7 +1,7 @@
-import type { MultiMarkerEvents } from '../events'
-import type { Map } from '../map'
-import type { MultiMarkerOptions } from '../options/MultiMarkerOptions'
-import type { PointGeometry } from '../options/PointGeometies'
+import type {MultiMarkerEvents} from '../events'
+import type {Map} from '../map'
+import type {MultiMarkerOptions} from '../options/MultiMarkerOptions'
+import type {PointGeometry} from '../options/PointGeometies'
 
 /**
  * # 多 maker 图层

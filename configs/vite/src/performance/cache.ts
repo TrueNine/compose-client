@@ -1,4 +1,4 @@
-import type { UserConfig } from 'vite'
+import type {UserConfig} from 'vite'
 
 /**
  * 缓存优化配置选项

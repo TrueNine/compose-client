@@ -1,6 +1,6 @@
-import type { UserConfig } from 'vite'
+import type {UserConfig} from 'vite'
 import process from 'node:process'
-import { mergeConfig } from 'vite'
+import {mergeConfig} from 'vite'
 
 /**
  * 开发模式优化配置选项
@@ -41,7 +41,7 @@ export function createDevServerOptimization(options: DevelopmentOptimizationOpti
     server: {
       port,
       open,
-      ...(https ? { https: {} } : {}),
+      ...https ? {https: {}} : {},
       proxy,
       // 启用 CORS
       cors: true,
@@ -114,7 +114,7 @@ export function createDevServerOptimization(options: DevelopmentOptimizationOpti
  * 创建开发模式依赖优化配置
  */
 export function createDevDepsOptimization(options: DevelopmentOptimizationOptions = {}): UserConfig {
-  const { enableDepsPreBundling = true } = options
+  const {enableDepsPreBundling = true} = options
 
   if (!enableDepsPreBundling) return {}
 
@@ -321,11 +321,11 @@ export function createMonorepoDevelopmentOptimization(options: DevelopmentOptimi
     optimizeDeps: {
       // Monorepo 中的依赖优化
       include: [
-        ...(baseConfig.optimizeDeps?.include ?? []),
+        ...baseConfig.optimizeDeps?.include ?? [],
         // 包含 workspace 依赖
       ],
       exclude: [
-        ...(baseConfig.optimizeDeps?.exclude ?? []),
+        ...baseConfig.optimizeDeps?.exclude ?? [],
         // 排除本地 workspace 包
         '@truenine/*',
         'workspace:*',
@@ -345,8 +345,8 @@ export function createMonorepoDevelopmentOptimization(options: DevelopmentOptimi
 /**
  * 创建热重载优化配置
  */
-export function createHMROptimization(options: { enableVueHMR?: boolean, enableReactHMR?: boolean } = {}): UserConfig {
-  const { enableVueHMR = true, enableReactHMR = false } = options
+export function createHMROptimization(options: {enableVueHMR?: boolean, enableReactHMR?: boolean} = {}): UserConfig {
+  const {enableVueHMR = true, enableReactHMR = false} = options
 
   const config: UserConfig = {
     server: {

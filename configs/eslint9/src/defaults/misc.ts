@@ -1,4 +1,4 @@
-import type { AntFuTestConfig, AntFuUnocssConfig } from '../types'
+import type {AntFuTestConfig, AntFuUnocssConfig} from '../types'
 
 export const defaultUnocssConfig: AntFuUnocssConfig = {
   attributify: true,

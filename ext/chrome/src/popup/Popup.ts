@@ -1,6 +1,6 @@
-import type { asyncable, task } from '@truenine/types'
+import type {asyncable, task} from '@truenine/types'
 
-import type { ChannelTypedMessage } from '../typ'
+import type {ChannelTypedMessage} from '../typ'
 
 /**
  * 类型守卫：检查消息是否符合 ChannelTypedMessage 接口

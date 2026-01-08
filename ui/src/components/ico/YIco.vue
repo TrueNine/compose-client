@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { YIcoProps } from './index'
+import type {YIcoProps} from './index'
 
 const props = withDefaults(defineProps<YIcoProps>(), {
   tag: 'i',

@@ -1,14 +1,14 @@
-import type { UserConfig } from 'vite'
-import type { CacheOptimizationOptions } from './cache'
-import type { VitePerformanceOptions } from './index'
+import type {UserConfig} from 'vite'
+import type {CacheOptimizationOptions} from './cache'
+import type {VitePerformanceOptions} from './index'
 
-import type { ParallelOptimizationOptions } from './parallel'
+import type {ParallelOptimizationOptions} from './parallel'
 import process from 'node:process'
-import { mergeConfig } from 'vite'
-import { createCacheOptimization } from './cache'
-import { createDevelopmentOptimization, createFastDevelopmentOptimization, createMonorepoDevelopmentOptimization } from './development'
-import { createDevelopmentPerformanceConfig, createProductionPerformanceConfig, createVitePerformanceConfig } from './index'
-import { createDevParallelOptimization, createMonorepoParallelOptimization, createParallelOptimization, createProdParallelOptimization } from './parallel'
+import {mergeConfig} from 'vite'
+import {createCacheOptimization} from './cache'
+import {createDevelopmentOptimization, createFastDevelopmentOptimization, createMonorepoDevelopmentOptimization} from './development'
+import {createDevelopmentPerformanceConfig, createProductionPerformanceConfig, createVitePerformanceConfig} from './index'
+import {createDevParallelOptimization, createMonorepoParallelOptimization, createParallelOptimization, createProdParallelOptimization} from './parallel'
 
 /**
  * 性能优化预设类型
@@ -302,22 +302,14 @@ export function createPerformancePreset(
   options: FullPerformanceOptions = {},
 ): UserConfig {
   switch (preset) {
-    case 'basic':
-      return createBasicPreset(options)
-    case 'aggressive':
-      return createAggressivePreset(options)
-    case 'maximum':
-      return createMaximumPreset(options)
-    case 'development':
-      return createDevelopmentPreset(options)
-    case 'fast-dev':
-      return createFastDevPreset(options)
-    case 'production':
-      return createProductionPreset(options)
-    case 'monorepo':
-      return createMonorepoPreset(options)
-    default:
-      return createBasicPreset(options)
+    case 'basic': return createBasicPreset(options)
+    case 'aggressive': return createAggressivePreset(options)
+    case 'maximum': return createMaximumPreset(options)
+    case 'development': return createDevelopmentPreset(options)
+    case 'fast-dev': return createFastDevPreset(options)
+    case 'production': return createProductionPreset(options)
+    case 'monorepo': return createMonorepoPreset(options)
+    default: return createBasicPreset(options)
   }
 }
 

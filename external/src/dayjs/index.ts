@@ -1,7 +1,7 @@
-import type { late, rq, timestamp } from '@truenine/types'
-import type { Dayjs } from 'dayjs'
-import type { DurationUnitType } from 'dayjs/plugin/duration'
-import { ISO8601Format, ISO8601TimeZone } from '@truenine/shared'
+import type {late, rq, timestamp} from '@truenine/types'
+import type {Dayjs} from 'dayjs'
+import type {DurationUnitType} from 'dayjs/plugin/duration'
+import {ISO8601Format, ISO8601TimeZone} from '@truenine/shared'
 import dayjs from 'dayjs'
 import duration from 'dayjs/plugin/duration'
 import isBetween from 'dayjs/plugin/isBetween'
@@ -42,7 +42,7 @@ function getDefaultParam(date: DayJSNewInstanceOptions, p?: Params, format?: str
 }
 
 function timestampOf(date: DayJSNewInstanceOptions, p?: Params): number {
-  const { date: _date, format, tz } = getDefaultParam(date, p, ISO8601Format.datetime)
+  const {date: _date, format, tz} = getDefaultParam(date, p, ISO8601Format.datetime)
   return DayJs.tz(_date, format, tz).valueOf()
 }
 
@@ -62,12 +62,11 @@ export function timeMillis(date: DayJSNewInstanceOptions, p?: Params): number {
     _p.date = `1970-01-01$$$$${_p.date}`
     const offset = getOffsetMillis(_p.tz)
     return timestampOf(_p.date, _p) + Number(offset) * 2
-  } else {
-    _p.utc = true
-    _p.tz = ISO8601TimeZone.UTC
-    const dg = timestampToTimeTimestamp(_p.date, _p)
-    return dg === void 0 ? Number.NaN : dg
   }
+  _p.utc = true
+  _p.tz = ISO8601TimeZone.UTC
+  const dg = timestampToTimeTimestamp(_p.date, _p)
+  return dg === void 0 ? Number.NaN : dg
 }
 
 export function datetimeMillis(date: DayJSNewInstanceOptions, p?: Params): number {
@@ -77,7 +76,7 @@ export function datetimeMillis(date: DayJSNewInstanceOptions, p?: Params): numbe
 
 export function format(date: DayJSNewInstanceOptions, p?: Params): string {
   const _p = getDefaultParam(date, p, ISO8601Format.datetime)
-  return DayJs(_p.date, { format: _p.format, utc: _p.utc }, true).tz(_p.tz).format(_p.format)
+  return DayJs(_p.date, {format: _p.format, utc: _p.utc}, true).tz(_p.tz).format(_p.format)
 }
 
 export function formatDatetime(date: DayJSNewInstanceOptions, p?: Params): string {
@@ -103,8 +102,8 @@ export function formatTime(date: DayJSNewInstanceOptions, p?: Params): string {
 function timestampToTimeTimestamp(ts: timestamp | Date | dayjs.Dayjs, p?: Params): late<number> {
   const _p = getDefaultParam(ts, p, ISO8601Format.datetime)
   let dj: dayjs.Dayjs
-  if (typeof ts === 'number' || typeof ts === 'string') dj = DayJs(ts, { utc: _p.utc }, true).tz(_p.tz)
-  else if (ts instanceof Date) dj = DayJs(ts, { utc: _p.utc }, true).tz(_p.tz)
+  if (typeof ts === 'number' || typeof ts === 'string') dj = DayJs(ts, {utc: _p.utc}, true).tz(_p.tz)
+  else if (ts instanceof Date) dj = DayJs(ts, {utc: _p.utc}, true).tz(_p.tz)
   else dj = ts.tz(_p.tz)
   const hMs = dj.hour() * 3600000
   const mMs = dj.minute() * 60000
@@ -122,12 +121,11 @@ export function isToday(to: DayJSNewInstanceOptions, qua = 1, unit: DurationUnit
 export function formatToday(to: Dayjs): string {
   const now = DayJs()
   if (isToday(to, 0)) return to.format('HH:mm')
-  if (to.isBefore(now)) {
-    if (isToday(to)) return `昨天 ${to.format('HH:mm')}`
-    else if (isToday(to, 0, 'month')) return to.format('MM-DD')
-    else if (isToday(to, 0, 'year')) return to.format('MM-DD')
-    else if (to.year() >= 2000) return to.format('YY-MM-DD')
-    else return to.format('YYYY-MM-DD')
-  }
-  else return to.format('YYYY-MM-DD')
+  if (!to.isBefore(now)) return to.format('YYYY-MM-DD')
+
+  if (isToday(to)) return `昨天 ${to.format('HH:mm')}`
+  if (isToday(to, 0, 'month')) return to.format('MM-DD')
+  if (isToday(to, 0, 'year')) return to.format('MM-DD')
+  if (to.year() >= 2000) return to.format('YY-MM-DD')
+  return to.format('YYYY-MM-DD')
 }

@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import type { nil } from '@truenine/types'
-import type { IComponentAddr, YAddressSelectEmits, YVAddressSelectProps, YVAddressSelectSelectValue } from '.'
+import type {nil} from '@truenine/types'
+import type {IComponentAddr, YAddressSelectEmits, YVAddressSelectProps, YVAddressSelectSelectValue} from '.'
 
-import { AddressUtils, des } from '@truenine/shared'
-import { useVModel, watchThrottled } from '@vueuse/core'
-import { computed, onMounted, reactive, ref, watch } from 'vue'
+import {AddressUtils, des} from '@truenine/shared'
+import {useVModel, watchThrottled} from '@vueuse/core'
+import {computed, onMounted, reactive, ref, watch} from 'vue'
 import {
   clipCode,
   getAdCodeLevel,
@@ -36,23 +36,18 @@ function pad(code: string) {
 
 const emitsDeepLevel = computed(() => {
   switch (props.level) {
-    case 'province':
-      return 2
-    case 'city':
-      return 3
-    case 'town':
-      return 5
-    case 'village':
-      return 6
+    case 'province': return 2
+    case 'city': return 3
+    case 'town': return 5
+    case 'village': return 6
     case 'district':
-    default:
-      return 4
+    default: return 4
   }
 })
 
 // 地址缓存
 const addressCache = ref<Record<string, IComponentAddr[]>>({})
-const saveCache = (code: string, data: IComponentAddr[]) => (addressCache.value[code] = data)
+const saveCache = (code: string, data: IComponentAddr[]) => addressCache.value[code] = data
 const getCache = (code?: string) => (code ? addressCache.value[code] : void 0)
 
 const addressCacheData = reactive<Record<string, IComponentAddr[]>>({
@@ -66,9 +61,9 @@ const addressCacheData = reactive<Record<string, IComponentAddr[]>>({
 const defaultSelected = des(YVAddressSelectDefaultSelects)
 const selected = ref<YVAddressSelectSelectValue>(des(YVAddressSelectDefaultSelects))
 
-const _fullPath = useVModel(props, 'fullPath', emits, { passive: true })
-const _adCode = useVModel(props, 'adCode', emits, { passive: true })
-const _selectedLevel = useVModel(props, 'selectedLevel', emits, { passive: true, defaultValue: 0 })
+const _fullPath = useVModel(props, 'fullPath', emits, {passive: true})
+const _adCode = useVModel(props, 'adCode', emits, {passive: true})
+const _selectedLevel = useVModel(props, 'selectedLevel', emits, {passive: true, defaultValue: 0})
 
 function sortFn(a?: nil<IComponentAddr>, b?: nil<IComponentAddr>) {
   if (a === null || a === void 0) return 1

@@ -1,6 +1,6 @@
-import type { bool, nilpt } from '@truenine/types'
+import type {bool, nilpt} from '@truenine/types'
 
-import { STR_EMPTY } from '@/consts'
+import {STR_EMPTY} from '@/consts'
 
 /**
  * 将可能为空的字符串转换为非空字符串
@@ -168,7 +168,7 @@ export function deepResolve<T extends Record<string, unknown> | unknown[]>(
  * @param obj - 源对象
  */
 export function des<T extends Record<string, unknown>>(obj: T): T {
-  return { ...obj }
+  return {...obj}
 }
 
 /**
@@ -176,5 +176,5 @@ export function des<T extends Record<string, unknown>>(obj: T): T {
  * @param arr - 源数组
  */
 export function aDes<T extends Record<string, unknown>>(arr: T[] | readonly T[]): T[] {
-  return arr.map(item => ({ ...item }))
+  return arr.map(item => ({...item}))
 }

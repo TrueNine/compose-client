@@ -1,5 +1,5 @@
-import type { LatLngDataTyping, PointDataTyping } from '../LatLng'
-import type { ITencentEvent } from './Events'
+import type {LatLngDataTyping, PointDataTyping} from '../LatLng'
+import type {ITencentEvent} from './Events'
 
 export type GeometryOverlayEvent<K extends string> = {
   geometry: unknown

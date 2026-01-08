@@ -1,5 +1,5 @@
-import type { BasicMapZoomType, MapStyleIds, ViewMode } from '../Constants'
-import type { LatLngDataTyping, PointDataTyping } from '../LatLng'
+import type {BasicMapZoomType, MapStyleIds, ViewMode} from '../Constants'
+import type {LatLngDataTyping, PointDataTyping} from '../LatLng'
 
 /**
  * # 地图配置参数

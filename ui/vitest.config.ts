@@ -1,8 +1,8 @@
-import type { InlineConfig } from 'vitest'
-import { resolve } from 'node:path'
-import { mergeConfig } from 'vite'
-import { defineConfig } from 'vitest/config'
-import { e as viteConfig } from './vite.config'
+import type {InlineConfig} from 'vitest'
+import {resolve} from 'node:path'
+import {mergeConfig} from 'vite'
+import {defineConfig} from 'vitest/config'
+import {e as viteConfig} from './vite.config'
 
 const vitestConfig = defineConfig({
   resolve: {

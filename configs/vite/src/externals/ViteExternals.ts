@@ -1,4 +1,4 @@
-import { getExternals } from './Common'
+import {getExternals} from './Common'
 
 export const ViteExternals: (string | RegExp)[] = [
   ...getExternals([

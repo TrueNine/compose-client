@@ -1,8 +1,8 @@
 <script setup lang="tsx">
-import type { dynamic } from '@truenine/types'
-import { maybeArray } from '@truenine/shared'
-import { useField } from 'vee-validate'
-import { computed, reactive, ref, toRef } from 'vue'
+import type {dynamic} from '@truenine/types'
+import {maybeArray} from '@truenine/shared'
+import {useField} from 'vee-validate'
+import {computed, reactive, ref, toRef} from 'vue'
 
 interface Props {
   component: dynamic
@@ -29,7 +29,7 @@ const _modelNames = computed(() => {
 
 const _allFields = reactive(
   Object.entries(_modelNames.value)
-    .map(([modelValueName, bindModelValueName]) => useField(modelValueName, void 0, { label: bindModelValueName })),
+    .map(([modelValueName, bindModelValueName]) => useField(modelValueName, void 0, {label: bindModelValueName})),
 )
 const _allErrors = computed(() => _allFields.map(e => e.errorMessage).filter((e): e is string => Boolean(e)))
 

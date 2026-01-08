@@ -1,6 +1,6 @@
-import type { SFCWithInstall } from '@/common/install'
+import type {SFCWithInstall} from '@/common/install'
 
-import { componentInstallToPlugin } from '@/common'
+import {componentInstallToPlugin} from '@/common'
 import _c from './YDebugCode.vue'
 
 export type CodeLang = 'javascript' | 'json' | 'kotlin' | 'java'

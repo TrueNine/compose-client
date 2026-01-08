@@ -1,15 +1,15 @@
-import type { Result as LighthouseResult } from 'lighthouse'
-import type { LighthouseReport } from './types.js'
-import { runLighthouseAudit } from './core.js'
-import { AuditCategory } from './types.js'
+import type {Result as LighthouseResult} from 'lighthouse'
+import type {LighthouseReport} from './types.js'
+import {runLighthouseAudit} from './core.js'
+import {AuditCategory} from './types.js'
 
 // Type guard function
-function isObjectWithItems(value: unknown): value is { items: unknown[] } {
+function isObjectWithItems(value: unknown): value is {items: unknown[]} {
   return (
     value != null
     && typeof value === 'object'
     && 'items' in value
-    && Array.isArray((value as { items: unknown }).items)
+    && Array.isArray((value as {items: unknown}).items)
   )
 }
 
@@ -115,11 +115,11 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
 
   // Initialize variables
   const issues: AISEOIssue[] = []
-  const categories: Record<string, { score: number, issues_count: number }> = {
-    content: { score: 0, issues_count: 0 },
-    mobile: { score: 0, issues_count: 0 },
-    crawlability: { score: 0, issues_count: 0 },
-    other: { score: 0, issues_count: 0 },
+  const categories: Record<string, {score: number, issues_count: number}> = {
+    content: {score: 0, issues_count: 0},
+    mobile: {score: 0, issues_count: 0},
+    crawlability: {score: 0, issues_count: 0},
+    other: {score: 0, issues_count: 0},
   }
 
   // Count audits by type
@@ -139,18 +139,9 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
 
     // Count by scoreDisplayMode
     switch (audit.scoreDisplayMode) {
-      case 'manual': {
-        manualCount++
-        break
-      }
-      case 'informative': {
-        informativeCount++
-        break
-      }
-      case 'notApplicable': {
-        notApplicableCount++
-        break
-      }
+      case 'manual': manualCount++; break
+      case 'informative': informativeCount++; break
+      case 'notApplicable': notApplicableCount++; break
       default: {
         if (audit.score != null) {
           // Binary pass/fail
@@ -166,30 +157,17 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
       case ref.id.includes('crawl'):
       case ref.id.includes('http'):
       case ref.id.includes('redirect'):
-      case ref.id.includes('robots'): {
-        category = 'crawlability'
-
-        break
-      }
+      case ref.id.includes('robots'): category = 'crawlability'; break
       case ref.id.includes('viewport'):
       case ref.id.includes('font-size'):
-      case ref.id.includes('tap-targets'): {
-        category = 'mobile'
-
-        break
-      }
+      case ref.id.includes('tap-targets'): category = 'mobile'; break
       case ref.id.includes('document'):
       case ref.id.includes('meta'):
       case ref.id.includes('description'):
       case ref.id.includes('canonical'):
       case ref.id.includes('title'):
-      case ref.id.includes('link'): {
-        category = 'content'
-
-        break
-      }
-      default:
-        break
+      case ref.id.includes('link'): category = 'content'; break
+      default: break
     }
 
     // Update category score and issues count
@@ -219,34 +197,21 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
         case ref.id.includes('crawl'):
         case ref.id.includes('http'):
         case ref.id.includes('redirect'):
-        case ref.id.includes('robots'): {
-          category = 'crawlability'
-
-          break
-        }
+        case ref.id.includes('robots'): category = 'crawlability'; break
         case ref.id.includes('viewport'):
         case ref.id.includes('font-size'):
-        case ref.id.includes('tap-targets'): {
-          category = 'mobile'
-
-          break
-        }
+        case ref.id.includes('tap-targets'): category = 'mobile'; break
         case ref.id.includes('document'):
         case ref.id.includes('meta'):
         case ref.id.includes('description'):
         case ref.id.includes('canonical'):
         case ref.id.includes('title'):
-        case ref.id.includes('link'): {
-          category = 'content'
-
-          break
-        }
-        default:
-          break
+        case ref.id.includes('link'): category = 'content'; break
+        default: break
       }
 
       // Extract details
-      const details: { selector?: string, value?: string, issue?: string }[]
+      const details: {selector?: string, value?: string, issue?: string}[]
         = []
 
       if (audit.details != null) {
@@ -305,17 +270,10 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
       let recommendation: string
 
       switch (category) {
-        case 'content':
-          recommendation = `Improve SEO content (${data.issues_count} issues): titles, descriptions, and headers`
-          break
-        case 'mobile':
-          recommendation = `Optimize for mobile devices (${data.issues_count} issues)`
-          break
-        case 'crawlability':
-          recommendation = `Fix crawlability issues (${data.issues_count} issues): robots.txt, sitemaps, and redirects`
-          break
-        default:
-          recommendation = `Fix ${data.issues_count} SEO issues in category: ${category}`
+        case 'content': recommendation = `Improve SEO content (${data.issues_count} issues): titles, descriptions, and headers`; break
+        case 'mobile': recommendation = `Optimize for mobile devices (${data.issues_count} issues)`; break
+        case 'crawlability': recommendation = `Fix crawlability issues (${data.issues_count} issues): robots.txt, sitemaps, and redirects`; break
+        default: recommendation = `Fix ${data.issues_count} SEO issues in category: ${category}`
       }
 
       prioritized_recommendations.push(recommendation)

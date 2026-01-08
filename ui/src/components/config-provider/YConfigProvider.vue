@@ -1,19 +1,19 @@
 <script setup lang="ts">
-import type { VNode } from 'vue'
+import type {VNode} from 'vue'
 
-import type { YConfigProviderProps } from './index'
+import type {YConfigProviderProps} from './index'
 
-import { useDark } from '@vueuse/core'
+import {useDark} from '@vueuse/core'
 
-import { computed, watch } from 'vue'
-import { useTheme } from 'vuetify'
+import {computed, watch} from 'vue'
+import {useTheme} from 'vuetify'
 
 import {
   ElementPlusDayjs as dayjs,
   ElementPlusEn,
   ElementPlusZhCn,
 } from '@/common'
-import { checkDark, checkLocale } from '@/common/VarletCommon'
+import {checkDark, checkLocale} from '@/common/VarletCommon'
 import 'dayjs/locale/zh-cn'
 import 'element-plus/theme-chalk/dark/css-vars.css'
 
@@ -54,10 +54,8 @@ watch(
 
 const elLocale = computed(() => {
   switch (props.locale) {
-    case 'zh-CN':
-      return ElementPlusZhCn
-    default:
-      return ElementPlusEn
+    case 'zh-CN': return ElementPlusZhCn
+    default: return ElementPlusEn
   }
 })
 </script>

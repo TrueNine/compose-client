@@ -1,4 +1,4 @@
-import type { BuildOptions, UserConfig } from 'vite'
+import type {BuildOptions, UserConfig} from 'vite'
 
 /**
  * Vite 性能优化配置选项
@@ -61,10 +61,10 @@ export function createChunkOptimization(): BuildOptions['rollupOptions'] {
       minifyInternalExports: true,
       // 设置 chunk 文件名格式
       chunkFileNames: chunkInfo => {
-        const { facadeModuleId } = chunkInfo
+        const {facadeModuleId} = chunkInfo
         if (facadeModuleId == null) return 'chunks/[name]-[hash].js'
 
-        const name = (facadeModuleId.split('/').pop()?.replace(/\.[^.]*$/, '')) ?? 'chunk'
+        const name = facadeModuleId.split('/').pop()?.replace(/\.[^.]*$/, '') ?? 'chunk'
         return `chunks/${name}-[hash].js`
       },
       entryFileNames: 'entries/[name]-[hash].js',

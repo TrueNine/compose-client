@@ -1,7 +1,7 @@
-import type { Result as LighthouseResult } from 'lighthouse'
-import type { LighthouseReport } from './types.js'
-import { runLighthouseAudit } from './core.js'
-import { AuditCategory } from './types.js'
+import type {Result as LighthouseResult} from 'lighthouse'
+import type {LighthouseReport} from './types.js'
+import {runLighthouseAudit} from './core.js'
+import {AuditCategory} from './types.js'
 
 // === Accessibility Report Types ===
 
@@ -120,7 +120,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
   // Initialize variables
   const issues: AIAccessibilityIssue[] = []
   const criticalElements: AIAccessibilityElement[] = []
-  const categories: Record<string, { score: number, issues_count: number }> = {}
+  const categories: Record<string, {score: number, issues_count: number}> = {}
 
   // Count audits by type
   let failedCount = 0
@@ -137,18 +137,9 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
     const audit = audits[ref.id]
     // Count by scoreDisplayMode
     switch (audit.scoreDisplayMode) {
-      case 'manual': {
-        manualCount++
-        break
-      }
-      case 'informative': {
-        informativeCount++
-        break
-      }
-      case 'notApplicable': {
-        notApplicableCount++
-        break
-      }
+      case 'manual': manualCount++; break
+      case 'informative': informativeCount++; break
+      case 'notApplicable': notApplicableCount++; break
       default: if (audit.score !== null) {
       // Binary pass/fail
         if (audit.score >= 0.9) passedCount++
@@ -158,7 +149,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
 
     if (ref.group === void 0) return
     // Initialize category if not exists
-    if (!(ref.group in categories)) categories[ref.group] = { score: 0, issues_count: 0 }
+    if (!(ref.group in categories)) categories[ref.group] = {score: 0, issues_count: 0}
 
     // Update category score and issues count
     if (audit.score !== null && audit.score < 0.9) categories[ref.group].issues_count++
@@ -191,10 +182,10 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
           details != null
           && typeof details === 'object'
           && 'items' in details
-          && Array.isArray((details as { items: unknown[] }).items)
+          && Array.isArray((details as {items: unknown[]}).items)
         ) {
-          const detailsWithItems = details as { items: unknown[] }
-          const { items } = detailsWithItems
+          const detailsWithItems = details as {items: unknown[]}
+          const {items} = detailsWithItems
           // Apply limits based on impact level
           const itemLimit = DETAIL_LIMITS[impact]
           items.slice(0, itemLimit).forEach(item => {
@@ -207,7 +198,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
               selector: String(node.selector),
               snippet: node.snippet != null ? String(node.snippet) : void 0,
               label: node.nodeLabel != null ? String(node.nodeLabel) : void 0,
-              issue_description: node.explanation != null ? String(node.explanation) : (itemObj.explanation != null ? String(itemObj.explanation) : void 0),
+              issue_description: node.explanation != null ? String(node.explanation) : itemObj.explanation != null ? String(itemObj.explanation) : void 0,
             }
             if (itemObj.value != null) {
               element.value = typeof itemObj.value === 'string' || typeof itemObj.value === 'number'
@@ -247,26 +238,13 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
       let recommendation = ''
 
       switch (category) {
-        case 'a11y-color-contrast':
-          recommendation = 'Improve color contrast for better readability'
-          break
-        case 'a11y-names-labels':
-          recommendation = 'Add proper labels to all interactive elements'
-          break
-        case 'a11y-aria':
-          recommendation = 'Fix ARIA attributes and roles'
-          break
-        case 'a11y-navigation':
-          recommendation = 'Improve keyboard navigation and focus management'
-          break
-        case 'a11y-language':
-          recommendation = 'Add proper language attributes to HTML'
-          break
-        case 'a11y-tables-lists':
-          recommendation = 'Fix table and list structures for screen readers'
-          break
-        default:
-          recommendation = `Fix ${data.issues_count} issues in ${category}`
+        case 'a11y-color-contrast': recommendation = 'Improve color contrast for better readability'; break
+        case 'a11y-names-labels': recommendation = 'Add proper labels to all interactive elements'; break
+        case 'a11y-aria': recommendation = 'Fix ARIA attributes and roles'; break
+        case 'a11y-navigation': recommendation = 'Improve keyboard navigation and focus management'; break
+        case 'a11y-language': recommendation = 'Add proper language attributes to HTML'; break
+        case 'a11y-tables-lists': recommendation = 'Fix table and list structures for screen readers'; break
+        default: recommendation = `Fix ${data.issues_count} issues in ${category}`
       }
 
       prioritized_recommendations.push(recommendation)

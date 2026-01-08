@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
-import type { Buffer } from 'node:buffer'
-import type { IncomingMessage, Server } from 'node:http'
-import type { Socket } from 'node:net'
-import type { LighthouseReport } from './lighthouse/index.js'
-import { exec } from 'node:child_process'
+import type {Buffer} from 'node:buffer'
+import type {IncomingMessage, Server} from 'node:http'
+import type {Socket} from 'node:net'
+import type {LighthouseReport} from './lighthouse/index.js'
+import {exec} from 'node:child_process'
 import fs from 'node:fs'
 import * as net from 'node:net'
 import os from 'node:os'
@@ -13,9 +13,9 @@ import process from 'node:process'
 import bodyParser from 'body-parser'
 import cors from 'cors'
 import express from 'express'
-import { WebSocket, WebSocketServer } from 'ws'
-import { AuditCategory, runAccessibilityAudit, runBestPracticesAudit, runPerformanceAudit, runSEOAudit } from '@/lighthouse'
-import { logger } from '@/logger'
+import {WebSocket, WebSocketServer} from 'ws'
+import {AuditCategory, runAccessibilityAudit, runBestPracticesAudit, runPerformanceAudit, runSEOAudit} from '@/lighthouse'
+import {logger} from '@/logger'
 
 // Define proper types for better type safety
 interface LogEntry {
@@ -271,13 +271,13 @@ let PORT = REQUESTED_PORT
 const app = express()
 app.use(cors())
 // Increase JSON body parser limit to 50MB to handle large screenshots
-app.use(bodyParser.json({ limit: '50mb' }))
-app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }))
+app.use(bodyParser.json({limit: '50mb'}))
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}))
 
 // Helper to process logs based on settings
 function processLogsWithSettings(logs: LogEntry[]): LogEntry[] {
   return logs.map(log => {
-    const processedLog = { ...log }
+    const processedLog = {...log}
 
     if (log.type !== 'network-request') return processedLog
 
@@ -334,8 +334,8 @@ app.post('/extension-log', (req, res) => {
     hasSettings: bodyObj?.settings != null,
   })
 
-  const { data } = bodyObj
-  const { settings } = bodyObj
+  const {data} = bodyObj
+  const {settings} = bodyObj
 
   // Update settings if provided
   if (settings != null) {
@@ -349,7 +349,7 @@ app.post('/extension-log', (req, res) => {
 
   if (data == null) {
     logger.info('Warning: No data received in log request')
-    res.status(400).json({ status: 'error', message: 'No data provided' })
+    res.status(400).json({status: 'error', message: 'No data provided'})
     return
   }
 
@@ -444,8 +444,7 @@ app.post('/extension-log', (req, res) => {
       selectedElement = element
       break
     }
-    default:
-      logger.info('Unknown log type:', String(dataObj.type))
+    default: logger.info('Unknown log type:', String(dataObj.type))
   }
 
   logger.info('Current log counts:', {
@@ -456,7 +455,7 @@ app.post('/extension-log', (req, res) => {
   })
   logger.info('=== End Extension Log ===\n')
 
-  res.json({ status: 'ok' })
+  res.json({status: 'ok'})
 })
 
 // Update GET endpoints to use the new function
@@ -493,11 +492,11 @@ app.get('/all-xhr', (_req, res) => {
 app.post('/selected-element', (req, res) => {
   const bodyObj = req.body as Record<string, unknown>
   selectedElement = bodyObj.data
-  res.json({ status: 'ok' })
+  res.json({status: 'ok'})
 })
 
 app.get('/selected-element', (_req, res) => {
-  res.json(selectedElement ?? { message: 'No element selected' })
+  res.json(selectedElement ?? {message: 'No element selected'})
 })
 
 app.get('/.port', (_req, res) => {
@@ -529,7 +528,7 @@ function clearAllLogs(): void {
 // Add endpoint to wipe logs
 app.post('/wipelogs', (_req, res) => {
   clearAllLogs()
-  res.json({ status: 'ok', message: 'All logs cleared successfully' })
+  res.json({status: 'ok', message: 'All logs cleared successfully'})
 })
 
 // Add endpoint for the extension to report the current URL
@@ -574,14 +573,14 @@ app.post('/current-url', (req, res) => {
     })
   } else {
     logger.info('No URL provided in current-url request')
-    res.status(400).json({ status: 'error', message: 'No URL provided' })
+    res.status(400).json({status: 'error', message: 'No URL provided'})
   }
 })
 
 // Add endpoint to get the current URL
 app.get('/current-url', (_req, res) => {
   logger.info('Current URL requested, returning:', currentUrl)
-  res.json({ url: currentUrl })
+  res.json({url: currentUrl})
 })
 
 // ScreenshotMessage interface removed - handled directly in WebSocket message handler
@@ -764,11 +763,11 @@ export class BrowserConnector {
         logger.info('Browser Connector: Request body:', req.body)
         try {
           logger.info('Received screenshot capture request')
-          const { data, path: outputPath } = req.body as { data?: string, path?: string }
+          const {data, path: outputPath} = req.body as {data?: string, path?: string}
 
           if (data == null) {
             logger.info('Screenshot request missing data')
-            res.status(400).json({ error: 'Missing screenshot data' })
+            res.status(400).json({error: 'Missing screenshot data'})
             return
           }
 
@@ -780,7 +779,7 @@ export class BrowserConnector {
           const base64Data = String(data).replace(/^data:image\/png;base64,/, '')
 
           // Create the full directory path if it doesn't exist
-          fs.mkdirSync(targetPath, { recursive: true })
+          fs.mkdirSync(targetPath, {recursive: true})
           logger.info(`Created/verified directory: ${targetPath}`)
 
           // Generate a unique filename using timestamp
@@ -799,8 +798,8 @@ export class BrowserConnector {
           })
         } catch (error: unknown) {
           logger.error('Error saving screenshot:', error)
-          if (error instanceof Error) res.status(500).json({ error: error.message })
-          else res.status(500).json({ error: 'An unknown error occurred' })
+          if (error instanceof Error) res.status(500).json({error: error.message})
+          else res.status(500).json({error: 'An unknown error occurred'})
         }
       },
     )
@@ -861,7 +860,7 @@ export class BrowserConnector {
   }
 
   // Add new endpoint for programmatic screenshot capture
-  async captureScreenshot(req: express.Request, res: express.Response): Promise<express.Response<any, Record<string, any>> | undefined> {
+  async captureScreenshot(req: express.Request, res: express.Response): Promise<express.Response | undefined> {
     logger.info('Browser Connector: Starting captureScreenshot method')
     logger.info('Browser Connector: Request headers:', req.headers)
     logger.info('Browser Connector: Request method:', req.method)
@@ -870,7 +869,7 @@ export class BrowserConnector {
       logger.info(
         'Browser Connector: No active WebSocket connection to Chrome extension',
       )
-      return res.status(503).json({ error: 'Chrome extension not connected' })
+      return res.status(503).json({error: 'Chrome extension not connected'})
     }
 
     try {
@@ -888,7 +887,7 @@ export class BrowserConnector {
           `Browser Connector: Setting up screenshot callback for requestId: ${requestId}`,
         )
         // Store callback in map
-        screenshotCallbacks.set(requestId, { resolve, reject })
+        screenshotCallbacks.set(requestId, {resolve, reject})
         logger.info(
           'Browser Connector: Current callbacks:',
           [...screenshotCallbacks.keys()],
@@ -946,7 +945,7 @@ export class BrowserConnector {
       if (base64Data == null) throw new Error('No screenshot data received from Chrome extension')
 
       try {
-        fs.mkdirSync(targetPath, { recursive: true })
+        fs.mkdirSync(targetPath, {recursive: true})
         logger.info(`Browser Connector: Created directory: ${targetPath}`)
       } catch (err) {
         logger.error(
@@ -1177,7 +1176,7 @@ export class BrowserConnector {
         logger.info('Notifying client to close connection...')
         try {
           this.activeConnection.send(
-            JSON.stringify({ type: 'server-shutdown' }),
+            JSON.stringify({type: 'server-shutdown'}),
           )
         } catch (err: unknown) {
           logger.error('Error sending shutdown message to client:', err)

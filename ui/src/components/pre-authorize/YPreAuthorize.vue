@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { YPreAuthorizeProps } from '.'
+import type {YPreAuthorizeProps} from '.'
 
-import { isNil } from '@truenine/shared'
+import {isNil} from '@truenine/shared'
 
-import { usePreAuthorize } from '@/common'
+import {usePreAuthorize} from '@/common'
 
 const props = withDefaults(defineProps<YPreAuthorizeProps>(), {
   authed: void 0,

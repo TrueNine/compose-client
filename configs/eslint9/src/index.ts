@@ -1,7 +1,7 @@
-import type { OptionsTypeScriptParserOptions } from '@antfu/eslint-config'
-import type { Linter } from 'eslint'
-import type { AntFuConfig, AntFuStrictTsConfig, AntFuTsConfig } from './types'
-import { antfu } from '@antfu/eslint-config'
+import type {OptionsTypeScriptParserOptions} from '@antfu/eslint-config'
+import type {Linter} from 'eslint'
+import type {AntFuConfig, AntFuStrictTsConfig, AntFuTsConfig} from './types'
+import {antfu} from '@antfu/eslint-config'
 import {
   defaultFormatterConfig,
   defaultJsConfig,
@@ -12,10 +12,10 @@ import {
   defaultUnocssConfig,
   defaultVueConfig,
 } from './defaults'
-import { plugin } from './plugin'
-import { mergeWithDefaults } from './utils'
+import {plugin} from './plugin'
+import {mergeWithDefaults} from './utils'
 
-export { plugin } from './plugin'
+export {plugin} from './plugin'
 
 /**
  * Extends AntFuConfig to allow users to pass any options supported by antfu()
@@ -98,7 +98,7 @@ export default async function eslint9(options: ConfigOptions = {}): Promise<Retu
     rules: {
       '@truenine/prefer-single-line-if': 'warn',
       '@truenine/prefer-single-line-control': 'warn',
-      '@truenine/prefer-guard-clause': ['warn', { minStatements: 2 }],
+      '@truenine/prefer-guard-clause': ['warn', {minStatements: 2}],
       'antfu/if-newline': 'off',
       'antfu/curly': 'off',
       'style/brace-style': 'off',
@@ -109,7 +109,7 @@ export default async function eslint9(options: ConfigOptions = {}): Promise<Retu
       'prefer-destructuring': ['error', {
         array: false,
         object: true,
-      }, { enforceForRenamedProperties: false }],
+      }, {enforceForRenamedProperties: false}],
       // 使用模板字符串代替字符串拼接
       'prefer-template': 'error',
       // 对象字面量简写
@@ -120,9 +120,9 @@ export default async function eslint9(options: ConfigOptions = {}): Promise<Retu
       'prefer-object-has-own': 'error',
       // ===== 减少字符数的规则 =====
       // 不需要的 else（return 后）
-      'no-else-return': ['error', { allowElseIf: false }],
+      'no-else-return': ['error', {allowElseIf: false}],
       // 合并连续变量声明
-      'one-var': ['error', { initialized: 'never', uninitialized: 'consecutive' }],
+      'one-var': ['error', {initialized: 'never', uninitialized: 'consecutive'}],
       // 简化布尔表达式 !!x → Boolean(x) 或直接用
       'no-extra-boolean-cast': 'error',
       // 移除不必要的 return await
@@ -253,7 +253,7 @@ export default async function eslint9(options: ConfigOptions = {}): Promise<Retu
       '@typescript-eslint/switch-exhaustiveness-check': 'off',
       // ===== 减少字符数的 TS 规则 =====
       // Array<T> → T[]
-      '@typescript-eslint/array-type': ['error', { default: 'array' }],
+      '@typescript-eslint/array-type': ['error', {default: 'array'}],
       // 移除无用的类型断言
       '@typescript-eslint/no-unnecessary-type-assertion': 'error',
       // 移除无用的类型约束 <T extends unknown>
@@ -279,7 +279,7 @@ function isStrictTsConfig(config: unknown): config is AntFuStrictTsConfig {
     config !== null
     && typeof config === 'object'
     && 'strictTypescriptEslint' in config
-    && (config as AntFuStrictTsConfig).strictTypescriptEslint === true
+    && (config as AntFuStrictTsConfig).strictTypescriptEslint
   )
 }
 

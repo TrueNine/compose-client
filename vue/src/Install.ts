@@ -1,5 +1,5 @@
-import type { dynamic } from '@truenine/types'
-import type { App } from 'vue'
+import type {dynamic} from '@truenine/types'
+import type {App} from 'vue'
 
 export interface VueComponentInstanceMapping {
   name?: string
@@ -27,17 +27,15 @@ export function componentInstallToPlugin<T extends VueComponentInstanceMapping>(
 
   if (!otherComponent) return primaryComponent
 
-  for (const [key, comp] of Object.entries(otherComponent)) {
-    otherSecondaryComponentInstallers[key] = comp as SFCWithInstall<T>
-  }
+  for (const [key, comp] of Object.entries(otherComponent)) otherSecondaryComponentInstallers[key] = comp as SFCWithInstall<T>
 
-  if (primaryComponent.name == null) primaryComponent = { ...primaryComponent, name: primaryComponent.__name }
+  if (primaryComponent.name == null) primaryComponent = {...primaryComponent, name: primaryComponent.__name}
 
   primaryComponent.install = (app: App) => {
     const allInstallComponents = [primaryComponent, ...Object.values(otherSecondaryComponentInstallers)]
     for (const toInstallComponent of allInstallComponents) {
-      const { name = void 0, __name = void 0 } = toInstallComponent
-      const resolvedName = (name ?? __name)
+      const {name = void 0, __name = void 0} = toInstallComponent
+      const resolvedName = name ?? __name
       if (typeof resolvedName !== 'string' || !resolvedName) throw new Error('组件缺少有效的 name 或 __name 属性，无法注册到 app.component')
 
       app.component(resolvedName, toInstallComponent)

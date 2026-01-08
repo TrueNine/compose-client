@@ -1,4 +1,4 @@
-import type { dynamic } from '@truenine/types'
+import type {dynamic} from '@truenine/types'
 
 type NativeType = null | number | string | boolean | symbol | ((...args: dynamic) => dynamic)
 

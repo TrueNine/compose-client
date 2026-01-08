@@ -1,5 +1,5 @@
-import type { dynamic, task } from '@truenine/types'
-import type { PDFDocumentProxy, PDFPageProxy } from 'pdfjs-dist'
+import type {dynamic, task} from '@truenine/types'
+import type {PDFDocumentProxy, PDFPageProxy} from 'pdfjs-dist'
 import * as pdfjs from 'pdfjs-dist'
 
 // FIXME 当前文件所有文件需要进行去除副作用优化
@@ -34,8 +34,8 @@ interface PDFOperatorList {
   argsArray: unknown[][]
 }
 
-let __workSrc: string | undefined
-let __worker: Worker | undefined
+let __workSrc: string | undefined,
+  __worker: Worker | undefined
 
 export const PdfJs: typeof pdfjs = pdfjs
 

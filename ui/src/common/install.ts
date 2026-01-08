@@ -1,5 +1,5 @@
-import type { dynamic } from '@truenine/types'
-import type { App } from 'vue'
+import type {dynamic} from '@truenine/types'
+import type {App} from 'vue'
 
 export interface VueComponentInstanceMapping {
   name?: string
@@ -28,17 +28,15 @@ export function componentInstallToPlugin<T extends VueComponentInstanceMapping>(
   const otherSecondaryComponentInstallers: Record<string, SFCWithInstall<T>> = {}
 
   if (otherComponent) {
-    for (const [key, comp] of Object.entries(otherComponent)) {
-      otherSecondaryComponentInstallers[key] = comp as SFCWithInstall<T>
-    }
+    for (const [key, comp] of Object.entries(otherComponent)) otherSecondaryComponentInstallers[key] = comp as SFCWithInstall<T>
   }
 
-  if (primaryComponent.name == null) primaryComponent = { ...primaryComponent, name: primaryComponent.__name }
+  if (primaryComponent.name == null) primaryComponent = {...primaryComponent, name: primaryComponent.__name}
 
   primaryComponent.install = (app: App) => {
     const allInstallComponents = [primaryComponent, ...Object.values(otherSecondaryComponentInstallers)]
     for (const toInstallComponent of allInstallComponents) {
-      const { name = void 0, __name = void 0 } = toInstallComponent
+      const {name = void 0, __name = void 0} = toInstallComponent
       app.component(name ?? __name ?? undefinedName, toInstallComponent)
     }
   }

@@ -1,5 +1,5 @@
-import type { dynamic } from './Types'
-import type { i8 } from '@/typescripts/Number'
+import type {dynamic} from './Types'
+import type {i8} from '@/typescripts/Number'
 
 /**
  * ## readonly array or array

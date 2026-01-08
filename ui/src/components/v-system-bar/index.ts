@@ -1,6 +1,6 @@
-import type { bool, dynamic } from '@truenine/types'
-import type { SFCWithInstall } from '@/common/install'
-import { componentInstallToPlugin } from '@/common'
+import type {bool, dynamic} from '@truenine/types'
+import type {SFCWithInstall} from '@/common/install'
+import {componentInstallToPlugin} from '@/common'
 
 import YIco from '@/components/ico'
 import _c from './YVSystemBar.vue'
@@ -26,9 +26,9 @@ export interface YVSystemBarSlots {
   'app-settings': () => dynamic
   'left-btn': () => dynamic
   'right-btn': () => dynamic
-  'drawer': (p: { menuOpened: bool }) => dynamic
-  'settings-drawer': (p: { settingsMenuOpened: bool }) => dynamic
+  'drawer': (p: {menuOpened: bool}) => dynamic
+  'settings-drawer': (p: {settingsMenuOpened: bool}) => dynamic
 }
 
-const YVSystemBar: SFCWithInstall<typeof _c> = componentInstallToPlugin(_c, { YIco })
+const YVSystemBar: SFCWithInstall<typeof _c> = componentInstallToPlugin(_c, {YIco})
 export default YVSystemBar

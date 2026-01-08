@@ -1,1 +1,1 @@
-export { mergeWithDefaults } from './merge'
+export {mergeWithDefaults} from './merge'

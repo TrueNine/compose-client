@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import type { dynamic } from '@truenine/types'
-import type { YFormEmits, YFormInjection, YFormProps, YFormSlots } from './index'
-import { toTypedSchema as yupToTypedSchema } from '@vee-validate/yup'
-import { toTypedSchema as zodToTypedSchema } from '@vee-validate/zod'
-import { useVModel } from '@vueuse/core'
-import { useForm } from 'vee-validate'
-import { computed, nextTick, provide, ref, watch } from 'vue'
-import { ObjectSchema } from 'yup'
-import { YFormInjectionKey } from '../form/index'
+import type {dynamic} from '@truenine/types'
+import type {YFormEmits, YFormInjection, YFormProps, YFormSlots} from './index'
+import {toTypedSchema as yupToTypedSchema} from '@vee-validate/yup'
+import {toTypedSchema as zodToTypedSchema} from '@vee-validate/zod'
+import {useVModel} from '@vueuse/core'
+import {useForm} from 'vee-validate'
+import {computed, nextTick, provide, ref, watch} from 'vue'
+import {ObjectSchema} from 'yup'
+import {YFormInjectionKey} from '../form/index'
 
 const props = withDefaults(defineProps<YFormProps>(), {
   step: 0,
@@ -21,7 +21,7 @@ const emit = defineEmits<YFormEmits>()
 defineSlots<YFormSlots>()
 
 // 处理表单验证模式
-const schemaModel = useVModel(props, 'schema', emit, { passive: true })
+const schemaModel = useVModel(props, 'schema', emit, {passive: true})
 const validationSchema = computed(() => {
   const schema = schemaModel.value
   // Use duck typing to detect Zod schemas instead of instanceof to avoid proxy issues in tests
@@ -38,7 +38,7 @@ const validationSchema = computed(() => {
           parse(values: any) {
             try {
               const result = schema.parse(values)
-              return { output: result, errors: [] }
+              return {output: result, errors: []}
             } catch (err: any) {
               const errors: any[] = []
               if (err.errors) {
@@ -49,7 +49,7 @@ const validationSchema = computed(() => {
                   })
                 })
               }
-              return { errors }
+              return {errors}
             }
           },
         }
@@ -62,7 +62,7 @@ const validationSchema = computed(() => {
 })
 
 // 处理表单数据
-const formValues = useVModel(props, 'modelValue', emit, { passive: true })
+const formValues = useVModel(props, 'modelValue', emit, {passive: true})
 
 // In test environment, avoid passing Zod schemas to useForm to prevent proxy issues
 const formConfig = computed(() => {
@@ -115,7 +115,7 @@ watch(formValues, v => {
   void nextTick(() => {
     isUpdating.value = false
   })
-}, { deep: true })
+}, {deep: true})
 
 watch(form.values, v => {
   // 避免循环更新
@@ -126,7 +126,7 @@ watch(form.values, v => {
   void nextTick(() => {
     isUpdating.value = false
   })
-}, { deep: true })
+}, {deep: true})
 
 const formContext: YFormInjection = {
   getForm: () => form,

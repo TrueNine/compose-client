@@ -1,8 +1,8 @@
-import type { Plugin } from 'vite'
-import type { PluginOptions } from 'vite-plugin-dts'
+import type {Plugin} from 'vite'
+import type {PluginOptions} from 'vite-plugin-dts'
 import dtsPluginImport from 'vite-plugin-dts'
 
-const dtsPlugin = (dtsPluginImport as unknown as { default: typeof dtsPluginImport }).default ?? dtsPluginImport
+const dtsPlugin = (dtsPluginImport as unknown as {default: typeof dtsPluginImport}).default ?? dtsPluginImport
 
 export interface SimpleDtsOptions {
   /**
@@ -54,7 +54,7 @@ const DEFAULT_OPTIONS: Required<SimpleDtsOptions> = {
  * 创建简化版的 DTS 插件
  */
 export function createDtsPlugin(options: SimpleDtsOptions = {}): Plugin {
-  const finalOptions = { ...DEFAULT_OPTIONS, ...options }
+  const finalOptions = {...DEFAULT_OPTIONS, ...options}
 
   // 收集所有入口文件的后缀
   const extensions = new Set(
@@ -100,7 +100,7 @@ export function createDtsPlugin(options: SimpleDtsOptions = {}): Plugin {
     // 使用 beforeWriteFile 钩子来验证生成的文件
     beforeWriteFile: (filePath: string, content: string) => {
       if (!content || content.trim().length === 0) throw new Error(`DTS generation failed: Empty declaration file generated for ${filePath}`)
-      return { filePath, content }
+      return {filePath, content}
     },
   }
 

@@ -1,6 +1,6 @@
-import type { Maybe } from '@truenine/types'
-import type { ComputedRef, InjectionKey, Ref } from 'vue'
-import { inject } from 'vue'
+import type {Maybe} from '@truenine/types'
+import type {ComputedRef, InjectionKey, Ref} from 'vue'
+import {inject} from 'vue'
 
 const providePrefix = '__MetaUIProvideSymbolKey__'
 
