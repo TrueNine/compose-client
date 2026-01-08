@@ -227,6 +227,14 @@ export default async function eslint9(options: ConfigOptions = {}): Promise<Retu
       'unicorn/text-encoding-identifier-case': 'error',
     },
   } as Linter.Config, {
+    // .d.ts 文件专用规则覆盖
+    name: '@truenine/dts-rules',
+    files: ['**/*.d.ts'],
+    rules: {
+      // declare const 不适用 one-var 合并
+      'one-var': 'off',
+    },
+  } as Linter.Config, {
     // TypeScript 专用规则（需要类型信息）
     name: '@truenine/typescript-rules',
     files: ['**/*.ts', '**/*.tsx', '**/*.mts', '**/*.cts'],
