@@ -78,7 +78,7 @@ const rule: Rule.RuleModule = {
       }
 
       // 情况2: case x: { stmt; break } (BlockStatement)
-      if (consequent.length !== 1 && consequent[0].type === 'BlockStatement') return {mainStmt: null, hasBreak: false}
+      if (consequent.length !== 1 || consequent[0].type !== 'BlockStatement') return {mainStmt: null, hasBreak: false}
 
       const block = consequent[0] as Rule.Node & {body: Rule.Node[]}
       const {body} = block
