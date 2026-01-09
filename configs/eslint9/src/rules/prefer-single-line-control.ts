@@ -152,78 +152,49 @@ const rule: Rule.RuleModule = {
       finalizer: (Rule.Node & {body: Rule.Node[]}) | null
     }
 
-    function canTryBeSimplified(tryNode: TryNode): boolean {
-      const {block, handler, finalizer} = tryNode
-
-      // try block 必须是单条简单语句
-      const tryStmt = getSingleStatement(block)
-      if (!tryStmt || !isSimpleStatement(tryStmt)) return false
-      if (!isNodeSingleLine(tryStmt)) return false
+    // 检查单个块是否可以压缩成单行
+    function canBlockBeCompact(block: Rule.Node & {body: Rule.Node[]}): boolean {
+      const stmt = getSingleStatement(block)
+      if (!stmt || !isSimpleStatement(stmt)) return false
+      if (!isNodeSingleLine(stmt)) return false
       if (hasComments(block)) return false
-
-      // catch block（如果存在）必须是单条简单语句
-      if (handler) {
-        const catchStmt = getSingleStatement(handler.body)
-        if (!catchStmt || !isSimpleStatement(catchStmt)) return false
-        if (!isNodeSingleLine(catchStmt)) return false
-        if (hasComments(handler.body)) return false
-      }
-
-      // finally block（如果存在）必须是单条简单语句
-      if (finalizer) {
-        const finallyStmt = getSingleStatement(finalizer)
-        if (!finallyStmt || !isSimpleStatement(finallyStmt)) return false
-        if (!isNodeSingleLine(finallyStmt)) return false
-        if (hasComments(finalizer)) return false
-      }
-
-      // 必须有 catch 或 finally
-      if (!handler && !finalizer) return false
-
-      // 检查每行长度
-      const tryText = ensureSemicolon(sourceCode.getText(tryStmt))
-      if (`try { ${tryText} }`.length >= MAX_LINE_LENGTH) return false
-
-      if (handler) {
-        const catchParam = handler.param
-        const catchParamText = catchParam ? sourceCode.getText(catchParam) : ''
-        const catchStmt = getSingleStatement(handler.body)!
-        const catchText = ensureSemicolon(sourceCode.getText(catchStmt))
-        const catchLine = catchParam ? `catch (${catchParamText}) { ${catchText} }` : `catch { ${catchText} }`
-        if (catchLine.length >= MAX_LINE_LENGTH) return false
-      }
-
-      if (!finalizer) return true
-
-      const finallyStmt = getSingleStatement(finalizer)!
-      const finallyText = ensureSemicolon(sourceCode.getText(finallyStmt))
-      if (`finally { ${finallyText} }`.length >= MAX_LINE_LENGTH) return false
       return true
     }
 
-    function isTryAlreadyCompact(tryNode: TryNode): boolean {
-      const {block, handler, finalizer} = tryNode
+    // 检查块是否已经是单行
+    function isBlockAlreadyCompact(block: Rule.Node & {body: Rule.Node[]}): boolean {
+      return block.loc?.start.line === block.loc?.end.line
+    }
 
-      // 检查 try 块是否已经是单行格式 try { ... }
-      const tryStmt = getSingleStatement(block)
-      // 不是单语句，不处理
-      if (!tryStmt) return true
-      if (block.loc?.start.line !== block.loc?.end.line) return false
+    // 生成压缩后的块文本
+    function getCompactBlockText(block: Rule.Node & {body: Rule.Node[]}): string {
+      const stmt = getSingleStatement(block)!
+      return `{ ${ensureSemicolon(sourceCode.getText(stmt))} }`
+    }
 
-      // 检查 catch 块
-      if (handler) {
-        const catchStmt = getSingleStatement(handler.body)
-        if (!catchStmt) return true
-        if (handler.body.loc?.start.line !== handler.body.loc?.end.line) return false
-      }
+    // 检查压缩后的 catch 行长度
+    function getCatchLineLength(handler: TryNode['handler']): number {
+      if (!handler) return 0
+      const catchParam = handler.param
+      const catchParamText = catchParam ? sourceCode.getText(catchParam) : ''
+      const stmt = getSingleStatement(handler.body)!
+      const stmtText = ensureSemicolon(sourceCode.getText(stmt))
+      return catchParam ? `catch (${catchParamText}) { ${stmtText} }`.length : `catch { ${stmtText} }`.length
+    }
 
-      // 检查 finally 块
-      if (!finalizer) return true
+    // 检查压缩后的 finally 行长度
+    function getFinallyLineLength(finalizer: TryNode['finalizer']): number {
+      if (!finalizer) return 0
+      const stmt = getSingleStatement(finalizer)!
+      const stmtText = ensureSemicolon(sourceCode.getText(stmt))
+      return `finally { ${stmtText} }`.length
+    }
 
-      const finallyStmt = getSingleStatement(finalizer)
-      if (!finallyStmt) return true
-      if (finalizer.loc?.start.line !== finalizer.loc?.end.line) return false
-      return true
+    // 检查压缩后的 try 行长度
+    function getTryLineLength(block: Rule.Node & {body: Rule.Node[]}): number {
+      const stmt = getSingleStatement(block)!
+      const stmtText = ensureSemicolon(sourceCode.getText(stmt))
+      return `try { ${stmtText} }`.length
     }
 
     return {
@@ -362,39 +333,66 @@ const rule: Rule.RuleModule = {
 
       TryStatement(node) {
         const tryNode = node as TryNode
-        if (isTryAlreadyCompact(tryNode)) return
-        if (!canTryBeSimplified(tryNode)) return
+        const {block, handler, finalizer} = tryNode
+
+        // 分别检查每个块是否需要压缩
+        const canCompactTry = canBlockBeCompact(block) && !isBlockAlreadyCompact(block) && getTryLineLength(block) < MAX_LINE_LENGTH
+        const canCompactCatch = handler && canBlockBeCompact(handler.body) && !isBlockAlreadyCompact(handler.body) && getCatchLineLength(handler) < MAX_LINE_LENGTH
+        const canCompactFinally = finalizer && canBlockBeCompact(finalizer) && !isBlockAlreadyCompact(finalizer) && getFinallyLineLength(finalizer) < MAX_LINE_LENGTH
+
+        // 如果没有任何块需要压缩，跳过
+        if (!canCompactTry && !canCompactCatch && !canCompactFinally) return
 
         context.report({
           node,
           messageId: 'preferSingleLineTry',
           fix(fixer) {
-            const {block, handler, finalizer} = tryNode
+            const fixes: ReturnType<typeof fixer.replaceText>[] = []
 
-            // try block
-            const tryStmt = getSingleStatement(block)
-            if (!tryStmt) return null
-            const tryText = ensureSemicolon(sourceCode.getText(tryStmt))
-
-            let result = `try { ${tryText} }`
-
-            // catch block (换行)
-            if (handler) {
-              const catchParam = handler.param
-              const catchParamText = catchParam ? sourceCode.getText(catchParam) : ''
-              const catchStmt = getSingleStatement(handler.body)
-              if (!catchStmt) return null
-              const catchText = ensureSemicolon(sourceCode.getText(catchStmt))
-              result += catchParam ? `\ncatch (${catchParamText}) { ${catchText} }` : `\ncatch { ${catchText} }`
+            // 压缩 try 块
+            if (canCompactTry) {
+              const tryKeyword = sourceCode.getFirstToken(node)!
+              const tryBlockText = getCompactBlockText(block)
+              fixes.push(fixer.replaceTextRange([tryKeyword.range[0], block.range![1]], `try ${tryBlockText}`))
             }
 
-            // finally block (换行)
-            if (!finalizer) return fixer.replaceText(node, result)
+            // 压缩 catch 块
+            if (canCompactCatch) {
+              const catchKeyword = sourceCode.getTokenBefore(handler.body, {filter: t => t.value === 'catch'})!
+              const catchParam = handler.param
+              const catchParamText = catchParam ? `(${sourceCode.getText(catchParam)}) ` : ''
+              const catchBlockText = getCompactBlockText(handler.body)
+              fixes.push(fixer.replaceTextRange([catchKeyword.range[0], handler.body.range![1]], `catch ${catchParamText}${catchBlockText}`))
+            }
 
-            const finallyStmt = getSingleStatement(finalizer)
-            if (!finallyStmt) return null
-            const finallyText = ensureSemicolon(sourceCode.getText(finallyStmt))
-            result += `\nfinally { ${finallyText} }`
+            // 压缩 finally 块
+            if (canCompactFinally) {
+              const finallyKeyword = sourceCode.getTokenBefore(finalizer, {filter: t => t.value === 'finally'})!
+              const finallyBlockText = getCompactBlockText(finalizer)
+              fixes.push(fixer.replaceTextRange([finallyKeyword.range[0], finalizer.range![1]], `finally ${finallyBlockText}`))
+            }
+
+            // 如果有多个 fix，需要合并（ESLint 不支持多个 fix）
+            // 所以我们重新生成整个 try 语句
+            if (fixes.length === 0) return null
+            if (fixes.length === 1) return fixes[0]
+
+            // 多个块需要压缩，重新生成整个语句
+            let result = ''
+
+            // try 块
+            result = canCompactTry ? `try ${getCompactBlockText(block)}` : `try ${sourceCode.getText(block)}`
+
+            // catch 块 - } catch 在同一行
+            if (handler) {
+              const catchParam = handler.param
+              const catchParamText = catchParam ? `(${sourceCode.getText(catchParam)}) ` : ''
+              result += canCompactCatch ? ` catch ${catchParamText}${getCompactBlockText(handler.body)}` : ` catch ${catchParamText}${sourceCode.getText(handler.body)}`
+            }
+
+            // finally 块 - } finally 在同一行
+            if (finalizer) result += canCompactFinally ? ` finally ${getCompactBlockText(finalizer)}` : ` finally ${sourceCode.getText(finalizer)}`
+
             return fixer.replaceText(node, result)
           },
         })

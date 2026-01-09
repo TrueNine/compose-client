@@ -164,20 +164,14 @@ async function launchNewBrowser(): Promise<Browser> {
 
     // Clean up resources
 
-    try {
-      await browser?.close()
-    } catch (closeError: unknown) {
-      logger.error('Error closing browser:', closeError)
-    }
+    try { await browser?.close() }
+    catch (closeError: unknown) { logger.error('Error closing browser:', closeError) }
     headlessBrowserInstance = null
     launchedBrowserWSEndpoint = null
 
     // Clean up the temporary directory
-    try {
-      fs.rmSync(userDataDir, {recursive: true, force: true})
-    } catch (fsError: unknown) {
-      logger.error('Error removing temporary directory:', fsError)
-    }
+    try { fs.rmSync(userDataDir, {recursive: true, force: true}) }
+    catch (fsError: unknown) { logger.error('Error removing temporary directory:', fsError) }
 
     throw error
   }
@@ -738,11 +732,8 @@ export async function connectToHeadlessBrowser(
 
   try {
     // Validate URL format
-    try {
-      URL.parse(url)
-    } catch {
-      throw new Error(`Invalid URL format: ${url}`)
-    }
+    try { URL.parse(url) }
+    catch { throw new Error(`Invalid URL format: ${url}`) }
 
     // Get or create a browser instance
     const browser = await getHeadlessBrowserInstance()
