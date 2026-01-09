@@ -193,12 +193,11 @@ const rule: Rule.RuleModule = {
         if (catchLine.length >= MAX_LINE_LENGTH) return false
       }
 
-      if (finalizer) {
-        const finallyStmt = getSingleStatement(finalizer)!
-        const finallyText = ensureSemicolon(sourceCode.getText(finallyStmt))
-        if (`finally { ${finallyText} }`.length >= MAX_LINE_LENGTH) return false
-      }
+      if (!finalizer) return true
 
+      const finallyStmt = getSingleStatement(finalizer)!
+      const finallyText = ensureSemicolon(sourceCode.getText(finallyStmt))
+      if (`finally { ${finallyText} }`.length >= MAX_LINE_LENGTH) return false
       return true
     }
 
@@ -219,12 +218,11 @@ const rule: Rule.RuleModule = {
       }
 
       // 检查 finally 块
-      if (finalizer) {
-        const finallyStmt = getSingleStatement(finalizer)
-        if (!finallyStmt) return true
-        if (finalizer.loc?.start.line !== finalizer.loc?.end.line) return false
-      }
+      if (!finalizer) return true
 
+      const finallyStmt = getSingleStatement(finalizer)
+      if (!finallyStmt) return true
+      if (finalizer.loc?.start.line !== finalizer.loc?.end.line) return false
       return true
     }
 
@@ -391,13 +389,12 @@ const rule: Rule.RuleModule = {
             }
 
             // finally block (换行)
-            if (finalizer) {
-              const finallyStmt = getSingleStatement(finalizer)
-              if (!finallyStmt) return null
-              const finallyText = ensureSemicolon(sourceCode.getText(finallyStmt))
-              result += `\nfinally { ${finallyText} }`
-            }
+            if (!finalizer) return fixer.replaceText(node, result)
 
+            const finallyStmt = getSingleStatement(finalizer)
+            if (!finallyStmt) return null
+            const finallyText = ensureSemicolon(sourceCode.getText(finallyStmt))
+            result += `\nfinally { ${finallyText} }`
             return fixer.replaceText(node, result)
           },
         })
