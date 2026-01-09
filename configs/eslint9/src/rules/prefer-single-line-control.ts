@@ -6,7 +6,7 @@ const rule: Rule.RuleModule = {
   meta: {
     type: 'layout',
     docs: {
-      description: 'Prefer single-line switch cases, for loops, and while loops when possible',
+      description: 'Prefer single-line switch cases, for loops, while loops, and try-catch when possible',
       recommended: false,
     },
     fixable: 'code',
@@ -15,6 +15,7 @@ const rule: Rule.RuleModule = {
       preferSingleLineCase: 'Switch case with simple statement should be single-line format',
       preferSingleLineFor: 'For loop with simple body should be single-line format',
       preferSingleLineWhile: 'While loop with simple body should be single-line format',
+      preferSingleLineTry: 'Try-catch with simple bodies should be single-line format',
     },
   },
   create(context) {
@@ -142,6 +143,89 @@ const rule: Rule.RuleModule = {
       if (body == null) return false
       if (body.type === 'BlockStatement') return false
       return loopNode.loc?.start.line === body.loc?.end.line
+    }
+
+    // ==================== Try-Catch ====================
+    type TryNode = Rule.Node & {
+      block: Rule.Node & {body: Rule.Node[]}
+      handler: (Rule.Node & {param: Rule.Node | null, body: Rule.Node & {body: Rule.Node[]}}) | null
+      finalizer: (Rule.Node & {body: Rule.Node[]}) | null
+    }
+
+    function canTryBeSimplified(tryNode: TryNode): boolean {
+      const {block, handler, finalizer} = tryNode
+
+      // try block 必须是单条简单语句
+      const tryStmt = getSingleStatement(block)
+      if (!tryStmt || !isSimpleStatement(tryStmt)) return false
+      if (!isNodeSingleLine(tryStmt)) return false
+      if (hasComments(block)) return false
+
+      // catch block（如果存在）必须是单条简单语句
+      if (handler) {
+        const catchStmt = getSingleStatement(handler.body)
+        if (!catchStmt || !isSimpleStatement(catchStmt)) return false
+        if (!isNodeSingleLine(catchStmt)) return false
+        if (hasComments(handler.body)) return false
+      }
+
+      // finally block（如果存在）必须是单条简单语句
+      if (finalizer) {
+        const finallyStmt = getSingleStatement(finalizer)
+        if (!finallyStmt || !isSimpleStatement(finallyStmt)) return false
+        if (!isNodeSingleLine(finallyStmt)) return false
+        if (hasComments(finalizer)) return false
+      }
+
+      // 必须有 catch 或 finally
+      if (!handler && !finalizer) return false
+
+      // 检查每行长度
+      const tryText = ensureSemicolon(sourceCode.getText(tryStmt))
+      if (`try { ${tryText} }`.length >= MAX_LINE_LENGTH) return false
+
+      if (handler) {
+        const catchParam = handler.param
+        const catchParamText = catchParam ? sourceCode.getText(catchParam) : ''
+        const catchStmt = getSingleStatement(handler.body)!
+        const catchText = ensureSemicolon(sourceCode.getText(catchStmt))
+        const catchLine = catchParam ? `catch (${catchParamText}) { ${catchText} }` : `catch { ${catchText} }`
+        if (catchLine.length >= MAX_LINE_LENGTH) return false
+      }
+
+      if (finalizer) {
+        const finallyStmt = getSingleStatement(finalizer)!
+        const finallyText = ensureSemicolon(sourceCode.getText(finallyStmt))
+        if (`finally { ${finallyText} }`.length >= MAX_LINE_LENGTH) return false
+      }
+
+      return true
+    }
+
+    function isTryAlreadyCompact(tryNode: TryNode): boolean {
+      const {block, handler, finalizer} = tryNode
+
+      // 检查 try 块是否已经是单行格式 try { ... }
+      const tryStmt = getSingleStatement(block)
+      // 不是单语句，不处理
+      if (!tryStmt) return true
+      if (block.loc?.start.line !== block.loc?.end.line) return false
+
+      // 检查 catch 块
+      if (handler) {
+        const catchStmt = getSingleStatement(handler.body)
+        if (!catchStmt) return true
+        if (handler.body.loc?.start.line !== handler.body.loc?.end.line) return false
+      }
+
+      // 检查 finally 块
+      if (finalizer) {
+        const finallyStmt = getSingleStatement(finalizer)
+        if (!finallyStmt) return true
+        if (finalizer.loc?.start.line !== finalizer.loc?.end.line) return false
+      }
+
+      return true
     }
 
     return {
@@ -276,6 +360,47 @@ const rule: Rule.RuleModule = {
 
       DoWhileStatement() {
         // do-while 结构特殊，暂不处理
+      },
+
+      TryStatement(node) {
+        const tryNode = node as TryNode
+        if (isTryAlreadyCompact(tryNode)) return
+        if (!canTryBeSimplified(tryNode)) return
+
+        context.report({
+          node,
+          messageId: 'preferSingleLineTry',
+          fix(fixer) {
+            const {block, handler, finalizer} = tryNode
+
+            // try block
+            const tryStmt = getSingleStatement(block)
+            if (!tryStmt) return null
+            const tryText = ensureSemicolon(sourceCode.getText(tryStmt))
+
+            let result = `try { ${tryText} }`
+
+            // catch block (换行)
+            if (handler) {
+              const catchParam = handler.param
+              const catchParamText = catchParam ? sourceCode.getText(catchParam) : ''
+              const catchStmt = getSingleStatement(handler.body)
+              if (!catchStmt) return null
+              const catchText = ensureSemicolon(sourceCode.getText(catchStmt))
+              result += catchParam ? `\ncatch (${catchParamText}) { ${catchText} }` : `\ncatch { ${catchText} }`
+            }
+
+            // finally block (换行)
+            if (finalizer) {
+              const finallyStmt = getSingleStatement(finalizer)
+              if (!finallyStmt) return null
+              const finallyText = ensureSemicolon(sourceCode.getText(finallyStmt))
+              result += `\nfinally { ${finallyText} }`
+            }
+
+            return fixer.replaceText(node, result)
+          },
+        })
       },
     }
   },
