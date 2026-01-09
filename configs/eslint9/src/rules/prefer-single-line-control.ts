@@ -68,13 +68,16 @@ const rule: Rule.RuleModule = {
     function extractCaseStatements(consequent: Rule.Node[]): {mainStmt: Rule.Node | null, hasBreak: boolean} {
       if (!Array.isArray(consequent) || consequent.length === 0) return {mainStmt: null, hasBreak: false}
 
-      // 情况1: case x: stmt; break (直接语句)
-      if (consequent.length <= 2) {
+      // 情况1: case x: stmt (单语句) 或 case x: stmt; break (语句+break)
+      if (consequent.length === 1) {
         const first = consequent[0]
-        if (isSimpleStatement(first)) {
-          const hasBreak = consequent.length === 2 && consequent[1].type === 'BreakStatement'
-          return {mainStmt: first, hasBreak}
-        }
+        if (isSimpleStatement(first)) return {mainStmt: first, hasBreak: false}
+      }
+      if (consequent.length === 2) {
+        const first = consequent[0]
+        const second = consequent[1]
+        // 只有当第二条是 break 时才能简化
+        if (isSimpleStatement(first) && second.type === 'BreakStatement') return {mainStmt: first, hasBreak: true}
       }
 
       // 情况2: case x: { stmt; break } (BlockStatement)
