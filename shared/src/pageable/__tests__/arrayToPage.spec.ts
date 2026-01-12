@@ -9,9 +9,7 @@ function pq(o?: number, s?: number): Pq {
 }
 
 describe('arrayToPage', () => {
-  it('空数组应返回空分页', () => {
-    expect(arrayToPage([], pq(0, 10))).toEqual(Pw.empty())
-  })
+  it('空数组应返回空分页', () => expect(arrayToPage([], pq(0, 10))).toEqual(Pw.empty()))
 
   it('使用默认参数 Pw.DEFAULT_MAX', () => {
     const arr = Array.from({length: 50}, (_, i) => i + 1)

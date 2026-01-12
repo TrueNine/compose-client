@@ -1,9 +1,6 @@
 import type {timestamp} from '@truenine/types'
 
-export const ISO8601TimeZone = {
-  ASIA_SHANGHAI: 'Asia/Shanghai' as const,
-  UTC: 'UTC' as const,
-}
+export const ISO8601TimeZone = {ASIA_SHANGHAI: 'Asia/Shanghai' as const, UTC: 'UTC' as const}
 
 /**
  * # 标准格式化字符串

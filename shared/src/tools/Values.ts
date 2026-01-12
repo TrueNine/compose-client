@@ -113,10 +113,7 @@ export function deepResolve<T extends Record<string, unknown> | unknown[]>(
   options: DeepOptions = {},
   filter: DeepFilterFn = () => false,
 ): T {
-  const {
-    maxDepth = false,
-    transform = (value: unknown) => value,
-  } = options
+  const {maxDepth = false, transform = (value: unknown) => value} = options
 
   function processValue<V>(value: V, depth: number): V {
     if (value == null || typeof value !== 'object') return value

@@ -100,10 +100,7 @@ export function* range(start: number, end: number): Generator<number, void, unkn
  */
 export function mergeToMap<T extends object>(key: keyof T, arr: T[]): {[key in keyof T]: T[]} {
   if (!arr.length) return {} as {[key in keyof T]: T[]}
-  const ks = arr.map(e => ({
-    key: (e[key]?.toString() ?? '') as keyof T,
-    value: e,
-  }))
+  const ks = arr.map(e => ({key: (e[key]?.toString() ?? '') as keyof T, value: e}))
   return ks.reduce(
     (acc, cur) => {
       if (acc[cur.key] !== void 0) acc[cur.key]?.push(cur.value)
