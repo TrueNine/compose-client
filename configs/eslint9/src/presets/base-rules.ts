@@ -24,6 +24,7 @@ export const baseRulesPreset: Linter.RulesRecord = {
   '@truenine/prefer-single-line-call': 'warn',
   '@truenine/prefer-concise-arrow': 'warn',
   '@truenine/prefer-guard-clause': ['warn', {minStatements: 2}],
+  '@truenine/prefer-void-zero': 'warn',
 
   // antfu 规则覆盖
   'antfu/if-newline': 'off',
