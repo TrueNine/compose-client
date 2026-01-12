@@ -52,44 +52,48 @@ const rule: Rule.RuleModule = {
       let current: Rule.Node | null = node
 
       while (current) {
-        const parent = current.parent
+        const parent: Rule.Node | null = current.parent
 
         if (!parent) break
 
+        // 使用 string 类型来绕过 TypeScript 的类型检查
+        // 因为 Rule.Node 类型不包含 TypeScript 的 AST 节点类型
+        const parentType = parent.type as string
+
         // Direct type annotation contexts
         if (
-          parent.type === 'TSTypeAnnotation' ||
-          parent.type === 'TSTypeAliasDeclaration' ||
-          parent.type === 'TSInterfaceDeclaration' ||
-          parent.type === 'TSTypeParameterDeclaration' ||
-          parent.type === 'TSTypeParameterInstantiation' ||
-          parent.type === 'TSTypeLiteral' ||
-          parent.type === 'TSPropertySignature' ||
-          parent.type === 'TSMethodSignature' ||
-          parent.type === 'TSIndexSignature' ||
-          parent.type === 'TSFunctionType' ||
-          parent.type === 'TSConstructorType' ||
-          parent.type === 'TSMappedType' ||
-          parent.type === 'TSConditionalType' ||
-          parent.type === 'TSInferType' ||
-          parent.type === 'TSTypeQuery' ||
-          parent.type === 'TSTypePredicate'
+          parentType === 'TSTypeAnnotation' ||
+          parentType === 'TSTypeAliasDeclaration' ||
+          parentType === 'TSInterfaceDeclaration' ||
+          parentType === 'TSTypeParameterDeclaration' ||
+          parentType === 'TSTypeParameterInstantiation' ||
+          parentType === 'TSTypeLiteral' ||
+          parentType === 'TSPropertySignature' ||
+          parentType === 'TSMethodSignature' ||
+          parentType === 'TSIndexSignature' ||
+          parentType === 'TSFunctionType' ||
+          parentType === 'TSConstructorType' ||
+          parentType === 'TSMappedType' ||
+          parentType === 'TSConditionalType' ||
+          parentType === 'TSInferType' ||
+          parentType === 'TSTypeQuery' ||
+          parentType === 'TSTypePredicate'
         ) {
           return true
         }
 
         // Union/Intersection types
-        if (parent.type === 'TSUnionType' || parent.type === 'TSIntersectionType') {
+        if (parentType === 'TSUnionType' || parentType === 'TSIntersectionType') {
           return true
         }
 
         // TSUndefinedKeyword is always a type
-        if (parent.type === 'TSUndefinedKeyword') {
+        if (parentType === 'TSUndefinedKeyword') {
           return true
         }
 
         // TSAsExpression - check if we're in the type part
-        if (parent.type === 'TSAsExpression') {
+        if (parentType === 'TSAsExpression') {
           const asExpr = parent as Rule.Node & {typeAnnotation: Rule.Node}
           if (asExpr.typeAnnotation === current) {
             return true
@@ -97,7 +101,7 @@ const rule: Rule.RuleModule = {
         }
 
         // TSSatisfiesExpression - check if we're in the type part
-        if (parent.type === 'TSSatisfiesExpression') {
+        if (parentType === 'TSSatisfiesExpression') {
           const satisfiesExpr = parent as Rule.Node & {typeAnnotation: Rule.Node}
           if (satisfiesExpr.typeAnnotation === current) {
             return true
@@ -105,7 +109,7 @@ const rule: Rule.RuleModule = {
         }
 
         // TSTypeReference - this is a type context
-        if (parent.type === 'TSTypeReference') {
+        if (parentType === 'TSTypeReference') {
           return true
         }
 

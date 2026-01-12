@@ -79,7 +79,7 @@ const rule: Rule.RuleModule = {meta: {
       // 遍历子节点
       for (const key of Object.keys(n)) {
         if (skipKeys.has(key)) continue
-        const value = (n as Record<string, unknown>)[key]
+        const value = (n as unknown as Record<string, unknown>)[key]
         if (value && typeof value === 'object') {
           if (Array.isArray(value)) {
             for (const item of value) {
@@ -96,6 +96,20 @@ const rule: Rule.RuleModule = {meta: {
 
     traverse(node)
     return hasComplexity
+  }
+
+  // 检查参数是否需要括号
+  // TypeScript 中，带类型注解的单参数必须有括号
+  // 解构参数也必须有括号
+  function needsParentheses(params: Rule.Node[]): boolean {
+    if (params.length !== 1) return true
+    const param = params[0]
+    // 带类型注解的参数（TypeScript）
+    if (param.type !== 'Identifier') return true
+    // 检查是否有类型注解（通过检查 AST 节点是否有 typeAnnotation 属性）
+    const paramWithType = param as Rule.Node & {typeAnnotation?: unknown}
+    if (paramWithType.typeAnnotation) return true
+    return false
   }
 
   type ArrowNode = Rule.Node & {
@@ -139,7 +153,7 @@ const rule: Rule.RuleModule = {meta: {
       const paramsText = arrowNode.params.map(p => sourceCode.getText(p)).join(', ')
       const exprText = normalizeText(sourceCode.getText(expr))
       const asyncPrefix = arrowNode.async ? 'async ' : ''
-      const paramsWrapper = arrowNode.params.length === 1 && arrowNode.params[0].type === 'Identifier' ? paramsText : `(${paramsText})`
+      const paramsWrapper = needsParentheses(arrowNode.params) ? `(${paramsText})` : paramsText
       const singleLineText = `${asyncPrefix}${paramsWrapper} => ${exprText}`
 
       // 检查长度
@@ -163,7 +177,7 @@ const rule: Rule.RuleModule = {meta: {
     const paramsText = arrowNode.params.map(p => sourceCode.getText(p)).join(', ')
     const returnText = normalizeText(sourceCode.getText(returnStmt.argument))
     const asyncPrefix = arrowNode.async ? 'async ' : ''
-    const paramsWrapper = arrowNode.params.length === 1 && arrowNode.params[0].type === 'Identifier' ? paramsText : `(${paramsText})`
+    const paramsWrapper = needsParentheses(arrowNode.params) ? `(${paramsText})` : paramsText
     let exprText = returnText
     if (returnStmt.argument.type === 'ObjectExpression') exprText = `(${returnText})`
     const singleLineText = `${asyncPrefix}${paramsWrapper} => ${exprText}`

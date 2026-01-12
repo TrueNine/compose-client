@@ -376,6 +376,38 @@ describe('prefer-concise-arrow', () => {
           ],
         })
       })
+
+      it('should preserve parentheses for single parameter with type annotation', () => {
+        ruleTester.run('prefer-concise-arrow', rule, {
+          valid: [],
+          invalid: [
+            // 单参数带类型注解 - 应该保留括号 (TypeScript 要求)
+            {
+              code: `const fn = (x: number) => {
+  return x + 1
+}`,
+              output: 'const fn = (x: number) => x + 1',
+              errors: [{messageId: 'preferConciseArrow'}],
+            },
+            // useCallback 场景 - 单参数带类型注解
+            {
+              code: `const handleDirtyChange = useCallback((dirty: boolean) => {
+  isDirtyRef.current = dirty
+}, [])`,
+              output: 'const handleDirtyChange = useCallback((dirty: boolean) => isDirtyRef.current = dirty, [])',
+              errors: [{messageId: 'preferConciseArrow'}],
+            },
+            // 单参数带复杂类型注解
+            {
+              code: `const fn = (item: {name: string}) => {
+  console.log(item.name)
+}`,
+              output: 'const fn = (item: {name: string}) => console.log(item.name)',
+              errors: [{messageId: 'preferConciseArrow'}],
+            },
+          ],
+        })
+      })
     })
   })
 })

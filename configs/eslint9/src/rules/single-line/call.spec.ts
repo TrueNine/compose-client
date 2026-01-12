@@ -40,6 +40,27 @@ describe('prefer-single-line-call', () => {
   () => console.log('done'),
   1000
 )`,
+            // useCallback 带多行箭头函数体 - 不应简化
+            `const handleDirtyChange = useCallback((dirty: boolean) => {
+  isDirtyRef.current = dirty
+}, [])`,
+            // useCallback 带单行箭头函数 - 不应简化
+            `useCallback(
+  (dirty: boolean) => isDirtyRef.current = dirty,
+  []
+)`,
+            // useMemo 带箭头函数 - 不应简化
+            `useMemo(
+  () => computeExpensiveValue(a, b),
+  [a, b]
+)`,
+            // useEffect 带箭头函数 - 不应简化
+            `useEffect(
+  () => {
+    document.title = count
+  },
+  [count]
+)`,
           ],
           invalid: [],
         })
