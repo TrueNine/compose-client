@@ -1,5 +1,6 @@
 export {defaultJsConfig} from './javascript'
 export {defaultTestConfig, defaultUnocssConfig} from './misc'
+export {baseRules, dtsRules, typescriptRules} from './rules'
 export {defaultFormatterConfig, defaultStylisticConfig} from './stylistic'
 export {defaultStrictTsConfig, defaultTsConfig} from './typescript'
 export {defaultVueConfig} from './vue'

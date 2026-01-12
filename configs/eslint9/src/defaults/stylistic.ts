@@ -6,8 +6,11 @@ export const defaultStylisticConfig: AntFuStylisticConfig = {
   quotes: 'single',
   semi: false,
   overrides: {
-    'style/no-multiple-empty-lines': ['error', {max: 1, maxBOF: 0, maxEOF: 0}],
-    'style/brace-style': 'off',
+    'style/no-multiple-empty-lines': ['error', {max: 1,
+      maxBOF: 0,
+      maxEOF: 0}],
+    // } catch / } else / } finally 必须在同一行
+    'style/brace-style': ['error', '1tbs', {allowSingleLine: true}],
     'style/arrow-parens': ['error', 'as-needed'],
     'curly': ['error', 'multi-line'],
     'antfu/if-newline': 'off',
@@ -26,11 +29,9 @@ export const defaultStylisticConfig: AntFuStylisticConfig = {
     // 块语句前加空格 if(x){} → if (x) {}
     'style/space-before-blocks': ['error', 'always'],
     // 函数括号前不加空格 function () → function()
-    'style/space-before-function-paren': ['error', {
-      anonymous: 'never',
+    'style/space-before-function-paren': ['error', {anonymous: 'never',
       named: 'never',
-      asyncArrow: 'always',
-    }],
+      asyncArrow: 'always'}],
     // 括号内不加空格 ( a ) → (a)
     'style/space-in-parens': ['error', 'never'],
     // 对象冒号后加空格，前不加 {a : 1} → {a: 1}
@@ -53,11 +54,23 @@ export const defaultStylisticConfig: AntFuStylisticConfig = {
     'style/type-annotation-spacing': 'error',
     // 允许每行最多 3 条语句（支持 case x: stmt; break 格式）
     'style/max-statements-per-line': ['error', {max: 3}],
+    // 函数调用参数换行：短参数允许单行
+    'style/function-call-argument-newline': ['error', 'consistent'],
+    // 函数参数换行：短参数允许单行
+    'style/function-paren-newline': ['error', 'multiline-arguments'],
+    // import/export 语句强制单行，短对象强制单行
+    'style/object-curly-newline': ['error', {ImportDeclaration: 'never',
+      ExportDeclaration: 'never',
+      ObjectExpression: {minProperties: 5, consistent: false},
+      ObjectPattern: {minProperties: 5, consistent: false}}],
+    // 对象属性：允许所有属性在同一行
+    'style/object-property-newline': ['error', {allowAllPropertiesOnSameLine: true}],
+    // 关闭 antfu/consistent-list-newline（与 object-curly-newline 冲突）
+    'antfu/consistent-list-newline': 'off',
   },
 }
 
-export const defaultFormatterConfig: AntFuFormatterConfig = {
-  css: 'prettier',
+export const defaultFormatterConfig: AntFuFormatterConfig = {css: 'prettier',
   html: 'prettier',
   markdown: 'prettier',
   prettierOptions: {
@@ -70,5 +83,4 @@ export const defaultFormatterConfig: AntFuFormatterConfig = {
     jsxSingleQuote: true,
     trailingComma: 'all',
     bracketSpacing: false,
-  },
-}
+  }}

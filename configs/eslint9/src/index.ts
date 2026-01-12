@@ -2,7 +2,7 @@ import type {OptionsTypeScriptParserOptions} from '@antfu/eslint-config'
 import type {Linter} from 'eslint'
 import type {AntFuConfig, AntFuStrictTsConfig, AntFuTsConfig} from './types'
 import {antfu} from '@antfu/eslint-config'
-import {defaultFormatterConfig, defaultJsConfig, defaultStrictTsConfig, defaultStylisticConfig, defaultTestConfig, defaultTsConfig, defaultUnocssConfig, defaultVueConfig} from './defaults'
+import {baseRules, defaultFormatterConfig, defaultJsConfig, defaultStrictTsConfig, defaultStylisticConfig, defaultTestConfig, defaultTsConfig, defaultUnocssConfig, defaultVueConfig, dtsRules, typescriptRules} from './defaults'
 import {plugin} from './plugin'
 import {mergeWithDefaults} from './utils'
 
@@ -25,21 +25,7 @@ export async function applyPreset(options: ConfigOptions = {}): Promise<ReturnTy
 
 export default async function eslint9(options: ConfigOptions = {}): Promise<ReturnType<typeof antfu>> {
   const {
-    type = 'lib',
-    ignores = [],
-    test = true,
-    nextjs = false,
-    react = false,
-    unocss = false,
-    vue = false,
-    jsx = false,
-    pnpm = false,
-    stylistic = true,
-    javascript = defaultJsConfig,
-    typescript = defaultTsConfig,
-    formatters = false,
-    // Extract remaining options to pass through to antfu
-    ...restOptions
+    type = 'lib', ignores = [], test = true, nextjs = false, react = false, unocss = false, vue = false, jsx = false, pnpm = false, stylistic = true, javascript = defaultJsConfig, typescript = defaultTsConfig, formatters = false, ...restOptions
   } = options
 
   const _test = mergeWithDefaults(test, defaultTestConfig)
@@ -52,235 +38,24 @@ export default async function eslint9(options: ConfigOptions = {}): Promise<Retu
   let _typescript = typescript
   const _pnpm = type === 'app' ? false : pnpm
 
-  // 严格 ts 模式
   if (isStrictTsConfig(_typescript)) {
     const merged = mergeWithDefaults(_typescript as AntFuTsConfig, defaultStrictTsConfig)
-    if (typeof merged === 'object' && 'tsconfigPath' in merged) {
-      (merged as OptionsTypeScriptParserOptions).parserOptions = {
-        projectService: true,
-      }
-    }
+    if (typeof merged === 'object' && 'tsconfigPath' in merged) (merged as OptionsTypeScriptParserOptions).parserOptions = {projectService: true}
     _typescript = merged
   }
 
-  return antfu({
-    // Pass through any additional options from user
-    ...restOptions,
-    // Apply our defaults (these override restOptions if duplicated)
-    markdown: true,
-    type,
-    ignores,
-    pnpm: _pnpm,
-    test: _test,
-    unocss: _unocss,
-    vue: _vue,
-    nextjs,
-    react,
-    jsx,
-    typescript: _typescript,
-    javascript: _javascript,
-    stylistic: _stylistic,
-    formatters: _formatters,
-  }, {
-    name: '@truenine/eslint-plugin',
-    plugins: {
-      '@truenine': plugin,
+  return antfu(
+    {
+      ...restOptions, markdown: true, type, ignores, pnpm: _pnpm, test: _test, unocss: _unocss, vue: _vue, nextjs, react, jsx, typescript: _typescript, javascript: _javascript, stylistic: _stylistic, formatters: _formatters,
     },
-    rules: {
-      '@truenine/prefer-single-line-if': 'warn',
-      '@truenine/prefer-single-line-control': 'warn',
-      '@truenine/prefer-single-line-call': 'warn',
-      '@truenine/prefer-concise-arrow': 'warn',
-      '@truenine/prefer-guard-clause': ['warn', {minStatements: 2}],
-      'antfu/if-newline': 'off',
-      'antfu/curly': 'off',
-      'curly': ['error', 'multi-line'],
-      // 箭头函数单行时去掉大括号
-      'arrow-body-style': ['error', 'as-needed'],
-      // 对象解构优先
-      'prefer-destructuring': ['error', {
-        array: false,
-        object: true,
-      }, {enforceForRenamedProperties: false}],
-      // 使用模板字符串代替字符串拼接
-      'prefer-template': 'error',
-      // 对象字面量简写
-      'object-shorthand': ['error', 'always'],
-      // 使用 ** 代替 Math.pow
-      'prefer-exponentiation-operator': 'error',
-      // 使用 Object.hasOwn 代替 Object.prototype.hasOwnProperty.call
-      'prefer-object-has-own': 'error',
-      // ===== 减少字符数的规则 =====
-      // 不需要的 else（return 后）
-      'no-else-return': ['error', {allowElseIf: false}],
-      // 合并连续变量声明
-      'one-var': ['error', {initialized: 'never', uninitialized: 'consecutive'}],
-      // 简化布尔表达式 !!x → Boolean(x) 或直接用
-      'no-extra-boolean-cast': 'error',
-      // 移除不必要的 return await
-      'no-return-await': 'error',
-      // 移除无用的 catch
-      'no-useless-catch': 'error',
-      // 移除无用的 return
-      'no-useless-return': 'error',
-      // 移除无用的 constructor
-      'no-useless-constructor': 'error',
-      // 移除无用的 rename { a: a } → { a }
-      'no-useless-rename': 'error',
-      // 移除无用的 computed key { ['a']: 1 } → { a: 1 }
-      'no-useless-computed-key': 'error',
-      // 移除无用的 concat 'a' + '' → 'a'
-      'no-useless-concat': 'error',
-      // 移除无用的 escape
-      'no-useless-escape': 'error',
-      // 移除无用的 call/apply
-      'no-useless-call': 'error',
-      // 移除多余括号
-      'no-extra-parens': ['error', 'all', {
-        nestedBinaryExpressions: false,
-        ignoreJSX: 'multi-line',
-        enforceForArrowConditionals: false,
-      }],
-      // 使用 includes 代替 indexOf !== -1
-      'unicorn/prefer-includes': 'error',
-      // 使用 startsWith/endsWith 代替正则
-      'unicorn/prefer-string-starts-ends-with': 'error',
-      // 使用 Number.isNaN 代替 isNaN
-      'unicorn/prefer-number-properties': 'error',
-      // 使用 Array.isArray 代替 instanceof Array
-      'unicorn/no-instanceof-array': 'error',
-      // 使用 .at() 代替 arr[arr.length - 1]
-      'unicorn/prefer-at': 'error',
-      // 使用 String#slice 代替 substring/substr
-      'unicorn/prefer-string-slice': 'error',
-      // 使用 spread 代替 Array.from
-      'unicorn/prefer-spread': 'error',
-      // 使用 Array#flat 代替 reduce + concat
-      'unicorn/prefer-array-flat': 'error',
-      // 使用 Array#flatMap 代替 map + flat
-      'unicorn/prefer-array-flat-map': 'error',
-      // 使用 Array#find 代替 filter[0]
-      'unicorn/prefer-array-find': 'error',
-      // 使用 Array#some 代替 find !== undefined
-      'unicorn/prefer-array-some': 'error',
-      // 使用 Set#has 代替 Array#includes（大数组性能更好）
-      'unicorn/prefer-set-has': 'error',
-      // 使用 String#replaceAll 代替全局正则替换
-      'unicorn/prefer-string-replace-all': 'error',
-      // 使用 String#trimStart/trimEnd 代替 trimLeft/trimRight
-      'unicorn/prefer-string-trim-start-end': 'error',
-      // 使用 Object.fromEntries 代替 reduce 构建对象
-      'unicorn/prefer-object-from-entries': 'error',
-      // 使用 default parameters 代替 || 默认值
-      'unicorn/prefer-default-parameters': 'error',
-      // 使用 negative index 代替 length - index
-      'unicorn/prefer-negative-index': 'error',
-      // 使用 Math.trunc 代替位运算截断
-      'unicorn/prefer-math-trunc': 'error',
-      // 使用 Date.now() 代替 new Date().getTime()
-      'unicorn/prefer-date-now': 'error',
-      // 使用 export from 代替 import + export
-      'unicorn/prefer-export-from': 'warn',
-      // 简单 if-else 转三元表达式
-      'unicorn/prefer-ternary': 'error',
-      // a ? a : b → a || b
-      'unicorn/prefer-logical-operator-over-ternary': 'error',
-      // match() → test() 用于布尔检查
-      'unicorn/prefer-regexp-test': 'error',
-      // 现代 DOM API
-      'unicorn/prefer-modern-dom-apis': 'error',
-      // getElementById → querySelector
-      'unicorn/prefer-query-selector': 'error',
-      // appendChild → append
-      'unicorn/prefer-dom-node-append': 'error',
-      // removeChild → remove
-      'unicorn/prefer-dom-node-remove': 'error',
-      // innerText → textContent
-      'unicorn/prefer-dom-node-text-content': 'error',
-      // EventEmitter → EventTarget
-      'unicorn/prefer-event-target': 'error',
-      // 类型检查抛出 TypeError
-      'unicorn/prefer-type-error': 'error',
-      // charCodeAt → codePointAt
-      'unicorn/prefer-code-point': 'error',
-      // 现代 Math API (Math.hypot, Math.log10 等)
-      'unicorn/prefer-modern-math-apis': 'error',
-      // 使用 structuredClone 代替 JSON.parse(JSON.stringify())
-      'unicorn/prefer-structured-clone': 'error',
-      // 使用 node: 协议导入 Node.js 内置模块
-      'unicorn/prefer-node-protocol': 'error',
-      // 使用 Array#toSorted/toReversed/toSpliced (不修改原数组)
-      'unicorn/prefer-array-index-of': 'error',
-      // 使用 Reflect.apply 代替 Function.prototype.apply
-      'unicorn/prefer-reflect-apply': 'error',
-      // 使用 Set#size 代替转数组后 .length
-      'unicorn/prefer-set-size': 'error',
-      // 使用 String#codePointAt 代替 charCodeAt
-      'unicorn/text-encoding-identifier-case': 'error',
-    },
-  } as Linter.Config, {
-    // .d.ts 文件专用规则覆盖
-    name: '@truenine/dts-rules',
-    files: ['**/*.d.ts'],
-    rules: {
-      // declare const 不适用 one-var 合并
-      'one-var': 'off',
-    },
-  } as Linter.Config, {
-    // TypeScript 专用规则（需要类型信息）
-    name: '@truenine/typescript-rules',
-    files: ['**/*.ts', '**/*.tsx', '**/*.mts', '**/*.cts'],
-    rules: {
-      // 优先使用 optional chaining (?.)
-      '@typescript-eslint/prefer-optional-chain': 'error',
-      // 优先使用 nullish coalescing (??) 代替 ||
-      '@typescript-eslint/prefer-nullish-coalescing': 'error',
-      // 使用 includes 代替 indexOf (TS 版本)
-      '@typescript-eslint/prefer-includes': 'error',
-      // 使用 startsWith/endsWith (TS 版本)
-      '@typescript-eslint/prefer-string-starts-ends-with': 'error',
-      // 使用 for-of 代替 for 循环
-      '@typescript-eslint/prefer-for-of': 'error',
-      // 函数返回 Promise 时使用 async
-      '@typescript-eslint/promise-function-async': 'error',
-      // 使用 Array<T>.reduce 时提供初始值
-      '@typescript-eslint/prefer-reduce-type-parameter': 'error',
-      // 使用 RegExp#exec 代替 String#match (性能更好)
-      '@typescript-eslint/prefer-regexp-exec': 'error',
-      // 使用 this 参数代替 bind
-      '@typescript-eslint/unbound-method': 'off',
-      // 关闭 switch 穷举检查（对 switch(true) 和部分枚举类型误报太多）
-      '@typescript-eslint/switch-exhaustiveness-check': 'off',
-      // ===== 减少字符数的 TS 规则 =====
-      // Array<T> → T[]
-      '@typescript-eslint/array-type': ['error', {default: 'array'}],
-      // 移除无用的类型断言
-      '@typescript-eslint/no-unnecessary-type-assertion': 'error',
-      // 移除无用的类型约束 <T extends unknown>
-      '@typescript-eslint/no-unnecessary-type-constraint': 'error',
-      // 移除无用的类型参数
-      '@typescript-eslint/no-unnecessary-type-arguments': 'error',
-      // 移除无用的 boolean 比较 x === true → x
-      '@typescript-eslint/no-unnecessary-boolean-literal-compare': 'error',
-      // 移除无用的条件 if (alwaysTrue)
-      '@typescript-eslint/no-unnecessary-condition': 'off',
-      // 简化 namespace 导入
-      '@typescript-eslint/no-namespace': 'error',
-      // 使用简短的函数类型 { (): void } → () => void
-      '@typescript-eslint/prefer-function-type': 'error',
-      // as const 代替字面量类型
-      '@typescript-eslint/prefer-as-const': 'error',
-    },
-  } as Linter.Config)
+    {name: '@truenine/eslint-plugin', plugins: {'@truenine': plugin}, rules: baseRules} as Linter.Config,
+    {name: '@truenine/dts-rules', files: ['**/*.d.ts'], rules: dtsRules} as Linter.Config,
+    {name: '@truenine/typescript-rules', files: ['**/*.ts', '**/*.tsx', '**/*.mts', '**/*.cts'], rules: typescriptRules} as Linter.Config,
+  )
 }
 
 function isStrictTsConfig(config: unknown): config is AntFuStrictTsConfig {
-  return (
-    config !== null
-    && typeof config === 'object'
-    && 'strictTypescriptEslint' in config
-    && (config as AntFuStrictTsConfig).strictTypescriptEslint
-  )
+  return config !== null && typeof config === 'object' && 'strictTypescriptEslint' in config && (config as AntFuStrictTsConfig).strictTypescriptEslint
 }
 
 export * from './rules'
