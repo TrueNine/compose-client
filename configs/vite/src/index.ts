@@ -60,12 +60,7 @@ export function configureViteFragment(options: ViteFragmentOptions = {}, baseCon
     formats: ['es'] as const,
     sourcemap: false,
     name: 'index',
-    fileNameMap: {
-      es: '.js',
-      cjs: '.cjs',
-      umd: '.umd.js',
-      iife: '.iife.js',
-    },
+    fileNameMap: {es: '.js', cjs: '.cjs', umd: '.umd.js', iife: '.iife.js'},
     excludes: ['**/__tests__/**', '**/__test__/**', '**/__build-src__/**', '**/*.spec.ts', '**/*.test.ts'],
   }
 
@@ -99,10 +94,7 @@ export function configureViteFragment(options: ViteFragmentOptions = {}, baseCon
       excludes: mergedLibOptions.excludes,
     }
 
-    const finalDtsOptions: SimpleDtsOptions = {
-      ...dtsDefaults,
-      ...options.dts === true ? dtsDefaults : options.dts,
-    }
+    const finalDtsOptions: SimpleDtsOptions = {...dtsDefaults, ...options.dts === true ? dtsDefaults : options.dts}
     dtsPlugin = createDtsPlugin({
       ...finalDtsOptions,
       outDir: finalDtsOptions.outDir ?? 'dist',
@@ -112,10 +104,7 @@ export function configureViteFragment(options: ViteFragmentOptions = {}, baseCon
     })
   }
 
-  const mergedBuildOptions: BuildOptions = {
-    ...baseConfig.build,
-    ...generatedBuildOptions,
-  }
+  const mergedBuildOptions: BuildOptions = {...baseConfig.build, ...generatedBuildOptions}
 
   const generatedPlugins = [dtsPlugin].filter(Boolean)
 
@@ -129,11 +118,7 @@ export function configureViteFragment(options: ViteFragmentOptions = {}, baseCon
     ...options.additionalPlugins ?? [],
   ]
 
-  let finalConfig: UserConfig = {
-    ...baseConfig,
-    build: mergedBuildOptions,
-    plugins: mergedPlugins,
-  }
+  let finalConfig: UserConfig = {...baseConfig, build: mergedBuildOptions, plugins: mergedPlugins}
 
   // 应用性能优化配置
   if (options.performance?.enabled === false) return mergeConfig(finalConfig, baseConfig)
