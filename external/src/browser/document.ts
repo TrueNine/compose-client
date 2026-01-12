@@ -62,12 +62,8 @@ export function downloadBlob(blob: Blob, downloadName = 'noneFile'): void {
       element.href = url
       element.download = downloadName
       element.click()
-    } finally {
-      window.URL.revokeObjectURL(url)
-    }
-  } catch (error) {
-    console.error('下载文件失败:', error)
-  }
+    } finally { window.URL.revokeObjectURL(url) }
+  } catch (error) { console.error('下载文件失败:', error) }
 }
 
 /**
@@ -81,9 +77,7 @@ export function download(url: string, downloadName = 'noneFile'): void {
     element.href = url
     element.download = downloadName
     element.click()
-  } catch (error) {
-    console.error('下载文件失败:', error)
-  }
+  } catch (error) { console.error('下载文件失败:', error) }
 }
 
 /**
