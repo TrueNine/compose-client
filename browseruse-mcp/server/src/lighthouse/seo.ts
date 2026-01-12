@@ -77,8 +77,7 @@ const DETAIL_LIMITS = {
   // Up to 10 items for moderate issues
   moderate: 10,
   // Up to 3 items for minor issues
-  minor: 3,
-}
+  minor: 3}
 
 /**
  * Runs an SEO audit on the specified URL
@@ -105,22 +104,18 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
   const audits = lhr.audits ?? {}
 
   // Add metadata
-  const metadata = {
-    url,
+  const metadata = {url,
     timestamp: lhr.fetchTime || new Date().toISOString(),
     // This could be made configurable
     device: 'desktop',
-    lighthouseVersion: lhr.lighthouseVersion,
-  }
+    lighthouseVersion: lhr.lighthouseVersion}
 
   // Initialize variables
   const issues: AISEOIssue[] = []
-  const categories: Record<string, {score: number, issues_count: number}> = {
-    content: {score: 0, issues_count: 0},
+  const categories: Record<string, {score: number, issues_count: number}> = {content: {score: 0, issues_count: 0},
     mobile: {score: 0, issues_count: 0},
     crawlability: {score: 0, issues_count: 0},
-    other: {score: 0, issues_count: 0},
-  }
+    other: {score: 0, issues_count: 0}}
 
   // Count audits by type
   let failedCount = 0
@@ -211,7 +206,11 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
       }
 
       // Extract details
-      const details: {selector?: string, value?: string, issue?: string}[]
+      const details: {
+        selector?: string
+        value?: string
+        issue?: string
+      }[]
         = []
 
       if (audit.details != null) {
@@ -280,23 +279,11 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
     })
 
   // Add specific high-impact recommendations
-  if (issues.some(issue => issue.id === 'meta-description')) {
-    prioritized_recommendations.push(
-      'Add a meta description to improve click-through rate',
-    )
-  }
+  if (issues.some(issue => issue.id === 'meta-description')) prioritized_recommendations.push('Add a meta description to improve click-through rate')
 
-  if (issues.some(issue => issue.id === 'document-title')) {
-    prioritized_recommendations.push(
-      'Add a descriptive page title with keywords',
-    )
-  }
+  if (issues.some(issue => issue.id === 'document-title')) prioritized_recommendations.push('Add a descriptive page title with keywords')
 
-  if (issues.some(issue => issue.id === 'hreflang')) {
-    prioritized_recommendations.push(
-      'Fix hreflang implementation for international SEO',
-    )
-  }
+  if (issues.some(issue => issue.id === 'hreflang')) prioritized_recommendations.push('Fix hreflang implementation for international SEO')
 
   if (issues.some(issue => issue.id === 'canonical')) prioritized_recommendations.push('Implement proper canonical tags')
 
@@ -319,8 +306,6 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
   }
 
   // Return the full report following the LighthouseReport interface
-  return {
-    metadata,
-    report: reportContent,
-  }
+  return {metadata,
+    report: reportContent}
 }

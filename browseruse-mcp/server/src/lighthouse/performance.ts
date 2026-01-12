@@ -114,8 +114,7 @@ const DETAIL_LIMITS = {
   // Up to 10 items for moderate issues
   moderate: 10,
   // Up to 3 items for minor issues
-  minor: 3,
-}
+  minor: 3}
 
 /**
  * Performance audit adapted for AI consumption
@@ -147,13 +146,11 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
   const score = Math.round((categoryData?.score ?? 0) * 100)
 
   // Add metadata
-  const metadata = {
-    url,
+  const metadata = {url,
     timestamp: lhr.fetchTime || new Date().toISOString(),
     // This could be made configurable
     device: 'desktop',
-    lighthouseVersion: lhr.lighthouseVersion,
-  }
+    lighthouseVersion: lhr.lighthouseVersion}
 
   // Count audits by type
   const auditRefs = categoryData?.auditRefs ?? []
@@ -196,12 +193,10 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
     const lcp = audits['largest-contentful-paint']
     const lcpElement = audits['largest-contentful-paint-element']
 
-    const metric: AIOptimizedMetric = {
-      id: 'lcp',
+    const metric: AIOptimizedMetric = {id: 'lcp',
       score: lcp.score,
       value_ms: Math.round(lcp.numericValue ?? 0),
-      passes_core_web_vital: lcp.score != null && lcp.score >= 0.9,
-    }
+      passes_core_web_vital: lcp.score != null && lcp.score >= 0.9}
 
     // Enhanced LCP element detection
 
@@ -235,8 +230,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
                 // Try to extract image name from selector
                 const imgMatch = /img\.[^> ]+/.exec(selector)
                 if (imgMatch != null && metric.element_url == null) metric.element_url = imgMatch[0]
-              }
-              else if (String(path).includes(',SPAN') || String(path).includes(',P') || String(path).includes(',H')) metric.element_type = 'text'
+              } else if (String(path).includes(',SPAN') || String(path).includes(',P') || String(path).includes(',H')) metric.element_type = 'text'
             }
 
             // Try to extract text content if available
@@ -261,8 +255,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
                 const match = /src="([^"]+)"/.exec(String(snippet))
                 if (match?.[1] != null) metric.element_url = match[1]
               }
-            }
-            else if (String(node.nodeLabel).startsWith('<video')) metric.element_type = 'video'
+            } else if (String(node.nodeLabel).startsWith('<video')) metric.element_type = 'video'
             else if (String(node.nodeLabel).startsWith('<h')) metric.element_type = 'heading'
             else metric.element_type = 'text'
 
@@ -380,54 +373,34 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
 
   if (audits['first-contentful-paint'] != null) {
     const fcp = audits['first-contentful-paint']
-    metrics.push({
-      id: 'fcp',
-      score: fcp.score,
-      value_ms: Math.round(fcp.numericValue ?? 0),
-      passes_core_web_vital: (fcp.score ?? 0) >= 0.9,
-    })
+    metrics.push({id: 'fcp', score: fcp.score, value_ms: Math.round(fcp.numericValue ?? 0), passes_core_web_vital: (fcp.score ?? 0) >= 0.9})
   }
 
   if (audits['speed-index'] != null) {
     const si = audits['speed-index']
-    metrics.push({
-      id: 'si',
-      score: si.score,
-      value_ms: Math.round(si.numericValue ?? 0),
-    })
+    metrics.push({id: 'si', score: si.score, value_ms: Math.round(si.numericValue ?? 0)})
   }
 
   if (audits.interactive != null) {
     const tti = audits.interactive
-    metrics.push({
-      id: 'tti',
-      score: tti.score,
-      value_ms: Math.round(tti.numericValue ?? 0),
-    })
+    metrics.push({id: 'tti', score: tti.score, value_ms: Math.round(tti.numericValue ?? 0)})
   }
 
   // Add CLS (Cumulative Layout Shift)
   if (audits['cumulative-layout-shift'] != null) {
     const cls = audits['cumulative-layout-shift']
-    metrics.push({
-      id: 'cls',
+    metrics.push({id: 'cls',
       score: cls.score,
       // CLS is not in ms, but a unitless value
       // Convert to 3 decimal places
       value_ms: Math.round((cls.numericValue ?? 0) * 1000) / 1000,
-      passes_core_web_vital: (cls.score ?? 0) >= 0.9,
-    })
+      passes_core_web_vital: (cls.score ?? 0) >= 0.9})
   }
 
   // Add TBT (Total Blocking Time)
   if (audits['total-blocking-time'] != null) {
     const tbt = audits['total-blocking-time']
-    metrics.push({
-      id: 'tbt',
-      score: tbt.score,
-      value_ms: Math.round(tbt.numericValue ?? 0),
-      passes_core_web_vital: (tbt.score ?? 0) >= 0.9,
-    })
+    metrics.push({id: 'tbt', score: tbt.score, value_ms: Math.round(tbt.numericValue ?? 0), passes_core_web_vital: (tbt.score ?? 0) >= 0.9})
   }
 
   // Extract opportunities
@@ -442,12 +415,10 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
     else if (savings > 1000) impact = 'serious'
     else if (savings < 300) impact = 'minor'
 
-    const opportunity: AIOptimizedOpportunity = {
-      id: 'render_blocking_resources',
+    const opportunity: AIOptimizedOpportunity = {id: 'render_blocking_resources',
       savings_ms: savings,
       severity: impact,
-      resources: [],
-    }
+      resources: []}
 
     const rbrDetails = rbrAudit.details as unknown
     if (rbrDetails != null && isObjectWithItems(rbrDetails)) {
@@ -462,10 +433,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
 
           const url = String(itemObj.url)
           const fileName = url.split('/').pop() ?? url
-          opportunity.resources.push({
-            url: fileName,
-            savings_ms: Math.round(itemObj.wastedMs != null ? Number(itemObj.wastedMs) : 0),
-          })
+          opportunity.resources.push({url: fileName, savings_ms: Math.round(itemObj.wastedMs != null ? Number(itemObj.wastedMs) : 0)})
         })
     }
 
@@ -483,12 +451,10 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
     else if (savings > 1000) impact = 'serious'
     else if (savings < 300) impact = 'minor'
 
-    const opportunity: AIOptimizedOpportunity = {
-      id: 'http2',
+    const opportunity: AIOptimizedOpportunity = {id: 'http2',
       savings_ms: savings,
       severity: impact,
-      resources: [],
-    }
+      resources: []}
 
     const http2Details = http2Audit.details as unknown
     if (http2Details != null && isObjectWithItems(http2Details)) {
@@ -625,8 +591,6 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
   }
 
   // Return the full report following the LighthouseReport interface
-  return {
-    metadata,
-    report: reportContent,
-  }
+  return {metadata,
+    report: reportContent}
 }

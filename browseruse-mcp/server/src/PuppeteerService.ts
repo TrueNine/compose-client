@@ -104,14 +104,10 @@ async function getHeadlessBrowserInstance(): Promise<Browser> {
   if (headlessBrowserInstance != null) {
     try {
       const pages = await headlessBrowserInstance.pages()
-      logger.info(
-        `Reusing existing headless browser with ${pages.length} pages`,
-      )
+      logger.info(`Reusing existing headless browser with ${pages.length} pages`)
       return headlessBrowserInstance
     } catch {
-      logger.info(
-        'Existing browser instance is no longer valid, creating a new one',
-      )
+      logger.info('Existing browser instance is no longer valid, creating a new one')
       headlessBrowserInstance = null
       launchedBrowserWSEndpoint = null
     }
@@ -140,13 +136,7 @@ async function launchNewBrowser(): Promise<Browser> {
     await setCustomBrowserExecutable(launchOptions)
 
     // Launch the browser
-    logger.info(
-      'Launching browser with options:',
-      JSON.stringify({
-        headless: launchOptions.headless,
-        executablePath: launchOptions.executablePath,
-      }),
-    )
+    logger.info('Launching browser with options:', JSON.stringify({headless: launchOptions.headless, executablePath: launchOptions.executablePath}))
 
     browser = await puppeteer.launch(launchOptions)
 
@@ -164,14 +154,12 @@ async function launchNewBrowser(): Promise<Browser> {
 
     // Clean up resources
 
-    try { await browser?.close() }
-    catch (closeError: unknown) { logger.error('Error closing browser:', closeError) }
+    try { await browser?.close() } catch (closeError: unknown) { logger.error('Error closing browser:', closeError) }
     headlessBrowserInstance = null
     launchedBrowserWSEndpoint = null
 
     // Clean up the temporary directory
-    try { fs.rmSync(userDataDir, {recursive: true, force: true}) }
-    catch (fsError: unknown) { logger.error('Error removing temporary directory:', fsError) }
+    try { fs.rmSync(userDataDir, {recursive: true, force: true}) } catch (fsError: unknown) { logger.error('Error removing temporary directory:', fsError) }
 
     throw error
   }
@@ -198,26 +186,24 @@ function createTempUserDataDir(): string {
  * @returns Launch options object
  */
 function configureLaunchOptions(userDataDir: string): Record<string, unknown> {
-  const launchOptions: Record<string, unknown> = {
-    args: [
-      // Use dynamic port
-      '--remote-debugging-port=0',
-      `--user-data-dir=${userDataDir}`,
-      '--no-first-run',
-      '--no-default-browser-check',
-      '--disable-dev-shm-usage',
-      '--disable-extensions',
-      '--disable-component-extensions-with-background-pages',
-      '--disable-background-networking',
-      '--disable-backgrounding-occluded-windows',
-      '--disable-default-apps',
-      '--disable-sync',
-      '--disable-translate',
-      '--metrics-recording-only',
-      '--no-pings',
-      '--safebrowsing-disable-auto-update',
-    ],
-  }
+  const launchOptions: Record<string, unknown> = {args: [
+    // Use dynamic port
+    '--remote-debugging-port=0',
+    `--user-data-dir=${userDataDir}`,
+    '--no-first-run',
+    '--no-default-browser-check',
+    '--disable-dev-shm-usage',
+    '--disable-extensions',
+    '--disable-component-extensions-with-background-pages',
+    '--disable-background-networking',
+    '--disable-backgrounding-occluded-windows',
+    '--disable-default-apps',
+    '--disable-sync',
+    '--disable-translate',
+    '--metrics-recording-only',
+    '--no-pings',
+    '--safebrowsing-disable-auto-update',
+  ]}
 
   // Add headless mode (using any to bypass type checking issues)
   launchOptions.headless = 'new'
@@ -253,10 +239,7 @@ async function setCustomBrowserExecutable(launchOptions: Record<string, unknown>
         // Set product to firefox if using Firefox browser
         if (browser === 'firefox') launchOptions.product = 'firefox'
 
-        logger.info(
-          `Using custom ${browser} path: `,
-          launchOptions.executablePath,
-        )
+        logger.info(`Using custom ${browser} path: `, launchOptions.executablePath)
         return
       }
     }
@@ -283,10 +266,7 @@ async function setCustomBrowserExecutable(launchOptions: Record<string, unknown>
         logger.info('Setting product to firefox for Firefox browser')
       }
 
-      logger.info(
-        `Using detected browser path: `,
-        launchOptions.executablePath,
-      )
+      logger.info(`Using detected browser path: `, launchOptions.executablePath)
     }
   } catch (error: unknown) {
     logger.error('Failed to detect browser executable path:', error)
@@ -306,10 +286,7 @@ async function findBrowserExecutablePath(): Promise<string> {
     logger.info('Attempting to find Chrome using chrome-launcher...')
 
     // Launch Chrome using chrome-launcher
-    const chrome = await ChromeLauncher.launch({
-      chromeFlags: ['--headless'],
-      handleSIGINT: false,
-    })
+    const chrome = await ChromeLauncher.launch({chromeFlags: ['--headless'], handleSIGINT: false})
 
     // chrome-launcher stores the Chrome executable path differently than Puppeteer
     // Let's try different approaches to get it
@@ -394,10 +371,7 @@ async function findBrowserExecutablePath(): Promise<string> {
       try {
         logger.info('Checking Windows registry for Chrome...')
         // Try HKLM first
-        const regOutput = execSync(
-          'reg query "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\chrome.exe" /ve',
-          {encoding: 'utf8'},
-        )
+        const regOutput = execSync('reg query "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\chrome.exe" /ve', {encoding: 'utf8'})
 
         // Extract path from registry output
         const match = /REG_(?:SZ|EXPAND_SZ)\s+(\S+)/i.exec(regOutput)
@@ -413,10 +387,7 @@ async function findBrowserExecutablePath(): Promise<string> {
       // Try HKCU if HKLM fails
         try {
           logger.info('Checking user registry for Chrome...')
-          const regOutput = execSync(
-            'reg query "HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\chrome.exe" /ve',
-            {encoding: 'utf8'},
-          )
+          const regOutput = execSync('reg query "HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\chrome.exe" /ve', {encoding: 'utf8'})
 
           // Extract path from registry output
           const match = /REG_(?:SZ|EXPAND_SZ)\s+(\S+)/i.exec(regOutput)
@@ -428,20 +399,13 @@ async function findBrowserExecutablePath(): Promise<string> {
               return registryPath
             }
           }
-        } catch {
-          logger.info(
-            'Failed to find Chrome via registry, continuing with path checks',
-          )
-        }
+        } catch { logger.info('Failed to find Chrome via registry, continuing with path checks') }
       }
 
       // Try to find Chrome through BLBeacon registry key (version info)
       try {
         logger.info('Checking Chrome BLBeacon registry...')
-        const regOutput = execSync(
-          'reg query "HKEY_CURRENT_USER\\Software\\Google\\Chrome\\BLBeacon" /v version',
-          {encoding: 'utf8'},
-        )
+        const regOutput = execSync('reg query "HKEY_CURRENT_USER\\Software\\Google\\Chrome\\BLBeacon" /v version', {encoding: 'utf8'})
 
         if (regOutput) {
           const p = await import('node:process')
@@ -456,46 +420,34 @@ async function findBrowserExecutablePath(): Promise<string> {
 
           for (const chromePath of defaultChromePaths) {
             if (fs.existsSync(chromePath)) {
-              logger.info(
-                `Found Chrome via BLBeacon registry hint: ${chromePath}`,
-              )
+              logger.info(`Found Chrome via BLBeacon registry hint: ${chromePath}`)
               return chromePath
             }
           }
         }
-      } catch {
-        logger.info('Failed to find Chrome via BLBeacon registry')
-      }
+      } catch { logger.info('Failed to find Chrome via BLBeacon registry') }
       const p = await import('node:process')
       // Continue with regular path checks
       const programFiles = p.env.PROGRAMFILES ?? 'C:\\Program Files'
       const programFilesX86 = p.env['PROGRAMFILES(X86)'] ?? 'C:\\Program Files (x86)'
 
       // Common Windows browser paths
-      const winBrowserPaths = {
-        chrome: [
-          path.join(programFiles, 'Google\\Chrome\\Application\\chrome.exe'),
-          path.join(programFilesX86, 'Google\\Chrome\\Application\\chrome.exe'),
-        ],
-        edge: [
-          path.join(programFiles, 'Microsoft\\Edge\\Application\\msedge.exe'),
-          path.join(programFilesX86, 'Microsoft\\Edge\\Application\\msedge.exe'),
-        ],
-        brave: [
-          path.join(
-            programFiles,
-            'BraveSoftware\\Brave-Browser\\Application\\brave.exe',
-          ),
-          path.join(
-            programFilesX86,
-            'BraveSoftware\\Brave-Browser\\Application\\brave.exe',
-          ),
-        ],
-        firefox: [
-          path.join(programFiles, 'Mozilla Firefox\\firefox.exe'),
-          path.join(programFilesX86, 'Mozilla Firefox\\firefox.exe'),
-        ],
-      }
+      const winBrowserPaths = {chrome: [
+        path.join(programFiles, 'Google\\Chrome\\Application\\chrome.exe'),
+        path.join(programFilesX86, 'Google\\Chrome\\Application\\chrome.exe'),
+      ],
+      edge: [
+        path.join(programFiles, 'Microsoft\\Edge\\Application\\msedge.exe'),
+        path.join(programFilesX86, 'Microsoft\\Edge\\Application\\msedge.exe'),
+      ],
+      brave: [
+        path.join(programFiles, 'BraveSoftware\\Brave-Browser\\Application\\brave.exe'),
+        path.join(programFilesX86, 'BraveSoftware\\Brave-Browser\\Application\\brave.exe'),
+      ],
+      firefox: [
+        path.join(programFiles, 'Mozilla Firefox\\firefox.exe'),
+        path.join(programFilesX86, 'Mozilla Firefox\\firefox.exe'),
+      ]}
 
       // Check each browser in preferred order
       for (const browser of preferredBrowsers) {
@@ -529,9 +481,7 @@ async function findBrowserExecutablePath(): Promise<string> {
             logger.info(`Found ${browser} at ${browserPath}`)
             // Safari is detected but not supported by Puppeteer
             if (browser === 'safari') {
-              logger.info(
-                'Safari detected but not supported by Puppeteer. Continuing search...',
-              )
+              logger.info('Safari detected but not supported by Puppeteer. Continuing search...')
               continue
             }
             return browserPath
@@ -543,12 +493,10 @@ async function findBrowserExecutablePath(): Promise<string> {
     }
     case 'linux': {
     // Linux browser commands
-      const linuxBrowserCommands = {
-        chrome: ['google-chrome', 'chromium', 'chromium-browser'],
+      const linuxBrowserCommands = {chrome: ['google-chrome', 'chromium', 'chromium-browser'],
         edge: ['microsoft-edge'],
         brave: ['brave-browser'],
-        firefox: ['firefox'],
-      }
+        firefox: ['firefox']}
 
       // Check each browser in preferred order
       for (const browser of preferredBrowsers) {
@@ -622,14 +570,8 @@ function setupBrowserCleanupHandlers(
         try {
           fs.rmSync(userDataDir, {recursive: true, force: true})
           logger.info(`Successfully removed directory: ${userDataDir}`)
-        } catch (error: unknown) {
-          logger.error(`Failed to remove directory ${userDataDir}:`, error)
-        }
-      } else {
-        logger.info(
-          `Skipping cleanup for ${userDataDir} as new browser instance is active`,
-        )
-      }
+        } catch (error: unknown) { logger.error(`Failed to remove directory ${userDataDir}:`, error) }
+      } else logger.info(`Skipping cleanup for ${userDataDir} as new browser instance is active`)
       // 5-second delay for cleanup
     }, 5000)
 
@@ -662,9 +604,7 @@ export function scheduleBrowserCleanup(): void {
   // Only schedule cleanup if we have an active browser instance
   if (!headlessBrowserInstance) return
 
-  logger.info(
-    `Scheduling browser cleanup in ${BROWSER_CLEANUP_TIMEOUT / 1000} seconds`,
-  )
+  logger.info(`Scheduling browser cleanup in ${BROWSER_CLEANUP_TIMEOUT / 1000} seconds`)
   browserCleanupTimeout = setTimeout(() => {
     logger.info('Executing scheduled browser cleanup')
     if (headlessBrowserInstance) {
@@ -732,8 +672,7 @@ export async function connectToHeadlessBrowser(
 
   try {
     // Validate URL format
-    try { URL.parse(url) }
-    catch { throw new Error(`Invalid URL format: ${url}`) }
+    try { URL.parse(url) } catch { throw new Error(`Invalid URL format: ${url}`) }
 
     // Get or create a browser instance
     const browser = await getHeadlessBrowserInstance()
@@ -741,9 +680,7 @@ export async function connectToHeadlessBrowser(
     if (launchedBrowserWSEndpoint === null) throw new Error('Failed to retrieve WebSocket endpoint for browser')
 
     // Extract port from WebSocket endpoint
-    const port = Number.parseInt(
-      launchedBrowserWSEndpoint.split(':')[2].split('/')[0],
-    )
+    const port = Number.parseInt(launchedBrowserWSEndpoint.split(':')[2].split('/')[0])
 
     // Always create a new page for each audit to avoid request interception conflicts
     logger.info('Creating a new page for this audit')
@@ -759,8 +696,7 @@ export async function connectToHeadlessBrowser(
     await page.goto(url, {
       // Wait until there are no more network connections for at least 500ms
       waitUntil: 'networkidle2',
-      timeout: navigationTimeout,
-    })
+      timeout: navigationTimeout})
 
     // Set custom headers if provided
     if (options.headers && Object.keys(options.headers).length > 0) {
@@ -771,11 +707,9 @@ export async function connectToHeadlessBrowser(
     // Set cookies if provided
     if (options.cookies && options.cookies.length > 0) {
       const urlObj = new URL(url)
-      const cookiesWithDomain = options.cookies.map(cookie => ({
-        ...cookie,
+      const cookiesWithDomain = options.cookies.map(cookie => ({...cookie,
         domain: cookie.domain ?? urlObj.hostname,
-        path: cookie.path ?? '/',
-      }))
+        path: cookie.path ?? '/'}))
       await page.setCookie(...cookiesWithDomain)
       logger.info(`Set ${options.cookies.length} cookies`)
     }
@@ -783,9 +717,7 @@ export async function connectToHeadlessBrowser(
     // Set custom viewport if specified
     if (options.viewport) {
       await page.setViewport(options.viewport)
-      logger.info(
-        `Set viewport to ${options.viewport.width}x${options.viewport.height}`,
-      )
+      logger.info(`Set viewport to ${options.viewport.width}x${options.viewport.height}`)
     } else if (options.emulateDevice) {
       // Set common device emulation presets
       let viewport
@@ -793,31 +725,25 @@ export async function connectToHeadlessBrowser(
 
       switch (options.emulateDevice) {
         case 'mobile':
-          viewport = {
-            width: 375,
+          viewport = {width: 375,
             height: 667,
             isMobile: true,
-            hasTouch: true,
-          }
+            hasTouch: true}
           userAgent = userAgent ?? 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X)'
           break
         case 'tablet':
-          viewport = {
-            width: 768,
+          viewport = {width: 768,
             height: 1024,
             isMobile: true,
-            hasTouch: true,
-          }
+            hasTouch: true}
           userAgent = userAgent ?? 'Mozilla/5.0 (iPad; CPU OS 13_2_3 like Mac OS X)'
           break
         case 'desktop':
         default:
-          viewport = {
-            width: 1280,
+          viewport = {width: 1280,
             height: 800,
             isMobile: false,
-            hasTouch: false,
-          }
+            hasTouch: false}
           break
       }
 
@@ -847,37 +773,35 @@ export async function connectToHeadlessBrowser(
 
       switch (options.emulateNetworkCondition) {
         case 'slow3G':
-          networkConditions = {
-            offline: false,
+          networkConditions = {offline: false,
             latency: 400,
             download: (500 * 1024) / 8,
-            upload: (500 * 1024) / 8,
-          }
+            upload: (500 * 1024) / 8}
           break
         case 'fast3G':
-          networkConditions = {
-            offline: false,
+          networkConditions = {offline: false,
             latency: 150,
             download: (1.5 * 1024 * 1024) / 8,
-            upload: (750 * 1024) / 8,
-          }
+            upload: (750 * 1024) / 8}
           break
         case '4G':
-          networkConditions = {
-            offline: false,
+          networkConditions = {offline: false,
             latency: 50,
             download: (4 * 1024 * 1024) / 8,
-            upload: (2 * 1024 * 1024) / 8,
-          }
+            upload: (2 * 1024 * 1024) / 8}
           break
-        case 'offline': networkConditions = {download: 0, latency: 0, upload: 0, offline: true}; break
-        default: networkConditions = {download: 0, latency: 0, upload: 0, offline: false}
+        case 'offline': networkConditions = {download: 0,
+          latency: 0,
+          upload: 0,
+          offline: true}; break
+        default: networkConditions = {download: 0,
+          latency: 0,
+          upload: 0,
+          offline: false}
       }
 
       await page.emulateNetworkConditions(networkConditions)
-      logger.info(
-        `Emulating ${options.emulateNetworkCondition} network conditions`,
-      )
+      logger.info(`Emulating ${options.emulateNetworkCondition} network conditions`)
     }
 
     // Check if we should block resources based on the options
@@ -893,28 +817,24 @@ export async function connectToHeadlessBrowser(
         else void request.continue()
       })
 
-      logger.info(
-        `Blocking resource types: ${resourceTypesToBlock.join(', ')}`,
-      )
+      logger.info(`Blocking resource types: ${resourceTypesToBlock.join(', ')}`)
     }
 
     // Wait for a specific selector if requested
     if (options.waitForSelector !== void 0) {
       try {
         logger.info(`Waiting for selector: ${options.waitForSelector}`)
-        await page.waitForSelector(options.waitForSelector, {
-          timeout: options.waitForTimeout ?? 30000,
-        })
+        await page.waitForSelector(options.waitForSelector, {timeout: options.waitForTimeout ?? 30000})
       } catch (selectorError: unknown) {
         const message = selectorError instanceof Error ? selectorError.message : String(selectorError)
-        logger.warn(
-          `Failed to find selector "${options.waitForSelector}": ${message}`,
-        )
+        logger.warn(`Failed to find selector "${options.waitForSelector}": ${message}`)
         // Continue anyway, don't fail the whole operation
       }
     }
 
-    return {browser, port, page}
+    return {browser,
+      port,
+      page}
   } catch (error: unknown) {
     logger.error('Failed to connect to headless browser:', error)
     throw new Error(

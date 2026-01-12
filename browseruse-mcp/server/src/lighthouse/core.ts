@@ -13,29 +13,23 @@ import {AuditCategory} from './types.js'
 export function createLighthouseConfig(
   categories: string[] = [AuditCategory.ACCESSIBILITY],
 ): LighthouseConfig {
-  return {
-    flags: {
-      output: ['json'],
-      onlyCategories: categories,
-      formFactor: 'desktop',
-      port: void 0 as number | undefined,
-      screenEmulation: {
-        mobile: false,
-        width: 1350,
-        height: 940,
-        deviceScaleFactor: 1,
-        disabled: false,
-      },
+  return {flags: {
+    output: ['json'],
+    onlyCategories: categories,
+    formFactor: 'desktop',
+    port: void 0 as number | undefined,
+    screenEmulation: {
+      mobile: false,
+      width: 1350,
+      height: 940,
+      deviceScaleFactor: 1,
+      disabled: false,
     },
-    config: {
-      extends: 'lighthouse:default',
-      settings: {
-        onlyCategories: categories,
-        emulatedFormFactor: 'desktop',
-        throttling: {cpuSlowdownMultiplier: 1},
-      },
-    },
-  }
+  },
+  config: {extends: 'lighthouse:default',
+    settings: {onlyCategories: categories,
+      emulatedFormFactor: 'desktop',
+      throttling: {cpuSlowdownMultiplier: 1}}}}
 }
 
 /**
@@ -68,9 +62,7 @@ export async function runLighthouseAudit(
     // For performance audits, we want to load all resources
     // For accessibility or other audits, we can block non-essential resources
     try {
-      const {port} = await connectToHeadlessBrowser(url, {
-        blockResources: !isPerformanceAudit,
-      })
+      const {port} = await connectToHeadlessBrowser(url, {blockResources: !isPerformanceAudit})
 
       logger.info(`Connected to browser on port: ${port}`)
 
@@ -78,9 +70,7 @@ export async function runLighthouseAudit(
       const {flags, config} = createLighthouseConfig(categories)
       flags.port = port
 
-      logger.info(
-        `Running Lighthouse with categories: ${categories.join(', ')}`,
-      )
+      logger.info(`Running Lighthouse with categories: ${categories.join(', ')}`)
       const runnerResult = await lighthouse(url, flags as Flags, config)
       logger.info('Lighthouse scan completed')
 

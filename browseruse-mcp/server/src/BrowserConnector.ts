@@ -95,9 +95,7 @@ function convertPathForCurrentPlatform(inputPath: string): string {
       // Find the distribution name in the path
       let distIndex = -1
       for (const dist of distNames) {
-        const index = parts.findIndex(
-          part => part === dist || part.toLowerCase() === dist.toLowerCase(),
-        )
+        const index = parts.findIndex(part => part === dist || part.toLowerCase() === dist.toLowerCase())
         if (index !== -1) {
           distIndex = index
           break
@@ -107,28 +105,18 @@ function convertPathForCurrentPlatform(inputPath: string): string {
       if (distIndex !== -1 && distIndex + 1 < parts.length) {
         // Reconstruct the path as a native Linux path
         const linuxPath = `/${parts.slice(distIndex + 1).join('/')}`
-        logger.info(
-          `Converted Windows WSL path "${inputPath}" to Linux path "${linuxPath}"`,
-        )
+        logger.info(`Converted Windows WSL path "${inputPath}" to Linux path "${linuxPath}"`)
         return linuxPath
       }
 
       // If we couldn't find a distribution name but it's clearly a WSL path,
       // try to extract everything after wsl.localhost or wsl$
-      const wslIndex = parts.findIndex(
-        part =>
-          part === 'wsl.localhost'
-          || part === 'wsl$'
-          || part.toLowerCase() === 'wsl.localhost'
-          || part.toLowerCase() === 'wsl$',
-      )
+      const wslIndex = parts.findIndex(part => part === 'wsl.localhost' || part === 'wsl$' || part.toLowerCase() === 'wsl.localhost' || part.toLowerCase() === 'wsl$')
 
       if (wslIndex !== -1 && wslIndex + 2 < parts.length) {
         // Skip the WSL prefix and distribution name
         const linuxPath = `/${parts.slice(wslIndex + 2).join('/')}`
-        logger.info(
-          `Converted Windows WSL path "${inputPath}" to Linux path "${linuxPath}"`,
-        )
+        logger.info(`Converted Windows WSL path "${inputPath}" to Linux path "${linuxPath}"`)
         return linuxPath
       }
     }
@@ -137,9 +125,7 @@ function convertPathForCurrentPlatform(inputPath: string): string {
     const normalizedPath = inputPath
       .replaceAll('\\\\', '/')
       .replaceAll('\\', '/')
-    logger.info(
-      `Converted Windows UNC path "${inputPath}" to "${normalizedPath}"`,
-    )
+    logger.info(`Converted Windows UNC path "${inputPath}" to "${normalizedPath}"`)
     return normalizedPath
   }
   if (!/^[A-Z]:\\/i.test(inputPath)) return inputPath
@@ -147,9 +133,7 @@ function convertPathForCurrentPlatform(inputPath: string): string {
   const normalizedPath = inputPath
     .replace(/^[A-Z]:\\/i, '/')
     .replaceAll('\\', '/')
-  logger.info(
-    `Converted Windows drive path "${inputPath}" to "${normalizedPath}"`,
-  )
+  logger.info(`Converted Windows drive path "${inputPath}" to "${normalizedPath}"`)
   return normalizedPath
 }
 
@@ -308,9 +292,7 @@ function truncateLogsToQueryLimit(logs: LogEntry[]): LogEntry[] {
 
     // Check if adding this log would exceed the limit
     if (currentSize + logSize > currentSettings.queryLimit) {
-      logger.info(
-        `Reached query limit (${currentSize}/${currentSettings.queryLimit}), truncating logs`,
-      )
+      logger.info(`Reached query limit (${currentSize}/${currentSettings.queryLimit}), truncating logs`)
       break
     }
 
@@ -328,11 +310,9 @@ app.post('/extension-log', (req, res) => {
   logger.info('\n=== Received Extension Log ===')
   const bodyObj = req.body as Record<string, unknown>
   const bodyData = bodyObj?.data as Record<string, unknown> | undefined
-  logger.info('Request body:', {
-    dataType: bodyObj != null && bodyData != null ? bodyData.type : null,
+  logger.info('Request body:', {dataType: bodyObj != null && bodyData != null ? bodyData.type : null,
     timestamp: bodyObj != null && bodyData != null ? bodyData.timestamp : null,
-    hasSettings: bodyObj?.settings != null,
-  })
+    hasSettings: bodyObj?.settings != null})
 
   const {data} = bodyObj
   const {settings} = bodyObj
@@ -341,10 +321,8 @@ app.post('/extension-log', (req, res) => {
   if (settings != null) {
     logger.info('Updating settings:', settings)
     const settingsObj = settings as Record<string, unknown>
-    currentSettings = {
-      ...currentSettings,
-      ...settingsObj,
-    } as Settings
+    currentSettings = {...currentSettings,
+      ...settingsObj} as Settings
   }
 
   if (data == null) {
@@ -373,44 +351,34 @@ app.post('/extension-log', (req, res) => {
       logger.info('Updated current URL:', currentUrl)
       break
     case 'console-log':
-      logger.info('Adding console log:', {
-        level: dataObj.level,
+      logger.info('Adding console log:', {level: dataObj.level,
         message:
           String(dataObj.message).slice(0, 100)
           + (String(dataObj.message).length > 100 ? '...' : ''),
-        timestamp: dataObj.timestamp,
-      })
+        timestamp: dataObj.timestamp})
       consoleLogs.push(dataObj as unknown as LogEntry)
       if (consoleLogs.length > currentSettings.logLimit) {
-        logger.info(
-          `Console logs exceeded limit (${currentSettings.logLimit}), removing oldest entry`,
-        )
+        logger.info(`Console logs exceeded limit (${currentSettings.logLimit}), removing oldest entry`)
         consoleLogs.shift()
       }
       break
     case 'console-error':
-      logger.info('Adding console error:', {
-        level: dataObj.level,
+      logger.info('Adding console error:', {level: dataObj.level,
         message:
           String(dataObj.message).slice(0, 100)
           + (String(dataObj.message).length > 100 ? '...' : ''),
-        timestamp: dataObj.timestamp,
-      })
+        timestamp: dataObj.timestamp})
       consoleErrors.push(dataObj as unknown as LogEntry)
       if (consoleErrors.length > currentSettings.logLimit) {
-        logger.info(
-          `Console errors exceeded limit (${currentSettings.logLimit}), removing oldest entry`,
-        )
+        logger.info(`Console errors exceeded limit (${currentSettings.logLimit}), removing oldest entry`)
         consoleErrors.shift()
       }
       break
     case 'network-request': {
-      const logEntry = {
-        url: dataObj.url,
+      const logEntry = {url: dataObj.url,
         method: dataObj.method,
         status: dataObj.status,
-        timestamp: dataObj.timestamp,
-      }
+        timestamp: dataObj.timestamp}
       logger.info('Adding network request:', logEntry)
 
       // Route network requests based on status code
@@ -418,17 +386,13 @@ app.post('/extension-log', (req, res) => {
       if (status >= 400) {
         networkErrors.push(dataObj as unknown as LogEntry)
         if (networkErrors.length > currentSettings.logLimit) {
-          logger.info(
-            `Network errors exceeded limit (${currentSettings.logLimit}), removing oldest entry`,
-          )
+          logger.info(`Network errors exceeded limit (${currentSettings.logLimit}), removing oldest entry`)
           networkErrors.shift()
         }
       } else {
         networkSuccess.push(dataObj as unknown as LogEntry)
         if (networkSuccess.length > currentSettings.logLimit) {
-          logger.info(
-            `Network success logs exceeded limit (${currentSettings.logLimit}), removing oldest entry`,
-          )
+          logger.info(`Network success logs exceeded limit (${currentSettings.logLimit}), removing oldest entry`)
           networkSuccess.shift()
         }
       }
@@ -436,23 +400,19 @@ app.post('/extension-log', (req, res) => {
     }
     case 'selected-element': {
       const element = dataObj.element as Record<string, unknown> | undefined
-      logger.info('Updating selected element:', {
-        tagName: element?.tagName as string | undefined,
+      logger.info('Updating selected element:', {tagName: element?.tagName as string | undefined,
         id: element?.id as string | undefined,
-        className: element?.className as string | undefined,
-      })
+        className: element?.className as string | undefined})
       selectedElement = element
       break
     }
     default: logger.info('Unknown log type:', String(dataObj.type))
   }
 
-  logger.info('Current log counts:', {
-    consoleLogs: consoleLogs.length,
+  logger.info('Current log counts:', {consoleLogs: consoleLogs.length,
     consoleErrors: consoleErrors.length,
     networkErrors: networkErrors.length,
-    networkSuccess: networkSuccess.length,
-  })
+    networkSuccess: networkSuccess.length})
   logger.info('=== End Extension Log ===\n')
 
   res.json({status: 'ok'})
@@ -481,9 +441,7 @@ app.get('/network-success', (_req, res) => {
 
 app.get('/all-xhr', (_req, res) => {
   // Merge and sort network success and error logs by timestamp
-  const mergedLogs = [...networkSuccess, ...networkErrors].sort(
-    (a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime(),
-  )
+  const mergedLogs = [...networkSuccess, ...networkErrors].sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime())
   const truncatedLogs = truncateLogsToQueryLimit(mergedLogs)
   res.json(truncatedLogs)
 })
@@ -495,22 +453,13 @@ app.post('/selected-element', (req, res) => {
   res.json({status: 'ok'})
 })
 
-app.get('/selected-element', (_req, res) => {
-  res.json(selectedElement ?? {message: 'No element selected'})
-})
+app.get('/selected-element', (_req, res) => { res.json(selectedElement ?? {message: 'No element selected'}) })
 
-app.get('/.port', (_req, res) => {
-  res.send(PORT.toString())
-})
+app.get('/.port', (_req, res) => { res.send(PORT.toString()) })
 
 // Add new identity endpoint with a unique signature
 app.get('/.identity', (_req, res) => {
-  res.json({
-    port: PORT,
-    name: 'browser-tools-server',
-    version: '1.2.0',
-    signature: 'mcp-browser-connector-24x7',
-  })
+  res.json({port: PORT, name: 'browser-tools-server', version: '1.2.0', signature: 'mcp-browser-connector-24x7'})
 })
 
 // Add function to clear all logs
@@ -533,10 +482,7 @@ app.post('/wipelogs', (_req, res) => {
 
 // Add endpoint for the extension to report the current URL
 app.post('/current-url', (req, res) => {
-  logger.info(
-    'Received current URL update request:',
-    JSON.stringify(req.body, null, 2),
-  )
+  logger.info('Received current URL update request:', JSON.stringify(req.body, null, 2))
 
   if (req.body != null && (req.body as Record<string, unknown>).url != null) {
     const oldUrl = currentUrl
@@ -557,12 +503,8 @@ app.post('/current-url', (req, res) => {
       ? new Date(String(bodyObj.timestamp)).toISOString()
       : 'unknown'
 
-    logger.info(
-      `Updated current URL via dedicated endpoint: ${oldUrl} -> ${currentUrl}`,
-    )
-    logger.info(
-      `URL update details: source=${source}, tabId=${tabId}, timestamp=${timestamp}`,
-    )
+    logger.info(`Updated current URL via dedicated endpoint: ${oldUrl} -> ${currentUrl}`)
+    logger.info(`URL update details: source=${source}, tabId=${tabId}, timestamp=${timestamp}`)
 
     res.json({
       status: 'ok',
@@ -608,23 +550,16 @@ export class BrowserConnector {
     this.server = server
 
     // Initialize WebSocket server using the existing HTTP server
-    this.wss = new WebSocketServer({
-      noServer: true,
-      path: '/extension-ws',
-    })
+    this.wss = new WebSocketServer({noServer: true,
+      path: '/extension-ws'})
 
     // Register the capture-screenshot endpoint
     this.app.post(
       '/capture-screenshot',
       async (req: express.Request, res: express.Response) => {
-        logger.info(
-          'Browser Connector: Received request to /capture-screenshot endpoint',
-        )
+        logger.info('Browser Connector: Received request to /capture-screenshot endpoint')
         logger.info('Browser Connector: Request body:', req.body)
-        logger.info(
-          'Browser Connector: Active WebSocket connection:',
-          !!this.activeConnection,
-        )
+        logger.info('Browser Connector: Active WebSocket connection:', !!this.activeConnection)
         await this.captureScreenshot(req, res)
       },
     )
@@ -645,11 +580,7 @@ export class BrowserConnector {
     this.server.on(
       'upgrade',
       (request: IncomingMessage, socket: Socket, head: Buffer) => {
-        if (request.url === '/extension-ws') {
-          this.wss.handleUpgrade(request, socket, head, (ws: WebSocket) => {
-            this.wss.emit('connection', ws, request)
-          })
-        }
+        if (request.url === '/extension-ws') this.wss.handleUpgrade(request, socket, head, (ws: WebSocket) => { this.wss.emit('connection', ws, request) })
       },
     )
 
@@ -662,10 +593,7 @@ export class BrowserConnector {
           const rawData: unknown = JSON.parse(message.toString())
           const data = rawData as WebSocketMessage
           // Log message without the base64 data
-          logger.info('Received WebSocket message:', {
-            ...data,
-            data: data.data != null && data.data !== '' ? '[base64 data]' : void 0,
-          })
+          logger.info('Received WebSocket message:', {...data, data: data.data != null && data.data !== '' ? '[base64 data]' : void 0})
 
           // Handle URL response
           if (data.type === 'current-url-response' && data.url !== null && data.url !== void 0) {
@@ -674,10 +602,7 @@ export class BrowserConnector {
 
             // Also update the tab ID if provided
             if (data.tabId !== null && data.tabId !== void 0) {
-              logger.info(
-                'Updating tab ID from WebSocket message:',
-                data.tabId,
-              )
+              logger.info('Updating tab ID from WebSocket message:', data.tabId)
               currentTabId = String(data.tabId)
             }
 
@@ -700,10 +625,7 @@ export class BrowserConnector {
 
             // Also update the tab ID if provided
             if (data.tabId !== null && data.tabId !== void 0) {
-              logger.info(
-                'Updating tab ID from page navigation event:',
-                data.tabId,
-              )
+              logger.info('Updating tab ID from page navigation event:', data.tabId)
               currentTabId = String(data.tabId)
             }
           }
@@ -718,33 +640,22 @@ export class BrowserConnector {
               const callback = callbacks[0]
               logger.info('Found callback, resolving promise')
               // Pass both the data, path and autoPaste to the resolver
-              callback.resolve({
-                data: data.data,
-                path: data.path,
-                autoPaste: data.autoPaste,
-              })
+              callback.resolve({data: data.data, path: data.path, autoPaste: data.autoPaste})
               // Clear all callbacks
               screenshotCallbacks.clear()
-            }
-            else logger.info('No callbacks found for screenshot')
-          }
-          else if (data.type === 'screenshot-error') {
+            } else logger.info('No callbacks found for screenshot')
+          } else if (data.type === 'screenshot-error') {
             // Handle screenshot error
             logger.info('Received screenshot error:', data.error)
             const callbacks = [...screenshotCallbacks.values()]
             if (callbacks.length > 0) {
               const callback = callbacks[0]
-              callback.reject(
-                new Error(data.error != null && data.error !== '' ? data.error : 'Screenshot capture failed'),
-              )
+              callback.reject(new Error(data.error != null && data.error !== '' ? data.error : 'Screenshot capture failed'))
               // Clear all callbacks
               screenshotCallbacks.clear()
             }
-          }
-          else logger.info('Unhandled message type:', data.type)
-        } catch (error: unknown) {
-          logger.error('Error processing WebSocket message:', error)
-        }
+          } else logger.info('Unhandled message type:', data.type)
+        } catch (error: unknown) { logger.error('Error processing WebSocket message:', error) }
       })
 
       ws.on('close', () => {
@@ -757,9 +668,7 @@ export class BrowserConnector {
     this.app.post(
       '/screenshot',
       (req: express.Request, res: express.Response): void => {
-        logger.info(
-          'Browser Connector: Received request to /screenshot endpoint',
-        )
+        logger.info('Browser Connector: Received request to /screenshot endpoint')
         logger.info('Browser Connector: Request body:', req.body)
         try {
           logger.info('Received screenshot capture request')
@@ -792,10 +701,7 @@ export class BrowserConnector {
           fs.writeFileSync(fullPath, base64Data, 'base64')
           logger.info('Screenshot saved successfully')
 
-          res.json({
-            path: fullPath,
-            filename,
-          })
+          res.json({path: fullPath, filename})
         } catch (error: unknown) {
           logger.error('Error saving screenshot:', error)
           if (error instanceof Error) res.status(500).json({error: error.message})
@@ -838,9 +744,7 @@ export class BrowserConnector {
         }
 
         // Wait before checking again
-        logger.info(
-          `Waiting for URL (attempt ${attempt + 1}/${maxAttempts})...`,
-        )
+        logger.info(`Waiting for URL (attempt ${attempt + 1}/${maxAttempts})...`)
         await new Promise(resolve => setTimeout(resolve, waitTime))
       }
 
@@ -866,9 +770,7 @@ export class BrowserConnector {
     logger.info('Browser Connector: Request method:', req.method)
 
     if (this.activeConnection == null) {
-      logger.info(
-        'Browser Connector: No active WebSocket connection to Chrome extension',
-      )
+      logger.info('Browser Connector: No active WebSocket connection to Chrome extension')
       return res.status(503).json({error: 'Chrome extension not connected'})
     }
 
@@ -883,50 +785,31 @@ export class BrowserConnector {
         path?: string
         autoPaste?: boolean
       }>((resolve, reject) => {
-        logger.info(
-          `Browser Connector: Setting up screenshot callback for requestId: ${requestId}`,
-        )
+        logger.info(`Browser Connector: Setting up screenshot callback for requestId: ${requestId}`)
         // Store callback in map
         screenshotCallbacks.set(requestId, {resolve, reject})
-        logger.info(
-          'Browser Connector: Current callbacks:',
-          [...screenshotCallbacks.keys()],
-        )
+        logger.info('Browser Connector: Current callbacks:', [...screenshotCallbacks.keys()])
 
         // Set timeout to clean up if we don't get a response
         setTimeout(() => {
           if (!screenshotCallbacks.has(requestId)) return
 
-          logger.info(
-            `Browser Connector: Screenshot capture timed out for requestId: ${requestId}`,
-          )
+          logger.info(`Browser Connector: Screenshot capture timed out for requestId: ${requestId}`)
           screenshotCallbacks.delete(requestId)
-          reject(
-            new Error(
-              'Screenshot capture timed out - no response from Chrome extension',
-            ),
-          )
+          reject(new Error('Screenshot capture timed out - no response from Chrome extension'))
         }, 10000)
       })
 
       // Send screenshot request to extension
-      const message = JSON.stringify({
-        type: 'take-screenshot',
-        requestId,
-      })
-      logger.info(
-        `Browser Connector: Sending WebSocket message to extension:`,
-        message,
-      )
+      const message = JSON.stringify({type: 'take-screenshot', requestId})
+      logger.info(`Browser Connector: Sending WebSocket message to extension:`, message)
       this.activeConnection.send(message)
 
       // Wait for screenshot data
       logger.info('Browser Connector: Waiting for screenshot data...')
-      const {
-        data: base64Data,
+      const {data: base64Data,
         path: customPath,
-        autoPaste,
-      } = await screenshotPromise
+        autoPaste} = await screenshotPromise
       logger.info('Browser Connector: Received screenshot data, saving...')
       logger.info('Browser Connector: Custom path from extension:', customPath)
       logger.info('Browser Connector: Auto-paste setting:', autoPaste)
@@ -948,10 +831,7 @@ export class BrowserConnector {
         fs.mkdirSync(targetPath, {recursive: true})
         logger.info(`Browser Connector: Created directory: ${targetPath}`)
       } catch (err) {
-        logger.error(
-          `Browser Connector: Error creating directory: ${targetPath}`,
-          err,
-        )
+        logger.error(`Browser Connector: Error creating directory: ${targetPath}`, err)
         throw new Error(
           `Failed to create screenshot directory: ${err instanceof Error ? err.message : String(err)
           }`,
@@ -971,10 +851,7 @@ export class BrowserConnector {
         fs.writeFileSync(fullPath, cleanBase64, 'base64')
         logger.info(`Browser Connector: Screenshot saved to: ${fullPath}`)
       } catch (err) {
-        logger.error(
-          `Browser Connector: Error saving screenshot to: ${fullPath}`,
-          err,
-        )
+        logger.error(`Browser Connector: Error saving screenshot to: ${fullPath}`, err)
         throw new Error(
           `Failed to save screenshot: ${err instanceof Error ? err.message : String(err)
           }`,
@@ -983,9 +860,7 @@ export class BrowserConnector {
 
       // Check if running on macOS before executing AppleScript
       if (os.platform() === 'darwin' && autoPaste === true) {
-        logger.info(
-          'Browser Connector: Running on macOS with auto-paste enabled, executing AppleScript to paste into Cursor',
-        )
+        logger.info('Browser Connector: Running on macOS with auto-paste enabled, executing AppleScript to paste into Cursor')
 
         // Create the AppleScript to copy the image to clipboard and paste into Cursor
         // This version is more robust and includes debugging
@@ -1125,9 +1000,7 @@ export class BrowserConnector {
         // Execute the AppleScript
         exec(`osascript -e '${appleScript}'`, (error, stdout, stderr) => {
           if (error) {
-            logger.error(
-              `Browser Connector: Error executing AppleScript: ${error.message}`,
-            )
+            logger.error(`Browser Connector: Error executing AppleScript: ${error.message}`)
             logger.error(`Browser Connector: stderr: ${stderr}`)
             // Don't fail the response; log the error and proceed
           } else {
@@ -1136,31 +1009,16 @@ export class BrowserConnector {
           }
         })
       } else {
-        if (os.platform() === 'darwin' && !autoPaste) {
-          logger.info(
-            `Browser Connector: Running on macOS but auto-paste is disabled, skipping AppleScript execution`,
-          )
-        } else {
-          logger.info(
-            `Browser Connector: Not running on macOS, skipping AppleScript execution`,
-          )
-        }
+        if (os.platform() === 'darwin' && !autoPaste) logger.info(`Browser Connector: Running on macOS but auto-paste is disabled, skipping AppleScript execution`)
+        else logger.info(`Browser Connector: Not running on macOS, skipping AppleScript execution`)
       }
 
-      res.json({
-        path: fullPath,
-        filename,
-      })
+      res.json({path: fullPath, filename})
     } catch (error) {
       const errorMessage
         = error instanceof Error ? error.message : String(error)
-      logger.error(
-        'Browser Connector: Error capturing screenshot:',
-        errorMessage,
-      )
-      res.status(500).json({
-        error: errorMessage,
-      })
+      logger.error('Browser Connector: Error capturing screenshot:', errorMessage)
+      res.status(500).json({error: errorMessage})
     }
   }
 
@@ -1174,13 +1032,7 @@ export class BrowserConnector {
         this.activeConnection?.readyState === WebSocket.OPEN
       ) {
         logger.info('Notifying client to close connection...')
-        try {
-          this.activeConnection.send(
-            JSON.stringify({type: 'server-shutdown'}),
-          )
-        } catch (err: unknown) {
-          logger.error('Error sending shutdown message to client:', err)
-        }
+        try { this.activeConnection.send(JSON.stringify({type: 'server-shutdown'})) } catch (err: unknown) { logger.error('Error sending shutdown message to client:', err) }
       }
 
       // Set a timeout to force close after 2 seconds
@@ -1212,20 +1064,12 @@ export class BrowserConnector {
 
   // Sets up the accessibility audit endpoint
   private setupAccessibilityAudit(): void {
-    this.setupAuditEndpoint(
-      AuditCategory.ACCESSIBILITY,
-      '/accessibility-audit',
-      runAccessibilityAudit,
-    )
+    this.setupAuditEndpoint(AuditCategory.ACCESSIBILITY, '/accessibility-audit', runAccessibilityAudit)
   }
 
   // Sets up the performance audit endpoint
   private setupPerformanceAudit(): void {
-    this.setupAuditEndpoint(
-      AuditCategory.PERFORMANCE,
-      '/performance-audit',
-      runPerformanceAudit,
-    )
+    this.setupAuditEndpoint(AuditCategory.PERFORMANCE, '/performance-audit', runPerformanceAudit)
   }
 
   // Set up SEO audit endpoint
@@ -1235,11 +1079,7 @@ export class BrowserConnector {
 
   // Add a setup method for Best Practices audit
   private setupBestPracticesAudit(): void {
-    this.setupAuditEndpoint(
-      AuditCategory.BEST_PRACTICES,
-      '/best-practices-audit',
-      runBestPracticesAudit,
-    )
+    this.setupAuditEndpoint(AuditCategory.BEST_PRACTICES, '/best-practices-audit', runBestPracticesAudit)
   }
 
   /**
@@ -1254,12 +1094,7 @@ export class BrowserConnector {
     auditFunction: (url: string) => Promise<LighthouseReport>,
   ): void {
     // Add server identity validation endpoint
-    this.app.get('/.identity', (_req, res) => {
-      res.json({
-        signature: 'mcp-browser-connector-24x7',
-        version: '1.2.0',
-      })
-    })
+    this.app.get('/.identity', (_req, res) => { res.json({signature: 'mcp-browser-connector-24x7', version: '1.2.0'}) })
 
     this.app.post(endpoint, async (req: express.Request, res: express.Response) => {
       try {
@@ -1270,9 +1105,7 @@ export class BrowserConnector {
 
         if (url == null) {
           logger.info(`No URL available for ${auditType} audit`)
-          return res.status(400).json({
-            error: `URL is required for ${auditType} audit. Make sure you navigate to a page in the browser first, and the browser-tool extension tab is open.`,
-          })
+          return res.status(400).json({error: `URL is required for ${auditType} audit. Make sure you navigate to a page in the browser first, and the browser-tool extension tab is open.`})
         }
 
         // If we're using the stored URL (not from request body), log it now
@@ -1283,9 +1116,7 @@ export class BrowserConnector {
         // Check if we're using the default URL
         if (url === 'about:blank') {
           logger.info(`Cannot run ${auditType} audit on about:blank`)
-          return res.status(400).json({
-            error: `Cannot run ${auditType} audit on about:blank`,
-          })
+          return res.status(400).json({error: `Cannot run ${auditType} audit on about:blank`})
         }
 
         logger.info(`Preparing to run ${auditType} audit for: ${url}`)
@@ -1303,17 +1134,13 @@ export class BrowserConnector {
             = auditError instanceof Error
               ? auditError.message
               : String(auditError)
-          res.status(500).json({
-            error: `Failed to run ${auditType} audit: ${errorMessage}`,
-          })
+          res.status(500).json({error: `Failed to run ${auditType} audit: ${errorMessage}`})
         }
       } catch (error: unknown) {
         logger.error(`Error in ${auditType} audit endpoint:`, error)
         const errorMessage
           = error instanceof Error ? error.message : String(error)
-        res.status(500).json({
-          error: `Error in ${auditType} audit endpoint: ${errorMessage}`,
-        })
+        res.status(500).json({error: `Error in ${auditType} audit endpoint: ${errorMessage}`})
       }
     })
   }
@@ -1343,15 +1170,9 @@ export class BrowserConnector {
     // Create the server with the available port
     const server = app.listen(PORT, currentSettings.serverHost, () => {
       logger.info(`\n=== Browser Tools Server Started ===`)
-      logger.info(
-        `Aggregator listening on http://${currentSettings.serverHost}:${PORT}`,
-      )
+      logger.info(`Aggregator listening on http://${currentSettings.serverHost}:${PORT}`)
 
-      if (PORT !== REQUESTED_PORT) {
-        logger.info(
-          `NOTE: Using fallback port ${PORT} instead of requested port ${REQUESTED_PORT}`,
-        )
-      }
+      if (PORT !== REQUESTED_PORT) logger.info(`NOTE: Using fallback port ${PORT} instead of requested port ${REQUESTED_PORT}`)
 
       // Log all available network interfaces for easier discovery
       const networkInterfaces = os.networkInterfaces()
@@ -1360,9 +1181,7 @@ export class BrowserConnector {
       Object.keys(networkInterfaces).forEach(interfaceName => {
         const interfaces = networkInterfaces[interfaceName]
         if (interfaces) {
-          interfaces.forEach((iface: NetworkInterface) => {
-            if (!iface.internal && iface.family === 'IPv4') logger.info(`  - http://${iface.address}:${PORT}`)
-          })
+          interfaces.forEach((iface: NetworkInterface) => { if (!iface.internal && iface.family === 'IPv4') logger.info(` - http://${iface.address}:${PORT}`) })
         }
       })
 
@@ -1372,14 +1191,9 @@ export class BrowserConnector {
     // Handle server startup errors
     server.on('error', (err: NodeJS.ErrnoException) => {
       if (err.code === 'EADDRINUSE') {
-        logger.error(
-          `ERROR: Port ${PORT} is still in use, despite our checks!`,
-        )
-        logger.error(
-          `This might indicate another process started using this port after our check.`,
-        )
-      }
-      else logger.error(`Server error:`, err)
+        logger.error(`ERROR: Port ${PORT} is still in use, despite our checks!`)
+        logger.error(`This might indicate another process started using this port after our check.`)
+      } else logger.error(`Server error:`, err)
       process.exit(1)
     })
 
@@ -1416,9 +1230,7 @@ export class BrowserConnector {
       }
     }
     // Handle shutdown gracefully with improved error handling
-    process.on('SIGINT', () => {
-      void fn()
-    })
+    process.on('SIGINT', () => { void fn() })
 
     // Also handle SIGTERM
     process.on('SIGTERM', () => {

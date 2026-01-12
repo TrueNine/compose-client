@@ -76,8 +76,7 @@ const DETAIL_LIMITS: Record<string, number> = {
   // Up to 10 items for moderate issues
   moderate: 10,
   // Up to 3 items for minor issues
-  minor: 3,
-}
+  minor: 3}
 
 /**
  * Runs a Best Practices audit on the specified URL
@@ -106,12 +105,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
   const audits = lhr.audits ?? {}
 
   // Add metadata
-  const metadata = {
-    url,
-    timestamp: lhr.fetchTime || new Date().toISOString(),
-    device: lhr.configSettings?.formFactor || 'desktop',
-    lighthouseVersion: lhr.lighthouseVersion || 'unknown',
-  }
+  const metadata = {url, timestamp: lhr.fetchTime || new Date().toISOString(), device: lhr.configSettings?.formFactor || 'desktop', lighthouseVersion: lhr.lighthouseVersion || 'unknown'}
 
   // Process audit results
   const issues: AIBestPracticesIssue[] = []
@@ -270,8 +264,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
       // More issues = lower score, max penalty of 25 points per issue
       const penalty = Math.min(100, issueCount * 25)
       categories[category].score = Math.max(0, 100 - penalty)
-    }
-    else categories[category].score = 100
+    } else categories[category].score = 100
   })
 
   // Generate prioritized recommendations
@@ -296,8 +289,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
     })
 
   // Return the optimized report
-  return {
-    metadata,
+  return {metadata,
     report: {
       score: categoryData?.score != null ? Math.round(categoryData.score * 100) : 0,
       audit_counts: {
@@ -310,6 +302,5 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
       issues,
       categories,
       prioritized_recommendations,
-    },
-  }
+    }}
 }
