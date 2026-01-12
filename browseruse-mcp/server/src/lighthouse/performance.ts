@@ -114,7 +114,8 @@ const DETAIL_LIMITS = {
   // Up to 10 items for moderate issues
   moderate: 10,
   // Up to 3 items for minor issues
-  minor: 3}
+  minor: 3,
+}
 
 /**
  * Performance audit adapted for AI consumption
@@ -146,11 +147,9 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
   const score = Math.round((categoryData?.score ?? 0) * 100)
 
   // Add metadata
-  const metadata = {url,
-    timestamp: lhr.fetchTime || new Date().toISOString(),
+  const metadata = {url, timestamp: lhr.fetchTime || new Date().toISOString(),
     // This could be made configurable
-    device: 'desktop',
-    lighthouseVersion: lhr.lighthouseVersion}
+    device: 'desktop', lighthouseVersion: lhr.lighthouseVersion}
 
   // Count audits by type
   const auditRefs = categoryData?.auditRefs ?? []
@@ -193,10 +192,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
     const lcp = audits['largest-contentful-paint']
     const lcpElement = audits['largest-contentful-paint-element']
 
-    const metric: AIOptimizedMetric = {id: 'lcp',
-      score: lcp.score,
-      value_ms: Math.round(lcp.numericValue ?? 0),
-      passes_core_web_vital: lcp.score != null && lcp.score >= 0.9}
+    const metric: AIOptimizedMetric = {id: 'lcp', score: lcp.score, value_ms: Math.round(lcp.numericValue ?? 0), passes_core_web_vital: lcp.score != null && lcp.score >= 0.9}
 
     // Enhanced LCP element detection
 
@@ -389,12 +385,10 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
   // Add CLS (Cumulative Layout Shift)
   if (audits['cumulative-layout-shift'] != null) {
     const cls = audits['cumulative-layout-shift']
-    metrics.push({id: 'cls',
-      score: cls.score,
+    metrics.push({id: 'cls', score: cls.score,
       // CLS is not in ms, but a unitless value
       // Convert to 3 decimal places
-      value_ms: Math.round((cls.numericValue ?? 0) * 1000) / 1000,
-      passes_core_web_vital: (cls.score ?? 0) >= 0.9})
+      value_ms: Math.round((cls.numericValue ?? 0) * 1000) / 1000, passes_core_web_vital: (cls.score ?? 0) >= 0.9})
   }
 
   // Add TBT (Total Blocking Time)
@@ -415,10 +409,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
     else if (savings > 1000) impact = 'serious'
     else if (savings < 300) impact = 'minor'
 
-    const opportunity: AIOptimizedOpportunity = {id: 'render_blocking_resources',
-      savings_ms: savings,
-      severity: impact,
-      resources: []}
+    const opportunity: AIOptimizedOpportunity = {id: 'render_blocking_resources', savings_ms: savings, severity: impact, resources: []}
 
     const rbrDetails = rbrAudit.details as unknown
     if (rbrDetails != null && isObjectWithItems(rbrDetails)) {
@@ -451,10 +442,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
     else if (savings > 1000) impact = 'serious'
     else if (savings < 300) impact = 'minor'
 
-    const opportunity: AIOptimizedOpportunity = {id: 'http2',
-      savings_ms: savings,
-      severity: impact,
-      resources: []}
+    const opportunity: AIOptimizedOpportunity = {id: 'http2', savings_ms: savings, severity: impact, resources: []}
 
     const http2Details = http2Audit.details as unknown
     if (http2Details != null && isObjectWithItems(http2Details)) {
@@ -591,6 +579,5 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
   }
 
   // Return the full report following the LighthouseReport interface
-  return {metadata,
-    report: reportContent}
+  return {metadata, report: reportContent}
 }

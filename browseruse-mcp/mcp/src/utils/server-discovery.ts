@@ -83,10 +83,8 @@ export async function withServerConnection<T>(
     const discovered = await discoverServer()
     if (!discovered) {
       return {content: [
-        {type: 'text',
-          text: 'Failed to discover browser connector server. Please ensure it\'s running.'},
-      ],
-      isError: true} as T
+        {type: 'text', text: 'Failed to discover browser connector server. Please ensure it\'s running.'},
+      ], isError: true} as T
     }
   }
 
@@ -101,24 +99,18 @@ export async function withServerConnection<T>(
         const retryErrorMessage = retryError instanceof Error ? retryError.message : String(retryError)
         logger.error(`Retry failed: ${retryErrorMessage}`)
         return {content: [
-          {type: 'text',
-            text: `Error after reconnection attempt: ${retryErrorMessage}`},
-        ],
-        isError: true} as T
+          {type: 'text', text: `Error after reconnection attempt: ${retryErrorMessage}`},
+        ], isError: true} as T
       }
     } else {
       logger.error('Rediscovery failed. Could not reconnect to server.')
       return {content: [
-        {type: 'text',
-          text: `Failed to reconnect to server: ${errorMessage}`},
-      ],
-      isError: true} as T
+        {type: 'text', text: `Failed to reconnect to server: ${errorMessage}`},
+      ], isError: true} as T
     }
   }
 }
 
 export function getDiscoveredConnection(): ServerConnection {
-  return {host: discoveredHost,
-    port: discoveredPort,
-    discovered: serverDiscovered}
+  return {host: discoveredHost, port: discoveredPort, discovered: serverDiscovered}
 }

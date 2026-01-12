@@ -79,7 +79,8 @@ const DETAIL_LIMITS = {
   // Up to 10 items for moderate issues
   moderate: 10,
   // Up to 3 items for minor issues
-  minor: 3}
+  minor: 3,
+}
 
 /**
  * Runs an accessibility audit on the specified URL
@@ -109,10 +110,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
   const audits = lhr.audits ?? {}
 
   // Add metadata
-  const metadata = {url,
-    timestamp: lhr.fetchTime || new Date().toISOString(),
-    device: 'desktop',
-    lighthouseVersion: lhr.lighthouseVersion}
+  const metadata = {url, timestamp: lhr.fetchTime || new Date().toISOString(), device: 'desktop', lighthouseVersion: lhr.lighthouseVersion}
 
   // Initialize variables
   const issues: AIAccessibilityIssue[] = []
@@ -191,10 +189,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
 
             if (!node) return
 
-            const element: AIAccessibilityElement = {selector: String(node.selector),
-              snippet: node.snippet != null ? String(node.snippet) : void 0,
-              label: node.nodeLabel != null ? String(node.nodeLabel) : void 0,
-              issue_description: node.explanation != null ? String(node.explanation) : itemObj.explanation != null ? String(itemObj.explanation) : void 0}
+            const element: AIAccessibilityElement = {selector: String(node.selector), snippet: node.snippet != null ? String(node.snippet) : void 0, label: node.nodeLabel != null ? String(node.nodeLabel) : void 0, issue_description: node.explanation != null ? String(node.explanation) : itemObj.explanation != null ? String(itemObj.explanation) : void 0}
             if (itemObj.value != null) {
               element.value = typeof itemObj.value === 'string' || typeof itemObj.value === 'number'
                 ? itemObj.value
@@ -272,6 +267,5 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
   }
 
   // Return the full report following the LighthouseReport interface
-  return {metadata,
-    report: reportContent}
+  return {metadata, report: reportContent}
 }

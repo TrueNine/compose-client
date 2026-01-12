@@ -77,7 +77,8 @@ const DETAIL_LIMITS = {
   // Up to 10 items for moderate issues
   moderate: 10,
   // Up to 3 items for minor issues
-  minor: 3}
+  minor: 3,
+}
 
 /**
  * Runs an SEO audit on the specified URL
@@ -104,18 +105,13 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
   const audits = lhr.audits ?? {}
 
   // Add metadata
-  const metadata = {url,
-    timestamp: lhr.fetchTime || new Date().toISOString(),
+  const metadata = {url, timestamp: lhr.fetchTime || new Date().toISOString(),
     // This could be made configurable
-    device: 'desktop',
-    lighthouseVersion: lhr.lighthouseVersion}
+    device: 'desktop', lighthouseVersion: lhr.lighthouseVersion}
 
   // Initialize variables
   const issues: AISEOIssue[] = []
-  const categories: Record<string, {score: number, issues_count: number}> = {content: {score: 0, issues_count: 0},
-    mobile: {score: 0, issues_count: 0},
-    crawlability: {score: 0, issues_count: 0},
-    other: {score: 0, issues_count: 0}}
+  const categories: Record<string, {score: number, issues_count: number}> = {content: {score: 0, issues_count: 0}, mobile: {score: 0, issues_count: 0}, crawlability: {score: 0, issues_count: 0}, other: {score: 0, issues_count: 0}}
 
   // Count audits by type
   let failedCount = 0
@@ -306,6 +302,5 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
   }
 
   // Return the full report following the LighthouseReport interface
-  return {metadata,
-    report: reportContent}
+  return {metadata, report: reportContent}
 }

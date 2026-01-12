@@ -15,13 +15,11 @@ interface ProperLogger {
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
 // Create logger configuration based on environment
+// Development: Human-readable format without external dependencies
+// Note: prettyPrint option removed as it's deprecated in pino v8+
+// Production: JSON format for log aggregation
 const loggerConfig: pino.LoggerOptions = isDevelopment
-  ? {level: process.env.LOG_LEVEL ?? 'debug', formatters: {level: (label: string) => ({level: label.toUpperCase()})}, timestamp: pino.stdTimeFunctions.isoTime,
-      // Development: Human-readable format without external dependencies
-      // Note: prettyPrint option removed as it's deprecated in pino v8+
-    }
-  : {level: process.env.LOG_LEVEL !== null && process.env.LOG_LEVEL !== void 0 && process.env.LOG_LEVEL !== '' ? process.env.LOG_LEVEL : 'info', formatters: {level: (label: string) => ({level: label.toUpperCase()})}, timestamp: pino.stdTimeFunctions.isoTime,
-      // Production: JSON format for log aggregation
-    }
+  ? {level: process.env.LOG_LEVEL ?? 'debug', formatters: {level: (label: string) => ({level: label.toUpperCase()})}, timestamp: pino.stdTimeFunctions.isoTime}
+  : {level: process.env.LOG_LEVEL ?? 'info', formatters: {level: (label: string) => ({level: label.toUpperCase()})}, timestamp: pino.stdTimeFunctions.isoTime}
 
 export const logger: ProperLogger = pino(loggerConfig) as ProperLogger

@@ -76,7 +76,8 @@ const DETAIL_LIMITS: Record<string, number> = {
   // Up to 10 items for moderate issues
   moderate: 10,
   // Up to 3 items for minor issues
-  minor: 3}
+  minor: 3,
+}
 
 /**
  * Runs a Best Practices audit on the specified URL
@@ -289,18 +290,17 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
     })
 
   // Return the optimized report
-  return {metadata,
-    report: {
-      score: categoryData?.score != null ? Math.round(categoryData.score * 100) : 0,
-      audit_counts: {
-        failed: failedCount,
-        passed: passedCount,
-        manual: manualCount,
-        informative: informativeCount,
-        not_applicable: notApplicableCount,
-      },
-      issues,
-      categories,
-      prioritized_recommendations,
-    }}
+  return {metadata, report: {
+    score: categoryData?.score != null ? Math.round(categoryData.score * 100) : 0,
+    audit_counts: {
+      failed: failedCount,
+      passed: passedCount,
+      manual: manualCount,
+      informative: informativeCount,
+      not_applicable: notApplicableCount,
+    },
+    issues,
+    categories,
+    prioritized_recommendations,
+  }}
 }

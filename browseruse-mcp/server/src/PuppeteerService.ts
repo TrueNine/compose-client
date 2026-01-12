@@ -435,16 +435,13 @@ async function findBrowserExecutablePath(): Promise<string> {
       const winBrowserPaths = {chrome: [
         path.join(programFiles, 'Google\\Chrome\\Application\\chrome.exe'),
         path.join(programFilesX86, 'Google\\Chrome\\Application\\chrome.exe'),
-      ],
-      edge: [
+      ], edge: [
         path.join(programFiles, 'Microsoft\\Edge\\Application\\msedge.exe'),
         path.join(programFilesX86, 'Microsoft\\Edge\\Application\\msedge.exe'),
-      ],
-      brave: [
+      ], brave: [
         path.join(programFiles, 'BraveSoftware\\Brave-Browser\\Application\\brave.exe'),
         path.join(programFilesX86, 'BraveSoftware\\Brave-Browser\\Application\\brave.exe'),
-      ],
-      firefox: [
+      ], firefox: [
         path.join(programFiles, 'Mozilla Firefox\\firefox.exe'),
         path.join(programFilesX86, 'Mozilla Firefox\\firefox.exe'),
       ]}
@@ -493,10 +490,7 @@ async function findBrowserExecutablePath(): Promise<string> {
     }
     case 'linux': {
     // Linux browser commands
-      const linuxBrowserCommands = {chrome: ['google-chrome', 'chromium', 'chromium-browser'],
-        edge: ['microsoft-edge'],
-        brave: ['brave-browser'],
-        firefox: ['firefox']}
+      const linuxBrowserCommands = {chrome: ['google-chrome', 'chromium', 'chromium-browser'], edge: ['microsoft-edge'], brave: ['brave-browser'], firefox: ['firefox']}
 
       // Check each browser in preferred order
       for (const browser of preferredBrowsers) {
@@ -696,7 +690,8 @@ export async function connectToHeadlessBrowser(
     await page.goto(url, {
       // Wait until there are no more network connections for at least 500ms
       waitUntil: 'networkidle2',
-      timeout: navigationTimeout})
+      timeout: navigationTimeout,
+    })
 
     // Set custom headers if provided
     if (options.headers && Object.keys(options.headers).length > 0) {
@@ -707,9 +702,7 @@ export async function connectToHeadlessBrowser(
     // Set cookies if provided
     if (options.cookies && options.cookies.length > 0) {
       const urlObj = new URL(url)
-      const cookiesWithDomain = options.cookies.map(cookie => ({...cookie,
-        domain: cookie.domain ?? urlObj.hostname,
-        path: cookie.path ?? '/'}))
+      const cookiesWithDomain = options.cookies.map(cookie => ({...cookie, domain: cookie.domain ?? urlObj.hostname, path: cookie.path ?? '/'}))
       await page.setCookie(...cookiesWithDomain)
       logger.info(`Set ${options.cookies.length} cookies`)
     }
@@ -725,26 +718,15 @@ export async function connectToHeadlessBrowser(
 
       switch (options.emulateDevice) {
         case 'mobile':
-          viewport = {width: 375,
-            height: 667,
-            isMobile: true,
-            hasTouch: true}
+          viewport = {width: 375, height: 667, isMobile: true, hasTouch: true}
           userAgent = userAgent ?? 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X)'
           break
         case 'tablet':
-          viewport = {width: 768,
-            height: 1024,
-            isMobile: true,
-            hasTouch: true}
+          viewport = {width: 768, height: 1024, isMobile: true, hasTouch: true}
           userAgent = userAgent ?? 'Mozilla/5.0 (iPad; CPU OS 13_2_3 like Mac OS X)'
           break
         case 'desktop':
-        default:
-          viewport = {width: 1280,
-            height: 800,
-            isMobile: false,
-            hasTouch: false}
-          break
+        default: viewport = {width: 1280, height: 800, isMobile: false, hasTouch: false}; break
       }
 
       await page.setViewport(viewport)
@@ -772,32 +754,11 @@ export async function connectToHeadlessBrowser(
       let networkConditions: NetworkConditions
 
       switch (options.emulateNetworkCondition) {
-        case 'slow3G':
-          networkConditions = {offline: false,
-            latency: 400,
-            download: (500 * 1024) / 8,
-            upload: (500 * 1024) / 8}
-          break
-        case 'fast3G':
-          networkConditions = {offline: false,
-            latency: 150,
-            download: (1.5 * 1024 * 1024) / 8,
-            upload: (750 * 1024) / 8}
-          break
-        case '4G':
-          networkConditions = {offline: false,
-            latency: 50,
-            download: (4 * 1024 * 1024) / 8,
-            upload: (2 * 1024 * 1024) / 8}
-          break
-        case 'offline': networkConditions = {download: 0,
-          latency: 0,
-          upload: 0,
-          offline: true}; break
-        default: networkConditions = {download: 0,
-          latency: 0,
-          upload: 0,
-          offline: false}
+        case 'slow3G': networkConditions = {offline: false, latency: 400, download: (500 * 1024) / 8, upload: (500 * 1024) / 8}; break
+        case 'fast3G': networkConditions = {offline: false, latency: 150, download: (1.5 * 1024 * 1024) / 8, upload: (750 * 1024) / 8}; break
+        case '4G': networkConditions = {offline: false, latency: 50, download: (4 * 1024 * 1024) / 8, upload: (2 * 1024 * 1024) / 8}; break
+        case 'offline': networkConditions = {download: 0, latency: 0, upload: 0, offline: true}; break
+        default: networkConditions = {download: 0, latency: 0, upload: 0, offline: false}
       }
 
       await page.emulateNetworkConditions(networkConditions)
@@ -832,9 +793,7 @@ export async function connectToHeadlessBrowser(
       }
     }
 
-    return {browser,
-      port,
-      page}
+    return {browser, port, page}
   } catch (error: unknown) {
     logger.error('Failed to connect to headless browser:', error)
     throw new Error(

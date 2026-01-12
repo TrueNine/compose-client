@@ -310,9 +310,7 @@ app.post('/extension-log', (req, res) => {
   logger.info('\n=== Received Extension Log ===')
   const bodyObj = req.body as Record<string, unknown>
   const bodyData = bodyObj?.data as Record<string, unknown> | undefined
-  logger.info('Request body:', {dataType: bodyObj != null && bodyData != null ? bodyData.type : null,
-    timestamp: bodyObj != null && bodyData != null ? bodyData.timestamp : null,
-    hasSettings: bodyObj?.settings != null})
+  logger.info('Request body:', {dataType: bodyObj != null && bodyData != null ? bodyData.type : null, timestamp: bodyObj != null && bodyData != null ? bodyData.timestamp : null, hasSettings: bodyObj?.settings != null})
 
   const {data} = bodyObj
   const {settings} = bodyObj
@@ -321,8 +319,7 @@ app.post('/extension-log', (req, res) => {
   if (settings != null) {
     logger.info('Updating settings:', settings)
     const settingsObj = settings as Record<string, unknown>
-    currentSettings = {...currentSettings,
-      ...settingsObj} as Settings
+    currentSettings = {...currentSettings, ...settingsObj} as Settings
   }
 
   if (data == null) {
@@ -351,11 +348,9 @@ app.post('/extension-log', (req, res) => {
       logger.info('Updated current URL:', currentUrl)
       break
     case 'console-log':
-      logger.info('Adding console log:', {level: dataObj.level,
-        message:
+      logger.info('Adding console log:', {level: dataObj.level, message:
           String(dataObj.message).slice(0, 100)
-          + (String(dataObj.message).length > 100 ? '...' : ''),
-        timestamp: dataObj.timestamp})
+          + (String(dataObj.message).length > 100 ? '...' : ''), timestamp: dataObj.timestamp})
       consoleLogs.push(dataObj as unknown as LogEntry)
       if (consoleLogs.length > currentSettings.logLimit) {
         logger.info(`Console logs exceeded limit (${currentSettings.logLimit}), removing oldest entry`)
@@ -363,11 +358,9 @@ app.post('/extension-log', (req, res) => {
       }
       break
     case 'console-error':
-      logger.info('Adding console error:', {level: dataObj.level,
-        message:
+      logger.info('Adding console error:', {level: dataObj.level, message:
           String(dataObj.message).slice(0, 100)
-          + (String(dataObj.message).length > 100 ? '...' : ''),
-        timestamp: dataObj.timestamp})
+          + (String(dataObj.message).length > 100 ? '...' : ''), timestamp: dataObj.timestamp})
       consoleErrors.push(dataObj as unknown as LogEntry)
       if (consoleErrors.length > currentSettings.logLimit) {
         logger.info(`Console errors exceeded limit (${currentSettings.logLimit}), removing oldest entry`)
@@ -375,10 +368,7 @@ app.post('/extension-log', (req, res) => {
       }
       break
     case 'network-request': {
-      const logEntry = {url: dataObj.url,
-        method: dataObj.method,
-        status: dataObj.status,
-        timestamp: dataObj.timestamp}
+      const logEntry = {url: dataObj.url, method: dataObj.method, status: dataObj.status, timestamp: dataObj.timestamp}
       logger.info('Adding network request:', logEntry)
 
       // Route network requests based on status code
@@ -400,19 +390,14 @@ app.post('/extension-log', (req, res) => {
     }
     case 'selected-element': {
       const element = dataObj.element as Record<string, unknown> | undefined
-      logger.info('Updating selected element:', {tagName: element?.tagName as string | undefined,
-        id: element?.id as string | undefined,
-        className: element?.className as string | undefined})
+      logger.info('Updating selected element:', {tagName: element?.tagName as string | undefined, id: element?.id as string | undefined, className: element?.className as string | undefined})
       selectedElement = element
       break
     }
     default: logger.info('Unknown log type:', String(dataObj.type))
   }
 
-  logger.info('Current log counts:', {consoleLogs: consoleLogs.length,
-    consoleErrors: consoleErrors.length,
-    networkErrors: networkErrors.length,
-    networkSuccess: networkSuccess.length})
+  logger.info('Current log counts:', {consoleLogs: consoleLogs.length, consoleErrors: consoleErrors.length, networkErrors: networkErrors.length, networkSuccess: networkSuccess.length})
   logger.info('=== End Extension Log ===\n')
 
   res.json({status: 'ok'})
@@ -458,9 +443,7 @@ app.get('/selected-element', (_req, res) => { res.json(selectedElement ?? {messa
 app.get('/.port', (_req, res) => { res.send(PORT.toString()) })
 
 // Add new identity endpoint with a unique signature
-app.get('/.identity', (_req, res) => {
-  res.json({port: PORT, name: 'browser-tools-server', version: '1.2.0', signature: 'mcp-browser-connector-24x7'})
-})
+app.get('/.identity', (_req, res) => res.json({port: PORT, name: 'browser-tools-server', version: '1.2.0', signature: 'mcp-browser-connector-24x7'}))
 
 // Add function to clear all logs
 function clearAllLogs(): void {
@@ -550,8 +533,7 @@ export class BrowserConnector {
     this.server = server
 
     // Initialize WebSocket server using the existing HTTP server
-    this.wss = new WebSocketServer({noServer: true,
-      path: '/extension-ws'})
+    this.wss = new WebSocketServer({noServer: true, path: '/extension-ws'})
 
     // Register the capture-screenshot endpoint
     this.app.post(
@@ -807,9 +789,7 @@ export class BrowserConnector {
 
       // Wait for screenshot data
       logger.info('Browser Connector: Waiting for screenshot data...')
-      const {data: base64Data,
-        path: customPath,
-        autoPaste} = await screenshotPromise
+      const {data: base64Data, path: customPath, autoPaste} = await screenshotPromise
       logger.info('Browser Connector: Received screenshot data, saving...')
       logger.info('Browser Connector: Custom path from extension:', customPath)
       logger.info('Browser Connector: Auto-paste setting:', autoPaste)

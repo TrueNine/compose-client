@@ -25,11 +25,7 @@ export function createLighthouseConfig(
       deviceScaleFactor: 1,
       disabled: false,
     },
-  },
-  config: {extends: 'lighthouse:default',
-    settings: {onlyCategories: categories,
-      emulatedFormFactor: 'desktop',
-      throttling: {cpuSlowdownMultiplier: 1}}}}
+  }, config: {extends: 'lighthouse:default', settings: {onlyCategories: categories, emulatedFormFactor: 'desktop', throttling: {cpuSlowdownMultiplier: 1}}}}
 }
 
 /**
