@@ -280,16 +280,7 @@ export function createDevelopmentOptimization(options: DevelopmentOptimizationOp
   const cssConfig = createDevCssOptimization()
   const envConfig = createDevEnvOptimization()
 
-  return mergeConfig(
-    mergeConfig(
-      mergeConfig(
-        mergeConfig(serverConfig, depsConfig),
-        buildConfig,
-      ),
-      cssConfig,
-    ),
-    envConfig,
-  )
+  return mergeConfig(mergeConfig(mergeConfig(mergeConfig(serverConfig, depsConfig), buildConfig), cssConfig), envConfig)
 }
 
 /**
@@ -453,10 +444,7 @@ export function createSmartDevelopmentOptimization(options: DevelopmentOptimizat
     : createDevelopmentOptimization(options)
 
   // 添加框架特定的 HMR 优化
-  const hmrConfig = createHMROptimization({
-    enableVueHMR: !!isVueProject,
-    enableReactHMR: isReactProject,
-  })
+  const hmrConfig = createHMROptimization({enableVueHMR: !!isVueProject, enableReactHMR: isReactProject})
 
   return mergeConfig(config, hmrConfig)
 }

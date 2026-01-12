@@ -78,10 +78,7 @@ export function createAggressivePreset(options: FullPerformanceOptions = {}): Us
     ...options.parallel,
   })
 
-  return mergeConfig(
-    mergeConfig(performanceConfig, cacheConfig),
-    parallelConfig,
-  )
+  return mergeConfig(mergeConfig(performanceConfig, cacheConfig), parallelConfig)
 }
 
 /**
@@ -112,10 +109,7 @@ export function createMaximumPreset(options: FullPerformanceOptions = {}): UserC
     ...options.parallel,
   })
 
-  return mergeConfig(
-    mergeConfig(performanceConfig, cacheConfig),
-    parallelConfig,
-  )
+  return mergeConfig(mergeConfig(performanceConfig, cacheConfig), parallelConfig)
 }
 
 /**
@@ -158,13 +152,7 @@ export function createDevelopmentPreset(options: FullPerformanceOptions = {}): U
     open: false,
   })
 
-  return mergeConfig(
-    mergeConfig(
-      mergeConfig(performanceConfig, cacheConfig),
-      parallelConfig,
-    ),
-    devOptimizationConfig,
-  )
+  return mergeConfig(mergeConfig(mergeConfig(performanceConfig, cacheConfig), parallelConfig), devOptimizationConfig)
 }
 
 /**
@@ -206,13 +194,7 @@ export function createFastDevPreset(options: FullPerformanceOptions = {}): UserC
     open: false,
   })
 
-  return mergeConfig(
-    mergeConfig(
-      mergeConfig(performanceConfig, cacheConfig),
-      parallelConfig,
-    ),
-    fastDevConfig,
-  )
+  return mergeConfig(mergeConfig(mergeConfig(performanceConfig, cacheConfig), parallelConfig), fastDevConfig)
 }
 
 /**
@@ -242,10 +224,7 @@ export function createProductionPreset(options: FullPerformanceOptions = {}): Us
     ...options.parallel,
   })
 
-  return mergeConfig(
-    mergeConfig(performanceConfig, cacheConfig),
-    parallelConfig,
-  )
+  return mergeConfig(mergeConfig(performanceConfig, cacheConfig), parallelConfig)
 }
 
 /**
@@ -285,13 +264,7 @@ export function createMonorepoPreset(options: FullPerformanceOptions = {}): User
     enableFsCache: true,
   })
 
-  return mergeConfig(
-    mergeConfig(
-      mergeConfig(performanceConfig, cacheConfig),
-      parallelConfig,
-    ),
-    monorepoDevConfig,
-  )
+  return mergeConfig(mergeConfig(mergeConfig(performanceConfig, cacheConfig), parallelConfig), monorepoDevConfig)
 }
 
 /**

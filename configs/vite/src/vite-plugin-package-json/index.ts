@@ -13,29 +13,19 @@ export interface PackageJsonOptions {
 }
 
 function packageJsonContentReplace(content: string, options: Omit<PackageJsonOptions, 'content'>): string | undefined {
-  const {
-    entry,
-    formats = ['es'],
-    buildTool = 'npm',
-    dts = true,
-  } = options
+  const {entry, formats = ['es'], buildTool = 'npm', dts = true} = options
 
   if (formats.length === 0) return void 0
   if (content === '' || content === null || content === void 0) return void 0
 
   let packageJson: PackageJson
-  try { packageJson = JSON.parse(content) as PackageJson } catch (error) {
-    throw new Error('Failed to parse or process package.json content', {
-      cause: error,
-    })
-  }
+  try { packageJson = JSON.parse(content) as PackageJson }
+  catch (error) { throw new Error('Failed to parse or process package.json content', {cause: error}) }
   const keysToDelete = ['scripts', 'files', 'types', 'typings', 'main', 'module', 'types', 'typings', 'exports'] as const
   keysToDelete.forEach(key => {
     if (key in packageJson) delete packageJson[key]
   })
-  packageJson.scripts = {
-    pub: `${buildTool} publish`,
-  }
+  packageJson.scripts = {pub: `${buildTool} publish`}
 
   const hasEsm = formats.includes('es')
   const hasCjs = formats.includes('cjs')
@@ -120,18 +110,14 @@ export function PackageJsonGeneratorPlugin(options: Omit<PackageJsonOptions, 'co
   try {
     const packageJsonPath = path.resolve(process.cwd(), 'package.json')
     originalContent = fs.readFileSync(packageJsonPath, 'utf8')
-  } catch (error) {
-    throw new Error(`Failed to read package.json from ${process.cwd()}`, {
-      cause: error,
-    })
   }
+  catch (error) { throw new Error(`Failed to read package.json from ${process.cwd()}`, {cause: error}) }
 
   const packageJsonContent = packageJsonContentReplace(originalContent, options)
 
   if (packageJsonContent === void 0) throw new Error('Failed to parse or process package.json content')
 
-  return {
-    name: 'vite-plugin-package-json-generator',
+  return {name: 'vite-plugin-package-json-generator',
     apply: 'build',
     generateBundle: (_, bundle) => {
       bundle['package.json'] = {
@@ -141,6 +127,5 @@ export function PackageJsonGeneratorPlugin(options: Omit<PackageJsonOptions, 'co
         name: 'package.json',
         needsCodeReference: false,
       } as OutputAsset
-    },
-  }
+    }}
 }

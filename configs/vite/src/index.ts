@@ -14,57 +14,20 @@ import {createDtsPlugin} from './vite-plugin-dts'
 
 // 导出性能优化相关功能
 export type {VitePerformanceOptions} from './performance'
-export {
-  createChunkOptimization,
-  createDepsOptimization,
-  createDevelopmentPerformanceConfig,
-  createEsbuildOptimization,
-  createProductionPerformanceConfig,
-  createVitePerformanceConfig,
-} from './performance'
+export {createChunkOptimization, createDepsOptimization, createDevelopmentPerformanceConfig, createEsbuildOptimization, createProductionPerformanceConfig, createVitePerformanceConfig} from './performance'
 export type {CacheOptimizationOptions} from './performance/cache'
-export {
-  createBuildCacheOptimization,
-  createCacheOptimization,
-  createTypeScriptCacheOptimization,
-} from './performance/cache'
+export {createBuildCacheOptimization, createCacheOptimization, createTypeScriptCacheOptimization} from './performance/cache'
 
 export type {DevelopmentOptimizationOptions} from './performance/development'
 
-export {
-  createDevBuildOptimization,
-  createDevCssOptimization,
-  createDevDepsOptimization,
-  createDevelopmentOptimization,
-  createDevEnvOptimization,
-  createFastDevelopmentOptimization,
-  createHMROptimization,
-  createMonorepoDevelopmentOptimization,
-  createSmartDevelopmentOptimization,
-} from './performance/development'
+export {createDevBuildOptimization, createDevCssOptimization, createDevDepsOptimization, createDevelopmentOptimization, createDevEnvOptimization, createFastDevelopmentOptimization, createHMROptimization, createMonorepoDevelopmentOptimization, createSmartDevelopmentOptimization} from './performance/development'
 
 export type {ParallelOptimizationOptions} from './performance/parallel'
 
-export {
-  createDevParallelOptimization,
-  createMonorepoParallelOptimization,
-  createParallelOptimization,
-  createProdParallelOptimization,
-  getOptimalConcurrency,
-} from './performance/parallel'
+export {createDevParallelOptimization, createMonorepoParallelOptimization, createParallelOptimization, createProdParallelOptimization, getOptimalConcurrency} from './performance/parallel'
 
 export type {FullPerformanceOptions, PerformancePreset} from './performance/presets'
-export {
-  createAggressivePreset,
-  createBasicPreset,
-  createDevelopmentPreset,
-  createFastDevPreset,
-  createMaximumPreset,
-  createMonorepoPreset,
-  createPerformancePreset,
-  createProductionPreset,
-  createSmartPreset,
-} from './performance/presets'
+export {createAggressivePreset, createBasicPreset, createDevelopmentPreset, createFastDevPreset, createMaximumPreset, createMonorepoPreset, createPerformancePreset, createProductionPreset, createSmartPreset} from './performance/presets'
 
 export interface ViteFragmentOptions {
   lib?: BuildLibraryConfigOptions
@@ -87,10 +50,7 @@ export interface ViteFragmentOptions {
   }
 }
 
-export function configureViteFragment(
-  options: ViteFragmentOptions = {},
-  baseConfig: UserConfig = {},
-): UserConfig {
+export function configureViteFragment(options: ViteFragmentOptions = {}, baseConfig: UserConfig = {}): UserConfig {
   const externals = [...defaultExternals, ...options.additionalExternals ?? []]
 
   const libDefaults: Partial<BuildLibraryConfigOptions> & {entry: string[]} = {
@@ -159,11 +119,7 @@ export function configureViteFragment(
 
   const generatedPlugins = [dtsPlugin].filter(Boolean)
 
-  const basePluginsArray = (
-    Array.isArray(baseConfig.plugins)
-      ? baseConfig.plugins
-      : [baseConfig.plugins ?? []]
-  ).flat()
+  const basePluginsArray = (Array.isArray(baseConfig.plugins) ? baseConfig.plugins : [baseConfig.plugins ?? []]).flat()
 
   const basePluginsNormalized = basePluginsArray.filter(Boolean) as Plugin[]
 
@@ -180,17 +136,9 @@ export function configureViteFragment(
   }
 
   // 应用性能优化配置
-  if (options.performance?.enabled === false) {
-    return mergeConfig(
-      finalConfig,
-      baseConfig,
-    )
-  }
+  if (options.performance?.enabled === false) return mergeConfig(finalConfig, baseConfig)
 
-  const performanceConfig = createPerformancePreset(
-    options.performance?.preset ?? 'basic',
-    options.performance?.options ?? {},
-  )
+  const performanceConfig = createPerformancePreset(options.performance?.preset ?? 'basic', options.performance?.options ?? {})
   finalConfig = mergeConfig(finalConfig, performanceConfig)
 
   return finalConfig
