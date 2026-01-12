@@ -28,9 +28,7 @@ export function getDefaultServerPort(): number {
       const port = Number.parseInt(fs.readFileSync(portFilePath, 'utf8').trim(), 10)
       if (!Number.isNaN(port) && port > 0) return port
     }
-  } catch (err) {
-    logger.error('Error reading port file:', err)
-  }
+  } catch (err) { logger.error('Error reading port file:', err) }
 
   return DEFAULT_PORT
 }
@@ -105,9 +103,7 @@ export async function withServerConnection<T>(
     }
   }
 
-  try {
-    return await apiCall()
-  } catch (error) {
+  try { return await apiCall() } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error)
     logger.error(
       `API call failed: ${errorMessage}. Attempting rediscovery...`,
@@ -116,9 +112,7 @@ export async function withServerConnection<T>(
 
     if (await discoverServer()) {
       logger.error('Rediscovery successful. Retrying API call...')
-      try {
-        return await apiCall()
-      } catch (retryError) {
+      try { return await apiCall() } catch (retryError) {
         const retryErrorMessage = retryError instanceof Error ? retryError.message : String(retryError)
         logger.error(`Retry failed: ${retryErrorMessage}`)
         return {
