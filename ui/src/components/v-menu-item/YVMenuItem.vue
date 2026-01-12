@@ -5,10 +5,7 @@ import type {YVMenuItemProps, YVMenuItemSlots} from './index'
 import {isNonNil} from '@truenine/shared'
 import {useRouter} from 'vue-router'
 
-const props = withDefaults(defineProps<YVMenuItemProps>(), {
-  pathPrefix: '',
-  routeMode: false,
-})
+const props = withDefaults(defineProps<YVMenuItemProps>(), {pathPrefix: '', routeMode: false})
 
 defineSlots<YVMenuItemSlots>()
 const _route = computed(() => props.route)

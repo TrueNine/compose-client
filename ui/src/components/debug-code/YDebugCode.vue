@@ -1,12 +1,7 @@
 <script lang="ts" setup>
 import type {YDebugCodeProps} from './index'
 
-const props = withDefaults(defineProps<YDebugCodeProps>(), {
-  wrap: true,
-  code: () => '',
-  lang: 'json',
-  title: null,
-})
+const props = withDefaults(defineProps<YDebugCodeProps>(), {wrap: true, code: () => '', lang: 'json', title: null})
 
 const internalTypedCode = computed<string>(() => {
   if (props.lang === 'json') return JSON.stringify(props.code, null, 2)

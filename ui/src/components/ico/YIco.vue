@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import type {YIcoProps} from './index'
 
-const props = withDefaults(defineProps<YIcoProps>(), {
-  tag: 'i',
-})
+const props = withDefaults(defineProps<YIcoProps>(), {tag: 'i'})
 </script>
 
 <template>

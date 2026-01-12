@@ -26,33 +26,20 @@ const validationSchema = computed(() => {
   const schema = schemaModel.value
   // Use duck typing to detect Zod schemas instead of instanceof to avoid proxy issues in tests
   if (schema && typeof schema === 'object' && '_def' in schema && 'parse' in schema) {
-    try {
-      return zodToTypedSchema(schema)
-    } catch (error) {
+    try { return zodToTypedSchema(schema) } catch (error) {
       // In test environment, if zodToTypedSchema fails due to proxy issues,
       // create a simple validation function that uses the schema directly
       if (import.meta.env.NODE_ENV === 'test' || import.meta.env.VITEST) {
-        return {
-          __type: 'VeeTypedSchema',
-          async: false,
-          parse(values: any) {
-            try {
-              const result = schema.parse(values)
-              return {output: result, errors: []}
-            } catch (err: any) {
-              const errors: any[] = []
-              if (err.errors) {
-                err.errors.forEach((zodError: any) => {
-                  errors.push({
-                    path: zodError.path.join('.'),
-                    message: zodError.message,
-                  })
-                })
-              }
-              return {errors}
-            }
-          },
-        }
+        return {__type: 'VeeTypedSchema', async: false, parse(values: any) {
+          try {
+            const result = schema.parse(values)
+            return {output: result, errors: []}
+          } catch (err: any) {
+            const errors: any[] = []
+            if (err.errors) err.errors.forEach((zodError: any) => errors.push({path: zodError.path.join('.'), message: zodError.message}))
+            return {errors}
+          }
+        }}
       }
       throw error
     }
@@ -66,10 +53,7 @@ const formValues = useVModel(props, 'modelValue', emit, {passive: true})
 
 // In test environment, avoid passing Zod schemas to useForm to prevent proxy issues
 const formConfig = computed(() => {
-  const config: any = {
-    name: props.name,
-    initialValues: formValues,
-  }
+  const config: any = {name: props.name, initialValues: formValues}
 
   // Only add validationSchema if it's not a problematic Zod schema in test environment
   const schema = validationSchema.value
@@ -78,8 +62,7 @@ const formConfig = computed(() => {
       // In test environment, only add schema if it's not a Zod schema or if it's our custom wrapper
       if (!(schema as any).__type || (schema as any).__type === 'VeeTypedSchema') config.validationSchema = schema
       // For Zod schemas in tests, we'll handle validation manually
-    }
-    else config.validationSchema = schema
+    } else config.validationSchema = schema
   }
 
   return config
@@ -89,12 +72,8 @@ const form = useForm(formConfig.value)
 
 // 表单提交处理
 const handleFormSubmit = form.handleSubmit(
-  values => {
-    emit('submit', values, props.step)
-  },
-  ctx => {
-    emit('error', ctx)
-  },
+  values => emit('submit', values, props.step),
+  ctx => emit('error', ctx),
 )
 
 function handleSubmit(e?: Event) {
@@ -112,9 +91,7 @@ watch(formValues, v => {
   if (isUpdating.value) return
   isUpdating.value = true
   processFormValues(v)
-  void nextTick(() => {
-    isUpdating.value = false
-  })
+  void nextTick(() => isUpdating.value = false)
 }, {deep: true})
 
 watch(form.values, v => {
@@ -123,18 +100,12 @@ watch(form.values, v => {
 
   isUpdating.value = true
   formValues.value = v
-  void nextTick(() => {
-    isUpdating.value = false
-  })
+  void nextTick(() => isUpdating.value = false)
 }, {deep: true})
 
-const formContext: YFormInjection = {
-  getForm: () => form,
-  setFieldValidate: () => {
-    throw new Error('Framework UnImplementation setFieldValidate')
-  },
-  validate: async () => (await form.validate()).valid,
-}
+const formContext: YFormInjection = {getForm: () => form, setFieldValidate: () => {
+  throw new Error('Framework UnImplementation setFieldValidate')
+}, validate: async () => (await form.validate()).valid}
 
 provide(YFormInjectionKey, formContext)
 
@@ -143,9 +114,7 @@ function handleReset() {
   form.handleReset()
 }
 
-setTimeout(() => {
-  void form.setFieldError('a.b', 'error')
-}, 2000)
+setTimeout(() => void form.setFieldError('a.b', 'error'), 2000)
 defineExpose(formContext)
 </script>
 

@@ -8,84 +8,49 @@ import YField from '../../field/index'
 import YFieldProxyComponent from '../../field/YFieldProxyComponent.vue'
 import YForm from '../index'
 
-const globalComponents = {
-  components: {
-    YField,
-    YFieldProxyComponent,
-  },
-}
+const globalComponents = {components: {YField, YFieldProxyComponent}}
 
 // 测试用子组件，模拟一个简单的输入控件
-const InputComponent = defineComponent({
-  props: {
-    modelValue: String,
-    label: String,
-    type: String,
-    errorMessages: {
-      type: [String, Array],
-      default: '',
-    },
-  },
-  emits: ['update:modelValue'],
-  setup(props, {emit}) {
-    const handleInput = (e: Event) => {
-      emit('update:modelValue', (e.target as HTMLInputElement).value)
-    }
+const InputComponent = defineComponent({props: {modelValue: String, label: String, type: String, errorMessages: {type: [String, Array], default: ''}}, emits: ['update:modelValue'], setup(props, {emit}) {
+  const handleInput = (e: Event) => emit('update:modelValue', (e.target as HTMLInputElement).value)
 
-    return () => (
-      <div>
-        {props.label !== void 0 && <label>{props.label}</label>}
-        <input
-          class="test-input"
-          type={props.type}
-          value={props.modelValue}
-          onInput={handleInput}
-        />
-        {props.errorMessages !== void 0 && (props.errorMessages as string | string[]).length && (
-          <div class="test-error">
-            {Array.isArray(props.errorMessages) ? props.errorMessages[0] : props.errorMessages}
-          </div>
-        )}
-      </div>
-    )
-  },
-})
+  return () => (
+    <div>
+      {props.label !== void 0 && <label>{props.label}</label>}
+      <input
+        class="test-input"
+        type={props.type}
+        value={props.modelValue}
+        onInput={handleInput}
+      />
+      {props.errorMessages !== void 0 && (props.errorMessages as string | string[]).length && (
+        <div class="test-error">
+          {Array.isArray(props.errorMessages) ? props.errorMessages[0] : props.errorMessages}
+        </div>
+      )}
+    </div>
+  )
+}})
 
 // 多输入组件
-const MultiInputComponent = defineComponent({
-  props: ['key1', 'value2'],
-  emits: ['update:key1', 'update:value2'],
-  setup(props, {emit}) {
-    const handleInput1 = (e: Event) => {
-      emit('update:key1', (e.target as HTMLInputElement).value)
-    }
+const MultiInputComponent = defineComponent({props: ['key1', 'value2'], emits: ['update:key1', 'update:value2'], setup(props, {emit}) {
+  const handleInput1 = (e: Event) => emit('update:key1', (e.target as HTMLInputElement).value)
 
-    const handleInput2 = (e: Event) => {
-      emit('update:value2', (e.target as HTMLInputElement).value)
-    }
+  const handleInput2 = (e: Event) => emit('update:value2', (e.target as HTMLInputElement).value)
 
-    return () => (
-      <div>
-        <input class="input1" value={props.key1} onInput={handleInput1} />
-        <input class="input2" value={props.value2} onInput={handleInput2} />
-      </div>
-    )
-  },
-})
+  return () => (
+    <div>
+      <input class="input1" value={props.key1} onInput={handleInput1} />
+      <input class="input2" value={props.value2} onInput={handleInput2} />
+    </div>
+  )
+}})
 
 describe('yFormTest', () => {
   describe('正常 渲染 时', () => {
     it('应 正确渲染表单及默认插槽', () => {
       const emptySchema = z.object({})
-      const wrapper = mount(YForm, {
-        props: {
-          validationSchema: emptySchema,
-        },
-        slots: {
-          default: () => <div class="form-content">内容</div>,
-          submit: () => <button class="submit-button">提交</button>,
-        },
-      })
+      const wrapper = mount(YForm, {props: {validationSchema: emptySchema}, slots: {default: () => <div class="form-content">内容</div>, submit: () => <button class="submit-button">提交</button>}})
       expect(wrapper.find('form').exists()).toBe(true)
       expect(wrapper.find('.form-content').text()).toBe('内容')
       expect(wrapper.find('.submit-button').text()).toBe('提交')
@@ -94,50 +59,30 @@ describe('yFormTest', () => {
     it('应 正确传递提交插槽属性', () => {
       const submitSlotSpy = vi.fn(() => <button>提交</button>)
       const emptySchema = z.object({})
-      mount(YForm, {
-        props: {
-          validationSchema: emptySchema,
-        },
-        slots: {
-          default: () => [],
-          submit: submitSlotSpy,
-        },
-      })
-      expect(submitSlotSpy).toHaveBeenCalledWith(expect.objectContaining<Partial<YFormSlotsSubMitProps>>({
-        disabled: expect.any(Boolean) as boolean,
-        isSubmitting: expect.any(Boolean) as boolean,
-        reset: expect.any(Function) as () => void,
-        submit: expect.any(Function) as () => void,
-      }))
+      mount(YForm, {props: {validationSchema: emptySchema}, slots: {default: () => [], submit: submitSlotSpy}})
+      expect(submitSlotSpy).toHaveBeenCalledWith(expect.objectContaining<Partial<YFormSlotsSubMitProps>>({disabled: expect.any(Boolean) as boolean, isSubmitting: expect.any(Boolean) as boolean, reset: expect.any(Function) as () => void, submit: expect.any(Function) as () => void}))
     })
   })
 
   describe('yForm与YField交互Group', () => {
     it('应 正确渲染 YField 子组件', async () => {
-      const userSchema = z.object({
-        username: z.string().min(1, '用户名不能为空'),
-        password: z.string().min(1, '密码不能为空'),
-      })
+      const userSchema = z.object({username: z.string().min(1, '用户名不能为空'), password: z.string().min(1, '密码不能为空')})
 
-      const TestComponent = defineComponent({
-        setup() {
-          const formData = ref({username: '', password: ''})
-          return () => (
-            <YForm v-model={formData.value} schema={userSchema}>
-              <YField name="username" label="用户名">
-                <InputComponent />
-              </YField>
-              <YField name="password" label="密码">
-                <InputComponent type="password" />
-              </YField>
-            </YForm>
-          )
-        },
-      })
+      const TestComponent = defineComponent({setup() {
+        const formData = ref({username: '', password: ''})
+        return () => (
+          <YForm v-model={formData.value} schema={userSchema}>
+            <YField name="username" label="用户名">
+              <InputComponent />
+            </YField>
+            <YField name="password" label="密码">
+              <InputComponent type="password" />
+            </YField>
+          </YForm>
+        )
+      }})
 
-      const wrapper = mount(TestComponent, {
-        global: globalComponents,
-      })
+      const wrapper = mount(TestComponent, {global: globalComponents})
       await nextTick()
       expect(wrapper.findAllComponents(YField).length).toBe(2)
       expect(wrapper.findAll('.test-input').length).toBe(2)
@@ -145,36 +90,28 @@ describe('yFormTest', () => {
     })
 
     it('应 在 YField 输入时正确更新 YForm 的 modelValue', async () => {
-      const userSchema = z.object({
-        username: z.string().min(1, '用户名不能为空'),
-      })
+      const userSchema = z.object({username: z.string().min(1, '用户名不能为空')})
 
-      const TestComponent = defineComponent({
-        setup() {
-          const formData = ref({username: 'initial'})
+      const TestComponent = defineComponent({setup() {
+        const formData = ref({username: 'initial'})
 
-          // 添加监听函数以便验证值是否更新
-          const handleUpdate = (newVal: any) => {
-            formData.value = newVal
-          }
+        // 添加监听函数以便验证值是否更新
+        const handleUpdate = (newVal: any) => formData.value = newVal
 
-          return () => (
-            <YForm
-              v-model={formData.value}
-              schema={userSchema}
-              onUpdate:modelValue={handleUpdate}
-            >
-              <YField name="username" label="用户名">
-                <InputComponent />
-              </YField>
-            </YForm>
-          )
-        },
-      })
+        return () => (
+          <YForm
+            v-model={formData.value}
+            schema={userSchema}
+            onUpdate:modelValue={handleUpdate}
+          >
+            <YField name="username" label="用户名">
+              <InputComponent />
+            </YField>
+          </YForm>
+        )
+      }})
 
-      const wrapper = mount(TestComponent, {
-        global: globalComponents,
-      })
+      const wrapper = mount(TestComponent, {global: globalComponents})
       await nextTick()
       const input = wrapper.find('.test-input')
       await input.setValue('newUser')
@@ -200,22 +137,9 @@ describe('yFormTest', () => {
   describe('表单 方法 时', () => {
     it('应 在调用 submit 插槽函数时触发 submit 事件并传递数据', async () => {
       const handleSubmit = vi.fn()
-      const userSchema = z.object({
-        username: z.string().min(1, '用户名不能为空'),
-      })
+      const userSchema = z.object({username: z.string().min(1, '用户名不能为空')})
 
-      const wrapper = mount(YForm, {
-        props: {
-          modelValue: {username: 'test'},
-          onSubmit: handleSubmit,
-          validationSchema: userSchema,
-        },
-        slots: {
-          default: () => [],
-          submit: ({submit }: {submit: () => void}) => <button onClick={submit}>提交</button>,
-        },
-        global: globalComponents,
-      })
+      const wrapper = mount(YForm, {props: {modelValue: {username: 'test'}, onSubmit: handleSubmit, validationSchema: userSchema}, slots: {default: () => [], submit: ({submit }: {submit: () => void}) => <button onClick={submit}>提交</button>}, global: globalComponents})
 
       await wrapper.find('button').trigger('click')
       expect(wrapper.emitted('submit')).toBeTruthy()
@@ -224,22 +148,9 @@ describe('yFormTest', () => {
 
     it('应 在调用 reset 插槽函数时重置表单值', async () => {
       const initialData = {username: 'test'}
-      const userSchema = z.object({
-        username: z.string().min(1, '用户名不能为空'),
-      })
+      const userSchema = z.object({username: z.string().min(1, '用户名不能为空')})
 
-      const wrapper = mount(YForm, {
-        props: {
-          modelValue: {...initialData},
-          initialValues: {...initialData},
-          validationSchema: userSchema,
-        },
-        slots: {
-          default: () => [],
-          submit: ({reset }: {reset: () => void}) => <button class="reset-btn" onClick={reset}>重置</button>,
-        },
-        global: globalComponents,
-      })
+      const wrapper = mount(YForm, {props: {modelValue: {...initialData}, initialValues: {...initialData}, validationSchema: userSchema}, slots: {default: () => [], submit: ({reset }: {reset: () => void}) => <button class="reset-btn" onClick={reset}>重置</button>}, global: globalComponents})
 
       await wrapper.setProps({modelValue: {username: 'changed'}})
       await nextTick()
@@ -257,21 +168,9 @@ describe('yFormTest', () => {
     it('应 正确处理 button type="reset" 触发表单重置事件', async () => {
       const handleReset = vi.fn()
       const initialData = {username: 'test'}
-      const userSchema = z.object({
-        username: z.string().min(1, '用户名不能为空'),
-      })
+      const userSchema = z.object({username: z.string().min(1, '用户名不能为空')})
 
-      const wrapper = mount(YForm, {
-        props: {
-          modelValue: {...initialData},
-          onReset: handleReset,
-          validationSchema: userSchema,
-        },
-        slots: {
-          default: () => <button type="reset" class="reset-button">重置</button>,
-        },
-        global: globalComponents,
-      })
+      const wrapper = mount(YForm, {props: {modelValue: {...initialData}, onReset: handleReset, validationSchema: userSchema}, slots: {default: () => <button type="reset" class="reset-button">重置</button>}, global: globalComponents})
 
       await wrapper.setProps({modelValue: {username: 'changed'}})
       await nextTick()
@@ -294,35 +193,27 @@ describe('yFormTest', () => {
   describe('特性 字段名映射 时', () => {
     it('应 支持 YField :name 为对象时的映射', async () => {
       const handleSubmit = vi.fn()
-      const mappedSchema = z.object({
-        formKey: z.string().min(1, '映射字段不能为空'),
-      })
+      const mappedSchema = z.object({formKey: z.string().min(1, '映射字段不能为空')})
 
-      const TestComponent = defineComponent({
-        setup() {
-          const formData = ref({formKey: 'initialValue'})
-          const onSubmit = (values: dynamic) => {
-            console.log('提交表单数据：', values)
-            handleSubmit(values)
-          }
+      const TestComponent = defineComponent({setup() {
+        const formData = ref({formKey: 'initialValue'})
+        const onSubmit = (values: dynamic) => {
+          console.log('提交表单数据：', values)
+          handleSubmit(values)
+        }
 
-          return () => (
-            <YForm v-model={formData.value} schema={mappedSchema} onSubmit={onSubmit}>
-              <YField name={{formKey: 'modelValue'}} label="映射字段">
-                <InputComponent />
-              </YField>
-              {{
-                default: () =>
-                  <button class="submit-btn" type="submit">提交</button>,
-              }}
-            </YForm>
-          )
-        },
-      })
+        return () => (
+          <YForm v-model={formData.value} schema={mappedSchema} onSubmit={onSubmit}>
+            <YField name={{formKey: 'modelValue'}} label="映射字段">
+              <InputComponent />
+            </YField>
+            {{default: () =>
+              <button class="submit-btn" type="submit">提交</button>}}
+          </YForm>
+        )
+      }})
 
-      const wrapper = mount(TestComponent, {
-        global: globalComponents,
-      })
+      const wrapper = mount(TestComponent, {global: globalComponents})
       await nextTick()
 
       const inputComp = wrapper.findComponent(InputComponent)
@@ -354,36 +245,27 @@ describe('yFormTest', () => {
 
     it('应 支持 YField :name 为数组时的多重映射', async () => {
       const handleSubmit = vi.fn()
-      const multiMapSchema = z.object({
-        key1: z.string().min(1, 'Key1不能为空'),
-        key2: z.string().min(1, 'Key2不能为空'),
-      })
+      const multiMapSchema = z.object({key1: z.string().min(1, 'Key1不能为空'), key2: z.string().min(1, 'Key2不能为空')})
 
-      const TestComponent = defineComponent({
-        setup() {
-          const formData = ref({key1: 'val1', key2: 'val2'})
-          const onSubmit = (values: dynamic) => {
-            console.log('提交表单数据：', values)
-            handleSubmit(values)
-          }
+      const TestComponent = defineComponent({setup() {
+        const formData = ref({key1: 'val1', key2: 'val2'})
+        const onSubmit = (values: dynamic) => {
+          console.log('提交表单数据：', values)
+          handleSubmit(values)
+        }
 
-          return () => (
-            <YForm v-model={formData.value} schema={multiMapSchema} onSubmit={onSubmit}>
-              <YField name={['key1', {key2: 'value2'}]} label="多重映射">
-                <MultiInputComponent />
-              </YField>
-              {{
-                submit: () =>
-                  <button class="submit-btn" type="submit">提交</button>,
-              }}
-            </YForm>
-          )
-        },
-      })
+        return () => (
+          <YForm v-model={formData.value} schema={multiMapSchema} onSubmit={onSubmit}>
+            <YField name={['key1', {key2: 'value2'}]} label="多重映射">
+              <MultiInputComponent />
+            </YField>
+            {{submit: () =>
+              <button class="submit-btn" type="submit">提交</button>}}
+          </YForm>
+        )
+      }})
 
-      const wrapper = mount(TestComponent, {
-        global: globalComponents,
-      })
+      const wrapper = mount(TestComponent, {global: globalComponents})
       await nextTick()
 
       const multiInput = wrapper.findComponent(MultiInputComponent)

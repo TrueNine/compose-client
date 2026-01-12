@@ -14,12 +14,7 @@ const props = withDefaults(defineProps<YSystemBarProps>(), {
 const emits = defineEmits<YVSystemBarEmits>()
 const slots = defineSlots<YVSystemBarSlots>()
 
-const {
-  menuOpened: _menuOpened,
-  progress: _progress,
-  progressLoading: _progressLoading,
-  settingsMenuOpened: _settingsMenuOpened,
-} = useVModels(props, emits, {passive: true})
+const {menuOpened: _menuOpened, progress: _progress, progressLoading: _progressLoading, settingsMenuOpened: _settingsMenuOpened} = useVModels(props, emits, {passive: true})
 const progressClr = computed(() => _progressLoading.value && _progress.value === 0)
 const useRight = computed(() => !!slots['right-btn'])
 </script>

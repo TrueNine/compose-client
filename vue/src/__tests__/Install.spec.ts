@@ -4,9 +4,7 @@ import {componentInstallToPlugin} from '../Install'
 
 describe('componentInstallToPlugin', () => {
   function createMockApp() {
-    return {
-      component: vi.fn(),
-    } as unknown as App
+    return {component: vi.fn()} as unknown as App
   }
 
   it('返回的组件包含install方法', () => {
@@ -42,10 +40,7 @@ describe('componentInstallToPlugin', () => {
 
   it('能注册附加组件', () => {
     const comp = {name: 'MainComp'}
-    const other = {
-      Sub1: {name: 'SubComp1'},
-      Sub2: {__name: 'SubComp2'},
-    }
+    const other = {Sub1: {name: 'SubComp1'}, Sub2: {__name: 'SubComp2'}}
     const app = createMockApp()
     const plugin = componentInstallToPlugin(comp, other) as typeof comp & {install: (app: App) => void} & {Sub1: typeof other.Sub1, Sub2: typeof other.Sub2}
     plugin.install(app)

@@ -4,9 +4,7 @@ import {maybeArray} from '@truenine/shared'
 import {useVModel} from '@vueuse/core'
 import {computed, onMounted, ref, toValue} from 'vue'
 
-const props = withDefaults(defineProps<YFieldProps>(), {
-  modelValue: void 0,
-})
+const props = withDefaults(defineProps<YFieldProps>(), {modelValue: void 0})
 const emits = defineEmits<YFieldEmits>()
 const slots = defineSlots<YFieldSlots>()
 
@@ -20,18 +18,12 @@ const _effectModels = computed(() => {
   for (let i = 0; i < names.length; i++) {
     const name = toValue(names[i])
     if (typeof name === 'string') result[name] = name
-    else {
-      Object.entries(name ?? {}).forEach(([key, value]) => {
-        result[key] = value
-      })
-    }
+    else Object.entries(name ?? {}).forEach(([key, value]) => result[key] = value)
   }
   return result
 })
 const mounted = ref(false)
-onMounted(() => {
-  mounted.value = true
-})
+onMounted(() => mounted.value = true)
 
 const usedDefaultSlot = computed(() => !!slots.default)
 </script>

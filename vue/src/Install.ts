@@ -45,9 +45,7 @@ export function componentInstallToPlugin<T extends VueComponentInstanceMapping>(
   if (Object.keys(otherSecondaryComponentInstallers).length === 0) return primaryComponent
 
   const extendedComponent = primaryComponent as unknown as Record<string, unknown>
-  Object.entries(otherSecondaryComponentInstallers).forEach(([key, comp]) => {
-    extendedComponent[key] = comp
-  })
+  Object.entries(otherSecondaryComponentInstallers).forEach(([key, comp]) => extendedComponent[key] = comp)
 
   return primaryComponent as T
 }

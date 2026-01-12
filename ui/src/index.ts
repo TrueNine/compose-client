@@ -55,13 +55,7 @@ const components = {
   YPager,
 } as Record<string, unknown>
 
-const plugin = {
-  install: (app: App): void => {
-    Object.entries(components).forEach(([_name, component]) => {
-      app.use(component as Plugin<[]>)
-    })
-  },
-}
+const plugin = {install: (app: App) => Object.entries(components).forEach(([_name, component]) => { app.use(component as Plugin<[]>) })}
 
 export default plugin
 

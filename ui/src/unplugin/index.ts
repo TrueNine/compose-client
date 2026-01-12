@@ -7,15 +7,15 @@ function camelTo(str: string, sep = '-'): string {
   return firstCharLower.replaceAll(/([a-z0-9])([A-Z])/g, `$1${sep}$2`).toLowerCase()
 }
 
-function resolveComponent(name: string): {name: string, from: string, satisfies: string[]} | undefined {
+function resolveComponent(name: string): {
+  name: string
+  from: string
+  satisfies: string[]
+} | undefined {
   if (!/^Y[A-Z]/.test(name)) return
 
   const _kebabName = camelTo(name.slice(1))
-  return {
-    name,
-    from: '@truenine/ui',
-    satisfies: [],
-  }
+  return {name, from: '@truenine/ui', satisfies: []}
 }
 
 /**
@@ -33,12 +33,16 @@ function resolveComponent(name: string): {name: string, from: string, satisfies:
  * // 用于自动导入 Y 开头的组件及其样式
  * ```
  */
-export function MetaUiWebResolver(): {type: string, resolve: (name: string) => {name: string, from: string, satisfies: string[]} | undefined}[] {
+export function MetaUiWebResolver(): {
+  type: string
+  resolve: (name: string) => {
+    name: string
+    from: string
+    satisfies: string[]
+  } | undefined
+}[] {
   return [
-    {
-      type: 'component',
-      resolve: resolveComponent,
-    },
+    {type: 'component', resolve: resolveComponent},
   ]
 }
 
@@ -54,10 +58,7 @@ const _vLabsComponentNames = new Set([
   'VTreeview',
 ])
 export function Vuetify3LabsLabResolver(useLabs = true): {type: string, resolve: (name: string) => {name: string, from: string} | undefined} {
-  return {
-    type: 'component',
-    resolve: (name: string) => {
-      if (/^V[A-Z]/.test(name)) return {name, from: useLabs && _vLabsComponentNames.has(name) ? 'vuetify/labs/components' : 'vuetify/components'}
-    },
-  }
+  return {type: 'component', resolve: (name: string) => {
+    if (/^V[A-Z]/.test(name)) return {name, from: useLabs && _vLabsComponentNames.has(name) ? 'vuetify/labs/components' : 'vuetify/components'}
+  }}
 }

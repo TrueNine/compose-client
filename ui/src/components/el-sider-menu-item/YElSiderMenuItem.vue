@@ -1,20 +1,12 @@
 <script lang="ts" setup>
-import type {bool, dynamic, RouteOption} from '@truenine/types'
+import type {bool, RouteOption} from '@truenine/types'
 import type {YElSiderMenuItemProps} from './index'
 
 import {isNonNil} from '@truenine/shared'
 
-const props = withDefaults(defineProps<YElSiderMenuItemProps>(), {
-  collapsed: false,
-  iconName: 'i-mdi-menu',
-  idxKey: void 0,
-  parentIndex: '',
-})
+const props = withDefaults(defineProps<YElSiderMenuItemProps>(), {collapsed: false, iconName: 'i-mdi-menu', idxKey: void 0, parentIndex: ''})
 
-defineSlots<{
-  icon: (props: {item: RouteOption}) => dynamic
-  title: (props: {item: RouteOption}) => dynamic
-}>()
+defineSlots()
 
 function isSub(opt: RouteOption): bool {
   return isNonNil(opt.sub)

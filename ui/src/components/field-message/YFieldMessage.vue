@@ -2,9 +2,7 @@
 import type {YFieldMessageEmits, YFieldMessageProps} from './index'
 import {ErrorMessage as VeeErrorMessage} from 'vee-validate'
 
-const props = withDefaults(defineProps<YFieldMessageProps>(), {
-  name: '',
-})
+const props = withDefaults(defineProps<YFieldMessageProps>(), {name: ''})
 const emits = defineEmits<YFieldMessageEmits>()
 const _name = useVModel(props, 'name', emits, {passive: true})
 </script>

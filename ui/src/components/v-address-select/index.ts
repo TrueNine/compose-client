@@ -43,36 +43,11 @@ export interface YVAddressSelectSelectValue {
 }
 
 export const YVAddressSelectDefaultSelects = {
-  province: {
-    name: '选择省份',
-    code: '',
-    leaf: false,
-    level: 1,
-  },
-  city: {
-    name: '选择市',
-    code: '',
-    leaf: false,
-    level: 2,
-  },
-  district: {
-    name: '选择区/县',
-    code: '',
-    leaf: false,
-    level: 3,
-  },
-  town: {
-    name: '选择镇/街道',
-    code: '',
-    leaf: false,
-    level: 4,
-  },
-  village: {
-    name: '选择村/居委会',
-    code: '',
-    leaf: false,
-    level: 5,
-  },
+  province: {name: '选择省份', code: '', leaf: false, level: 1},
+  city: {name: '选择市', code: '', leaf: false, level: 2},
+  district: {name: '选择区/县', code: '', leaf: false, level: 3},
+  town: {name: '选择镇/街道', code: '', leaf: false, level: 4},
+  village: {name: '选择村/居委会', code: '', leaf: false, level: 5},
 }
 
 export function getAdCodeLevel(code: string): number {

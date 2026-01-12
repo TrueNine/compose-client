@@ -4,20 +4,10 @@ import type {PreAuthorizeInjection} from '@/common'
 import {maybeArray} from '@truenine/shared'
 import {PreAuthorizeInjectionSymbol} from '@/common'
 
-const props = withDefaults(defineProps<YConfigPreAuthorizeProps>(), {
-  authedProvider: () => false,
-  permissionsProvider: () => [],
-  rolesProvider: () => [],
-  anonymousProvider: () => false,
-})
+const props = withDefaults(defineProps<YConfigPreAuthorizeProps>(), {authedProvider: () => false, permissionsProvider: () => [], rolesProvider: () => [], anonymousProvider: () => false})
 
 // 合并相关的状态计算
-const state = computed(() => ({
-  authed: props.authedProvider(),
-  anonymous: props.anonymousProvider(),
-  permissions: maybeArray(props.permissionsProvider()),
-  roles: maybeArray(props.rolesProvider()),
-}))
+const state = computed(() => ({authed: props.authedProvider(), anonymous: props.anonymousProvider(), permissions: maybeArray(props.permissionsProvider()), roles: maybeArray(props.rolesProvider())}))
 
 // 预计算权限注入实现
 const impl = computed<PreAuthorizeInjection>(() => ({

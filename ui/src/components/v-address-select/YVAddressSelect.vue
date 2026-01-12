@@ -5,13 +5,7 @@ import type {IComponentAddr, YAddressSelectEmits, YVAddressSelectProps, YVAddres
 import {AddressUtils, des} from '@truenine/shared'
 import {useVModel, watchThrottled} from '@vueuse/core'
 import {computed, onMounted, reactive, ref, watch} from 'vue'
-import {
-  clipCode,
-  getAdCodeLevel,
-
-  YVAddressSelectDefaultSelects,
-
-} from '.'
+import {clipCode, getAdCodeLevel, YVAddressSelectDefaultSelects} from '.'
 
 const props = withDefaults(defineProps<YVAddressSelectProps>(), {
   selectedLevel: 0,
@@ -105,10 +99,7 @@ async function cacheAndUpdate(code: string) {
           .map((e: IComponentAddr) => e)
           ?? []
 
-    saveCache(
-      padCode,
-      addressCacheData[currentKey!]?.map((e: IComponentAddr) => e) ?? [],
-    )
+    saveCache(padCode, addressCacheData[currentKey!]?.map((e: IComponentAddr) => e) ?? [])
   }
 
   // append fullPath

@@ -6,30 +6,14 @@ import YField from '../index'
 import YFieldProxyComponent from '../YFieldProxyComponent.vue'
 import {ChildInputComponent} from './components/TestComponents'
 
-const globalComponents = {
-  components: {
-    YField,
-    YFieldProxyComponent,
-  },
-}
+const globalComponents = {components: {YField, YFieldProxyComponent}}
 
-afterEach(() => {
-  document.body.innerHTML = ''
-})
+afterEach(() => document.body.innerHTML = '')
 
 describe('yFieldTest', () => {
   describe('基础功能Group', () => {
     it('正常 初始化 条件时，应正确渲染子组件并传递标签', async () => {
-      const wrapper = mount(YField, {
-        props: {
-          name: 'testField',
-          label: '测试标签',
-        },
-        slots: {
-          default: () => <ChildInputComponent />,
-        },
-        global: globalComponents,
-      })
+      const wrapper = mount(YField, {props: {name: 'testField', label: '测试标签'}, slots: {default: () => <ChildInputComponent />}, global: globalComponents})
 
       await nextTick()
       const childComponent = wrapper.findComponent(ChildInputComponent)
@@ -38,17 +22,7 @@ describe('yFieldTest', () => {
     })
 
     it('正常 继承属性 条件时，应将非name和label属性传递给子组件', async () => {
-      const wrapper = mount(YField, {
-        props: {
-          name: 'testField',
-          label: '测试标签',
-          placeholder: '请输入',
-        },
-        slots: {
-          default: () => <ChildInputComponent />,
-        },
-        global: globalComponents,
-      })
+      const wrapper = mount(YField, {props: {name: 'testField', label: '测试标签', placeholder: '请输入'}, slots: {default: () => <ChildInputComponent />}, global: globalComponents})
 
       await nextTick()
       const childComponent = wrapper.findComponent(ChildInputComponent)
@@ -58,20 +32,11 @@ describe('yFieldTest', () => {
 
   describe('表单集成Group', () => {
     it('正常 表单结构 条件时，应生成正确的YFieldProxyComponent', async () => {
-      const wrapper = mount(YForm, {
-        props: {
-          initValue: {email: 'test@example.com'},
-        },
-        slots: {
-          default: () => (
-            <YField name="email" label="邮箱">
-              <ChildInputComponent />
-            </YField>
-          ),
-        },
-        global: globalComponents,
-        attachTo: document.body,
-      })
+      const wrapper = mount(YForm, {props: {initValue: {email: 'test@example.com'}}, slots: {default: () => (
+        <YField name="email" label="邮箱">
+          <ChildInputComponent />
+        </YField>
+      )}, global: globalComponents, attachTo: document.body})
 
       await nextTick()
 
@@ -82,20 +47,11 @@ describe('yFieldTest', () => {
     })
 
     it('正常 字段映射 条件时，应将表单对象字段映射到代理组件', async () => {
-      const wrapper = mount(YForm, {
-        props: {
-          initValue: {address: {code: '110000'}},
-        },
-        slots: {
-          default: () => (
-            <YField name={{'address.code': 'adCode'}} label="地址编码">
-              <ChildInputComponent />
-            </YField>
-          ),
-        },
-        global: globalComponents,
-        attachTo: document.body,
-      })
+      const wrapper = mount(YForm, {props: {initValue: {address: {code: '110000'}}}, slots: {default: () => (
+        <YField name={{'address.code': 'adCode'}} label="地址编码">
+          <ChildInputComponent />
+        </YField>
+      )}, global: globalComponents, attachTo: document.body})
 
       await nextTick()
 
@@ -109,25 +65,14 @@ describe('yFieldTest', () => {
   // 嵌套字段测试
   describe('多字段映射Group', () => {
     it('正常 映射 条件时，YField应正确将表单字段映射到代理组件', async () => {
-      const wrapper = mount(YForm, {
-        props: {
-          initValue: {
-            coord: {x: '100', y: '200'},
-          },
-        },
-        slots: {
-          default: () => (
-            <YField
-              name={{'coord.x': 'x', 'coord.y': 'y'}}
-              label="坐标"
-            >
-              <ChildInputComponent />
-            </YField>
-          ),
-        },
-        global: globalComponents,
-        attachTo: document.body,
-      })
+      const wrapper = mount(YForm, {props: {initValue: {coord: {x: '100', y: '200'}}}, slots: {default: () => (
+        <YField
+          name={{'coord.x': 'x', 'coord.y': 'y'}}
+          label="坐标"
+        >
+          <ChildInputComponent />
+        </YField>
+      )}, global: globalComponents, attachTo: document.body})
 
       await nextTick()
 

@@ -11,13 +11,7 @@ interface Props {
   modelNames: Record<string, string>
 }
 
-const props = withDefaults(
-  defineProps<Props>(),
-  {
-    label: void 0,
-    placeholder: void 0,
-  },
-)
+const props = withDefaults(defineProps<Props>(), {label: void 0, placeholder: void 0})
 const mounted = ref(false)
 if (!mounted.value) mounted.value = true
 
@@ -37,12 +31,7 @@ const effectVModels = computed(() => {
   if (!mounted.value) return {}
 
   // 首先收集所有基础属性
-  const baseProps = {
-    ...props.component.props ?? {},
-    errorMessages: _allErrors.value,
-    label: props.label,
-    placeholder: props.placeholder,
-  }
+  const baseProps = {...props.component.props ?? {}, errorMessages: _allErrors.value, label: props.label, placeholder: props.placeholder}
 
   // 然后收集所有事件和值属性，但不覆盖它们
   const fieldProps: Record<string, any> = {}
@@ -55,26 +44,14 @@ const effectVModels = computed(() => {
     fieldProps[label] = f.value
 
     // 添加事件监听
-    fieldProps[`onUpdate:${label}`] = (v: dynamic) => {
-      f.setValue(v)
-    }
+    fieldProps[`onUpdate:${label}`] = (v: dynamic) => f.setValue(v)
   })
 
   // 添加通用事件
-  const commonEvents = {
-    'onBlur': (e: Event) => _allFields[0]?.handleBlur(e, true),
-    'onReset': () => _allFields[0]?.handleReset,
-    'onUpdate:errorMessages': (v: string | string[]) => {
-      _allFields.forEach(f => f.setErrors(maybeArray(v)))
-    },
-  }
+  const commonEvents = {'onBlur': (e: Event) => _allFields[0]?.handleBlur(e, true), 'onReset': () => _allFields[0]?.handleReset, 'onUpdate:errorMessages': (v: string | string[]) => _allFields.forEach(f => f.setErrors(maybeArray(v)))}
 
   // 合并所有属性
-  return {
-    ...baseProps,
-    ...fieldProps,
-    ...commonEvents,
-  }
+  return {...baseProps, ...fieldProps, ...commonEvents}
 })
 </script>
 
