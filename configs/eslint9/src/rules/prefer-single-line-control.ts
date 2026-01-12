@@ -16,6 +16,8 @@ const rule: Rule.RuleModule = {
       preferSingleLineFor: 'For loop with simple body should be single-line format',
       preferSingleLineWhile: 'While loop with simple body should be single-line format',
       preferSingleLineTry: 'Try-catch with simple bodies should be single-line format',
+      preferBraceCatch: '} catch should be on the same line',
+      preferBraceFinally: '} finally should be on the same line',
     },
   },
   create(context) {
@@ -335,65 +337,52 @@ const rule: Rule.RuleModule = {
         const tryNode = node as TryNode
         const {block, handler, finalizer} = tryNode
 
-        // 分别检查每个块是否需要压缩
-        const canCompactTry = canBlockBeCompact(block) && !isBlockAlreadyCompact(block) && getTryLineLength(block) < MAX_LINE_LENGTH
-        const canCompactCatch = handler && canBlockBeCompact(handler.body) && !isBlockAlreadyCompact(handler.body) && getCatchLineLength(handler) < MAX_LINE_LENGTH
-        const canCompactFinally = finalizer && canBlockBeCompact(finalizer) && !isBlockAlreadyCompact(finalizer) && getFinallyLineLength(finalizer) < MAX_LINE_LENGTH
+        // 检查是否需要任何修复
+        const canCompactTry = canBlockBeCompact(block) && !isBlockAlreadyCompact(block)
+        const canCompactCatch = handler && canBlockBeCompact(handler.body) && !isBlockAlreadyCompact(handler.body)
+        const canCompactFinally = finalizer && canBlockBeCompact(finalizer) && !isBlockAlreadyCompact(finalizer)
 
-        // 如果没有任何块需要压缩，跳过
-        if (!canCompactTry && !canCompactCatch && !canCompactFinally) return
+        // 检查各部分是否在同一行（需要拆分）
+        const tryEndLine = block.loc!.end.line
+        const catchStartLine = handler?.loc!.start.line
+        const catchEndLine = handler?.body.loc!.end.line
+        const finallyStartLine = finalizer?.loc!.start.line
+
+        // try 和 catch 在同一行
+        const tryCatchSameLine = handler && tryEndLine === catchStartLine
+        // catch 和 finally 在同一行
+        const catchFinallySameLine = handler && finalizer && catchEndLine === finallyStartLine
+        // try 和 finally 在同一行（没有 catch 的情况）
+        const tryFinallySameLine = !handler && finalizer && tryEndLine === finallyStartLine
+
+        // 如果没有任何需要修复的，跳过
+        if (!canCompactTry && !canCompactCatch && !canCompactFinally && !tryCatchSameLine && !catchFinallySameLine && !tryFinallySameLine) return
 
         context.report({
           node,
           messageId: 'preferSingleLineTry',
           fix(fixer) {
-            const fixes: ReturnType<typeof fixer.replaceText>[] = []
+            const lines: string[] = []
 
-            // 压缩 try 块
-            if (canCompactTry) {
-              const tryKeyword = sourceCode.getFirstToken(node)!
-              const tryBlockText = getCompactBlockText(block)
-              fixes.push(fixer.replaceTextRange([tryKeyword.range[0], block.range![1]], `try ${tryBlockText}`))
-            }
+            // try 块 - 独立一行
+            if ((canCompactTry || isBlockAlreadyCompact(block)) && getTryLineLength(block) < MAX_LINE_LENGTH) lines.push(`try ${getCompactBlockText(block)}`)
+            else lines.push(`try ${sourceCode.getText(block)}`)
 
-            // 压缩 catch 块
-            if (canCompactCatch) {
-              const catchKeyword = sourceCode.getTokenBefore(handler.body, {filter: t => t.value === 'catch'})!
-              const catchParam = handler.param
-              const catchParamText = catchParam ? `(${sourceCode.getText(catchParam)}) ` : ''
-              const catchBlockText = getCompactBlockText(handler.body)
-              fixes.push(fixer.replaceTextRange([catchKeyword.range[0], handler.body.range![1]], `catch ${catchParamText}${catchBlockText}`))
-            }
-
-            // 压缩 finally 块
-            if (canCompactFinally) {
-              const finallyKeyword = sourceCode.getTokenBefore(finalizer, {filter: t => t.value === 'finally'})!
-              const finallyBlockText = getCompactBlockText(finalizer)
-              fixes.push(fixer.replaceTextRange([finallyKeyword.range[0], finalizer.range![1]], `finally ${finallyBlockText}`))
-            }
-
-            // 如果有多个 fix，需要合并（ESLint 不支持多个 fix）
-            // 所以我们重新生成整个 try 语句
-            if (fixes.length === 0) return null
-            if (fixes.length === 1) return fixes[0]
-
-            // 多个块需要压缩，重新生成整个语句
-            let result = ''
-
-            // try 块
-            result = canCompactTry ? `try ${getCompactBlockText(block)}` : `try ${sourceCode.getText(block)}`
-
-            // catch 块 - } catch 在同一行
+            // catch 块 - 独立一行
             if (handler) {
               const catchParam = handler.param
               const catchParamText = catchParam ? `(${sourceCode.getText(catchParam)}) ` : ''
-              result += canCompactCatch ? ` catch ${catchParamText}${getCompactBlockText(handler.body)}` : ` catch ${catchParamText}${sourceCode.getText(handler.body)}`
+              if ((canCompactCatch || isBlockAlreadyCompact(handler.body)) && getCatchLineLength(handler) < MAX_LINE_LENGTH) lines.push(`catch ${catchParamText}${getCompactBlockText(handler.body)}`)
+              else lines.push(`catch ${catchParamText}${sourceCode.getText(handler.body)}`)
             }
 
-            // finally 块 - } finally 在同一行
-            if (finalizer) result += canCompactFinally ? ` finally ${getCompactBlockText(finalizer)}` : ` finally ${sourceCode.getText(finalizer)}`
+            // finally 块 - 独立一行
+            if (finalizer) {
+              if ((canCompactFinally || isBlockAlreadyCompact(finalizer)) && getFinallyLineLength(finalizer) < MAX_LINE_LENGTH) lines.push(`finally ${getCompactBlockText(finalizer)}`)
+              else lines.push(`finally ${sourceCode.getText(finalizer)}`)
+            }
 
-            return fixer.replaceText(node, result)
+            return fixer.replaceText(node, lines.join('\n'))
           },
         })
       },
