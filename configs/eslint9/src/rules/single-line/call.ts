@@ -22,18 +22,13 @@ interface RuleOptions {
 
 const rule: Rule.RuleModule = {meta: {
   type: 'layout',
-  docs: {description: 'Prefer single-line function calls when the result fits within max line length',
-    recommended: false},
+  docs: {description: 'Prefer single-line function calls when the result fits within max line length', recommended: false},
   fixable: 'code',
   schema: [
-    {type: 'object',
-      properties: {maxLineLength: {type: 'number',
-        default: MAX_LINE_LENGTH}},
-      additionalProperties: false},
+    {type: 'object', properties: {maxLineLength: {type: 'number', default: MAX_LINE_LENGTH}}, additionalProperties: false},
   ],
   messages: {preferSingleLineCall: 'Function call can be written on a single line'},
-},
-create(context) {
+}, create(context) {
   const {sourceCode} = context
   const options = (context.options[0] ?? {}) as RuleOptions
   const maxLineLength = options.maxLineLength ?? MAX_LINE_LENGTH

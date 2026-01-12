@@ -9,8 +9,7 @@ import {singleLineRules} from './single-line'
  * - single-line: Rules that prefer single-line format for simple statements
  * - code-style: Rules that enforce code style preferences
  */
-export const rules: Record<string, Rule.RuleModule> = {...singleLineRules,
-  ...codeStyleRules}
+export const rules: Record<string, Rule.RuleModule> = {...singleLineRules, ...codeStyleRules}
 
 // Re-export all rules from subdirectories
 export * from './code-style'

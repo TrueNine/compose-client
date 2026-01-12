@@ -10,16 +10,14 @@ export const javascriptConfig: AntFuJsConfig = {overrides: {
   'no-constant-condition': 'error',
   'no-restricted-syntax': [
     'error',
-    {selector: 'Identifier[name="undefined"]',
-      message: 'Use `void 0` instead of `undefined`.'},
+    {selector: 'Identifier[name="undefined"]', message: 'Use `void 0` instead of `undefined`.'},
   ],
   'no-global-assign': 'error',
   'no-unused-vars': 'error',
   'no-var': 'error',
   'prefer-const': [
     'error',
-    {destructuring: 'any',
-      ignoreReadBeforeAssign: false},
+    {destructuring: 'any', ignoreReadBeforeAssign: false},
   ],
 }}
 

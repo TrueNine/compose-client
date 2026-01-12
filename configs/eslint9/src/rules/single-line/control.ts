@@ -18,8 +18,7 @@ const MAX_LINE_LENGTH = 160
  */
 const rule: Rule.RuleModule = {meta: {
   type: 'layout',
-  docs: {description: 'Prefer single-line switch cases, for loops, while loops, and try-catch when possible',
-    recommended: false},
+  docs: {description: 'Prefer single-line switch cases, for loops, while loops, and try-catch when possible', recommended: false},
   fixable: 'code',
   schema: [],
   messages: {
@@ -30,8 +29,7 @@ const rule: Rule.RuleModule = {meta: {
     preferBraceCatch: '} catch should be on the same line',
     preferBraceFinally: '} finally should be on the same line',
   },
-},
-create(context) {
+}, create(context) {
   const {sourceCode} = context
 
   function getSingleStatement(node: Rule.Node | null | undefined): Rule.Node | null {
@@ -226,25 +224,23 @@ create(context) {
 
       for (const idx of simplifiableCases) {
         const caseNode = cases[idx]
-        context.report({node: caseNode,
-          messageId: 'preferSingleLineCase',
-          fix(fixer) {
-            const {test, consequent} = caseNode
-            const {mainStmt, hasBreak} = extractCaseStatements(consequent)
-            if (!mainStmt) return null
+        context.report({node: caseNode, messageId: 'preferSingleLineCase', fix(fixer) {
+          const {test, consequent} = caseNode
+          const {mainStmt, hasBreak} = extractCaseStatements(consequent)
+          if (!mainStmt) return null
 
-            const stmtText = ensureSemicolon(sourceCode.getText(mainStmt))
+          const stmtText = ensureSemicolon(sourceCode.getText(mainStmt))
 
-            let caseText: string
-            if (test != null) {
-              const testText = normalizeText(sourceCode.getText(test))
-              caseText = `case ${testText}:`
-            } else caseText = 'default:'
+          let caseText: string
+          if (test != null) {
+            const testText = normalizeText(sourceCode.getText(test))
+            caseText = `case ${testText}:`
+          } else caseText = 'default:'
 
-            const breakText = hasBreak ? ' break' : ''
+          const breakText = hasBreak ? ' break' : ''
 
-            return fixer.replaceText(caseNode, `${caseText} ${stmtText}${breakText}`)
-          }})
+          return fixer.replaceText(caseNode, `${caseText} ${stmtText}${breakText}`)
+        }})
       }
     },
 
@@ -253,20 +249,18 @@ create(context) {
       if (isLoopAlreadySingleLine(loopNode)) return
       if (!canLoopBeSimplified(loopNode)) return
 
-      context.report({node,
-        messageId: 'preferSingleLineFor',
-        fix(fixer) {
-          const {body} = loopNode
-          const stmt = getSingleStatement(body)!
-          const stmtText = sourceCode.getText(stmt).trimEnd()
+      context.report({node, messageId: 'preferSingleLineFor', fix(fixer) {
+        const {body} = loopNode
+        const stmt = getSingleStatement(body)!
+        const stmtText = sourceCode.getText(stmt).trimEnd()
 
-          const loopText = sourceCode.getText(node)
-          const bodyStart = body.range?.[0] ?? 0
-          const loopStart = node.range?.[0] ?? 0
-          const headerText = normalizeText(loopText.slice(0, bodyStart - loopStart))
+        const loopText = sourceCode.getText(node)
+        const bodyStart = body.range?.[0] ?? 0
+        const loopStart = node.range?.[0] ?? 0
+        const headerText = normalizeText(loopText.slice(0, bodyStart - loopStart))
 
-          return fixer.replaceText(node, `${headerText} ${stmtText}`)
-        }})
+        return fixer.replaceText(node, `${headerText} ${stmtText}`)
+      }})
     },
 
     ForInStatement(node) {
@@ -274,20 +268,18 @@ create(context) {
       if (isLoopAlreadySingleLine(loopNode)) return
       if (!canLoopBeSimplified(loopNode)) return
 
-      context.report({node,
-        messageId: 'preferSingleLineFor',
-        fix(fixer) {
-          const {body} = loopNode
-          const stmt = getSingleStatement(body)!
-          const stmtText = sourceCode.getText(stmt).trimEnd()
+      context.report({node, messageId: 'preferSingleLineFor', fix(fixer) {
+        const {body} = loopNode
+        const stmt = getSingleStatement(body)!
+        const stmtText = sourceCode.getText(stmt).trimEnd()
 
-          const loopText = sourceCode.getText(node)
-          const bodyStart = body.range?.[0] ?? 0
-          const loopStart = node.range?.[0] ?? 0
-          const headerText = normalizeText(loopText.slice(0, bodyStart - loopStart))
+        const loopText = sourceCode.getText(node)
+        const bodyStart = body.range?.[0] ?? 0
+        const loopStart = node.range?.[0] ?? 0
+        const headerText = normalizeText(loopText.slice(0, bodyStart - loopStart))
 
-          return fixer.replaceText(node, `${headerText} ${stmtText}`)
-        }})
+        return fixer.replaceText(node, `${headerText} ${stmtText}`)
+      }})
     },
 
     ForOfStatement(node) {
@@ -295,20 +287,18 @@ create(context) {
       if (isLoopAlreadySingleLine(loopNode)) return
       if (!canLoopBeSimplified(loopNode)) return
 
-      context.report({node,
-        messageId: 'preferSingleLineFor',
-        fix(fixer) {
-          const {body} = loopNode
-          const stmt = getSingleStatement(body)!
-          const stmtText = sourceCode.getText(stmt).trimEnd()
+      context.report({node, messageId: 'preferSingleLineFor', fix(fixer) {
+        const {body} = loopNode
+        const stmt = getSingleStatement(body)!
+        const stmtText = sourceCode.getText(stmt).trimEnd()
 
-          const loopText = sourceCode.getText(node)
-          const bodyStart = body.range?.[0] ?? 0
-          const loopStart = node.range?.[0] ?? 0
-          const headerText = normalizeText(loopText.slice(0, bodyStart - loopStart))
+        const loopText = sourceCode.getText(node)
+        const bodyStart = body.range?.[0] ?? 0
+        const loopStart = node.range?.[0] ?? 0
+        const headerText = normalizeText(loopText.slice(0, bodyStart - loopStart))
 
-          return fixer.replaceText(node, `${headerText} ${stmtText}`)
-        }})
+        return fixer.replaceText(node, `${headerText} ${stmtText}`)
+      }})
     },
 
     WhileStatement(node) {
@@ -316,17 +306,15 @@ create(context) {
       if (isLoopAlreadySingleLine(loopNode)) return
       if (!canLoopBeSimplified(loopNode)) return
 
-      context.report({node,
-        messageId: 'preferSingleLineWhile',
-        fix(fixer) {
-          const {body, test} = loopNode
-          const stmt = getSingleStatement(body)!
-          const stmtText = sourceCode.getText(stmt).trimEnd()
+      context.report({node, messageId: 'preferSingleLineWhile', fix(fixer) {
+        const {body, test} = loopNode
+        const stmt = getSingleStatement(body)!
+        const stmtText = sourceCode.getText(stmt).trimEnd()
 
-          const testText = normalizeText(sourceCode.getText(test))
+        const testText = normalizeText(sourceCode.getText(test))
 
-          return fixer.replaceText(node, `while (${testText}) ${stmtText}`)
-        }})
+        return fixer.replaceText(node, `while (${testText}) ${stmtText}`)
+      }})
     },
 
     DoWhileStatement() {
@@ -378,27 +366,25 @@ create(context) {
       const totalLen = tryLen + catchLen + finallyLen
       if (totalLen > MAX_LINE_LENGTH) return
 
-      context.report({node,
-        messageId: 'preferSingleLineTry',
-        fix(fixer) {
-          // 生成 try 块
-          const tryText = `try ${getCompactBlockText(block)}`
+      context.report({node, messageId: 'preferSingleLineTry', fix(fixer) {
+        // 生成 try 块
+        const tryText = `try ${getCompactBlockText(block)}`
 
-          // 生成 catch 块
-          let catchText = ''
-          if (handler) {
-            const catchParam = handler.param
-            const catchParamText = catchParam ? `(${sourceCode.getText(catchParam)}) ` : ''
-            catchText = ` catch ${catchParamText}${getCompactBlockText(handler.body)}`
-          }
+        // 生成 catch 块
+        let catchText = ''
+        if (handler) {
+          const catchParam = handler.param
+          const catchParamText = catchParam ? `(${sourceCode.getText(catchParam)}) ` : ''
+          catchText = ` catch ${catchParamText}${getCompactBlockText(handler.body)}`
+        }
 
-          // 生成 finally 块
-          let finallyText = ''
-          if (finalizer) finallyText = ` finally ${getCompactBlockText(finalizer)}`
+        // 生成 finally 块
+        let finallyText = ''
+        if (finalizer) finallyText = ` finally ${getCompactBlockText(finalizer)}`
 
-          // 组合：try {...} catch {...} finally {...}（1tbs 风格，全部单行）
-          return fixer.replaceText(node, `${tryText}${catchText}${finallyText}`)
-        }})
+        // 组合：try {...} catch {...} finally {...}（1tbs 风格，全部单行）
+        return fixer.replaceText(node, `${tryText}${catchText}${finallyText}`)
+      }})
     },
   }
 }}

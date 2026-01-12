@@ -18,13 +18,11 @@ const MAX_LINE_LENGTH = 160
  */
 const rule: Rule.RuleModule = {meta: {
   type: 'layout',
-  docs: {description: 'Prefer concise arrow function body when possible',
-    recommended: false},
+  docs: {description: 'Prefer concise arrow function body when possible', recommended: false},
   fixable: 'code',
   schema: [],
   messages: {preferConciseArrow: 'Arrow function body can be simplified to a single expression'},
-},
-create(context) {
+}, create(context) {
   const {sourceCode} = context
 
   function hasComments(node: Rule.Node): boolean {

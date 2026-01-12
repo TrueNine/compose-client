@@ -7,9 +7,7 @@ export const stylisticConfig: AntFuStylisticConfig = {
   quotes: 'single',
   semi: false,
   overrides: {
-    'style/no-multiple-empty-lines': ['error', {max: 1,
-      maxBOF: 0,
-      maxEOF: 0}],
+    'style/no-multiple-empty-lines': ['error', {max: 1, maxBOF: 0, maxEOF: 0}],
     // } catch / } else / } finally 必须在同一行
     'style/brace-style': ['error', '1tbs', {allowSingleLine: true}],
     'style/arrow-parens': ['error', 'as-needed'],
@@ -30,9 +28,7 @@ export const stylisticConfig: AntFuStylisticConfig = {
     // 块语句前加空格 if(x){} → if (x) {}
     'style/space-before-blocks': ['error', 'always'],
     // 函数括号前不加空格 function () → function()
-    'style/space-before-function-paren': ['error', {anonymous: 'never',
-      named: 'never',
-      asyncArrow: 'always'}],
+    'style/space-before-function-paren': ['error', {anonymous: 'never', named: 'never', asyncArrow: 'always'}],
     // 括号内不加空格 ( a ) → (a)
     'style/space-in-parens': ['error', 'never'],
     // 对象冒号后加空格，前不加 {a : 1} → {a: 1}
@@ -59,15 +55,13 @@ export const stylisticConfig: AntFuStylisticConfig = {
     'style/function-call-argument-newline': ['error', 'consistent'],
     // 函数参数换行：短参数允许单行
     'style/function-paren-newline': ['error', 'multiline-arguments'],
-    // import/export 语句强制单行，短对象强制单行
-    'style/object-curly-newline': ['error', {ImportDeclaration: 'never',
-      ExportDeclaration: 'never',
-      ObjectExpression: {minProperties: 5, consistent: false},
-      ObjectPattern: {minProperties: 5, consistent: false}}],
-    // 对象属性：允许所有属性在同一行
-    'style/object-property-newline': ['error', {allowAllPropertiesOnSameLine: true}],
-    // 关闭 antfu/consistent-list-newline（与 object-curly-newline 冲突）
-    'antfu/consistent-list-newline': 'off',
+    // 关闭 object-curly-newline，由 antfu/consistent-list-newline 统一处理
+    // 注意：import/export 的换行由 antfu/consistent-list-newline 处理
+    'style/object-curly-newline': 'off',
+    // 关闭 object-property-newline，由 antfu/consistent-list-newline 统一处理
+    'style/object-property-newline': 'off',
+    // 列表换行一致性：如果第一项换行则全部换行，否则全部单行
+    'antfu/consistent-list-newline': 'error',
   },
 }
 

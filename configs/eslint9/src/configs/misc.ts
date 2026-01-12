@@ -1,8 +1,7 @@
 import type {AntFuTestConfig, AntFuUnocssConfig} from '../types'
 
 /** UnoCSS 默认配置 */
-export const unocssConfig: AntFuUnocssConfig = {attributify: true,
-  strict: true}
+export const unocssConfig: AntFuUnocssConfig = {attributify: true, strict: true}
 
 /** @deprecated 使用 unocssConfig 代替 */
 export const defaultUnocssConfig: AntFuUnocssConfig = unocssConfig

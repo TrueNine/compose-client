@@ -9,14 +9,11 @@ export const typescriptConfig: AntFuTsConfig = {overrides: {
   'ts/member-ordering': ['error'],
   'ts/no-extra-non-null-assertion': 'error',
   'ts/no-non-null-assertion': 'error',
-  'ts/no-explicit-any': ['error', {fixToUnknown: true,
-    ignoreRestArgs: true}],
+  'ts/no-explicit-any': ['error', {fixToUnknown: true, ignoreRestArgs: true}],
   'ts/no-namespace': 'error',
   'ts/no-unused-vars': [
     'error',
-    {vars: 'all',
-      args: 'after-used',
-      ignoreRestSiblings: false},
+    {vars: 'all', args: 'after-used', ignoreRestSiblings: false},
   ],
 }}
 

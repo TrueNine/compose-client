@@ -8,8 +8,7 @@ import preferGuardClause from './guard-clause'
  * These rules enforce code style preferences for better readability
  * and maintainability.
  */
-export const codeStyleRules: Record<string, Rule.RuleModule> = {'prefer-concise-arrow': preferConciseArrow,
-  'prefer-guard-clause': preferGuardClause}
+export const codeStyleRules: Record<string, Rule.RuleModule> = {'prefer-concise-arrow': preferConciseArrow, 'prefer-guard-clause': preferGuardClause}
 
 export {default as preferConciseArrow} from './concise-arrow'
 export {default as preferGuardClause} from './guard-clause'

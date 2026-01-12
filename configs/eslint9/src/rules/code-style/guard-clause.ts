@@ -28,18 +28,13 @@ interface RuleOptions {
 
 const rule: Rule.RuleModule = {meta: {
   type: 'suggestion',
-  docs: {description: 'Prefer guard clauses (early returns) to reduce nesting',
-    recommended: false},
+  docs: {description: 'Prefer guard clauses (early returns) to reduce nesting', recommended: false},
   fixable: 'code',
   schema: [
-    {type: 'object',
-      properties: {minStatements: {type: 'number',
-        default: 2}},
-      additionalProperties: false},
+    {type: 'object', properties: {minStatements: {type: 'number', default: 2}}, additionalProperties: false},
   ],
   messages: {preferGuardClause: 'Prefer guard clause with early return to reduce nesting'},
-},
-create(context) {
+}, create(context) {
   const {sourceCode} = context
   const options = (context.options[0] ?? {}) as RuleOptions
   const minStatements = options.minStatements ?? 2
@@ -129,31 +124,29 @@ create(context) {
       const lastBlockStmt = blockBody.at(-1)
       const blockEndsWithReturn = lastBlockStmt?.type === 'ReturnStatement'
 
-      context.report({node,
-        messageId: 'preferGuardClause',
-        fix(fixer) {
-          const conditionText = sourceCode.getText(node.test)
-          const invertedCondition = invertCondition(conditionText)
-          const indent = getIndent(node)
-          const returnText = sourceCode.getText(returnNode)
+      context.report({node, messageId: 'preferGuardClause', fix(fixer) {
+        const conditionText = sourceCode.getText(node.test)
+        const invertedCondition = invertCondition(conditionText)
+        const indent = getIndent(node)
+        const returnText = sourceCode.getText(returnNode)
 
-          const bodyText = blockBody
-            .map(stmt => sourceCode.getText(stmt))
-            .join(`\n${indent}`)
+        const bodyText = blockBody
+          .map(stmt => sourceCode.getText(stmt))
+          .join(`\n${indent}`)
 
-          const formattedReturn = formatReturnStatement(returnText, indent)
+        const formattedReturn = formatReturnStatement(returnText, indent)
 
-          // If block already ends with return, don't append the fallback return
-          const result = blockEndsWithReturn
-            ? `if (${invertedCondition}) ${formattedReturn}\n\n${indent}${bodyText}`
-            : `if (${invertedCondition}) ${formattedReturn}\n\n${indent}${bodyText}\n${indent}${returnText}`
+        // If block already ends with return, don't append the fallback return
+        const result = blockEndsWithReturn
+          ? `if (${invertedCondition}) ${formattedReturn}\n\n${indent}${bodyText}`
+          : `if (${invertedCondition}) ${formattedReturn}\n\n${indent}${bodyText}\n${indent}${returnText}`
 
-          const nodeRange = node.range as [number, number] | undefined
-          const returnRange = returnNode.range
-          if (nodeRange == null || returnRange == null) return null
+        const nodeRange = node.range as [number, number] | undefined
+        const returnRange = returnNode.range
+        if (nodeRange == null || returnRange == null) return null
 
-          return fixer.replaceTextRange([nodeRange[0], returnRange[1]], result)
-        }})
+        return fixer.replaceTextRange([nodeRange[0], returnRange[1]], result)
+      }})
       return
     }
 
@@ -189,27 +182,25 @@ create(context) {
       }
     }
 
-    context.report({node,
-      messageId: 'preferGuardClause',
-      fix(fixer) {
-        const conditionText = sourceCode.getText(node.test)
-        const invertedCondition = invertCondition(conditionText)
-        const indent = getIndent(node)
+    context.report({node, messageId: 'preferGuardClause', fix(fixer) {
+      const conditionText = sourceCode.getText(node.test)
+      const invertedCondition = invertCondition(conditionText)
+      const indent = getIndent(node)
 
-        if (endsWithReturn) {
-          const statementsWithoutReturn = blockBody.slice(0, -1)
-          if (statementsWithoutReturn.length === 0) return fixer.replaceText(node, `if (${invertedCondition}) ${defaultReturnText}`)
-          const bodyText = statementsWithoutReturn
-            .map(stmt => sourceCode.getText(stmt))
-            .join(`\n${indent}`)
-          return fixer.replaceText(node, `if (${invertedCondition}) ${defaultReturnText}\n\n${indent}${bodyText}`)
-        }
-
-        const bodyText = blockBody
+      if (endsWithReturn) {
+        const statementsWithoutReturn = blockBody.slice(0, -1)
+        if (statementsWithoutReturn.length === 0) return fixer.replaceText(node, `if (${invertedCondition}) ${defaultReturnText}`)
+        const bodyText = statementsWithoutReturn
           .map(stmt => sourceCode.getText(stmt))
           .join(`\n${indent}`)
         return fixer.replaceText(node, `if (${invertedCondition}) ${defaultReturnText}\n\n${indent}${bodyText}`)
-      }})
+      }
+
+      const bodyText = blockBody
+        .map(stmt => sourceCode.getText(stmt))
+        .join(`\n${indent}`)
+      return fixer.replaceText(node, `if (${invertedCondition}) ${defaultReturnText}\n\n${indent}${bodyText}`)
+    }})
     /* eslint-enable ts/no-unsafe-member-access, ts/no-unsafe-assignment, ts/no-unsafe-argument */
   }}
 }}
