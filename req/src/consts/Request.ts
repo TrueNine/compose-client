@@ -85,11 +85,4 @@ interface ContentTypesStructure {
 /**
  * http Content-Type
  */
-export const ContentTypes: ContentTypesStructure = {
-  formType: {
-    [Headers.contentType]: MediaTypes.urlEncode,
-  },
-  jsonType: {
-    [Headers.contentType]: MediaTypes.json,
-  },
-}
+export const ContentTypes: ContentTypesStructure = {formType: {[Headers.contentType]: MediaTypes.urlEncode}, jsonType: {[Headers.contentType]: MediaTypes.json}}

@@ -21,16 +21,13 @@ export function toFormPathData(formContent: Record<string, unknown>, parentExpre
                 _resultArr.push(...toFormPathData(arrayEntity as Record<string, unknown>, `${parentExpression}.${k}[${i.toString()}]`))
               }
             })
-          }
-          else if (isBlobArray) {
+          } else if (isBlobArray) {
             v1.forEach((arrayEntity, i) => {
               if (arrayEntity instanceof Blob) _resultArr.push({name: `${parentExpression}.${k}[${i.toString()}]`, value: arrayEntity})
             })
-          }
-          else _resultArr.push({name: `${parentExpression}.${k}`, value: v1.join(',')})
+          } else _resultArr.push({name: `${parentExpression}.${k}`, value: v1.join(',')})
         }
-      }
-      else if (v instanceof Blob) _resultArr.push({name: `${parentExpression}.${k}`, value: v})
+      } else if (v instanceof Blob) _resultArr.push({name: `${parentExpression}.${k}`, value: v})
       else if (v !== null && typeof v === 'object') _resultArr.push(...toFormPathData(v as Record<string, unknown>, `${parentExpression}.${k}`))
     }
   })
@@ -43,9 +40,7 @@ export function toFormPathData(formContent: Record<string, unknown>, parentExpre
 export function form(formContent: Record<string, unknown>): FormData {
   const f = new FormData()
 
-  toFormPathData(formContent).forEach(it => {
-    f.append(it.name, it.value)
-  })
+  toFormPathData(formContent).forEach(it => f.append(it.name, it.value))
 
   return f
 }
