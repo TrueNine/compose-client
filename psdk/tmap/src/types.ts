@@ -3,20 +3,8 @@ import type {MapEvents, MultiMarkerEvents} from './events'
 import type {InfoWindow} from './infowindow'
 import type {LatLng, LatLngDataTyping, Point, PointDataTyping} from './LatLng'
 import type {MultiMarker} from './multimarker'
-import type {
-  EaseOptions,
-  InfoWindowOptions,
-  MapOptions,
-  MultiMarkerOptions,
-  PointGeometry,
-} from './options'
-import type {
-  SearchErrorResult,
-  SearchNearbyOptions,
-  SearchOptions,
-  SearchRegionOptions,
-  SearchResult,
-} from './options/service'
+import type {EaseOptions, InfoWindowOptions, MapOptions, MultiMarkerOptions, PointGeometry} from './options'
+import type {SearchErrorResult, SearchNearbyOptions, SearchOptions, SearchRegionOptions, SearchResult} from './options/service'
 import type {Search} from './services'
 
 export interface TMapService {
@@ -74,10 +62,4 @@ export type {ViewMode} from './Constants'
 export type {MapEvents, MultiMarkerEvents} from './events'
 export type {LatLngDataTyping, PointDataTyping} from './LatLng'
 export type {EaseOptions, InfoWindowOptions, MapOptions, MultiMarkerOptions, PointGeometry} from './options'
-export type {
-  SearchErrorResult,
-  SearchNearbyOptions,
-  SearchOptions,
-  SearchRegionOptions,
-  SearchResult,
-} from './options/service'
+export type {SearchErrorResult, SearchNearbyOptions, SearchOptions, SearchRegionOptions, SearchResult} from './options/service'
