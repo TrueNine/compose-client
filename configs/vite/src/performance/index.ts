@@ -37,46 +37,40 @@ export function createEsbuildOptimization(): UserConfig['esbuild'] {
  * 创建代码分割优化配置
  */
 export function createChunkOptimization(): BuildOptions['rollupOptions'] {
-  return {
-    output: {
-      // 优化 chunk 分割策略
-      manualChunks: (id: string) => {
-        // 将 node_modules 中的依赖分离到 vendor chunk
-        if (id.includes('node_modules')) {
-          // 大型库单独分包
-          if (id.includes('vue') || id.includes('@vue')) return 'vue-vendor'
-          if (id.includes('lodash') || id.includes('ramda')) return 'utility-vendor'
-          if (id.includes('axios') || id.includes('fetch')) return 'http-vendor'
-          return 'vendor'
-        }
+  return {output: {
+    // 优化 chunk 分割策略
+    manualChunks: (id: string) => {
+      // 将 node_modules 中的依赖分离到 vendor chunk
+      if (id.includes('node_modules')) {
+        // 大型库单独分包
+        if (id.includes('vue') || id.includes('@vue')) return 'vue-vendor'
+        if (id.includes('lodash') || id.includes('ramda')) return 'utility-vendor'
+        if (id.includes('axios') || id.includes('fetch')) return 'http-vendor'
+        return 'vendor'
+      }
 
-        // 将工具函数分离
-        if (id.includes('/utils/') || id.includes('/helpers/')) return 'utils'
+      // 将工具函数分离
+      if (id.includes('/utils/') || id.includes('/helpers/')) return 'utils'
 
-        // 将组件分离
-        if (id.includes('/components/')) return 'components'
-      },
-      // 优化输出配置
-      compact: true,
-      minifyInternalExports: true,
-      // 设置 chunk 文件名格式
-      chunkFileNames: chunkInfo => {
-        const {facadeModuleId} = chunkInfo
-        if (facadeModuleId == null) return 'chunks/[name]-[hash].js'
-
-        const name = facadeModuleId.split('/').pop()?.replace(/\.[^.]*$/, '') ?? 'chunk'
-        return `chunks/${name}-[hash].js`
-      },
-      entryFileNames: 'entries/[name]-[hash].js',
-      assetFileNames: 'assets/[name]-[hash].[ext]',
+      // 将组件分离
+      if (id.includes('/components/')) return 'components'
     },
-    // 优化外部依赖处理
-    treeshake: {
-      moduleSideEffects: false,
-      propertyReadSideEffects: false,
-      unknownGlobalSideEffects: false,
+    // 优化输出配置
+    compact: true,
+    minifyInternalExports: true,
+    // 设置 chunk 文件名格式
+    chunkFileNames: chunkInfo => {
+      const {facadeModuleId} = chunkInfo
+      if (facadeModuleId == null) return 'chunks/[name]-[hash].js'
+
+      const name = facadeModuleId.split('/').pop()?.replace(/\.[^.]*$/, '') ?? 'chunk'
+      return `chunks/${name}-[hash].js`
     },
-  }
+    entryFileNames: 'entries/[name]-[hash].js',
+    assetFileNames: 'assets/[name]-[hash].[ext]',
+  },
+  // 优化外部依赖处理
+  treeshake: {moduleSideEffects: false, propertyReadSideEffects: false, unknownGlobalSideEffects: false}}
 }
 
 /**
@@ -107,12 +101,7 @@ export function createDepsOptimization(): UserConfig['optimizeDeps'] {
     // 强制重新优化依赖
     force: false,
     // 启用 esbuild 优化
-    esbuildOptions: {
-      target: 'es2020',
-      supported: {
-        'top-level-await': true,
-      },
-    },
+    esbuildOptions: {target: 'es2020', supported: {'top-level-await': true}},
   }
 }
 
@@ -127,13 +116,11 @@ export function createDevServerOptimization(): UserConfig['server'] {
       overlay: false,
     },
     // 预热常用文件
-    warmup: {
-      clientFiles: [
-        'src/main.ts',
-        'src/App.vue',
-        'src/components/**/*.vue',
-      ],
-    },
+    warmup: {clientFiles: [
+      'src/main.ts',
+      'src/App.vue',
+      'src/components/**/*.vue',
+    ]},
   }
 }
 
@@ -187,26 +174,15 @@ export function createVitePerformanceConfig(options: VitePerformanceOptions = {}
 export function createProductionPerformanceConfig(options: VitePerformanceOptions = {}): UserConfig {
   const baseConfig = createVitePerformanceConfig(options)
 
-  return {
-    ...baseConfig,
-    build: {
-      ...baseConfig.build,
-      // 生产环境启用更激进的优化
-      minify: 'esbuild',
-      reportCompressedSize: true,
-      // 启用 gzip 压缩分析
-      rollupOptions: {
-        ...baseConfig.build?.rollupOptions,
-        output: {
-          ...baseConfig.build?.rollupOptions?.output,
-          // 生产环境使用更小的 chunk
-          experimentalMinChunkSize: 1000,
-        },
-      },
-    },
-    // 生产环境禁用开发服务器优化
-    server: {},
-  }
+  return {...baseConfig, build: {...baseConfig.build,
+    // 生产环境启用更激进的优化
+    minify: 'esbuild', reportCompressedSize: true,
+    // 启用 gzip 压缩分析
+    rollupOptions: {...baseConfig.build?.rollupOptions, output: {...baseConfig.build?.rollupOptions?.output,
+      // 生产环境使用更小的 chunk
+      experimentalMinChunkSize: 1000}}},
+  // 生产环境禁用开发服务器优化
+  server: {}}
 }
 
 /**
@@ -215,15 +191,9 @@ export function createProductionPerformanceConfig(options: VitePerformanceOption
 export function createDevelopmentPerformanceConfig(options: VitePerformanceOptions = {}): UserConfig {
   const baseConfig = createVitePerformanceConfig(options)
 
-  return {
-    ...baseConfig,
-    build: {
-      ...baseConfig.build,
-      // 开发环境禁用压缩以提升构建速度
-      minify: false,
-      reportCompressedSize: false,
-      // 启用源码映射
-      sourcemap: true,
-    },
-  }
+  return {...baseConfig, build: {...baseConfig.build,
+    // 开发环境禁用压缩以提升构建速度
+    minify: false, reportCompressedSize: false,
+    // 启用源码映射
+    sourcemap: true}}
 }

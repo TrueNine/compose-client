@@ -32,42 +32,32 @@ export function getOptimalConcurrency(maxConcurrency?: number): number {
  * 创建并行构建优化配置
  */
 export function createParallelOptimization(options: ParallelOptimizationOptions = {}): UserConfig {
-  const {
-    maxConcurrency,
-    enableWorkerThreads = true,
-    enableParallelCss = true,
-  } = options
+  const {maxConcurrency, enableWorkerThreads = true, enableParallelCss = true} = options
 
   const concurrency = getOptimalConcurrency(maxConcurrency)
 
-  const config: UserConfig = {
-    build: {
-      // 启用并行构建
-      rollupOptions: {
-        // 配置并行处理
-        maxParallelFileOps: concurrency,
-        output: {
-          // 启用并行写入
-          compact: true,
-        },
+  const config: UserConfig = {build: {
+    // 启用并行构建
+    rollupOptions: {
+      // 配置并行处理
+      maxParallelFileOps: concurrency,
+      output: {
+        // 启用并行写入
+        compact: true,
       },
     },
-  }
+  }}
 
   if (enableWorkerThreads) {
     // 配置 esbuild 使用多线程
-    config.esbuild = {
-      ...config.esbuild,
+    config.esbuild = {...config.esbuild,
       // esbuild 会自动使用多核心
-      target: 'es2020',
-    }
+      target: 'es2020'}
 
     // 配置 Rollup 使用 Worker 线程
-    config.build!.rollupOptions = {
-      ...config.build!.rollupOptions,
+    config.build!.rollupOptions = {...config.build!.rollupOptions,
       // 启用并行插件处理
-      experimentalCacheExpiry: 10,
-    }
+      experimentalCacheExpiry: 10}
   }
 
   if (enableParallelCss) {
@@ -91,33 +81,27 @@ export function createParallelOptimization(options: ParallelOptimizationOptions 
 export function createDevParallelOptimization(options: ParallelOptimizationOptions = {}): UserConfig {
   const baseConfig = createParallelOptimization(options)
 
-  return {
-    ...baseConfig,
-    server: {
-      // 开发服务器并行优化
-      hmr: {
-        // 启用并行 HMR 处理
-        overlay: false,
-      },
-      // 预热文件并行处理
-      warmup: {
-        clientFiles: [
-          'src/**/*.vue',
-          'src/**/*.ts',
-          'src/**/*.js',
-        ],
-      },
+  return {...baseConfig, server: {
+    // 开发服务器并行优化
+    hmr: {
+      // 启用并行 HMR 处理
+      overlay: false,
     },
-    optimizeDeps: {
-      // 依赖预构建并行处理
-      esbuildOptions: {
-        // esbuild 并行处理配置
-        target: 'es2020',
-        // 启用并行转换
-        keepNames: false,
-      },
+    // 预热文件并行处理
+    warmup: {clientFiles: [
+      'src/**/*.vue',
+      'src/**/*.ts',
+      'src/**/*.js',
+    ]},
+  }, optimizeDeps: {
+    // 依赖预构建并行处理
+    esbuildOptions: {
+      // esbuild 并行处理配置
+      target: 'es2020',
+      // 启用并行转换
+      keepNames: false,
     },
-  }
+  }}
 }
 
 /**
@@ -127,29 +111,16 @@ export function createProdParallelOptimization(options: ParallelOptimizationOpti
   const baseConfig = createParallelOptimization(options)
   const concurrency = getOptimalConcurrency(options.maxConcurrency)
 
-  return {
-    ...baseConfig,
-    build: {
-      ...baseConfig.build,
-      // 生产环境并行优化
-      // esbuild 支持并行压缩
-      minify: 'esbuild',
-      // 启用并行构建
-      rollupOptions: {
-        ...baseConfig.build?.rollupOptions,
-        // 配置更激进的并行处理
-        maxParallelFileOps: concurrency,
-        output: {
-          ...baseConfig.build?.rollupOptions?.output,
-          // 并行输出优化
-          generatedCode: {
-            constBindings: true,
-            objectShorthand: true,
-          },
-        },
-      },
-    },
-  }
+  return {...baseConfig, build: {...baseConfig.build,
+    // 生产环境并行优化
+    // esbuild 支持并行压缩
+    minify: 'esbuild',
+    // 启用并行构建
+    rollupOptions: {...baseConfig.build?.rollupOptions,
+      // 配置更激进的并行处理
+      maxParallelFileOps: concurrency, output: {...baseConfig.build?.rollupOptions?.output,
+        // 并行输出优化
+        generatedCode: {constBindings: true, objectShorthand: true}}}}}
 }
 
 /**
@@ -158,19 +129,13 @@ export function createProdParallelOptimization(options: ParallelOptimizationOpti
 export function createMonorepoParallelOptimization(options: ParallelOptimizationOptions = {}): UserConfig {
   const baseConfig = createParallelOptimization(options)
 
-  return {
-    ...baseConfig,
+  return {...baseConfig,
     // monorepo 特定的并行优化
-    build: {
-      ...baseConfig.build,
+    build: {...baseConfig.build,
       // 启用跨包并行构建支持
-      rollupOptions: {
-        ...baseConfig.build?.rollupOptions,
+      rollupOptions: {...baseConfig.build?.rollupOptions,
         // 优化外部依赖处理以支持并行构建
         external: (id: string) =>
           // 将 workspace 包标记为外部依赖，支持并行构建
-          id.startsWith('@truenine/') || id.startsWith('workspace:'),
-      },
-    },
-  }
+          id.startsWith('@truenine/') || id.startsWith('workspace:')}}}
 }

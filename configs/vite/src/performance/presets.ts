@@ -42,11 +42,7 @@ export function createBasicPreset(options: FullPerformanceOptions = {}): UserCon
     ...options,
   })
 
-  const cacheConfig = createCacheOptimization({
-    enableFsCache: true,
-    enableDepsCache: true,
-    ...options.cache,
-  })
+  const cacheConfig = createCacheOptimization({enableFsCache: true, enableDepsCache: true, ...options.cache})
 
   return mergeConfig(performanceConfig, cacheConfig)
 }
@@ -65,18 +61,9 @@ export function createAggressivePreset(options: FullPerformanceOptions = {}): Us
     ...options,
   })
 
-  const cacheConfig = createCacheOptimization({
-    enableFsCache: true,
-    enableDepsCache: true,
-    ...options.cache,
-  })
+  const cacheConfig = createCacheOptimization({enableFsCache: true, enableDepsCache: true, ...options.cache})
 
-  const parallelConfig = createParallelOptimization({
-    enableWorkerThreads: true,
-    enableParallelCss: true,
-    enableParallelTypeCheck: true,
-    ...options.parallel,
-  })
+  const parallelConfig = createParallelOptimization({enableWorkerThreads: true, enableParallelCss: true, enableParallelTypeCheck: true, ...options.parallel})
 
   return mergeConfig(mergeConfig(performanceConfig, cacheConfig), parallelConfig)
 }
@@ -95,19 +82,9 @@ export function createMaximumPreset(options: FullPerformanceOptions = {}): UserC
     ...options,
   })
 
-  const cacheConfig = createCacheOptimization({
-    enableFsCache: true,
-    enableDepsCache: true,
-    forceClearCache: false,
-    ...options.cache,
-  })
+  const cacheConfig = createCacheOptimization({enableFsCache: true, enableDepsCache: true, forceClearCache: false, ...options.cache})
 
-  const parallelConfig = createParallelOptimization({
-    enableWorkerThreads: true,
-    enableParallelCss: true,
-    enableParallelTypeCheck: true,
-    ...options.parallel,
-  })
+  const parallelConfig = createParallelOptimization({enableWorkerThreads: true, enableParallelCss: true, enableParallelTypeCheck: true, ...options.parallel})
 
   return mergeConfig(mergeConfig(performanceConfig, cacheConfig), parallelConfig)
 }
@@ -126,21 +103,13 @@ export function createDevelopmentPreset(options: FullPerformanceOptions = {}): U
     ...options,
   })
 
-  const cacheConfig = createCacheOptimization({
-    enableFsCache: true,
-    enableDepsCache: true,
-    forceClearCache: false,
-    ...options.cache,
-  })
+  const cacheConfig = createCacheOptimization({enableFsCache: true, enableDepsCache: true, forceClearCache: false, ...options.cache})
 
-  const parallelConfig = createDevParallelOptimization({
-    enableWorkerThreads: true,
+  const parallelConfig = createDevParallelOptimization({enableWorkerThreads: true,
     // 开发环境可以关闭 CSS 并行处理以减少复杂度
     enableParallelCss: false,
     // 开发环境通常由 IDE 处理类型检查
-    enableParallelTypeCheck: false,
-    ...options.parallel,
-  })
+    enableParallelTypeCheck: false, ...options.parallel})
 
   // 使用新的开发模式优化
   const devOptimizationConfig = createDevelopmentOptimization({
@@ -168,12 +137,7 @@ export function createFastDevPreset(options: FullPerformanceOptions = {}): UserC
     ...options,
   })
 
-  const cacheConfig = createCacheOptimization({
-    enableFsCache: true,
-    enableDepsCache: true,
-    forceClearCache: false,
-    ...options.cache,
-  })
+  const cacheConfig = createCacheOptimization({enableFsCache: true, enableDepsCache: true, forceClearCache: false, ...options.cache})
 
   const parallelConfig = createDevParallelOptimization({
     enableWorkerThreads: true,
@@ -211,18 +175,9 @@ export function createProductionPreset(options: FullPerformanceOptions = {}): Us
     ...options,
   })
 
-  const cacheConfig = createCacheOptimization({
-    enableFsCache: true,
-    enableDepsCache: true,
-    ...options.cache,
-  })
+  const cacheConfig = createCacheOptimization({enableFsCache: true, enableDepsCache: true, ...options.cache})
 
-  const parallelConfig = createProdParallelOptimization({
-    enableWorkerThreads: true,
-    enableParallelCss: true,
-    enableParallelTypeCheck: true,
-    ...options.parallel,
-  })
+  const parallelConfig = createProdParallelOptimization({enableWorkerThreads: true, enableParallelCss: true, enableParallelTypeCheck: true, ...options.parallel})
 
   return mergeConfig(mergeConfig(performanceConfig, cacheConfig), parallelConfig)
 }
@@ -241,28 +196,14 @@ export function createMonorepoPreset(options: FullPerformanceOptions = {}): User
     ...options,
   })
 
-  const cacheConfig = createCacheOptimization({
-    enableFsCache: true,
-    enableDepsCache: true,
+  const cacheConfig = createCacheOptimization({enableFsCache: true, enableDepsCache: true,
     // monorepo 使用统一的缓存目录
-    cacheDir: 'node_modules/.vite',
-    ...options.cache,
-  })
+    cacheDir: 'node_modules/.vite', ...options.cache})
 
-  const parallelConfig = createMonorepoParallelOptimization({
-    enableWorkerThreads: true,
-    enableParallelCss: true,
-    enableParallelTypeCheck: true,
-    ...options.parallel,
-  })
+  const parallelConfig = createMonorepoParallelOptimization({enableWorkerThreads: true, enableParallelCss: true, enableParallelTypeCheck: true, ...options.parallel})
 
   // 添加 Monorepo 开发模式优化
-  const monorepoDevConfig = createMonorepoDevelopmentOptimization({
-    enableFastRefresh: true,
-    enableSmartHMR: true,
-    enableDepsPreBundling: true,
-    enableFsCache: true,
-  })
+  const monorepoDevConfig = createMonorepoDevelopmentOptimization({enableFastRefresh: true, enableSmartHMR: true, enableDepsPreBundling: true, enableFsCache: true})
 
   return mergeConfig(mergeConfig(mergeConfig(performanceConfig, cacheConfig), parallelConfig), monorepoDevConfig)
 }
