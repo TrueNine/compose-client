@@ -60,13 +60,7 @@ export function initTencentMapWebGlScript(
   const section = document.querySelector(query)
   if (!section) return null
 
-  const src = loadRemoteScriptTag(
-    `${WEBGL_JS_URL}${queryParam({
-      v: '1.exp',
-      key,
-      libraries: options.libraries,
-    })}`,
-  ) as HTMLScriptElement
+  const src = loadRemoteScriptTag(`${WEBGL_JS_URL}${queryParam({v: '1.exp', key, libraries: options.libraries})}`) as HTMLScriptElement
 
   // 创建一个id容器
   const mapContainer: HTMLElement = document.createElement(containerTag)

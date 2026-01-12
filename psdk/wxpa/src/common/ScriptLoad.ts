@@ -12,9 +12,7 @@ export function loadWxpaJsSdk(
 ): HTMLScriptElement {
   const script = loadRemoteScriptTag(WXPA_SCRIPT_URL, 'head', void 0, () => {
     if (configOptions) wx.config({...configOptions, jsApiList: AllJsApiList})
-    wx.ready(() => {
-      lazy?.()
-    })
+    wx.ready(() => lazy?.())
   }) as HTMLScriptElement
 
   return script
