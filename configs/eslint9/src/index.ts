@@ -2,16 +2,7 @@ import type {OptionsTypeScriptParserOptions} from '@antfu/eslint-config'
 import type {Linter} from 'eslint'
 import type {AntFuConfig, AntFuStrictTsConfig, AntFuTsConfig} from './types'
 import {antfu} from '@antfu/eslint-config'
-import {
-  defaultFormatterConfig,
-  defaultJsConfig,
-  defaultStrictTsConfig,
-  defaultStylisticConfig,
-  defaultTestConfig,
-  defaultTsConfig,
-  defaultUnocssConfig,
-  defaultVueConfig,
-} from './defaults'
+import {defaultFormatterConfig, defaultJsConfig, defaultStrictTsConfig, defaultStylisticConfig, defaultTestConfig, defaultTsConfig, defaultUnocssConfig, defaultVueConfig} from './defaults'
 import {plugin} from './plugin'
 import {mergeWithDefaults} from './utils'
 
@@ -98,10 +89,10 @@ export default async function eslint9(options: ConfigOptions = {}): Promise<Retu
     rules: {
       '@truenine/prefer-single-line-if': 'warn',
       '@truenine/prefer-single-line-control': 'warn',
+      '@truenine/prefer-single-line-call': 'warn',
       '@truenine/prefer-guard-clause': ['warn', {minStatements: 2}],
       'antfu/if-newline': 'off',
       'antfu/curly': 'off',
-      'style/brace-style': 'off',
       'curly': ['error', 'multi-line'],
       // 箭头函数单行时去掉大括号
       'arrow-body-style': ['error', 'as-needed'],
