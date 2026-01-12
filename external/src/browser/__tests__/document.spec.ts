@@ -66,9 +66,7 @@ vi.mock('../document', async () => {
         mockAnchor.download = fileName
         mockAnchor.click()
         // 实际调用时会设置这些属性
-      } catch (error) {
-        console.error('下载文件失败:', error)
-      }
+      } catch (error) { console.error('下载文件失败:', error) }
     }),
     // 重写 download 函数的实现
     download: vi.fn((url: string, fileName: string = 'noneFile') => {
@@ -76,9 +74,7 @@ vi.mock('../document', async () => {
         mockAnchor.href = url
         mockAnchor.download = fileName
         mockAnchor.click()
-      } catch (error) {
-        console.error('下载文件失败:', error)
-      }
+      } catch (error) { console.error('下载文件失败:', error) }
     }),
   }
 })
