@@ -1,9 +1,5 @@
 import type {clip, dynamic, Maybe} from '@truenine/types'
-import type {
-  RendererElement,
-  RendererNode,
-  VNode,
-} from 'vue'
+import type {RendererElement, RendererNode, VNode} from 'vue'
 import {maybeArray} from '@truenine/shared'
 
 /**
@@ -92,8 +88,7 @@ export function findSlotNodesByName(
   const resultNodes: SlotNode[] = []
   const validNodes = maybeArray(targetNode).filter(Boolean) as SlotNode[]
   validNodes.forEach(slotNode =>
-    resultNodes.push(..._findSlotNodesBy(slotNode, node => node.actualName === componentName)),
-  )
+    resultNodes.push(..._findSlotNodesBy(slotNode, node => node.actualName === componentName)))
   return resultNodes
 }
 

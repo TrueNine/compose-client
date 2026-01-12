@@ -9,11 +9,7 @@ describe('browser tests', () => {
     const f = readFileSync('./00.png')
     const b = new Blob([f], {type: 'image/png'})
     const data = await getImageData(b)
-    const r = new Promise(resolve => {
-      data.onloadeddata = () => {
-        resolve(data)
-      }
-    })
+    const r = new Promise(resolve => data.onloadeddata = () => { resolve(data) })
     await r
   })
 })

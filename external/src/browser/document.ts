@@ -12,8 +12,7 @@ function getDownloadElement(): HTMLAnchorElement {
       downloadElement.style.display = 'none'
 
       document.body.append(downloadElement)
-    }
-    else throw new TypeError('无法创建下载元素：不在浏览器环境中')
+    } else throw new TypeError('无法创建下载元素：不在浏览器环境中')
   }
   return downloadElement
 }

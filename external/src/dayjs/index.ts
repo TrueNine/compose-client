@@ -33,12 +33,7 @@ export const DEFAULT_ZONE_OFFSET: number = dayjs().utcOffset() * 60 * 1000
 export const DayJs: typeof dayjs = dayjs
 
 function getDefaultParam(date: DayJSNewInstanceOptions, p?: Params, format?: string): rq<Params> {
-  return {
-    date: p?.date ?? date,
-    format: p?.format ?? format ?? ISO8601Format.datetime,
-    utc: (p?.utc ?? DEFAULT_UTC) || false,
-    tz: p?.tz ?? (p?.utc ? ISO8601TimeZone.UTC : void 0) ?? DEFAULT_TZ,
-  }
+  return {date: p?.date ?? date, format: p?.format ?? format ?? ISO8601Format.datetime, utc: (p?.utc ?? DEFAULT_UTC) || false, tz: p?.tz ?? (p?.utc ? ISO8601TimeZone.UTC : void 0) ?? DEFAULT_TZ}
 }
 
 function timestampOf(date: DayJSNewInstanceOptions, p?: Params): number {

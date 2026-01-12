@@ -24,40 +24,24 @@ interface MockImage {
 }
 
 // 模拟锚点元素
-const mockAnchor: MockAnchor = {
-  href: '',
-  download: '',
-  click: vi.fn(),
-  style: {display: 'none'},
-}
+const mockAnchor: MockAnchor = {href: '', download: '', click: vi.fn(), style: {display: 'none'}}
 
 // 模拟脚本元素
-const mockScript: MockScript = {
-  src: '',
-  setAttribute: vi.fn(),
-  addEventListener: vi.fn(),
-}
+const mockScript: MockScript = {src: '', setAttribute: vi.fn(), addEventListener: vi.fn()}
 
 // 模拟 document 对象
-const documentMock = {
-  createElement: vi.fn((tag: string) => {
-    if (tag === 'a') return mockAnchor
-    if (tag === 'script') return mockScript
-    return {}
-  }),
-  body: {
-    appendChild: vi.fn(),
-  },
-  querySelector: vi.fn(),
-}
+const documentMock = {createElement: vi.fn((tag: string) => {
+  if (tag === 'a') return mockAnchor
+  if (tag === 'script') return mockScript
+  return {}
+}), body: {appendChild: vi.fn()}, querySelector: vi.fn()}
 
 // 使用 vi.mock 进行全局模拟
 vi.mock('../document', async () => {
   // 导入原始模块以获取默认导出
   const originalModule = await vi.importActual<typeof import('../document')>('../document')
 
-  return {
-    ...originalModule,
+  return {...originalModule,
     // 重写 downloadBlob 函数的实现
     downloadBlob: vi.fn((_: Blob, fileName: string = 'noneFile') => {
       try {
@@ -75,8 +59,7 @@ vi.mock('../document', async () => {
         mockAnchor.download = fileName
         mockAnchor.click()
       } catch (error) { console.error('下载文件失败:', error) }
-    }),
-  }
+    })}
 })
 
 describe('document.ts 文件函数测试', () => {
@@ -93,26 +76,16 @@ describe('document.ts 文件函数测试', () => {
 
     // 模拟全局对象
     globalThis.document = documentMock as unknown as Document
-    globalThis.window = {
-      URL: {
-        createObjectURL: vi.fn(() => 'blob:mock-url'),
-        revokeObjectURL: vi.fn(),
-      },
-    } as unknown as Window & typeof globalThis
+    globalThis.window = {URL: {createObjectURL: vi.fn(() => 'blob:mock-url'), revokeObjectURL: vi.fn()}} as unknown as Window & typeof globalThis
 
     // 针对不使用window的函数
-    globalThis.URL = {
-      createObjectURL: vi.fn(() => 'blob:mock-url'),
-      revokeObjectURL: vi.fn(),
-    } as unknown as typeof URL
+    globalThis.URL = {createObjectURL: vi.fn(() => 'blob:mock-url'), revokeObjectURL: vi.fn()} as unknown as typeof URL
 
     // 模拟 console.error
     consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => { })
   })
 
-  afterEach(() => {
-    vi.restoreAllMocks()
-  })
+  afterEach(() => vi.restoreAllMocks())
 
   describe('loadRemoteScriptTag 函数测试', () => {
     it('已存在相同src的script标签时直接返回该标签', () => {
@@ -267,11 +240,7 @@ describe('document.ts 文件函数测试', () => {
       originalImage = globalThis.Image
 
       // 模拟 Image 构造函数
-      globalThis.Image = vi.fn().mockImplementation(() => ({
-        onload: null,
-        onerror: null,
-        src: '',
-      } as MockImage)) as unknown as typeof Image
+      globalThis.Image = vi.fn().mockImplementation(() => ({onload: null, onerror: null, src: ''} as MockImage)) as unknown as typeof Image
     })
 
     afterEach(() => {

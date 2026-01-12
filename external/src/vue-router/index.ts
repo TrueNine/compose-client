@@ -106,11 +106,7 @@ function routeToMenuObject(
   const fullPath = combineURIs(parentPath, route.path)
 
   if (matchFn) {
-    const raw = {
-      ...route,
-      fullPath,
-      parentPath,
-    } as Raw
+    const raw = {...route, fullPath, parentPath} as Raw
     if (!matchFn(raw)) return null
   }
 
