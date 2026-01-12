@@ -45,6 +45,59 @@ const rule: Rule.RuleModule = {meta: {
     return match?.[1] ?? ''
   }
 
+  // 检查表达式是否包含嵌套的箭头函数或复杂结构
+  function containsNestedComplexity(node: Rule.Node): boolean {
+    let hasComplexity = false
+    const visited = new WeakSet<object>()
+
+    // 需要跳过的 AST 元数据属性
+    const skipKeys = new Set(['parent', 'loc', 'range', 'start', 'end', 'tokens', 'comments'])
+
+    function traverse(n: Rule.Node): void {
+      if (hasComplexity) return
+      if (visited.has(n)) return
+      visited.add(n)
+
+      // 包含嵌套箭头函数
+      if (n.type === 'ArrowFunctionExpression') {
+        hasComplexity = true
+        return
+      }
+
+      // 包含三元表达式
+      if (n.type === 'ConditionalExpression') {
+        hasComplexity = true
+        return
+      }
+
+      // 包含逻辑表达式链
+      if (n.type === 'LogicalExpression') {
+        hasComplexity = true
+        return
+      }
+
+      // 遍历子节点
+      for (const key of Object.keys(n)) {
+        if (skipKeys.has(key)) continue
+        const value = (n as Record<string, unknown>)[key]
+        if (value && typeof value === 'object') {
+          if (Array.isArray(value)) {
+            for (const item of value) {
+              if (item && typeof item === 'object' && 'type' in item) {
+                traverse(item as Rule.Node)
+              }
+            }
+          } else if ('type' in value) {
+            traverse(value as Rule.Node)
+          }
+        }
+      }
+    }
+
+    traverse(node)
+    return hasComplexity
+  }
+
   type ArrowNode = Rule.Node & {
     params: Rule.Node[]
     body: Rule.Node
@@ -79,6 +132,9 @@ const rule: Rule.RuleModule = {meta: {
       // 跳过已经是单行的
       if (isNodeSingleLine(arrowNode)) return
 
+      // 跳过包含嵌套箭头函数、三元表达式等复杂结构的情况
+      if (containsNestedComplexity(expr)) return
+
       // 生成简化版本
       const paramsText = arrowNode.params.map(p => sourceCode.getText(p)).join(', ')
       const exprText = normalizeText(sourceCode.getText(expr))
@@ -100,6 +156,10 @@ const rule: Rule.RuleModule = {meta: {
     const returnStmt = stmt as Rule.Node & {argument: Rule.Node | null}
     if (!returnStmt.argument) return
     if (isNodeSingleLine(arrowNode)) return
+
+    // 跳过包含嵌套箭头函数、三元表达式等复杂结构的情况
+    if (containsNestedComplexity(returnStmt.argument)) return
+
     const paramsText = arrowNode.params.map(p => sourceCode.getText(p)).join(', ')
     const returnText = normalizeText(sourceCode.getText(returnStmt.argument))
     const asyncPrefix = arrowNode.async ? 'async ' : ''
