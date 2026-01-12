@@ -24,9 +24,7 @@ function packageJsonContentReplace(content: string, options: Omit<PackageJsonOpt
   if (content === '' || content === null || content === void 0) return void 0
 
   let packageJson: PackageJson
-  try {
-    packageJson = JSON.parse(content) as PackageJson
-  } catch (error) {
+  try { packageJson = JSON.parse(content) as PackageJson } catch (error) {
     throw new Error('Failed to parse or process package.json content', {
       cause: error,
     })
