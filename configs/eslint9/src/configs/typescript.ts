@@ -1,6 +1,7 @@
 import type {AntFuTsConfig} from '../types'
 
-export const defaultTsConfig: AntFuTsConfig = {overrides: {
+/** TypeScript 默认配置 */
+export const typescriptConfig: AntFuTsConfig = {overrides: {
   'ts/no-unsafe-assignment': 'off',
   'ts/no-unsafe-call': 'off',
   'ts/no-unsafe-argument': 'off',
@@ -19,16 +20,22 @@ export const defaultTsConfig: AntFuTsConfig = {overrides: {
   ],
 }}
 
+/** @deprecated 使用 typescriptConfig 代替 */
+export const defaultTsConfig: AntFuTsConfig = typescriptConfig
+
 /**
- * 严格 ts 模式的默认配置
+ * 严格 TypeScript 模式的默认配置
  *
  * 需要配置 parserOptions 和 tsconfigPath
  * @see https://typescript-eslint.io/getting-started/typed-linting
  */
-export const defaultStrictTsConfig: AntFuTsConfig = {overrides: {
+export const strictTypescriptConfig: AntFuTsConfig = {overrides: {
   'ts/no-unsafe-assignment': 'off',
   'ts/no-unsafe-call': 'off',
   'ts/no-unsafe-argument': 'off',
   'ts/no-unsafe-return': 'off',
   'ts/no-floating-promises': 'error',
 }}
+
+/** @deprecated 使用 strictTypescriptConfig 代替 */
+export const defaultStrictTsConfig: AntFuTsConfig = strictTypescriptConfig

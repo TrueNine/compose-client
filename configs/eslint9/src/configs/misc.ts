@@ -1,9 +1,14 @@
 import type {AntFuTestConfig, AntFuUnocssConfig} from '../types'
 
-export const defaultUnocssConfig: AntFuUnocssConfig = {attributify: true,
+/** UnoCSS 默认配置 */
+export const unocssConfig: AntFuUnocssConfig = {attributify: true,
   strict: true}
 
-export const defaultTestConfig: AntFuTestConfig = {overrides: {
+/** @deprecated 使用 unocssConfig 代替 */
+export const defaultUnocssConfig: AntFuUnocssConfig = unocssConfig
+
+/** Test 默认配置 */
+export const testConfig: AntFuTestConfig = {overrides: {
   'no-console': 'off',
   'ts/unbound-method': 'off',
   'ts/no-unsafe-argument': 'off',
@@ -12,3 +17,6 @@ export const defaultTestConfig: AntFuTestConfig = {overrides: {
   'ts/no-unsafe-call': 'off',
   'ts/no-unsafe-return': 'off',
 }}
+
+/** @deprecated 使用 testConfig 代替 */
+export const defaultTestConfig: AntFuTestConfig = testConfig

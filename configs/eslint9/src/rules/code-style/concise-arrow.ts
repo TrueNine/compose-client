@@ -3,18 +3,18 @@ import type {Rule} from 'eslint'
 const MAX_LINE_LENGTH = 160
 
 /**
- * 检测并修复可以简化的箭头函数
+ * ESLint rule: prefer-concise-arrow
  *
- * 例如：
- * ```ts
- * // 修复前
+ * Detects and fixes arrow functions that can be simplified.
+ *
+ * @example
+ * // Before
  * arr.forEach(it => {
  *   f.append(it.name, it.value)
  * })
  *
- * // 修复后
+ * // After
  * arr.forEach(it => f.append(it.name, it.value))
- * ```
  */
 const rule: Rule.RuleModule = {meta: {
   type: 'layout',

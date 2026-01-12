@@ -1,48 +1,18 @@
-import type antfu from '@antfu/eslint-config'
+/**
+ * 类型定义模块
+ * @description 导出所有公共类型定义
+ */
 
-/**
- * AntFu Config
- */
-export type AntFuConfig = NonNullable<Parameters<typeof antfu>[0]>
+// AntFu 相关类型
+export type {AntFuConfig,
+  AntFuFormatterConfig,
+  AntFuJsConfig,
+  AntFuStrictTsConfig,
+  AntFuStylisticConfig,
+  AntFuTestConfig,
+  AntFuTsConfig,
+  AntFuUnocssConfig,
+  AntFuVueConfig} from './antfu'
 
-/**
- * typescript config options
- */
-export type AntFuTsConfig = Exclude<AntFuConfig['typescript'], boolean | undefined>
-
-/**
- * javascript config options
- */
-export type AntFuJsConfig = Exclude<AntFuConfig['javascript'], boolean | undefined>
-
-/**
- * vue config options
- */
-export type AntFuVueConfig = Exclude<AntFuConfig['vue'], boolean | undefined>
-
-/**
- * unocss config options
- */
-export type AntFuUnocssConfig = Exclude<AntFuConfig['unocss'], boolean | undefined>
-
-/**
- * stylistic config options
- */
-export type AntFuStylisticConfig = Exclude<AntFuConfig['stylistic'], boolean | undefined>
-
-/**
- * formatter config options
- */
-export type AntFuFormatterConfig = Exclude<AntFuConfig['formatters'], boolean | undefined>
-
-/**
- * test config options
- */
-export type AntFuTestConfig = Exclude<AntFuConfig['test'], boolean | undefined>
-/**
- * 严格的 typescript config
- */
-export type AntFuStrictTsConfig = AntFuTsConfig & {
-  strictTypescriptEslint: true
-  tsconfigPath: string
-}
+// 配置选项类型
+export type {ConfigOptions} from './options'

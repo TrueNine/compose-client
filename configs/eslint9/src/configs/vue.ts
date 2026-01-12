@@ -1,6 +1,7 @@
 import type {AntFuVueConfig} from '../types'
 
-export const defaultVueConfig: AntFuVueConfig = {vueVersion: 3,
+/** Vue 默认配置 */
+export const vueConfig: AntFuVueConfig = {vueVersion: 3,
   overrides: {
     'vue/html-self-closing': ['error', {html: {void: 'always',
       normal: 'always',
@@ -46,3 +47,6 @@ export const defaultVueConfig: AntFuVueConfig = {vueVersion: 3,
         registeredComponentsOnly: false},
     ],
   }}
+
+/** @deprecated 使用 vueConfig 代替 */
+export const defaultVueConfig: AntFuVueConfig = vueConfig

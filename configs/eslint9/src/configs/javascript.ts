@@ -1,6 +1,7 @@
 import type {AntFuJsConfig} from '../types'
 
-export const defaultJsConfig: AntFuJsConfig = {overrides: {
+/** JavaScript 默认配置 */
+export const javascriptConfig: AntFuJsConfig = {overrides: {
   'no-inline-comments': 'error',
   'unicorn/no-useless-spread': 'error',
   'curly': ['error', 'multi-line'],
@@ -21,3 +22,6 @@ export const defaultJsConfig: AntFuJsConfig = {overrides: {
       ignoreReadBeforeAssign: false},
   ],
 }}
+
+/** @deprecated 使用 javascriptConfig 代替 */
+export const defaultJsConfig: AntFuJsConfig = javascriptConfig

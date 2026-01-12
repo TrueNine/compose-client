@@ -5,8 +5,6 @@ export default eslint9({
   pnpm: true,
   test: true,
   ignores: ['README.md'],
-  typescript: {
-    strictTypescriptEslint: true,
-    tsconfigPath: './tsconfig.json',
-  },
+  typescript: {strictTypescriptEslint: true,
+    tsconfigPath: './tsconfig.json'},
 })

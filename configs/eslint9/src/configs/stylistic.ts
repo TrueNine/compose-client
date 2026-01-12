@@ -1,6 +1,7 @@
-import type {AntFuFormatterConfig, AntFuStylisticConfig} from '../types'
+import type {AntFuStylisticConfig} from '../types'
 
-export const defaultStylisticConfig: AntFuStylisticConfig = {
+/** Stylistic 代码风格配置 */
+export const stylisticConfig: AntFuStylisticConfig = {
   jsx: true,
   indent: 2,
   quotes: 'single',
@@ -70,17 +71,5 @@ export const defaultStylisticConfig: AntFuStylisticConfig = {
   },
 }
 
-export const defaultFormatterConfig: AntFuFormatterConfig = {css: 'prettier',
-  html: 'prettier',
-  markdown: 'prettier',
-  prettierOptions: {
-    printWidth: 160,
-    tabWidth: 2,
-    arrowParens: 'avoid',
-    vueIndentScriptAndStyle: true,
-    useTabs: false,
-    singleQuote: true,
-    jsxSingleQuote: true,
-    trailingComma: 'all',
-    bracketSpacing: false,
-  }}
+/** @deprecated 使用 stylisticConfig 代替 */
+export const defaultStylisticConfig: AntFuStylisticConfig = stylisticConfig

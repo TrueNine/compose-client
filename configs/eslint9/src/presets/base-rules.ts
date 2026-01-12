@@ -1,14 +1,35 @@
 import type {Linter} from 'eslint'
 
-/** 基础规则配置 */
-export const baseRules: Linter.RulesRecord = {
+/**
+ * @truenine 插件基础规则配置
+ *
+ * 包含自定义规则和常用的代码风格规则，适用于所有 JavaScript/TypeScript 项目。
+ * 这些规则旨在提高代码可读性和一致性。
+ *
+ * @example
+ * ```typescript
+ * import {baseRulesPreset} from '@truenine/eslint9-config/presets'
+ *
+ * export default [
+ *   {
+ *     rules: baseRulesPreset
+ *   }
+ * ]
+ * ```
+ */
+export const baseRulesPreset: Linter.RulesRecord = {
+  // @truenine 自定义规则
   '@truenine/prefer-single-line-if': 'warn',
   '@truenine/prefer-single-line-control': 'warn',
   '@truenine/prefer-single-line-call': 'warn',
   '@truenine/prefer-concise-arrow': 'warn',
   '@truenine/prefer-guard-clause': ['warn', {minStatements: 2}],
+
+  // antfu 规则覆盖
   'antfu/if-newline': 'off',
   'antfu/curly': 'off',
+
+  // 基础 JavaScript 规则
   'curly': ['error', 'multi-line'],
   'arrow-body-style': ['error', 'as-needed'],
   'prefer-destructuring': ['error', {array: false, object: true}, {enforceForRenamedProperties: false}],
@@ -29,6 +50,8 @@ export const baseRules: Linter.RulesRecord = {
   'no-useless-escape': 'error',
   'no-useless-call': 'error',
   'no-extra-parens': ['error', 'all', {nestedBinaryExpressions: false, ignoreJSX: 'multi-line', enforceForArrowConditionals: false}],
+
+  // unicorn 规则 - 现代 JavaScript 最佳实践
   'unicorn/prefer-includes': 'error',
   'unicorn/prefer-string-starts-ends-with': 'error',
   'unicorn/prefer-number-properties': 'error',
@@ -67,30 +90,4 @@ export const baseRules: Linter.RulesRecord = {
   'unicorn/prefer-reflect-apply': 'error',
   'unicorn/prefer-set-size': 'error',
   'unicorn/text-encoding-identifier-case': 'error',
-}
-
-/** .d.ts 文件专用规则 */
-export const dtsRules: Linter.RulesRecord = {'one-var': 'off'}
-
-/** TypeScript 专用规则 */
-export const typescriptRules: Linter.RulesRecord = {
-  '@typescript-eslint/prefer-optional-chain': 'error',
-  '@typescript-eslint/prefer-nullish-coalescing': 'error',
-  '@typescript-eslint/prefer-includes': 'error',
-  '@typescript-eslint/prefer-string-starts-ends-with': 'error',
-  '@typescript-eslint/prefer-for-of': 'error',
-  '@typescript-eslint/promise-function-async': 'error',
-  '@typescript-eslint/prefer-reduce-type-parameter': 'error',
-  '@typescript-eslint/prefer-regexp-exec': 'error',
-  '@typescript-eslint/unbound-method': 'off',
-  '@typescript-eslint/switch-exhaustiveness-check': 'off',
-  '@typescript-eslint/array-type': ['error', {default: 'array'}],
-  '@typescript-eslint/no-unnecessary-type-assertion': 'error',
-  '@typescript-eslint/no-unnecessary-type-constraint': 'error',
-  '@typescript-eslint/no-unnecessary-type-arguments': 'error',
-  '@typescript-eslint/no-unnecessary-boolean-literal-compare': 'error',
-  '@typescript-eslint/no-unnecessary-condition': 'off',
-  '@typescript-eslint/no-namespace': 'error',
-  '@typescript-eslint/prefer-function-type': 'error',
-  '@typescript-eslint/prefer-as-const': 'error',
 }

@@ -2,6 +2,21 @@ import type {Rule} from 'eslint'
 
 const MAX_LINE_LENGTH = 160
 
+/**
+ * ESLint rule: prefer-single-line-if
+ *
+ * Prefer single-line if statements when possible.
+ * This rule detects if-else chains with simple statements and converts them to single-line format.
+ *
+ * @example
+ * // Before
+ * if (condition) {
+ *   return value
+ * }
+ *
+ * // After
+ * if (condition) return value
+ */
 const rule: Rule.RuleModule = {meta: {
   type: 'layout',
   docs: {description: 'Prefer single-line if statements when possible',

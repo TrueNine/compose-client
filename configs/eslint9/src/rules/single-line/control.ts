@@ -2,6 +2,20 @@ import type {Rule} from 'eslint'
 
 const MAX_LINE_LENGTH = 160
 
+/**
+ * ESLint rule: prefer-single-line-control
+ *
+ * Prefer single-line switch cases, for loops, while loops, and try-catch when possible.
+ *
+ * @example
+ * // Before
+ * for (const item of items) {
+ *   process(item)
+ * }
+ *
+ * // After
+ * for (const item of items) process(item)
+ */
 const rule: Rule.RuleModule = {meta: {
   type: 'layout',
   docs: {description: 'Prefer single-line switch cases, for loops, while loops, and try-catch when possible',

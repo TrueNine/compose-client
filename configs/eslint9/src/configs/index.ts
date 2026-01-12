@@ -1,6 +1,7 @@
-export {defaultJsConfig} from './javascript'
-export {defaultTestConfig, defaultUnocssConfig} from './misc'
-export {baseRules, dtsRules, typescriptRules} from './rules'
-export {defaultFormatterConfig, defaultStylisticConfig} from './stylistic'
-export {defaultStrictTsConfig, defaultTsConfig} from './typescript'
-export {defaultVueConfig} from './vue'
+// 新命名导出
+export {defaultFormatterConfig, formatterConfig} from './formatter'
+export {defaultJsConfig, javascriptConfig} from './javascript'
+export {defaultTestConfig, defaultUnocssConfig, testConfig, unocssConfig} from './misc'
+export {defaultStylisticConfig, stylisticConfig} from './stylistic'
+export {defaultStrictTsConfig, defaultTsConfig, strictTypescriptConfig, typescriptConfig} from './typescript'
+export {defaultVueConfig, vueConfig} from './vue'

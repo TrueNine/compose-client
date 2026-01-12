@@ -1,5 +1,27 @@
 import type {Rule} from 'eslint'
 
+/**
+ * ESLint rule: prefer-guard-clause
+ *
+ * Prefer guard clauses (early returns) to reduce nesting.
+ *
+ * @example
+ * // Before
+ * function process(data) {
+ *   if (data) {
+ *     doSomething(data)
+ *     doMore(data)
+ *   }
+ * }
+ *
+ * // After
+ * function process(data) {
+ *   if (!data) return
+ *
+ *   doSomething(data)
+ *   doMore(data)
+ * }
+ */
 interface RuleOptions {
   minStatements?: number
 }
@@ -188,6 +210,7 @@ create(context) {
           .join(`\n${indent}`)
         return fixer.replaceText(node, `if (${invertedCondition}) ${defaultReturnText}\n\n${indent}${bodyText}`)
       }})
+    /* eslint-enable ts/no-unsafe-member-access, ts/no-unsafe-assignment, ts/no-unsafe-argument */
   }}
 }}
 

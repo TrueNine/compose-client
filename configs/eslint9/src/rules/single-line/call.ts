@@ -3,18 +3,18 @@ import type {Rule} from 'eslint'
 const MAX_LINE_LENGTH = 160
 
 /**
- * 检测并修复可以压缩成单行的函数调用
+ * ESLint rule: prefer-single-line-call
  *
- * 例如：
- * ```ts
- * // 修复前
+ * Detects and fixes function calls that can be compressed to a single line.
+ *
+ * @example
+ * // Before
  * this.connection.send(
  *   JSON.stringify({type: 'shutdown'}),
  * )
  *
- * // 修复后
+ * // After
  * this.connection.send(JSON.stringify({type: 'shutdown'}))
- * ```
  */
 interface RuleOptions {
   maxLineLength?: number

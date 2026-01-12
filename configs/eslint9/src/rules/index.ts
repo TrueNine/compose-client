@@ -1,20 +1,17 @@
 import type {Rule} from 'eslint'
-import preferConciseArrow from './prefer-concise-arrow'
-import preferGuardClause from './prefer-guard-clause'
-import preferSingleLineCall from './prefer-single-line-call'
-import preferSingleLineControl from './prefer-single-line-control'
-import preferSingleLineIf from './prefer-single-line-if'
+import {codeStyleRules} from './code-style'
+import {singleLineRules} from './single-line'
 
-export const rules: Record<string, Rule.RuleModule> = {
-  'prefer-concise-arrow': preferConciseArrow,
-  'prefer-guard-clause': preferGuardClause,
-  'prefer-single-line-call': preferSingleLineCall,
-  'prefer-single-line-control': preferSingleLineControl,
-  'prefer-single-line-if': preferSingleLineIf,
-}
+/**
+ * All custom ESLint rules
+ *
+ * Rules are organized into categories:
+ * - single-line: Rules that prefer single-line format for simple statements
+ * - code-style: Rules that enforce code style preferences
+ */
+export const rules: Record<string, Rule.RuleModule> = {...singleLineRules,
+  ...codeStyleRules}
 
-export {default as preferConciseArrow} from './prefer-concise-arrow'
-export {default as preferGuardClause} from './prefer-guard-clause'
-export {default as preferSingleLineCall} from './prefer-single-line-call'
-export {default as preferSingleLineControl} from './prefer-single-line-control'
-export {default as preferSingleLineIf} from './prefer-single-line-if'
+// Re-export all rules from subdirectories
+export * from './code-style'
+export * from './single-line'
