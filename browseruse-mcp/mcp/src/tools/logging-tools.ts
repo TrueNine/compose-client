@@ -9,24 +9,14 @@ export function registerLoggingTools(server: McpServer): void {
       const response = await fetch(`http://${host}:${port}/logger-logs`)
       const json = await response.json() as ApiResponse
 
-      return {
-        content: [
-          {
-            type: 'text',
-            text: JSON.stringify(json, null, 2),
-          },
-        ],
-      }
+      return {content: [
+        {type: 'text', text: JSON.stringify(json, null, 2)},
+      ]}
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : String(error)
-      return {
-        content: [
-          {
-            type: 'text',
-            text: `Failed to get console logs: ${errorMessage}`,
-          },
-        ],
-      }
+      return {content: [
+        {type: 'text', text: `Failed to get console logs: ${errorMessage}`},
+      ]}
     }
   }))
 
@@ -36,24 +26,14 @@ export function registerLoggingTools(server: McpServer): void {
       const response = await fetch(`http://${host}:${port}/logger-errors`)
       const json = await response.json() as ApiResponse
 
-      return {
-        content: [
-          {
-            type: 'text',
-            text: JSON.stringify(json, null, 2),
-          },
-        ],
-      }
+      return {content: [
+        {type: 'text', text: JSON.stringify(json, null, 2)},
+      ]}
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : String(error)
-      return {
-        content: [
-          {
-            type: 'text',
-            text: `Failed to get console errors: ${errorMessage}`,
-          },
-        ],
-      }
+      return {content: [
+        {type: 'text', text: `Failed to get console errors: ${errorMessage}`},
+      ]}
     }
   }))
 
@@ -63,26 +43,14 @@ export function registerLoggingTools(server: McpServer): void {
       const response = await fetch(`http://${host}:${port}/network-errors`)
       const json = await response.json() as ApiResponse
 
-      return {
-        content: [
-          {
-            type: 'text',
-            text: JSON.stringify(json, null, 2),
-          },
-        ],
-        isError: true,
-      }
+      return {content: [
+        {type: 'text', text: JSON.stringify(json, null, 2)},
+      ], isError: true}
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : String(error)
-      return {
-        content: [
-          {
-            type: 'text',
-            text: `Failed to get network errors: ${errorMessage}`,
-          },
-        ],
-        isError: true,
-      }
+      return {content: [
+        {type: 'text', text: `Failed to get network errors: ${errorMessage}`},
+      ], isError: true}
     }
   }))
 
@@ -92,24 +60,14 @@ export function registerLoggingTools(server: McpServer): void {
       const response = await fetch(`http://${host}:${port}/network-success`)
       const json = await response.json() as ApiResponse
 
-      return {
-        content: [
-          {
-            type: 'text',
-            text: JSON.stringify(json, null, 2),
-          },
-        ],
-      }
+      return {content: [
+        {type: 'text', text: JSON.stringify(json, null, 2)},
+      ]}
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : String(error)
-      return {
-        content: [
-          {
-            type: 'text',
-            text: `Failed to get network logs: ${errorMessage}`,
-          },
-        ],
-      }
+      return {content: [
+        {type: 'text', text: `Failed to get network logs: ${errorMessage}`},
+      ]}
     }
   }))
 }

@@ -2,11 +2,8 @@ import type {McpServer} from '@modelcontextprotocol/sdk/server/mcp.js'
 import type {McpToolResponse} from '@/types'
 
 export function registerCompositeTools(server: McpServer): void {
-  server.tool('runNextJSAudit', 'Run a comprehensive NextJS SEO audit and optimization', {}, async (): Promise<McpToolResponse> => ({
-    content: [
-      {
-        type: 'text',
-        text: `
+  server.tool('runNextJSAudit', 'Run a comprehensive NextJS SEO audit and optimization', {}, async (): Promise<McpToolResponse> => ({content: [
+    {type: 'text', text: `
       You are an expert in SEO and web development with NextJS. Given the following procedures for analyzing my codebase, please perform a comprehensive - page by page analysis of our NextJS application to identify any issues or areas of improvement for SEO.
 
       After each iteration of changes, reinvoke this tool to re-fetch our SEO audit procedures and then scan our codebase again to identify additional areas of improvement.
@@ -704,16 +701,11 @@ export function registerCompositeTools(server: McpServer): void {
       Do not actually make the code changes yet, just return a comprehensive plan that you will ask for approval for.
       If feedback is provided, adjust the plan accordingly and ask for approval again.
       If the user approves of the plan, go ahead and proceed to implement all the necessary code changes to completely optimize our application.
-    `,
-      },
-    ],
-  }))
+    `},
+  ]}))
 
-  server.tool('runDebuggerMode', 'Run debugger mode to debug an issue in our application', {}, async (): Promise<McpToolResponse> => ({
-    content: [
-      {
-        type: 'text',
-        text: `
+  server.tool('runDebuggerMode', 'Run debugger mode to debug an issue in our application', {}, async (): Promise<McpToolResponse> => ({content: [
+    {type: 'text', text: `
       Please follow this exact sequence to debug an issue in our application:
 
   1. Reflect on 5-7 different possible sources of the problem
@@ -726,16 +718,11 @@ export function registerCompositeTools(server: McpServer): void {
   8. Once a fix is implemented, ask for approval to remove the previously added logs
 
   Note: DO NOT run any of our audits (runAccessibilityAudit, runPerformanceAudit, runBestPracticesAudit, runSEOAudit, runNextJSAudit) when in debugging mode unless explicitly asked to do so or unless you switch to audit mode.
-`,
-      },
-    ],
-  }))
+`},
+  ]}))
 
-  server.tool('runAuditMode', 'Run audit mode to optimize our application for SEO, accessibility and performance', {}, async (): Promise<McpToolResponse> => ({
-    content: [
-      {
-        type: 'text',
-        text: `
+  server.tool('runAuditMode', 'Run audit mode to optimize our application for SEO, accessibility and performance', {}, async (): Promise<McpToolResponse> => ({content: [
+    {type: 'text', text: `
       I want you to enter "Audit Mode". Use the following MCP tools one after the other in this exact sequence:
 
       1. runAccessibilityAudit
@@ -758,8 +745,6 @@ export function registerCompositeTools(server: McpServer): void {
 
       Keep repeating / iterating through this process with the four tools until our application is as optimized as possible for SEO, accessibility and performance.
 
-`,
-      },
-    ],
-  }))
+`},
+  ]}))
 }

@@ -2,14 +2,7 @@ import type {ApiResponse, ServerConnection} from '@/types'
 import fs from 'node:fs'
 import path from 'node:path'
 import process from 'node:process'
-import {
-  DEFAULT_HOST,
-  DEFAULT_PORT,
-  DISCOVERY_TIMEOUT,
-  PORT_RANGE_END,
-  PORT_RANGE_START,
-  SERVER_SIGNATURE,
-} from '@/config/constants'
+import {DEFAULT_HOST, DEFAULT_PORT, DISCOVERY_TIMEOUT, PORT_RANGE_END, PORT_RANGE_START, SERVER_SIGNATURE} from '@/config/constants'
 import {logger} from '@/logger'
 
 let discoveredHost = DEFAULT_HOST
@@ -57,9 +50,7 @@ export async function discoverServer(): Promise<boolean> {
       try {
         logger.info(`Checking ${host}:${port}...`)
 
-        const response = await fetch(`http://${host}:${port}/.identity`, {
-          signal: AbortSignal.timeout(DISCOVERY_TIMEOUT),
-        })
+        const response = await fetch(`http://${host}:${port}/.identity`, {signal: AbortSignal.timeout(DISCOVERY_TIMEOUT)})
 
         if (response.ok) {
           const identity = await response.json() as ApiResponse
@@ -91,23 +82,17 @@ export async function withServerConnection<T>(
   if (!serverDiscovered) {
     const discovered = await discoverServer()
     if (!discovered) {
-      return {
-        content: [
-          {
-            type: 'text',
-            text: 'Failed to discover browser connector server. Please ensure it\'s running.',
-          },
-        ],
-        isError: true,
-      } as T
+      return {content: [
+        {type: 'text',
+          text: 'Failed to discover browser connector server. Please ensure it\'s running.'},
+      ],
+      isError: true} as T
     }
   }
 
   try { return await apiCall() } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error)
-    logger.error(
-      `API call failed: ${errorMessage}. Attempting rediscovery...`,
-    )
+    logger.error(`API call failed: ${errorMessage}. Attempting rediscovery...`)
     serverDiscovered = false
 
     if (await discoverServer()) {
@@ -115,31 +100,25 @@ export async function withServerConnection<T>(
       try { return await apiCall() } catch (retryError) {
         const retryErrorMessage = retryError instanceof Error ? retryError.message : String(retryError)
         logger.error(`Retry failed: ${retryErrorMessage}`)
-        return {
-          content: [
-            {
-              type: 'text',
-              text: `Error after reconnection attempt: ${retryErrorMessage}`,
-            },
-          ],
-          isError: true,
-        } as T
+        return {content: [
+          {type: 'text',
+            text: `Error after reconnection attempt: ${retryErrorMessage}`},
+        ],
+        isError: true} as T
       }
     } else {
       logger.error('Rediscovery failed. Could not reconnect to server.')
-      return {
-        content: [
-          {
-            type: 'text',
-            text: `Failed to reconnect to server: ${errorMessage}`,
-          },
-        ],
-        isError: true,
-      } as T
+      return {content: [
+        {type: 'text',
+          text: `Failed to reconnect to server: ${errorMessage}`},
+      ],
+      isError: true} as T
     }
   }
 }
 
 export function getDiscoveredConnection(): ServerConnection {
-  return {host: discoveredHost, port: discoveredPort, discovered: serverDiscovered}
+  return {host: discoveredHost,
+    port: discoveredPort,
+    discovered: serverDiscovered}
 }

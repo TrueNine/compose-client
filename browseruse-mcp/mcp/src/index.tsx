@@ -10,10 +10,7 @@ import {registerCompositeTools} from '@/tools/composite-tools'
 import {registerLoggingTools} from '@/tools/logging-tools'
 import {discoverServer} from '@/utils/server-discovery'
 
-const server = new McpServer({
-  name: 'Browseruse MCP',
-  version: '0.0.1',
-})
+const server = new McpServer({name: 'Browseruse MCP', version: '0.0.1'})
 
 registerLoggingTools(server)
 registerBrowserTools(server)

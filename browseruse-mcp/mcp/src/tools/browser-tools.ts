@@ -6,42 +6,22 @@ export function registerBrowserTools(server: McpServer): void {
   server.tool('takeScreenshot', 'Take a screenshot of the current browser tab', {}, async () => withServerConnection(async (): Promise<McpToolResponse> => {
     try {
       const {host, port} = getDiscoveredConnection()
-      const response = await fetch(
-        `http://${host}:${port}/capture-screenshot`,
-        {
-          method: 'POST',
-        },
-      )
+      const response = await fetch(`http://${host}:${port}/capture-screenshot`, {method: 'POST'})
 
       const result = await response.json() as ApiResponse
 
       return response.ok
-        ? {
-            content: [
-              {
-                type: 'text',
-                text: 'Successfully saved screenshot',
-              },
-            ],
-          }
-        : {
-            content: [
-              {
-                type: 'text',
-                text: `Error taking screenshot: ${result.error ?? 'Unknown error'}`,
-              },
-            ],
-          }
+        ? {content: [
+            {type: 'text', text: 'Successfully saved screenshot'},
+          ]}
+        : {content: [
+            {type: 'text', text: `Error taking screenshot: ${result.error ?? 'Unknown error'}`},
+          ]}
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : String(error)
-      return {
-        content: [
-          {
-            type: 'text',
-            text: `Failed to take screenshot: ${errorMessage}`,
-          },
-        ],
-      }
+      return {content: [
+        {type: 'text', text: `Failed to take screenshot: ${errorMessage}`},
+      ]}
     }
   }))
 
@@ -51,56 +31,31 @@ export function registerBrowserTools(server: McpServer): void {
       const response = await fetch(`http://${host}:${port}/selected-element`)
       const json = await response.json() as ApiResponse
 
-      return {
-        content: [
-          {
-            type: 'text',
-            text: JSON.stringify(json, null, 2),
-          },
-        ],
-      }
+      return {content: [
+        {type: 'text', text: JSON.stringify(json, null, 2)},
+      ]}
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : String(error)
-      return {
-        content: [
-          {
-            type: 'text',
-            text: `Failed to get selected element: ${errorMessage}`,
-          },
-        ],
-      }
+      return {content: [
+        {type: 'text', text: `Failed to get selected element: ${errorMessage}`},
+      ]}
     }
   }))
 
   server.tool('wipeLogs', 'Wipe all browser logs from memory', {}, async () => withServerConnection(async (): Promise<McpToolResponse> => {
     try {
       const {host, port} = getDiscoveredConnection()
-      const response = await fetch(
-        `http://${host}:${port}/wipelogs`,
-        {
-          method: 'POST',
-        },
-      )
+      const response = await fetch(`http://${host}:${port}/wipelogs`, {method: 'POST'})
       const json = await response.json() as ApiResponse
 
-      return {
-        content: [
-          {
-            type: 'text',
-            text: json.message ?? 'Logs wiped',
-          },
-        ],
-      }
+      return {content: [
+        {type: 'text', text: json.message ?? 'Logs wiped'},
+      ]}
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : String(error)
-      return {
-        content: [
-          {
-            type: 'text',
-            text: `Failed to wipe logs: ${errorMessage}`,
-          },
-        ],
-      }
+      return {content: [
+        {type: 'text', text: `Failed to wipe logs: ${errorMessage}`},
+      ]}
     }
   }))
 }
