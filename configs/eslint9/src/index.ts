@@ -90,6 +90,7 @@ export default async function eslint9(options: ConfigOptions = {}): Promise<Retu
       '@truenine/prefer-single-line-if': 'warn',
       '@truenine/prefer-single-line-control': 'warn',
       '@truenine/prefer-single-line-call': 'warn',
+      '@truenine/prefer-concise-arrow': 'warn',
       '@truenine/prefer-guard-clause': ['warn', {minStatements: 2}],
       'antfu/if-newline': 'off',
       'antfu/curly': 'off',
