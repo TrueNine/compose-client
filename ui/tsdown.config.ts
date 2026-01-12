@@ -10,13 +10,7 @@ import {transformAssetUrls} from 'vite-plugin-vuetify'
 export const e: UserConfig = defineConfig({
   unbundle: true,
   plugins: [
-    Vue({
-      template: {
-        transformAssetUrls: {
-          ...transformAssetUrls,
-        },
-      },
-    }),
+    Vue({template: {transformAssetUrls: {...transformAssetUrls}}}),
     VueJsx(),
     AutoImport({
       imports: ['vue', '@vueuse/core'],
@@ -25,14 +19,7 @@ export const e: UserConfig = defineConfig({
         enabled: false,
       },
     }),
-    Components({
-      dts: '.types/components.d.ts',
-      resolvers: [
-        ElementPlusResolver(),
-        Vuetify3Resolver(),
-        VarletUIResolver(),
-      ],
-    }),
+    Components({dts: '.types/components.d.ts', resolvers: [ElementPlusResolver(), Vuetify3Resolver(), VarletUIResolver()]}),
   ],
   entry: [
     './src/index.ts',

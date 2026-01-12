@@ -13,13 +13,7 @@ import vuetify, {transformAssetUrls} from 'vite-plugin-vuetify'
 
 export const e: UserConfig = defineConfig({
   plugins: [
-    Vue({
-      template: {
-        transformAssetUrls: {
-          ...transformAssetUrls,
-        },
-      },
-    }),
+    Vue({template: {transformAssetUrls: {...transformAssetUrls}}}),
     devTools(),
     VueJsx(),
     unocss(),
@@ -31,14 +25,7 @@ export const e: UserConfig = defineConfig({
         enabled: true,
       },
     }),
-    Components({
-      dts: '.types/components.d.ts',
-      resolvers: [
-        ElementPlusResolver(),
-        Vuetify3Resolver(),
-        VarletUIResolver(),
-      ],
-    }),
+    Components({dts: '.types/components.d.ts', resolvers: [ElementPlusResolver(), Vuetify3Resolver(), VarletUIResolver()]}),
   ],
 })
 
