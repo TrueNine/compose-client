@@ -6,10 +6,7 @@ export default eslint9({
   vue: true,
   jsx: true,
   formatters: true,
-  typescript: {
-    strictTypescriptEslint: true,
-    tsconfigPath: './tsconfig.json',
-  },
+  typescript: {strictTypescriptEslint: true, tsconfigPath: './tsconfig.json'},
   ignores: [
     'playground/**/*',
   ],

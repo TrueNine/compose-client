@@ -12,13 +12,7 @@ export const e: UserConfig = defineConfig({
   plugins: [
     Vue({template: {transformAssetUrls: {...transformAssetUrls}}}),
     VueJsx(),
-    AutoImport({
-      imports: ['vue', '@vueuse/core'],
-      dts: '.types/auto-imports.d.ts',
-      eslintrc: {
-        enabled: false,
-      },
-    }),
+    AutoImport({imports: ['vue', '@vueuse/core'], dts: '.types/auto-imports.d.ts', eslintrc: {enabled: false}}),
     Components({dts: '.types/components.d.ts', resolvers: [ElementPlusResolver(), Vuetify3Resolver(), VarletUIResolver()]}),
   ],
   entry: [
@@ -29,11 +23,7 @@ export const e: UserConfig = defineConfig({
   platform: 'neutral',
   format: ['esm'],
   sourcemap: false,
-  dts: {
-    tsconfig: './tsconfig.build.json',
-    sourcemap: false,
-    vue: true,
-  },
+  dts: {tsconfig: './tsconfig.build.json', sourcemap: false, vue: true},
 })
 
 export default e

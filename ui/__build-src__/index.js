@@ -25,9 +25,7 @@ export async function buildUnocss(fName = 'unocss.css') {
 export function buildStyle() {
   return src(`${basePath}/src/**/**.scss`)
     .pipe(
-      gulpSass(sass)({
-        includePaths: [nodeModulesPath],
-      }),
+      gulpSass(sass)({includePaths: [nodeModulesPath]}),
     )
     .pipe(gulpPostcss([unocssPostcss(), autoprefixer(), cssnano()]))
     .pipe(dest(distPath))
@@ -47,11 +45,7 @@ export function joinPath(pattern) {
 export async function run(command, path) {
   const [cmd, ...args] = command.split(' ')
   return new Promise(resolve => {
-    const app = spawn(cmd, args, {
-      cwd: path,
-      stdio: 'inherit',
-      shell: true,
-    })
+    const app = spawn(cmd, args, {cwd: path, stdio: 'inherit', shell: true})
     app.on('close', resolve)
   })
 }
