@@ -22,6 +22,32 @@ import type {Rule} from 'eslint'
  * type T = string | undefined
  * function fn(): undefined {}
  */
+const directTypeContexts = new Set([
+  'TSTypeAnnotation',
+  'TSTypeAliasDeclaration',
+  'TSInterfaceDeclaration',
+  'TSTypeParameterDeclaration',
+  'TSTypeParameterInstantiation',
+  'TSTypeLiteral',
+  'TSPropertySignature',
+  'TSMethodSignature',
+  'TSIndexSignature',
+  'TSFunctionType',
+  'TSConstructorType',
+  'TSMappedType',
+  'TSConditionalType',
+  'TSInferType',
+  'TSTypeQuery',
+  'TSTypePredicate',
+])
+
+const importExportTypes = new Set([
+  'ImportSpecifier',
+  'ImportDefaultSpecifier',
+  'ImportNamespaceSpecifier',
+  'ExportSpecifier',
+])
+
 const rule: Rule.RuleModule = {
   meta: {
     type: 'suggestion',
@@ -52,66 +78,37 @@ const rule: Rule.RuleModule = {
       let current: Rule.Node | null = node
 
       while (current) {
-        const parent: Rule.Node | null = current.parent
+        const currentWithParent = current as Rule.Node & {parent?: Rule.Node}
+        const {parent} = currentWithParent
 
-        if (!parent) break
+        if (parent === void 0 || parent === null) break
 
         // 使用 string 类型来绕过 TypeScript 的类型检查
         // 因为 Rule.Node 类型不包含 TypeScript 的 AST 节点类型
         const parentType = parent.type as string
 
-        // Direct type annotation contexts
-        if (
-          parentType === 'TSTypeAnnotation' ||
-          parentType === 'TSTypeAliasDeclaration' ||
-          parentType === 'TSInterfaceDeclaration' ||
-          parentType === 'TSTypeParameterDeclaration' ||
-          parentType === 'TSTypeParameterInstantiation' ||
-          parentType === 'TSTypeLiteral' ||
-          parentType === 'TSPropertySignature' ||
-          parentType === 'TSMethodSignature' ||
-          parentType === 'TSIndexSignature' ||
-          parentType === 'TSFunctionType' ||
-          parentType === 'TSConstructorType' ||
-          parentType === 'TSMappedType' ||
-          parentType === 'TSConditionalType' ||
-          parentType === 'TSInferType' ||
-          parentType === 'TSTypeQuery' ||
-          parentType === 'TSTypePredicate'
-        ) {
-          return true
-        }
+        if (directTypeContexts.has(parentType)) return true
 
         // Union/Intersection types
-        if (parentType === 'TSUnionType' || parentType === 'TSIntersectionType') {
-          return true
-        }
+        if (parentType === 'TSUnionType' || parentType === 'TSIntersectionType') return true
 
         // TSUndefinedKeyword is always a type
-        if (parentType === 'TSUndefinedKeyword') {
-          return true
-        }
+        if (parentType === 'TSUndefinedKeyword') return true
 
         // TSAsExpression - check if we're in the type part
         if (parentType === 'TSAsExpression') {
           const asExpr = parent as Rule.Node & {typeAnnotation: Rule.Node}
-          if (asExpr.typeAnnotation === current) {
-            return true
-          }
+          if (asExpr.typeAnnotation === current) return true
         }
 
         // TSSatisfiesExpression - check if we're in the type part
         if (parentType === 'TSSatisfiesExpression') {
           const satisfiesExpr = parent as Rule.Node & {typeAnnotation: Rule.Node}
-          if (satisfiesExpr.typeAnnotation === current) {
-            return true
-          }
+          if (satisfiesExpr.typeAnnotation === current) return true
         }
 
         // TSTypeReference - this is a type context
-        if (parentType === 'TSTypeReference') {
-          return true
-        }
+        if (parentType === 'TSTypeReference') return true
 
         current = parent
       }
@@ -132,9 +129,9 @@ const rule: Rule.RuleModule = {
       if (isInTypeContext(node)) return false
 
       // Skip if it's a property key (not value)
-      const parent = node.parent
+      const {parent} = node
       if (parent?.type === 'Property') {
-        const prop = parent as Rule.Node & {key: Rule.Node; shorthand: boolean}
+        const prop = parent as Rule.Node & {key: Rule.Node, shorthand: boolean}
         // If it's a shorthand property, it's both key and value - should fix
         // If it's a non-shorthand key, skip
         if (prop.key === node && !prop.shorthand) return false
@@ -159,21 +156,13 @@ const rule: Rule.RuleModule = {
       }
 
       // Skip if it's an import/export specifier
-      if (
-        parent?.type === 'ImportSpecifier' ||
-        parent?.type === 'ImportDefaultSpecifier' ||
-        parent?.type === 'ImportNamespaceSpecifier' ||
-        parent?.type === 'ExportSpecifier'
-      ) {
-        return false
-      }
+      if (parent?.type && importExportTypes.has(parent.type as string)) return false
 
       // Skip member expression property (obj.undefined)
-      if (parent?.type === 'MemberExpression') {
-        const member = parent as Rule.Node & {property: Rule.Node; computed: boolean}
-        if (member.property === node && !member.computed) return false
-      }
+      if (parent?.type !== 'MemberExpression') return true
 
+      const member = parent as Rule.Node & {property: Rule.Node, computed: boolean}
+      if (member.property === node && !member.computed) return false
       return true
     }
 
@@ -181,13 +170,7 @@ const rule: Rule.RuleModule = {
       Identifier(node) {
         if (!isUndefinedValue(node)) return
 
-        context.report({
-          node,
-          messageId: 'preferVoidZero',
-          fix(fixer) {
-            return fixer.replaceText(node, 'void 0')
-          },
-        })
+        context.report({node, messageId: 'preferVoidZero', fix(fixer) { return fixer.replaceText(node, 'void 0') }})
       },
     }
   },

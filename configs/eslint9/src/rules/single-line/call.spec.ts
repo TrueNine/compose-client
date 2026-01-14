@@ -88,8 +88,8 @@ describe('prefer-single-line-call', () => {
         ruleTester.run('prefer-single-line-call', rule, {
           valid: [
             // 多行模板字面量 - 不应简化 (Requirement 3.5)
-            "console.log(\n  `line1\nline2`\n)",
-            "sql(\n  `SELECT *\n   FROM users`\n)",
+            'console.log(\n  `line1\nline2`\n)',
+            'sql(\n  `SELECT *\n   FROM users`\n)',
           ],
           invalid: [],
         })
@@ -245,7 +245,7 @@ describe('prefer-single-line-call', () => {
               code: `this.connection.send(
   JSON.stringify({type: 'shutdown'})
 )`,
-              output: "this.connection.send(JSON.stringify({type: 'shutdown'}))",
+              output: 'this.connection.send(JSON.stringify({type: \'shutdown\'}))',
               errors: [{messageId: 'preferSingleLineCall'}],
             },
             // 简单对象参数
@@ -253,7 +253,7 @@ describe('prefer-single-line-call', () => {
               code: `createUser(
   {name: 'test'}
 )`,
-              output: "createUser({name: 'test'})",
+              output: 'createUser({name: \'test\'})',
               errors: [{messageId: 'preferSingleLineCall'}],
             },
           ],
@@ -278,7 +278,7 @@ describe('prefer-single-line-call', () => {
               code: `console.log(
   'hello',
 )`,
-              output: "console.log('hello')",
+              output: 'console.log(\'hello\')',
               errors: [{messageId: 'preferSingleLineCall'}],
             },
           ],
@@ -310,7 +310,7 @@ describe('prefer-single-line-call', () => {
   'arg1',
   'arg2'
 )`,
-              output: "doSomething('arg1', 'arg2')",
+              output: 'doSomething(\'arg1\', \'arg2\')',
               options: [{maxLineLength: 100}],
               errors: [{messageId: 'preferSingleLineCall'}],
             },
@@ -345,7 +345,7 @@ describe('prefer-single-line-call', () => {
   'secondArgument',
   'thirdArgument'
 )`,
-              output: "someFunctionWithALongerName('firstArgument', 'secondArgument', 'thirdArgument')",
+              output: 'someFunctionWithALongerName(\'firstArgument\', \'secondArgument\', \'thirdArgument\')',
               options: [{maxLineLength: 300}],
               errors: [{messageId: 'preferSingleLineCall'}],
             },

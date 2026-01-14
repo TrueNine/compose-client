@@ -9,7 +9,8 @@
       "@/*": ["./src/*"]
     },
     "types": ["node"],
-    "noEmit": false
+    "noEmit": false,
+    "isolatedDeclarations": true
   },
   "include": [
     "src/**/*",

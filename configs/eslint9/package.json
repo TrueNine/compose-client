@@ -61,7 +61,7 @@
   },
   "scripts": {
     "build": "tsdown",
-    "lintfix": "eslint --fix",
+    "lintfix": "eslint --fix --cache --cache-location node_modules/.cache/.eslintcache",
     "typecheck": "tsc --noEmit -p tsconfig.lib.json",
     "test": "vitest run",
     "copylicense": "node -e \"require('fs').copyFileSync('../../LICENSE', './LICENSE')\"",
