@@ -2,7 +2,7 @@
   "name": "compose-client",
   "type": "module",
   "version": "2026.10107.100",
-  "packageManager": "pnpm@10.27.0",
+  "packageManager": "pnpm@10.28.0",
   "description": "yan100 dev kit",
   "author": "TrueNine",
   "license": "LGPL-2.1-or-later",
@@ -37,9 +37,9 @@
   },
   "devEngines": {
     "node": ">= 25",
-    "pnpm": ">= 10.22",
-    "npm": ">= 10.6.2",
-    "trubo": ">= 2.6.1"
+    "pnpm": ">= 10.28.0",
+    "npm": ">= 11.7.0",
+    "trubo": ">= 2.7.4"
   },
   "scripts": {
     "build": "turbo run build --output-logs=new-only",
