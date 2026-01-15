@@ -27,7 +27,8 @@ export const baseRulesPreset: Linter.RulesRecord = {
   '@truenine/prefer-void-zero': 'warn', // '@truenine/compact-try-catch': 'off', /* 废弃 */
   '@truenine/prefer-lookup-table': 'warn',
   '@truenine/beside-comment': 'error',
-  'style/brace-style': ['error', 'stroustrup', {allowSingleLine: true}],
+  '@truenine/brace-style': ['error', '1tbs', {allowSingleLine: true}],
+  'style/brace-style': 'off',
 
   'antfu/if-newline': 'off', /* antfu 规则覆盖 */
   'antfu/curly': 'off',

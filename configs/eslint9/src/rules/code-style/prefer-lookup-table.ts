@@ -50,8 +50,7 @@ const rule: Rule.RuleModule = {
         const logicalNode = node as Rule.Node & {left: Rule.Node, right: Rule.Node, operator: string}
         collectConditions(logicalNode.left, operator, conditions)
         collectConditions(logicalNode.right, operator, conditions)
-      }
-      else conditions.push(node)
+      } else conditions.push(node)
       return conditions
     }
 
@@ -79,8 +78,7 @@ const rule: Rule.RuleModule = {
           if (isPure(binExpr.left) && binExpr.right.type === 'Literal') { /* 尝试找出 subject (变量) 和 value (字面量) */
             subject = binExpr.left
             value = binExpr.right
-          }
-          else if (isPure(binExpr.right) && binExpr.left.type === 'Literal') {
+          } else if (isPure(binExpr.right) && binExpr.left.type === 'Literal') {
             subject = binExpr.right
             value = binExpr.left
           }

@@ -10,7 +10,8 @@ export const stylisticConfig: AntFuStylisticConfig = {
   semi: false,
   overrides: {
     'style/no-multiple-empty-lines': ['error', {max: 1, maxBOF: 0, maxEOF: 0}],
-    'style/brace-style': ['error', 'stroustrup', {allowSingleLine: true}], /* } catch / } else / } finally 必须在单独一行 */
+    'style/brace-style': 'off',
+    '@truenine/brace-style': ['error', '1tbs', {allowSingleLine: true}],
     '@truenine/prefer-separate-try-catch': 'error', /* 强制 try/catch/finally 分开写 */
     'style/arrow-parens': ['error', 'as-needed'],
     'curly': ['error', 'multi-line'],

@@ -1,5 +1,6 @@
 import type {Rule} from 'eslint'
 import besideComment from './beside-comment'
+import braceStyle from './brace-style'
 import compactTryCatch from './compact-try-catch'
 import preferConciseArrow from './concise-arrow'
 import preferGuardClause from './guard-clause'
@@ -21,11 +22,15 @@ export const codeStyleRules: Record<string, Rule.RuleModule> = {
   'compact-try-catch': compactTryCatch,
   'beside-comment': besideComment,
   'prefer-separate-try-catch': preferSeparateTryCatch,
+  'brace-style': braceStyle,
 }
 
 export {
   default as besideComment,
 } from './beside-comment'
+export {
+  default as braceStyle,
+} from './brace-style'
 export {
   default as compactTryCatch,
 } from './compact-try-catch'
