@@ -58,3 +58,4 @@ WARP.md
 .npmrc
 *_log.txt
 test_*.ts
+*.log
