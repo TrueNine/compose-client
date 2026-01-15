@@ -1,6 +1,6 @@
-import { RuleTester } from 'eslint'
+import {RuleTester} from 'eslint'
 import * as tseslint from 'typescript-eslint'
-import { describe, it } from 'vitest'
+import {describe, it} from 'vitest'
 import rule from './control'
 
 /**
@@ -45,7 +45,7 @@ describe('prefer-single-line-control', () => {
               output: `switch (x) {
   case 1: console.log('one');
 }`,
-              errors: [{ messageId: 'preferSingleLineCase' }],
+              errors: [{messageId: 'preferSingleLineCase'}],
             },
           ],
         })
@@ -65,7 +65,7 @@ describe('prefer-single-line-control', () => {
               output: `switch (x) {
   case 1: console.log('one'); break
 }`,
-              errors: [{ messageId: 'preferSingleLineCase' }],
+              errors: [{messageId: 'preferSingleLineCase'}],
             },
           ],
         })
@@ -85,7 +85,7 @@ describe('prefer-single-line-control', () => {
               output: `switch (x) {
   case 1: console.log('one');
 }`,
-              errors: [{ messageId: 'preferSingleLineCase' }],
+              errors: [{messageId: 'preferSingleLineCase'}],
             },
             // 块包裹带 break
             {
@@ -98,7 +98,7 @@ describe('prefer-single-line-control', () => {
               output: `switch (x) {
   case 1: console.log('one'); break
 }`,
-              errors: [{ messageId: 'preferSingleLineCase' }],
+              errors: [{messageId: 'preferSingleLineCase'}],
             },
           ],
         })
@@ -117,7 +117,7 @@ describe('prefer-single-line-control', () => {
               output: `switch (x) {
   default: console.log('default');
 }`,
-              errors: [{ messageId: 'preferSingleLineCase' }],
+              errors: [{messageId: 'preferSingleLineCase'}],
             },
             // default case 带 break
             {
@@ -129,7 +129,7 @@ describe('prefer-single-line-control', () => {
               output: `switch (x) {
   default: console.log('default'); break
 }`,
-              errors: [{ messageId: 'preferSingleLineCase' }],
+              errors: [{messageId: 'preferSingleLineCase'}],
             },
           ],
         })
@@ -214,7 +214,7 @@ describe('prefer-single-line-control', () => {
   console.log(i)
 }`,
               output: 'for (let i = 0; i < 10; i++) console.log(i)',
-              errors: [{ messageId: 'preferSingleLineFor' }],
+              errors: [{messageId: 'preferSingleLineFor'}],
             },
           ],
         })
@@ -230,7 +230,7 @@ describe('prefer-single-line-control', () => {
   console.log(key)
 }`,
               output: 'for (const key in obj) console.log(key)',
-              errors: [{ messageId: 'preferSingleLineFor' }],
+              errors: [{messageId: 'preferSingleLineFor'}],
             },
           ],
         })
@@ -246,7 +246,7 @@ describe('prefer-single-line-control', () => {
   process(item)
 }`,
               output: 'for (const item of items) process(item)',
-              errors: [{ messageId: 'preferSingleLineFor' }],
+              errors: [{messageId: 'preferSingleLineFor'}],
             },
           ],
         })
@@ -262,7 +262,7 @@ describe('prefer-single-line-control', () => {
   doSomething()
 }`,
               output: 'while (condition) doSomething()',
-              errors: [{ messageId: 'preferSingleLineWhile' }],
+              errors: [{messageId: 'preferSingleLineWhile'}],
             },
           ],
         })

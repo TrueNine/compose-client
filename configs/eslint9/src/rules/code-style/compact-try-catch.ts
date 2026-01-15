@@ -119,7 +119,7 @@ const rule: Rule.RuleModule = {
           const catchBlock = handler.body
           const catchCanBeSingle = canBeSingleLine(catchBlock)
 
-          if (catchToken !== null && tryCloseBrace !== null) {
+          if (catchToken !== null && tryCloseBrace !== null && catchToken.loc !== null && tryCloseBrace.loc !== null) {
             // Compression
             if (catchCanBeSingle && !isSingleLine(catchBlock)) {
               context.report({
@@ -164,7 +164,8 @@ const rule: Rule.RuleModule = {
         const prevCloseBrace = sourceCode.getLastToken(previousBlock)
         const finallyCanBeSingle = canBeSingleLine(finallyBlock)
         const prevCanBeSingle = canBeSingleLine(previousBlock)
-        if (finallyToken === null && prevCloseBrace !== null) return
+
+        if (finallyToken === null || prevCloseBrace === null || finallyToken.loc === null || prevCloseBrace.loc === null) return
 
         if (finallyCanBeSingle && !isSingleLine(finallyBlock)) {
           context.report({
