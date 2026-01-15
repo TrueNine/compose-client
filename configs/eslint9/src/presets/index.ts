@@ -6,6 +6,12 @@
  * @module presets
  */
 
-export {baseRulesPreset} from './base-rules'
-export {dtsRulesPreset} from './dts-rules'
-export {typescriptRulesPreset} from './typescript-rules'
+export {
+  baseRulesPreset,
+} from './base-rules'
+export {
+  dtsRulesPreset,
+} from './dts-rules'
+export {
+  typescriptRulesPreset,
+} from './typescript-rules'

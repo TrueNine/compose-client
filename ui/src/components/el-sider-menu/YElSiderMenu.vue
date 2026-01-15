@@ -16,9 +16,7 @@ const emits = defineEmits<YElSiderMenuEmits>()
 
 const prefix = computed(() => (props.pathPrefix ? props.pathPrefix + STR_SLASH : STR_EMPTY))
 const menus = useVModel(props, 'routeTable', emits, {passive: true})
-
-// @unocss-include
-</script>
+</script> // @unocss-include
 
 <template>
 <ElMenu :router="routeMode" :collapse="!collapsed">

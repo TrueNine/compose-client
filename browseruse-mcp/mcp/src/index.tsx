@@ -36,7 +36,8 @@ async function main(): Promise<void> {
     }
 
     await server.connect(transport)
-  } catch (error) {
+  }
+  catch (error) {
     logger.error('Failed to initialize MCP server:', error)
     process.exit(1)
   }

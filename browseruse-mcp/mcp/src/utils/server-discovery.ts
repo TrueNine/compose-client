@@ -21,7 +21,8 @@ export function getDefaultServerPort(): number {
       const port = Number.parseInt(fs.readFileSync(portFilePath, 'utf8').trim(), 10)
       if (!Number.isNaN(port) && port > 0) return port
     }
-  } catch (err) { logger.error('Error reading port file:', err) }
+  }
+  catch (err) { logger.error('Error reading port file:', err) }
 
   return DEFAULT_PORT
 }
@@ -65,7 +66,8 @@ export async function discoverServer(): Promise<boolean> {
             return true
           }
         }
-      } catch (error) {
+      }
+      catch (error) {
         const errorMessage = error instanceof Error ? error.message : String(error)
         logger.error(`Error checking ${host}:${port}: ${errorMessage}`)
       }
@@ -88,21 +90,24 @@ export async function withServerConnection<T>(
     }
   }
 
-  try { return await apiCall() } catch (error) {
+  try { return await apiCall() }
+  catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error)
     logger.error(`API call failed: ${errorMessage}. Attempting rediscovery...`)
     serverDiscovered = false
 
     if (await discoverServer()) {
       logger.error('Rediscovery successful. Retrying API call...')
-      try { return await apiCall() } catch (retryError) {
+      try { return await apiCall() }
+      catch (retryError) {
         const retryErrorMessage = retryError instanceof Error ? retryError.message : String(retryError)
         logger.error(`Retry failed: ${retryErrorMessage}`)
         return {content: [
           {type: 'text', text: `Error after reconnection attempt: ${retryErrorMessage}`},
         ], isError: true} as T
       }
-    } else {
+    }
+    else {
       logger.error('Rediscovery failed. Could not reconnect to server.')
       return {content: [
         {type: 'text', text: `Failed to reconnect to server: ${errorMessage}`},

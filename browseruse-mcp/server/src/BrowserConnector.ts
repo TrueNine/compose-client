@@ -17,8 +17,7 @@ import {WebSocket, WebSocketServer} from 'ws'
 import {AuditCategory, runAccessibilityAudit, runBestPracticesAudit, runPerformanceAudit, runSEOAudit} from '@/lighthouse'
 import {logger} from '@/logger'
 
-// Define proper types for better type safety
-interface LogEntry {
+interface LogEntry { // Define proper types for better type safety
   type: string
   timestamp: string
   level?: string
@@ -63,27 +62,20 @@ interface NetworkInterface {
 function convertPathForCurrentPlatform(inputPath: string): string {
   const platform = os.platform()
 
-  // If no path provided, return as is
-  if (!inputPath) return inputPath
+  if (!inputPath) return inputPath // If no path provided, return as is
 
   logger.info(`Converting path "${inputPath}" for platform: ${platform}`)
 
-  // Windows-specific conversion
-  if (platform === 'win32') return inputPath.replaceAll('/', '\\')
+  if (platform === 'win32') return inputPath.replaceAll('/', '\\') // Windows-specific conversion
 
-  // Linux/Mac-specific conversion
-  if (platform !== 'linux' && platform !== 'darwin') return inputPath
+  if (platform !== 'linux' && platform !== 'darwin') return inputPath // Linux/Mac-specific conversion
 
   if (inputPath.startsWith('\\\\') || inputPath.includes('\\')) {
-    // Check if this is a WSL path (contains wsl.localhost or wsl$)
-    if (inputPath.includes('wsl.localhost') || inputPath.includes('wsl$')) {
-      // Extract the path after the distribution name
-      // Handle both \\wsl.localhost\Ubuntu\path and \\wsl$\Ubuntu\path formats
-      const parts = inputPath.split('\\').filter(part => part.length > 0)
+    if (inputPath.includes('wsl.localhost') || inputPath.includes('wsl$')) { // Check if this is a WSL path (contains wsl.localhost or wsl$)
+      const parts = inputPath.split('\\').filter(part => part.length > 0) // Handle both \\wsl.localhost\Ubuntu\path and \\wsl$\Ubuntu\path formats // Extract the path after the distribution name
       logger.info('Path parts:', parts)
 
-      // Find the index after the distribution name
-      const distNames = [
+      const distNames = [ // Find the index after the distribution name
         'Ubuntu',
         'Debian',
         'kali',
@@ -92,8 +84,7 @@ function convertPathForCurrentPlatform(inputPath: string): string {
         'Fedora',
       ]
 
-      // Find the distribution name in the path
-      let distIndex = -1
+      let distIndex = -1 // Find the distribution name in the path
       for (const dist of distNames) {
         const index = parts.findIndex(part => part === dist || part.toLowerCase() === dist.toLowerCase())
         if (index !== -1) {
@@ -103,26 +94,21 @@ function convertPathForCurrentPlatform(inputPath: string): string {
       }
 
       if (distIndex !== -1 && distIndex + 1 < parts.length) {
-        // Reconstruct the path as a native Linux path
-        const linuxPath = `/${parts.slice(distIndex + 1).join('/')}`
+        const linuxPath = `/${parts.slice(distIndex + 1).join('/')}` // Reconstruct the path as a native Linux path
         logger.info(`Converted Windows WSL path "${inputPath}" to Linux path "${linuxPath}"`)
         return linuxPath
       }
 
-      // If we couldn't find a distribution name but it's clearly a WSL path,
-      // try to extract everything after wsl.localhost or wsl$
-      const wslIndex = parts.findIndex(part => part === 'wsl.localhost' || part === 'wsl$' || part.toLowerCase() === 'wsl.localhost' || part.toLowerCase() === 'wsl$')
+      const wslIndex = parts.findIndex(part => part === 'wsl.localhost' || part === 'wsl$' || part.toLowerCase() === 'wsl.localhost' || part.toLowerCase() === 'wsl$') // try to extract everything after wsl.localhost or wsl$ // If we couldn't find a distribution name but it's clearly a WSL path,
 
       if (wslIndex !== -1 && wslIndex + 2 < parts.length) {
-        // Skip the WSL prefix and distribution name
-        const linuxPath = `/${parts.slice(wslIndex + 2).join('/')}`
+        const linuxPath = `/${parts.slice(wslIndex + 2).join('/')}` // Skip the WSL prefix and distribution name
         logger.info(`Converted Windows WSL path "${inputPath}" to Linux path "${linuxPath}"`)
         return linuxPath
       }
     }
 
-    // For non-WSL Windows paths, just normalize the slashes
-    const normalizedPath = inputPath
+    const normalizedPath = inputPath // For non-WSL Windows paths, just normalize the slashes
       .replaceAll('\\\\', '/')
       .replaceAll('\\', '/')
     logger.info(`Converted Windows UNC path "${inputPath}" to "${normalizedPath}"`)
@@ -137,29 +123,23 @@ function convertPathForCurrentPlatform(inputPath: string): string {
   return normalizedPath
 }
 
-// Function to get default downloads folder
-function getDefaultDownloadsFolder(): string {
+function getDefaultDownloadsFolder(): string { // Function to get default downloads folder
   const homeDir = os.homedir()
-  // Downloads folder is typically the same path on Windows, macOS, and Linux
-  const downloadsPath = path.join(homeDir, 'Downloads', 'mcp-screenshots')
+  const downloadsPath = path.join(homeDir, 'Downloads', 'mcp-screenshots') // Downloads folder is typically the same path on Windows, macOS, and Linux
   return downloadsPath
 }
 
-// We store logs in memory
-const consoleLogs: LogEntry[] = []
+const consoleLogs: LogEntry[] = [] // We store logs in memory
 const consoleErrors: LogEntry[] = []
 const networkErrors: LogEntry[] = []
 const networkSuccess: LogEntry[] = []
 const allXhr: LogEntry[] = []
 
-// Store the current URL from the extension
-let currentUrl: string = ''
+let currentUrl: string = '' // Store the current URL from the extension
 
-// Store the current tab ID from the extension
-let currentTabId: string | number | null = null
+let currentTabId: string | number | null = null // Store the current tab ID from the extension
 
-// Add settings state
-let currentSettings: Settings = {
+let currentSettings: Settings = { // Add settings state
   logLimit: 50,
   queryLimit: 30000,
   showRequestHeaders: false,
@@ -168,16 +148,12 @@ let currentSettings: Settings = {
   stringSizeLimit: 500,
   maxLogSize: 20000,
   screenshotPath: getDefaultDownloadsFolder(),
-  // Add server host configuration
-  // Default to all interfaces
-  serverHost: process.env.SERVER_HOST ?? '0.0.0.0',
+  serverHost: process.env.SERVER_HOST ?? '0.0.0.0', // Default to all interfaces // Add server host configuration
 }
 
-// Add new storage for selected element
-let selectedElement: unknown = null
+let selectedElement: unknown = null // Add new storage for selected element
 
-// Add new state for tracking screenshot requests
-interface ScreenshotCallback {
+interface ScreenshotCallback { // Add new state for tracking screenshot requests
   resolve: (value: {
     data: string
     path?: string
@@ -188,8 +164,7 @@ interface ScreenshotCallback {
 
 const screenshotCallbacks = new Map<string, ScreenshotCallback>()
 
-// Function to get available port starting with the given port
-async function getAvailablePort(
+async function getAvailablePort( // Function to get available port starting with the given port
   startPort: number,
   maxAttempts: number = 10,
 ): Promise<number> {
@@ -198,68 +173,55 @@ async function getAvailablePort(
 
   while (attempts < maxAttempts) {
     try {
-      // Try to create a server on the current port
-      // We'll use a raw Node.js net server for just testing port availability
-      await new Promise<void>((resolve, reject) => {
+      await new Promise<void>((resolve, reject) => { // We'll use a raw Node.js net server for just testing port availability // Try to create a server on the current port
         const testServer = net.createServer()
 
-        // Handle errors (e.g., port in use)
-        testServer.once('error', (err: NodeJS.ErrnoException) => {
+        testServer.once('error', (err: NodeJS.ErrnoException) => { // Handle errors (e.g., port in use)
           if (err.code === 'EADDRINUSE') {
             logger.info(`Port ${currentPort} is in use, trying next port...`)
             currentPort++
             attempts++
-            // Continue to next iteration
-            resolve()
-          } else {
-            // Different error, propagate it
-            reject(err)
+            resolve() // Continue to next iteration
+          }
+          else {
+            reject(err) // Different error, propagate it
           }
         })
 
-        // If we can listen, the port is available
-        testServer.once('listening', () => {
-          // Make sure to close the server to release the port
-          testServer.close(() => {
+        testServer.once('listening', () => { // If we can listen, the port is available
+          testServer.close(() => { // Make sure to close the server to release the port
             logger.info(`Found available port: ${currentPort}`)
             resolve()
           })
         })
 
-        // Try to listen on the current port
-        testServer.listen(currentPort, currentSettings.serverHost)
+        testServer.listen(currentPort, currentSettings.serverHost) // Try to listen on the current port
       })
 
-      // If we reach here without incrementing the port, it means the port is available
-      return currentPort
-    } catch (error: unknown) {
+      return currentPort // If we reach here without incrementing the port, it means the port is available
+    }
+    catch (error: unknown) {
       logger.error(`Error checking port ${currentPort}:`, error)
-      // For non-EADDRINUSE errors, try the next port
-      currentPort++
+      currentPort++ // For non-EADDRINUSE errors, try the next port
       attempts++
     }
   }
 
-  // If we've exhausted all attempts, throw an error
-  throw new Error(
+  throw new Error( // If we've exhausted all attempts, throw an error
     `Could not find an available port after ${maxAttempts} attempts starting from ${startPort}`,
   )
 }
 
-// Start with requested port and find an available one
-const REQUESTED_PORT = Number.parseInt(process.env.PORT ?? '3025', 10)
+const REQUESTED_PORT = Number.parseInt(process.env.PORT ?? '3025', 10) // Start with requested port and find an available one
 
 let PORT = REQUESTED_PORT
 
-// Create application and initialize middleware
-const app = express()
+const app = express() // Create application and initialize middleware
 app.use(cors())
-// Increase JSON body parser limit to 50MB to handle large screenshots
-app.use(bodyParser.json({limit: '50mb'}))
+app.use(bodyParser.json({limit: '50mb'})) // Increase JSON body parser limit to 50MB to handle large screenshots
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}))
 
-// Helper to process logs based on settings
-function processLogsWithSettings(logs: LogEntry[]): LogEntry[] {
+function processLogsWithSettings(logs: LogEntry[]): LogEntry[] { // Helper to process logs based on settings
   return logs.map(log => {
     const processedLog = {...log}
 
@@ -272,17 +234,14 @@ function processLogsWithSettings(logs: LogEntry[]): LogEntry[] {
   })
 }
 
-// Helper to calculate size of a log entry
-function calculateLogSize(log: LogEntry): number {
+function calculateLogSize(log: LogEntry): number { // Helper to calculate size of a log entry
   return JSON.stringify(log).length
 }
 
-// Helper to truncate logs based on character limit
-function truncateLogsToQueryLimit(logs: LogEntry[]): LogEntry[] {
+function truncateLogsToQueryLimit(logs: LogEntry[]): LogEntry[] { // Helper to truncate logs based on character limit
   if (logs.length === 0) return logs
 
-  // First process logs according to current settings
-  const processedLogs = processLogsWithSettings(logs)
+  const processedLogs = processLogsWithSettings(logs) // First process logs according to current settings
 
   let currentSize = 0
   const result = []
@@ -290,14 +249,12 @@ function truncateLogsToQueryLimit(logs: LogEntry[]): LogEntry[] {
   for (const log of processedLogs) {
     const logSize = calculateLogSize(log)
 
-    // Check if adding this log would exceed the limit
-    if (currentSize + logSize > currentSettings.queryLimit) {
+    if (currentSize + logSize > currentSettings.queryLimit) { // Check if adding this log would exceed the limit
       logger.info(`Reached query limit (${currentSize}/${currentSettings.queryLimit}), truncating logs`)
       break
     }
 
-    // Add log and update size
-    result.push(log)
+    result.push(log) // Add log and update size
     currentSize += logSize
     logger.info(`Added log of size ${logSize}, total size now: ${currentSize}`)
   }
@@ -305,8 +262,7 @@ function truncateLogsToQueryLimit(logs: LogEntry[]): LogEntry[] {
   return result
 }
 
-// Endpoint for the extension to POST data
-app.post('/extension-log', (req, res) => {
+app.post('/extension-log', (req, res) => { // Endpoint for the extension to POST data
   logger.info('\n=== Received Extension Log ===')
   const bodyObj = req.body as Record<string, unknown>
   const bodyData = bodyObj?.data as Record<string, unknown> | undefined
@@ -315,8 +271,7 @@ app.post('/extension-log', (req, res) => {
   const {data} = bodyObj
   const {settings} = bodyObj
 
-  // Update settings if provided
-  if (settings != null) {
+  if (settings != null) { // Update settings if provided
     logger.info('Updating settings:', settings)
     const settingsObj = settings as Record<string, unknown>
     currentSettings = {...currentSettings, ...settingsObj} as Settings
@@ -333,14 +288,10 @@ app.post('/extension-log', (req, res) => {
 
   switch (dataObj.type) {
     case 'page-navigated':
-      // Handle page navigation event via HTTP POST
-      // Note: This is also handled in the WebSocket message handler
-      // as the extension may send navigation events through either channel
-      logger.info('Received page navigation event with URL:', dataObj.url)
+      logger.info('Received page navigation event with URL:', dataObj.url) // as the extension may send navigation events through either channel // Note: This is also handled in the WebSocket message handler // Handle page navigation event via HTTP POST
       currentUrl = String(dataObj.url)
 
-      // Also update the tab ID if provided
-      if (dataObj.tabId != null) {
+      if (dataObj.tabId != null) { // Also update the tab ID if provided
         logger.info('Updating tab ID from page navigation event:', dataObj.tabId)
         currentTabId = String(dataObj.tabId)
       }
@@ -371,15 +322,15 @@ app.post('/extension-log', (req, res) => {
       const logEntry = {url: dataObj.url, method: dataObj.method, status: dataObj.status, timestamp: dataObj.timestamp}
       logger.info('Adding network request:', logEntry)
 
-      // Route network requests based on status code
-      const status = Number(dataObj.status)
+      const status = Number(dataObj.status) // Route network requests based on status code
       if (status >= 400) {
         networkErrors.push(dataObj as unknown as LogEntry)
         if (networkErrors.length > currentSettings.logLimit) {
           logger.info(`Network errors exceeded limit (${currentSettings.logLimit}), removing oldest entry`)
           networkErrors.shift()
         }
-      } else {
+      }
+      else {
         networkSuccess.push(dataObj as unknown as LogEntry)
         if (networkSuccess.length > currentSettings.logLimit) {
           logger.info(`Network success logs exceeded limit (${currentSettings.logLimit}), removing oldest entry`)
@@ -403,8 +354,7 @@ app.post('/extension-log', (req, res) => {
   res.json({status: 'ok'})
 })
 
-// Update GET endpoints to use the new function
-app.get('/console-logs', (_req, res) => {
+app.get('/console-logs', (_req, res) => { // Update GET endpoints to use the new function
   const truncatedLogs = truncateLogsToQueryLimit(consoleLogs)
   res.json(truncatedLogs)
 })
@@ -425,14 +375,12 @@ app.get('/network-success', (_req, res) => {
 })
 
 app.get('/all-xhr', (_req, res) => {
-  // Merge and sort network success and error logs by timestamp
-  const mergedLogs = [...networkSuccess, ...networkErrors].sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime())
+  const mergedLogs = [...networkSuccess, ...networkErrors].sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()) // Merge and sort network success and error logs by timestamp
   const truncatedLogs = truncateLogsToQueryLimit(mergedLogs)
   res.json(truncatedLogs)
 })
 
-// Add new endpoint for selected element
-app.post('/selected-element', (req, res) => {
+app.post('/selected-element', (req, res) => { // Add new endpoint for selected element
   const bodyObj = req.body as Record<string, unknown>
   selectedElement = bodyObj.data
   res.json({status: 'ok'})
@@ -442,11 +390,9 @@ app.get('/selected-element', (_req, res) => { res.json(selectedElement ?? {messa
 
 app.get('/.port', (_req, res) => { res.send(PORT.toString()) })
 
-// Add new identity endpoint with a unique signature
-app.get('/.identity', (_req, res) => res.json({port: PORT, name: 'browser-tools-server', version: '1.2.0', signature: 'mcp-browser-connector-24x7'}))
+app.get('/.identity', (_req, res) => res.json({port: PORT, name: 'browser-tools-server', version: '1.2.0', signature: 'mcp-browser-connector-24x7'})) // Add new identity endpoint with a unique signature
 
-// Add function to clear all logs
-function clearAllLogs(): void {
+function clearAllLogs(): void { // Add function to clear all logs
   logger.info('Wiping all logs...')
   consoleLogs.length = 0
   consoleErrors.length = 0
@@ -457,14 +403,12 @@ function clearAllLogs(): void {
   logger.info('All logs have been wiped')
 }
 
-// Add endpoint to wipe logs
-app.post('/wipelogs', (_req, res) => {
+app.post('/wipelogs', (_req, res) => { // Add endpoint to wipe logs
   clearAllLogs()
   res.json({status: 'ok', message: 'All logs cleared successfully'})
 })
 
-// Add endpoint for the extension to report the current URL
-app.post('/current-url', (req, res) => {
+app.post('/current-url', (req, res) => { // Add endpoint for the extension to report the current URL
   logger.info('Received current URL update request:', JSON.stringify(req.body, null, 2))
 
   if (req.body != null && (req.body as Record<string, unknown>).url != null) {
@@ -472,15 +416,13 @@ app.post('/current-url', (req, res) => {
     const bodyObj = req.body as Record<string, unknown>
     currentUrl = String(bodyObj.url)
 
-    // Update the current tab ID if provided
-    if (bodyObj.tabId != null) {
+    if (bodyObj.tabId != null) { // Update the current tab ID if provided
       const oldTabId = currentTabId
       currentTabId = String(bodyObj.tabId)
       logger.info(`Updated current tab ID: ${oldTabId} -> ${currentTabId}`)
     }
 
-    // Log the source of the update if provided
-    const source = bodyObj.source != null ? String(bodyObj.source) : 'unknown'
+    const source = bodyObj.source != null ? String(bodyObj.source) : 'unknown' // Log the source of the update if provided
     const tabId = bodyObj.tabId != null ? String(bodyObj.tabId) : 'unknown'
     const timestamp = bodyObj.timestamp != null
       ? new Date(String(bodyObj.timestamp)).toISOString()
@@ -496,19 +438,17 @@ app.post('/current-url', (req, res) => {
       previousUrl: oldUrl,
       updated: oldUrl !== currentUrl,
     })
-  } else {
+  }
+  else {
     logger.info('No URL provided in current-url request')
     res.status(400).json({status: 'error', message: 'No URL provided'})
   }
 })
 
-// Add endpoint to get the current URL
-app.get('/current-url', (_req, res) => {
+app.get('/current-url', (_req, res) => { // Add endpoint to get the current URL
   logger.info('Current URL requested, returning:', currentUrl)
   res.json({url: currentUrl})
-})
-
-// ScreenshotMessage interface removed - handled directly in WebSocket message handler
+}) // ScreenshotMessage interface removed - handled directly in WebSocket message handler
 
 interface WebSocketMessage {
   type: string
@@ -532,11 +472,9 @@ export class BrowserConnector {
     this.app = app
     this.server = server
 
-    // Initialize WebSocket server using the existing HTTP server
-    this.wss = new WebSocketServer({noServer: true, path: '/extension-ws'})
+    this.wss = new WebSocketServer({noServer: true, path: '/extension-ws'}) // Initialize WebSocket server using the existing HTTP server
 
-    // Register the capture-screenshot endpoint
-    this.app.post(
+    this.app.post( // Register the capture-screenshot endpoint
       '/capture-screenshot',
       async (req: express.Request, res: express.Response) => {
         logger.info('Browser Connector: Received request to /capture-screenshot endpoint')
@@ -546,20 +484,15 @@ export class BrowserConnector {
       },
     )
 
-    // Set up accessibility audit endpoint
-    this.setupAccessibilityAudit()
+    this.setupAccessibilityAudit() // Set up accessibility audit endpoint
 
-    // Set up performance audit endpoint
-    this.setupPerformanceAudit()
+    this.setupPerformanceAudit() // Set up performance audit endpoint
 
-    // Set up SEO audit endpoint
-    this.setupSEOAudit()
+    this.setupSEOAudit() // Set up SEO audit endpoint
 
-    // Set up Best Practices audit endpoint
-    this.setupBestPracticesAudit()
+    this.setupBestPracticesAudit() // Set up Best Practices audit endpoint
 
-    // Handle upgrade requests for WebSocket
-    this.server.on(
+    this.server.on( // Handle upgrade requests for WebSocket
       'upgrade',
       (request: IncomingMessage, socket: Socket, head: Buffer) => {
         if (request.url === '/extension-ws') this.wss.handleUpgrade(request, socket, head, (ws: WebSocket) => { this.wss.emit('connection', ws, request) })
@@ -574,22 +507,18 @@ export class BrowserConnector {
         try {
           const rawData: unknown = JSON.parse(message.toString())
           const data = rawData as WebSocketMessage
-          // Log message without the base64 data
-          logger.info('Received WebSocket message:', {...data, data: data.data != null && data.data !== '' ? '[base64 data]' : void 0})
+          logger.info('Received WebSocket message:', {...data, data: data.data != null && data.data !== '' ? '[base64 data]' : void 0}) // Log message without the base64 data
 
-          // Handle URL response
-          if (data.type === 'current-url-response' && data.url !== null && data.url !== void 0) {
+          if (data.type === 'current-url-response' && data.url !== null && data.url !== void 0) { // Handle URL response
             logger.info('Received current URL from browser:', data.url)
             currentUrl = String(data.url)
 
-            // Also update the tab ID if provided
-            if (data.tabId !== null && data.tabId !== void 0) {
+            if (data.tabId !== null && data.tabId !== void 0) { // Also update the tab ID if provided
               logger.info('Updating tab ID from WebSocket message:', data.tabId)
               currentTabId = String(data.tabId)
             }
 
-            // Call the callback if exists
-            if (
+            if ( // Call the callback if exists
               data.requestId !== null && data.requestId !== void 0
               && this.urlRequestCallbacks.has(data.requestId)
             ) {
@@ -598,46 +527,40 @@ export class BrowserConnector {
               this.urlRequestCallbacks.delete(data.requestId)
             }
           }
-          // Handle page navigation event via WebSocket
-          // Note: This is intentionally duplicated from the HTTP handler in /extension-log
-          // as the extension may send navigation events through either channel
-          if (data.type === 'page-navigated' && data.url !== null && data.url !== void 0) {
+          if (data.type === 'page-navigated' && data.url !== null && data.url !== void 0) { // as the extension may send navigation events through either channel // Note: This is intentionally duplicated from the HTTP handler in /extension-log // Handle page navigation event via WebSocket
             logger.info('Page navigated to:', data.url)
             currentUrl = String(data.url)
 
-            // Also update the tab ID if provided
-            if (data.tabId !== null && data.tabId !== void 0) {
+            if (data.tabId !== null && data.tabId !== void 0) { // Also update the tab ID if provided
               logger.info('Updating tab ID from page navigation event:', data.tabId)
               currentTabId = String(data.tabId)
             }
           }
-          // Handle screenshot response
-          if (data.type === 'screenshot-data' && data.data !== null && data.data !== void 0) {
+          if (data.type === 'screenshot-data' && data.data !== null && data.data !== void 0) { // Handle screenshot response
             logger.info('Received screenshot data')
             logger.info('Screenshot path from extension:', data.path)
             logger.info('Auto-paste setting from extension:', data.autoPaste)
-            // Get the most recent callback since we're not using requestId anymore
-            const callbacks = [...screenshotCallbacks.values()]
+            const callbacks = [...screenshotCallbacks.values()] // Get the most recent callback since we're not using requestId anymore
             if (callbacks.length > 0) {
               const callback = callbacks[0]
               logger.info('Found callback, resolving promise')
-              // Pass both the data, path and autoPaste to the resolver
-              callback.resolve({data: data.data, path: data.path, autoPaste: data.autoPaste})
-              // Clear all callbacks
-              screenshotCallbacks.clear()
-            } else logger.info('No callbacks found for screenshot')
-          } else if (data.type === 'screenshot-error') {
-            // Handle screenshot error
-            logger.info('Received screenshot error:', data.error)
+              callback.resolve({data: data.data, path: data.path, autoPaste: data.autoPaste}) // Pass both the data, path and autoPaste to the resolver
+              screenshotCallbacks.clear() // Clear all callbacks
+            }
+            else logger.info('No callbacks found for screenshot')
+          }
+          else if (data.type === 'screenshot-error') {
+            logger.info('Received screenshot error:', data.error) // Handle screenshot error
             const callbacks = [...screenshotCallbacks.values()]
             if (callbacks.length > 0) {
               const callback = callbacks[0]
               callback.reject(new Error(data.error != null && data.error !== '' ? data.error : 'Screenshot capture failed'))
-              // Clear all callbacks
-              screenshotCallbacks.clear()
+              screenshotCallbacks.clear() // Clear all callbacks
             }
-          } else logger.info('Unhandled message type:', data.type)
-        } catch (error: unknown) { logger.error('Error processing WebSocket message:', error) }
+          }
+          else logger.info('Unhandled message type:', data.type)
+        }
+        catch (error: unknown) { logger.error('Error processing WebSocket message:', error) }
       })
 
       ws.on('close', () => {
@@ -646,8 +569,7 @@ export class BrowserConnector {
       })
     })
 
-    // Add screenshot endpoint
-    this.app.post(
+    this.app.post( // Add screenshot endpoint
       '/screenshot',
       (req: express.Request, res: express.Response): void => {
         logger.info('Browser Connector: Received request to /screenshot endpoint')
@@ -662,29 +584,25 @@ export class BrowserConnector {
             return
           }
 
-          // Use provided path or default to downloads folder
-          const targetPath = outputPath ?? getDefaultDownloadsFolder()
+          const targetPath = outputPath ?? getDefaultDownloadsFolder() // Use provided path or default to downloads folder
           logger.info(`Using screenshot path: ${targetPath}`)
 
-          // Remove the data:image/png;base64, prefix
-          const base64Data = String(data).replace(/^data:image\/png;base64,/, '')
+          const base64Data = String(data).replace(/^data:image\/png;base64,/, '') // Remove the data:image/png;base64, prefix
 
-          // Create the full directory path if it doesn't exist
-          fs.mkdirSync(targetPath, {recursive: true})
+          fs.mkdirSync(targetPath, {recursive: true}) // Create the full directory path if it doesn't exist
           logger.info(`Created/verified directory: ${targetPath}`)
 
-          // Generate a unique filename using timestamp
-          const timestamp = new Date().toISOString().replaceAll(/[:.]/g, '-')
+          const timestamp = new Date().toISOString().replaceAll(/[:.]/g, '-') // Generate a unique filename using timestamp
           const filename = `screenshot-${timestamp}.png`
           const fullPath = path.join(targetPath, filename)
           logger.info(`Saving screenshot to: ${fullPath}`)
 
-          // Write the file
-          fs.writeFileSync(fullPath, base64Data, 'base64')
+          fs.writeFileSync(fullPath, base64Data, 'base64') // Write the file
           logger.info('Screenshot saved successfully')
 
           res.json({path: fullPath, filename})
-        } catch (error: unknown) {
+        }
+        catch (error: unknown) {
           logger.error('Error saving screenshot:', error)
           if (error instanceof Error) res.status(500).json({error: error.message})
           else res.status(500).json({error: 'An unknown error occurred'})
@@ -693,60 +611,46 @@ export class BrowserConnector {
     )
   }
 
-  // Note: This method has been superseded by captureScreenshot() method
-  // Keeping it for potential future use or backward compatibility
-  // private async _handleScreenshot(_req: express.Request, _res: express.Response): Promise<express.Response<any, Record<string, any>> | undefined> {
-  //   // Implementation omitted - use captureScreenshot() instead
-  // }
+  //   // Implementation omitted - use captureScreenshot() instead // private async _handleScreenshot(_req: express.Request, _res: express.Response): Promise<express.Response<any, Record<string, any>> | undefined> { // Keeping it for potential future use or backward compatibility // Note: This method has been superseded by captureScreenshot() method // }
 
-  // Updated method to get URL for audits with improved connection tracking and waiting
-  private async getUrlForAudit(): Promise<string | null> {
+  private async getUrlForAudit(): Promise<string | null> { // Updated method to get URL for audits with improved connection tracking and waiting
     try {
       logger.info('getUrlForAudit called')
 
-      // Use the stored URL if available immediately
-      if (currentUrl != null && currentUrl !== '' && currentUrl !== 'about:blank') {
+      if (currentUrl != null && currentUrl !== '' && currentUrl !== 'about:blank') { // Use the stored URL if available immediately
         logger.info(`Using existing URL immediately: ${currentUrl}`)
         return currentUrl
       }
 
-      // Wait for a URL to become available (retry loop)
-      logger.info('No valid URL available yet, waiting for navigation...')
+      logger.info('No valid URL available yet, waiting for navigation...') // Wait for a URL to become available (retry loop)
 
-      // Wait up to 10 seconds for a URL to be set (20 attempts x 500ms)
-      const maxAttempts = 50
-      // ms
-      const waitTime = 500
+      const maxAttempts = 50 // Wait up to 10 seconds for a URL to be set (20 attempts x 500ms)
+      const waitTime = 500 // ms
 
       for (let attempt = 0; attempt < maxAttempts; attempt++) {
-        // Check if URL is available now
-        if (currentUrl != null && currentUrl !== '' && currentUrl !== 'about:blank') {
+        if (currentUrl != null && currentUrl !== '' && currentUrl !== 'about:blank') { // Check if URL is available now
           logger.info(`URL became available after waiting:`, currentUrl)
           return currentUrl
         }
 
-        // Wait before checking again
-        logger.info(`Waiting for URL (attempt ${attempt + 1}/${maxAttempts})...`)
+        logger.info(`Waiting for URL (attempt ${attempt + 1}/${maxAttempts})...`) // Wait before checking again
         await new Promise(resolve => setTimeout(resolve, waitTime))
       }
 
-      // If we reach here, no URL became available after waiting
-      logger.info('Timed out waiting for URL, returning null')
+      logger.info('Timed out waiting for URL, returning null') // If we reach here, no URL became available after waiting
       return null
-    } catch (error: unknown) {
+    }
+    catch (error: unknown) {
       logger.error('Error in getUrlForAudit:', error)
-      // Return null to trigger an error
-      return null
+      return null // Return null to trigger an error
     }
   }
 
-  // Public method to check if there's an active connection
-  public hasActiveConnection(): boolean {
+  public hasActiveConnection(): boolean { // Public method to check if there's an active connection
     return this.activeConnection != null
   }
 
-  // Add new endpoint for programmatic screenshot capture
-  async captureScreenshot(req: express.Request, res: express.Response): Promise<express.Response | undefined> {
+  async captureScreenshot(req: express.Request, res: express.Response): Promise<express.Response | undefined> { // Add new endpoint for programmatic screenshot capture
     logger.info('Browser Connector: Starting captureScreenshot method')
     logger.info('Browser Connector: Request headers:', req.headers)
     logger.info('Browser Connector: Request method:', req.method)
@@ -761,19 +665,16 @@ export class BrowserConnector {
       const requestId = Date.now().toString()
       logger.info('Browser Connector: Generated requestId:', requestId)
 
-      // Create promise that will resolve when we get the screenshot data
-      const screenshotPromise = new Promise<{
+      const screenshotPromise = new Promise<{ // Create promise that will resolve when we get the screenshot data
         data: string
         path?: string
         autoPaste?: boolean
       }>((resolve, reject) => {
         logger.info(`Browser Connector: Setting up screenshot callback for requestId: ${requestId}`)
-        // Store callback in map
-        screenshotCallbacks.set(requestId, {resolve, reject})
+        screenshotCallbacks.set(requestId, {resolve, reject}) // Store callback in map
         logger.info('Browser Connector: Current callbacks:', [...screenshotCallbacks.keys()])
 
-        // Set timeout to clean up if we don't get a response
-        setTimeout(() => {
+        setTimeout(() => { // Set timeout to clean up if we don't get a response
           if (!screenshotCallbacks.has(requestId)) return
 
           logger.info(`Browser Connector: Screenshot capture timed out for requestId: ${requestId}`)
@@ -782,26 +683,21 @@ export class BrowserConnector {
         }, 10000)
       })
 
-      // Send screenshot request to extension
-      const message = JSON.stringify({type: 'take-screenshot', requestId})
+      const message = JSON.stringify({type: 'take-screenshot', requestId}) // Send screenshot request to extension
       logger.info(`Browser Connector: Sending WebSocket message to extension:`, message)
       this.activeConnection.send(message)
 
-      // Wait for screenshot data
-      logger.info('Browser Connector: Waiting for screenshot data...')
+      logger.info('Browser Connector: Waiting for screenshot data...') // Wait for screenshot data
       const {data: base64Data, path: customPath, autoPaste} = await screenshotPromise
       logger.info('Browser Connector: Received screenshot data, saving...')
       logger.info('Browser Connector: Custom path from extension:', customPath)
       logger.info('Browser Connector: Auto-paste setting:', autoPaste)
 
-      // Always prioritize the path from the Chrome extension
-      let targetPath = customPath
+      let targetPath = customPath // Always prioritize the path from the Chrome extension
 
-      // If no path provided by extension, fall back to defaults
-      targetPath ??= currentSettings.screenshotPath ?? getDefaultDownloadsFolder()
+      targetPath ??= currentSettings.screenshotPath ?? getDefaultDownloadsFolder() // If no path provided by extension, fall back to defaults
 
-      // Convert the path for the current platform
-      targetPath = convertPathForCurrentPlatform(targetPath)
+      targetPath = convertPathForCurrentPlatform(targetPath) // Convert the path for the current platform
 
       logger.info(`Browser Connector: Using path: ${targetPath}`)
 
@@ -810,7 +706,8 @@ export class BrowserConnector {
       try {
         fs.mkdirSync(targetPath, {recursive: true})
         logger.info(`Browser Connector: Created directory: ${targetPath}`)
-      } catch (err) {
+      }
+      catch (err) {
         logger.error(`Browser Connector: Error creating directory: ${targetPath}`, err)
         throw new Error(
           `Failed to create screenshot directory: ${err instanceof Error ? err.message : String(err)
@@ -823,14 +720,13 @@ export class BrowserConnector {
       const fullPath = path.join(targetPath, filename)
       logger.info(`Browser Connector: Full screenshot path: ${fullPath}`)
 
-      // Remove the data:image/png;base64, prefix if present
-      const cleanBase64 = base64Data.replace(/^data:image\/png;base64,/, '')
+      const cleanBase64 = base64Data.replace(/^data:image\/png;base64,/, '') // Remove the data:image/png;base64, prefix if present
 
-      // Save the file
-      try {
+      try { // Save the file
         fs.writeFileSync(fullPath, cleanBase64, 'base64')
         logger.info(`Browser Connector: Screenshot saved to: ${fullPath}`)
-      } catch (err) {
+      }
+      catch (err) {
         logger.error(`Browser Connector: Error saving screenshot to: ${fullPath}`, err)
         throw new Error(
           `Failed to save screenshot: ${err instanceof Error ? err.message : String(err)
@@ -838,13 +734,10 @@ export class BrowserConnector {
         )
       }
 
-      // Check if running on macOS before executing AppleScript
-      if (os.platform() === 'darwin' && autoPaste === true) {
+      if (os.platform() === 'darwin' && autoPaste === true) { // Check if running on macOS before executing AppleScript
         logger.info('Browser Connector: Running on macOS with auto-paste enabled, executing AppleScript to paste into Cursor')
 
-        // Create the AppleScript to copy the image to clipboard and paste into Cursor
-        // This version is more robust and includes debugging
-        const appleScript = `
+        const appleScript = ` // This version is more robust and includes debugging // Create the AppleScript to copy the image to clipboard and paste into Cursor
           -- Set path to the screenshot
           set imagePath to "${fullPath}"
 
@@ -977,24 +870,25 @@ export class BrowserConnector {
           end try
         `
 
-        // Execute the AppleScript
-        exec(`osascript -e '${appleScript}'`, (error, stdout, stderr) => {
+        exec(`osascript -e '${appleScript}'`, (error, stdout, stderr) => { // Execute the AppleScript
           if (error) {
             logger.error(`Browser Connector: Error executing AppleScript: ${error.message}`)
             logger.error(`Browser Connector: stderr: ${stderr}`)
-            // Don't fail the response; log the error and proceed
-          } else {
+          }
+          else { // Don't fail the response; log the error and proceed
             logger.info(`Browser Connector: AppleScript executed successfully`)
             logger.info(`Browser Connector: stdout: ${stdout}`)
           }
         })
-      } else {
+      }
+      else {
         if (os.platform() === 'darwin' && !autoPaste) logger.info(`Browser Connector: Running on macOS but auto-paste is disabled, skipping AppleScript execution`)
         else logger.info(`Browser Connector: Not running on macOS, skipping AppleScript execution`)
       }
 
       res.json({path: fullPath, filename})
-    } catch (error) {
+    }
+    catch (error) {
       const errorMessage
         = error instanceof Error ? error.message : String(error)
       logger.error('Browser Connector: Error capturing screenshot:', errorMessage)
@@ -1002,39 +896,34 @@ export class BrowserConnector {
     }
   }
 
-  // Add shutdown method
-  public async shutdown(): Promise<void> {
+  public async shutdown(): Promise<void> { // Add shutdown method
     return new Promise<void>(resolve => {
       logger.info('Shutting down WebSocket server...')
 
-      // Send close message to client if connection is active
-      if (
+      if ( // Send close message to client if connection is active
         this.activeConnection?.readyState === WebSocket.OPEN
       ) {
         logger.info('Notifying client to close connection...')
-        try { this.activeConnection.send(JSON.stringify({type: 'server-shutdown'})) } catch (err: unknown) { logger.error('Error sending shutdown message to client:', err) }
+        try { this.activeConnection.send(JSON.stringify({type: 'server-shutdown'})) }
+        catch (err: unknown) { logger.error('Error sending shutdown message to client:', err) }
       }
 
-      // Set a timeout to force close after 2 seconds
-      const forceCloseTimeout = setTimeout(() => {
+      const forceCloseTimeout = setTimeout(() => { // Set a timeout to force close after 2 seconds
         logger.info('Force closing connections after timeout...')
         if (this.activeConnection != null) {
-          // Force close the connection
-          this.activeConnection.terminate()
+          this.activeConnection.terminate() // Force close the connection
           this.activeConnection = null
         }
         this.wss.close()
         resolve()
       }, 2000)
 
-      // Close active WebSocket connection if exists
-      if (this.activeConnection != null) {
+      if (this.activeConnection != null) { // Close active WebSocket connection if exists
         this.activeConnection.close(1000, 'Server shutting down')
         this.activeConnection = null
       }
 
-      // Close WebSocket server
-      this.wss.close(() => {
+      this.wss.close(() => { // Close WebSocket server
         clearTimeout(forceCloseTimeout)
         logger.info('WebSocket server closed gracefully')
         resolve()
@@ -1042,23 +931,19 @@ export class BrowserConnector {
     })
   }
 
-  // Sets up the accessibility audit endpoint
-  private setupAccessibilityAudit(): void {
+  private setupAccessibilityAudit(): void { // Sets up the accessibility audit endpoint
     this.setupAuditEndpoint(AuditCategory.ACCESSIBILITY, '/accessibility-audit', runAccessibilityAudit)
   }
 
-  // Sets up the performance audit endpoint
-  private setupPerformanceAudit(): void {
+  private setupPerformanceAudit(): void { // Sets up the performance audit endpoint
     this.setupAuditEndpoint(AuditCategory.PERFORMANCE, '/performance-audit', runPerformanceAudit)
   }
 
-  // Set up SEO audit endpoint
-  private setupSEOAudit(): void {
+  private setupSEOAudit(): void { // Set up SEO audit endpoint
     this.setupAuditEndpoint(AuditCategory.SEO, '/seo-audit', runSEOAudit)
   }
 
-  // Add a setup method for Best Practices audit
-  private setupBestPracticesAudit(): void {
+  private setupBestPracticesAudit(): void { // Add a setup method for Best Practices audit
     this.setupAuditEndpoint(AuditCategory.BEST_PRACTICES, '/best-practices-audit', runBestPracticesAudit)
   }
 
@@ -1073,42 +958,37 @@ export class BrowserConnector {
     endpoint: string,
     auditFunction: (url: string) => Promise<LighthouseReport>,
   ): void {
-    // Add server identity validation endpoint
-    this.app.get('/.identity', (_req, res) => { res.json({signature: 'mcp-browser-connector-24x7', version: '1.2.0'}) })
+    this.app.get('/.identity', (_req, res) => { res.json({signature: 'mcp-browser-connector-24x7', version: '1.2.0'}) }) // Add server identity validation endpoint
 
     this.app.post(endpoint, async (req: express.Request, res: express.Response) => {
       try {
         logger.info(`${auditType} audit request received`)
 
-        // Get URL using our helper method
-        const url = await this.getUrlForAudit()
+        const url = await this.getUrlForAudit() // Get URL using our helper method
 
         if (url == null) {
           logger.info(`No URL available for ${auditType} audit`)
           return res.status(400).json({error: `URL is required for ${auditType} audit. Make sure you navigate to a page in the browser first, and the browser-tool extension tab is open.`})
         }
 
-        // If we're using the stored URL (not from request body), log it now
-        if ((req.body == null || (req.body as Record<string, unknown>)?.url == null) && url === currentUrl) {
+        if ((req.body == null || (req.body as Record<string, unknown>)?.url == null) && url === currentUrl) { // If we're using the stored URL (not from request body), log it now
           logger.info(`Using stored URL for ${auditType} audit:`, url)
         }
 
-        // Check if we're using the default URL
-        if (url === 'about:blank') {
+        if (url === 'about:blank') { // Check if we're using the default URL
           logger.info(`Cannot run ${auditType} audit on about:blank`)
           return res.status(400).json({error: `Cannot run ${auditType} audit on about:blank`})
         }
 
         logger.info(`Preparing to run ${auditType} audit for: ${url}`)
 
-        // Run the audit using the provided function
-        try {
+        try { // Run the audit using the provided function
           const result = await auditFunction(url)
 
           logger.info(`${auditType} audit completed successfully`)
-          // Return the results
-          res.json(result)
-        } catch (auditError: unknown) {
+          res.json(result) // Return the results
+        }
+        catch (auditError: unknown) {
           logger.error(`${auditType} audit failed:`, auditError)
           const errorMessage
             = auditError instanceof Error
@@ -1116,7 +996,8 @@ export class BrowserConnector {
               : String(auditError)
           res.status(500).json({error: `Failed to run ${auditType} audit: ${errorMessage}`})
         }
-      } catch (error: unknown) {
+      }
+      catch (error: unknown) {
         logger.error(`Error in ${auditType} audit endpoint:`, error)
         const errorMessage
           = error instanceof Error ? error.message : String(error)
@@ -1126,14 +1007,12 @@ export class BrowserConnector {
   }
 }
 
-// Use an async IIFE to allow for async/await in the initial setup
-(async () => {
+(async () => { // Use an async IIFE to allow for async/await in the initial setup
   try {
     logger.info(`Starting Browser Tools Server...`)
     logger.info(`Requested port: ${REQUESTED_PORT}`)
 
-    // Find an available port
-    try {
+    try { // Find an available port
       PORT = await getAvailablePort(REQUESTED_PORT)
 
       if (PORT !== REQUESTED_PORT) {
@@ -1142,20 +1021,19 @@ export class BrowserConnector {
         logger.info(`Using port ${PORT} instead.`)
         logger.info(`====================================\n`)
       }
-    } catch (portError: unknown) {
+    }
+    catch (portError: unknown) {
       logger.error(`Failed to find an available port:`, portError)
       process.exit(1)
     }
 
-    // Create the server with the available port
-    const server = app.listen(PORT, currentSettings.serverHost, () => {
+    const server = app.listen(PORT, currentSettings.serverHost, () => { // Create the server with the available port
       logger.info(`\n=== Browser Tools Server Started ===`)
       logger.info(`Aggregator listening on http://${currentSettings.serverHost}:${PORT}`)
 
       if (PORT !== REQUESTED_PORT) logger.info(`NOTE: Using fallback port ${PORT} instead of requested port ${REQUESTED_PORT}`)
 
-      // Log all available network interfaces for easier discovery
-      const networkInterfaces = os.networkInterfaces()
+      const networkInterfaces = os.networkInterfaces() // Log all available network interfaces for easier discovery
       logger.info('\nAvailable on the following network addresses:')
 
       Object.keys(networkInterfaces).forEach(interfaceName => {
@@ -1168,56 +1046,52 @@ export class BrowserConnector {
       logger.info(`\nFor local access use: http://localhost:${PORT}`)
     })
 
-    // Handle server startup errors
-    server.on('error', (err: NodeJS.ErrnoException) => {
+    server.on('error', (err: NodeJS.ErrnoException) => { // Handle server startup errors
       if (err.code === 'EADDRINUSE') {
         logger.error(`ERROR: Port ${PORT} is still in use, despite our checks!`)
         logger.error(`This might indicate another process started using this port after our check.`)
-      } else logger.error(`Server error:`, err)
+      }
+      else logger.error(`Server error:`, err)
       process.exit(1)
     })
 
-    // Initialize the browser connector with the existing app AND server
-    const browserConnector = new BrowserConnector(app, server)
+    const browserConnector = new BrowserConnector(app, server) // Initialize the browser connector with the existing app AND server
     const fn = async (): Promise<void> => {
       logger.info('\nReceived SIGINT signal. Starting graceful shutdown...')
       try {
-        // First shutdown WebSocket connections
-        await browserConnector.shutdown()
+        await browserConnector.shutdown() // First shutdown WebSocket connections
 
-        // Then close the HTTP server
-        await new Promise<void>((resolve, reject) => {
+        await new Promise<void>((resolve, reject) => { // Then close the HTTP server
           server.close(err => {
             if (err) {
               logger.error('Error closing HTTP server:', err)
               reject(err)
-            } else {
+            }
+            else {
               logger.info('HTTP server closed successfully')
               resolve()
             }
           })
         })
 
-        // Clear all logs
-        clearAllLogs()
+        clearAllLogs() // Clear all logs
 
         logger.info('Shutdown completed successfully')
         process.exit(0)
-      } catch (error: unknown) {
+      }
+      catch (error: unknown) {
         logger.error('Error during shutdown:', error)
-        // Force exit in case of error
-        process.exit(1)
+        process.exit(1) // Force exit in case of error
       }
     }
-    // Handle shutdown gracefully with improved error handling
-    process.on('SIGINT', () => { void fn() })
+    process.on('SIGINT', () => { void fn() }) // Handle shutdown gracefully with improved error handling
 
-    // Also handle SIGTERM
-    process.on('SIGTERM', () => {
+    process.on('SIGTERM', () => { // Also handle SIGTERM
       logger.info('\nReceived SIGTERM signal')
       process.emit('SIGINT')
     })
-  } catch (error: unknown) {
+  }
+  catch (error: unknown) {
     logger.error('Failed to start server:', error)
     process.exit(1)
   }

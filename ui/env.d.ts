@@ -4,16 +4,14 @@
 /// <reference types="@vueuse/core" />
 /// <reference types="unplugin-vue-router/client" />
 
-// Vue SFC 类型声明
-declare module '*.vue' {
+declare module '*.vue' { // Vue SFC 类型声明
   import type {DefineComponent} from 'vue'
 
   const component: DefineComponent<object, object, any>
   export default component
 }
 
-// Element Plus 模块声明
-declare module 'element-plus/dist/locale/en.mjs' {
+declare module 'element-plus/dist/locale/en.mjs' { // Element Plus 模块声明
   const locale: any
   export default locale
 }
@@ -23,8 +21,7 @@ declare module 'element-plus/dist/locale/zh-cn.mjs' {
   export default locale
 }
 
-// Vue 组合式 API 全局导入
-declare global {
+declare global { // Vue 组合式 API 全局导入
   const computed: typeof import('vue')['computed'],
     ref: typeof import('vue')['ref'],
     reactive: typeof import('vue')['reactive'],
@@ -40,8 +37,7 @@ declare global {
     defineExpose: typeof import('vue')['defineExpose'],
     withDefaults: typeof import('vue')['withDefaults'],
 
-    // VueUse 函数
-    useVModel: typeof import('@vueuse/core')['useVModel'],
+    useVModel: typeof import('@vueuse/core')['useVModel'], // VueUse 函数
     useRouter: typeof import('vue-router')['useRouter'],
     useRoute: typeof import('vue-router')['useRoute']
 }

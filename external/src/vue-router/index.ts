@@ -13,8 +13,7 @@ export interface AutoRouterConfig {
   children?: RouteRecordRaw[]
 }
 
-// 路径常量
-const STR_EMPTY = ''
+const STR_EMPTY = '' // 路径常量
 const STR_SLASH = '/'
 
 /**
@@ -139,8 +138,7 @@ function routeToMenuObject(
     return menuObj
   }
 
-  // 无 index 路由，递归所有子路由
-  const sub = generateMenuInternal(children, matchFn, null, fullPath)
+  const sub = generateMenuInternal(children, matchFn, null, fullPath) // 无 index 路由，递归所有子路由
   if (sub.length > 0) menuObj.sub = sub
   return menuObj
 }

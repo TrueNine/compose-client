@@ -56,21 +56,18 @@ const DEFAULT_OPTIONS: Required<SimpleDtsOptions> = {
 export function createDtsPlugin(options: SimpleDtsOptions = {}): Plugin {
   const finalOptions = {...DEFAULT_OPTIONS, ...options}
 
-  // 收集所有入口文件的后缀
-  const extensions = new Set(
+  const extensions = new Set( // 收集所有入口文件的后缀
     finalOptions.entry.map(entry => {
       const match = /\.([^.]+)$/.exec(entry)
       return match ? match[1] : 'ts'
     }),
   )
 
-  // 生成包含所有后缀的 glob 模式
-  const includes = [...extensions].map(ext =>
+  const includes = [...extensions].map(ext => // 生成包含所有后缀的 glob 模式
     `${finalOptions.entryRoot}/**/*.${ext}`)
 
   const dtsPluginConfig: PluginOptions = {
-    // 基础配置
-    entryRoot: finalOptions.entryRoot,
+    entryRoot: finalOptions.entryRoot, // 基础配置
     tsconfigPath: finalOptions.tsconfigPath,
     include: includes,
     exclude: [
@@ -78,8 +75,7 @@ export function createDtsPlugin(options: SimpleDtsOptions = {}): Plugin {
       ...finalOptions.excludes,
     ],
 
-    // 编译器选项
-    compilerOptions: {
+    compilerOptions: { // 编译器选项
       declaration: true,
       emitDeclarationOnly: true,
       declarationDir: finalOptions.outDir,
@@ -87,17 +83,14 @@ export function createDtsPlugin(options: SimpleDtsOptions = {}): Plugin {
       emitDecoratorMetadata: finalOptions.sourcemap,
     },
 
-    // 插件行为
-    clearPureImport: false,
+    clearPureImport: false, // 插件行为
     staticImport: true,
     logLevel: finalOptions.logLevel,
     strictOutput: finalOptions.strict,
 
-    // 错误处理 - 确保 dts 生成错误时构建失败
-    rollupOptions: {},
+    rollupOptions: {}, // 错误处理 - 确保 dts 生成错误时构建失败
 
-    // 使用 beforeWriteFile 钩子来验证生成的文件
-    beforeWriteFile: (filePath: string, content: string) => {
+    beforeWriteFile: (filePath: string, content: string) => { // 使用 beforeWriteFile 钩子来验证生成的文件
       if (!content || content.trim().length === 0) throw new Error(`DTS generation failed: Empty declaration file generated for ${filePath}`)
       return {filePath, content}
     },
@@ -108,8 +101,7 @@ export function createDtsPlugin(options: SimpleDtsOptions = {}): Plugin {
   return plugin
 }
 
-// 导出一些常用的预设配置
-export const dtsPresets = {
+export const dtsPresets = { // 导出一些常用的预设配置
   /**
    * 库模式预设
    */

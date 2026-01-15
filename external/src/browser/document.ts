@@ -1,5 +1,4 @@
-// 创建安全的懒加载单例下载元素
-let downloadElement: HTMLAnchorElement | null = null
+let downloadElement: HTMLAnchorElement | null = null // 创建安全的懒加载单例下载元素
 
 /**
  * 获取下载元素实例，确保只创建一次
@@ -12,7 +11,8 @@ function getDownloadElement(): HTMLAnchorElement {
       downloadElement.style.display = 'none'
 
       document.body.append(downloadElement)
-    } else throw new TypeError('无法创建下载元素：不在浏览器环境中')
+    }
+    else throw new TypeError('无法创建下载元素：不在浏览器环境中')
   }
   return downloadElement
 }
@@ -32,13 +32,10 @@ export function loadRemoteScriptTag(
   beforeEach: (scriptTag: HTMLScriptElement) => HTMLScriptElement = b => b,
   loadFn?: () => void,
 ): HTMLScriptElement | null {
-  // 确保在浏览器环境中执行
-  if (typeof document === 'undefined') return null
-  // 先查找是否已存在相同 src 的 script 标签，若存在直接返回
-  const exist = document.querySelector<HTMLScriptElement>(`script[src='${src}']`)
+  if (typeof document === 'undefined') return null // 确保在浏览器环境中执行
+  const exist = document.querySelector<HTMLScriptElement>(`script[src='${src}']`) // 先查找是否已存在相同 src 的 script 标签，若存在直接返回
   if (exist !== null) return exist
-  // 创建 script 标签并设置属性
-  const scriptTag = document.createElement('script')
+  const scriptTag = document.createElement('script') // 创建 script 标签并设置属性
   scriptTag.src = src
   scriptTag.setAttribute('charset', 'utf8')
   if (typeof loadFn === 'function') scriptTag.addEventListener('load', loadFn)
@@ -61,8 +58,10 @@ export function downloadBlob(blob: Blob, downloadName = 'noneFile'): void {
       element.href = url
       element.download = downloadName
       element.click()
-    } finally { window.URL.revokeObjectURL(url) }
-  } catch (error) { console.error('下载文件失败:', error) }
+    }
+    finally { window.URL.revokeObjectURL(url) }
+  }
+  catch (error) { console.error('下载文件失败:', error) }
 }
 
 /**
@@ -76,7 +75,8 @@ export function download(url: string, downloadName = 'noneFile'): void {
     element.href = url
     element.download = downloadName
     element.click()
-  } catch (error) { console.error('下载文件失败:', error) }
+  }
+  catch (error) { console.error('下载文件失败:', error) }
 }
 
 /**

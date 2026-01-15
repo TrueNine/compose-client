@@ -1,5 +1,4 @@
-// MCP Tool Response Types
-export interface McpToolResponse {
+export interface McpToolResponse { // MCP Tool Response Types
   [x: string]: unknown
   content: {
     type: 'text'
@@ -9,15 +8,13 @@ export interface McpToolResponse {
   isError?: boolean
 }
 
-// Server Discovery Types
-export interface ServerConnection {
+export interface ServerConnection { // Server Discovery Types
   host: string
   port: number
   discovered: boolean
 }
 
-// API Response Types
-export interface ApiResponse {
+export interface ApiResponse { // API Response Types
   error?: string
   message?: string
   report?: unknown
@@ -25,19 +22,15 @@ export interface ApiResponse {
   [key: string]: unknown
 }
 
-// Audit Types
-export interface AuditRequest {
+export interface AuditRequest { // Audit Types
   category?: string
   source: string
   timestamp: number
 }
 
-// Logger Types
-export interface LogEntry {
+export interface LogEntry { // Logger Types
   level: string
   message: string
   timestamp: number
   [key: string]: unknown
-}
-
-// We don't need this type anymore - removed due to complexity
+} // We don't need this type anymore - removed due to complexity

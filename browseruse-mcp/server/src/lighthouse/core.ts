@@ -49,21 +49,16 @@ export async function runLighthouseAudit(
   }
 
   try {
-    // Always use a dedicated headless browser for audits
-    logger.info('Using dedicated headless browser for audit')
+    logger.info('Using dedicated headless browser for audit') // Always use a dedicated headless browser for audits
 
-    // Determine if this is a performance audit - we need to load all resources for performance audits
-    const isPerformanceAudit = categories.includes(AuditCategory.PERFORMANCE)
+    const isPerformanceAudit = categories.includes(AuditCategory.PERFORMANCE) // Determine if this is a performance audit - we need to load all resources for performance audits
 
-    // For performance audits, we want to load all resources
-    // For accessibility or other audits, we can block non-essential resources
-    try {
+    try { // For accessibility or other audits, we can block non-essential resources // For performance audits, we want to load all resources
       const {port} = await connectToHeadlessBrowser(url, {blockResources: !isPerformanceAudit})
 
       logger.info(`Connected to browser on port: ${port}`)
 
-      // Create Lighthouse config
-      const {flags, config} = createLighthouseConfig(categories)
+      const {flags, config} = createLighthouseConfig(categories) // Create Lighthouse config
       flags.port = port
 
       logger.info(`Running Lighthouse with categories: ${categories.join(', ')}`)
@@ -75,14 +70,12 @@ export async function runLighthouseAudit(
         throw new Error('Lighthouse audit failed to produce results')
       }
 
-      // Schedule browser cleanup after a delay to allow for subsequent audits
-      scheduleBrowserCleanup()
+      scheduleBrowserCleanup() // Schedule browser cleanup after a delay to allow for subsequent audits
 
-      // Return the result
-      return runnerResult.lhr
-    } catch (browserError: unknown) {
-      // Check if the error is related to Chrome/Edge not being available
-      const errorMessage = browserError instanceof Error
+      return runnerResult.lhr // Return the result
+    }
+    catch (browserError: unknown) {
+      const errorMessage = browserError instanceof Error // Check if the error is related to Chrome/Edge not being available
         ? browserError.message
         : String(browserError)
       if (
@@ -94,13 +87,12 @@ export async function runLighthouseAudit(
           'Chrome or Edge browser could not be found. Please ensure that Chrome or Edge is installed on your system to run audits.',
         )
       }
-      // Re-throw other errors
-      throw browserError
+      throw browserError // Re-throw other errors
     }
-  } catch (error: unknown) {
+  }
+  catch (error: unknown) {
     logger.error('Lighthouse audit failed:', error)
-    // Schedule browser cleanup even if the audit fails
-    scheduleBrowserCleanup()
+    scheduleBrowserCleanup() // Schedule browser cleanup even if the audit fails
     throw new Error(
       `Lighthouse audit failed: ${
         error instanceof Error ? error.message : String(error)

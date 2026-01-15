@@ -67,8 +67,7 @@ export class SearchParam {
   }
 
   toString(): string {
-    // 使用缓存提升性能
-    if (this._cachedString !== null) return this._cachedString
+    if (this._cachedString !== null) return this._cachedString // 使用缓存提升性能
 
     this._cachedString = [...this._root]
       .map(([k, v]) => {
@@ -162,11 +161,12 @@ export function encodeQueryParam(...cards: nilpt<object>[]): string {
         for (const v of value) {
           if (v != null) params.push([encodedKey, encodeURIComponent(String(v))])
         }
-      } else if (typeof value === 'string') params.push([encodedKey, encodeURIComponent(value)])
+      }
+      else if (typeof value === 'string') params.push([encodedKey, encodeURIComponent(value)])
       else if (typeof value === 'object') {
-        // 嵌套对象只处理一层，输出空字符串
-        params.push([encodedKey, ''])
-      } else params.push([encodedKey, String(value)])
+        params.push([encodedKey, '']) // 嵌套对象只处理一层，输出空字符串
+      }
+      else params.push([encodedKey, String(value)])
     }
   }
 
@@ -204,10 +204,11 @@ export function queryParam(...cards: nilpt<object>[]): string {
         for (const v of value) {
           if (v != null) params.push([key, String(v)])
         }
-      } else if (typeof value === 'object') {
-        // 嵌套对象只处理一层，输出空字符串
-        params.push([key, ''])
-      } else params.push([key, String(value)])
+      }
+      else if (typeof value === 'object') {
+        params.push([key, '']) // 嵌套对象只处理一层，输出空字符串
+      }
+      else params.push([key, String(value)])
     }
   }
 
@@ -243,7 +244,8 @@ export function queryHash(...cards: nilpt<object>[]): string {
         for (const v of value) {
           if (v != null) params.push([key, String(v)])
         }
-      } else if (typeof value === 'object') params.push([key, ''])
+      }
+      else if (typeof value === 'object') params.push([key, ''])
       else params.push([key, String(value)])
     }
   }
@@ -269,8 +271,7 @@ export function decodeHash(hash?: string | null): Record<string, string> {
 
   if (!isNonNilString(hash)) return result
 
-  // 此时我们已经确认 hash 是非空字符串
-  const rawInput = (hash as string).startsWith('#') ? (hash as string).slice(1) : hash as string
+  const rawInput = (hash as string).startsWith('#') ? (hash as string).slice(1) : hash as string // 此时我们已经确认 hash 是非空字符串
   if (!isNonNilString(rawInput)) return result
 
   const pairs = rawInput.split('&')

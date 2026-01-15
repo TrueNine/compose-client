@@ -34,8 +34,7 @@ export interface FullPerformanceOptions extends VitePerformanceOptions {
 export function createBasicPreset(options: FullPerformanceOptions = {}): UserConfig {
   const performanceConfig = createVitePerformanceConfig({
     enableEsbuildOptimization: true,
-    // 基础预设不启用复杂的代码分割
-    enableChunkOptimization: false,
+    enableChunkOptimization: false, // 基础预设不启用复杂的代码分割
     enableDepsOptimization: true,
     chunkSizeWarningLimit: 1000,
     reportCompressedSize: false,
@@ -96,8 +95,7 @@ export function createMaximumPreset(options: FullPerformanceOptions = {}): UserC
 export function createDevelopmentPreset(options: FullPerformanceOptions = {}): UserConfig {
   const performanceConfig = createDevelopmentPerformanceConfig({
     enableEsbuildOptimization: true,
-    // 开发环境不需要复杂的代码分割
-    enableChunkOptimization: false,
+    enableChunkOptimization: false, // 开发环境不需要复杂的代码分割
     enableDepsOptimization: true,
     reportCompressedSize: false,
     ...options,
@@ -105,14 +103,10 @@ export function createDevelopmentPreset(options: FullPerformanceOptions = {}): U
 
   const cacheConfig = createCacheOptimization({enableFsCache: true, enableDepsCache: true, forceClearCache: false, ...options.cache})
 
-  const parallelConfig = createDevParallelOptimization({enableWorkerThreads: true,
-    // 开发环境可以关闭 CSS 并行处理以减少复杂度
-    enableParallelCss: false,
-    // 开发环境通常由 IDE 处理类型检查
-    enableParallelTypeCheck: false, ...options.parallel})
+  const parallelConfig = createDevParallelOptimization({enableWorkerThreads: true, enableParallelCss: false, // 开发环境可以关闭 CSS 并行处理以减少复杂度
+    enableParallelTypeCheck: false, ...options.parallel}) // 开发环境通常由 IDE 处理类型检查
 
-  // 使用新的开发模式优化
-  const devOptimizationConfig = createDevelopmentOptimization({
+  const devOptimizationConfig = createDevelopmentOptimization({ // 使用新的开发模式优化
     enableFastRefresh: true,
     enableSmartHMR: true,
     enableDepsPreBundling: true,
@@ -143,13 +137,11 @@ export function createFastDevPreset(options: FullPerformanceOptions = {}): UserC
     enableWorkerThreads: true,
     enableParallelCss: false,
     enableParallelTypeCheck: false,
-    // 减少并发以避免资源竞争
-    maxConcurrency: 2,
+    maxConcurrency: 2, // 减少并发以避免资源竞争
     ...options.parallel,
   })
 
-  // 使用快速开发模式优化
-  const fastDevConfig = createFastDevelopmentOptimization({
+  const fastDevConfig = createFastDevelopmentOptimization({ // 使用快速开发模式优化
     enableFastRefresh: true,
     enableSmartHMR: true,
     enableDepsPreBundling: true,
@@ -196,14 +188,11 @@ export function createMonorepoPreset(options: FullPerformanceOptions = {}): User
     ...options,
   })
 
-  const cacheConfig = createCacheOptimization({enableFsCache: true, enableDepsCache: true,
-    // monorepo 使用统一的缓存目录
-    cacheDir: 'node_modules/.vite', ...options.cache})
+  const cacheConfig = createCacheOptimization({enableFsCache: true, enableDepsCache: true, cacheDir: 'node_modules/.vite', ...options.cache}) // monorepo 使用统一的缓存目录
 
   const parallelConfig = createMonorepoParallelOptimization({enableWorkerThreads: true, enableParallelCss: true, enableParallelTypeCheck: true, ...options.parallel})
 
-  // 添加 Monorepo 开发模式优化
-  const monorepoDevConfig = createMonorepoDevelopmentOptimization({enableFastRefresh: true, enableSmartHMR: true, enableDepsPreBundling: true, enableFsCache: true})
+  const monorepoDevConfig = createMonorepoDevelopmentOptimization({enableFastRefresh: true, enableSmartHMR: true, enableDepsPreBundling: true, enableFsCache: true}) // 添加 Monorepo 开发模式优化
 
   return mergeConfig(mergeConfig(mergeConfig(performanceConfig, cacheConfig), parallelConfig), monorepoDevConfig)
 }
@@ -236,8 +225,7 @@ export function createSmartPreset(options: FullPerformanceOptions = {}): UserCon
   const isProd = process.env.NODE_ENV === 'production'
   const isCI = process.env.CI === 'true'
 
-  // 检测是否为 monorepo 项目
-  const isMonorepo = process.cwd().includes('packages')
+  const isMonorepo = process.cwd().includes('packages') // 检测是否为 monorepo 项目
     || process.cwd().includes('apps')
     || (process.env.PNPM_WORKSPACE_ROOT != null)
 

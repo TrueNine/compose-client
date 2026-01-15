@@ -10,8 +10,7 @@ import YForm from '../index'
 
 const globalComponents = {components: {YField, YFieldProxyComponent}}
 
-// 测试用子组件，模拟一个简单的输入控件
-const InputComponent = defineComponent({props: {modelValue: String, label: String, type: String, errorMessages: {type: [String, Array], default: ''}}, emits: ['update:modelValue'], setup(props, {emit}) {
+const InputComponent = defineComponent({props: {modelValue: String, label: String, type: String, errorMessages: {type: [String, Array], default: ''}}, emits: ['update:modelValue'], setup(props, {emit}) { // 测试用子组件，模拟一个简单的输入控件
   const handleInput = (e: Event) => emit('update:modelValue', (e.target as HTMLInputElement).value)
 
   return () => (
@@ -32,8 +31,7 @@ const InputComponent = defineComponent({props: {modelValue: String, label: Strin
   )
 }})
 
-// 多输入组件
-const MultiInputComponent = defineComponent({props: ['key1', 'value2'], emits: ['update:key1', 'update:value2'], setup(props, {emit}) {
+const MultiInputComponent = defineComponent({props: ['key1', 'value2'], emits: ['update:key1', 'update:value2'], setup(props, {emit}) { // 多输入组件
   const handleInput1 = (e: Event) => emit('update:key1', (e.target as HTMLInputElement).value)
 
   const handleInput2 = (e: Event) => emit('update:value2', (e.target as HTMLInputElement).value)
@@ -95,8 +93,7 @@ describe('yFormTest', () => {
       const TestComponent = defineComponent({setup() {
         const formData = ref({username: 'initial'})
 
-        // 添加监听函数以便验证值是否更新
-        const handleUpdate = (newVal: any) => formData.value = newVal
+        const handleUpdate = (newVal: any) => formData.value = newVal // 添加监听函数以便验证值是否更新
 
         return () => (
           <YForm
@@ -115,18 +112,14 @@ describe('yFormTest', () => {
       await nextTick()
       const input = wrapper.find('.test-input')
       await input.setValue('newUser')
-      // 确保更新已经完成
-      await nextTick()
+      await nextTick() // 确保更新已经完成
 
-      // 不再直接访问formData，而是检查输入元素的值
-      expect((input.element as HTMLInputElement).value).toBe('newUser')
+      expect((input.element as HTMLInputElement).value).toBe('newUser') // 不再直接访问formData，而是检查输入元素的值
 
-      // 可以检查触发的事件来验证表单的更新
-      const formComponent = wrapper.findComponent(YForm)
+      const formComponent = wrapper.findComponent(YForm) // 可以检查触发的事件来验证表单的更新
       expect(formComponent.emitted('update:modelValue')).toBeTruthy()
 
-      // 或者检查事件的最新值
-      const emitEvents = formComponent.emitted('update:modelValue')
+      const emitEvents = formComponent.emitted('update:modelValue') // 或者检查事件的最新值
       if (emitEvents && emitEvents.length <= 0) return
 
       const lastEvent = emitEvents.at(-1)
@@ -176,16 +169,12 @@ describe('yFormTest', () => {
       await nextTick()
       expect((wrapper.props() as any).modelValue).toEqual({username: 'changed'})
 
-      // 直接触发表单的reset事件，而不是点击按钮
-      await wrapper.find('form').trigger('reset')
+      await wrapper.find('form').trigger('reset') // 直接触发表单的reset事件，而不是点击按钮
       await nextTick()
 
-      // 验证reset事件是否被触发
-      expect(wrapper.emitted('reset')).toBeTruthy()
-      // 验证reset事件参数是否正确
-      expect(wrapper.emitted('reset')?.[0]?.[0]).toEqual({username: 'test'})
-      // 验证handleReset函数是否被调用
-      expect(handleReset).toHaveBeenCalledTimes(1)
+      expect(wrapper.emitted('reset')).toBeTruthy() // 验证reset事件是否被触发
+      expect(wrapper.emitted('reset')?.[0]?.[0]).toEqual({username: 'test'}) // 验证reset事件参数是否正确
+      expect(handleReset).toHaveBeenCalledTimes(1) // 验证handleReset函数是否被调用
       expect(handleReset).toHaveBeenCalledWith({username: 'test'})
     })
   })
@@ -220,18 +209,11 @@ describe('yFormTest', () => {
       expect(inputComp.props('modelValue')).toBe('initialValue')
       expect(inputComp.props('label')).toBe('映射字段')
 
-      // 模拟用户输入
-      const testInput = wrapper.find('.test-input')
+      const testInput = wrapper.find('.test-input') // 模拟用户输入
       await testInput.setValue('changedValue')
-      await nextTick()
+      await nextTick() // const submitBtn = wrapper.find('.submit-btn') // 检查一下实际的按钮DOM，不验证按钮存在 // expect(submitBtn.exists()).toBe(true)
 
-      // 检查一下实际的按钮DOM，不验证按钮存在
-      // const submitBtn = wrapper.find('.submit-btn')
-      // expect(submitBtn.exists()).toBe(true)
-
-      // 直接使用onSubmit回调
-      // 不再试图点击按钮，而是直接触发表单提交
-      const formEl = wrapper.find('form')
+      const formEl = wrapper.find('form') // 不再试图点击按钮，而是直接触发表单提交 // 直接使用onSubmit回调
       expect(formEl.exists()).toBe(true)
 
       if (!formEl.exists()) return
@@ -274,29 +256,20 @@ describe('yFormTest', () => {
       await multiInput.find('.input2').setValue('newVal2')
       await nextTick()
 
-      // 检查输入元素的值
-      expect((multiInput.find('.input1').element as HTMLInputElement).value).toBe('newVal1')
+      expect((multiInput.find('.input1').element as HTMLInputElement).value).toBe('newVal1') // 检查输入元素的值
       expect((multiInput.find('.input2').element as HTMLInputElement).value).toBe('newVal2')
 
-      // 检查表单事件
-      const formComponent = wrapper.findComponent(YForm)
+      const formComponent = wrapper.findComponent(YForm) // 检查表单事件
       expect(formComponent.emitted('update:modelValue')).toBeTruthy()
 
-      // 检查事件的最新值
-      const emitEvents = formComponent.emitted('update:modelValue')
+      const emitEvents = formComponent.emitted('update:modelValue') // 检查事件的最新值
       if (emitEvents && emitEvents.length > 0) {
         const lastEvent = emitEvents.at(-1)
         expect(lastEvent[0]).toHaveProperty('key1', 'newVal1')
         expect(lastEvent[0]).toHaveProperty('key2', 'newVal2')
-      }
+      } // const submitBtn = wrapper.find('.submit-btn') // 检查一下实际的按钮DOM，不验证按钮存在 // expect(submitBtn.exists()).toBe(true)
 
-      // 检查一下实际的按钮DOM，不验证按钮存在
-      // const submitBtn = wrapper.find('.submit-btn')
-      // expect(submitBtn.exists()).toBe(true)
-
-      // 直接使用onSubmit回调
-      // 不再试图点击按钮，而是直接触发表单提交
-      const formEl = wrapper.find('form')
+      const formEl = wrapper.find('form') // 不再试图点击按钮，而是直接触发表单提交 // 直接使用onSubmit回调
       expect(formEl.exists()).toBe(true)
 
       if (!formEl.exists()) return

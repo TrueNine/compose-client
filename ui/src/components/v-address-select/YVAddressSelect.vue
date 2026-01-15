@@ -39,8 +39,7 @@ const emitsDeepLevel = computed(() => {
   }
 })
 
-// 地址缓存
-const addressCache = ref<Record<string, IComponentAddr[]>>({})
+const addressCache = ref<Record<string, IComponentAddr[]>>({}) // 地址缓存
 const saveCache = (code: string, data: IComponentAddr[]) => addressCache.value[code] = data
 const getCache = (code?: string) => (code ? addressCache.value[code] : void 0)
 
@@ -88,8 +87,7 @@ async function cacheAndUpdate(code: string) {
   const cache = getCache(padCode)
   const pt = addressCacheData[prevKey!]?.find((e: IComponentAddr) => pad(e.code) === padCode)
 
-  // ready next addresses
-  let fullPath = ''
+  let fullPath = '' // ready next addresses
   if (level < emitsDeepLevel.value) {
     addressCacheData[currentKey!]
       = cache
@@ -102,8 +100,7 @@ async function cacheAndUpdate(code: string) {
     saveCache(padCode, addressCacheData[currentKey!]?.map((e: IComponentAddr) => e) ?? [])
   }
 
-  // append fullPath
-  for (let i = 0; i < max; i++) {
+  for (let i = 0; i < max; i++) { // append fullPath
     const key = keyNames[i]
     const item = selected.value[key!]
     if (item?.name) fullPath += item.name

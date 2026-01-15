@@ -3,8 +3,7 @@ import {describe, expect, it} from 'vitest'
 import {Pw} from '../../consts'
 import {arrayToPage} from '../index'
 
-// 辅助函数：生成分页参数
-function pq(o?: number, s?: number): Pq {
+function pq(o?: number, s?: number): Pq { // 辅助函数：生成分页参数
   return {o, s} as Pq
 }
 

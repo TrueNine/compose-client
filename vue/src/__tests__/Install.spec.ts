@@ -50,8 +50,7 @@ describe('componentInstallToPlugin', () => {
     expect(app.component).toHaveBeenCalledWith('SubComp1', expect.any(Object))
 
     expect(app.component).toHaveBeenCalledWith('SubComp2', expect.any(Object))
-    // 返回对象应包含附加组件
-    expect(plugin.Sub1).toBeDefined()
+    expect(plugin.Sub1).toBeDefined() // 返回对象应包含附加组件
     expect(plugin.Sub2).toBeDefined()
   })
 

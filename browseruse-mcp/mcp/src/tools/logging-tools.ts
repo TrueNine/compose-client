@@ -12,7 +12,8 @@ export function registerLoggingTools(server: McpServer): void {
       return {content: [
         {type: 'text', text: JSON.stringify(json, null, 2)},
       ]}
-    } catch (error) {
+    }
+    catch (error) {
       const errorMessage = error instanceof Error ? error.message : String(error)
       return {content: [
         {type: 'text', text: `Failed to get console logs: ${errorMessage}`},
@@ -29,7 +30,8 @@ export function registerLoggingTools(server: McpServer): void {
       return {content: [
         {type: 'text', text: JSON.stringify(json, null, 2)},
       ]}
-    } catch (error) {
+    }
+    catch (error) {
       const errorMessage = error instanceof Error ? error.message : String(error)
       return {content: [
         {type: 'text', text: `Failed to get console errors: ${errorMessage}`},
@@ -46,7 +48,8 @@ export function registerLoggingTools(server: McpServer): void {
       return {content: [
         {type: 'text', text: JSON.stringify(json, null, 2)},
       ], isError: true}
-    } catch (error) {
+    }
+    catch (error) {
       const errorMessage = error instanceof Error ? error.message : String(error)
       return {content: [
         {type: 'text', text: `Failed to get network errors: ${errorMessage}`},
@@ -63,7 +66,8 @@ export function registerLoggingTools(server: McpServer): void {
       return {content: [
         {type: 'text', text: JSON.stringify(json, null, 2)},
       ]}
-    } catch (error) {
+    }
+    catch (error) {
       const errorMessage = error instanceof Error ? error.message : String(error)
       return {content: [
         {type: 'text', text: `Failed to get network logs: ${errorMessage}`},

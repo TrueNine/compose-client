@@ -3,8 +3,7 @@ import {describe, expect, it} from 'vitest'
 import {generateMenu} from '../index'
 import routers from './routers.json'
 
-// 选取部分典型路由用于测试
-const rootRoutes: RouteRecordRaw[] = routers as RouteRecordRaw[]
+const rootRoutes: RouteRecordRaw[] = routers as RouteRecordRaw[] // 选取部分典型路由用于测试
 const aRoutes: RouteRecordRaw[] = rootRoutes.find((r: RouteRecordRaw) => r.path === '/a')?.children ?? []
 const wxpaRoutes: RouteRecordRaw[] = rootRoutes.find((r: RouteRecordRaw) => r.path === '/wxpa')?.children ?? []
 
@@ -18,8 +17,7 @@ describe('generateMenu - routers.json 数据', (): void => {
   it('应该正确转换 /a 下的嵌套路由', () => {
     const menu = generateMenu(aRoutes)
     expect(menu.length).toBeGreaterThan(0)
-    // 检查典型子路由
-    const audit = menu.find(m => m.path === 'audit')
+    const audit = menu.find(m => m.path === 'audit') // 检查典型子路由
     expect(audit).toBeDefined()
     expect(audit?.sub?.length).toBeGreaterThan(0)
     const enterprises = audit?.sub?.find(m => m.path === 'enterprises')
@@ -92,8 +90,7 @@ describe('generateMenu - path为空的子路由特殊处理', () => {
     ]
     const menu = generateMenu(routes)
     expect(menu[0].name).toBe('首页')
-    // sub 应包含 sub1、sub2、other
-    const subPaths = Array.isArray(menu[0].sub) ? menu[0].sub.map(s => s.path) : []
+    const subPaths = Array.isArray(menu[0].sub) ? menu[0].sub.map(s => s.path) : [] // sub 应包含 sub1、sub2、other
     expect(subPaths).toContain('sub1')
     expect(subPaths).toContain('sub2')
     expect(subPaths).toContain('other')

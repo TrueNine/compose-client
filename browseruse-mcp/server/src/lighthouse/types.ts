@@ -5,10 +5,8 @@ export enum AuditCategory {
   ACCESSIBILITY = 'accessibility',
   PERFORMANCE = 'performance',
   SEO = 'seo',
-  // Not yet implemented
-  BEST_PRACTICES = 'best-practices',
-  // Not yet implemented
-  PWA = 'pwa',
+  BEST_PRACTICES = 'best-practices', // Not yet implemented
+  PWA = 'pwa', // Not yet implemented
 }
 
 /**
@@ -17,16 +15,12 @@ export enum AuditCategory {
 export interface LighthouseReport<T = unknown> {
   metadata: {
     url: string
-    // ISO 8601, e.g., "2025-02-27T14:30:00Z"
-    timestamp: string
-    // e.g., "mobile", "desktop"
-    device: string
-    // e.g., "10.4.0"
-    lighthouseVersion: string
+    timestamp: string // ISO 8601, e.g., "2025-02-27T14:30:00Z"
+    device: string // e.g., "mobile", "desktop"
+    lighthouseVersion: string // e.g., "10.4.0"
   }
 
-  // For backward compatibility with existing report formats
-  overallScore?: number
+  overallScore?: number // For backward compatibility with existing report formats
   failedAuditsCount?: number
   passedAuditsCount?: number
   manualAuditsCount?: number
@@ -34,9 +28,7 @@ export interface LighthouseReport<T = unknown> {
   notApplicableAuditsCount?: number
   failedAudits?: unknown[]
 
-  // New format for specialized reports
-  // Generic report data that will be specialized by each audit type
-  report?: T
+  report?: T // Generic report data that will be specialized by each audit type // New format for specialized reports
 }
 
 /**

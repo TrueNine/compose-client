@@ -7,9 +7,13 @@ import {plugin} from './plugin'
 import {baseRulesPreset, dtsRulesPreset, typescriptRulesPreset} from './presets'
 import {mergeWithDefaults} from './utils'
 
-export {plugin} from './plugin'
+export {
+  plugin,
+} from './plugin'
 export * from './rules'
-export type {ConfigOptions} from './types'
+export type {
+  ConfigOptions,
+} from './types'
 
 /**
  * 创建 ESLint 配置

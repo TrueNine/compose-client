@@ -43,7 +43,8 @@ export function registerAuditTools(server: McpServer): void {
       return {content: [
         {type: 'text', text: JSON.stringify(json, null, 2)},
       ]}
-    } catch (error) {
+    }
+    catch (error) {
       const errorMessage = error instanceof Error ? error.message : String(error)
       logger.error('Error in accessibility audit:', errorMessage)
       return {content: [
@@ -90,7 +91,8 @@ export function registerAuditTools(server: McpServer): void {
       return {content: [
         {type: 'text', text: JSON.stringify(json, null, 2)},
       ]}
-    } catch (error) {
+    }
+    catch (error) {
       const errorMessage = error instanceof Error ? error.message : String(error)
       logger.error('Error in performance audit:', errorMessage)
       return {content: [
@@ -124,7 +126,8 @@ export function registerAuditTools(server: McpServer): void {
       return {content: [
         {type: 'text', text: JSON.stringify(json, null, 2)},
       ]}
-    } catch (error) {
+    }
+    catch (error) {
       const errorMessage = error instanceof Error ? error.message : String(error)
       logger.error('Error in SEO audit:', errorMessage)
       return {content: [
@@ -168,7 +171,8 @@ export function registerAuditTools(server: McpServer): void {
       return {content: [
         {type: 'text', text: JSON.stringify(json, null, 2)},
       ]}
-    } catch (error) {
+    }
+    catch (error) {
       const errorMessage = error instanceof Error ? error.message : String(error)
       logger.error('Error in Best Practices audit:', errorMessage)
       return {content: [

@@ -1,8 +1,7 @@
 import process from 'node:process'
 import pino from 'pino'
 
-// Create a proper Logger interface that supports multiple parameters
-interface ProperLogger {
+interface ProperLogger { // Create a proper Logger interface that supports multiple parameters
   info: (msg: string, ...args: unknown[]) => void
   error: (msg: string, ...args: unknown[]) => void
   warn: (msg: string, ...args: unknown[]) => void
@@ -11,15 +10,10 @@ interface ProperLogger {
   fatal: (msg: string, ...args: unknown[]) => void
 }
 
-// Determine if we're in development mode
-const isDevelopment = process.env.NODE_ENV !== 'production'
+const isDevelopment = process.env.NODE_ENV !== 'production' // Determine if we're in development mode
 
-// Create logger configuration based on environment
-const loggerConfig: pino.LoggerOptions = isDevelopment
-  // Development: Human-readable format without external dependencies
-  // Note: prettyPrint option removed as it's deprecated in pino v8+
-  ? {level: process.env.LOG_LEVEL ?? 'debug', formatters: {level: (label: string) => ({level: label.toUpperCase()})}, timestamp: pino.stdTimeFunctions.isoTime}
-  // Production: JSON format for log aggregation
-  : {level: process.env.LOG_LEVEL !== null && process.env.LOG_LEVEL !== void 0 && process.env.LOG_LEVEL !== '' ? process.env.LOG_LEVEL : 'info', formatters: {level: (label: string) => ({level: label.toUpperCase()})}, timestamp: pino.stdTimeFunctions.isoTime}
+const loggerConfig: pino.LoggerOptions = isDevelopment // Create logger configuration based on environment
+  ? {level: process.env.LOG_LEVEL ?? 'debug', formatters: {level: (label: string) => ({level: label.toUpperCase()})}, timestamp: pino.stdTimeFunctions.isoTime} // Note: prettyPrint option removed as it's deprecated in pino v8+ // Development: Human-readable format without external dependencies
+  : {level: process.env.LOG_LEVEL !== null && process.env.LOG_LEVEL !== void 0 && process.env.LOG_LEVEL !== '' ? process.env.LOG_LEVEL : 'info', formatters: {level: (label: string) => ({level: label.toUpperCase()})}, timestamp: pino.stdTimeFunctions.isoTime} // Production: JSON format for log aggregation
 
 export const logger: ProperLogger = pino(loggerConfig) as ProperLogger

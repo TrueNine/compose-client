@@ -4,8 +4,7 @@ import {componentInstallToPlugin} from '@/common'
 import _c from './YDragItem.vue'
 
 export interface YDragItemProps {
-  // 根据组件实际props定义，这里添加基本类型
-}
+} // 根据组件实际props定义，这里添加基本类型
 
 export type YDragItemEmits = Record<string, never>
 

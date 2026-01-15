@@ -3,27 +3,22 @@ import type {LighthouseReport} from './types.js'
 import {runLighthouseAudit} from './core.js'
 import {AuditCategory} from './types.js'
 
-// Type guard function
-function isObjectWithItems(value: unknown): value is {items: unknown[]} {
+function isObjectWithItems(value: unknown): value is {items: unknown[]} { // Type guard function
   return (
     value != null
     && typeof value === 'object'
     && 'items' in value
     && Array.isArray((value as {items: unknown}).items)
   )
-}
-
-// === SEO Report Types ===
+} // === SEO Report Types ===
 
 /**
  * SEO-specific report content structure
  */
 export interface SEOReportContent {
-  // Overall score (0-100)
-  score: number
+  score: number // Overall score (0-100)
   audit_counts: {
-    // Counts of different audit types
-    failed: number
+    failed: number // Counts of different audit types
     passed: number
     manual: number
     informative: number
@@ -36,8 +31,7 @@ export interface SEOReportContent {
       issues_count: number
     }
   }
-  // Ordered list of recommendations
-  prioritized_recommendations?: string[]
+  prioritized_recommendations?: string[] // Ordered list of recommendations
 }
 
 /**
@@ -49,35 +43,23 @@ export type AIOptimizedSEOReport = LighthouseReport<SEOReportContent>
  * AI-optimized SEO issue
  */
 interface AISEOIssue {
-  // e.g., "meta-description"
-  id: string
-  // e.g., "Document has a meta description"
-  title: string
+  id: string // e.g., "meta-description"
+  title: string // e.g., "Document has a meta description"
   impact: 'critical' | 'serious' | 'moderate' | 'minor'
-  // e.g., "content", "mobile", "crawlability"
-  category: string
+  category: string // e.g., "content", "mobile", "crawlability"
   details?: {
-    // CSS selector if applicable
-    selector?: string
-    // Current value
-    value?: string
-    // Description of the issue
-    issue?: string
+    selector?: string // CSS selector if applicable
+    value?: string // Current value
+    issue?: string // Description of the issue
   }[]
-  // 0-1 or null
-  score: number | null
+  score: number | null // 0-1 or null
 }
 
-// This ensures we always include critical issues while limiting less important ones
-const DETAIL_LIMITS = {
-  // No limit for critical issues
-  critical: Number.MAX_SAFE_INTEGER,
-  // Up to 15 items for serious issues
-  serious: 15,
-  // Up to 10 items for moderate issues
-  moderate: 10,
-  // Up to 3 items for minor issues
-  minor: 3,
+const DETAIL_LIMITS = { // This ensures we always include critical issues while limiting less important ones
+  critical: Number.MAX_SAFE_INTEGER, // No limit for critical issues
+  serious: 15, // Up to 15 items for serious issues
+  moderate: 10, // Up to 10 items for moderate issues
+  minor: 3, // Up to 3 items for minor issues
 }
 
 /**
@@ -89,7 +71,8 @@ export async function runSEOAudit(url: string): Promise<AIOptimizedSEOReport> {
   try {
     const lhr = await runLighthouseAudit(url, [AuditCategory.SEO])
     return extractAIOptimizedData(lhr, url)
-  } catch (error: unknown) {
+  }
+  catch (error: unknown) {
     throw new Error(
       `SEO audit failed: ${error instanceof Error ? error.message : String(error)
       }`,
@@ -104,46 +87,37 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
   const categoryData = lhr.categories[AuditCategory.SEO]
   const audits = lhr.audits ?? {}
 
-  // Add metadata
-  const metadata = {url, timestamp: lhr.fetchTime || new Date().toISOString(),
-    // This could be made configurable
-    device: 'desktop', lighthouseVersion: lhr.lighthouseVersion}
+  const metadata = {url, timestamp: lhr.fetchTime || new Date().toISOString(), // Add metadata
+    device: 'desktop', lighthouseVersion: lhr.lighthouseVersion} // This could be made configurable
 
-  // Initialize variables
-  const issues: AISEOIssue[] = []
+  const issues: AISEOIssue[] = [] // Initialize variables
   const categories: Record<string, {score: number, issues_count: number}> = {content: {score: 0, issues_count: 0}, mobile: {score: 0, issues_count: 0}, crawlability: {score: 0, issues_count: 0}, other: {score: 0, issues_count: 0}}
 
-  // Count audits by type
-  let failedCount = 0
+  let failedCount = 0 // Count audits by type
   let passedCount = 0
   let manualCount = 0
   let informativeCount = 0
   let notApplicableCount = 0
 
-  // Process audit refs
-  const auditRefs = categoryData?.auditRefs ?? []
+  const auditRefs = categoryData?.auditRefs ?? [] // Process audit refs
 
-  // First pass: count audits by type and initialize categories
-  auditRefs.forEach(ref => {
+  auditRefs.forEach(ref => { // First pass: count audits by type and initialize categories
     const audit = audits[ref.id]
     if (audit == null) return
 
-    // Count by scoreDisplayMode
-    switch (audit.scoreDisplayMode) {
+    switch (audit.scoreDisplayMode) { // Count by scoreDisplayMode
       case 'manual': manualCount++; break
       case 'informative': informativeCount++; break
       case 'notApplicable': notApplicableCount++; break
       default: {
         if (audit.score != null) {
-          // Binary pass/fail
-          if (audit.score >= 0.9) passedCount++
+          if (audit.score >= 0.9) passedCount++ // Binary pass/fail
           else failedCount++
         }
       }
     }
 
-    // Categorize the issue
-    let category = 'other'
+    let category = 'other' // Categorize the issue
     switch (true) {
       case ref.id.includes('crawl'):
       case ref.id.includes('http'):
@@ -161,29 +135,24 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
       default: break
     }
 
-    // Update category score and issues count
-    if (audit.score != null && audit.score < 0.9) categories[category].issues_count++
+    if (audit.score != null && audit.score < 0.9) categories[category].issues_count++ // Update category score and issues count
   })
 
-  // Second pass: process failed audits into AI-friendly format
-  auditRefs
+  auditRefs // Second pass: process failed audits into AI-friendly format
     .filter(ref => {
       const audit = audits[ref.id]
       return audit?.score != null && audit.score < 0.9
     })
     .sort((a, b) => (b.weight || 0) - (a.weight || 0))
-    // No limit on failed audits - we'll filter dynamically based on impact
-    .forEach(ref => {
+    .forEach(ref => { // No limit on failed audits - we'll filter dynamically based on impact
       const audit = audits[ref.id]
 
-      // Determine impact level based on score and weight
-      let impact: 'critical' | 'serious' | 'moderate' | 'minor' = 'moderate'
+      let impact: 'critical' | 'serious' | 'moderate' | 'minor' = 'moderate' // Determine impact level based on score and weight
       if (audit.score === 0) impact = 'critical'
       else if (audit.score != null && audit.score <= 0.5) impact = 'serious'
       else if (audit.score != null && audit.score > 0.7) impact = 'minor'
 
-      // Categorize the issue
-      let category = 'other'
+      let category = 'other' // Categorize the issue
       switch (true) {
         case ref.id.includes('crawl'):
         case ref.id.includes('http'):
@@ -201,8 +170,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
         default: break
       }
 
-      // Extract details
-      const details: {
+      const details: { // Extract details
         selector?: string
         value?: string
         issue?: string
@@ -212,8 +180,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
       if (audit.details != null) {
         const auditDetails = audit.details
         if (isObjectWithItems(auditDetails) && Array.isArray(auditDetails.items)) {
-          // Determine item limit based on impact
-          const itemLimit = DETAIL_LIMITS[impact]
+          const itemLimit = DETAIL_LIMITS[impact] // Determine item limit based on impact
 
           auditDetails.items.slice(0, itemLimit).forEach(item => {
             const detail: {
@@ -222,8 +189,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
               issue?: string
             } = {}
 
-            // Type-safe property access for unknown item
-            const itemObj = item as Record<string, unknown>
+            const itemObj = item as Record<string, unknown> // Type-safe property access for unknown item
 
             if (itemObj.selector != null) detail.selector = String(itemObj.selector)
 
@@ -236,8 +202,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
         }
       }
 
-      // Create the issue
-      const issue: AISEOIssue = {
+      const issue: AISEOIssue = { // Create the issue
         id: ref.id,
         title: audit.title,
         impact,
@@ -249,14 +214,11 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
       issues.push(issue)
     })
 
-  // Calculate overall score
-  const score = Math.round((categoryData?.score ?? 0) * 100)
+  const score = Math.round((categoryData?.score ?? 0) * 100) // Calculate overall score
 
-  // Generate prioritized recommendations
-  const prioritized_recommendations: string[] = []
+  const prioritized_recommendations: string[] = [] // Generate prioritized recommendations
 
-  // Add category-specific recommendations
-  Object.entries(categories)
+  Object.entries(categories) // Add category-specific recommendations
     .filter(([_, data]) => data.issues_count > 0)
     .sort(([_, a], [__, b]) => b.issues_count - a.issues_count)
     .forEach(([category, data]) => {
@@ -274,8 +236,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
       prioritized_recommendations.push(recommendation)
     })
 
-  // Add specific high-impact recommendations
-  if (issues.some(issue => issue.id === 'meta-description')) prioritized_recommendations.push('Add a meta description to improve click-through rate')
+  if (issues.some(issue => issue.id === 'meta-description')) prioritized_recommendations.push('Add a meta description to improve click-through rate') // Add specific high-impact recommendations
 
   if (issues.some(issue => issue.id === 'document-title')) prioritized_recommendations.push('Add a descriptive page title with keywords')
 
@@ -283,8 +244,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
 
   if (issues.some(issue => issue.id === 'canonical')) prioritized_recommendations.push('Implement proper canonical tags')
 
-  // Create the report content
-  const reportContent: SEOReportContent = {
+  const reportContent: SEOReportContent = { // Create the report content
     score,
     audit_counts: {
       failed: failedCount,
@@ -301,6 +261,5 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
         : void 0,
   }
 
-  // Return the full report following the LighthouseReport interface
-  return {metadata, report: reportContent}
+  return {metadata, report: reportContent} // Return the full report following the LighthouseReport interface
 }

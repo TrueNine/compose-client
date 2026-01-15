@@ -23,10 +23,12 @@ const rule: Rule.RuleModule = {
         const {lines} = sourceCode
 
         for (const comment of comments) {
+          // eslint-disable-next-line ts/no-unsafe-member-access
+          if ((comment as any).type === 'Shebang') continue
           if (comment.type === 'Block' && comment.value.startsWith('*')) continue /* Ignore JSDoc comments (Block comments starting with *) */
 
           const trimmedValue = comment.value.trim()
-          if (comment.type === 'Line' && trimmedValue.startsWith('/')) continue /* Ignore /// <reference ... /> tags and other tooling markers */
+          if (comment.type === 'Line' && (trimmedValue.startsWith('/') || trimmedValue.startsWith('!'))) continue /* Ignore /// <reference ... /> tags, shebangs */
           if (trimmedValue.startsWith('ts-') || trimmedValue.startsWith('eslint-')) continue
 
           const {loc, range} = comment
@@ -61,7 +63,7 @@ const rule: Rule.RuleModule = {
                     return fixer.replaceTextRange([range[0], nextLineEnd], `${nextLineText} ${commentText}`)
                   }
 
-                  if (i !== startLine && i > 1 && lines[i - 2].trim() !== '') return null
+                  if (i <= 1 || (i !== startLine && lines[i - 2].trim() !== '')) return null
 
                   const prevLineText = lines[i - 2]
                   const commentText = sourceCode.getText(comment as any).trim()

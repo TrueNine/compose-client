@@ -104,7 +104,7 @@ describe('property-Based Tests', () => {
         expect(typeof ruleModule).toBe('object')
         expect(ruleModule).toHaveProperty('create')
         expect(typeof ruleModule.create).toBe('function')
-        expect(ruleName).toMatch(/^prefer-[a-z-]+$/) /* Rule name should follow expected naming convention */
+        expect(ruleName).toMatch(/^(prefer|beside|compact)-[a-z-]+$/) /* Rule name should follow expected naming convention */
       }
     })
   })

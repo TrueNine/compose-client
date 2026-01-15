@@ -14,6 +14,12 @@ export const singleLineRules: Record<string, Rule.RuleModule> = {
   'prefer-single-line-if': preferSingleLineIf,
 }
 
-export {default as preferSingleLineCall} from './call'
-export {default as preferSingleLineControl} from './control'
-export {default as preferSingleLineIf} from './if'
+export {
+  default as preferSingleLineCall,
+} from './call'
+export {
+  default as preferSingleLineControl,
+} from './control'
+export {
+  default as preferSingleLineIf,
+} from './if'

@@ -1,7 +1,6 @@
 import type {BuildOptions, Plugin, PluginOption, UserConfig} from 'vite'
 
-// 导入性能优化相关类型
-import type {FullPerformanceOptions, PerformancePreset} from './performance/presets'
+import type {FullPerformanceOptions, PerformancePreset} from './performance/presets' // 导入性能优化相关类型
 import type {BuildLibraryConfigOptions} from './types'
 import type {SimpleDtsOptions} from './vite-plugin-dts'
 import type {PackageJsonOptions} from './vite-plugin-package-json'
@@ -12,22 +11,69 @@ import {BuildConfigLib} from './lib'
 import {createPerformancePreset} from './performance/presets'
 import {createDtsPlugin} from './vite-plugin-dts'
 
-// 导出性能优化相关功能
-export type {VitePerformanceOptions} from './performance'
-export {createChunkOptimization, createDepsOptimization, createDevelopmentPerformanceConfig, createEsbuildOptimization, createProductionPerformanceConfig, createVitePerformanceConfig} from './performance'
-export type {CacheOptimizationOptions} from './performance/cache'
-export {createBuildCacheOptimization, createCacheOptimization, createTypeScriptCacheOptimization} from './performance/cache'
+export type {
+  VitePerformanceOptions,
+} from './performance' // 导出性能优化相关功能
+export {
+  createChunkOptimization,
+  createDepsOptimization,
+  createDevelopmentPerformanceConfig,
+  createEsbuildOptimization,
+  createProductionPerformanceConfig,
+  createVitePerformanceConfig,
+} from './performance'
+export type {
+  CacheOptimizationOptions,
+} from './performance/cache'
+export {
+  createBuildCacheOptimization,
+  createCacheOptimization,
+  createTypeScriptCacheOptimization,
+} from './performance/cache'
 
-export type {DevelopmentOptimizationOptions} from './performance/development'
+export type {
+  DevelopmentOptimizationOptions,
+} from './performance/development'
 
-export {createDevBuildOptimization, createDevCssOptimization, createDevDepsOptimization, createDevelopmentOptimization, createDevEnvOptimization, createFastDevelopmentOptimization, createHMROptimization, createMonorepoDevelopmentOptimization, createSmartDevelopmentOptimization} from './performance/development'
+export {
+  createDevBuildOptimization,
+  createDevCssOptimization,
+  createDevDepsOptimization,
+  createDevelopmentOptimization,
+  createDevEnvOptimization,
+  createFastDevelopmentOptimization,
+  createHMROptimization,
+  createMonorepoDevelopmentOptimization,
+  createSmartDevelopmentOptimization,
+} from './performance/development'
 
-export type {ParallelOptimizationOptions} from './performance/parallel'
+export type {
+  ParallelOptimizationOptions,
+} from './performance/parallel'
 
-export {createDevParallelOptimization, createMonorepoParallelOptimization, createParallelOptimization, createProdParallelOptimization, getOptimalConcurrency} from './performance/parallel'
+export {
+  createDevParallelOptimization,
+  createMonorepoParallelOptimization,
+  createParallelOptimization,
+  createProdParallelOptimization,
+  getOptimalConcurrency,
+} from './performance/parallel'
 
-export type {FullPerformanceOptions, PerformancePreset} from './performance/presets'
-export {createAggressivePreset, createBasicPreset, createDevelopmentPreset, createFastDevPreset, createMaximumPreset, createMonorepoPreset, createPerformancePreset, createProductionPreset, createSmartPreset} from './performance/presets'
+export type {
+  FullPerformanceOptions,
+  PerformancePreset,
+} from './performance/presets'
+export {
+  createAggressivePreset,
+  createBasicPreset,
+  createDevelopmentPreset,
+  createFastDevPreset,
+  createMaximumPreset,
+  createMonorepoPreset,
+  createPerformancePreset,
+  createProductionPreset,
+  createSmartPreset,
+} from './performance/presets'
 
 export interface ViteFragmentOptions {
   lib?: BuildLibraryConfigOptions
@@ -120,8 +166,7 @@ export function configureViteFragment(options: ViteFragmentOptions = {}, baseCon
 
   let finalConfig: UserConfig = {...baseConfig, build: mergedBuildOptions, plugins: mergedPlugins}
 
-  // 应用性能优化配置
-  if (options.performance?.enabled === false) return mergeConfig(finalConfig, baseConfig)
+  if (options.performance?.enabled === false) return mergeConfig(finalConfig, baseConfig) // 应用性能优化配置
 
   const performanceConfig = createPerformancePreset(options.performance?.preset ?? 'basic', options.performance?.options ?? {})
   finalConfig = mergeConfig(finalConfig, performanceConfig)

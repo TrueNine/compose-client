@@ -40,8 +40,7 @@ describe('yFieldTest', () => {
 
       await nextTick()
 
-      // 获取字段代理组件并验证它包含正确的modelNames
-      const proxy = wrapper.findComponent({name: 'YFieldProxyComponent'})
+      const proxy = wrapper.findComponent({name: 'YFieldProxyComponent'}) // 获取字段代理组件并验证它包含正确的modelNames
       expect(proxy.exists()).toBe(true)
       expect(proxy.props('modelNames')).toEqual({email: 'modelValue'})
     })
@@ -55,15 +54,13 @@ describe('yFieldTest', () => {
 
       await nextTick()
 
-      // 获取字段代理组件并验证它包含正确的modelNames
-      const proxy = wrapper.findComponent({name: 'YFieldProxyComponent'})
+      const proxy = wrapper.findComponent({name: 'YFieldProxyComponent'}) // 获取字段代理组件并验证它包含正确的modelNames
       expect(proxy.exists()).toBe(true)
       expect(proxy.props('modelNames')).toEqual({'address.code': 'adCode'})
     })
   })
 
-  // 嵌套字段测试
-  describe('多字段映射Group', () => {
+  describe('多字段映射Group', () => { // 嵌套字段测试
     it('正常 映射 条件时，YField应正确将表单字段映射到代理组件', async () => {
       const wrapper = mount(YForm, {props: {initValue: {coord: {x: '100', y: '200'}}}, slots: {default: () => (
         <YField
@@ -76,8 +73,7 @@ describe('yFieldTest', () => {
 
       await nextTick()
 
-      // 验证字段代理组件的modelNames映射
-      const proxy = wrapper.findComponent({name: 'YFieldProxyComponent'})
+      const proxy = wrapper.findComponent({name: 'YFieldProxyComponent'}) // 验证字段代理组件的modelNames映射
       expect(proxy.exists()).toBe(true)
       expect(proxy.props('modelNames')).toEqual({'coord.x': 'x', 'coord.y': 'y'})
     })

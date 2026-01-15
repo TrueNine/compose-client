@@ -247,7 +247,8 @@ const rule: Rule.RuleModule = {
                 let stmtText = sourceCode.getText(stmt)
                 if (!stmtText.endsWith(';') && !stmtText.endsWith('}')) stmtText = stmtText.trimEnd()
                 lines.push(`${prefix} (${condText}) ${stmtText}`)
-              } else {
+              }
+              else {
                 const consequentText = sourceCode.getText(consequent) /* Keep original format (already single-line without braces) */
                 lines.push(`${prefix} (${condText}) ${consequentText}`)
               }
@@ -259,7 +260,8 @@ const rule: Rule.RuleModule = {
                 let stmtText = sourceCode.getText(stmt)
                 if (!stmtText.endsWith(';') && !stmtText.endsWith('}')) stmtText = stmtText.trimEnd()
                 lines.push(`${indent}else ${stmtText}`)
-              } else {
+              }
+              else {
                 const elseText = sourceCode.getText(finalElse)
                 lines.push(`${indent}else ${elseText}`)
               }

@@ -1,6 +1,4 @@
-import {Archive} from 'libarchive.js'
-
-// FIXME 当前文件所有文件需要进行去除副作用优化
+import {Archive} from 'libarchive.js' // FIXME 当前文件所有文件需要进行去除副作用优化
 
 interface ArchiveOptions {
   workerUrl?: string

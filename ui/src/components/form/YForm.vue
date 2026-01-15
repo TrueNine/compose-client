@@ -20,21 +20,19 @@ const props = withDefaults(defineProps<YFormProps>(), {
 const emit = defineEmits<YFormEmits>()
 defineSlots<YFormSlots>()
 
-// 处理表单验证模式
-const schemaModel = useVModel(props, 'schema', emit, {passive: true})
+const schemaModel = useVModel(props, 'schema', emit, {passive: true}) // 处理表单验证模式
 const validationSchema = computed(() => {
   const schema = schemaModel.value
-  // Use duck typing to detect Zod schemas instead of instanceof to avoid proxy issues in tests
-  if (schema && typeof schema === 'object' && '_def' in schema && 'parse' in schema) {
-    try { return zodToTypedSchema(schema) } catch (error) {
-      // In test environment, if zodToTypedSchema fails due to proxy issues,
-      // create a simple validation function that uses the schema directly
-      if (import.meta.env.NODE_ENV === 'test' || import.meta.env.VITEST) {
+  if (schema && typeof schema === 'object' && '_def' in schema && 'parse' in schema) { // Use duck typing to detect Zod schemas instead of instanceof to avoid proxy issues in tests
+    try { return zodToTypedSchema(schema) }
+    catch (error) {
+      if (import.meta.env.NODE_ENV === 'test' || import.meta.env.VITEST) { // create a simple validation function that uses the schema directly // In test environment, if zodToTypedSchema fails due to proxy issues,
         return {__type: 'VeeTypedSchema', async: false, parse(values: any) {
           try {
             const result = schema.parse(values)
             return {output: result, errors: []}
-          } catch (err: any) {
+          }
+          catch (err: any) {
             const errors: any[] = []
             if (err.errors) err.errors.forEach((zodError: any) => errors.push({path: zodError.path.join('.'), message: zodError.message}))
             return {errors}
@@ -48,21 +46,17 @@ const validationSchema = computed(() => {
   return schema
 })
 
-// 处理表单数据
-const formValues = useVModel(props, 'modelValue', emit, {passive: true})
+const formValues = useVModel(props, 'modelValue', emit, {passive: true}) // 处理表单数据
 
-// In test environment, avoid passing Zod schemas to useForm to prevent proxy issues
-const formConfig = computed(() => {
+const formConfig = computed(() => { // In test environment, avoid passing Zod schemas to useForm to prevent proxy issues
   const config: any = {name: props.name, initialValues: formValues}
 
-  // Only add validationSchema if it's not a problematic Zod schema in test environment
-  const schema = validationSchema.value
+  const schema = validationSchema.value // Only add validationSchema if it's not a problematic Zod schema in test environment
   if (schema) {
     if (import.meta.env.NODE_ENV === 'test' || import.meta.env.VITEST) {
-      // In test environment, only add schema if it's not a Zod schema or if it's our custom wrapper
-      if (!(schema as any).__type || (schema as any).__type === 'VeeTypedSchema') config.validationSchema = schema
-      // For Zod schemas in tests, we'll handle validation manually
-    } else config.validationSchema = schema
+      if (!(schema as any).__type || (schema as any).__type === 'VeeTypedSchema') config.validationSchema = schema // In test environment, only add schema if it's not a Zod schema or if it's our custom wrapper
+    }
+    else config.validationSchema = schema // For Zod schemas in tests, we'll handle validation manually
   }
 
   return config
@@ -70,8 +64,7 @@ const formConfig = computed(() => {
 
 const form = useForm(formConfig.value)
 
-// 表单提交处理
-const handleFormSubmit = form.handleSubmit(
+const handleFormSubmit = form.handleSubmit( // 表单提交处理
   values => emit('submit', values, props.step),
   ctx => emit('error', ctx),
 )
@@ -80,13 +73,11 @@ function handleSubmit(e?: Event) {
   void handleFormSubmit(e)
 }
 
-// 对输入的值进行特殊处理
-function processFormValues(newValue: dynamic) {
+function processFormValues(newValue: dynamic) { // 对输入的值进行特殊处理
   form.setValues(newValue)
 }
 
-// 防止循环更新的标志
-const isUpdating = ref(false)
+const isUpdating = ref(false) // 防止循环更新的标志
 watch(formValues, v => {
   if (isUpdating.value) return
   isUpdating.value = true
@@ -95,8 +86,7 @@ watch(formValues, v => {
 }, {deep: true})
 
 watch(form.values, v => {
-  // 避免循环更新
-  if (isUpdating.value || v === formValues.value) return
+  if (isUpdating.value || v === formValues.value) return // 避免循环更新
 
   isUpdating.value = true
   formValues.value = v

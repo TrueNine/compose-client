@@ -127,7 +127,8 @@ export function deepResolve<T extends Record<string, unknown> | unknown[]>(
         const key = String(index)
         if (filter(item, key, depth)) {
           ; (result as unknown[])[index] = transform(item, key)
-        } else {
+        }
+        else {
           const shouldRecurse = maxDepth === true
             || (typeof maxDepth === 'number' && depth < maxDepth)
             || (maxDepth === false && depth <= 0)
@@ -137,12 +138,14 @@ export function deepResolve<T extends Record<string, unknown> | unknown[]>(
             : item
         }
       })
-    } else {
+    }
+    else {
       const obj = value as Record<string, unknown>
       for (const [key, item] of Object.entries(obj)) {
         if (filter(item, key, depth)) {
           ; (result as Record<string, unknown>)[key] = transform(item, key)
-        } else {
+        }
+        else {
           const shouldRecurse = maxDepth === true
             || (typeof maxDepth === 'number' && depth < maxDepth)
             || (maxDepth === false && depth <= 0)

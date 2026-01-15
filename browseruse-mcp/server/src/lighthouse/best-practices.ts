@@ -1,19 +1,15 @@
 import type {Result as LighthouseResult} from 'lighthouse'
 import type {LighthouseReport} from './types.js'
 import {runLighthouseAudit} from './core.js'
-import {AuditCategory} from './types.js'
-
-// === Best Practices Report Types ===
+import {AuditCategory} from './types.js' // === Best Practices Report Types ===
 
 /**
  * Best Practices-specific report content structure
  */
 export interface BestPracticesReportContent {
-  // Overall score (0-100)
-  score: number
+  score: number // Overall score (0-100)
   audit_counts: {
-    // Counts of different audit types
-    failed: number
+    failed: number // Counts of different audit types
     passed: number
     manual: number
     informative: number
@@ -26,8 +22,7 @@ export interface BestPracticesReportContent {
       issues_count: number
     }
   }
-  // Ordered list of recommendations
-  prioritized_recommendations?: string[]
+  prioritized_recommendations?: string[] // Ordered list of recommendations
 }
 
 /**
@@ -40,43 +35,29 @@ export type AIOptimizedBestPracticesReport
  * AI-optimized Best Practices issue
  */
 interface AIBestPracticesIssue {
-  // e.g., "js-libraries"
-  id: string
-  // e.g., "Detected JavaScript libraries"
-  title: string
+  id: string // e.g., "js-libraries"
+  title: string // e.g., "Detected JavaScript libraries"
   impact: 'critical' | 'serious' | 'moderate' | 'minor'
-  // e.g., "security", "trust", "user-experience", "browser-compat"
-  category: string
+  category: string // e.g., "security", "trust", "user-experience", "browser-compat"
   details?: {
-    // Name of the item (e.g., library name, vulnerability)
-    name?: string
-    // Version information if applicable
-    version?: string
-    // Current value or status
-    value?: string
-    // Description of the issue
-    issue?: string
+    name?: string // Name of the item (e.g., library name, vulnerability)
+    version?: string // Version information if applicable
+    value?: string // Current value or status
+    issue?: string // Description of the issue
   }[]
-  // 0-1 or null
-  score: number | null
+  score: number | null // 0-1 or null
 }
 
 interface BestPracticesAuditDetails {
   items?: Record<string, unknown>[]
-  // e.g., "table"
-  type?: string
+  type?: string // e.g., "table"
 }
 
-// This ensures we always include critical issues while limiting less important ones
-const DETAIL_LIMITS: Record<string, number> = {
-  // No limit for critical issues
-  critical: Number.MAX_SAFE_INTEGER,
-  // Up to 15 items for serious issues
-  serious: 15,
-  // Up to 10 items for moderate issues
-  moderate: 10,
-  // Up to 3 items for minor issues
-  minor: 3,
+const DETAIL_LIMITS: Record<string, number> = { // This ensures we always include critical issues while limiting less important ones
+  critical: Number.MAX_SAFE_INTEGER, // No limit for critical issues
+  serious: 15, // Up to 15 items for serious issues
+  moderate: 10, // Up to 10 items for moderate issues
+  minor: 3, // Up to 3 items for minor issues
 }
 
 /**
@@ -90,7 +71,8 @@ export async function runBestPracticesAudit(
   try {
     const lhr = await runLighthouseAudit(url, [AuditCategory.BEST_PRACTICES])
     return extractAIOptimizedData(lhr, url)
-  } catch (error: unknown) {
+  }
+  catch (error: unknown) {
     throw new Error(
       `Best Practices audit failed: ${error instanceof Error ? error.message : String(error)
       }`,
@@ -105,11 +87,9 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
   const categoryData = lhr.categories[AuditCategory.BEST_PRACTICES]
   const audits = lhr.audits ?? {}
 
-  // Add metadata
-  const metadata = {url, timestamp: lhr.fetchTime || new Date().toISOString(), device: lhr.configSettings?.formFactor || 'desktop', lighthouseVersion: lhr.lighthouseVersion || 'unknown'}
+  const metadata = {url, timestamp: lhr.fetchTime || new Date().toISOString(), device: lhr.configSettings?.formFactor || 'desktop', lighthouseVersion: lhr.lighthouseVersion || 'unknown'} // Add metadata
 
-  // Process audit results
-  const issues: AIBestPracticesIssue[] = []
+  const issues: AIBestPracticesIssue[] = [] // Process audit results
   const categories: Record<string, {score: number, issues_count: number}> = {
     'security': {score: 0, issues_count: 0},
     'trust': {score: 0, issues_count: 0},
@@ -118,15 +98,13 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
     'other': {score: 0, issues_count: 0},
   }
 
-  // Counters for audit types
-  let failedCount = 0
+  let failedCount = 0 // Counters for audit types
   let passedCount = 0
   let manualCount = 0
   let informativeCount = 0
   let notApplicableCount = 0
 
-  // Process failed audits (score < 1)
-  const failedAudits = Object.entries(audits)
+  const failedAudits = Object.entries(audits) // Process failed audits (score < 1)
     .filter(([, audit]) => {
       const {score} = audit
       return (
@@ -138,8 +116,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
     })
     .map(([auditId, audit]) => ({auditId, ...audit}))
 
-  // Update counters
-  Object.values(audits).forEach(audit => {
+  Object.values(audits).forEach(audit => { // Update counters
     const {score, scoreDisplayMode} = audit
 
     switch (scoreDisplayMode) {
@@ -153,23 +130,18 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
     }
   })
 
-  // Process failed audits into AI-friendly format
-  failedAudits.forEach((ref: Record<string, unknown>) => {
-    // Determine impact level based on audit score and weight
-    let impact: 'critical' | 'serious' | 'moderate' | 'minor'
+  failedAudits.forEach((ref: Record<string, unknown>) => { // Process failed audits into AI-friendly format
+    let impact: 'critical' | 'serious' | 'moderate' | 'minor' // Determine impact level based on audit score and weight
     const score = typeof ref.score === 'number' ? ref.score : 0
 
-    // Use a more reliable approach to determine impact
-    if (score === 0) impact = 'critical'
+    if (score === 0) impact = 'critical' // Use a more reliable approach to determine impact
     else if (score < 0.5) impact = 'serious'
     else if (score < 0.9) impact = 'moderate'
     else impact = 'minor'
 
-    // Categorize the issue
-    let category = 'other'
+    let category = 'other' // Categorize the issue
 
-    // Security-related issues
-    if (
+    if ( // Security-related issues
       String(ref.auditId).includes('csp')
       || String(ref.auditId).includes('security')
       || String(ref.auditId).includes('vulnerab')
@@ -178,16 +150,16 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
       || String(ref.auditId).includes('deprecat')
     ) {
       category = 'security'
-      // Trust and legitimacy issues
-    } else if (
+    }
+    else if ( // Trust and legitimacy issues
       String(ref.auditId).includes('doctype')
       || String(ref.auditId).includes('charset')
       || String(ref.auditId).includes('legit')
       || String(ref.auditId).includes('trust')
     ) {
       category = 'trust'
-      // User experience issues
-    } else if (
+    }
+    else if ( // User experience issues
       String(ref.auditId).includes('user')
       || String(ref.auditId).includes('experience')
       || String(ref.auditId).includes('console')
@@ -195,8 +167,8 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
       || String(ref.auditId).includes('paste')
     ) {
       category = 'user-experience'
-      // Browser compatibility issues
-    } else if (
+    }
+    else if ( // Browser compatibility issues
       String(ref.auditId).includes('compat')
       || String(ref.auditId).includes('browser')
       || String(ref.auditId).includes('vendor')
@@ -205,11 +177,9 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
       category = 'browser-compat'
     }
 
-    // Count issues by category
-    categories[category].issues_count++
+    categories[category].issues_count++ // Count issues by category
 
-    // Create issue object
-    const issue: AIBestPracticesIssue = {
+    const issue: AIBestPracticesIssue = { // Create issue object
       id: String(ref.auditId),
       title: String(ref.title),
       impact,
@@ -218,8 +188,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
       details: [],
     }
 
-    // Extract details if available
-    const refDetails = ref.details as BestPracticesAuditDetails | undefined
+    const refDetails = ref.details as BestPracticesAuditDetails | undefined // Extract details if available
     if (refDetails?.items && Array.isArray(refDetails.items)) {
       const itemLimit = DETAIL_LIMITS[impact]
       const detailItems = refDetails.items.slice(0, itemLimit)
@@ -227,16 +196,14 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
       detailItems.forEach((item: Record<string, unknown>) => {
         issue.details ??= []
 
-        // Different audits have different detail structures
-        const detail: Record<string, string> = {}
+        const detail: Record<string, string> = {} // Different audits have different detail structures
 
         if (typeof item.name === 'string') detail.name = item.name
         if (typeof item.version === 'string') detail.version = item.version
         if (typeof item.issue === 'string') detail.issue = item.issue
         if (item.value !== void 0) detail.value = String(item.value)
 
-        // For JS libraries, extract name and version
-        if (
+        if ( // For JS libraries, extract name and version
           String(ref.auditId) === 'js-libraries'
           && typeof item.name === 'string'
           && typeof item.version === 'string'
@@ -245,8 +212,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
           detail.version = item.version
         }
 
-        // Add other generic properties that might exist
-        for (const [key, value] of Object.entries(item)) {
+        for (const [key, value] of Object.entries(item)) { // Add other generic properties that might exist
           if (!detail[key] && typeof value === 'string') detail[key] = value
         }
 
@@ -257,22 +223,18 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
     issues.push(issue)
   })
 
-  // Calculate category scores (0-100)
-  Object.keys(categories).forEach(category => {
-    // Simplified scoring: if there are issues in this category, score is reduced proportionally
-    const issueCount = categories[category].issues_count
+  Object.keys(categories).forEach(category => { // Calculate category scores (0-100)
+    const issueCount = categories[category].issues_count // Simplified scoring: if there are issues in this category, score is reduced proportionally
     if (issueCount > 0) {
-      // More issues = lower score, max penalty of 25 points per issue
-      const penalty = Math.min(100, issueCount * 25)
+      const penalty = Math.min(100, issueCount * 25) // More issues = lower score, max penalty of 25 points per issue
       categories[category].score = Math.max(0, 100 - penalty)
-    } else categories[category].score = 100
+    }
+    else categories[category].score = 100
   })
 
-  // Generate prioritized recommendations
-  const prioritized_recommendations: string[] = []
+  const prioritized_recommendations: string[] = [] // Generate prioritized recommendations
 
-  // Prioritize recommendations by category with most issues
-  Object.entries(categories)
+  Object.entries(categories) // Prioritize recommendations by category with most issues
     .filter(([_, data]) => data.issues_count > 0)
     .sort(([_, a], [__, b]) => b.issues_count - a.issues_count)
     .forEach(([category, data]) => {
@@ -289,8 +251,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
       prioritized_recommendations.push(recommendation)
     })
 
-  // Return the optimized report
-  return {metadata, report: {
+  return {metadata, report: { // Return the optimized report
     score: categoryData?.score != null ? Math.round(categoryData.score * 100) : 0,
     audit_counts: {
       failed: failedCount,

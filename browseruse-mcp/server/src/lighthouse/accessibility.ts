@@ -1,9 +1,7 @@
 import type {Result as LighthouseResult} from 'lighthouse'
 import type {LighthouseReport} from './types.js'
 import {runLighthouseAudit} from './core.js'
-import {AuditCategory} from './types.js'
-
-// === Accessibility Report Types ===
+import {AuditCategory} from './types.js' // === Accessibility Report Types ===
 
 /**
  * Accessibility-specific report content structure
@@ -11,8 +9,7 @@ import {AuditCategory} from './types.js'
 export interface AccessibilityReportContent {
   score: number
   audit_counts: {
-    // Counts of different audit types
-    failed: number
+    failed: number // Counts of different audit types
     passed: number
     manual: number
     informative: number
@@ -51,35 +48,18 @@ interface AIAccessibilityIssue {
  * Accessibility element with issues
  */
 interface AIAccessibilityElement {
-  // CSS selector
-  selector: string
-  // HTML snippet
-  snippet?: string
-  // Element label
-  label?: string
-  // Description of the issue
-  issue_description?: string
-  // Current value (e.g., contrast ratio)
-  value?: string | number
-}
+  selector: string // CSS selector
+  snippet?: string // HTML snippet
+  label?: string // Element label
+  issue_description?: string // Description of the issue
+  value?: string | number // Current value (e.g., contrast ratio)
+} // AuditDetails interface removed - handled directly with type guards in processing logic // but are not needed for the AI-optimized format // These interfaces were part of the original Lighthouse audit structure // Original interfaces for backward compatibility - now removed as they're unused
 
-// Original interfaces for backward compatibility - now removed as they're unused
-// These interfaces were part of the original Lighthouse audit structure
-// but are not needed for the AI-optimized format
-
-// AuditDetails interface removed - handled directly with type guards in processing logic
-
-// Original limits were optimized for human consumption
-// This ensures we always include critical issues while limiting less important ones
-const DETAIL_LIMITS = {
-  // No limit for critical issues
-  critical: Number.MAX_SAFE_INTEGER,
-  // Up to 15 items for serious issues
-  serious: 15,
-  // Up to 10 items for moderate issues
-  moderate: 10,
-  // Up to 3 items for minor issues
-  minor: 3,
+const DETAIL_LIMITS = { // This ensures we always include critical issues while limiting less important ones // Original limits were optimized for human consumption
+  critical: Number.MAX_SAFE_INTEGER, // No limit for critical issues
+  serious: 15, // Up to 15 items for serious issues
+  moderate: 10, // Up to 10 items for moderate issues
+  minor: 3, // Up to 3 items for minor issues
 }
 
 /**
@@ -93,7 +73,8 @@ export async function runAccessibilityAudit(
   try {
     const lhr = await runLighthouseAudit(url, [AuditCategory.ACCESSIBILITY])
     return extractAIOptimizedData(lhr, url)
-  } catch (error: unknown) {
+  }
+  catch (error: unknown) {
     throw new Error(
       `Accessibility audit failed: ${
         error instanceof Error ? error.message : String(error)
@@ -109,71 +90,57 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
   const categoryData = lhr.categories[AuditCategory.ACCESSIBILITY]
   const audits = lhr.audits ?? {}
 
-  // Add metadata
-  const metadata = {url, timestamp: lhr.fetchTime || new Date().toISOString(), device: 'desktop', lighthouseVersion: lhr.lighthouseVersion}
+  const metadata = {url, timestamp: lhr.fetchTime || new Date().toISOString(), device: 'desktop', lighthouseVersion: lhr.lighthouseVersion} // Add metadata
 
-  // Initialize variables
-  const issues: AIAccessibilityIssue[] = []
+  const issues: AIAccessibilityIssue[] = [] // Initialize variables
   const criticalElements: AIAccessibilityElement[] = []
   const categories: Record<string, {score: number, issues_count: number}> = {}
 
-  // Count audits by type
-  let failedCount = 0
+  let failedCount = 0 // Count audits by type
   let passedCount = 0
   let manualCount = 0
   let informativeCount = 0
   let notApplicableCount = 0
 
-  // Process audit refs
-  const auditRefs = categoryData?.auditRefs ?? []
+  const auditRefs = categoryData?.auditRefs ?? [] // Process audit refs
 
-  // First pass: count audits by type and initialize categories
-  auditRefs.forEach(ref => {
+  auditRefs.forEach(ref => { // First pass: count audits by type and initialize categories
     const audit = audits[ref.id]
-    // Count by scoreDisplayMode
-    switch (audit.scoreDisplayMode) {
+    switch (audit.scoreDisplayMode) { // Count by scoreDisplayMode
       case 'manual': manualCount++; break
       case 'informative': informativeCount++; break
       case 'notApplicable': notApplicableCount++; break
       default: if (audit.score !== null) {
-      // Binary pass/fail
-        if (audit.score >= 0.9) passedCount++
+        if (audit.score >= 0.9) passedCount++ // Binary pass/fail
         else failedCount++
       }
     }
 
     if (ref.group === void 0) return
-    // Initialize category if not exists
-    if (!(ref.group in categories)) categories[ref.group] = {score: 0, issues_count: 0}
+    if (!(ref.group in categories)) categories[ref.group] = {score: 0, issues_count: 0} // Initialize category if not exists
 
-    // Update category score and issues count
-    if (audit.score !== null && audit.score < 0.9) categories[ref.group].issues_count++
+    if (audit.score !== null && audit.score < 0.9) categories[ref.group].issues_count++ // Update category score and issues count
   })
 
-  // Second pass: process failed audits into AI-friendly format
-  auditRefs
+  auditRefs // Second pass: process failed audits into AI-friendly format
     .filter(ref => {
       const audit = audits[ref.id]
       return audit.score !== null && audit.score < 0.9
     })
     .sort((a, b) => (b.weight || 0) - (a.weight || 0))
-    // No limit on number of failed audits - we'll show them all
-    .forEach(ref => {
+    .forEach(ref => { // No limit on number of failed audits - we'll show them all
       const audit = audits[ref.id]
 
-      // Determine impact level based on score and weight
-      let impact: 'critical' | 'serious' | 'moderate' | 'minor' = 'moderate'
+      let impact: 'critical' | 'serious' | 'moderate' | 'minor' = 'moderate' // Determine impact level based on score and weight
       if (audit.score === 0) impact = 'critical'
       else if (audit.score !== null && audit.score <= 0.5) impact = 'serious'
       else if (audit.score !== null && audit.score > 0.7) impact = 'minor'
 
-      // Create elements array
-      const elements: AIAccessibilityElement[] = []
+      const elements: AIAccessibilityElement[] = [] // Create elements array
 
       if (audit.details) {
         const details = audit.details as unknown
-        // Type guard to check if details has items property
-        if (
+        if ( // Type guard to check if details has items property
           details != null
           && typeof details === 'object'
           && 'items' in details
@@ -181,8 +148,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
         ) {
           const detailsWithItems = details as {items: unknown[]}
           const {items} = detailsWithItems
-          // Apply limits based on impact level
-          const itemLimit = DETAIL_LIMITS[impact]
+          const itemLimit = DETAIL_LIMITS[impact] // Apply limits based on impact level
           items.slice(0, itemLimit).forEach(item => {
             const itemObj = item as Record<string, unknown>
             const node = itemObj.node as Record<string, unknown> | undefined
@@ -201,8 +167,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
         }
       }
 
-      // Create the issue
-      const issue: AIAccessibilityIssue = {
+      const issue: AIAccessibilityIssue = { // Create the issue
         id: ref.id,
         title: audit.title,
         impact,
@@ -214,14 +179,11 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
       issues.push(issue)
     })
 
-  // Calculate overall score
-  const score = Math.round((categoryData?.score ?? 0) * 100)
+  const score = Math.round((categoryData?.score ?? 0) * 100) // Calculate overall score
 
-  // Generate prioritized recommendations
-  const prioritized_recommendations: string[] = []
+  const prioritized_recommendations: string[] = [] // Generate prioritized recommendations
 
-  // Add category-specific recommendations
-  Object.entries(categories)
+  Object.entries(categories) // Add category-specific recommendations
     .filter(([_, data]) => data.issues_count > 0)
     .sort(([_, a], [__, b]) => b.issues_count - a.issues_count)
     .forEach(([category, data]) => {
@@ -240,15 +202,13 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
       prioritized_recommendations.push(recommendation)
     })
 
-  // Add specific high-impact recommendations
-  if (issues.some(issue => issue.id === 'color-contrast')) prioritized_recommendations.push('Fix low contrast text for better readability')
+  if (issues.some(issue => issue.id === 'color-contrast')) prioritized_recommendations.push('Fix low contrast text for better readability') // Add specific high-impact recommendations
 
   if (issues.some(issue => issue.id === 'document-title')) prioritized_recommendations.push('Add a descriptive page title')
 
   if (issues.some(issue => issue.id === 'image-alt')) prioritized_recommendations.push('Add alt text to all images')
 
-  // Create the report content
-  const reportContent: AccessibilityReportContent = {
+  const reportContent: AccessibilityReportContent = { // Create the report content
     score,
     audit_counts: {
       failed: failedCount,
@@ -266,6 +226,5 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
         : void 0,
   }
 
-  // Return the full report following the LighthouseReport interface
-  return {metadata, report: reportContent}
+  return {metadata, report: reportContent} // Return the full report following the LighthouseReport interface
 }

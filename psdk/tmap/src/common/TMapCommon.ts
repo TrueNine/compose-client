@@ -45,8 +45,7 @@ export function initTencentMapWebGlScript(
   callback?: (container: HTMLElement, mapHandle: TMapSDK, ev?: Event) => void,
   options: CreateTencentMapOptions = _default,
 ): InitResult | null {
-  // 验证必要参数
-  if (typeof options.loadQuery !== 'string') return null
+  if (typeof options.loadQuery !== 'string') return null // 验证必要参数
   const query = options.loadQuery.trim()
   if (!query) return null
 
@@ -62,8 +61,7 @@ export function initTencentMapWebGlScript(
 
   const src = loadRemoteScriptTag(`${WEBGL_JS_URL}${queryParam({v: '1.exp', key, libraries: options.libraries})}`) as HTMLScriptElement
 
-  // 创建一个id容器
-  const mapContainer: HTMLElement = document.createElement(containerTag)
+  const mapContainer: HTMLElement = document.createElement(containerTag) // 创建一个id容器
   mapContainer.id = containerId
   section.append(mapContainer)
 

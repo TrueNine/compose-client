@@ -23,33 +23,25 @@ export function createCacheOptimization(options: CacheOptimizationOptions = {}):
   const config: UserConfig = {}
 
   if (enableFsCache) {
-    // 配置文件系统缓存
-    config.cacheDir = cacheDir
+    config.cacheDir = cacheDir // 配置文件系统缓存
 
-    // 优化文件监听
-    config.server = {...config.server, watch: {
-      // 忽略不需要监听的文件
-      ignored: [
+    config.server = {...config.server, watch: { // 优化文件监听
+      ignored: [ // 忽略不需要监听的文件
         '**/node_modules/**',
         '**/.git/**',
         '**/dist/**',
         '**/.turbo/**',
         '**/.cache/**',
       ],
-      // 启用轮询以提升性能
-      usePolling: false,
-      // 设置合理的延迟
-      interval: 100,
+      usePolling: false, // 启用轮询以提升性能
+      interval: 100, // 设置合理的延迟
     }}
   }
 
   if (enableDepsCache) {
-    // 优化依赖缓存配置
-    config.optimizeDeps = {...config.optimizeDeps,
-      // 强制重新优化依赖
-      force: forceClearCache,
-      // 启用依赖哈希
-      holdUntilCrawlEnd: true}
+    config.optimizeDeps = {...config.optimizeDeps, // 优化依赖缓存配置
+      force: forceClearCache, // 强制重新优化依赖
+      holdUntilCrawlEnd: true} // 启用依赖哈希
   }
 
   return config
@@ -60,12 +52,9 @@ export function createCacheOptimization(options: CacheOptimizationOptions = {}):
  */
 export function createBuildCacheOptimization(): UserConfig {
   return {build: {
-    // 启用构建缓存
-    write: true,
-    // 优化输出目录清理
-    emptyOutDir: true,
-    // 启用增量构建支持
-    watch: null,
+    write: true, // 启用构建缓存
+    emptyOutDir: true, // 优化输出目录清理
+    watch: null, // 启用增量构建支持
   }}
 }
 
@@ -74,10 +63,8 @@ export function createBuildCacheOptimization(): UserConfig {
  */
 export function createTypeScriptCacheOptimization(): UserConfig {
   return {esbuild: {
-    // 启用 TypeScript 缓存
-    tsconfigRaw: {compilerOptions: {
-      // 优化 TypeScript 编译选项
-      target: 'ES2020',
+    tsconfigRaw: {compilerOptions: { // 启用 TypeScript 缓存
+      target: 'ES2020', // 优化 TypeScript 编译选项
     }},
   }}
 }

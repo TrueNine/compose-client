@@ -1,10 +1,8 @@
 export type ResolverType = 'component' | 'directive'
 
 function camelTo(str: string, sep = '-'): string {
-  // Example: YButton -> yButton, YTestComponent -> yTestComponent
-  const firstCharLower = str.charAt(0).toLowerCase() + str.slice(1)
-  // Example: yButton -> y-button, yTestComponent -> y-test-component
-  return firstCharLower.replaceAll(/([a-z0-9])([A-Z])/g, `$1${sep}$2`).toLowerCase()
+  const firstCharLower = str.charAt(0).toLowerCase() + str.slice(1) // Example: YButton -> yButton, YTestComponent -> yTestComponent
+  return firstCharLower.replaceAll(/([a-z0-9])([A-Z])/g, `$1${sep}$2`).toLowerCase() // Example: yButton -> y-button, yTestComponent -> y-test-component
 }
 
 function resolveComponent(name: string): {

@@ -23,10 +23,11 @@ export const baseRulesPreset: Linter.RulesRecord = {
   '@truenine/prefer-single-line-call': 'warn',
   '@truenine/prefer-concise-arrow': 'warn',
   '@truenine/prefer-guard-clause': ['warn', {minStatements: 2}],
-  '@truenine/compact-try-catch': 'warn',
-  '@truenine/prefer-void-zero': 'warn',
+  '@truenine/prefer-separate-try-catch': 'error',
+  '@truenine/prefer-void-zero': 'warn', // '@truenine/compact-try-catch': 'off', /* 废弃 */
   '@truenine/prefer-lookup-table': 'warn',
   '@truenine/beside-comment': 'error',
+  'style/brace-style': ['error', 'stroustrup', {allowSingleLine: true}],
 
   'antfu/if-newline': 'off', /* antfu 规则覆盖 */
   'antfu/curly': 'off',

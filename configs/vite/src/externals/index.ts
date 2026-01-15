@@ -7,16 +7,13 @@ export * from './EslintExternals'
 export * from './NodeExternals'
 
 export const Externals: (string | RegExp)[] = [
-  // 既定依赖
-  /__tests__/,
+  /__tests__/, // 既定依赖
   /__test__/,
   /__build-src__/,
 
-  // compose
-  /^@truenine/,
+  /^@truenine/, // compose
 
-  // vue
-  /^vue/,
+  /^vue/, // vue
   /^@vue/,
   /^@vueuse/,
   /^vue-router/,
@@ -25,8 +22,7 @@ export const Externals: (string | RegExp)[] = [
   /^vee-validate/,
   /^yup/,
 
-  // 组件库
-  /^element-plus/,
+  /^element-plus/, // 组件库
   /^element-ui/,
   /^quasar/,
   /^@quasar/,
@@ -34,35 +30,28 @@ export const Externals: (string | RegExp)[] = [
   /^@varlet/,
   /^naive-ui/,
 
-  // date class
-  /^dayjs/,
+  /^dayjs/, // date class
   /^moment/,
   /^@date-io/,
 
-  // code
-  /^highlight\.js/,
+  /^highlight\.js/, // code
 
-  // rollup
-  /^(@rollup|rollup)/,
+  /^(@rollup|rollup)/, // rollup
 
-  // tools
-  /^lodash-es/,
+  /^lodash-es/, // tools
   /^pdfjs-dist/,
   /^pino/,
   /^@antfu/,
   /^@antfu\/ni/,
   /^libarchive\.js/,
 
-  // 样式文件
-  /\.(scss|sass|less|css)$/,
+  /\.(scss|sass|less|css)$/, // 样式文件
 
   ...NodeExternals,
   ...ViteExternals,
   ...TypescriptExternals,
   ...EslintExternals,
 
-  // other
-  /^data:/,
-  // unocss
-  /^(unocss|@unocss)/,
+  /^data:/, // other
+  /^(unocss|@unocss)/, // unocss
 ]

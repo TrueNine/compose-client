@@ -86,33 +86,28 @@ describe('yFieldProxyComponentTest', () => {
       const wrapper = mount(TestComponent, {global: globalComponents})
       await nextTick()
 
-      // 单字符串默认映射到 modelValue
-      let proxy = wrapper.findComponent({name: 'YFieldProxyComponent'})
+      let proxy = wrapper.findComponent({name: 'YFieldProxyComponent'}) // 单字符串默认映射到 modelValue
       expect(proxy.props('modelNames')).toEqual({firstName: 'modelValue'})
 
-      // 切换为字符串
-      currentName.value = 'lastName'
+      currentName.value = 'lastName' // 切换为字符串
       await nextTick()
 
       proxy = wrapper.findComponent({name: 'YFieldProxyComponent'})
       expect(proxy.props('modelNames')).toEqual({lastName: 'modelValue'})
 
-      // 切换为对象
-      currentName.value = {firstName: 'modelValue', lastName: 'otherProp'}
+      currentName.value = {firstName: 'modelValue', lastName: 'otherProp'} // 切换为对象
       await nextTick()
 
       proxy = wrapper.findComponent({name: 'YFieldProxyComponent'})
       expect(proxy.props('modelNames')).toEqual({firstName: 'modelValue', lastName: 'otherProp'})
 
-      // 切换为数组
-      currentName.value = ['firstName', 'lastName']
+      currentName.value = ['firstName', 'lastName'] // 切换为数组
       await nextTick()
 
       proxy = wrapper.findComponent({name: 'YFieldProxyComponent'})
       expect(proxy.props('modelNames')).toEqual({firstName: 'firstName', lastName: 'lastName'})
 
-      // 切换为混合数组
-      currentName.value = ['firstName', {lastName: 'otherProp'}, {addr: 'adCode'}]
+      currentName.value = ['firstName', {lastName: 'otherProp'}, {addr: 'adCode'}] // 切换为混合数组
       await nextTick()
 
       proxy = wrapper.findComponent({name: 'YFieldProxyComponent'})
@@ -139,19 +134,15 @@ describe('yFieldProxyComponentTest', () => {
     })
 
     it('直接实例化 条件时，应保持单个modelNames的一致性', async () => {
-      // 准备测试组件
-      const TestComponent = markRaw({template: '<div>测试组件</div>'})
+      const TestComponent = markRaw({template: '<div>测试组件</div>'}) // 准备测试组件
 
-      // 挂载组件并传入需要测试的 modelNames
-      const wrapper = mount(YFieldProxyComponent, {props: {component: TestComponent, modelNames: {addressCode: 'adCode'}}})
+      const wrapper = mount(YFieldProxyComponent, {props: {component: TestComponent, modelNames: {addressCode: 'adCode'}}}) // 挂载组件并传入需要测试的 modelNames
 
       await nextTick()
 
-      // 获取组件实例
-      const vm = wrapper.vm as any
+      const vm = wrapper.vm as any // 获取组件实例
 
-      // 断言 _modelNames 保持与传入的 modelNames 一致
-      expect(vm._modelNames).toEqual({addressCode: 'adCode'})
+      expect(vm._modelNames).toEqual({addressCode: 'adCode'}) // 断言 _modelNames 保持与传入的 modelNames 一致
     })
   })
 })

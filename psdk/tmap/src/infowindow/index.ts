@@ -26,4 +26,6 @@ declare class InfoWindow {
   on<K extends keyof InfoWindowEvents>(name: K, listener: (ev: InfoWindowEvents[K]) => void): InfoWindow
 }
 
-export {InfoWindow}
+export {
+  InfoWindow,
+}

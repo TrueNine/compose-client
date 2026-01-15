@@ -32,8 +32,7 @@ export interface TMapSDK {
 }
 
 export interface TMap {
-  // 这里可以添加地图实例的具体属性和方法
-}
+} // 这里可以添加地图实例的具体属性和方法
 
 export interface TMapTypes {
   LatLngDataTyping: LatLngDataTyping
@@ -55,11 +54,33 @@ declare global {
   }
 }
 
-export type {MapStyleIds} from './Constants'
+export type {
+  MapStyleIds,
+} from './Constants'
 
-export type {ViewMode} from './Constants'
+export type {
+  ViewMode,
+} from './Constants'
 
-export type {MapEvents, MultiMarkerEvents} from './events'
-export type {LatLngDataTyping, PointDataTyping} from './LatLng'
-export type {EaseOptions, InfoWindowOptions, MapOptions, MultiMarkerOptions, PointGeometry} from './options'
-export type {SearchErrorResult, SearchNearbyOptions, SearchOptions, SearchRegionOptions, SearchResult} from './options/service'
+export type {
+  MapEvents,
+  MultiMarkerEvents,
+} from './events'
+export type {
+  LatLngDataTyping,
+  PointDataTyping,
+} from './LatLng'
+export type {
+  EaseOptions,
+  InfoWindowOptions,
+  MapOptions,
+  MultiMarkerOptions,
+  PointGeometry,
+} from './options'
+export type {
+  SearchErrorResult,
+  SearchNearbyOptions,
+  SearchOptions,
+  SearchRegionOptions,
+  SearchResult,
+} from './options/service'
