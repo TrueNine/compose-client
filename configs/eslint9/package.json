@@ -1,7 +1,7 @@
 {
   "name": "@truenine/eslint9-config",
   "type": "module",
-  "version": "2026.10115.11811",
+  "version": "2026.10115.122",
   "description": "ESLint 9 configuration package for Compose Client projects with TypeScript, Vue, and modern JavaScript support",
   "author": {
     "name": "TrueNine",
