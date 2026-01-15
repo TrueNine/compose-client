@@ -75,7 +75,7 @@ export async function defineConfig(options: ConfigOptions = {}): Promise<ReturnT
     },
     {name: '@truenine/eslint-plugin', plugins: {'@truenine': plugin}, rules: baseRulesPreset} as Linter.Config,
     {name: '@truenine/dts-rules', files: ['**/*.d.ts'], rules: dtsRulesPreset} as Linter.Config,
-    {name: '@truenine/typescript-rules', files: ['**/*.ts', '**/*.tsx', '**/*.mts', '**/*.cts'], rules: typescriptRulesPreset} as Linter.Config,
+    {name: '@truenine/typescript-rules', files: ['**/*.ts', '**/*.tsx', '**/*.mts', '**/*.cts'], ignores: ['**/*.md/**'], rules: typescriptRulesPreset} as Linter.Config,
   )
 }
 
