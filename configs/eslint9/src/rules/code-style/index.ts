@@ -1,4 +1,5 @@
 import type {Rule} from 'eslint'
+import besideComment from './beside-comment'
 import compactTryCatch from './compact-try-catch'
 import preferConciseArrow from './concise-arrow'
 import preferGuardClause from './guard-clause'
@@ -17,8 +18,10 @@ export const codeStyleRules: Record<string, Rule.RuleModule> = {
   'prefer-void-zero': preferVoidZero,
   'prefer-lookup-table': preferLookupTable,
   'compact-try-catch': compactTryCatch,
+  'beside-comment': besideComment,
 }
 
+export {default as besideComment} from './beside-comment'
 export {default as compactTryCatch} from './compact-try-catch'
 export {default as preferConciseArrow} from './concise-arrow'
 export {default as preferGuardClause} from './guard-clause'

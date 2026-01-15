@@ -28,8 +28,7 @@ describe('prefer-void-zero', () => {
       it('should skip type annotations in variable declarations', () => {
         ruleTester.run('prefer-void-zero', rule, {
           valid: [
-            // 变量类型注解
-            'let x: undefined',
+            'let x: undefined', // 变量类型注解
             'let x: undefined = void 0',
             'const x: string | undefined = "test"',
             'let x: number | undefined',
@@ -41,8 +40,7 @@ describe('prefer-void-zero', () => {
       it('should skip function return type annotations', () => {
         ruleTester.run('prefer-void-zero', rule, {
           valid: [
-            // 函数返回类型
-            'function fn(): undefined { return void 0 }',
+            'function fn(): undefined { return void 0 }', // 函数返回类型
             'function fn(): string | undefined { return "test" }',
             'const fn = (): undefined => void 0',
             'const fn = (): string | undefined => "test"',
@@ -55,8 +53,7 @@ describe('prefer-void-zero', () => {
       it('should skip function parameter type annotations', () => {
         ruleTester.run('prefer-void-zero', rule, {
           valid: [
-            // 函数参数类型
-            'function fn(x: undefined): void {}',
+            'function fn(x: undefined): void {}', // 函数参数类型
             'function fn(x: string | undefined): void {}',
             'const fn = (x: undefined) => {}',
             'const fn = (x: number | undefined) => {}',
@@ -70,8 +67,7 @@ describe('prefer-void-zero', () => {
       it('should skip type alias declarations', () => {
         ruleTester.run('prefer-void-zero', rule, {
           valid: [
-            // 类型别名
-            'type T = undefined',
+            'type T = undefined', // 类型别名
             'type T = string | undefined',
             'type T = undefined | null',
             'type MaybeString = string | undefined',
@@ -83,8 +79,7 @@ describe('prefer-void-zero', () => {
       it('should skip interface members', () => {
         ruleTester.run('prefer-void-zero', rule, {
           valid: [
-            // 接口成员
-            'interface I { x: undefined }',
+            'interface I { x: undefined }', // 接口成员
             'interface I { x: string | undefined }',
             'interface I { x?: undefined }',
             'interface I { fn(): undefined }',
@@ -96,8 +91,7 @@ describe('prefer-void-zero', () => {
       it('should skip generic type parameters', () => {
         ruleTester.run('prefer-void-zero', rule, {
           valid: [
-            // 泛型类型参数
-            'type T<U = undefined> = U',
+            'type T<U = undefined> = U', // 泛型类型参数
             'function fn<T = undefined>(): T { return void 0 as T }',
             'const x: Array<undefined> = []',
             'const x: Map<string, undefined> = new Map()',
@@ -110,8 +104,7 @@ describe('prefer-void-zero', () => {
       it('should skip union and intersection types', () => {
         ruleTester.run('prefer-void-zero', rule, {
           valid: [
-            // 联合类型和交叉类型
-            'type T = string | undefined | null',
+            'type T = string | undefined | null', // 联合类型和交叉类型
             'type T = (string | undefined) & object',
             'let x: string | number | undefined',
             'function fn(x: string | undefined | null): void {}',
@@ -123,8 +116,7 @@ describe('prefer-void-zero', () => {
       it('should skip conditional types', () => {
         ruleTester.run('prefer-void-zero', rule, {
           valid: [
-            // 条件类型
-            'type T = string extends undefined ? true : false',
+            'type T = string extends undefined ? true : false', // 条件类型
             'type T<U> = U extends undefined ? never : U',
           ],
           invalid: [],
@@ -134,8 +126,7 @@ describe('prefer-void-zero', () => {
       it('should skip mapped types', () => {
         ruleTester.run('prefer-void-zero', rule, {
           valid: [
-            // 映射类型
-            'type T = { [K in string]: undefined }',
+            'type T = { [K in string]: undefined }', // 映射类型
             'type T = { [K in keyof object]: string | undefined }',
           ],
           invalid: [],
@@ -145,8 +136,7 @@ describe('prefer-void-zero', () => {
       it('should skip type literals', () => {
         ruleTester.run('prefer-void-zero', rule, {
           valid: [
-            // 类型字面量
-            'type T = { x: undefined }',
+            'type T = { x: undefined }', // 类型字面量
             'type T = { x: string | undefined, y: number }',
             'const fn = (x: { value: undefined }) => {}',
           ],
@@ -157,8 +147,7 @@ describe('prefer-void-zero', () => {
       it('should skip as expressions type part', () => {
         ruleTester.run('prefer-void-zero', rule, {
           valid: [
-            // as 表达式的类型部分
-            'const x = value as undefined',
+            'const x = value as undefined', // as 表达式的类型部分
             'const x = value as string | undefined',
             'const x = (value as undefined)',
           ],
@@ -169,8 +158,7 @@ describe('prefer-void-zero', () => {
       it('should skip satisfies expressions type part', () => {
         ruleTester.run('prefer-void-zero', rule, {
           valid: [
-            // satisfies 表达式的类型部分
-            'const x = value satisfies undefined',
+            'const x = value satisfies undefined', // satisfies 表达式的类型部分
             'const x = value satisfies string | undefined',
           ],
           invalid: [],
@@ -180,8 +168,7 @@ describe('prefer-void-zero', () => {
       it('should skip function type expressions', () => {
         ruleTester.run('prefer-void-zero', rule, {
           valid: [
-            // 函数类型表达式
-            'type T = () => undefined',
+            'type T = () => undefined', // 函数类型表达式
             'type T = (x: string) => undefined',
             'type T = (x: undefined) => void',
             'let fn: () => undefined',
@@ -194,8 +181,7 @@ describe('prefer-void-zero', () => {
       it('should skip type predicates', () => {
         ruleTester.run('prefer-void-zero', rule, {
           valid: [
-            // 类型谓词
-            'function isUndefined(x: unknown): x is undefined { return x === void 0 }',
+            'function isUndefined(x: unknown): x is undefined { return x === void 0 }', // 类型谓词
           ],
           invalid: [],
         })
@@ -206,8 +192,7 @@ describe('prefer-void-zero', () => {
       it('should skip property keys', () => {
         ruleTester.run('prefer-void-zero', rule, {
           valid: [
-            // 属性键（非简写）
-            'const obj = { undefined: 1 }',
+            'const obj = { undefined: 1 }', // 属性键（非简写）
             'obj.undefined = 1',
           ],
           invalid: [],
@@ -217,8 +202,7 @@ describe('prefer-void-zero', () => {
       it('should skip member expression property access', () => {
         ruleTester.run('prefer-void-zero', rule, {
           valid: [
-            // 成员表达式属性访问
-            'obj.undefined',
+            'obj.undefined', // 成员表达式属性访问
             'this.undefined',
             'window.undefined',
           ],
@@ -229,9 +213,7 @@ describe('prefer-void-zero', () => {
       it('should skip variable declarations (left side)', () => {
         ruleTester.run('prefer-void-zero', rule, {
           valid: [
-            // 变量声明（左侧）- 虽然不常见，但语法上允许
-            // 注意：这里 undefined 作为变量名被声明
-          ],
+          ], // 注意：这里 undefined 作为变量名被声明 // 变量声明（左侧）- 虽然不常见，但语法上允许
           invalid: [],
         })
       })
@@ -239,9 +221,7 @@ describe('prefer-void-zero', () => {
       it('should skip import/export specifiers', () => {
         ruleTester.run('prefer-void-zero', rule, {
           valid: [
-            // import/export 说明符
-            // 注意：undefined 通常不会被 import/export，但规则应该处理这种情况
-          ],
+          ], // 注意：undefined 通常不会被 import/export，但规则应该处理这种情况 // import/export 说明符
           invalid: [],
         })
       })
@@ -433,9 +413,7 @@ describe('prefer-void-zero', () => {
         ruleTester.run('prefer-void-zero', rule, {
           valid: [],
           invalid: [
-            // 简写属性中的 undefined 既是键也是值，应该修复
-            // 注意：这会改变语义，但规则的目的就是替换 undefined 值
-          ],
+          ], // 注意：这会改变语义，但规则的目的就是替换 undefined 值 // 简写属性中的 undefined 既是键也是值，应该修复
         })
       })
     })
@@ -593,13 +571,11 @@ describe('prefer-void-zero', () => {
     it('should handle type annotation with value in same statement', () => {
       ruleTester.run('prefer-void-zero', rule, {
         valid: [
-          // 类型注解中的 undefined 不应被修改
-          'let x: undefined',
+          'let x: undefined', // 类型注解中的 undefined 不应被修改
           'let x: string | undefined',
         ],
         invalid: [
-          // 值位置的 undefined 应该被修改
-          {
+          { // 值位置的 undefined 应该被修改
             code: 'let x: string | undefined = undefined',
             output: 'let x: string | undefined = void 0',
             errors: [{messageId: 'preferVoidZero'}],
@@ -616,13 +592,11 @@ describe('prefer-void-zero', () => {
     it('should handle generic functions with undefined', () => {
       ruleTester.run('prefer-void-zero', rule, {
         valid: [
-          // 泛型类型参数中的 undefined
-          'function fn<T = undefined>(): T { return void 0 as T }',
+          'function fn<T = undefined>(): T { return void 0 as T }', // 泛型类型参数中的 undefined
           'const fn = <T extends undefined>() => {}',
         ],
         invalid: [
-          // 泛型函数调用中的值参数
-          {
+          { // 泛型函数调用中的值参数
             code: 'fn<string>(undefined)',
             output: 'fn<string>(void 0)',
             errors: [{messageId: 'preferVoidZero'}],
@@ -634,13 +608,11 @@ describe('prefer-void-zero', () => {
     it('should handle type assertions', () => {
       ruleTester.run('prefer-void-zero', rule, {
         valid: [
-          // as 表达式的类型部分
-          'const x = value as undefined',
+          'const x = value as undefined', // as 表达式的类型部分
           'const x = value as string | undefined',
         ],
         invalid: [
-          // as 表达式的值部分
-          {
+          { // as 表达式的值部分
             code: 'const x = undefined as unknown',
             output: 'const x = void 0 as unknown',
             errors: [{messageId: 'preferVoidZero'}],
@@ -653,8 +625,7 @@ describe('prefer-void-zero', () => {
       ruleTester.run('prefer-void-zero', rule, {
         valid: [],
         invalid: [
-          // 复杂嵌套场景
-          {
+          { // 复杂嵌套场景
             code: 'const result = arr.map(x => x === undefined ? undefined : x)',
             output: 'const result = arr.map(x => x === void 0 ? void 0 : x)',
             errors: [{messageId: 'preferVoidZero'}, {messageId: 'preferVoidZero'}],

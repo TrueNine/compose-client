@@ -37,8 +37,7 @@ describe('prefer-lookup-table', () => {
       ruleTester.run('prefer-lookup-table', rule, {
         valid: [
           'if (a > 1 || a < 10 || a === 5 || a === 6) {}',
-          // Strict inequality not covered
-          'if (a !== \'1\' || a !== \'2\' || a !== \'3\' || a !== \'4\') {}',
+          'if (a !== \'1\' || a !== \'2\' || a !== \'3\' || a !== \'4\') {}', // Strict inequality not covered
         ],
         invalid: [],
       })
@@ -47,8 +46,7 @@ describe('prefer-lookup-table', () => {
     it('should allow non-literal comparisons', () => {
       ruleTester.run('prefer-lookup-table', rule, {
         valid: [
-          // Assuming variable comparison is not flagged as we look for Literals
-          'if (a === b || a === c || a === d || a === e) {}',
+          'if (a === b || a === c || a === d || a === e) {}', // Assuming variable comparison is not flagged as we look for Literals
         ],
         invalid: [],
       })
@@ -126,15 +124,13 @@ describe('prefer-lookup-table', () => {
     it('should respect custom threshold', () => {
       ruleTester.run('prefer-lookup-table', rule, {
         valid: [
-          // 4 checks is valid if threshold is 5
-          {
+          { // 4 checks is valid if threshold is 5
             code: 'if (a === \'1\' || a === \'2\' || a === \'3\' || a === \'4\') {}',
             options: [{threshold: 5}],
           },
         ],
         invalid: [
-          // 3 checks is invalid if threshold is 3
-          {
+          { // 3 checks is invalid if threshold is 3
             code: 'if (a === \'1\' || a === \'2\' || a === \'3\') {}',
             options: [{threshold: 3}],
             errors: [{messageId: 'preferLookup', data: {count: '3'}}],

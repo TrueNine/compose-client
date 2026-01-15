@@ -13,12 +13,12 @@ const ruleTester = new RuleTester({
 
 describe('compact-try-catch', () => {
   describe('valid', () => {
-    it('should allow tiered layout', () => {
+    it('should allow compact layout', () => {
       ruleTester.run('compact-try-catch', rule, {
         valid: [
-          'try {\n  a();\n  b();\n} catch (e) {\n  c();\n  d();\n}',
-          'try { a(); }\ncatch (e) { b(); }',
-          'try { a(); }\ncatch (e) { /* ignore */ }',
+          'try {\n  a();\n  b();\n} catch (e) {\n  c();\n  d();\n}', // Multi-line joined (Standard 1TBS)
+          'try { a(); } catch (e) { b(); }', // Single-line joined (Standard 1TBS with allowSingleLine)
+          'try { a(); } catch (e) { /* ignore */ }', // Single-line with comments
         ],
         invalid: [],
       })
@@ -31,10 +31,9 @@ describe('compact-try-catch', () => {
         valid: [],
         invalid: [
           {
-            code: 'try { foo(); } catch (e) {\n  // ignore\n}',
-            output: 'try { foo(); }\ncatch (e) { /* ignore */ }',
+            code: 'try { foo(); } catch (e) {\n  // ignore\n}', // Input has catch on same line but multi-line body
+            output: 'try { foo(); } catch (e) { /* ignore */ }',
             errors: [
-              {messageId: 'separateCatch'},
               {messageId: 'preferSingleLine'},
             ],
           },
@@ -48,9 +47,8 @@ describe('compact-try-catch', () => {
         invalid: [
           {
             code: 'try { foo(); } finally {\n  // cleanup\n}',
-            output: 'try { foo(); }\nfinally { /* cleanup */ }',
+            output: 'try { foo(); } finally { /* cleanup */ }',
             errors: [
-              {messageId: 'separateFinally'},
               {messageId: 'preferSingleLine'},
             ],
           },
@@ -59,16 +57,23 @@ describe('compact-try-catch', () => {
     })
   })
 
-  describe('invalid - tiered layout', () => {
+  describe('invalid - layout', () => {
     it('should report incorrect layout for multi-line blocks', () => {
       ruleTester.run('compact-try-catch', rule, {
         valid: [],
         invalid: [
           {
-            code: 'try {\n  a();\n  b();\n}\ncatch (e) { c(); }',
+            code: 'try {\n  a();\n  b();\n}\ncatch (e) { c(); }', // If try is multi-line, catch should be joined
             output: 'try {\n  a();\n  b();\n} catch (e) { c(); }',
             errors: [
               {messageId: 'compactCatch'},
+            ],
+          },
+          {
+            code: 'try { a(); } catch (e) {\n  b();\n  c();\n}\nfinally { d(); }', // If catch is multi-line, finally should be joined
+            output: 'try { a(); } catch (e) {\n  b();\n  c();\n} finally { d(); }',
+            errors: [
+              {messageId: 'compactFinally'},
             ],
           },
         ],

@@ -3,15 +3,7 @@ import type {Rule} from 'eslint'
 /**
  * ESLint rule: prefer-lookup-table
  *
- * Detects long chains of `||` checks against the same variable and suggests using a Set loopup or Array.includes.
- *
- * @example
- * // Before
- * if (type === 'A' || type === 'B' || type === 'C' || type === 'D') {}
- *
- * // After
- * const types = new Set(['A', 'B', 'C', 'D'])
- * if (types.has(type)) {}
+ * Detects long chains of `||` checks against the same variable and suggests using a Set lookup or Array.includes.
  */
 const rule: Rule.RuleModule = {
   meta: {
@@ -39,25 +31,21 @@ const rule: Rule.RuleModule = {
     const options = (context.options[0] ?? {}) as {threshold?: number}
     const threshold = options.threshold ?? 4
 
-    // 辅助函数：标准化节点文本，去除空格干扰
-    function getNormalizedText(node: Rule.Node): string {
+    function getNormalizedText(node: Rule.Node): string { /* 辅助函数：标准化节点文本，去除空格干扰 */
       return sourceCode.getText(node).replaceAll(/\s+/g, '')
     }
 
-    // 辅助函数：判断是否是简单的相等比较节点
-    function isEqualityCheck(node: Rule.Node): boolean {
+    function isEqualityCheck(node: Rule.Node): boolean { /* 辅助函数：判断是否是简单的相等比较节点 */
       if (node.type !== 'BinaryExpression') return false
       const op = (node as unknown as {operator: string}).operator
       return op === '===' || op === '=='
     }
 
-    // 辅助函数：判断节点是否包含副作用（简单判断是否是标识符或成员表达式）
-    function isPure(node: Rule.Node): boolean {
+    function isPure(node: Rule.Node): boolean { /* 辅助函数：判断节点是否包含副作用 */
       return node.type === 'Identifier' || node.type === 'MemberExpression' || node.type === 'Literal'
     }
 
-    // 递归收集 LogicalExpression 中的所有条件
-    function collectConditions(node: Rule.Node, operator: string, conditions: Rule.Node[] = []): Rule.Node[] {
+    function collectConditions(node: Rule.Node, operator: string, conditions: Rule.Node[] = []): Rule.Node[] { /* 递归收集 LogicalExpression 中的所有条件 */
       if (node.type === 'LogicalExpression' && (node as unknown as {operator: string}).operator === operator) {
         const logicalNode = node as Rule.Node & {left: Rule.Node, right: Rule.Node, operator: string}
         collectConditions(logicalNode.left, operator, conditions)
@@ -70,35 +58,24 @@ const rule: Rule.RuleModule = {
 
     return {
       LogicalExpression(node) {
-        // 只处理 || 链
-        if ((node as unknown as {operator: string}).operator !== '||') return
-
-        // 避免重复报告子节点
-        if (reportSet.has(node)) return
-        // 向上查找，如果是顶层的 LogicalExpression 再处理
+        if ((node as unknown as {operator: string}).operator !== '||') return /* 只处理 || 链 */
+        if (reportSet.has(node)) return /* 避免重复报告子节点 */
         const currentParent = node.parent
-        if (currentParent?.type === 'LogicalExpression' && (currentParent as unknown as {operator: string}).operator === '||') {
-          // 让顶层处理
-          return
-        }
+        if (currentParent?.type === 'LogicalExpression' && (currentParent as unknown as {operator: string}).operator === '||') return /* 让顶层处理 */
 
         const conditions = collectConditions(node, '||')
         if (conditions.length < threshold) return
 
-        // 分析每个条件
-        const subjectMap = new Map<string, {subject: Rule.Node, values: Rule.Node[]}>()
+        const subjectMap = new Map<string, {subject: Rule.Node, values: Rule.Node[]}>() /* 分析每个条件 */
 
         for (const condition of conditions) {
-          // 必须是相等比较
-          if (!isEqualityCheck(condition)) continue
+          if (!isEqualityCheck(condition)) continue /* 必须是相等比较 */
 
           const binExpr = condition as Rule.Node & {left: Rule.Node, right: Rule.Node}
           let subject: Rule.Node | null = null
           let value: Rule.Node | null = null
 
-          // 尝试找出 subject (变量) 和 value (字面量)
-          // 假设字面量在右边
-          if (isPure(binExpr.left) && binExpr.right.type === 'Literal') {
+          if (isPure(binExpr.left) && binExpr.right.type === 'Literal') { /* 尝试找出 subject (变量) 和 value (字面量) */
             subject = binExpr.left
             value = binExpr.right
           } else if (isPure(binExpr.right) && binExpr.left.type === 'Literal') {
@@ -113,20 +90,16 @@ const rule: Rule.RuleModule = {
           }
         }
 
-        // 检查是否有某个 subject 超过阈值
-        for (const [_, {subject, values}] of subjectMap.entries()) {
+        for (const [_, {subject, values}] of subjectMap.entries()) { /* 检查是否有某个 subject 超过阈值 */
           if (values.length >= threshold) {
             context.report({
               node,
               messageId: 'preferLookup',
-              data: {
-                count: values.length.toString(),
-              },
+              data: {count: values.length.toString()},
               fix(fixer) {
                 const valuesText = values.map((v: Rule.Node) => sourceCode.getText(v)).join(', ')
                 const subjectText = sourceCode.getText(subject)
-                const replacement = `new Set([${valuesText}]).has(${subjectText})`
-                return fixer.replaceText(node, replacement)
+                return fixer.replaceText(node, `new Set([${valuesText}]).has(${subjectText})`)
               },
             })
             break

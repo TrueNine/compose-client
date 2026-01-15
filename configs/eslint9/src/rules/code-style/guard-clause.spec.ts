@@ -29,8 +29,7 @@ describe('prefer-guard-clause', () => {
       it('should skip if statement with else branch', () => {
         ruleTester.run('prefer-guard-clause', rule, {
           valid: [
-            // 有 else 分支 - 不应转换 (Requirement 2.8)
-            `function process(data) {
+            `function process(data) { // 有 else 分支 - 不应转换 (Requirement 2.8)
   if (data) {
     doSomething(data)
     doMore(data)
@@ -38,8 +37,7 @@ describe('prefer-guard-clause', () => {
     handleEmpty()
   }
 }`,
-            // if-else-if 链
-            `function process(data) {
+            `function process(data) { // if-else-if 链
   if (data.type === 'a') {
     handleA(data)
     processA(data)
@@ -55,8 +53,7 @@ describe('prefer-guard-clause', () => {
       it('should skip if block with fewer statements than minStatements', () => {
         ruleTester.run('prefer-guard-clause', rule, {
           valid: [
-            // 语句数不足 - 默认 minStatements=2 (Requirement 2.9)
-            `function process(data) {
+            `function process(data) { // 语句数不足 - 默认 minStatements=2 (Requirement 2.9)
   if (data) {
     doSomething(data)
   }
@@ -69,13 +66,11 @@ describe('prefer-guard-clause', () => {
       it('should skip if statement not in function body', () => {
         ruleTester.run('prefer-guard-clause', rule, {
           valid: [
-            // 非函数体 - 不应转换 (Requirement 2.10)
-            `if (condition) {
+            `if (condition) { // 非函数体 - 不应转换 (Requirement 2.10)
   doSomething()
   doMore()
 }`,
-            // 在模块顶层
-            `const x = 1
+            `const x = 1 // 在模块顶层
 if (x > 0) {
   console.log('positive')
   console.log('done')
@@ -93,8 +88,7 @@ if (x > 0) {
         ruleTester.run('prefer-guard-clause', rule, {
           valid: [],
           invalid: [
-            // if 块包裹整个函数体 (Requirement 2.1)
-            {
+            { // if 块包裹整个函数体 (Requirement 2.1)
               code: `function process(data) {
   if (data) {
     doSomething(data)
@@ -117,8 +111,7 @@ if (x > 0) {
         ruleTester.run('prefer-guard-clause', rule, {
           valid: [],
           invalid: [
-            // if 块后跟单个 return (Requirement 2.2)
-            {
+            { // if 块后跟单个 return (Requirement 2.2)
               code: `function process(data) {
   if (data) {
     doSomething(data)
@@ -145,8 +138,7 @@ if (x > 0) {
         ruleTester.run('prefer-guard-clause', rule, {
           valid: [],
           invalid: [
-            // === 转换为 !== (Requirement 2.3)
-            {
+            { // === 转换为 !== (Requirement 2.3)
               code: `function process(data) {
   if (data === 'valid') {
     doSomething(data)
@@ -161,8 +153,7 @@ if (x > 0) {
 }`,
               errors: [{messageId: 'preferGuardClause'}],
             },
-            // !== 转换为 ===
-            {
+            { // !== 转换为 ===
               code: `function process(data) {
   if (data !== null) {
     doSomething(data)
@@ -177,8 +168,7 @@ if (x > 0) {
 }`,
               errors: [{messageId: 'preferGuardClause'}],
             },
-            // == 转换为 !=
-            {
+            { // == 转换为 !=
               code: `function process(data) {
   if (data == 'valid') {
     doSomething(data)
@@ -193,8 +183,7 @@ if (x > 0) {
 }`,
               errors: [{messageId: 'preferGuardClause'}],
             },
-            // != 转换为 ==
-            {
+            { // != 转换为 ==
               code: `function process(data) {
   if (data != null) {
     doSomething(data)
@@ -217,8 +206,7 @@ if (x > 0) {
         ruleTester.run('prefer-guard-clause', rule, {
           valid: [],
           invalid: [
-            // > 转换为 <= (Requirement 2.4)
-            {
+            { // > 转换为 <= (Requirement 2.4)
               code: `function process(data) {
   if (data > 0) {
     doSomething(data)
@@ -233,8 +221,7 @@ if (x > 0) {
 }`,
               errors: [{messageId: 'preferGuardClause'}],
             },
-            // < 转换为 >=
-            {
+            { // < 转换为 >=
               code: `function process(data) {
   if (data < 10) {
     doSomething(data)
@@ -249,8 +236,7 @@ if (x > 0) {
 }`,
               errors: [{messageId: 'preferGuardClause'}],
             },
-            // >= 转换为 <
-            {
+            { // >= 转换为 <
               code: `function process(data) {
   if (data >= 0) {
     doSomething(data)
@@ -265,8 +251,7 @@ if (x > 0) {
 }`,
               errors: [{messageId: 'preferGuardClause'}],
             },
-            // <= 转换为 >
-            {
+            { // <= 转换为 >
               code: `function process(data) {
   if (data <= 10) {
     doSomething(data)
@@ -289,8 +274,7 @@ if (x > 0) {
         ruleTester.run('prefer-guard-clause', rule, {
           valid: [],
           invalid: [
-            // !condition 转换为 condition (Requirement 2.5)
-            {
+            { // !condition 转换为 condition (Requirement 2.5)
               code: `function process(data) {
   if (!isEmpty) {
     doSomething(data)
@@ -305,8 +289,7 @@ if (x > 0) {
 }`,
               errors: [{messageId: 'preferGuardClause'}],
             },
-            // !(expr) 转换为 expr
-            {
+            { // !(expr) 转换为 expr
               code: `function process(data) {
   if (!(data.valid)) {
     doSomething(data)
@@ -329,8 +312,7 @@ if (x > 0) {
         ruleTester.run('prefer-guard-clause', rule, {
           valid: [],
           invalid: [
-            // && 表达式包裹在 !() 中 (Requirement 2.6)
-            {
+            { // && 表达式包裹在 !() 中 (Requirement 2.6)
               code: `function process(data) {
   if (data && data.valid) {
     doSomething(data)
@@ -345,8 +327,7 @@ if (x > 0) {
 }`,
               errors: [{messageId: 'preferGuardClause'}],
             },
-            // || 表达式包裹在 !() 中
-            {
+            { // || 表达式包裹在 !() 中
               code: `function process(data) {
   if (data || fallback) {
     doSomething(data)
@@ -369,9 +350,7 @@ if (x > 0) {
         ruleTester.run('prefer-guard-clause', rule, {
           valid: [],
           invalid: [
-            // .length > 0 转换为 .length <= 0 (Requirement 2.7)
-            // Note: rule uses comparison inversion (> -> <=) rather than semantic .length === 0
-            {
+            { // Note: rule uses comparison inversion (> -> <=) rather than semantic .length === 0 // .length > 0 转换为 .length <= 0 (Requirement 2.7)
               code: `function process(data) {
   if (data.length > 0) {
     doSomething(data)
@@ -386,8 +365,7 @@ if (x > 0) {
 }`,
               errors: [{messageId: 'preferGuardClause'}],
             },
-            // .length === 0 转换为 .length !== 0 (uses === -> !== inversion)
-            {
+            { // .length === 0 转换为 .length !== 0 (uses === -> !== inversion)
               code: `function process(data) {
   if (data.length === 0) {
     handleEmpty()
@@ -412,8 +390,7 @@ if (x > 0) {
         ruleTester.run('prefer-guard-clause', rule, {
           valid: [],
           invalid: [
-            // 块末有 return - 规则会移除最后的 return 并将其放入 guard clause (Requirement 2.11)
-            {
+            { // 块末有 return - 规则会移除最后的 return 并将其放入 guard clause (Requirement 2.11)
               code: `function process(data) {
   if (data) {
     doSomething(data)
@@ -427,8 +404,7 @@ if (x > 0) {
 }`,
               errors: [{messageId: 'preferGuardClause'}],
             },
-            // 块末有 return 且后跟 return
-            {
+            { // 块末有 return 且后跟 return
               code: `function process(data) {
   if (data) {
     doSomething(data)
@@ -452,8 +428,7 @@ if (x > 0) {
         ruleTester.run('prefer-guard-clause', rule, {
           valid: [],
           invalid: [
-            // 非 void 返回类型，块末有 return (Requirement 2.12)
-            {
+            { // 非 void 返回类型，块末有 return (Requirement 2.12)
               code: `function process(data): string {
   if (data) {
     doSomething(data)
@@ -473,14 +448,12 @@ if (x > 0) {
     })
   })
 
-  // ==================== Schema Options Tests (Requirement 7.3) ====================
-  describe('schema options', () => {
+  describe('schema options', () => { // ==================== Schema Options Tests (Requirement 7.3) ====================
     describe('minStatements option', () => {
       it('should respect custom minStatements value', () => {
         ruleTester.run('prefer-guard-clause', rule, {
           valid: [
-            // With minStatements=3, a block with 2 statements should NOT trigger the rule
-            {
+            { // With minStatements=3, a block with 2 statements should NOT trigger the rule
               code: `function process(data) {
   if (data) {
     doSomething(data)
@@ -491,8 +464,7 @@ if (x > 0) {
             },
           ],
           invalid: [
-            // With minStatements=3, a block with 3 statements SHOULD trigger the rule
-            {
+            { // With minStatements=3, a block with 3 statements SHOULD trigger the rule
               code: `function process(data) {
   if (data) {
     step1(data)
@@ -518,8 +490,7 @@ if (x > 0) {
         ruleTester.run('prefer-guard-clause', rule, {
           valid: [],
           invalid: [
-            // With minStatements=1, even a single statement block should trigger the rule
-            {
+            { // With minStatements=1, even a single statement block should trigger the rule
               code: `function process(data) {
   if (data) {
     doSomething(data)

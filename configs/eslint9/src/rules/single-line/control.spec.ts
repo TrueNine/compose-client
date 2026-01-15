@@ -29,15 +29,13 @@ const ruleTester = new RuleTester({
 })
 
 describe('prefer-single-line-control', () => {
-  // ==================== Switch Case Tests ====================
-  describe('switch case', () => {
+  describe('switch case', () => { // ==================== Switch Case Tests ====================
     describe('invalid cases - basic transformations (Requirements 4.1, 4.2, 4.3, 4.19)', () => {
       it('should simplify case with single simple statement', () => {
         ruleTester.run('prefer-single-line-control', rule, {
           valid: [],
           invalid: [
-            // 单语句 case - 应该简化 (Requirement 4.1)
-            {
+            { // 单语句 case - 应该简化 (Requirement 4.1)
               code: `switch (x) {
   case 1:
     console.log('one')
@@ -55,8 +53,7 @@ describe('prefer-single-line-control', () => {
         ruleTester.run('prefer-single-line-control', rule, {
           valid: [],
           invalid: [
-            // 带 break 的 case - 应该保留 break (Requirement 4.2)
-            {
+            { // 带 break 的 case - 应该保留 break (Requirement 4.2)
               code: `switch (x) {
   case 1:
     console.log('one')
@@ -75,8 +72,7 @@ describe('prefer-single-line-control', () => {
         ruleTester.run('prefer-single-line-control', rule, {
           valid: [],
           invalid: [
-            // 块包裹的 case - 应该简化 (Requirement 4.3)
-            {
+            { // 块包裹的 case - 应该简化 (Requirement 4.3)
               code: `switch (x) {
   case 1: {
     console.log('one')
@@ -87,8 +83,7 @@ describe('prefer-single-line-control', () => {
 }`,
               errors: [{messageId: 'preferSingleLineCase'}],
             },
-            // 块包裹带 break
-            {
+            { // 块包裹带 break
               code: `switch (x) {
   case 1: {
     console.log('one')
@@ -108,8 +103,7 @@ describe('prefer-single-line-control', () => {
         ruleTester.run('prefer-single-line-control', rule, {
           valid: [],
           invalid: [
-            // default case - 应该简化 (Requirement 4.19)
-            {
+            { // default case - 应该简化 (Requirement 4.19)
               code: `switch (x) {
   default:
     console.log('default')
@@ -119,8 +113,7 @@ describe('prefer-single-line-control', () => {
 }`,
               errors: [{messageId: 'preferSingleLineCase'}],
             },
-            // default case 带 break
-            {
+            { // default case 带 break
               code: `switch (x) {
   default:
     console.log('default')
@@ -140,15 +133,13 @@ describe('prefer-single-line-control', () => {
       it('should skip case with multiple statements', () => {
         ruleTester.run('prefer-single-line-control', rule, {
           valid: [
-            // 多语句 case - 不应简化 (Requirement 4.4)
-            `switch (x) {
+            `switch (x) { // 多语句 case - 不应简化 (Requirement 4.4)
   case 1:
     console.log('one')
     doSomething()
     break
 }`,
-            // 多语句块
-            `switch (x) {
+            `switch (x) { // 多语句块
   case 1: {
     const y = x + 1
     console.log(y)
@@ -163,9 +154,7 @@ describe('prefer-single-line-control', () => {
       it('should skip case with comments', () => {
         ruleTester.run('prefer-single-line-control', rule, {
           valid: [
-            // 有注释的 case - 不应简化 (Requirement 4.5)
-            // 注释在块内部
-            `switch (x) {
+            `switch (x) { // 注释在块内部 // 有注释的 case - 不应简化 (Requirement 4.5)
   case 1: {
     // comment
     console.log('one')
@@ -184,8 +173,7 @@ describe('prefer-single-line-control', () => {
       it('should skip already single-line case', () => {
         ruleTester.run('prefer-single-line-control', rule, {
           valid: [
-            // 已经是单行的 - 不应报告 (Requirement 4.6)
-            `switch (x) {
+            `switch (x) { // 已经是单行的 - 不应报告 (Requirement 4.6)
   case 1: console.log('one'); break
 }`,
             `switch (x) {
@@ -201,15 +189,13 @@ describe('prefer-single-line-control', () => {
     })
   })
 
-  // ==================== Loop Tests ====================
-  describe('loops', () => {
+  describe('loops', () => { // ==================== Loop Tests ====================
     describe('invalid cases - basic transformations (Requirements 4.7, 4.8, 4.9, 4.10)', () => {
       it('should simplify for loop with single statement', () => {
         ruleTester.run('prefer-single-line-control', rule, {
           valid: [],
           invalid: [
-            // for 循环简化 (Requirement 4.7)
-            {
+            { // for 循环简化 (Requirement 4.7)
               code: `for (let i = 0; i < 10; i++) {
   console.log(i)
 }`,
@@ -224,8 +210,7 @@ describe('prefer-single-line-control', () => {
         ruleTester.run('prefer-single-line-control', rule, {
           valid: [],
           invalid: [
-            // for-in 循环简化 (Requirement 4.8)
-            {
+            { // for-in 循环简化 (Requirement 4.8)
               code: `for (const key in obj) {
   console.log(key)
 }`,
@@ -240,8 +225,7 @@ describe('prefer-single-line-control', () => {
         ruleTester.run('prefer-single-line-control', rule, {
           valid: [],
           invalid: [
-            // for-of 循环简化 (Requirement 4.9)
-            {
+            { // for-of 循环简化 (Requirement 4.9)
               code: `for (const item of items) {
   process(item)
 }`,
@@ -256,8 +240,7 @@ describe('prefer-single-line-control', () => {
         ruleTester.run('prefer-single-line-control', rule, {
           valid: [],
           invalid: [
-            // while 循环简化 (Requirement 4.10)
-            {
+            { // while 循环简化 (Requirement 4.10)
               code: `while (condition) {
   doSomething()
 }`,
@@ -273,8 +256,7 @@ describe('prefer-single-line-control', () => {
       it('should skip loop with multiple statements', () => {
         ruleTester.run('prefer-single-line-control', rule, {
           valid: [
-            // 多语句循环体 - 不应简化 (Requirement 4.11)
-            `for (let i = 0; i < 10; i++) {
+            `for (let i = 0; i < 10; i++) { // 多语句循环体 - 不应简化 (Requirement 4.11)
   console.log(i)
   doSomething(i)
 }`,
@@ -294,8 +276,7 @@ describe('prefer-single-line-control', () => {
       it('should skip loop with comments', () => {
         ruleTester.run('prefer-single-line-control', rule, {
           valid: [
-            // 有注释的循环 - 不应简化 (Requirement 4.12)
-            `for (let i = 0; i < 10; i++) {
+            `for (let i = 0; i < 10; i++) { // 有注释的循环 - 不应简化 (Requirement 4.12)
   // comment
   console.log(i)
 }`,
@@ -314,8 +295,7 @@ describe('prefer-single-line-control', () => {
       it('should skip already single-line loop', () => {
         ruleTester.run('prefer-single-line-control', rule, {
           valid: [
-            // 已经是单行的 - 不应报告 (Requirement 4.13)
-            'for (let i = 0; i < 10; i++) console.log(i)',
+            'for (let i = 0; i < 10; i++) console.log(i)', // 已经是单行的 - 不应报告 (Requirement 4.13)
             'for (const key in obj) console.log(key)',
             'for (const item of items) process(item)',
             'while (condition) doSomething()',

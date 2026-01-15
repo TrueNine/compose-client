@@ -18,21 +18,20 @@ import type {Linter} from 'eslint'
  * ```
  */
 export const baseRulesPreset: Linter.RulesRecord = {
-  // @truenine 自定义规则
-  '@truenine/prefer-single-line-if': 'warn',
+  '@truenine/prefer-single-line-if': 'warn', /* @truenine 自定义规则 */
   '@truenine/prefer-single-line-control': 'warn',
   '@truenine/prefer-single-line-call': 'warn',
   '@truenine/prefer-concise-arrow': 'warn',
   '@truenine/prefer-guard-clause': ['warn', {minStatements: 2}],
   '@truenine/compact-try-catch': 'warn',
   '@truenine/prefer-void-zero': 'warn',
+  '@truenine/prefer-lookup-table': 'warn',
+  '@truenine/beside-comment': 'error',
 
-  // antfu 规则覆盖
-  'antfu/if-newline': 'off',
+  'antfu/if-newline': 'off', /* antfu 规则覆盖 */
   'antfu/curly': 'off',
 
-  // 基础 JavaScript 规则
-  'curly': ['error', 'multi-line'],
+  'curly': ['error', 'multi-line'], /* 基础 JavaScript 规则 */
   'arrow-body-style': ['error', 'as-needed'],
   'prefer-destructuring': ['error', {array: false, object: true}, {enforceForRenamedProperties: false}],
   'prefer-template': 'error',
@@ -53,8 +52,7 @@ export const baseRulesPreset: Linter.RulesRecord = {
   'no-useless-call': 'error',
   'no-extra-parens': ['error', 'all', {nestedBinaryExpressions: false, ignoreJSX: 'multi-line', enforceForArrowConditionals: false}],
 
-  // unicorn 规则 - 现代 JavaScript 最佳实践
-  'unicorn/prefer-includes': 'error',
+  'unicorn/prefer-includes': 'error', /* unicorn 规则 - 现代 JavaScript 最佳实践 */
   'unicorn/prefer-string-starts-ends-with': 'error',
   'unicorn/prefer-number-properties': 'error',
   'unicorn/no-instanceof-array': 'error',

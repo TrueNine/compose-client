@@ -24,23 +24,20 @@ const ruleTester = new RuleTester({
 })
 
 describe('prefer-single-line-if', () => {
-  // ==================== Invalid Cases ====================
-  describe('invalid cases', () => {
+  describe('invalid cases', () => { // ==================== Invalid Cases ====================
     describe('basic transformations (Requirements 5.1, 5.2, 5.3)', () => {
       it('should simplify single if statement', () => {
         ruleTester.run('prefer-single-line-if', rule, {
           valid: [],
           invalid: [
-            // 单 if 语句 - 应该简化 (Requirement 5.1)
-            {
+            { // 单 if 语句 - 应该简化 (Requirement 5.1)
               code: `if (condition) {
   return value
 }`,
               output: 'if (condition) return value',
               errors: [{messageId: 'preferSingleLine'}],
             },
-            // 单 if 语句 - 表达式语句
-            {
+            { // 单 if 语句 - 表达式语句
               code: `if (condition) {
   doSomething()
 }`,
@@ -55,8 +52,7 @@ describe('prefer-single-line-if', () => {
         ruleTester.run('prefer-single-line-if', rule, {
           valid: [],
           invalid: [
-            // if-else 链 - 应该简化 (Requirement 5.2)
-            {
+            { // if-else 链 - 应该简化 (Requirement 5.2)
               code: `if (condition) {
   return 'yes'
 } else {
@@ -74,8 +70,7 @@ else return 'no'`,
         ruleTester.run('prefer-single-line-if', rule, {
           valid: [],
           invalid: [
-            // if-else-if-else 链 - 应该简化 (Requirement 5.3)
-            {
+            { // if-else-if-else 链 - 应该简化 (Requirement 5.3)
               code: `if (a) {
   return 1
 } else if (b) {
@@ -98,8 +93,7 @@ else return 3`,
         ruleTester.run('prefer-single-line-if', rule, {
           valid: [],
           invalid: [
-            // 多行条件 - 应该压缩成单行 (Requirement 5.4)
-            {
+            { // 多行条件 - 应该压缩成单行 (Requirement 5.4)
               code: `if (condition1
   || condition2) {
   return value
@@ -107,8 +101,7 @@ else return 3`,
               output: 'if (condition1 || condition2) return value',
               errors: [{messageId: 'preferSingleLine'}],
             },
-            // 多行条件 - && 分隔
-            {
+            { // 多行条件 - && 分隔
               code: `if (condition1
   && condition2) {
   return value
@@ -124,8 +117,7 @@ else return 3`,
         ruleTester.run('prefer-single-line-if', rule, {
           valid: [],
           invalid: [
-            // 部分简化 - 只简化可简化的分支 (Requirement 5.10)
-            {
+            { // 部分简化 - 只简化可简化的分支 (Requirement 5.10)
               code: `if (a) {
   return 1
 } else {
@@ -145,24 +137,20 @@ else {
     })
   })
 
-  // ==================== Valid Cases ====================
-  describe('valid cases', () => {
+  describe('valid cases', () => { // ==================== Valid Cases ====================
     describe('skip scenarios (Requirements 5.5, 5.6, 5.7, 5.8)', () => {
       it('should skip if branch with complex statement', () => {
         ruleTester.run('prefer-single-line-if', rule, {
           valid: [
-            // 复杂语句 - 不应简化 (Requirement 5.5)
-            `if (condition) {
+            `if (condition) { // 复杂语句 - 不应简化 (Requirement 5.5)
   const x = getValue()
   return x
 }`,
-            // 多语句块
-            `if (condition) {
+            `if (condition) { // 多语句块
   doSomething()
   doMore()
 }`,
-            // for 循环 (not a simple statement)
-            `if (condition) {
+            `if (condition) { // for 循环 (not a simple statement)
   for (const item of items) {
     process(item)
   }
@@ -175,18 +163,15 @@ else {
       it('should skip if branch with comments', () => {
         ruleTester.run('prefer-single-line-if', rule, {
           valid: [
-            // 有注释 - 不应简化 (Requirement 5.6)
-            `if (condition) {
+            `if (condition) { // 有注释 - 不应简化 (Requirement 5.6)
   // comment
   return value
 }`,
-            // 块注释
-            `if (condition) {
+            `if (condition) { // 块注释
   /* block comment */
   return value
 }`,
-            // 行尾注释
-            `if (condition) {
+            `if (condition) { // 行尾注释
   return value // trailing comment
 }`,
           ],
@@ -197,8 +182,7 @@ else {
       it('should skip already single-line if statement', () => {
         ruleTester.run('prefer-single-line-if', rule, {
           valid: [
-            // 已经是单行的 - 不应报告 (Requirement 5.7)
-            'if (condition) return value',
+            'if (condition) return value', // 已经是单行的 - 不应报告 (Requirement 5.7)
             'if (a) return 1; else return 2',
             'if (a) doSomething()',
           ],
@@ -209,8 +193,7 @@ else {
       it('should skip when single-line form exceeds MAX_LINE_LENGTH', () => {
         ruleTester.run('prefer-single-line-if', rule, {
           valid: [
-            // 超长度 - 不应简化 (Requirement 5.8)
-            `if (veryLongConditionNameThatExceedsTheMaximumLineLengthWhenCombinedWithTheRestOfTheExpressionAndMoreTextToMakeItLonger) {
+            `if (veryLongConditionNameThatExceedsTheMaximumLineLengthWhenCombinedWithTheRestOfTheExpressionAndMoreTextToMakeItLonger) { // 超长度 - 不应简化 (Requirement 5.8)
   return veryLongReturnValueThatAlsoExceedsTheMaximumLineLengthWhenCombinedWithTheCondition
 }`,
           ],
@@ -223,10 +206,7 @@ else {
       it('should not report else-if chain nodes separately', () => {
         ruleTester.run('prefer-single-line-if', rule, {
           valid: [
-            // else-if 链中的非根节点 - 不应单独报告 (Requirement 5.9)
-            // 这个测试验证规则不会对 else-if 链中的子节点单独报告
-            // 整个链会作为一个整体处理
-            `if (a) return 1
+            `if (a) return 1 // 整个链会作为一个整体处理 // 这个测试验证规则不会对 else-if 链中的子节点单独报告 // else-if 链中的非根节点 - 不应单独报告 (Requirement 5.9)
 else if (b) {
   const x = 2
   return x
@@ -238,8 +218,7 @@ else if (b) {
     })
   })
 
-  // ==================== Simple Statement Recognition ====================
-  describe('simple statement recognition (Requirement 5.11)', () => {
+  describe('simple statement recognition (Requirement 5.11)', () => { // ==================== Simple Statement Recognition ====================
     it('should recognize return as simple statement', () => {
       ruleTester.run('prefer-single-line-if', rule, {
         valid: [],

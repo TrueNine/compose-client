@@ -29,8 +29,7 @@ describe('prefer-single-line-call', () => {
       it('should skip calls with arrow function arguments', () => {
         ruleTester.run('prefer-single-line-call', rule, {
           valid: [
-            // 箭头函数参数 - 不应简化 (Requirement 3.3)
-            `arr.map(
+            `arr.map( // 箭头函数参数 - 不应简化 (Requirement 3.3)
   x => x * 2
 )`,
             `arr.filter(
@@ -40,22 +39,18 @@ describe('prefer-single-line-call', () => {
   () => console.log('done'),
   1000
 )`,
-            // useCallback 带多行箭头函数体 - 不应简化
-            `const handleDirtyChange = useCallback((dirty: boolean) => {
+            `const handleDirtyChange = useCallback((dirty: boolean) => { // useCallback 带多行箭头函数体 - 不应简化
   isDirtyRef.current = dirty
 }, [])`,
-            // useCallback 带单行箭头函数 - 不应简化
-            `useCallback(
+            `useCallback( // useCallback 带单行箭头函数 - 不应简化
   (dirty: boolean) => isDirtyRef.current = dirty,
   []
 )`,
-            // useMemo 带箭头函数 - 不应简化
-            `useMemo(
+            `useMemo( // useMemo 带箭头函数 - 不应简化
   () => computeExpensiveValue(a, b),
   [a, b]
 )`,
-            // useEffect 带箭头函数 - 不应简化
-            `useEffect(
+            `useEffect( // useEffect 带箭头函数 - 不应简化
   () => {
     document.title = count
   },
@@ -69,8 +64,7 @@ describe('prefer-single-line-call', () => {
       it('should skip calls with function expression arguments', () => {
         ruleTester.run('prefer-single-line-call', rule, {
           valid: [
-            // 函数表达式参数 - 不应简化 (Requirement 3.4)
-            `arr.map(
+            `arr.map( // 函数表达式参数 - 不应简化 (Requirement 3.4)
   function(x) { return x * 2 }
 )`,
             `addEventListener(
@@ -87,8 +81,7 @@ describe('prefer-single-line-call', () => {
       it('should skip calls with multi-line template literals', () => {
         ruleTester.run('prefer-single-line-call', rule, {
           valid: [
-            // 多行模板字面量 - 不应简化 (Requirement 3.5)
-            'console.log(\n  `line1\nline2`\n)',
+            'console.log(\n  `line1\nline2`\n)', // 多行模板字面量 - 不应简化 (Requirement 3.5)
             'sql(\n  `SELECT *\n   FROM users`\n)',
           ],
           invalid: [],
@@ -100,8 +93,7 @@ describe('prefer-single-line-call', () => {
       it('should skip calls with objects having 5+ properties', () => {
         ruleTester.run('prefer-single-line-call', rule, {
           valid: [
-            // 5个及以上属性的对象 - 不应简化 (Requirement 3.6)
-            `createUser(
+            `createUser( // 5个及以上属性的对象 - 不应简化 (Requirement 3.6)
   {a: 1, b: 2, c: 3, d: 4, e: 5}
 )`,
             `config(
@@ -115,8 +107,7 @@ describe('prefer-single-line-call', () => {
       it('should skip calls with arrays having 4+ elements', () => {
         ruleTester.run('prefer-single-line-call', rule, {
           valid: [
-            // 4个及以上元素的数组 - 不应简化 (Requirement 3.7)
-            `process(
+            `process( // 4个及以上元素的数组 - 不应简化 (Requirement 3.7)
   [1, 2, 3, 4]
 )`,
             `concat(
@@ -132,8 +123,7 @@ describe('prefer-single-line-call', () => {
       it('should skip calls with nested object literals', () => {
         ruleTester.run('prefer-single-line-call', rule, {
           valid: [
-            // 嵌套对象字面量 - 不应简化 (Requirement 3.8)
-            `createConfig(
+            `createConfig( // 嵌套对象字面量 - 不应简化 (Requirement 3.8)
   {outer: {inner: 1}}
 )`,
             `setup(
@@ -149,8 +139,7 @@ describe('prefer-single-line-call', () => {
       it('should skip when single-line form exceeds maxLineLength', () => {
         ruleTester.run('prefer-single-line-call', rule, {
           valid: [
-            // 超过最大行长度 - 不应简化 (Requirement 3.9)
-            `veryLongFunctionNameThatExceedsTheMaximumLineLengthWhenCombinedWithTheRestOfTheExpression(
+            `veryLongFunctionNameThatExceedsTheMaximumLineLengthWhenCombinedWithTheRestOfTheExpression( // 超过最大行长度 - 不应简化 (Requirement 3.9)
   'anotherVeryLongStringArgumentThatMakesTheLineTooLongToFitOnASingleLineEvenWithoutIndentation',
   'andYetAnotherLongArgument'
 )`,
@@ -164,8 +153,7 @@ describe('prefer-single-line-call', () => {
       it('should skip calls that are part of a chained call', () => {
         ruleTester.run('prefer-single-line-call', rule, {
           valid: [
-            // 链式调用的一部分 - 不应简化 (Requirement 3.10)
-            `app.get(
+            `app.get( // 链式调用的一部分 - 不应简化 (Requirement 3.10)
   '/api'
 ).post(
   '/data'
@@ -178,8 +166,7 @@ describe('prefer-single-line-call', () => {
       it('should skip chained method calls', () => {
         ruleTester.run('prefer-single-line-call', rule, {
           valid: [
-            // 链式方法调用 - 不应简化 (Requirement 3.11)
-            `str.replaceAll(
+            `str.replaceAll( // 链式方法调用 - 不应简化 (Requirement 3.11)
   'a',
   'b'
 ).replaceAll(
@@ -196,8 +183,7 @@ describe('prefer-single-line-call', () => {
       it('should skip calls with comments', () => {
         ruleTester.run('prefer-single-line-call', rule, {
           valid: [
-            // 有注释的调用 - 不应简化 (Requirement 3.12)
-            `doSomething(
+            `doSomething( // 有注释的调用 - 不应简化 (Requirement 3.12)
   // comment
   arg1
 )`,
@@ -214,8 +200,7 @@ describe('prefer-single-line-call', () => {
       it('should skip already single-line calls', () => {
         ruleTester.run('prefer-single-line-call', rule, {
           valid: [
-            // 已经是单行的 - 不应报告 (Requirement 3.13)
-            'doSomething(arg1, arg2)',
+            'doSomething(arg1, arg2)', // 已经是单行的 - 不应报告 (Requirement 3.13)
             'console.log("hello")',
             'Math.max(1, 2, 3)',
           ],
@@ -231,8 +216,7 @@ describe('prefer-single-line-call', () => {
         ruleTester.run('prefer-single-line-call', rule, {
           valid: [],
           invalid: [
-            // 多行调用压缩 - 应该简化 (Requirement 3.1)
-            {
+            { // 多行调用压缩 - 应该简化 (Requirement 3.1)
               code: `doSomething(
   arg1,
   arg2
@@ -240,16 +224,14 @@ describe('prefer-single-line-call', () => {
               output: 'doSomething(arg1, arg2)',
               errors: [{messageId: 'preferSingleLineCall'}],
             },
-            // 方法调用
-            {
+            { // 方法调用
               code: `this.connection.send(
   JSON.stringify({type: 'shutdown'})
 )`,
               output: 'this.connection.send(JSON.stringify({type: \'shutdown\'}))',
               errors: [{messageId: 'preferSingleLineCall'}],
             },
-            // 简单对象参数
-            {
+            { // 简单对象参数
               code: `createUser(
   {name: 'test'}
 )`,
@@ -264,8 +246,7 @@ describe('prefer-single-line-call', () => {
         ruleTester.run('prefer-single-line-call', rule, {
           valid: [],
           invalid: [
-            // 尾逗号移除 - 应该简化 (Requirement 3.2)
-            {
+            { // 尾逗号移除 - 应该简化 (Requirement 3.2)
               code: `doSomething(
   arg1,
   arg2,
@@ -273,8 +254,7 @@ describe('prefer-single-line-call', () => {
               output: 'doSomething(arg1, arg2)',
               errors: [{messageId: 'preferSingleLineCall'}],
             },
-            // 单参数带尾逗号
-            {
+            { // 单参数带尾逗号
               code: `console.log(
   'hello',
 )`,
@@ -287,15 +267,12 @@ describe('prefer-single-line-call', () => {
     })
   })
 
-  // ==================== Schema Options Tests (Requirement 7.3) ====================
-  describe('schema options', () => {
+  describe('schema options', () => { // ==================== Schema Options Tests (Requirement 7.3) ====================
     describe('maxLineLength option', () => {
       it('should respect custom maxLineLength value', () => {
         ruleTester.run('prefer-single-line-call', rule, {
           valid: [
-            // With maxLineLength=30, this call would exceed the limit and should NOT be simplified
-            // "doSomething('argument1', 'argument2')" is 38 chars, exceeds 30
-            {
+            { // "doSomething('argument1', 'argument2')" is 38 chars, exceeds 30 // With maxLineLength=30, this call would exceed the limit and should NOT be simplified
               code: `doSomething(
   'argument1',
   'argument2'
@@ -304,8 +281,7 @@ describe('prefer-single-line-call', () => {
             },
           ],
           invalid: [
-            // With maxLineLength=100, this call fits and SHOULD be simplified
-            {
+            { // With maxLineLength=100, this call fits and SHOULD be simplified
               code: `doSomething(
   'arg1',
   'arg2'
@@ -321,9 +297,7 @@ describe('prefer-single-line-call', () => {
       it('should work with very short maxLineLength', () => {
         ruleTester.run('prefer-single-line-call', rule, {
           valid: [
-            // With maxLineLength=5, even short calls should NOT be simplified
-            // "fn('a')" is 7 chars, exceeds 5
-            {
+            { // "fn('a')" is 7 chars, exceeds 5 // With maxLineLength=5, even short calls should NOT be simplified
               code: `fn(
   'a'
 )`,
@@ -338,8 +312,7 @@ describe('prefer-single-line-call', () => {
         ruleTester.run('prefer-single-line-call', rule, {
           valid: [],
           invalid: [
-            // With maxLineLength=300, longer calls SHOULD be simplified
-            {
+            { // With maxLineLength=300, longer calls SHOULD be simplified
               code: `someFunctionWithALongerName(
   'firstArgument',
   'secondArgument',
