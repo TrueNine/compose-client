@@ -150,16 +150,14 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
       || String(ref.auditId).includes('deprecat')
     ) {
       category = 'security'
-    }
-    else if ( // Trust and legitimacy issues
+    } else if ( // Trust and legitimacy issues
       String(ref.auditId).includes('doctype')
       || String(ref.auditId).includes('charset')
       || String(ref.auditId).includes('legit')
       || String(ref.auditId).includes('trust')
     ) {
       category = 'trust'
-    }
-    else if ( // User experience issues
+    } else if ( // User experience issues
       String(ref.auditId).includes('user')
       || String(ref.auditId).includes('experience')
       || String(ref.auditId).includes('console')
@@ -167,8 +165,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
       || String(ref.auditId).includes('paste')
     ) {
       category = 'user-experience'
-    }
-    else if ( // Browser compatibility issues
+    } else if ( // Browser compatibility issues
       String(ref.auditId).includes('compat')
       || String(ref.auditId).includes('browser')
       || String(ref.auditId).includes('vendor')
@@ -228,8 +225,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
     if (issueCount > 0) {
       const penalty = Math.min(100, issueCount * 25) // More issues = lower score, max penalty of 25 points per issue
       categories[category].score = Math.max(0, 100 - penalty)
-    }
-    else categories[category].score = 100
+    } else categories[category].score = 100
   })
 
   const prioritized_recommendations: string[] = [] // Generate prioritized recommendations

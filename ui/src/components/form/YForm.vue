@@ -55,8 +55,7 @@ const formConfig = computed(() => { // In test environment, avoid passing Zod sc
   if (schema) {
     if (import.meta.env.NODE_ENV === 'test' || import.meta.env.VITEST) {
       if (!(schema as any).__type || (schema as any).__type === 'VeeTypedSchema') config.validationSchema = schema // In test environment, only add schema if it's not a Zod schema or if it's our custom wrapper
-    }
-    else config.validationSchema = schema // For Zod schemas in tests, we'll handle validation manually
+    } else config.validationSchema = schema // For Zod schemas in tests, we'll handle validation manually
   }
 
   return config

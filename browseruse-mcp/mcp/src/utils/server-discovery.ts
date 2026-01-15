@@ -106,8 +106,7 @@ export async function withServerConnection<T>(
           {type: 'text', text: `Error after reconnection attempt: ${retryErrorMessage}`},
         ], isError: true} as T
       }
-    }
-    else {
+    } else {
       logger.error('Rediscovery failed. Could not reconnect to server.')
       return {content: [
         {type: 'text', text: `Failed to reconnect to server: ${errorMessage}`},

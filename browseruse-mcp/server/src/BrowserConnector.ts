@@ -182,8 +182,7 @@ async function getAvailablePort( // Function to get available port starting with
             currentPort++
             attempts++
             resolve() // Continue to next iteration
-          }
-          else {
+          } else {
             reject(err) // Different error, propagate it
           }
         })
@@ -329,8 +328,7 @@ app.post('/extension-log', (req, res) => { // Endpoint for the extension to POST
           logger.info(`Network errors exceeded limit (${currentSettings.logLimit}), removing oldest entry`)
           networkErrors.shift()
         }
-      }
-      else {
+      } else {
         networkSuccess.push(dataObj as unknown as LogEntry)
         if (networkSuccess.length > currentSettings.logLimit) {
           logger.info(`Network success logs exceeded limit (${currentSettings.logLimit}), removing oldest entry`)
@@ -438,8 +436,7 @@ app.post('/current-url', (req, res) => { // Add endpoint for the extension to re
       previousUrl: oldUrl,
       updated: oldUrl !== currentUrl,
     })
-  }
-  else {
+  } else {
     logger.info('No URL provided in current-url request')
     res.status(400).json({status: 'error', message: 'No URL provided'})
   }
@@ -546,10 +543,8 @@ export class BrowserConnector {
               logger.info('Found callback, resolving promise')
               callback.resolve({data: data.data, path: data.path, autoPaste: data.autoPaste}) // Pass both the data, path and autoPaste to the resolver
               screenshotCallbacks.clear() // Clear all callbacks
-            }
-            else logger.info('No callbacks found for screenshot')
-          }
-          else if (data.type === 'screenshot-error') {
+            } else logger.info('No callbacks found for screenshot')
+          } else if (data.type === 'screenshot-error') {
             logger.info('Received screenshot error:', data.error) // Handle screenshot error
             const callbacks = [...screenshotCallbacks.values()]
             if (callbacks.length > 0) {
@@ -557,8 +552,7 @@ export class BrowserConnector {
               callback.reject(new Error(data.error != null && data.error !== '' ? data.error : 'Screenshot capture failed'))
               screenshotCallbacks.clear() // Clear all callbacks
             }
-          }
-          else logger.info('Unhandled message type:', data.type)
+          } else logger.info('Unhandled message type:', data.type)
         }
         catch (error: unknown) { logger.error('Error processing WebSocket message:', error) }
       })
@@ -874,14 +868,12 @@ export class BrowserConnector {
           if (error) {
             logger.error(`Browser Connector: Error executing AppleScript: ${error.message}`)
             logger.error(`Browser Connector: stderr: ${stderr}`)
-          }
-          else { // Don't fail the response; log the error and proceed
+          } else { // Don't fail the response; log the error and proceed
             logger.info(`Browser Connector: AppleScript executed successfully`)
             logger.info(`Browser Connector: stdout: ${stdout}`)
           }
         })
-      }
-      else {
+      } else {
         if (os.platform() === 'darwin' && !autoPaste) logger.info(`Browser Connector: Running on macOS but auto-paste is disabled, skipping AppleScript execution`)
         else logger.info(`Browser Connector: Not running on macOS, skipping AppleScript execution`)
       }
@@ -1050,8 +1042,7 @@ export class BrowserConnector {
       if (err.code === 'EADDRINUSE') {
         logger.error(`ERROR: Port ${PORT} is still in use, despite our checks!`)
         logger.error(`This might indicate another process started using this port after our check.`)
-      }
-      else logger.error(`Server error:`, err)
+      } else logger.error(`Server error:`, err)
       process.exit(1)
     })
 
@@ -1066,8 +1057,7 @@ export class BrowserConnector {
             if (err) {
               logger.error('Error closing HTTP server:', err)
               reject(err)
-            }
-            else {
+            } else {
               logger.info('HTTP server closed successfully')
               resolve()
             }

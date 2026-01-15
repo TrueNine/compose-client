@@ -50,13 +50,11 @@ function packageJsonContentReplace(content: string, options: Omit<PackageJsonOpt
       if (dirName !== '.' && dirName !== 'src') { // If index is not in the root (e.g., src/components/index.ts), use the dir name
         exportKey = `./${dirName.replace(/^src\/?/, '')}`
         baseOutputPath = `${dirName.replace(/^src\/?/, '')}/index`
-      }
-      else {
+      } else {
         exportKey = '.' // Root index file (index.ts or src/index.ts)
         baseOutputPath = 'index'
       }
-    }
-    else {
+    } else {
       const relativeDir = dirName === '.' || dirName === 'src' ? '' : `${dirName.replace(/^src\/?/, '')}/` // Non-index files
       exportKey = `./${relativeDir}${baseName}`
       baseOutputPath = `${relativeDir}${baseName}`
@@ -80,8 +78,7 @@ function packageJsonContentReplace(content: string, options: Omit<PackageJsonOpt
       if (dts && isTypeScriptEntry) { // Set top-level types directly if main entry is TS and dts is not false
         packageJson.types = exportValue.types.slice(2)
         packageJson.typings = exportValue.types.slice(2)
-      }
-      else if (!dts) {
+      } else if (!dts) {
         delete packageJson.types
         delete packageJson.typings
       }

@@ -209,8 +209,7 @@ async function setCustomBrowserExecutable(launchOptions: Record<string, unknown>
         launchOptions.product = 'firefox'
         logger.info('Setting product to firefox for Firefox browser')
       }
-    }
-    else {
+    } else {
       detectedBrowserPath = await findBrowserExecutablePath()
       launchOptions.executablePath = detectedBrowserPath
 
@@ -245,8 +244,7 @@ async function findBrowserExecutablePath(): Promise<string> {
     if (chrome.process.spawnfile) { // Chrome version data often contains the path
       chromePath = chrome.process.spawnfile
       logger.info('Found Chrome path from process.spawnfile')
-    }
-    else {
+    } else {
       logger.info('Trying to determine Chrome path using other methods') // In newer versions, it's directly accessible // Try to get the Chrome path from chrome-launcher
 
       const p = await import('node:process') // chrome-launcher has this inside but doesn't expose it directly // This will actually return the real Chrome path for us
@@ -286,8 +284,7 @@ async function findBrowserExecutablePath(): Promise<string> {
       || (error as NodeJS.ErrnoException)?.code === 'ERR_LAUNCHER_NOT_INSTALLED'
     ) {
       logger.info('Chrome not installed. Falling back to manual detection')
-    }
-    else {
+    } else {
       logger.error('Failed to find Chrome using chrome-launcher:', error)
       logger.info('Falling back to manual detection')
     }
@@ -483,8 +480,7 @@ function setupBrowserCleanupHandlers(
           logger.info(`Successfully removed directory: ${userDataDir}`)
         }
         catch (error: unknown) { logger.error(`Failed to remove directory ${userDataDir}:`, error) }
-      }
-      else logger.info(`Skipping cleanup for ${userDataDir} as new browser instance is active`)
+      } else logger.info(`Skipping cleanup for ${userDataDir} as new browser instance is active`)
     }, 5000) // 5-second delay for cleanup
 
     launchedBrowserWSEndpoint = null // Reset browser instance variables
@@ -612,8 +608,7 @@ export async function connectToHeadlessBrowser(
     if (options.viewport) { // Set custom viewport if specified
       await page.setViewport(options.viewport)
       logger.info(`Set viewport to ${options.viewport.width}x${options.viewport.height}`)
-    }
-    else if (options.emulateDevice) {
+    } else if (options.emulateDevice) {
       let viewport // Set common device emulation presets
       let {userAgent} = options
 

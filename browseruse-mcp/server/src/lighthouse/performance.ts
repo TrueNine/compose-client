@@ -180,8 +180,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
 
                 const imgMatch = /img\.[^> ]+/.exec(selector) // Try to extract image name from selector
                 if (imgMatch != null && metric.element_url == null) metric.element_url = imgMatch[0]
-              }
-              else if (String(path).includes(',SPAN') || String(path).includes(',P') || String(path).includes(',H')) metric.element_type = 'text'
+              } else if (String(path).includes(',SPAN') || String(path).includes(',P') || String(path).includes(',H')) metric.element_type = 'text'
             }
 
             if (node.nodeLabel != null) { // Try to extract text content if available
@@ -191,8 +190,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
               )
             }
           }
-        }
-        else if (itemData.node != null) { // Original handling for direct items
+        } else if (itemData.node != null) { // Original handling for direct items
           const node = itemData.node as Record<string, unknown>
 
           if (node.nodeLabel != null) {
@@ -203,8 +201,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
                 const match = /src="([^"]+)"/.exec(String(snippet))
                 if (match?.[1] != null) metric.element_url = match[1]
               }
-            }
-            else if (String(node.nodeLabel).startsWith('<video')) metric.element_type = 'video'
+            } else if (String(node.nodeLabel).startsWith('<video')) metric.element_type = 'video'
             else if (String(node.nodeLabel).startsWith('<h')) metric.element_type = 'heading'
             else metric.element_type = 'text'
 

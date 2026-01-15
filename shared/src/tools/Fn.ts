@@ -26,8 +26,7 @@ export function switchTo<T>(fn: () => T, switchBy: () => void): T {
       switchBy()
       return resolvedValue
     })
-  }
-  else switchBy()
+  } else switchBy()
 
   return result
 }
