@@ -1,4 +1,4 @@
-import type {Linter} from 'eslint'
+import type { Linter } from 'eslint'
 
 /**
  * @truenine 插件基础规则配置
@@ -23,8 +23,8 @@ export const baseRulesPreset: Linter.RulesRecord = {
   '@truenine/prefer-single-line-control': 'warn',
   '@truenine/prefer-single-line-call': 'warn',
   '@truenine/prefer-concise-arrow': 'warn',
-  '@truenine/prefer-guard-clause': ['warn', {minStatements: 2}],
-  '@truenine/prefer-separate-try-catch': 'warn',
+  '@truenine/prefer-guard-clause': ['warn', { minStatements: 2 }],
+  '@truenine/compact-try-catch': 'warn',
   '@truenine/prefer-void-zero': 'warn',
 
   // antfu 规则覆盖
@@ -34,13 +34,13 @@ export const baseRulesPreset: Linter.RulesRecord = {
   // 基础 JavaScript 规则
   'curly': ['error', 'multi-line'],
   'arrow-body-style': ['error', 'as-needed'],
-  'prefer-destructuring': ['error', {array: false, object: true}, {enforceForRenamedProperties: false}],
+  'prefer-destructuring': ['error', { array: false, object: true }, { enforceForRenamedProperties: false }],
   'prefer-template': 'error',
   'object-shorthand': ['error', 'always'],
   'prefer-exponentiation-operator': 'error',
   'prefer-object-has-own': 'error',
-  'no-else-return': ['error', {allowElseIf: false}],
-  'one-var': ['error', {initialized: 'never', uninitialized: 'consecutive'}],
+  'no-else-return': ['error', { allowElseIf: false }],
+  'one-var': ['error', { initialized: 'never', uninitialized: 'consecutive' }],
   'no-extra-boolean-cast': 'error',
   'no-return-await': 'error',
   'no-useless-catch': 'error',
@@ -51,7 +51,7 @@ export const baseRulesPreset: Linter.RulesRecord = {
   'no-useless-concat': 'error',
   'no-useless-escape': 'error',
   'no-useless-call': 'error',
-  'no-extra-parens': ['error', 'all', {nestedBinaryExpressions: false, ignoreJSX: 'multi-line', enforceForArrowConditionals: false}],
+  'no-extra-parens': ['error', 'all', { nestedBinaryExpressions: false, ignoreJSX: 'multi-line', enforceForArrowConditionals: false }],
 
   // unicorn 规则 - 现代 JavaScript 最佳实践
   'unicorn/prefer-includes': 'error',
