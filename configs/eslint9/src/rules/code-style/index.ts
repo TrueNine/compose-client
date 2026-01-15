@@ -1,8 +1,8 @@
-import type { Rule } from 'eslint'
+import type {Rule} from 'eslint'
+import compactTryCatch from './compact-try-catch'
 import preferConciseArrow from './concise-arrow'
 import preferGuardClause from './guard-clause'
 import preferLookupTable from './prefer-lookup-table'
-import compactTryCatch from './compact-try-catch'
 import preferVoidZero from './prefer-void-zero'
 
 /**
@@ -19,8 +19,8 @@ export const codeStyleRules: Record<string, Rule.RuleModule> = {
   'compact-try-catch': compactTryCatch,
 }
 
-export { default as preferConciseArrow } from './concise-arrow'
-export { default as preferGuardClause } from './guard-clause'
-export { default as preferLookupTable } from './prefer-lookup-table'
-export { default as compactTryCatch } from './compact-try-catch'
-export { default as preferVoidZero } from './prefer-void-zero'
+export {default as compactTryCatch} from './compact-try-catch'
+export {default as preferConciseArrow} from './concise-arrow'
+export {default as preferGuardClause} from './guard-clause'
+export {default as preferLookupTable} from './prefer-lookup-table'
+export {default as preferVoidZero} from './prefer-void-zero'

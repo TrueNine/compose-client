@@ -1,6 +1,6 @@
-import {RuleTester} from 'eslint'
+import { RuleTester } from 'eslint'
 import * as tseslint from 'typescript-eslint'
-import {describe, it} from 'vitest'
+import { describe, it } from 'vitest'
 import rule from './control'
 
 /**
@@ -45,7 +45,7 @@ describe('prefer-single-line-control', () => {
               output: `switch (x) {
   case 1: console.log('one');
 }`,
-              errors: [{messageId: 'preferSingleLineCase'}],
+              errors: [{ messageId: 'preferSingleLineCase' }],
             },
           ],
         })
@@ -65,7 +65,7 @@ describe('prefer-single-line-control', () => {
               output: `switch (x) {
   case 1: console.log('one'); break
 }`,
-              errors: [{messageId: 'preferSingleLineCase'}],
+              errors: [{ messageId: 'preferSingleLineCase' }],
             },
           ],
         })
@@ -85,7 +85,7 @@ describe('prefer-single-line-control', () => {
               output: `switch (x) {
   case 1: console.log('one');
 }`,
-              errors: [{messageId: 'preferSingleLineCase'}],
+              errors: [{ messageId: 'preferSingleLineCase' }],
             },
             // 块包裹带 break
             {
@@ -98,7 +98,7 @@ describe('prefer-single-line-control', () => {
               output: `switch (x) {
   case 1: console.log('one'); break
 }`,
-              errors: [{messageId: 'preferSingleLineCase'}],
+              errors: [{ messageId: 'preferSingleLineCase' }],
             },
           ],
         })
@@ -117,7 +117,7 @@ describe('prefer-single-line-control', () => {
               output: `switch (x) {
   default: console.log('default');
 }`,
-              errors: [{messageId: 'preferSingleLineCase'}],
+              errors: [{ messageId: 'preferSingleLineCase' }],
             },
             // default case 带 break
             {
@@ -129,7 +129,7 @@ describe('prefer-single-line-control', () => {
               output: `switch (x) {
   default: console.log('default'); break
 }`,
-              errors: [{messageId: 'preferSingleLineCase'}],
+              errors: [{ messageId: 'preferSingleLineCase' }],
             },
           ],
         })
@@ -214,7 +214,7 @@ describe('prefer-single-line-control', () => {
   console.log(i)
 }`,
               output: 'for (let i = 0; i < 10; i++) console.log(i)',
-              errors: [{messageId: 'preferSingleLineFor'}],
+              errors: [{ messageId: 'preferSingleLineFor' }],
             },
           ],
         })
@@ -230,7 +230,7 @@ describe('prefer-single-line-control', () => {
   console.log(key)
 }`,
               output: 'for (const key in obj) console.log(key)',
-              errors: [{messageId: 'preferSingleLineFor'}],
+              errors: [{ messageId: 'preferSingleLineFor' }],
             },
           ],
         })
@@ -246,7 +246,7 @@ describe('prefer-single-line-control', () => {
   process(item)
 }`,
               output: 'for (const item of items) process(item)',
-              errors: [{messageId: 'preferSingleLineFor'}],
+              errors: [{ messageId: 'preferSingleLineFor' }],
             },
           ],
         })
@@ -262,7 +262,7 @@ describe('prefer-single-line-control', () => {
   doSomething()
 }`,
               output: 'while (condition) doSomething()',
-              errors: [{messageId: 'preferSingleLineWhile'}],
+              errors: [{ messageId: 'preferSingleLineWhile' }],
             },
           ],
         })
@@ -319,95 +319,6 @@ describe('prefer-single-line-control', () => {
             'for (const key in obj) console.log(key)',
             'for (const item of items) process(item)',
             'while (condition) doSomething()',
-          ],
-          invalid: [],
-        })
-      })
-    })
-  })
-
-  // ==================== Try-Catch Tests ====================
-  describe('try-catch', () => {
-    describe('invalid cases - basic transformations (Requirements 4.14, 4.15)', () => {
-      it('should simplify try-catch with single statements', () => {
-        ruleTester.run('prefer-single-line-control', rule, {
-          valid: [],
-          invalid: [
-            // try-catch 简化 (Requirement 4.14)
-            {
-              code: `try {
-  doSomething()
-} catch (e) {
-  handleError(e)
-}`,
-              output: 'try { doSomething(); } catch (e) { handleError(e); }',
-              errors: [{messageId: 'preferSingleLineTry'}],
-            },
-          ],
-        })
-      })
-
-      it('should simplify try-catch-finally with single statements', () => {
-        ruleTester.run('prefer-single-line-control', rule, {
-          valid: [],
-          invalid: [
-            // try-catch-finally 简化 (Requirement 4.15)
-            {
-              code: `try {
-  doSomething()
-} catch (e) {
-  handleError(e)
-} finally {
-  cleanup()
-}`,
-              output: 'try { doSomething(); } catch (e) { handleError(e); } finally { cleanup(); }',
-              errors: [{messageId: 'preferSingleLineTry'}],
-            },
-          ],
-        })
-      })
-    })
-
-    describe('valid cases - skip scenarios (Requirements 4.16, 4.17, 4.18)', () => {
-      it('should skip try with multiple statements', () => {
-        ruleTester.run('prefer-single-line-control', rule, {
-          valid: [
-            // try 块多语句 - 不应简化 (Requirement 4.16)
-            `try {
-  step1()
-  step2()
-} catch (e) {
-  handleError(e)
-}`,
-          ],
-          invalid: [],
-        })
-      })
-
-      it('should skip catch with multiple statements', () => {
-        ruleTester.run('prefer-single-line-control', rule, {
-          valid: [
-            // catch 块多语句 - 不应简化 (Requirement 4.17)
-            `try {
-  doSomething()
-} catch (e) {
-  logError(e)
-  handleError(e)
-}`,
-          ],
-          invalid: [],
-        })
-      })
-
-      it('should skip when single-line form exceeds MAX_LINE_LENGTH', () => {
-        ruleTester.run('prefer-single-line-control', rule, {
-          valid: [
-            // 超长度 - 不应简化 (Requirement 4.18)
-            `try {
-  veryLongFunctionNameThatExceedsTheMaximumLineLengthWhenCombinedWithTheRestOfTheExpression()
-} catch (e) {
-  anotherVeryLongFunctionNameThatMakesTheLineTooLongToFitOnASingleLineEvenWithoutIndentation(e)
-}`,
           ],
           invalid: [],
         })

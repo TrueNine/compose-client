@@ -1,156 +1,202 @@
-import type { Rule } from 'eslint'
+import type {Rule} from 'eslint'
 
-/**
- * ESLint rule: compact-try-catch
- *
- * Enforce tiered layout for try-catch-finally:
- * 1. Blocks with 1 simple statement are compressed to single line.
- * 2. If the block is (or will be) single-line, the next keyword starts on a new line.
- * 3. If the block is multi-line, the next keyword joins the brace '}'.
- */
+type BlockNode = Rule.Node & {
+  body: Rule.Node[]
+}
+
+type CatchClause = Rule.Node & {
+  param: Rule.Node | null
+  body: BlockNode
+}
+
+type TryStatement = Rule.Node & {
+  block: BlockNode
+  handler: CatchClause | null
+  finalizer: BlockNode | null
+}
+
 const rule: Rule.RuleModule = {
-    meta: {
-        type: 'layout',
-        docs: {
-            description: 'Enforce tiered compact try-catch-finally layout',
-            recommended: false,
-        },
-        fixable: 'whitespace',
-        messages: {
-            compactCatch: 'Catch clause should be on the same line as the try block\'s closing brace',
-            compactFinally: 'Finally clause should be on the same line as the previous block\'s closing brace',
-            separateCatch: 'Catch clause should be on a new line when the try block is single-line',
-            separateFinally: 'Finally clause should be on a new line when the previous block is single-line',
-            compactBrace: 'Opening brace should be on the same line as the keyword',
-            preferSingleLine: 'Block should be compressed to a single line',
-        },
-        schema: [],
+  meta: {
+    type: 'layout',
+    docs: {
+      description: 'Enforce tiered compact try-catch-finally layout',
+      recommended: false,
     },
-    create(context) {
-        const { sourceCode } = context
+    fixable: 'whitespace',
+    messages: {
+      compactCatch: 'Catch clause should be on the same line as the try block\'s closing brace',
+      compactFinally: 'Finally clause should be on the same line as the previous block\'s closing brace',
+      separateCatch: 'Catch clause should be on a new line when the try block is single-line',
+      separateFinally: 'Finally clause should be on a new line when the previous block is single-line',
+      compactBrace: 'Opening brace should be on the same line as the keyword',
+      preferSingleLine: 'Block should be compressed to a single line',
+    },
+    schema: [],
+  },
+  create(context) {
+    const {sourceCode} = context
 
-        function getIndentation(node: any) {
-            return sourceCode.lines[node.loc!.start.line - 1].match(/^\s*/)?.[0] || ''
+    function getIndentation(node: Rule.Node): string {
+      const startLoc = node.loc
+      if (!startLoc) return ''
+      const line = sourceCode.lines[startLoc.start.line - 1]
+      const match = /^\s*/.exec(line)
+      return match?.[0] ?? ''
+    }
+
+    function isSingleLine(node: Rule.Node): boolean {
+      const {loc} = node
+      if (!loc) return false
+      return loc.start.line === loc.end.line
+    }
+
+    function canBeSingleLine(block: Rule.Node | null): boolean {
+      if (block?.type !== 'BlockStatement') return false
+      const bNode = block as BlockNode
+      const {body} = bNode
+      const comments = sourceCode.getCommentsInside(block)
+
+      if (body.length > 1) return false
+      if (body.length === 1) {
+        const stmt = body[0]
+        const allowed = ['ExpressionStatement', 'ReturnStatement', 'ThrowStatement', 'BreakStatement', 'ContinueStatement']
+        if (!allowed.includes(stmt.type)) return false
+        const stmtLoc = stmt.loc
+        if (!stmtLoc || stmtLoc.start.line !== stmtLoc.end.line) return false
+        if (sourceCode.getText(stmt).length > 60) return false
+      }
+
+      // If only comments, or 1 statement + some comments, check total length
+      if (comments.length <= 0) return true
+
+      const totalCommentLength = comments.reduce((acc, c) => acc + c.value.length + 6, 0)
+      if (totalCommentLength > 80) return false
+      return true
+    }
+
+    function getCompactBlockText(block: BlockNode): string {
+      const {body} = block
+      const comments = sourceCode.getCommentsInside(block)
+      const parts: string[] = []
+
+      if (comments.length > 0) {
+        for (const comment of comments) {
+          if (comment.type === 'Line') parts.push(`/* ${comment.value.trim()} */`)
+          else parts.push(`/*${comment.value}*/`)
+        }
+      }
+
+      if (body.length > 0) {
+        const stmtText = sourceCode.getText(body[0]).trim().replace(/;$/, '')
+        parts.push(`${stmtText};`)
+      }
+
+      if (parts.length === 0) return '{}'
+      return `{ ${parts.join(' ')} }`
+    }
+
+    return {
+      TryStatement(node: Rule.Node): void {
+        const tryNode = node as unknown as TryStatement
+        const indentation = getIndentation(node)
+        const tryBlock = tryNode.block
+        const tryCanBeSingle = canBeSingleLine(tryBlock)
+
+        // Try compression
+        if (tryCanBeSingle && !isSingleLine(tryBlock)) {
+          context.report({
+            node: tryBlock,
+            messageId: 'preferSingleLine',
+            fix: fixer => fixer.replaceTextRange(tryBlock.range as [number, number], getCompactBlockText(tryBlock)),
+          })
         }
 
-        function isSingleLine(node: any) {
-            return node.loc!.start.line === node.loc!.end.line
-        }
+        // Catch Handling
+        const {handler} = tryNode
+        if (handler !== null) {
+          const catchToken = sourceCode.getFirstToken(handler)
+          const tryCloseBrace = sourceCode.getLastToken(tryBlock)
+          const catchBlock = handler.body
+          const catchCanBeSingle = canBeSingleLine(catchBlock)
 
-        function canBeSingleLine(block: any) {
-            if (!block || block.type !== 'BlockStatement') return false
-            const body = block.body
-            if (body.length > 1) return false
-            if (body.length === 1) {
-                const stmt = body[0]
-                const allowed = ['ExpressionStatement', 'ReturnStatement', 'ThrowStatement', 'BreakStatement', 'ContinueStatement']
-                if (!allowed.includes(stmt.type)) return false
-                if (stmt.loc!.start.line !== stmt.loc!.end.line) return false
-                if (sourceCode.getText(stmt).length > 60) return false
+          if (catchToken !== null && tryCloseBrace !== null) {
+            // Compression
+            if (catchCanBeSingle && !isSingleLine(catchBlock)) {
+              context.report({
+                node: catchBlock,
+                messageId: 'preferSingleLine',
+                fix: fixer => fixer.replaceTextRange(catchBlock.range as [number, number], getCompactBlockText(catchBlock)),
+              })
             }
-            if (sourceCode.getCommentsInside(block).length > 0) return false
-            return true
+
+            // Separation logic (Potential based to report in pass 1)
+            const finalTryIsSingle = isSingleLine(tryBlock) || tryCanBeSingle
+            const spaceBefore = sourceCode.getTokenBefore(catchToken)
+            if (spaceBefore !== null) {
+              if (finalTryIsSingle) {
+                if (tryCloseBrace.loc.end.line === catchToken.loc.start.line) {
+                  context.report({
+                    node: catchToken,
+                    messageId: 'separateCatch',
+                    fix: fixer => fixer.replaceTextRange([spaceBefore.range[1], catchToken.range[0]], `\n${indentation}`),
+                  })
+                }
+              } else {
+                if (tryCloseBrace.loc.end.line !== catchToken.loc.start.line) {
+                  context.report({
+                    node: catchToken,
+                    messageId: 'compactCatch',
+                    fix: fixer => fixer.replaceTextRange([spaceBefore.range[1], catchToken.range[0]], ' '),
+                  })
+                }
+              }
+            }
+          }
         }
 
-        function getCompactBlockText(block: any) {
-            const body = block.body
-            if (body.length === 0) return '{}'
-            const stmtText = sourceCode.getText(body[0]).trim().replace(/;$/, '')
-            return `{ ${stmtText}; }`
+        // Finally Handling
+        const {finalizer} = tryNode
+        if (finalizer === null) return
+
+        const finallyBlock = finalizer
+        const finallyToken = sourceCode.getFirstTokenBetween(tryNode.handler ?? tryNode.block, finallyBlock, t => t.value === 'finally')
+        const previousBlock = tryNode.handler !== null ? tryNode.handler.body : tryNode.block
+        const prevCloseBrace = sourceCode.getLastToken(previousBlock)
+        const finallyCanBeSingle = canBeSingleLine(finallyBlock)
+        const prevCanBeSingle = canBeSingleLine(previousBlock)
+        if (finallyToken === null && prevCloseBrace !== null) return
+
+        if (finallyCanBeSingle && !isSingleLine(finallyBlock)) {
+          context.report({
+            node: finallyBlock,
+            messageId: 'preferSingleLine',
+            fix: fixer => fixer.replaceTextRange(finallyBlock.range as [number, number], getCompactBlockText(finallyBlock)),
+          })
         }
-
-        return {
-            TryStatement(node: any) {
-                const indentation = getIndentation(node)
-                const tryBlock = node.block
-                const tryCanBeSingle = canBeSingleLine(tryBlock)
-
-                // Try compression
-                if (tryCanBeSingle && !isSingleLine(tryBlock)) {
-                    context.report({
-                        node: tryBlock,
-                        messageId: 'preferSingleLine',
-                        fix: fixer => fixer.replaceTextRange(tryBlock.range, getCompactBlockText(tryBlock)),
-                    })
-                }
-
-                // Catch Handling
-                if (node.handler) {
-                    const catchToken = sourceCode.getFirstToken(node.handler)!
-                    const tryCloseBrace = sourceCode.getLastToken(tryBlock)!
-                    const catchBlock = node.handler.body
-                    const catchCanBeSingle = canBeSingleLine(catchBlock)
-
-                    // Compression
-                    if (catchCanBeSingle && !isSingleLine(catchBlock)) {
-                        context.report({
-                            node: catchBlock,
-                            messageId: 'preferSingleLine',
-                            fix: fixer => fixer.replaceTextRange(catchBlock.range, getCompactBlockText(catchBlock)),
-                        })
-                    }
-
-                    // Separation logic (Potential based to report in pass 1)
-                    const finalTryIsSingle = isSingleLine(tryBlock) || tryCanBeSingle
-                    if (finalTryIsSingle) {
-                        if (tryCloseBrace.loc.end.line === catchToken.loc.start.line) {
-                            // To avoid conflict with try compression, we use catch token as the node and insert BEFORE it
-                            context.report({
-                                node: catchToken,
-                                messageId: 'separateCatch',
-                                fix: fixer => fixer.insertTextBefore(catchToken, `\n${indentation}`),
-                            })
-                        }
-                    } else {
-                        if (tryCloseBrace.loc.end.line !== catchToken.loc.start.line) {
-                            context.report({
-                                node: catchToken,
-                                messageId: 'compactCatch',
-                                fix: fixer => fixer.replaceTextRange([tryCloseBrace.range[1], catchToken.range[0]], ' '),
-                            })
-                        }
-                    }
-                }
-
-                // Finally Handling
-                if (node.finalizer) {
-                    const finallyBlock = node.finalizer
-                    const finallyToken = sourceCode.getFirstTokenBetween(node.handler ?? node.block, finallyBlock, t => t.value === 'finally')!
-                    const previousBlock = node.handler ? node.handler.body : node.block
-                    const prevCloseBrace = sourceCode.getLastToken(previousBlock)!
-                    const finallyCanBeSingle = canBeSingleLine(finallyBlock)
-                    const prevCanBeSingle = canBeSingleLine(previousBlock)
-
-                    if (finallyCanBeSingle && !isSingleLine(finallyBlock)) {
-                        context.report({
-                            node: finallyBlock,
-                            messageId: 'preferSingleLine',
-                            fix: fixer => fixer.replaceTextRange(finallyBlock.range, getCompactBlockText(finallyBlock)),
-                        })
-                    }
-
-                    const finalPrevIsSingle = isSingleLine(previousBlock) || prevCanBeSingle
-                    if (finalPrevIsSingle) {
-                        if (prevCloseBrace.loc.end.line === finallyToken.loc.start.line) {
-                            context.report({
-                                node: finallyToken,
-                                messageId: 'separateFinally',
-                                fix: fixer => fixer.insertTextBefore(finallyToken, `\n${indentation}`),
-                            })
-                        }
-                    } else {
-                        if (prevCloseBrace.loc.end.line !== finallyToken.loc.start.line) {
-                            context.report({
-                                node: finallyToken,
-                                messageId: 'compactFinally',
-                                fix: fixer => fixer.replaceTextRange([prevCloseBrace.range[1], finallyToken.range[0]], ' '),
-                            })
-                        }
-                    }
-                }
-            },
+        const finalPrevIsSingle = isSingleLine(previousBlock) || prevCanBeSingle
+        const spaceBefore = sourceCode.getTokenBefore(finallyToken)
+        if (spaceBefore !== null) {
+          if (finalPrevIsSingle) {
+            if (prevCloseBrace.loc.end.line === finallyToken.loc.start.line) {
+              context.report({
+                node: finallyToken,
+                messageId: 'separateFinally',
+                fix: fixer => fixer.replaceTextRange([spaceBefore.range[1], finallyToken.range[0]], `\n${indentation}`),
+              })
+            }
+          } else {
+            if (prevCloseBrace.loc.end.line !== finallyToken.loc.start.line) {
+              context.report({
+                node: finallyToken,
+                messageId: 'compactFinally',
+                fix: fixer => fixer.replaceTextRange([spaceBefore.range[1], finallyToken.range[0]], ' '),
+              })
+            }
+          }
         }
-    },
+      },
+    }
+  },
 }
 
 export default rule
