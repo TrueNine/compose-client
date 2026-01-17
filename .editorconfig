@@ -18,3 +18,6 @@ tab_width = 1
 
 [Makefile]
 indent_style = tab
+
+[.gitmodules]
+indent_style = tab
