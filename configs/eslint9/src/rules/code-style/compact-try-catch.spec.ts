@@ -16,40 +16,96 @@ describe('compact-try-catch', () => {
     it('should allow compact layout', () => {
       ruleTester.run('compact-try-catch', rule, {
         valid: [
-          'try {\n  a();\n  b();\n} catch (e) {\n  c();\n  d();\n}', // Multi-line joined (Standard 1TBS)
-          'try { a(); } catch (e) { b(); }', // Single-line joined (Standard 1TBS with allowSingleLine)
-          'try { a(); } catch (e) { /* ignore */ }', // Single-line with comments
+          'try {\n  a();\n  b();\n} catch (e) {\n  c();\n  d();\n}',
+          'try { a(); } catch (e) { b(); }',
+          'try { a(); } catch (e) {}',
+          'try {\n  const x = getAppBaseInfo();\n  if (x.theme) theme.value = x.theme;\n} catch (error) { console.error("error:", error); }',
         ],
         invalid: [],
       })
     })
   })
 
-  describe('invalid - compression with comments', () => {
-    it('should compress catch with only comments', () => {
+  describe('invalid - independent block compression', () => {
+    it('should compress try block independently', () => {
       ruleTester.run('compact-try-catch', rule, {
         valid: [],
         invalid: [
           {
-            code: 'try { foo(); } catch (e) {\n  // ignore\n}', // Input has catch on same line but multi-line body
-            output: 'try { foo(); } catch (e) { /* ignore */ }',
+            code: 'try {\n  foo();\n} catch (e) {\n  bar();\n  baz();\n}',
+            output: 'try { foo(); } catch (e) {\n  bar();\n  baz();\n}',
+            errors: [{messageId: 'preferSingleLineTry'}],
+          },
+        ],
+      })
+    })
+
+    it('should compress catch block independently when try is multi-line', () => {
+      ruleTester.run('compact-try-catch', rule, {
+        valid: [],
+        invalid: [
+          {
+            code: 'try {\n  const appBaseInfo = getAppBaseInfo();\n  if (appBaseInfo.theme) systemTheme.value = appBaseInfo.theme;\n} catch (error) {\n  console.error("获取系统主题失败:", error);\n}',
+            output: 'try {\n  const appBaseInfo = getAppBaseInfo();\n  if (appBaseInfo.theme) systemTheme.value = appBaseInfo.theme;\n} catch (error) { console.error("获取系统主题失败:", error); }',
+            errors: [{messageId: 'preferSingleLineCatch'}],
+          },
+        ],
+      })
+    })
+
+    it('should compress finally block independently when try is multi-line', () => {
+      ruleTester.run('compact-try-catch', rule, {
+        valid: [],
+        invalid: [
+          {
+            code: 'try {\n  foo();\n  bar();\n} finally {\n  cleanup();\n}',
+            output: 'try {\n  foo();\n  bar();\n} finally { cleanup(); }',
+            errors: [{messageId: 'preferSingleLineFinally'}],
+          },
+        ],
+      })
+    })
+
+    it('should compress finally block independently when catch is multi-line', () => {
+      ruleTester.run('compact-try-catch', rule, {
+        valid: [],
+        invalid: [
+          {
+            code: 'try { foo(); } catch (e) {\n  bar();\n  baz();\n} finally {\n  cleanup();\n}',
+            output: 'try { foo(); } catch (e) {\n  bar();\n  baz();\n} finally { cleanup(); }',
+            errors: [{messageId: 'preferSingleLineFinally'}],
+          },
+        ],
+      })
+    })
+
+    it('should compress both catch and finally independently', () => {
+      ruleTester.run('compact-try-catch', rule, {
+        valid: [],
+        invalid: [
+          {
+            code: 'try {\n  foo();\n  bar();\n} catch (e) {\n  log(e);\n} finally {\n  cleanup();\n}',
+            output: 'try {\n  foo();\n  bar();\n} catch (e) { log(e); } finally { cleanup(); }',
             errors: [
-              {messageId: 'preferSingleLine'},
+              {messageId: 'preferSingleLineCatch'},
+              {messageId: 'preferSingleLineFinally'},
             ],
           },
         ],
       })
     })
 
-    it('should compress finally with only comments', () => {
+    it('should compress all three blocks when possible', () => {
       ruleTester.run('compact-try-catch', rule, {
         valid: [],
         invalid: [
           {
-            code: 'try { foo(); } finally {\n  // cleanup\n}',
-            output: 'try { foo(); } finally { /* cleanup */ }',
+            code: 'try {\n  foo();\n} catch (e) {\n  bar();\n} finally {\n  baz();\n}',
+            output: 'try { foo(); } catch (e) { bar(); } finally { baz(); }',
             errors: [
-              {messageId: 'preferSingleLine'},
+              {messageId: 'preferSingleLineTry'},
+              {messageId: 'preferSingleLineCatch'},
+              {messageId: 'preferSingleLineFinally'},
             ],
           },
         ],
@@ -63,20 +119,60 @@ describe('compact-try-catch', () => {
         valid: [],
         invalid: [
           {
-            code: 'try {\n  a();\n  b();\n}\ncatch (e) { c(); }', // If try is multi-line, catch should be joined
+            code: 'try {\n  a();\n  b();\n}\ncatch (e) { c(); }',
             output: 'try {\n  a();\n  b();\n} catch (e) { c(); }',
-            errors: [
-              {messageId: 'compactCatch'},
-            ],
+            errors: [{messageId: 'compactCatch'}],
           },
           {
-            code: 'try { a(); } catch (e) {\n  b();\n  c();\n}\nfinally { d(); }', // If catch is multi-line, finally should be joined
+            code: 'try { a(); } catch (e) {\n  b();\n  c();\n}\nfinally { d(); }',
             output: 'try { a(); } catch (e) {\n  b();\n  c();\n} finally { d(); }',
-            errors: [
-              {messageId: 'compactFinally'},
-            ],
+            errors: [{messageId: 'compactFinally'}],
           },
         ],
+      })
+    })
+
+    it('should compress try and enforce } catch on same line when try becomes single-line', () => {
+      ruleTester.run('compact-try-catch', rule, {
+        valid: [],
+        invalid: [
+          {
+            code: 'try {\n  foo();\n}\ncatch (e) { bar(); }',
+            output: 'try { foo(); }\ncatch (e) { bar(); }',
+            errors: [{messageId: 'preferSingleLineTry'}],
+          },
+        ],
+      })
+    })
+  })
+
+  describe('edge cases', () => {
+    it('should handle empty blocks', () => {
+      ruleTester.run('compact-try-catch', rule, {
+        valid: [
+          'try {} catch (e) {}',
+          'try { foo(); } catch (e) {}',
+        ],
+        invalid: [],
+      })
+    })
+
+    it('should not compress blocks with complex statements', () => {
+      ruleTester.run('compact-try-catch', rule, {
+        valid: [
+          'try {\n  if (x) { y(); }\n} catch (e) { bar(); }',
+          'try { foo(); } catch (e) {\n  if (x) { y(); }\n}',
+        ],
+        invalid: [],
+      })
+    })
+
+    it('should not compress blocks exceeding max length', () => {
+      ruleTester.run('compact-try-catch', rule, {
+        valid: [
+          `try {\n  veryLongFunctionNameThatExceedsTheMaximumLineLengthWhenCompressedToSingleLineWithAllItsParametersAndEverything();\n} catch (e) { bar(); }`,
+        ],
+        invalid: [],
       })
     })
   })
