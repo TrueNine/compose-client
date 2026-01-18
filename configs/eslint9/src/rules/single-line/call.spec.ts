@@ -208,6 +208,75 @@ describe('prefer-single-line-call', () => {
         })
       })
     })
+
+    describe('skip scenarios - new constraints (Lines > 4, Chars > 80)', () => {
+      it('should skip calls spanning more than 4 lines', () => {
+        ruleTester.run('prefer-single-line-call', rule, {
+          valid: [
+            {
+              code: `
+                functionName(
+                  arg1,
+                  arg2,
+                  arg3,
+                  arg4
+                )
+              `, // 5 lines of call content -> inclusive 2-7 = 6 lines?
+            }, // Count = End - Start + 1 // End line: ) // Start line: functionName( // Let's make sure it is > 4.
+            {
+              code: `
+                test(
+                  1,
+                  2,
+                  3,
+                  4
+                )
+              `, // 6 lines strictly > 4. Should be ignored.
+            },
+          ],
+          invalid: [
+            {
+              code: `
+                test(
+                  1,
+                  2
+                )
+              `, // 4 lines (inclusive). Should be optimized.
+              output: `
+                test(1, 2)
+              `,
+              errors: [{messageId: 'preferSingleLineCall'}],
+            },
+          ],
+        })
+      })
+
+      it('should skip calls where single-line result exceeds 80 chars', () => {
+        const longArg = 'a'.repeat(75)
+        ruleTester.run('prefer-single-line-call', rule, {
+          valid: [
+            `
+              longFunction(
+                '${longArg}'
+              )
+            `, // Result: longFunction('aaaa...') > 80 chars. Should skip.
+          ],
+          invalid: [
+            {
+              code: `
+                 short(
+                   'val'
+                 )
+               `,
+              output: `
+                 short('val')
+               `, // Result < 80 chars. Should optimize.
+              errors: [{messageId: 'preferSingleLineCall'}],
+            },
+          ],
+        })
+      })
+    })
   })
 
   describe('invalid cases', () => {
@@ -314,8 +383,7 @@ describe('prefer-single-line-call', () => {
           invalid: [
             { // With maxLineLength=300, longer calls SHOULD be simplified
               code: `someFunctionWithALongerName(
-  'firstArgument',
-  'secondArgument',
+  'firstArgument', 'secondArgument',
   'thirdArgument'
 )`,
               output: 'someFunctionWithALongerName(\'firstArgument\', \'secondArgument\', \'thirdArgument\')',

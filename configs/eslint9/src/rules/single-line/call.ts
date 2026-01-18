@@ -68,9 +68,13 @@ const rule: Rule.RuleModule = {
         const callNode = node as Rule.Node & {callee: Rule.Node, arguments: Rule.Node[]}
         if (!isNodeMultiLine(callNode) || hasComments(callNode) || hasComplexArgument(callNode.arguments) || isPartOfChainedCall(callNode) || isChainedMethodCall(callNode)) return
 
+        if (callNode.loc!.end.line - callNode.loc!.start.line + 1 > 4) return // 检查行数是否超过 4 行
+
         const calleeText = sourceCode.getText(callNode.callee)
         const argsText = callNode.arguments.map(arg => normalizeText(sourceCode.getText(arg))).join(', ')
         const singleLineText = `${calleeText}(${argsText})`
+
+        if (singleLineText.length > 80) return // 检查字数是否超过 80
         if (getIndent(callNode).length + singleLineText.length > maxLineLength) return /* 如果超过最大行长度，不修复 */
 
         context.report({node, messageId: 'preferSingleLineCall', fix: fixer => fixer.replaceText(node, singleLineText)})

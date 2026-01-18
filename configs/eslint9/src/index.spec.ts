@@ -64,7 +64,19 @@ describe('property-Based Tests', () => {
     })
 
     it('should export all expected rule names', () => {
-      const expectedRuleNames = ['prefer-single-line-if', 'prefer-single-line-control', 'prefer-single-line-call', 'prefer-concise-arrow', 'prefer-guard-clause'] /* Expected rules based on the directory structure */
+      const expectedRuleNames = [
+        'prefer-single-line-if',
+        'prefer-single-line-control',
+        'prefer-single-line-call',
+        'prefer-concise-arrow',
+        'prefer-guard-clause',
+        'prefer-void-zero',
+        'prefer-lookup-table',
+        'compact-try-catch',
+        'beside-comment',
+        'prefer-separate-try-catch',
+        'brace-style',
+      ]
       for (const ruleName of expectedRuleNames) {
         expect(rules).toHaveProperty(ruleName)
         expect(typeof rules[ruleName]).toBe('object')
@@ -104,7 +116,7 @@ describe('property-Based Tests', () => {
         expect(typeof ruleModule).toBe('object')
         expect(ruleModule).toHaveProperty('create')
         expect(typeof ruleModule.create).toBe('function')
-        expect(ruleName).toMatch(/^(prefer|beside|compact)-[a-z-]+$/) /* Rule name should follow expected naming convention */
+        expect(ruleName).toMatch(/^(prefer|beside|compact|brace)-[a-z-]+$/) /* Rule name should follow expected naming convention */
       }
     })
   })

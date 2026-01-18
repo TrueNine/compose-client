@@ -29,7 +29,7 @@ const rule: Rule.RuleModule = {
 
           const trimmedValue = comment.value.trim()
           if (comment.type === 'Line' && (trimmedValue.startsWith('/') || trimmedValue.startsWith('!'))) continue /* Ignore /// <reference ... /> tags, shebangs */
-          if (trimmedValue.startsWith('ts-') || trimmedValue.startsWith('eslint-')) continue
+          if (trimmedValue.startsWith('ts-') || trimmedValue.startsWith('eslint-') || trimmedValue.startsWith('#')) continue
 
           const {loc, range} = comment
           if (!loc || !range) continue

@@ -116,16 +116,19 @@ describe('compact-try-catch', () => {
   describe('invalid - layout', () => {
     it('should report incorrect layout for multi-line blocks', () => {
       ruleTester.run('compact-try-catch', rule, {
-        valid: [],
+        valid: [
+          'try {\n  a();\n  b();\n}\ncatch (e) { c(); }',
+          'try { a(); } catch (e) {\n  b();\n  c();\n}\nfinally { d(); }',
+        ],
         invalid: [
           {
-            code: 'try {\n  a();\n  b();\n}\ncatch (e) { c(); }',
-            output: 'try {\n  a();\n  b();\n} catch (e) { c(); }',
+            code: 'try {\n  a();\n  b();\n}\ncatch (e) {\n  c();\n  d();\n}',
+            output: 'try {\n  a();\n  b();\n} catch (e) {\n  c();\n  d();\n}',
             errors: [{messageId: 'compactCatch'}],
           },
           {
-            code: 'try { a(); } catch (e) {\n  b();\n  c();\n}\nfinally { d(); }',
-            output: 'try { a(); } catch (e) {\n  b();\n  c();\n} finally { d(); }',
+            code: 'try { a(); } catch (e) {\n  b();\n  c();\n}\nfinally {\n  d();\n  e();\n}',
+            output: 'try { a(); } catch (e) {\n  b();\n  c();\n} finally {\n  d();\n  e();\n}',
             errors: [{messageId: 'compactFinally'}],
           },
         ],

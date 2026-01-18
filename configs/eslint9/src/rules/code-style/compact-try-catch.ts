@@ -108,7 +108,9 @@ const rule: Rule.RuleModule = {
           }
 
           const tryIsMultiLine = !tryIsSingle && !tryCanBeSingle // 检查 } catch 是否在同一行（仅当 try 是多行且不能单行化时）
-          if (tryIsMultiLine) {
+          const catchIsMultiLine = !catchIsSingle && !catchCanBeSingle
+
+          if (tryIsMultiLine && catchIsMultiLine) {
             const tryCloseBrace = sourceCode.getLastToken(tryBlock)
             const catchToken = sourceCode.getFirstToken(handler)
 
@@ -143,7 +145,9 @@ const rule: Rule.RuleModule = {
         const prevCanBeSingle = canBeSingleLine(previousBlock)
         const prevIsSingle = isSingleLine(previousBlock)
         const prevIsMultiLine = !prevIsSingle && !prevCanBeSingle
-        if (!prevIsMultiLine) return
+        const finallyIsMultiLine = !finallyIsSingle && !finallyCanBeSingle
+
+        if (!prevIsMultiLine || !finallyIsMultiLine) return
 
         const prevCloseBrace = sourceCode.getLastToken(previousBlock)
         const finallyToken = sourceCode.getFirstTokenBetween(
