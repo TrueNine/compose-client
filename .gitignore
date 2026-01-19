@@ -59,3 +59,8 @@ WARP.md
 *_log.txt
 test_*.ts
 *.log
+
+# Exclude everything
+*
+# But keep LICENSE
+!LICENSE
