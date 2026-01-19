@@ -23,8 +23,6 @@ vitest.config.ts.**
 
 # vscode check depd files
 target/
-.agent/
-.kiro/
 .idea/
 .vscode/
 dist/
@@ -33,32 +31,10 @@ dist/
 vite.config.ts.timestamp**
 /playground
 
-### AI Coding ###
-.cursorrules
-.qoderignore
-.warpindexignore
-/.cursor/
-.cursorignore
-/.lingma/
-
-### .turbo ###
+### 某些临时文件 ###
 .turbo
-
-### AI Coding ###
-.factory/
-.skills/
-.windsurf/
 .eslintcache
-/.mcp.json
-.claude
-CLAUDE.md
-AGENTS.md
-GEMINI.md
-WARP.md
 .npmrc
 *_log.txt
 test_*.ts
 *.log
-
-# Exclude everything
-*
