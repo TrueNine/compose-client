@@ -1,5 +1,5 @@
 export async function promiseAll<T extends Record<string, Promise<unknown>>>(
-  promiseObject: T,
+  promiseObject: T
 ): Promise<{[K in keyof T]: Awaited<T[K]>} | null> {
   const entries = Object.entries(promiseObject)
   if (entries.length === 0) return null

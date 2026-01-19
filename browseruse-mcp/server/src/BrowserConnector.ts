@@ -81,7 +81,7 @@ function convertPathForCurrentPlatform(inputPath: string): string {
         'kali',
         'openSUSE',
         'SLES',
-        'Fedora',
+        'Fedora'
       ]
 
       let distIndex = -1 // Find the distribution name in the path
@@ -148,7 +148,7 @@ let currentSettings: Settings = { // Add settings state
   stringSizeLimit: 500,
   maxLogSize: 20000,
   screenshotPath: getDefaultDownloadsFolder(),
-  serverHost: process.env.SERVER_HOST ?? '0.0.0.0', // Default to all interfaces // Add server host configuration
+  serverHost: process.env.SERVER_HOST ?? '0.0.0.0' // Default to all interfaces // Add server host configuration
 }
 
 let selectedElement: unknown = null // Add new storage for selected element
@@ -166,7 +166,7 @@ const screenshotCallbacks = new Map<string, ScreenshotCallback>()
 
 async function getAvailablePort( // Function to get available port starting with the given port
   startPort: number,
-  maxAttempts: number = 10,
+  maxAttempts: number = 10
 ): Promise<number> {
   let currentPort = startPort
   let attempts = 0
@@ -207,7 +207,7 @@ async function getAvailablePort( // Function to get available port starting with
   }
 
   throw new Error( // If we've exhausted all attempts, throw an error
-    `Could not find an available port after ${maxAttempts} attempts starting from ${startPort}`,
+    `Could not find an available port after ${maxAttempts} attempts starting from ${startPort}`
   )
 }
 
@@ -434,7 +434,7 @@ app.post('/current-url', (req, res) => { // Add endpoint for the extension to re
       url: currentUrl,
       tabId: currentTabId,
       previousUrl: oldUrl,
-      updated: oldUrl !== currentUrl,
+      updated: oldUrl !== currentUrl
     })
   } else {
     logger.info('No URL provided in current-url request')
@@ -478,7 +478,7 @@ export class BrowserConnector {
         logger.info('Browser Connector: Request body:', req.body)
         logger.info('Browser Connector: Active WebSocket connection:', !!this.activeConnection)
         await this.captureScreenshot(req, res)
-      },
+      }
     )
 
     this.setupAccessibilityAudit() // Set up accessibility audit endpoint
@@ -493,7 +493,7 @@ export class BrowserConnector {
       'upgrade',
       (request: IncomingMessage, socket: Socket, head: Buffer) => {
         if (request.url === '/extension-ws') this.wss.handleUpgrade(request, socket, head, (ws: WebSocket) => { this.wss.emit('connection', ws, request) })
-      },
+      }
     )
 
     this.wss.on('connection', (ws: WebSocket) => {
@@ -601,11 +601,9 @@ export class BrowserConnector {
           if (error instanceof Error) res.status(500).json({error: error.message})
           else res.status(500).json({error: 'An unknown error occurred'})
         }
-      },
+      }
     )
   }
-
-  //   // Implementation omitted - use captureScreenshot() instead // private async _handleScreenshot(_req: express.Request, _res: express.Response): Promise<express.Response<any, Record<string, any>> | undefined> { // Keeping it for potential future use or backward compatibility // Note: This method has been superseded by captureScreenshot() method // }
 
   private async getUrlForAudit(): Promise<string | null> { // Updated method to get URL for audits with improved connection tracking and waiting
     try {
@@ -705,7 +703,7 @@ export class BrowserConnector {
         logger.error(`Browser Connector: Error creating directory: ${targetPath}`, err)
         throw new Error(
           `Failed to create screenshot directory: ${err instanceof Error ? err.message : String(err)
-          }`,
+          }`
         )
       }
 
@@ -724,7 +722,7 @@ export class BrowserConnector {
         logger.error(`Browser Connector: Error saving screenshot to: ${fullPath}`, err)
         throw new Error(
           `Failed to save screenshot: ${err instanceof Error ? err.message : String(err)
-          }`,
+          }`
         )
       }
 
@@ -939,16 +937,10 @@ export class BrowserConnector {
     this.setupAuditEndpoint(AuditCategory.BEST_PRACTICES, '/best-practices-audit', runBestPracticesAudit)
   }
 
-  /**
-   * Generic method to set up an audit endpoint
-   * @param auditType The type of audit (accessibility, performance, SEO)
-   * @param endpoint The endpoint path
-   * @param auditFunction The audit function to call
-   */
   private setupAuditEndpoint(
     auditType: string,
     endpoint: string,
-    auditFunction: (url: string) => Promise<LighthouseReport>,
+    auditFunction: (url: string) => Promise<LighthouseReport>
   ): void {
     this.app.get('/.identity', (_req, res) => { res.json({signature: 'mcp-browser-connector-24x7', version: '1.2.0'}) }) // Add server identity validation endpoint
 

@@ -12,10 +12,10 @@ function createVuetifyMount(optFn: (o?: VuetifyOptions) => late<VuetifyOptions>)
 }
 
 export {
-  createVuetifyMount,
+  createVuetifyMount
 }
 
 export {
   en as VuetifyEn,
-  zhHans as VuetifyZhCn,
+  zhHans as VuetifyZhCn
 } from 'vuetify/locale'

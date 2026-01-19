@@ -10,21 +10,21 @@ const rule: Rule.RuleModule = {
     type: 'suggestion',
     docs: {
       description: 'Prefer Set.has or Array.includes for multiple equality checks against the same variable',
-      recommended: false,
+      recommended: false
     },
     fixable: 'code',
     schema: [
       {
         type: 'object',
         properties: {
-          threshold: {type: 'integer', minimum: 3, default: 4},
+          threshold: {type: 'integer', minimum: 3, default: 4}
         },
-        additionalProperties: false,
-      },
+        additionalProperties: false
+      }
     ],
     messages: {
-      preferLookup: 'Found {{count}} checks against the same value. Consider optimizing with a lookup table (Set/Array).',
-    },
+      preferLookup: 'Found {{count}} checks against the same value. Consider optimizing with a lookup table (Set/Array).'
+    }
   },
   create(context) {
     const {sourceCode} = context
@@ -100,14 +100,14 @@ const rule: Rule.RuleModule = {
                 const valuesText = values.map((v: Rule.Node) => sourceCode.getText(v)).join(', ')
                 const subjectText = sourceCode.getText(subject)
                 return fixer.replaceText(node, `new Set([${valuesText}]).has(${subjectText})`)
-              },
+              }
             })
             break
           }
         }
-      },
+      }
     }
-  },
+  }
 }
 
 export default rule

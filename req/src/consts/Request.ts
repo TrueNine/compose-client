@@ -51,7 +51,7 @@ export const MediaTypes = {
   'ogg': 'video/ogg',
   'flv': 'video/x-flv',
   'avi': 'video/x-msvideo',
-  'wav': 'audio/wav',
+  'wav': 'audio/wav'
 }
 
 /**
@@ -64,7 +64,7 @@ export const Headers = {
   xDeviceId: 'X-Device-Id',
   xRequireCleanAuthentication: 'X-Require-Clean-Authentication',
   authorization: 'Authorization',
-  xRefreshToken: 'X-Refresh',
+  xRefreshToken: 'X-Refresh'
 }
 
 /**

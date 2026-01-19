@@ -8,6 +8,6 @@ export default defineConfig({
   format: ['esm'],
   dts: {
     sourcemap: true,
-    tsconfig: './tsconfig.lib.json',
-  },
+    tsconfig: './tsconfig.lib.json'
+  }
 })

@@ -66,7 +66,7 @@ export const STRS_ASCII: string[] = [
   'W',
   'X',
   'Y',
-  'Z',
+  'Z'
 ]
 export const __UPPERS_CHINESE_NUMBERS: string[] = ['壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖']
 export const __LOWVERS_CHINESE_NUMBERS: string[] = ['一', '二', '三', '四', '五', '六', '七', '八', '九']

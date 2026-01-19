@@ -81,7 +81,7 @@ export function mapRecord<T, U>(record: Record<string, T>, transform: (val: T) =
 export function dlv<T = unknown>(
   obj: Record<string, unknown>,
   path: string | string[],
-  defaultValue: T,
+  defaultValue: T
 ): T {
   const keys = typeof path === 'string' ? path.split('.') : path
   let current: unknown = obj
@@ -111,7 +111,7 @@ interface DeepOptions<T = unknown> {
 export function deepResolve<T extends Record<string, unknown> | unknown[]>(
   source: T,
   options: DeepOptions = {},
-  filter: DeepFilterFn = () => false,
+  filter: DeepFilterFn = () => false
 ): T {
   const {maxDepth = false, transform = (value: unknown) => value} = options
 

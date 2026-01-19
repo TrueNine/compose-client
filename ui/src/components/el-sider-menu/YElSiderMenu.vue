@@ -10,7 +10,7 @@ const props = withDefaults(defineProps<YElSiderMenuProps>(), {
   routeMode: true,
   pathPrefix: '',
   roles: () => [],
-  permissions: () => [],
+  permissions: () => []
 })
 const emits = defineEmits<YElSiderMenuEmits>()
 

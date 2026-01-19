@@ -18,7 +18,7 @@ export const e: UserConfig = defineConfig({plugins: [
   unocss(),
   vuetify(),
   AutoImport({imports: ['vue', '@vueuse/core'], dts: '.types/auto-imports.d.ts', eslintrc: {enabled: true}}),
-  Components({dts: '.types/components.d.ts', resolvers: [ElementPlusResolver(), Vuetify3Resolver(), VarletUIResolver()]}),
+  Components({dts: '.types/components.d.ts', resolvers: [ElementPlusResolver(), Vuetify3Resolver(), VarletUIResolver()]})
 ]})
 
 export default e

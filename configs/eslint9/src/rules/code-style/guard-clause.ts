@@ -12,7 +12,7 @@ const rule: Rule.RuleModule = {
     docs: {description: 'Prefer guard clauses (early returns) to reduce nesting', recommended: false},
     fixable: 'code',
     schema: [{type: 'object', properties: {minStatements: {type: 'number', default: 2}}, additionalProperties: false}],
-    messages: {preferGuardClause: 'Prefer guard clause with early return to reduce nesting'},
+    messages: {preferGuardClause: 'Prefer guard clause with early return to reduce nesting'}
   },
   create(context) {
     const {sourceCode} = context
@@ -82,7 +82,7 @@ const rule: Rule.RuleModule = {
 
               const nodeRange = node.range as [number, number]
               return fixer.replaceTextRange([nodeRange[0], returnNode.range![1]], result)
-            },
+            }
           })
           return
         }
@@ -116,11 +116,11 @@ const rule: Rule.RuleModule = {
             }
             const bodyText = blockBody.map(s => sourceCode.getText(s)).join(`\n${indent}`)
             return fixer.replaceText(node, `if (${invertedCondition}) ${defaultReturnText}\n\n${indent}${bodyText}`)
-          },
+          }
         })
-      },
+      }
     }
-  },
+  }
 }
 
 export default rule

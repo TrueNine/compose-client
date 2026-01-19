@@ -22,7 +22,7 @@ const rule: Rule.RuleModule = {
     type: 'layout',
     docs: {
       description: 'Enforce compact try-catch-finally layout with independent block optimization',
-      recommended: false,
+      recommended: false
     },
     fixable: 'whitespace',
     messages: {
@@ -30,9 +30,9 @@ const rule: Rule.RuleModule = {
       compactFinally: 'Finally clause should be on the same line as the previous block\'s closing brace',
       preferSingleLineTry: 'Try block should be compressed to a single line',
       preferSingleLineCatch: 'Catch block should be compressed to a single line',
-      preferSingleLineFinally: 'Finally block should be compressed to a single line',
+      preferSingleLineFinally: 'Finally block should be compressed to a single line'
     },
-    schema: [],
+    schema: []
   },
   create(context) {
     const {sourceCode} = context
@@ -90,7 +90,7 @@ const rule: Rule.RuleModule = {
           context.report({
             node: tryBlock,
             messageId: 'preferSingleLineTry',
-            fix: fixer => fixer.replaceTextRange(tryBlock.range as [number, number], getCompactBlockText(tryBlock)),
+            fix: fixer => fixer.replaceTextRange(tryBlock.range as [number, number], getCompactBlockText(tryBlock))
           })
         }
 
@@ -103,7 +103,7 @@ const rule: Rule.RuleModule = {
             context.report({
               node: catchBlock,
               messageId: 'preferSingleLineCatch',
-              fix: fixer => fixer.replaceTextRange(catchBlock.range as [number, number], getCompactBlockText(catchBlock)),
+              fix: fixer => fixer.replaceTextRange(catchBlock.range as [number, number], getCompactBlockText(catchBlock))
             })
           }
 
@@ -121,7 +121,7 @@ const rule: Rule.RuleModule = {
                   context.report({
                     node: catchToken,
                     messageId: 'compactCatch',
-                    fix: fixer => fixer.replaceTextRange([spaceBefore.range[1], catchToken.range[0]], ' '),
+                    fix: fixer => fixer.replaceTextRange([spaceBefore.range[1], catchToken.range[0]], ' ')
                   })
                 }
               }
@@ -138,7 +138,7 @@ const rule: Rule.RuleModule = {
           context.report({
             node: finallyBlock,
             messageId: 'preferSingleLineFinally',
-            fix: fixer => fixer.replaceTextRange(finallyBlock.range as [number, number], getCompactBlockText(finallyBlock)),
+            fix: fixer => fixer.replaceTextRange(finallyBlock.range as [number, number], getCompactBlockText(finallyBlock))
           })
         }
         const previousBlock = handler !== null ? handler.body : tryBlock
@@ -153,7 +153,7 @@ const rule: Rule.RuleModule = {
         const finallyToken = sourceCode.getFirstTokenBetween(
           handler ?? tryBlock,
           finallyBlock,
-          t => t.value === 'finally',
+          t => t.value === 'finally'
         )
         if (prevCloseBrace !== null && finallyToken !== null && prevCloseBrace.loc !== null && finallyToken.loc !== null) {
           if (prevCloseBrace.loc.end.line !== finallyToken.loc.start.line) {
@@ -162,14 +162,14 @@ const rule: Rule.RuleModule = {
               context.report({
                 node: finallyToken,
                 messageId: 'compactFinally',
-                fix: fixer => fixer.replaceTextRange([spaceBefore.range[1], finallyToken.range[0]], ' '),
+                fix: fixer => fixer.replaceTextRange([spaceBefore.range[1], finallyToken.range[0]], ' ')
               })
             }
           }
         }
-      },
+      }
     }
-  },
+  }
 }
 
 export default rule

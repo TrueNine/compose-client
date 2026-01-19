@@ -19,8 +19,8 @@ const ruleTester = new RuleTester({
   languageOptions: {
     ecmaVersion: 2022,
     sourceType: 'module',
-    parser: tseslint.parser,
-  },
+    parser: tseslint.parser
+  }
 })
 
 describe('prefer-single-line-call', () => {
@@ -55,9 +55,9 @@ describe('prefer-single-line-call', () => {
     document.title = count
   },
   [count]
-)`,
+)`
           ],
-          invalid: [],
+          invalid: []
         })
       })
 
@@ -70,9 +70,9 @@ describe('prefer-single-line-call', () => {
             `addEventListener(
   'click',
   function() { console.log('clicked') }
-)`,
+)`
           ],
-          invalid: [],
+          invalid: []
         })
       })
     })
@@ -82,9 +82,9 @@ describe('prefer-single-line-call', () => {
         ruleTester.run('prefer-single-line-call', rule, {
           valid: [
             'console.log(\n  `line1\nline2`\n)', // 多行模板字面量 - 不应简化 (Requirement 3.5)
-            'sql(\n  `SELECT *\n   FROM users`\n)',
+            'sql(\n  `SELECT *\n   FROM users`\n)'
           ],
-          invalid: [],
+          invalid: []
         })
       })
     })
@@ -98,9 +98,9 @@ describe('prefer-single-line-call', () => {
 )`,
             `config(
   {name: 'test', age: 20, city: 'NYC', country: 'USA', zip: '10001'}
-)`,
+)`
           ],
-          invalid: [],
+          invalid: []
         })
       })
 
@@ -112,9 +112,9 @@ describe('prefer-single-line-call', () => {
 )`,
             `concat(
   ['a', 'b', 'c', 'd', 'e']
-)`,
+)`
           ],
-          invalid: [],
+          invalid: []
         })
       })
     })
@@ -128,9 +128,9 @@ describe('prefer-single-line-call', () => {
 )`,
             `setup(
   {data: {items: []}}
-)`,
+)`
           ],
-          invalid: [],
+          invalid: []
         })
       })
     })
@@ -142,9 +142,9 @@ describe('prefer-single-line-call', () => {
             `veryLongFunctionNameThatExceedsTheMaximumLineLengthWhenCombinedWithTheRestOfTheExpression( // 超过最大行长度 - 不应简化 (Requirement 3.9)
   'anotherVeryLongStringArgumentThatMakesTheLineTooLongToFitOnASingleLineEvenWithoutIndentation',
   'andYetAnotherLongArgument'
-)`,
+)`
           ],
-          invalid: [],
+          invalid: []
         })
       })
     })
@@ -157,9 +157,9 @@ describe('prefer-single-line-call', () => {
   '/api'
 ).post(
   '/data'
-)`,
+)`
           ],
-          invalid: [],
+          invalid: []
         })
       })
 
@@ -172,9 +172,9 @@ describe('prefer-single-line-call', () => {
 ).replaceAll(
   'c',
   'd'
-)`,
+)`
           ],
-          invalid: [],
+          invalid: []
         })
       })
     })
@@ -189,9 +189,9 @@ describe('prefer-single-line-call', () => {
 )`,
             `doSomething(
   arg1 /* inline comment */
-)`,
+)`
           ],
-          invalid: [],
+          invalid: []
         })
       })
     })
@@ -202,9 +202,9 @@ describe('prefer-single-line-call', () => {
           valid: [
             'doSomething(arg1, arg2)', // 已经是单行的 - 不应报告 (Requirement 3.13)
             'console.log("hello")',
-            'Math.max(1, 2, 3)',
+            'Math.max(1, 2, 3)'
           ],
-          invalid: [],
+          invalid: []
         })
       })
     })
@@ -221,7 +221,7 @@ describe('prefer-single-line-call', () => {
                   arg3,
                   arg4
                 )
-              `, // 5 lines of call content -> inclusive 2-7 = 6 lines?
+              ` // 5 lines of call content -> inclusive 2-7 = 6 lines?
             }, // Count = End - Start + 1 // End line: ) // Start line: functionName( // Let's make sure it is > 4.
             {
               code: `
@@ -231,8 +231,8 @@ describe('prefer-single-line-call', () => {
                   3,
                   4
                 )
-              `, // 6 lines strictly > 4. Should be ignored.
-            },
+              ` // 6 lines strictly > 4. Should be ignored.
+            }
           ],
           invalid: [
             {
@@ -245,9 +245,9 @@ describe('prefer-single-line-call', () => {
               output: `
                 test(1, 2)
               `,
-              errors: [{messageId: 'preferSingleLineCall'}],
-            },
-          ],
+              errors: [{messageId: 'preferSingleLineCall'}]
+            }
+          ]
         })
       })
 
@@ -259,7 +259,7 @@ describe('prefer-single-line-call', () => {
               longFunction(
                 '${longArg}'
               )
-            `, // Result: longFunction('aaaa...') > 80 chars. Should skip.
+            `
           ],
           invalid: [
             {
@@ -271,9 +271,9 @@ describe('prefer-single-line-call', () => {
               output: `
                  short('val')
                `, // Result < 80 chars. Should optimize.
-              errors: [{messageId: 'preferSingleLineCall'}],
-            },
-          ],
+              errors: [{messageId: 'preferSingleLineCall'}]
+            }
+          ]
         })
       })
     })
@@ -291,23 +291,23 @@ describe('prefer-single-line-call', () => {
   arg2
 )`,
               output: 'doSomething(arg1, arg2)',
-              errors: [{messageId: 'preferSingleLineCall'}],
+              errors: [{messageId: 'preferSingleLineCall'}]
             },
             { // 方法调用
               code: `this.connection.send(
   JSON.stringify({type: 'shutdown'})
 )`,
               output: 'this.connection.send(JSON.stringify({type: \'shutdown\'}))',
-              errors: [{messageId: 'preferSingleLineCall'}],
+              errors: [{messageId: 'preferSingleLineCall'}]
             },
             { // 简单对象参数
               code: `createUser(
   {name: 'test'}
 )`,
               output: 'createUser({name: \'test\'})',
-              errors: [{messageId: 'preferSingleLineCall'}],
-            },
-          ],
+              errors: [{messageId: 'preferSingleLineCall'}]
+            }
+          ]
         })
       })
 
@@ -321,16 +321,16 @@ describe('prefer-single-line-call', () => {
   arg2,
 )`,
               output: 'doSomething(arg1, arg2)',
-              errors: [{messageId: 'preferSingleLineCall'}],
+              errors: [{messageId: 'preferSingleLineCall'}]
             },
             { // 单参数带尾逗号
               code: `console.log(
   'hello',
 )`,
               output: 'console.log(\'hello\')',
-              errors: [{messageId: 'preferSingleLineCall'}],
-            },
-          ],
+              errors: [{messageId: 'preferSingleLineCall'}]
+            }
+          ]
         })
       })
     })
@@ -346,8 +346,8 @@ describe('prefer-single-line-call', () => {
   'argument1',
   'argument2'
 )`,
-              options: [{maxLineLength: 30}],
-            },
+              options: [{maxLineLength: 30}]
+            }
           ],
           invalid: [
             { // With maxLineLength=100, this call fits and SHOULD be simplified
@@ -357,9 +357,9 @@ describe('prefer-single-line-call', () => {
 )`,
               output: 'doSomething(\'arg1\', \'arg2\')',
               options: [{maxLineLength: 100}],
-              errors: [{messageId: 'preferSingleLineCall'}],
-            },
-          ],
+              errors: [{messageId: 'preferSingleLineCall'}]
+            }
+          ]
         })
       })
 
@@ -370,10 +370,10 @@ describe('prefer-single-line-call', () => {
               code: `fn(
   'a'
 )`,
-              options: [{maxLineLength: 5}],
-            },
+              options: [{maxLineLength: 5}]
+            }
           ],
-          invalid: [],
+          invalid: []
         })
       })
 
@@ -388,9 +388,9 @@ describe('prefer-single-line-call', () => {
 )`,
               output: 'someFunctionWithALongerName(\'firstArgument\', \'secondArgument\', \'thirdArgument\')',
               options: [{maxLineLength: 300}],
-              errors: [{messageId: 'preferSingleLineCall'}],
-            },
-          ],
+              errors: [{messageId: 'preferSingleLineCall'}]
+            }
+          ]
         })
       })
     })

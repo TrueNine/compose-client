@@ -60,15 +60,15 @@ function packageJsonContentReplace(content: string, options: Omit<PackageJsonOpt
       baseOutputPath = `${relativeDir}${baseName}`
     }
 
-    const isTypeScriptEntry = /\.tsx?$/.exec(entryPath) // --- Determine if types should be generated for this entry --- START // --- Determine if types should be generated for this entry --- END
+    const isTypeScriptEntry = /\.tsx?$/.exec(entryPath)
 
-    if (exportKey.startsWith('./.')) exportKey = exportKey.slice(2) // --- Clean leading slash if relativeDir was empty initially --- START
+    if (exportKey.startsWith('./.')) exportKey = exportKey.slice(2)
     if (exportKey === './') exportKey = '.'
 
     const exportValue: Record<string, string> = {}
     if (hasEsm) exportValue.import = `./${baseOutputPath}.js`
     if (hasCjs) exportValue.require = `./${baseOutputPath}.cjs`
-    if (dts && isTypeScriptEntry) exportValue.types = `./${baseOutputPath}.d.ts` // --- Generate types entry only if it's a TS/TSX file and dts is not false --- START // --- Generate types entry only if it's a TS/TSX file and dts is not false --- END
+    if (dts && isTypeScriptEntry) exportValue.types = `./${baseOutputPath}.d.ts`
 
     if (Object.keys(exportValue).length <= 0) return // Only add if there are any valid export types
 
@@ -111,7 +111,7 @@ export function PackageJsonGeneratorPlugin(options: Omit<PackageJsonOptions, 'co
       fileName: 'package.json',
       source: packageJsonContent,
       name: 'package.json',
-      needsCodeReference: false,
+      needsCodeReference: false
     } as OutputAsset
   }}
 }

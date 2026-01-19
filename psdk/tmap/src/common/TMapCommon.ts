@@ -25,7 +25,7 @@ const _default = {
   isAsync: false,
   asyncFunName: 'initTencentFromAsync',
   containerTag: 'map',
-  mapContainerId: 'tencent-tmap-webgl',
+  mapContainerId: 'tencent-tmap-webgl'
 } satisfies CreateTencentMapOptions
 
 interface InitResult {
@@ -43,7 +43,7 @@ interface InitResult {
 export function initTencentMapWebGlScript(
   key: string,
   callback?: (container: HTMLElement, mapHandle: TMapSDK, ev?: Event) => void,
-  options: CreateTencentMapOptions = _default,
+  options: CreateTencentMapOptions = _default
 ): InitResult | null {
   if (typeof options.loadQuery !== 'string') return null // 验证必要参数
   const query = options.loadQuery.trim()

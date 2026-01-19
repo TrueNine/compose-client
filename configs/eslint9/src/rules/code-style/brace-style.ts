@@ -20,8 +20,8 @@ const rule: Rule.RuleModule = {
     ...originalRule?.meta,
     docs: {
       ...originalRule?.meta?.docs,
-      description: 'Custom brace style that enforces 1tbs but allows separate lines for try-catch-finally',
-    },
+      description: 'Custom brace style that enforces 1tbs but allows separate lines for try-catch-finally'
+    }
   },
   create(context) {
     if (!originalRule?.create) return {}
@@ -51,10 +51,10 @@ const rule: Rule.RuleModule = {
           context.report(descriptor)
         },
         writable: false,
-        configurable: false,
-      },
+        configurable: false
+      }
     }))
-  },
+  }
 }
 
 export default rule

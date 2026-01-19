@@ -38,7 +38,7 @@ export function createBasicPreset(options: FullPerformanceOptions = {}): UserCon
     enableDepsOptimization: true,
     chunkSizeWarningLimit: 1000,
     reportCompressedSize: false,
-    ...options,
+    ...options
   })
 
   const cacheConfig = createCacheOptimization({enableFsCache: true, enableDepsCache: true, ...options.cache})
@@ -57,7 +57,7 @@ export function createAggressivePreset(options: FullPerformanceOptions = {}): Us
     enableDepsOptimization: true,
     chunkSizeWarningLimit: 800,
     reportCompressedSize: false,
-    ...options,
+    ...options
   })
 
   const cacheConfig = createCacheOptimization({enableFsCache: true, enableDepsCache: true, ...options.cache})
@@ -78,7 +78,7 @@ export function createMaximumPreset(options: FullPerformanceOptions = {}): UserC
     enableDepsOptimization: true,
     chunkSizeWarningLimit: 600,
     reportCompressedSize: true,
-    ...options,
+    ...options
   })
 
   const cacheConfig = createCacheOptimization({enableFsCache: true, enableDepsCache: true, forceClearCache: false, ...options.cache})
@@ -98,7 +98,7 @@ export function createDevelopmentPreset(options: FullPerformanceOptions = {}): U
     enableChunkOptimization: false, // 开发环境不需要复杂的代码分割
     enableDepsOptimization: true,
     reportCompressedSize: false,
-    ...options,
+    ...options
   })
 
   const cacheConfig = createCacheOptimization({enableFsCache: true, enableDepsCache: true, forceClearCache: false, ...options.cache})
@@ -112,7 +112,7 @@ export function createDevelopmentPreset(options: FullPerformanceOptions = {}): U
     enableDepsPreBundling: true,
     enableFsCache: true,
     port: 3000,
-    open: false,
+    open: false
   })
 
   return mergeConfig(mergeConfig(mergeConfig(performanceConfig, cacheConfig), parallelConfig), devOptimizationConfig)
@@ -128,7 +128,7 @@ export function createFastDevPreset(options: FullPerformanceOptions = {}): UserC
     enableChunkOptimization: false,
     enableDepsOptimization: true,
     reportCompressedSize: false,
-    ...options,
+    ...options
   })
 
   const cacheConfig = createCacheOptimization({enableFsCache: true, enableDepsCache: true, forceClearCache: false, ...options.cache})
@@ -138,7 +138,7 @@ export function createFastDevPreset(options: FullPerformanceOptions = {}): UserC
     enableParallelCss: false,
     enableParallelTypeCheck: false,
     maxConcurrency: 2, // 减少并发以避免资源竞争
-    ...options.parallel,
+    ...options.parallel
   })
 
   const fastDevConfig = createFastDevelopmentOptimization({ // 使用快速开发模式优化
@@ -147,7 +147,7 @@ export function createFastDevPreset(options: FullPerformanceOptions = {}): UserC
     enableDepsPreBundling: true,
     enableFsCache: true,
     port: 3000,
-    open: false,
+    open: false
   })
 
   return mergeConfig(mergeConfig(mergeConfig(performanceConfig, cacheConfig), parallelConfig), fastDevConfig)
@@ -164,7 +164,7 @@ export function createProductionPreset(options: FullPerformanceOptions = {}): Us
     enableDepsOptimization: true,
     chunkSizeWarningLimit: 500,
     reportCompressedSize: true,
-    ...options,
+    ...options
   })
 
   const cacheConfig = createCacheOptimization({enableFsCache: true, enableDepsCache: true, ...options.cache})
@@ -185,7 +185,7 @@ export function createMonorepoPreset(options: FullPerformanceOptions = {}): User
     enableDepsOptimization: true,
     chunkSizeWarningLimit: 800,
     reportCompressedSize: false,
-    ...options,
+    ...options
   })
 
   const cacheConfig = createCacheOptimization({enableFsCache: true, enableDepsCache: true, cacheDir: 'node_modules/.vite', ...options.cache}) // monorepo 使用统一的缓存目录
@@ -202,7 +202,7 @@ export function createMonorepoPreset(options: FullPerformanceOptions = {}): User
  */
 export function createPerformancePreset(
   preset: PerformancePreset = 'basic',
-  options: FullPerformanceOptions = {},
+  options: FullPerformanceOptions = {}
 ): UserConfig {
   switch (preset) {
     case 'basic': return createBasicPreset(options)

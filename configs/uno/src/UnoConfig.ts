@@ -12,6 +12,6 @@ export function defaultConfig(themeConfig: ThemeConfig = {}): UserConfig {
     shortcuts: shortCuts(),
     rules: unoRules(themeConfig),
     theme: {breakpoints},
-    transformers: [transformerCompileClass()],
+    transformers: [transformerCompileClass()]
   })
 }

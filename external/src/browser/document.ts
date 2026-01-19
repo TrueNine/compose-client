@@ -29,7 +29,7 @@ export function loadRemoteScriptTag(
   src: string,
   appendTag: 'head' | 'body' = 'body',
   beforeEach: (scriptTag: HTMLScriptElement) => HTMLScriptElement = b => b,
-  loadFn?: () => void,
+  loadFn?: () => void
 ): HTMLScriptElement | null {
   if (typeof document === 'undefined') return null // 确保在浏览器环境中执行
   const exist = document.querySelector<HTMLScriptElement>(`script[src='${src}']`) // 先查找是否已存在相同 src 的 script 标签，若存在直接返回

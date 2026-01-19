@@ -17,32 +17,13 @@ interface FormAttribute {
 export type YFormPropsSchema = TypedSchema | YupSchema | ZodSchema
 export interface YFormProps extends ModelValueProps<dynamic>, FormAttribute {
 
-  /**
-   * 表单名称
-   */
   name?: string
 
-  /**
-   * 表单验证规则
-   */
   schema?: Maybe<YFormPropsSchema>
-  /**
-   * 表单验证状态
-   */
   isValid?: boolean
-  /**
-   * 表单步数
-   * @default 0
-   */
   step?: number
 
-  /**
-   * 是否每个步骤发出 next 事件
-   */
   everyStep?: boolean
-  /**
-   * 初始值
-   */
   initValue?: dynamic
 }
 

@@ -10,6 +10,6 @@ export default defineConfig({
   dts: {sourcemap: true, tsconfig: './tsconfig.lib.json', build: true},
   external: [
     'chrome-launcher', // Only externalize Node.js built-ins and large optional dependencies
-    'puppeteer-core',
-  ],
+    'puppeteer-core'
+  ]
 })

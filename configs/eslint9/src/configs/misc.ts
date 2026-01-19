@@ -14,7 +14,7 @@ export const testConfig: AntFuTestConfig = {overrides: {
   'ts/no-unsafe-assignment': 'off',
   'ts/no-unsafe-member-access': 'off',
   'ts/no-unsafe-call': 'off',
-  'ts/no-unsafe-return': 'off',
+  'ts/no-unsafe-return': 'off'
 }}
 
 /** @deprecated 使用 testConfig 代替 */

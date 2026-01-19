@@ -12,16 +12,16 @@ export function registerBrowserTools(server: McpServer): void {
 
       return response.ok
         ? {content: [
-            {type: 'text', text: 'Successfully saved screenshot'},
+            {type: 'text', text: 'Successfully saved screenshot'}
           ]}
         : {content: [
-            {type: 'text', text: `Error taking screenshot: ${result.error ?? 'Unknown error'}`},
+            {type: 'text', text: `Error taking screenshot: ${result.error ?? 'Unknown error'}`}
           ]}
     }
     catch (error) {
       const errorMessage = error instanceof Error ? error.message : String(error)
       return {content: [
-        {type: 'text', text: `Failed to take screenshot: ${errorMessage}`},
+        {type: 'text', text: `Failed to take screenshot: ${errorMessage}`}
       ]}
     }
   }))
@@ -33,13 +33,13 @@ export function registerBrowserTools(server: McpServer): void {
       const json = await response.json() as ApiResponse
 
       return {content: [
-        {type: 'text', text: JSON.stringify(json, null, 2)},
+        {type: 'text', text: JSON.stringify(json, null, 2)}
       ]}
     }
     catch (error) {
       const errorMessage = error instanceof Error ? error.message : String(error)
       return {content: [
-        {type: 'text', text: `Failed to get selected element: ${errorMessage}`},
+        {type: 'text', text: `Failed to get selected element: ${errorMessage}`}
       ]}
     }
   }))
@@ -51,13 +51,13 @@ export function registerBrowserTools(server: McpServer): void {
       const json = await response.json() as ApiResponse
 
       return {content: [
-        {type: 'text', text: json.message ?? 'Logs wiped'},
+        {type: 'text', text: json.message ?? 'Logs wiped'}
       ]}
     }
     catch (error) {
       const errorMessage = error instanceof Error ? error.message : String(error)
       return {content: [
-        {type: 'text', text: `Failed to wipe logs: ${errorMessage}`},
+        {type: 'text', text: `Failed to wipe logs: ${errorMessage}`}
       ]}
     }
   }))

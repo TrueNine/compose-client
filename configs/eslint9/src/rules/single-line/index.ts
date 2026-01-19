@@ -11,15 +11,15 @@ import preferSingleLineIf from './if'
 export const singleLineRules: Record<string, Rule.RuleModule> = {
   'prefer-single-line-call': preferSingleLineCall,
   'prefer-single-line-control': preferSingleLineControl,
-  'prefer-single-line-if': preferSingleLineIf,
+  'prefer-single-line-if': preferSingleLineIf
 }
 
 export {
-  default as preferSingleLineCall,
+  default as preferSingleLineCall
 } from './call'
 export {
-  default as preferSingleLineControl,
+  default as preferSingleLineControl
 } from './control'
 export {
-  default as preferSingleLineIf,
+  default as preferSingleLineIf
 } from './if'

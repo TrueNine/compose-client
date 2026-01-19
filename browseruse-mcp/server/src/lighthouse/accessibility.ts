@@ -1,7 +1,7 @@
 import type {Result as LighthouseResult} from 'lighthouse'
 import type {LighthouseReport} from './types.js'
 import {runLighthouseAudit} from './core.js'
-import {AuditCategory} from './types.js' // === Accessibility Report Types ===
+import {AuditCategory} from './types.js'
 
 /**
  * Accessibility-specific report content structure
@@ -59,7 +59,7 @@ const DETAIL_LIMITS = { // This ensures we always include critical issues while 
   critical: Number.MAX_SAFE_INTEGER, // No limit for critical issues
   serious: 15, // Up to 15 items for serious issues
   moderate: 10, // Up to 10 items for moderate issues
-  minor: 3, // Up to 3 items for minor issues
+  minor: 3 // Up to 3 items for minor issues
 }
 
 /**
@@ -68,7 +68,7 @@ const DETAIL_LIMITS = { // This ensures we always include critical issues while 
  * @returns Promise resolving to AI-optimized accessibility audit results
  */
 export async function runAccessibilityAudit(
-  url: string,
+  url: string
 ): Promise<AIOptimizedAccessibilityReport> {
   try {
     const lhr = await runLighthouseAudit(url, [AuditCategory.ACCESSIBILITY])
@@ -78,7 +78,7 @@ export async function runAccessibilityAudit(
     throw new Error(
       `Accessibility audit failed: ${
         error instanceof Error ? error.message : String(error)
-      }`,
+      }`
     )
   }
 }
@@ -173,7 +173,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
         impact,
         category: ref.group ?? 'other',
         elements: elements.length > 0 ? elements : void 0,
-        score: audit.score,
+        score: audit.score
       }
 
       issues.push(issue)
@@ -215,7 +215,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
       passed: passedCount,
       manual: manualCount,
       informative: informativeCount,
-      not_applicable: notApplicableCount,
+      not_applicable: notApplicableCount
     },
     issues,
     categories,
@@ -223,7 +223,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
     prioritized_recommendations:
       prioritized_recommendations.length > 0
         ? prioritized_recommendations
-        : void 0,
+        : void 0
   }
 
   return {metadata, report: reportContent} // Return the full report following the LighthouseReport interface

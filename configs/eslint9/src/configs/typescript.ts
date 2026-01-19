@@ -13,8 +13,8 @@ export const typescriptConfig: AntFuTsConfig = {overrides: {
   'ts/no-namespace': 'error',
   'ts/no-unused-vars': [
     'error',
-    {vars: 'all', args: 'after-used', ignoreRestSiblings: false},
-  ],
+    {vars: 'all', args: 'after-used', ignoreRestSiblings: false}
+  ]
 }}
 
 /** @deprecated 使用 typescriptConfig 代替 */
@@ -31,7 +31,7 @@ export const strictTypescriptConfig: AntFuTsConfig = {overrides: {
   'ts/no-unsafe-call': 'off',
   'ts/no-unsafe-argument': 'off',
   'ts/no-unsafe-return': 'off',
-  'ts/no-floating-promises': 'error',
+  'ts/no-floating-promises': 'error'
 }}
 
 /** @deprecated 使用 strictTypescriptConfig 代替 */

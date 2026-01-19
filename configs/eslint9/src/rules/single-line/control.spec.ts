@@ -24,8 +24,8 @@ const ruleTester = new RuleTester({
   languageOptions: {
     ecmaVersion: 2022,
     sourceType: 'module',
-    parser: tseslint.parser,
-  },
+    parser: tseslint.parser
+  }
 })
 
 describe('prefer-single-line-control', () => {
@@ -43,9 +43,9 @@ describe('prefer-single-line-control', () => {
               output: `switch (x) {
   case 1: console.log('one');
 }`,
-              errors: [{messageId: 'preferSingleLineCase'}],
-            },
-          ],
+              errors: [{messageId: 'preferSingleLineCase'}]
+            }
+          ]
         })
       })
 
@@ -62,9 +62,9 @@ describe('prefer-single-line-control', () => {
               output: `switch (x) {
   case 1: console.log('one'); break
 }`,
-              errors: [{messageId: 'preferSingleLineCase'}],
-            },
-          ],
+              errors: [{messageId: 'preferSingleLineCase'}]
+            }
+          ]
         })
       })
 
@@ -81,7 +81,7 @@ describe('prefer-single-line-control', () => {
               output: `switch (x) {
   case 1: console.log('one');
 }`,
-              errors: [{messageId: 'preferSingleLineCase'}],
+              errors: [{messageId: 'preferSingleLineCase'}]
             },
             { // 块包裹带 break
               code: `switch (x) {
@@ -93,9 +93,9 @@ describe('prefer-single-line-control', () => {
               output: `switch (x) {
   case 1: console.log('one'); break
 }`,
-              errors: [{messageId: 'preferSingleLineCase'}],
-            },
-          ],
+              errors: [{messageId: 'preferSingleLineCase'}]
+            }
+          ]
         })
       })
 
@@ -111,7 +111,7 @@ describe('prefer-single-line-control', () => {
               output: `switch (x) {
   default: console.log('default');
 }`,
-              errors: [{messageId: 'preferSingleLineCase'}],
+              errors: [{messageId: 'preferSingleLineCase'}]
             },
             { // default case 带 break
               code: `switch (x) {
@@ -122,9 +122,9 @@ describe('prefer-single-line-control', () => {
               output: `switch (x) {
   default: console.log('default'); break
 }`,
-              errors: [{messageId: 'preferSingleLineCase'}],
-            },
-          ],
+              errors: [{messageId: 'preferSingleLineCase'}]
+            }
+          ]
         })
       })
     })
@@ -145,9 +145,9 @@ describe('prefer-single-line-control', () => {
     console.log(y)
     break
   }
-}`,
+}`
           ],
-          invalid: [],
+          invalid: []
         })
       })
 
@@ -164,9 +164,9 @@ describe('prefer-single-line-control', () => {
   case 1: {
     console.log('one') /* inline comment */
   }
-}`,
+}`
           ],
-          invalid: [],
+          invalid: []
         })
       })
 
@@ -181,9 +181,9 @@ describe('prefer-single-line-control', () => {
 }`,
             `switch (x) {
   default: console.log('default')
-}`,
+}`
           ],
-          invalid: [],
+          invalid: []
         })
       })
     })
@@ -200,9 +200,9 @@ describe('prefer-single-line-control', () => {
   console.log(i)
 }`,
               output: 'for (let i = 0; i < 10; i++) console.log(i)',
-              errors: [{messageId: 'preferSingleLineFor'}],
-            },
-          ],
+              errors: [{messageId: 'preferSingleLineFor'}]
+            }
+          ]
         })
       })
 
@@ -215,9 +215,9 @@ describe('prefer-single-line-control', () => {
   console.log(key)
 }`,
               output: 'for (const key in obj) console.log(key)',
-              errors: [{messageId: 'preferSingleLineFor'}],
-            },
-          ],
+              errors: [{messageId: 'preferSingleLineFor'}]
+            }
+          ]
         })
       })
 
@@ -230,9 +230,9 @@ describe('prefer-single-line-control', () => {
   process(item)
 }`,
               output: 'for (const item of items) process(item)',
-              errors: [{messageId: 'preferSingleLineFor'}],
-            },
-          ],
+              errors: [{messageId: 'preferSingleLineFor'}]
+            }
+          ]
         })
       })
 
@@ -245,9 +245,9 @@ describe('prefer-single-line-control', () => {
   doSomething()
 }`,
               output: 'while (condition) doSomething()',
-              errors: [{messageId: 'preferSingleLineWhile'}],
-            },
-          ],
+              errors: [{messageId: 'preferSingleLineWhile'}]
+            }
+          ]
         })
       })
     })
@@ -267,9 +267,9 @@ describe('prefer-single-line-control', () => {
             `while (condition) {
   step1()
   step2()
-}`,
+}`
           ],
-          invalid: [],
+          invalid: []
         })
       })
 
@@ -286,9 +286,9 @@ describe('prefer-single-line-control', () => {
             `while (condition) {
   /* block comment */
   doSomething()
-}`,
+}`
           ],
-          invalid: [],
+          invalid: []
         })
       })
 
@@ -298,9 +298,9 @@ describe('prefer-single-line-control', () => {
             'for (let i = 0; i < 10; i++) console.log(i)', // 已经是单行的 - 不应报告 (Requirement 4.13)
             'for (const key in obj) console.log(key)',
             'for (const item of items) process(item)',
-            'while (condition) doSomething()',
+            'while (condition) doSomething()'
           ],
-          invalid: [],
+          invalid: []
         })
       })
     })

@@ -27,7 +27,7 @@ type NotChildrenSlotNode = clip<SlotNode, 'children'>
 function _findSlotNodesBy(
   slotNode: Maybe<SlotNode>,
   compareFn: (node: NotChildrenSlotNode) => boolean = () => true,
-  accumulator: SlotNode[] = [],
+  accumulator: SlotNode[] = []
 ): SlotNode[] {
   const slotNodes = maybeArray(slotNode)
   slotNodes.forEach(currentNode => {
@@ -42,25 +42,9 @@ function _findSlotNodesBy(
   return accumulator
 }
 
-/**
- * 根据自定义比较函数查找插槽节点
- *
- * @param compareFn - 用于判断节点是否符合条件的比较函数，默认返回 true
- * @param targetNode - 要搜索的目标节点或节点数组
- * @returns 所有符合比较函数条件的插槽节点数组
- *
- * @example
- * ```ts
- * // 查找所有 div 类型的插槽节点
- * const divNodes = findSlotNodesBy(
- *   node => (node.type as any) === 'div',
- *   parentNode
- * )
- * ```
- */
 export function findSlotNodesBy(
   compareFn: (node: NotChildrenSlotNode) => boolean = () => true,
-  targetNode?: Maybe<SlotNode>,
+  targetNode?: Maybe<SlotNode>
 ): SlotNode[] {
   const resultNodes: SlotNode[] = []
   const validNodes = maybeArray(targetNode).filter(Boolean) as SlotNode[]
@@ -68,22 +52,9 @@ export function findSlotNodesBy(
   return resultNodes
 }
 
-/**
- * 根据组件名称查找插槽节点
- *
- * @param componentName - 要查找的组件名称，默认为空字符串
- * @param targetNode - 要搜索的目标节点或节点数组
- * @returns 所有匹配指定组件名称的插槽节点数组
- *
- * @example
- * ```ts
- * // 查找所有名为 'MyComponent' 的插槽节点
- * const myComponentNodes = findSlotNodesByName('MyComponent', parentNode)
- * ```
- */
 export function findSlotNodesByName(
   componentName = '',
-  targetNode?: Maybe<SlotNode>,
+  targetNode?: Maybe<SlotNode>
 ): SlotNode[] {
   const resultNodes: SlotNode[] = []
   const validNodes = maybeArray(targetNode).filter(Boolean) as SlotNode[]

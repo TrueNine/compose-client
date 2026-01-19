@@ -2,10 +2,6 @@ export class CssVar { // --stepNodes-e: #abcd
   private readonly _name: string
   private readonly _value: string
 
-  /**
-   * @param name 不需要在前面加上 --
-   * @param value 变量的值
-   */
   constructor(name: string, value: string) {
     this._name = `--${name}`
     this._value = value

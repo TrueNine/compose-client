@@ -55,32 +55,32 @@ declare global {
 }
 
 export type {
-  MapStyleIds,
+  MapStyleIds
 } from './Constants'
 
 export type {
-  ViewMode,
+  ViewMode
 } from './Constants'
 
 export type {
   MapEvents,
-  MultiMarkerEvents,
+  MultiMarkerEvents
 } from './events'
 export type {
   LatLngDataTyping,
-  PointDataTyping,
+  PointDataTyping
 } from './LatLng'
 export type {
   EaseOptions,
   InfoWindowOptions,
   MapOptions,
   MultiMarkerOptions,
-  PointGeometry,
+  PointGeometry
 } from './options'
 export type {
   SearchErrorResult,
   SearchNearbyOptions,
   SearchOptions,
   SearchRegionOptions,
-  SearchResult,
+  SearchResult
 } from './options/service'

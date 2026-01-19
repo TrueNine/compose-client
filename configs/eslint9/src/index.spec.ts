@@ -34,12 +34,6 @@ describe('eslint9-config', () => {
  * across all valid executions of the system.
  */
 describe('property-Based Tests', () => {
-  /**
-   * Property 1: Rules Export Completeness
-   * For any* rule defined in `rules/single-line/` or `rules/code-style/` subdirectories,
-   * the rule SHALL be exported from `rules/index.ts` and accessible via the main package export.
-   * **Validates: Requirements 5.4, 7.5**
-   */
   describe('property 1: Rules Export Completeness', () => {
     it('should export all single-line rules from rules/index.ts', () => {
       const singleLineRuleNames = Object.keys(singleLineRules)
@@ -75,7 +69,7 @@ describe('property-Based Tests', () => {
         'compact-try-catch',
         'beside-comment',
         'prefer-separate-try-catch',
-        'brace-style',
+        'brace-style'
       ]
       for (const ruleName of expectedRuleNames) {
         expect(rules).toHaveProperty(ruleName)
@@ -85,12 +79,6 @@ describe('property-Based Tests', () => {
     })
   })
 
-  /**
-   * Property 2: Plugin Contains All Rules
-   * For any* rule exported from `rules/index.ts`, the `plugin.rules` object
-   * SHALL contain that rule with the correct key (rule name without prefix).
-   * **Validates: Requirements 7.3**
-   */
   describe('property 2: Plugin Contains All Rules', () => {
     it('should have plugin.rules containing all exported rules', () => {
       const exportedRuleNames = Object.keys(rules)

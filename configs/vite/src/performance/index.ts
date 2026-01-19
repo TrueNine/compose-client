@@ -27,7 +27,7 @@ export function createEsbuildOptimization(): UserConfig['esbuild'] {
     keepNames: false,
     jsxFactory: 'h', // 优化 JSX 转换
     jsxFragment: 'Fragment',
-    sourcemap: false, // 启用源码映射优化
+    sourcemap: false // 启用源码映射优化
   }
 }
 
@@ -58,7 +58,7 @@ export function createChunkOptimization(): BuildOptions['rollupOptions'] {
       return `chunks/${name}-[hash].js`
     },
     entryFileNames: 'entries/[name]-[hash].js',
-    assetFileNames: 'assets/[name]-[hash].[ext]',
+    assetFileNames: 'assets/[name]-[hash].[ext]'
   }, treeshake: {moduleSideEffects: false, propertyReadSideEffects: false, unknownGlobalSideEffects: false}} // 优化外部依赖处理
 }
 
@@ -72,19 +72,19 @@ export function createDepsOptimization(): UserConfig['optimizeDeps'] {
       'vue-router',
       'pinia',
       'axios',
-      'lodash-es',
+      'lodash-es'
     ],
     exclude: [ // 排除预构建的依赖
       '@vueuse/core', // 排除已经是 ESM 格式的包
-      '@vueuse/shared',
+      '@vueuse/shared'
     ],
     entries: [ // 启用依赖扫描优化
       'src/main.ts',
       'src/index.ts',
-      'index.html',
+      'index.html'
     ],
     force: false, // 强制重新优化依赖
-    esbuildOptions: {target: 'es2020', supported: {'top-level-await': true}}, // 启用 esbuild 优化
+    esbuildOptions: {target: 'es2020', supported: {'top-level-await': true}} // 启用 esbuild 优化
   }
 }
 
@@ -94,13 +94,13 @@ export function createDepsOptimization(): UserConfig['optimizeDeps'] {
 export function createDevServerOptimization(): UserConfig['server'] {
   return {
     hmr: { // 优化 HMR 配置
-      overlay: false, // 减少 HMR 更新延迟
+      overlay: false // 减少 HMR 更新延迟
     },
     warmup: {clientFiles: [ // 预热常用文件
       'src/main.ts',
       'src/App.vue',
-      'src/components/**/*.vue',
-    ]},
+      'src/components/**/*.vue'
+    ]}
   }
 }
 
@@ -113,7 +113,7 @@ export function createVitePerformanceConfig(options: VitePerformanceOptions = {}
     enableChunkOptimization = true,
     enableDepsOptimization = true,
     chunkSizeWarningLimit = 1000,
-    reportCompressedSize = false,
+    reportCompressedSize = false
   } = options
 
   const config: UserConfig = {
@@ -123,9 +123,9 @@ export function createVitePerformanceConfig(options: VitePerformanceOptions = {}
       minify: 'esbuild', // 启用并行构建
       assetsInlineLimit: 4096, // 优化资源内联限制
       cssCodeSplit: true, // CSS 代码分割
-      cssMinify: true, // 启用 CSS 压缩
+      cssMinify: true // 启用 CSS 压缩
     },
-    esbuild: enableEsbuildOptimization ? createEsbuildOptimization() : {}, // esbuild 配置
+    esbuild: enableEsbuildOptimization ? createEsbuildOptimization() : {} // esbuild 配置
   }
 
   if (enableChunkOptimization) config.build!.rollupOptions = createChunkOptimization() // 添加代码分割优化

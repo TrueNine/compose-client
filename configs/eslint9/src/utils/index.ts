@@ -1,3 +1,3 @@
 export {
-  mergeWithDefaults,
+  mergeWithDefaults
 } from './merge'

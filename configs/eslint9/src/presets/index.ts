@@ -7,11 +7,11 @@
  */
 
 export {
-  baseRulesPreset,
+  baseRulesPreset
 } from './base-rules'
 export {
-  dtsRulesPreset,
+  dtsRulesPreset
 } from './dts-rules'
 export {
-  typescriptRulesPreset,
+  typescriptRulesPreset
 } from './typescript-rules'

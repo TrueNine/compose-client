@@ -8,12 +8,6 @@ export interface IChinaAddressDistrict {
   code: AddrCode
   name: string
 
-  /**
-   * @default false
-   */
   leaf?: boolean
-  /**
-   * @default 0
-   */
   level: i32
 }

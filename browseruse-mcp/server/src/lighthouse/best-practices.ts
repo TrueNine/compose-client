@@ -1,7 +1,7 @@
 import type {Result as LighthouseResult} from 'lighthouse'
 import type {LighthouseReport} from './types.js'
 import {runLighthouseAudit} from './core.js'
-import {AuditCategory} from './types.js' // === Best Practices Report Types ===
+import {AuditCategory} from './types.js'
 
 /**
  * Best Practices-specific report content structure
@@ -57,7 +57,7 @@ const DETAIL_LIMITS: Record<string, number> = { // This ensures we always includ
   critical: Number.MAX_SAFE_INTEGER, // No limit for critical issues
   serious: 15, // Up to 15 items for serious issues
   moderate: 10, // Up to 10 items for moderate issues
-  minor: 3, // Up to 3 items for minor issues
+  minor: 3 // Up to 3 items for minor issues
 }
 
 /**
@@ -66,7 +66,7 @@ const DETAIL_LIMITS: Record<string, number> = { // This ensures we always includ
  * @returns Promise resolving to AI-optimized Best Practices audit results
  */
 export async function runBestPracticesAudit(
-  url: string,
+  url: string
 ): Promise<AIOptimizedBestPracticesReport> {
   try {
     const lhr = await runLighthouseAudit(url, [AuditCategory.BEST_PRACTICES])
@@ -75,7 +75,7 @@ export async function runBestPracticesAudit(
   catch (error: unknown) {
     throw new Error(
       `Best Practices audit failed: ${error instanceof Error ? error.message : String(error)
-      }`,
+      }`
     )
   }
 }
@@ -95,7 +95,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
     'trust': {score: 0, issues_count: 0},
     'user-experience': {score: 0, issues_count: 0},
     'browser-compat': {score: 0, issues_count: 0},
-    'other': {score: 0, issues_count: 0},
+    'other': {score: 0, issues_count: 0}
   }
 
   let failedCount = 0 // Counters for audit types
@@ -182,7 +182,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
       impact,
       category,
       score: typeof ref.score === 'number' ? ref.score : null,
-      details: [],
+      details: []
     }
 
     const refDetails = ref.details as BestPracticesAuditDetails | undefined // Extract details if available
@@ -254,10 +254,10 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
       passed: passedCount,
       manual: manualCount,
       informative: informativeCount,
-      not_applicable: notApplicableCount,
+      not_applicable: notApplicableCount
     },
     issues,
     categories,
-    prioritized_recommendations,
+    prioritized_recommendations
   }}
 }

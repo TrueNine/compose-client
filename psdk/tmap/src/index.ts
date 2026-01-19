@@ -1,27 +1,27 @@
 export * from './common'
 export * from './Constants'
 export {
-  type InfoWindow,
+  type InfoWindow
 } from './infowindow'
 export * from './LatLng' // 导出实现类
 
 export const MAP_ZOOM_TYPE = { // 定义常量
   DEFAULT: 0,
-  CENTER: 1,
+  CENTER: 1
 } as const
 
 export {
   type LatLng,
-  type Point,
+  type Point
 } from './LatLng'
 export {
-  type Map,
+  type Map
 } from './map'
 
 export {
-  type MultiMarker,
+  type MultiMarker
 } from './multimarker'
 export {
-  type Search,
+  type Search
 } from './services'
 export * from './types'

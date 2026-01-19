@@ -28,5 +28,5 @@ export const typescriptRulesPreset: Linter.RulesRecord = {
   '@typescript-eslint/no-unnecessary-boolean-literal-compare': 'error',
   '@typescript-eslint/no-namespace': 'error',
   '@typescript-eslint/prefer-function-type': 'error',
-  '@typescript-eslint/prefer-as-const': 'error',
+  '@typescript-eslint/prefer-as-const': 'error'
 }

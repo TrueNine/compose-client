@@ -3,5 +3,5 @@ export const EslintExternals: (string | RegExp)[] = [
   /^@rushstack/,
   /^eslint-define-config$/,
   /^(eslint$|@eslint)/,
-  /^eslint-plugin-/,
+  /^eslint-plugin-/
 ]

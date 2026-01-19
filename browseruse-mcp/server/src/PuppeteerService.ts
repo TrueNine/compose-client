@@ -6,7 +6,7 @@ import path from 'node:path'
 import process from 'node:process'
 import * as ChromeLauncher from 'chrome-launcher'
 import puppeteer from 'puppeteer-core'
-import {logger} from '@/logger' // ===== Configuration Types and Defaults =====
+import {logger} from '@/logger'
 
 /**
  * Configuration interface for the Puppeteer service
@@ -30,8 +30,8 @@ const DEFAULT_CONFIG: PuppeteerServiceConfig = { // Default configuration values
   connectionTimeout: 10000,
   maxRetries: 3,
   browserCleanupTimeout: 60000,
-  blockResourceTypes: ['image', 'font', 'media'],
-} // ===== Global State ===== // - Safari: Not supported by Puppeteer // - Firefox: Partially supported (some features may not work) // - Brave: Fully supported (Chromium-based) // - Edge: Fully supported (Chromium-based) // - Chrome/Chromium: Fully supported (primary target) // Browser support notes:
+  blockResourceTypes: ['image', 'font', 'media']
+}
 
 let currentConfig: PuppeteerServiceConfig = {...DEFAULT_CONFIG} // Current active configuration
 
@@ -41,21 +41,21 @@ let launchedBrowserWSEndpoint: string | null = null
 let browserCleanupTimeout: NodeJS.Timeout | null = null // Cleanup management
 let BROWSER_CLEANUP_TIMEOUT = 60000 // 60 seconds default
 
-let detectedBrowserPath: string | null = null // Cache for browser executable paths // ===== Configuration Functions =====
+let detectedBrowserPath: string | null = null
 
 /**
  * Configure the Puppeteer service with custom settings
  * @param config Partial configuration to override defaults
  */
 export function configurePuppeteerService(
-  config: Partial<PuppeteerServiceConfig>,
+  config: Partial<PuppeteerServiceConfig>
 ): void {
   currentConfig = {...DEFAULT_CONFIG, ...config}
 
   if (config.browserCleanupTimeout != null && config.browserCleanupTimeout !== BROWSER_CLEANUP_TIMEOUT) BROWSER_CLEANUP_TIMEOUT = config.browserCleanupTimeout // Update the timeout if it was changed
 
   logger.info('Puppeteer service configured:', currentConfig)
-} // ===== Browser Management =====
+}
 
 /**
  * Get or create a headless browser instance
@@ -160,7 +160,7 @@ function configureLaunchOptions(userDataDir: string): Record<string, unknown> {
     '--disable-translate',
     '--metrics-recording-only',
     '--no-pings',
-    '--safebrowsing-disable-auto-update',
+    '--safebrowsing-disable-auto-update'
   ]}
 
   launchOptions.headless = 'new' // Add headless mode (using any to bypass type checking issues)
@@ -181,7 +181,7 @@ async function setCustomBrowserExecutable(launchOptions: Record<string, unknown>
       'chrome',
       'edge',
       'brave',
-      'firefox',
+      'firefox'
     ]
 
     for (const browser of preferredBrowsers) {
@@ -224,7 +224,7 @@ async function setCustomBrowserExecutable(launchOptions: Record<string, unknown>
   catch (error: unknown) {
     logger.error('Failed to detect browser executable path:', error)
     throw new Error(
-      'No browser executable path found. Please specify a custom browser path in the configuration.',
+      'No browser executable path found. Please specify a custom browser path in the configuration.'
     )
   }
 }
@@ -255,9 +255,9 @@ async function findBrowserExecutablePath(): Promise<string> {
           : process.platform === 'win32'
             ? [
                 `${p.env.PROGRAMFILES}\\Google\\Chrome\\Application\\chrome.exe`,
-                `${p.env['PROGRAMFILES(X86)']}\\Google\\Chrome\\Application\\chrome.exe`,
+                `${p.env['PROGRAMFILES(X86)']}\\Google\\Chrome\\Application\\chrome.exe`
               ]
-            : ['/usr/bin/google-chrome'],
+            : ['/usr/bin/google-chrome']
       ].filter(Boolean)
 
       for (const _p of possiblePaths) { // Use the first valid path
@@ -295,7 +295,7 @@ async function findBrowserExecutablePath(): Promise<string> {
     'chrome',
     'edge',
     'brave',
-    'firefox',
+    'firefox'
   ]
 
   logger.info(`Attempting to detect browser executable path on ${platform}...`)
@@ -344,7 +344,7 @@ async function findBrowserExecutablePath(): Promise<string> {
 
           const defaultChromePaths = [
             path.join(programFiles, 'Google\\Chrome\\Application\\chrome.exe'),
-            path.join(programFilesX86, 'Google\\Chrome\\Application\\chrome.exe'),
+            path.join(programFilesX86, 'Google\\Chrome\\Application\\chrome.exe')
           ]
 
           for (const chromePath of defaultChromePaths) {
@@ -362,16 +362,16 @@ async function findBrowserExecutablePath(): Promise<string> {
 
       const winBrowserPaths = {chrome: [ // Common Windows browser paths
         path.join(programFiles, 'Google\\Chrome\\Application\\chrome.exe'),
-        path.join(programFilesX86, 'Google\\Chrome\\Application\\chrome.exe'),
+        path.join(programFilesX86, 'Google\\Chrome\\Application\\chrome.exe')
       ], edge: [
         path.join(programFiles, 'Microsoft\\Edge\\Application\\msedge.exe'),
-        path.join(programFilesX86, 'Microsoft\\Edge\\Application\\msedge.exe'),
+        path.join(programFilesX86, 'Microsoft\\Edge\\Application\\msedge.exe')
       ], brave: [
         path.join(programFiles, 'BraveSoftware\\Brave-Browser\\Application\\brave.exe'),
-        path.join(programFilesX86, 'BraveSoftware\\Brave-Browser\\Application\\brave.exe'),
+        path.join(programFilesX86, 'BraveSoftware\\Brave-Browser\\Application\\brave.exe')
       ], firefox: [
         path.join(programFiles, 'Mozilla Firefox\\firefox.exe'),
-        path.join(programFilesX86, 'Mozilla Firefox\\firefox.exe'),
+        path.join(programFilesX86, 'Mozilla Firefox\\firefox.exe')
       ]}
 
       for (const browser of preferredBrowsers) { // Check each browser in preferred order
@@ -392,7 +392,7 @@ async function findBrowserExecutablePath(): Promise<string> {
         edge: ['/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge'],
         brave: ['/Applications/Brave Browser.app/Contents/MacOS/Brave Browser'],
         firefox: ['/Applications/Firefox.app/Contents/MacOS/firefox'],
-        safari: ['/Applications/Safari.app/Contents/MacOS/Safari'],
+        safari: ['/Applications/Safari.app/Contents/MacOS/Safari']
       }
 
       for (const browser of preferredBrowsers) { // Check each browser in preferred order
@@ -421,7 +421,7 @@ async function findBrowserExecutablePath(): Promise<string> {
           try {
             const browserPath = execSync( // command -v works in most shells, fallback to which or type // Use more universal commands for Linux to find executables
               `command -v ${cmd} || which ${cmd} || type -p ${cmd} 2>/dev/null`,
-              {encoding: 'utf8'},
+              {encoding: 'utf8'}
             ).trim()
 
             if (browserPath && fs.existsSync(browserPath)) {
@@ -439,7 +439,7 @@ async function findBrowserExecutablePath(): Promise<string> {
         '/usr/bin/chromium-browser',
         '/snap/bin/chromium',
         '/snap/bin/google-chrome',
-        '/opt/google/chrome/chrome',
+        '/opt/google/chrome/chrome'
       ]
 
       for (const location of alternativeLocations) {
@@ -454,7 +454,7 @@ async function findBrowserExecutablePath(): Promise<string> {
   } // No default
 
   throw new Error(
-    `No browser executable found for platform ${platform}. Please specify a custom browser path.`,
+    `No browser executable found for platform ${platform}. Please specify a custom browser path.`
   )
 }
 
@@ -465,7 +465,7 @@ async function findBrowserExecutablePath(): Promise<string> {
  */
 function setupBrowserCleanupHandlers(
   browser: Browser,
-  userDataDir: string,
+  userDataDir: string
 ): void {
   browser.on('disconnected', () => {
     logger.info(`Browser disconnected. Scheduling cleanup for: ${userDataDir}`)
@@ -486,7 +486,7 @@ function setupBrowserCleanupHandlers(
     launchedBrowserWSEndpoint = null // Reset browser instance variables
     headlessBrowserInstance = null
   })
-} // ===== Cleanup Management =====
+}
 
 /**
  * Cancels any scheduled browser cleanup
@@ -518,7 +518,7 @@ export function scheduleBrowserCleanup(): void {
     }
     browserCleanupTimeout = null
   }, BROWSER_CLEANUP_TIMEOUT)
-} // ===== Public Browser Connection API =====
+}
 
 /**
  * Connects to a headless browser for web operations
@@ -560,7 +560,7 @@ export async function connectToHeadlessBrowser(
       path?: string
     }[]
     headers?: Record<string, string>
-  } = {},
+  } = {}
 ): Promise<{
   browser: Browser
   port: number
@@ -568,7 +568,7 @@ export async function connectToHeadlessBrowser(
 }> {
   logger.info(
     `Connecting to headless browser for ${url}${options.blockResources ? ' (blocking non-essential resources)' : ''
-    }`,
+    }`
   )
 
   try {
@@ -590,7 +590,7 @@ export async function connectToHeadlessBrowser(
     logger.info(`Navigating to ${url}`) // Navigate to the URL
     await page.goto(url, {
       waitUntil: 'networkidle2', // Wait until there are no more network connections for at least 500ms
-      timeout: navigationTimeout,
+      timeout: navigationTimeout
     })
 
     if (options.headers && Object.keys(options.headers).length > 0) { // Set custom headers if provided
@@ -690,7 +690,7 @@ export async function connectToHeadlessBrowser(
     logger.error('Failed to connect to headless browser:', error)
     throw new Error(
       `Failed to connect to headless browser: ${error instanceof Error ? error.message : String(error)
-      }`,
+      }`
     )
   }
 }

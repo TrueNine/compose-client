@@ -30,14 +30,14 @@ watch(
     darkUse.value = v
     checkDark(!props.dark)
     vuetifyUseTheme.global.name.value = darkLight.value
-  },
+  }
 )
 watch(
   () => props.locale,
   v => {
     checkLocale(props.locale)
     dayjs.locale(v.toLowerCase())
-  },
+  }
 )
 
 const elLocale = computed(() => {

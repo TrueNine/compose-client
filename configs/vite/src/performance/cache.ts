@@ -31,10 +31,10 @@ export function createCacheOptimization(options: CacheOptimizationOptions = {}):
         '**/.git/**',
         '**/dist/**',
         '**/.turbo/**',
-        '**/.cache/**',
+        '**/.cache/**'
       ],
       usePolling: false, // 启用轮询以提升性能
-      interval: 100, // 设置合理的延迟
+      interval: 100 // 设置合理的延迟
     }}
   }
 
@@ -54,7 +54,7 @@ export function createBuildCacheOptimization(): UserConfig {
   return {build: {
     write: true, // 启用构建缓存
     emptyOutDir: true, // 优化输出目录清理
-    watch: null, // 启用增量构建支持
+    watch: null // 启用增量构建支持
   }}
 }
 
@@ -64,7 +64,7 @@ export function createBuildCacheOptimization(): UserConfig {
 export function createTypeScriptCacheOptimization(): UserConfig {
   return {esbuild: {
     tsconfigRaw: {compilerOptions: { // 启用 TypeScript 缓存
-      target: 'ES2020', // 优化 TypeScript 编译选项
-    }},
+      target: 'ES2020' // 优化 TypeScript 编译选项
+    }}
   }}
 }

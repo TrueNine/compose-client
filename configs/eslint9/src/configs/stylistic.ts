@@ -26,7 +26,8 @@ export const stylisticConfig: AntFuStylisticConfig = {
     'style/space-before-function-paren': ['error', {anonymous: 'never', named: 'never', asyncArrow: 'always'}], /* 块语句前加空格 if(x){} → if (x) {} */
     'style/space-in-parens': ['error', 'never'], /* 函数括号前不加空格 function () → function() */
     'style/key-spacing': ['error', {beforeColon: false, afterColon: true}], /* 括号内不加空格 ( a ) → (a) */
-    'style/comma-spacing': ['error', {before: false, after: true}], /* 对象冒号后加空格，前不加 {a : 1} → {a: 1} */
+    'style/comma-spacing': ['error', {before: false, after: true}], /* 逗号后加空格，前不加 [a ,b] → [a, b] */
+    'style/comma-dangle': ['error', 'never'], /* 禁止尾随逗号，减少 AI 编码 token 消耗 */
     'style/semi-spacing': ['error', {before: false, after: true}], /* 逗号后加空格，前不加 [a ,b] → [a, b] */
     'style/arrow-spacing': ['error', {before: true, after: true}], /* 分号后加空格，前不加 */
     'style/keyword-spacing': ['error', {before: true, after: true}], /* 箭头函数箭头前后加空格 x=>y → x => y */
@@ -42,8 +43,8 @@ export const stylisticConfig: AntFuStylisticConfig = {
     'antfu/consistent-list-newline': 'error', /* 关闭 object-property-newline，由 antfu/consistent-list-newline 统一处理 */
     'no-inline-comments': 'off', /* 允许行内注释 */
     'style/line-comment-position': 'off', /* 由 truenine/beside-comment 接管 */
-    '@truenine/beside-comment': 'error', /* 强制普通注释在代码行尾 */
-  },
+    '@truenine/beside-comment': 'error' /* 强制普通注释在代码行尾 */
+  }
 }
 
 /**

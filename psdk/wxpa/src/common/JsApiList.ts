@@ -1,17 +1,8 @@
 export interface JsApiListMap {
   updateAppMessageShareData: never
   updateTimelineShareData: never
-  /**
-   * @deprecated 即将过期
-   */
   onMenuShareTimeline: never
-  /**
-   * @deprecated 即将过期
-   */
   onMenuShareAppMessage: never
-  /**
-   * @deprecated 即将过期
-   */
   onMenuShareQQ: never
   onMenuShareWeibo: never
   onMenuShareQZone: never
@@ -117,5 +108,5 @@ export const AllJsApiList: (keyof JsApiListMap)[] = [...new Set<keyof JsApiListM
 
   'chooseCard',
 
-  'openCard',
+  'openCard'
 ])]

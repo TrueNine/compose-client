@@ -1,17 +1,8 @@
 import type {WGS84} from '@truenine/types'
 
 export interface LatLngDataTyping {
-  /**
-   * ## 维度
-   */
   readonly lat: number
-  /**
-   * ## 经度
-   */
   readonly lng: number
-  /**
-   * ## 高度??
-   */
   readonly height?: number
 }
 
@@ -22,11 +13,6 @@ export declare class LatLng implements LatLngDataTyping {
   lat: number
   lng: number
 
-  /**
-   * @param lat 维度
-   * @param lng 精度
-   * @param height 高度（选填）
-   */
   constructor(lat: number, lng: number, height?: number)
 
   getLat(): number

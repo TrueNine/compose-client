@@ -22,7 +22,7 @@ const impl = computed<PreAuthorizeInjection>(() => ({ // 预计算权限注入�
   permissions: computed(() => state.value.permissions),
   roles: computed(() => state.value.roles),
   authed: computed(() => state.value.authed),
-  anonymous: computed(() => state.value.anonymous),
+  anonymous: computed(() => state.value.anonymous)
 }))
 
 provide(PreAuthorizeInjectionSymbol, impl.value)

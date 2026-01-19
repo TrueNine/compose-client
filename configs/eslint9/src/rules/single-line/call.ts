@@ -14,7 +14,7 @@ const rule: Rule.RuleModule = {
     docs: {description: 'Prefer single-line function calls when the result fits within max line length', recommended: false},
     fixable: 'code',
     schema: [{type: 'object', properties: {maxLineLength: {type: 'number', default: MAX_LINE_LENGTH}}, additionalProperties: false}],
-    messages: {preferSingleLineCall: 'Function call can be written on a single line'},
+    messages: {preferSingleLineCall: 'Function call can be written on a single line'}
   },
   create(context) {
     const {sourceCode} = context
@@ -78,9 +78,9 @@ const rule: Rule.RuleModule = {
         if (getIndent(callNode).length + singleLineText.length > maxLineLength) return /* 如果超过最大行长度，不修复 */
 
         context.report({node, messageId: 'preferSingleLineCall', fix: fixer => fixer.replaceText(node, singleLineText)})
-      },
+      }
     }
-  },
+  }
 }
 
 export default rule

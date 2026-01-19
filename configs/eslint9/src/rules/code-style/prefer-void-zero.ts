@@ -15,7 +15,7 @@ const rule: Rule.RuleModule = {
     docs: {description: 'Prefer `void 0` over `undefined` in value positions', recommended: false},
     fixable: 'code',
     schema: [],
-    messages: {preferVoidZero: 'Use `void 0` instead of `undefined`'},
+    messages: {preferVoidZero: 'Use `void 0` instead of `undefined`'}
   },
   create(context) {
     function isInTypeContext(node: Rule.Node): boolean { /* Check if the node is in a type annotation context */
@@ -80,9 +80,9 @@ const rule: Rule.RuleModule = {
       Identifier(node) {
         if (!isUndefinedValue(node)) return
         context.report({node, messageId: 'preferVoidZero', fix: fixer => fixer.replaceText(node, 'void 0')})
-      },
+      }
     }
-  },
+  }
 }
 
 export default rule

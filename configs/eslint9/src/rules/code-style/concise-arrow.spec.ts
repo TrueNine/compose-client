@@ -18,8 +18,8 @@ const ruleTester = new RuleTester({
   languageOptions: {
     ecmaVersion: 2022,
     sourceType: 'module',
-    parser: tseslint.parser,
-  },
+    parser: tseslint.parser
+  }
 })
 
 describe('prefer-concise-arrow', () => {
@@ -50,9 +50,9 @@ describe('prefer-concise-arrow', () => {
       ? prev.filter(id => id !== permissionId)
       : [...prev, permissionId]
   )
-}`,
+}`
           ],
-          invalid: [],
+          invalid: []
         })
       })
 
@@ -67,9 +67,9 @@ describe('prefer-concise-arrow', () => {
 }`,
             `const fn = x => { // 三元表达式在表达式语句中
   result = x > 0 ? 'yes' : 'no'
-}`,
+}`
           ],
-          invalid: [],
+          invalid: []
         })
       })
 
@@ -87,9 +87,9 @@ describe('prefer-concise-arrow', () => {
 }`,
             `const fn = x => { // 逻辑表达式在表达式语句中
   callback && callback(x)
-}`,
+}`
           ],
-          invalid: [],
+          invalid: []
         })
       })
     })
@@ -108,9 +108,9 @@ describe('prefer-concise-arrow', () => {
 }`,
             `const fn = x => { // 行尾注释
   return x + 1 // trailing comment
-}`,
+}`
           ],
-          invalid: [],
+          invalid: []
         })
       })
 
@@ -119,9 +119,9 @@ describe('prefer-concise-arrow', () => {
           valid: [
             'const fn = x => { return x + 1 }', // 已经是单行的 - 不应报告 (Requirement 1.8)
             'const fn = x => { console.log(x) }',
-            'const fn = (a, b) => { return a + b }',
+            'const fn = (a, b) => { return a + b }'
           ],
-          invalid: [],
+          invalid: []
         })
       })
 
@@ -135,9 +135,9 @@ describe('prefer-concise-arrow', () => {
             `const fn = x => { // 多个表达式语句
   console.log(x)
   doSomething(x)
-}`,
+}`
           ],
-          invalid: [],
+          invalid: []
         })
       })
 
@@ -149,9 +149,9 @@ describe('prefer-concise-arrow', () => {
 }`,
             `const fn = x => { // 空 return 带分号
   return;
-}`,
+}`
           ],
-          invalid: [],
+          invalid: []
         })
       })
 
@@ -160,9 +160,9 @@ describe('prefer-concise-arrow', () => {
           valid: [
             `const fn = x => { // MAX_LINE_LENGTH = 160, 这个简化后会超过 160 字符 // 超长度 - 不应简化 (Requirement 1.11)
   return veryLongFunctionNameThatExceedsTheMaximumLineLengthWhenCombinedWithTheRestOfTheExpressionAndMoreTextToMakeItLonger(x, anotherVeryLongParameterName, yetAnotherLongParameter)
-}`,
+}`
           ],
-          invalid: [],
+          invalid: []
         })
       })
     })
@@ -174,9 +174,9 @@ describe('prefer-concise-arrow', () => {
             'const fn = x => x + 1', // 已经是简洁形式的箭头函数
             'const fn = (x, y) => x + y',
             'arr.forEach(it => console.log(it))',
-            'const fn = async x => await fetch(x)',
+            'const fn = async x => await fetch(x)'
           ],
-          invalid: [],
+          invalid: []
         })
       })
     })
@@ -193,23 +193,23 @@ describe('prefer-concise-arrow', () => {
   console.log(x)
 }`,
               output: 'const fn = x => console.log(x)',
-              errors: [{messageId: 'preferConciseArrow'}],
+              errors: [{messageId: 'preferConciseArrow'}]
             },
             { // forEach 中的简单调用
               code: `arr.forEach(it => {
   f.append(it.name, it.value)
 })`,
               output: 'arr.forEach(it => f.append(it.name, it.value))',
-              errors: [{messageId: 'preferConciseArrow'}],
+              errors: [{messageId: 'preferConciseArrow'}]
             },
             { // 简单方法调用
               code: `const fn = item => {
   doSomething(item)
 }`,
               output: 'const fn = item => doSomething(item)',
-              errors: [{messageId: 'preferConciseArrow'}],
-            },
-          ],
+              errors: [{messageId: 'preferConciseArrow'}]
+            }
+          ]
         })
       })
 
@@ -222,23 +222,23 @@ describe('prefer-concise-arrow', () => {
   return x + 1
 }`,
               output: 'const fn = x => x + 1',
-              errors: [{messageId: 'preferConciseArrow'}],
+              errors: [{messageId: 'preferConciseArrow'}]
             },
             { // 返回函数调用
               code: `const fn = x => {
   return doSomething(x)
 }`,
               output: 'const fn = x => doSomething(x)',
-              errors: [{messageId: 'preferConciseArrow'}],
+              errors: [{messageId: 'preferConciseArrow'}]
             },
             { // 返回数组
               code: `const fn = x => {
   return [x, x + 1]
 }`,
               output: 'const fn = x => [x, x + 1]',
-              errors: [{messageId: 'preferConciseArrow'}],
-            },
-          ],
+              errors: [{messageId: 'preferConciseArrow'}]
+            }
+          ]
         })
       })
     })
@@ -253,23 +253,23 @@ describe('prefer-concise-arrow', () => {
   return {value: x}
 }`,
               output: 'const fn = x => ({value: x})',
-              errors: [{messageId: 'preferConciseArrow'}],
+              errors: [{messageId: 'preferConciseArrow'}]
             },
             { // 返回复杂对象字面量
               code: `const fn = x => {
   return {a: x, b: x + 1}
 }`,
               output: 'const fn = x => ({a: x, b: x + 1})',
-              errors: [{messageId: 'preferConciseArrow'}],
+              errors: [{messageId: 'preferConciseArrow'}]
             },
             { // 返回空对象
               code: `const fn = x => {
   return {}
 }`,
               output: 'const fn = x => ({})',
-              errors: [{messageId: 'preferConciseArrow'}],
-            },
-          ],
+              errors: [{messageId: 'preferConciseArrow'}]
+            }
+          ]
         })
       })
 
@@ -282,16 +282,16 @@ describe('prefer-concise-arrow', () => {
   return await fetch(x)
 }`,
               output: 'const fn = async x => await fetch(x)',
-              errors: [{messageId: 'preferConciseArrow'}],
+              errors: [{messageId: 'preferConciseArrow'}]
             },
             { // async 表达式语句
               code: `const fn = async x => {
   await doSomething(x)
 }`,
               output: 'const fn = async x => await doSomething(x)',
-              errors: [{messageId: 'preferConciseArrow'}],
-            },
-          ],
+              errors: [{messageId: 'preferConciseArrow'}]
+            }
+          ]
         })
       })
 
@@ -304,37 +304,37 @@ describe('prefer-concise-arrow', () => {
   return a + b
 }`,
               output: 'const add = (a, b) => a + b',
-              errors: [{messageId: 'preferConciseArrow'}],
+              errors: [{messageId: 'preferConciseArrow'}]
             },
             { // 三个参数
               code: `const fn = (a, b, c) => {
   return a + b + c
 }`,
               output: 'const fn = (a, b, c) => a + b + c',
-              errors: [{messageId: 'preferConciseArrow'}],
+              errors: [{messageId: 'preferConciseArrow'}]
             },
             { // 带类型注解的多参数
               code: `const fn = (a: number, b: number) => {
   return a + b
 }`,
               output: 'const fn = (a: number, b: number) => a + b',
-              errors: [{messageId: 'preferConciseArrow'}],
+              errors: [{messageId: 'preferConciseArrow'}]
             },
             { // 解构参数
               code: `const fn = ({a, b}) => {
   return a + b
 }`,
               output: 'const fn = ({a, b}) => a + b',
-              errors: [{messageId: 'preferConciseArrow'}],
+              errors: [{messageId: 'preferConciseArrow'}]
             },
             { // 数组解构参数
               code: `const fn = ([a, b]) => {
   return a + b
 }`,
               output: 'const fn = ([a, b]) => a + b',
-              errors: [{messageId: 'preferConciseArrow'}],
-            },
-          ],
+              errors: [{messageId: 'preferConciseArrow'}]
+            }
+          ]
         })
       })
 
@@ -347,23 +347,23 @@ describe('prefer-concise-arrow', () => {
   return x + 1
 }`,
               output: 'const fn = (x: number) => x + 1',
-              errors: [{messageId: 'preferConciseArrow'}],
+              errors: [{messageId: 'preferConciseArrow'}]
             },
             { // useCallback 场景 - 单参数带类型注解
               code: `const handleDirtyChange = useCallback((dirty: boolean) => {
   isDirtyRef.current = dirty
 }, [])`,
               output: 'const handleDirtyChange = useCallback((dirty: boolean) => isDirtyRef.current = dirty, [])',
-              errors: [{messageId: 'preferConciseArrow'}],
+              errors: [{messageId: 'preferConciseArrow'}]
             },
             { // 单参数带复杂类型注解
               code: `const fn = (item: {name: string}) => {
   console.log(item.name)
 }`,
               output: 'const fn = (item: {name: string}) => console.log(item.name)',
-              errors: [{messageId: 'preferConciseArrow'}],
-            },
-          ],
+              errors: [{messageId: 'preferConciseArrow'}]
+            }
+          ]
         })
       })
     })

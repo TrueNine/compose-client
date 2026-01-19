@@ -74,7 +74,7 @@ export type double = Double
  * @deprecated 改用 rust 风格
  */
 export type Decimal = number
-export type decimal = number // === rust 简短类型定义
+export type decimal = number
 
 export type bool = boolean
 export type u8 = number

@@ -10,7 +10,7 @@ export const ISO8601Format = {
   time: 'HH:mm:ss' as const,
   datetime: 'YYYY-MM-DD HH:mm:ss' as const,
   millis: 'x' as const,
-  second: 'X' as const,
+  second: 'X' as const
 }
 
 /**

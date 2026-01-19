@@ -20,7 +20,7 @@ type SFCWithInstall<T = dynamic> = T & VueComponentInstanceMapping & {
  */
 export function componentInstallToPlugin<T extends VueComponentInstanceMapping>(
   component: T,
-  otherComponent?: Record<string, unknown>,
+  otherComponent?: Record<string, unknown>
 ): T {
   let primaryComponent = component as unknown as SFCWithInstall<T>
   const otherSecondaryComponentInstallers: Record<string, SFCWithInstall<T>> = {}

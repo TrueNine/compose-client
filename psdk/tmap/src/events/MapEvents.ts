@@ -15,13 +15,7 @@ export interface MapEvent<K extends string> extends ITencentEvent<K, Event, Even
  * 地图事件
  */
 export interface MapEvents {
-  /**
-   * 地图进入空闲状态
-   */
   idle: null
-  /**
-   * 可见瓦片加载完毕后
-   */
   tilesloaded: null
   click: MapEvent<'click'>
   rightclick: MapEvent<'rightclick'>

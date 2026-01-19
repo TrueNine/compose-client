@@ -10,13 +10,13 @@ export function registerLoggingTools(server: McpServer): void {
       const json = await response.json() as ApiResponse
 
       return {content: [
-        {type: 'text', text: JSON.stringify(json, null, 2)},
+        {type: 'text', text: JSON.stringify(json, null, 2)}
       ]}
     }
     catch (error) {
       const errorMessage = error instanceof Error ? error.message : String(error)
       return {content: [
-        {type: 'text', text: `Failed to get console logs: ${errorMessage}`},
+        {type: 'text', text: `Failed to get console logs: ${errorMessage}`}
       ]}
     }
   }))
@@ -28,13 +28,13 @@ export function registerLoggingTools(server: McpServer): void {
       const json = await response.json() as ApiResponse
 
       return {content: [
-        {type: 'text', text: JSON.stringify(json, null, 2)},
+        {type: 'text', text: JSON.stringify(json, null, 2)}
       ]}
     }
     catch (error) {
       const errorMessage = error instanceof Error ? error.message : String(error)
       return {content: [
-        {type: 'text', text: `Failed to get console errors: ${errorMessage}`},
+        {type: 'text', text: `Failed to get console errors: ${errorMessage}`}
       ]}
     }
   }))
@@ -46,13 +46,13 @@ export function registerLoggingTools(server: McpServer): void {
       const json = await response.json() as ApiResponse
 
       return {content: [
-        {type: 'text', text: JSON.stringify(json, null, 2)},
+        {type: 'text', text: JSON.stringify(json, null, 2)}
       ], isError: true}
     }
     catch (error) {
       const errorMessage = error instanceof Error ? error.message : String(error)
       return {content: [
-        {type: 'text', text: `Failed to get network errors: ${errorMessage}`},
+        {type: 'text', text: `Failed to get network errors: ${errorMessage}`}
       ], isError: true}
     }
   }))
@@ -64,13 +64,13 @@ export function registerLoggingTools(server: McpServer): void {
       const json = await response.json() as ApiResponse
 
       return {content: [
-        {type: 'text', text: JSON.stringify(json, null, 2)},
+        {type: 'text', text: JSON.stringify(json, null, 2)}
       ]}
     }
     catch (error) {
       const errorMessage = error instanceof Error ? error.message : String(error)
       return {content: [
-        {type: 'text', text: `Failed to get network logs: ${errorMessage}`},
+        {type: 'text', text: `Failed to get network logs: ${errorMessage}`}
       ]}
     }
   }))

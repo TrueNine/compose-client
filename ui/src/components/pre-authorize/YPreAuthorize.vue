@@ -11,7 +11,7 @@ const props = withDefaults(defineProps<YPreAuthorizeProps>(), {
   hasAnyRoles: () => [],
   permissions: () => [],
   roles: () => [],
-  anonymous: void 0,
+  anonymous: void 0
 })
 const _handle = usePreAuthorize()
 if (!_handle) throw new Error('usePreAuthorize is not defined')

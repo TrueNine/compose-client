@@ -100,7 +100,7 @@ function clipRoutes(routes: RouteRecordRaw[], clipPath: string, parentPath = '')
 function routeToMenuObject(
   route: RouteRecordRaw,
   parentPath: string,
-  matchFn?: RouteMatchFn,
+  matchFn?: RouteMatchFn
 ): MenuObject | null {
   const fullPath = combineURIs(parentPath, route.path)
 
@@ -117,7 +117,7 @@ function routeToMenuObject(
     fullPath,
     parentPath,
     uri: route.path.replace(/^\/+/, ''),
-    name: typeof meta.title === 'string' ? meta.title : void 0,
+    name: typeof meta.title === 'string' ? meta.title : void 0
   }
 
   const {children} = route
@@ -155,7 +155,7 @@ function generateMenuInternal(
   routes: RouteRecordRaw[],
   matchFn?: RouteMatchFn,
   clipPath: string | null = null,
-  parentPath = '',
+  parentPath = ''
 ): MenuObject[] {
   const hasValidClipPath = typeof clipPath === 'string' && clipPath.length > 0
   const routesToProcess = hasValidClipPath ? clipRoutes(routes, clipPath) : routes
@@ -174,7 +174,7 @@ function generateMenuInternal(
 export function generateMenu(
   routes: RouteRecordRaw[],
   matchFn?: RouteMatchFn,
-  clipPath?: string,
+  clipPath?: string
 ): MenuObject[] {
   return generateMenuInternal(routes, matchFn, clipPath ?? null)
 }

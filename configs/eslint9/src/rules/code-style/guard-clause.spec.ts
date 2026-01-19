@@ -19,8 +19,8 @@ const ruleTester = new RuleTester({
   languageOptions: {
     ecmaVersion: 2022,
     sourceType: 'module',
-    parser: tseslint.parser,
-  },
+    parser: tseslint.parser
+  }
 })
 
 describe('prefer-guard-clause', () => {
@@ -44,9 +44,9 @@ describe('prefer-guard-clause', () => {
   } else if (data.type === 'b') {
     handleB(data)
   }
-}`,
+}`
           ],
-          invalid: [],
+          invalid: []
         })
       })
 
@@ -57,9 +57,9 @@ describe('prefer-guard-clause', () => {
   if (data) {
     doSomething(data)
   }
-}`,
+}`
           ],
-          invalid: [],
+          invalid: []
         })
       })
 
@@ -74,9 +74,9 @@ describe('prefer-guard-clause', () => {
 if (x > 0) {
   console.log('positive')
   console.log('done')
-}`,
+}`
           ],
-          invalid: [],
+          invalid: []
         })
       })
     })
@@ -101,9 +101,9 @@ if (x > 0) {
   doSomething(data)
   doMore(data)
 }`,
-              errors: [{messageId: 'preferGuardClause'}],
-            },
-          ],
+              errors: [{messageId: 'preferGuardClause'}]
+            }
+          ]
         })
       })
 
@@ -126,9 +126,9 @@ if (x > 0) {
   doMore(data)
   return null
 }`,
-              errors: [{messageId: 'preferGuardClause'}],
-            },
-          ],
+              errors: [{messageId: 'preferGuardClause'}]
+            }
+          ]
         })
       })
     })
@@ -138,7 +138,7 @@ if (x > 0) {
         ruleTester.run('prefer-guard-clause', rule, {
           valid: [],
           invalid: [
-            { // === 转换为 !== (Requirement 2.3)
+            {
               code: `function process(data) {
   if (data === 'valid') {
     doSomething(data)
@@ -151,9 +151,9 @@ if (x > 0) {
   doSomething(data)
   doMore(data)
 }`,
-              errors: [{messageId: 'preferGuardClause'}],
+              errors: [{messageId: 'preferGuardClause'}]
             },
-            { // !== 转换为 ===
+            {
               code: `function process(data) {
   if (data !== null) {
     doSomething(data)
@@ -166,7 +166,7 @@ if (x > 0) {
   doSomething(data)
   doMore(data)
 }`,
-              errors: [{messageId: 'preferGuardClause'}],
+              errors: [{messageId: 'preferGuardClause'}]
             },
             { // == 转换为 !=
               code: `function process(data) {
@@ -181,7 +181,7 @@ if (x > 0) {
   doSomething(data)
   doMore(data)
 }`,
-              errors: [{messageId: 'preferGuardClause'}],
+              errors: [{messageId: 'preferGuardClause'}]
             },
             { // != 转换为 ==
               code: `function process(data) {
@@ -196,9 +196,9 @@ if (x > 0) {
   doSomething(data)
   doMore(data)
 }`,
-              errors: [{messageId: 'preferGuardClause'}],
-            },
-          ],
+              errors: [{messageId: 'preferGuardClause'}]
+            }
+          ]
         })
       })
 
@@ -219,7 +219,7 @@ if (x > 0) {
   doSomething(data)
   doMore(data)
 }`,
-              errors: [{messageId: 'preferGuardClause'}],
+              errors: [{messageId: 'preferGuardClause'}]
             },
             { // < 转换为 >=
               code: `function process(data) {
@@ -234,7 +234,7 @@ if (x > 0) {
   doSomething(data)
   doMore(data)
 }`,
-              errors: [{messageId: 'preferGuardClause'}],
+              errors: [{messageId: 'preferGuardClause'}]
             },
             { // >= 转换为 <
               code: `function process(data) {
@@ -249,7 +249,7 @@ if (x > 0) {
   doSomething(data)
   doMore(data)
 }`,
-              errors: [{messageId: 'preferGuardClause'}],
+              errors: [{messageId: 'preferGuardClause'}]
             },
             { // <= 转换为 >
               code: `function process(data) {
@@ -264,9 +264,9 @@ if (x > 0) {
   doSomething(data)
   doMore(data)
 }`,
-              errors: [{messageId: 'preferGuardClause'}],
-            },
-          ],
+              errors: [{messageId: 'preferGuardClause'}]
+            }
+          ]
         })
       })
 
@@ -287,7 +287,7 @@ if (x > 0) {
   doSomething(data)
   doMore(data)
 }`,
-              errors: [{messageId: 'preferGuardClause'}],
+              errors: [{messageId: 'preferGuardClause'}]
             },
             { // !(expr) 转换为 expr
               code: `function process(data) {
@@ -302,9 +302,9 @@ if (x > 0) {
   doSomething(data)
   doMore(data)
 }`,
-              errors: [{messageId: 'preferGuardClause'}],
-            },
-          ],
+              errors: [{messageId: 'preferGuardClause'}]
+            }
+          ]
         })
       })
 
@@ -325,7 +325,7 @@ if (x > 0) {
   doSomething(data)
   doMore(data)
 }`,
-              errors: [{messageId: 'preferGuardClause'}],
+              errors: [{messageId: 'preferGuardClause'}]
             },
             { // || 表达式包裹在 !() 中
               code: `function process(data) {
@@ -340,9 +340,9 @@ if (x > 0) {
   doSomething(data)
   doMore(data)
 }`,
-              errors: [{messageId: 'preferGuardClause'}],
-            },
-          ],
+              errors: [{messageId: 'preferGuardClause'}]
+            }
+          ]
         })
       })
 
@@ -350,7 +350,7 @@ if (x > 0) {
         ruleTester.run('prefer-guard-clause', rule, {
           valid: [],
           invalid: [
-            { // Note: rule uses comparison inversion (> -> <=) rather than semantic .length === 0 // .length > 0 转换为 .length <= 0 (Requirement 2.7)
+            {
               code: `function process(data) {
   if (data.length > 0) {
     doSomething(data)
@@ -363,9 +363,9 @@ if (x > 0) {
   doSomething(data)
   doMore(data)
 }`,
-              errors: [{messageId: 'preferGuardClause'}],
+              errors: [{messageId: 'preferGuardClause'}]
             },
-            { // .length === 0 转换为 .length !== 0 (uses === -> !== inversion)
+            {
               code: `function process(data) {
   if (data.length === 0) {
     handleEmpty()
@@ -378,9 +378,9 @@ if (x > 0) {
   handleEmpty()
   logEmpty()
 }`,
-              errors: [{messageId: 'preferGuardClause'}],
-            },
-          ],
+              errors: [{messageId: 'preferGuardClause'}]
+            }
+          ]
         })
       })
     })
@@ -402,7 +402,7 @@ if (x > 0) {
 
   doSomething(data)
 }`,
-              errors: [{messageId: 'preferGuardClause'}],
+              errors: [{messageId: 'preferGuardClause'}]
             },
             { // 块末有 return 且后跟 return
               code: `function process(data) {
@@ -418,9 +418,9 @@ if (x > 0) {
   doSomething(data)
   return 'success'
 }`,
-              errors: [{messageId: 'preferGuardClause'}],
-            },
-          ],
+              errors: [{messageId: 'preferGuardClause'}]
+            }
+          ]
         })
       })
 
@@ -440,9 +440,9 @@ if (x > 0) {
 
   doSomething(data)
 }`,
-              errors: [{messageId: 'preferGuardClause'}],
-            },
-          ],
+              errors: [{messageId: 'preferGuardClause'}]
+            }
+          ]
         })
       })
     })
@@ -460,8 +460,8 @@ if (x > 0) {
     doMore(data)
   }
 }`,
-              options: [{minStatements: 3}],
-            },
+              options: [{minStatements: 3}]
+            }
           ],
           invalid: [
             { // With minStatements=3, a block with 3 statements SHOULD trigger the rule
@@ -480,9 +480,9 @@ if (x > 0) {
   step3(data)
 }`,
               options: [{minStatements: 3}],
-              errors: [{messageId: 'preferGuardClause'}],
-            },
-          ],
+              errors: [{messageId: 'preferGuardClause'}]
+            }
+          ]
         })
       })
 
@@ -502,9 +502,9 @@ if (x > 0) {
   doSomething(data)
 }`,
               options: [{minStatements: 1}],
-              errors: [{messageId: 'preferGuardClause'}],
-            },
-          ],
+              errors: [{messageId: 'preferGuardClause'}]
+            }
+          ]
         })
       })
     })

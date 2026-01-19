@@ -18,8 +18,8 @@ const rule: Rule.RuleModule = {
       preferSingleLineWhile: 'While loop with simple body should be single-line format',
       preferSingleLineTry: 'Try-catch with simple bodies should be single-line format',
       preferBraceCatch: '} catch should be on the same line',
-      preferBraceFinally: '} finally should be on the same line',
-    },
+      preferBraceFinally: '} finally should be on the same line'
+    }
   },
   create(context) {
     const {sourceCode} = context
@@ -90,7 +90,7 @@ const rule: Rule.RuleModule = {
           if (node.type === 'WhileStatement') return fixer.replaceText(node, `while (${normalizeText(sourceCode.getText((node as WhileNode).test))}) ${sourceCode.getText(stmt).trimEnd()}`)
           const h = normalizeText(sourceCode.getText(node).slice(0, (l.body.range?.[0] ?? 0) - (node.range?.[0] ?? 0)))
           return fixer.replaceText(node, `${h} ${sourceCode.getText(stmt).trimEnd()}`)
-        },
+        }
       })
     }
 
@@ -106,7 +106,7 @@ const rule: Rule.RuleModule = {
                 const {mainStmt, hasBreak} = extractCaseStatements(c.consequent)
                 const tText = c.test ? `case ${normalizeText(sourceCode.getText(c.test))}:` : 'default:'
                 return fixer.replaceText(c, `${tText} ${ensureSemicolon(sourceCode.getText(mainStmt!))}${hasBreak ? ' break' : ''}`)
-              },
+              }
             })
           }
         })
@@ -115,9 +115,9 @@ const rule: Rule.RuleModule = {
       ForInStatement: loopVisitor('preferSingleLineFor'),
       ForOfStatement: loopVisitor('preferSingleLineFor'),
       WhileStatement: loopVisitor('preferSingleLineWhile'),
-      DoWhileStatement() { /* do-while 结构特殊，暂不处理 */ },
+      DoWhileStatement() { /* do-while 结构特殊，暂不处理 */ }
     }
-  },
+  }
 }
 
 export default rule

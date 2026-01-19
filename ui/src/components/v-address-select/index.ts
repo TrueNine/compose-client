@@ -47,7 +47,7 @@ export const YVAddressSelectDefaultSelects = {
   city: {name: '选择市', code: '', leaf: false, level: 2},
   district: {name: '选择区/县', code: '', leaf: false, level: 3},
   town: {name: '选择镇/街道', code: '', leaf: false, level: 4},
-  village: {name: '选择村/居委会', code: '', leaf: false, level: 5},
+  village: {name: '选择村/居委会', code: '', leaf: false, level: 5}
 }
 
 export function getAdCodeLevel(code: string): number {
@@ -57,7 +57,7 @@ export function getAdCodeLevel(code: string): number {
     city: padCode.slice(2, 4),
     district: padCode.slice(4, 6),
     town: padCode.slice(6, 9),
-    village: padCode.slice(9, 12),
+    village: padCode.slice(9, 12)
   }
   let level = 0
   if (obj.province !== '00') level = 2

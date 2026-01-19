@@ -8,7 +8,7 @@ export const ChildInputComponent = defineComponent({name: 'ChildInputComponent',
   adCode: String,
   x: String,
   y: String,
-  z: String,
+  z: String
 }, emits: ['update:modelValue', 'update:otherProp', 'update:adCode', 'update:x', 'update:y', 'update:z'], setup(props, {emit}) {
   return () => (
     <div>

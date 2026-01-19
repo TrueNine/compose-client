@@ -22,7 +22,7 @@ function isChannelTypedMessage<T>(message: unknown): message is ChannelTypedMess
  */
 export class MessageSender {
   public static async sendToRuntimeChannel<T = unknown, R = unknown>(
-    msg: ChannelTypedMessage<T>,
+    msg: ChannelTypedMessage<T>
   ): task<R> {
     if (typeof chrome === 'undefined' || typeof chrome.runtime === 'undefined') throw new TypeError('Chrome runtime API is not available') // 检查 Chrome API 是否可用
 
@@ -37,14 +37,9 @@ export class MessageSender {
     })
   }
 
-  /**
-   * ## 监听从消息管道发送的特定消息id的消息体
-   * @param msgId 指定的消息id
-   * @param receiver 接受函数
-   */
   public static addRuntimeMessageLIstener<T = unknown>(
     msgId: string,
-    receiver: (msg: ChannelTypedMessage<T>) => asyncable<void>,
+    receiver: (msg: ChannelTypedMessage<T>) => asyncable<void>
   ): void {
     if (typeof chrome === 'undefined' || typeof chrome.runtime === 'undefined') { // 检查 Chrome API 是否可用
       console.error('Chrome runtime API is not available')

@@ -10,11 +10,11 @@ export const vueConfig: AntFuVueConfig = {vueVersion: 3, overrides: {
   'vue/define-props-declaration': ['error', 'type-based'],
   'vue/define-macros-order': [
     'error',
-    {order: ['defineProps', 'defineEmits', 'defineModel', 'defineSlots'], defineExposeLast: true},
+    {order: ['defineProps', 'defineEmits', 'defineModel', 'defineSlots'], defineExposeLast: true}
   ],
   'vue/block-order': [
     'error',
-    {order: ['script', 'template', 'style']},
+    {order: ['script', 'template', 'style']}
   ],
   'vue/attributes-order': [
     'error',
@@ -29,8 +29,8 @@ export const vueConfig: AntFuVueConfig = {vueVersion: 3, overrides: {
       'OTHER_DIRECTIVES',
       'OTHER_ATTR',
       'EVENTS',
-      'CONTENT',
-    ]},
+      'CONTENT'
+    ]}
   ],
   'vue/v-on-event-hyphenation': ['error', 'never', {autofix: true}],
   'vue/attribute-hyphenation': ['error', 'never', {ignoreTags: ['i-', 'v-', 'v-bind']}],
@@ -38,8 +38,8 @@ export const vueConfig: AntFuVueConfig = {vueVersion: 3, overrides: {
   'vue/component-name-in-template-casing': [
     'error',
     'PascalCase',
-    {ignores: ['router-view', 'router-link', 'scroll-view'], registeredComponentsOnly: false},
-  ],
+    {ignores: ['router-view', 'router-link', 'scroll-view'], registeredComponentsOnly: false}
+  ]
 }}
 
 /** @deprecated 使用 vueConfig 代替 */

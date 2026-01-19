@@ -5,14 +5,14 @@ const rule: Rule.RuleModule = {
     type: 'layout',
     docs: {
       description: 'Enforce try, catch, and finally blocks to be on separate lines',
-      recommended: false,
+      recommended: false
     },
     fixable: 'whitespace',
     messages: {
       separateCatch: 'Catch clause should be on a new line after the try block',
-      separateFinally: 'Finally clause should be on a new line after the previous block',
+      separateFinally: 'Finally clause should be on a new line after the previous block'
     },
-    schema: [],
+    schema: []
   },
   create(context) {
     const {sourceCode} = context
@@ -46,7 +46,7 @@ const rule: Rule.RuleModule = {
         const finallyToken = sourceCode.getFirstTokenBetween(
           handler ?? tryBlock,
           finalizer,
-          token => token.value === 'finally',
+          token => token.value === 'finally'
         )
         if (prevCloseBrace && finallyToken && previousBlock.loc && finalizer.loc) {
           if (prevCloseBrace.loc.end.line === finallyToken.loc.start.line) {
@@ -60,14 +60,14 @@ const rule: Rule.RuleModule = {
                 messageId: 'separateFinally',
                 fix(fixer) {
                   return fixer.replaceTextRange([prevCloseBrace.range[1], finallyToken.range[0]], '\n')
-                },
+                }
               })
             }
           }
         }
-      },
+      }
     }
-  },
+  }
 }
 
 export default rule

@@ -11,7 +11,7 @@ import {AuditCategory} from './types.js'
  * @returns Lighthouse configuration and flags
  */
 export function createLighthouseConfig(
-  categories: string[] = [AuditCategory.ACCESSIBILITY],
+  categories: string[] = [AuditCategory.ACCESSIBILITY]
 ): LighthouseConfig {
   return {flags: {
     output: ['json'],
@@ -23,8 +23,8 @@ export function createLighthouseConfig(
       width: 1350,
       height: 940,
       deviceScaleFactor: 1,
-      disabled: false,
-    },
+      disabled: false
+    }
   }, config: {extends: 'lighthouse:default', settings: {onlyCategories: categories, emulatedFormFactor: 'desktop', throttling: {cpuSlowdownMultiplier: 1}}}}
 }
 
@@ -37,14 +37,14 @@ export function createLighthouseConfig(
  */
 export async function runLighthouseAudit(
   url: string,
-  categories: string[],
+  categories: string[]
 ): Promise<LighthouseResult> {
   logger.info(`Starting Lighthouse ${categories.join(', ')} audit for: ${url}`)
 
   if (!url || url === 'about:blank') {
     logger.error('Invalid URL for Lighthouse audit')
     throw new Error(
-      'Cannot run audit on an empty page or about:blank. Please navigate to a valid URL first.',
+      'Cannot run audit on an empty page or about:blank. Please navigate to a valid URL first.'
     )
   }
 
@@ -84,7 +84,7 @@ export async function runLighthouseAudit(
         || errorMessage.includes('spawn ENOENT')
       ) {
         throw new Error(
-          'Chrome or Edge browser could not be found. Please ensure that Chrome or Edge is installed on your system to run audits.',
+          'Chrome or Edge browser could not be found. Please ensure that Chrome or Edge is installed on your system to run audits.'
         )
       }
       throw browserError // Re-throw other errors
@@ -96,7 +96,7 @@ export async function runLighthouseAudit(
     throw new Error(
       `Lighthouse audit failed: ${
         error instanceof Error ? error.message : String(error)
-      }`,
+      }`
     )
   }
 }

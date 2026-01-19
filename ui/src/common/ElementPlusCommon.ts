@@ -8,9 +8,9 @@ const en: dynamic = elementEnUs
 
 export {
   en as ElementPlusEn,
-  zhCn as ElementPlusZhCn,
+  zhCn as ElementPlusZhCn
 }
 
 export {
-  dayjs as ElementPlusDayjs,
+  dayjs as ElementPlusDayjs
 } from 'element-plus'

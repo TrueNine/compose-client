@@ -2,28 +2,13 @@ import type {Rule} from 'eslint'
 
 const MAX_LINE_LENGTH = 160
 
-/**
- * ESLint rule: prefer-single-line-if
- *
- * Prefer single-line if statements when possible.
- * This rule detects if-else chains with simple statements and converts them to single-line format.
- *
- * @example
- * // Before
- * if (condition) {
- *   return value
- * }
- *
- * // After
- * if (condition) return value
- */
 const rule: Rule.RuleModule = {
   meta: {
     type: 'layout',
     docs: {description: 'Prefer single-line if statements when possible', recommended: false},
     fixable: 'code',
     schema: [],
-    messages: {preferSingleLine: 'If-else chain with simple statements should be single-line format', preferSingleLineBranch: 'Simple if/else branch should be single-line format'},
+    messages: {preferSingleLine: 'If-else chain with simple statements should be single-line format', preferSingleLineBranch: 'Simple if/else branch should be single-line format'}
   },
   create(context) {
     const {sourceCode} = context
@@ -195,7 +180,7 @@ const rule: Rule.RuleModule = {
               if (!stmtText.endsWith(';') && !stmtText.endsWith('}')) stmtText = stmtText.trimEnd()
               lines.push(`${indent}else ${stmtText}`)
               return fixer.replaceText(node, lines.join('\n'))
-            },
+            }
           })
           return
         }
@@ -266,11 +251,11 @@ const rule: Rule.RuleModule = {
             }
 
             return fixer.replaceText(node, lines.join('\n'))
-          },
+          }
         })
-      },
+      }
     }
-  },
+  }
 }
 
 export default rule

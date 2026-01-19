@@ -1,28 +1,28 @@
 export {
   defaultFormatterConfig,
-  formatterConfig,
+  formatterConfig
 } from './formatter' /* 新命名导出 */
 export {
   defaultJsConfig,
-  javascriptConfig,
+  javascriptConfig
 } from './javascript'
 export {
   defaultTestConfig,
   defaultUnocssConfig,
   testConfig,
-  unocssConfig,
+  unocssConfig
 } from './misc'
 export {
   defaultStylisticConfig,
-  stylisticConfig,
+  stylisticConfig
 } from './stylistic'
 export {
   defaultStrictTsConfig,
   defaultTsConfig,
   strictTypescriptConfig,
-  typescriptConfig,
+  typescriptConfig
 } from './typescript'
 export {
   defaultVueConfig,
-  vueConfig,
+  vueConfig
 } from './vue'

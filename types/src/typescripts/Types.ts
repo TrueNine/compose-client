@@ -29,13 +29,6 @@ export type clip<T extends object, K extends keyof T> = Omit<T, K> & pt<Pick<T, 
  */
 export type newable = abstract new (...args: dynamic) => dynamic
 
-/**
- * # InstanceType 的简写
- *
- * ```typescript
- * type InstanceType<T extends abstract new (...args: any) => any> = T extends abstract new (...args: any) => infer R ? R : any;
- * ```
- */
 export type inst<T extends newable> = InstanceType<T>
 
 /**

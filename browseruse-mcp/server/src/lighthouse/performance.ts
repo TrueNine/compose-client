@@ -10,7 +10,7 @@ function isObjectWithItems(value: unknown): value is {items: unknown[]} { // Typ
     && 'items' in value
     && Array.isArray((value as {items: unknown}).items)
   )
-} // === Performance Report Types ===
+}
 
 /**
  * Performance-specific report content structure
@@ -78,7 +78,7 @@ const DETAIL_LIMITS = { // This ensures we always include critical issues while 
   critical: Number.MAX_SAFE_INTEGER, // No limit for critical issues
   serious: 15, // Up to 15 items for serious issues
   moderate: 10, // Up to 10 items for moderate issues
-  minor: 3, // Up to 3 items for minor issues
+  minor: 3 // Up to 3 items for minor issues
 }
 
 /**
@@ -89,7 +89,7 @@ const DETAIL_LIMITS = { // This ensures we always include critical issues while 
  * - Only actionable data that an AI can use for recommendations
  */
 export async function runPerformanceAudit(
-  url: string,
+  url: string
 ): Promise<AIOptimizedPerformanceReport> {
   try {
     const lhr = await runLighthouseAudit(url, [AuditCategory.PERFORMANCE])
@@ -98,7 +98,7 @@ export async function runPerformanceAudit(
   catch (error: unknown) {
     throw new Error(
       `Performance audit failed: ${error instanceof Error ? error.message : String(error)
-      }`,
+      }`
     )
   }
 }
@@ -143,7 +143,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
     passed: passedCount,
     manual: manualCount,
     informative: informativeCount,
-    not_applicable: notApplicableCount,
+    not_applicable: notApplicableCount
   }
 
   const metrics: AIOptimizedMetric[] = []
@@ -186,7 +186,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
             if (node.nodeLabel != null) { // Try to extract text content if available
               metric.element_content = String(node.nodeLabel).slice(
                 0,
-                100,
+                100
               )
             }
           }
@@ -285,14 +285,14 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
                   && String(itemObj.mimeType).startsWith('image/')
                   && itemObj.endTime != null
                   && Math.abs(Number(itemObj.endTime) - lcpTime) < 500 // Within 500ms of LCP
-              },
+              }
             )
             .sort(
               (a: unknown, b: unknown) => {
                 const aObj = a as Record<string, unknown>
                 const bObj = b as Record<string, unknown>
                 return Math.abs(Number(aObj.endTime) - lcpTime) - Math.abs(Number(bObj.endTime) - lcpTime)
-              },
+              }
             )
 
           if (imageResources.length > 0) {
@@ -455,10 +455,10 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
           css: cssCount,
           img: imgCount,
           font: fontCount,
-          other: otherCount,
+          other: otherCount
         },
         third_party_size_kb: thirdPartySizeKb,
-        main_thread_blocking_time_ms: mainThreadBlockingTimeMs,
+        main_thread_blocking_time_ms: mainThreadBlockingTimeMs
       }
     }
   }
@@ -496,7 +496,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
     prioritized_recommendations:
       prioritized_recommendations.length > 0
         ? prioritized_recommendations
-        : void 0,
+        : void 0
   }
 
   return {metadata, report: reportContent} // Return the full report following the LighthouseReport interface

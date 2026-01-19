@@ -79,13 +79,13 @@ export async function discoverServer(): Promise<boolean> {
 }
 
 export async function withServerConnection<T>(
-  apiCall: () => Promise<T>,
+  apiCall: () => Promise<T>
 ): Promise<T> {
   if (!serverDiscovered) {
     const discovered = await discoverServer()
     if (!discovered) {
       return {content: [
-        {type: 'text', text: 'Failed to discover browser connector server. Please ensure it\'s running.'},
+        {type: 'text', text: 'Failed to discover browser connector server. Please ensure it\'s running.'}
       ], isError: true} as T
     }
   }
@@ -103,13 +103,13 @@ export async function withServerConnection<T>(
         const retryErrorMessage = retryError instanceof Error ? retryError.message : String(retryError)
         logger.error(`Retry failed: ${retryErrorMessage}`)
         return {content: [
-          {type: 'text', text: `Error after reconnection attempt: ${retryErrorMessage}`},
+          {type: 'text', text: `Error after reconnection attempt: ${retryErrorMessage}`}
         ], isError: true} as T
       }
     } else {
       logger.error('Rediscovery failed. Could not reconnect to server.')
       return {content: [
-        {type: 'text', text: `Failed to reconnect to server: ${errorMessage}`},
+        {type: 'text', text: `Failed to reconnect to server: ${errorMessage}`}
       ], isError: true} as T
     }
   }

@@ -13,7 +13,7 @@ const rule: Rule.RuleModule = {
     docs: {description: 'Prefer concise arrow function body when possible', recommended: false},
     fixable: 'code',
     schema: [],
-    messages: {preferConciseArrow: 'Arrow function body can be simplified to a single expression'},
+    messages: {preferConciseArrow: 'Arrow function body can be simplified to a single expression'}
   },
   create(context) {
     const {sourceCode} = context
@@ -61,9 +61,9 @@ const rule: Rule.RuleModule = {
 
         if (getIndent(arrow).length + result.length > MAX_LINE_LENGTH) return
         context.report({node, messageId: 'preferConciseArrow', fix: fixer => fixer.replaceText(node, result)})
-      },
+      }
     }
-  },
+  }
 }
 
 export default rule

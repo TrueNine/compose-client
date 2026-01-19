@@ -7,8 +7,8 @@ const ruleTester = new RuleTester({
   languageOptions: {
     ecmaVersion: 2022,
     sourceType: 'module',
-    parser: tseslint.parser,
-  },
+    parser: tseslint.parser
+  }
 })
 
 describe('compact-try-catch', () => {
@@ -19,9 +19,9 @@ describe('compact-try-catch', () => {
           'try {\n  a();\n  b();\n} catch (e) {\n  c();\n  d();\n}',
           'try { a(); } catch (e) { b(); }',
           'try { a(); } catch (e) {}',
-          'try {\n  const x = getAppBaseInfo();\n  if (x.theme) theme.value = x.theme;\n} catch (error) { console.error("error:", error); }',
+          'try {\n  const x = getAppBaseInfo();\n  if (x.theme) theme.value = x.theme;\n} catch (error) { console.error("error:", error); }'
         ],
-        invalid: [],
+        invalid: []
       })
     })
   })
@@ -34,9 +34,9 @@ describe('compact-try-catch', () => {
           {
             code: 'try {\n  foo();\n} catch (e) {\n  bar();\n  baz();\n}',
             output: 'try { foo(); } catch (e) {\n  bar();\n  baz();\n}',
-            errors: [{messageId: 'preferSingleLineTry'}],
-          },
-        ],
+            errors: [{messageId: 'preferSingleLineTry'}]
+          }
+        ]
       })
     })
 
@@ -47,9 +47,9 @@ describe('compact-try-catch', () => {
           {
             code: 'try {\n  const appBaseInfo = getAppBaseInfo();\n  if (appBaseInfo.theme) systemTheme.value = appBaseInfo.theme;\n} catch (error) {\n  console.error("获取系统主题失败:", error);\n}',
             output: 'try {\n  const appBaseInfo = getAppBaseInfo();\n  if (appBaseInfo.theme) systemTheme.value = appBaseInfo.theme;\n} catch (error) { console.error("获取系统主题失败:", error); }',
-            errors: [{messageId: 'preferSingleLineCatch'}],
-          },
-        ],
+            errors: [{messageId: 'preferSingleLineCatch'}]
+          }
+        ]
       })
     })
 
@@ -60,9 +60,9 @@ describe('compact-try-catch', () => {
           {
             code: 'try {\n  foo();\n  bar();\n} finally {\n  cleanup();\n}',
             output: 'try {\n  foo();\n  bar();\n} finally { cleanup(); }',
-            errors: [{messageId: 'preferSingleLineFinally'}],
-          },
-        ],
+            errors: [{messageId: 'preferSingleLineFinally'}]
+          }
+        ]
       })
     })
 
@@ -73,9 +73,9 @@ describe('compact-try-catch', () => {
           {
             code: 'try { foo(); } catch (e) {\n  bar();\n  baz();\n} finally {\n  cleanup();\n}',
             output: 'try { foo(); } catch (e) {\n  bar();\n  baz();\n} finally { cleanup(); }',
-            errors: [{messageId: 'preferSingleLineFinally'}],
-          },
-        ],
+            errors: [{messageId: 'preferSingleLineFinally'}]
+          }
+        ]
       })
     })
 
@@ -88,10 +88,10 @@ describe('compact-try-catch', () => {
             output: 'try {\n  foo();\n  bar();\n} catch (e) { log(e); } finally { cleanup(); }',
             errors: [
               {messageId: 'preferSingleLineCatch'},
-              {messageId: 'preferSingleLineFinally'},
-            ],
-          },
-        ],
+              {messageId: 'preferSingleLineFinally'}
+            ]
+          }
+        ]
       })
     })
 
@@ -105,10 +105,10 @@ describe('compact-try-catch', () => {
             errors: [
               {messageId: 'preferSingleLineTry'},
               {messageId: 'preferSingleLineCatch'},
-              {messageId: 'preferSingleLineFinally'},
-            ],
-          },
-        ],
+              {messageId: 'preferSingleLineFinally'}
+            ]
+          }
+        ]
       })
     })
   })
@@ -118,20 +118,20 @@ describe('compact-try-catch', () => {
       ruleTester.run('compact-try-catch', rule, {
         valid: [
           'try {\n  a();\n  b();\n}\ncatch (e) { c(); }',
-          'try { a(); } catch (e) {\n  b();\n  c();\n}\nfinally { d(); }',
+          'try { a(); } catch (e) {\n  b();\n  c();\n}\nfinally { d(); }'
         ],
         invalid: [
           {
             code: 'try {\n  a();\n  b();\n}\ncatch (e) {\n  c();\n  d();\n}',
             output: 'try {\n  a();\n  b();\n} catch (e) {\n  c();\n  d();\n}',
-            errors: [{messageId: 'compactCatch'}],
+            errors: [{messageId: 'compactCatch'}]
           },
           {
             code: 'try { a(); } catch (e) {\n  b();\n  c();\n}\nfinally {\n  d();\n  e();\n}',
             output: 'try { a(); } catch (e) {\n  b();\n  c();\n} finally {\n  d();\n  e();\n}',
-            errors: [{messageId: 'compactFinally'}],
-          },
-        ],
+            errors: [{messageId: 'compactFinally'}]
+          }
+        ]
       })
     })
 
@@ -142,9 +142,9 @@ describe('compact-try-catch', () => {
           {
             code: 'try {\n  foo();\n}\ncatch (e) { bar(); }',
             output: 'try { foo(); }\ncatch (e) { bar(); }',
-            errors: [{messageId: 'preferSingleLineTry'}],
-          },
-        ],
+            errors: [{messageId: 'preferSingleLineTry'}]
+          }
+        ]
       })
     })
   })
@@ -154,9 +154,9 @@ describe('compact-try-catch', () => {
       ruleTester.run('compact-try-catch', rule, {
         valid: [
           'try {} catch (e) {}',
-          'try { foo(); } catch (e) {}',
+          'try { foo(); } catch (e) {}'
         ],
-        invalid: [],
+        invalid: []
       })
     })
 
@@ -164,18 +164,18 @@ describe('compact-try-catch', () => {
       ruleTester.run('compact-try-catch', rule, {
         valid: [
           'try {\n  if (x) { y(); }\n} catch (e) { bar(); }',
-          'try { foo(); } catch (e) {\n  if (x) { y(); }\n}',
+          'try { foo(); } catch (e) {\n  if (x) { y(); }\n}'
         ],
-        invalid: [],
+        invalid: []
       })
     })
 
     it('should not compress blocks exceeding max length', () => {
       ruleTester.run('compact-try-catch', rule, {
         valid: [
-          `try {\n  veryLongFunctionNameThatExceedsTheMaximumLineLengthWhenCompressedToSingleLineWithAllItsParametersAndEverything();\n} catch (e) { bar(); }`,
+          `try {\n  veryLongFunctionNameThatExceedsTheMaximumLineLengthWhenCompressedToSingleLineWithAllItsParametersAndEverything();\n} catch (e) { bar(); }`
         ],
-        invalid: [],
+        invalid: []
       })
     })
   })

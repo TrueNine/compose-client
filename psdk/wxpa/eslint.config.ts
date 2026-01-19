@@ -4,7 +4,7 @@ export default eslint9({
   type: 'lib',
   typescript: {
     strictTypescriptEslint: true,
-    tsconfigPath: './tsconfig.lib.json',
+    tsconfigPath: './tsconfig.lib.json'
   },
-  ignores: ['src/examples/**/*'],
+  ignores: ['src/examples/**/*']
 })

@@ -8,6 +8,6 @@ export default eslint9({
   formatters: true,
   typescript: {strictTypescriptEslint: true, tsconfigPath: './tsconfig.json'},
   ignores: [
-    'playground/**/*',
-  ],
+    'playground/**/*'
+  ]
 })

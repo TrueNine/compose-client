@@ -37,15 +37,6 @@ let __workSrc: string | undefined,
 
 export const PdfJs: typeof pdfjs = pdfjs
 
-/**
- * 初始化 PDF.js 配置
- * @returns {typeof pdfjs} 返回配置后的 PDF.js 实例
- * @example
- * ```typescript
- * const pdfjs = init();
- * // 现在可以使用配置好的 PDF.js 实例了
- * ```
- */
 export function init(): typeof pdfjs {
   if (typeof __workSrc === 'string' && __workSrc.length > 0) {
     pdfjs.GlobalWorkerOptions.workerSrc = __workSrc
@@ -58,28 +49,11 @@ export function init(): typeof pdfjs {
   return PdfJs
 }
 
-/**
- * 设置 PDF.js Worker 的源文件路径
- * @param {string} workSrc - Worker 脚本的 URL 路径
- * @example
- * ```typescript
- * setWorkerSrc('https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.worker.min.js');
- * ```
- */
 export function setWorkerSrc(workSrc: string): void {
   __workSrc = workSrc
   PdfJs.GlobalWorkerOptions.workerSrc = workSrc
 }
 
-/**
- * 设置 PDF.js Worker 实例
- * @param {Worker} worker - Web Worker 实例
- * @example
- * ```typescript
- * const worker = new Worker('pdf.worker.js');
- * setWorker(worker);
- * ```
- */
 export function setWorker(worker: Worker): void {
   __worker = worker
   PdfJs.GlobalWorkerOptions.workerPort = worker
@@ -101,23 +75,9 @@ export function getWorker(): Worker | undefined {
   return __worker
 }
 
-/**
- * 处理 PDF 文档的每一页
- * @template T - 页面处理结果的类型
- * @param {PDFDocumentProxy} pdf - PDF 文档代理对象
- * @param {Function} pageHandle - 处理每一页的回调函数
- * @returns {Promise<T[]>} 返回所有页面处理结果的数组
- * @example
- * ```typescript
- * const results = await resolvePages(pdfDoc, async (page, pageNum) => {
- *   const text = await page.getTextContent();
- *   return text;
- * });
- * ```
- */
 export async function resolvePages<T = dynamic>(
   pdf: PDFDocumentProxy,
-  pageHandle: (page: PDFPageProxy, numPage: number) => task<T>,
+  pageHandle: (page: PDFPageProxy, numPage: number) => task<T>
 ): task<T[]> {
   const result: T[] = []
   for (let i = 1; i <= pdf.numPages; i++) {
@@ -128,16 +88,6 @@ export async function resolvePages<T = dynamic>(
   return result
 }
 
-/**
- * 将 PDF 图像数据转换为 base64 格式的 PNG 图片
- * @param {PDFImageData} arg - PDF 图像数据
- * @returns {string} base64 格式的 PNG 图片数据
- * @example
- * ```typescript
- * const base64Image = resolveImage(pdfImageData);
- * // 可以直接在 img 标签的 src 中使用
- * ```
- */
 export function resolveImage(arg: PDFImageData): string {
   const canvas = globalThis.document.createElement('canvas')
   canvas.width = arg.width
@@ -167,26 +117,9 @@ export async function safeGetObject(objId: string, proxy: PDFPageProxy): Promise
   })
 }
 
-/**
- * 从 PDF 文件中提取所有图片
- * @template T - 图片处理结果的类型
- * @param {Blob} pdfFile - PDF 文件数据
- * @param {Function} [resolve] - 可选的图片处理函数
- * @returns {Promise<T[]>} 处理后的图片数组
- * @example
- * ```typescript
- * // 基本用法：提取为 base64 图片
- * const images = await extractPdfImages(pdfBlob);
- *
- * // 自定义处理：转换为 URL 对象
- * const urls = await extractPdfImages(pdfBlob,
- *   async (img) => URL.createObjectURL(new Blob([img.data]))
- * );
- * ```
- */
 export async function extractPdfImages<T = string>(
   pdfFile: Blob,
-  resolve?: (img: PDFImageData) => task<T>,
+  resolve?: (img: PDFImageData) => task<T>
 ): task<T[]> {
   const pdfArrayBuffer = await pdfFile.arrayBuffer()
   const pdfDocument = await PdfJs.getDocument(pdfArrayBuffer).promise
@@ -212,7 +145,7 @@ export async function extractPdfImages<T = string>(
   })
 
   return Promise.all(
-    extractedImages.map(async imageData => (await (resolve ?? resolveImage)(imageData)) as T),
+    extractedImages.map(async imageData => (await (resolve ?? resolveImage)(imageData)) as T)
   )
 }
 

@@ -42,22 +42,6 @@ export function arrayDiff<T>(a: T[], b: T[]): T[] {
   return [...first].filter(i => !last.has(i))
 }
 
-/**
- * # 将一个数组组合为一个 Map
- *
- * 得到类似
- * ```typescript
- * Map {
- *   '颜色': [ '红色', '绿色', '默认' ],
- *   '尺寸': [ '大码'，'中码' ]
- *}
- * ```
- *
- * @param arr 数组
- * @param keyHandle 键提供函数
- * @param valueHandle 值提供函数
- * @returns 组合后的 map k v[]
- */
 export function combineToMap<T, K, V>(arr: T[], keyHandle: (t: T) => K, valueHandle: (t: T) => V): Map<K, V[]> {
   const result = new Map<K, V[]>()
   arr.forEach(item => {
@@ -107,7 +91,7 @@ export function mergeToMap<T extends object>(key: keyof T, arr: T[]): {[key in k
       else acc[cur.key] = [cur.value]
       return acc
     },
-    {} as {[key in keyof T]: T[] | undefined},
+    {} as {[key in keyof T]: T[] | undefined}
   ) as {[key in keyof T]: T[]}
 }
 

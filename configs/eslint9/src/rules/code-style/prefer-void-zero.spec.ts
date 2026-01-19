@@ -18,8 +18,8 @@ const ruleTester = new RuleTester({
   languageOptions: {
     ecmaVersion: 2022,
     sourceType: 'module',
-    parser: tseslint.parser,
-  },
+    parser: tseslint.parser
+  }
 })
 
 describe('prefer-void-zero', () => {
@@ -31,9 +31,9 @@ describe('prefer-void-zero', () => {
             'let x: undefined', // 变量类型注解
             'let x: undefined = void 0',
             'const x: string | undefined = "test"',
-            'let x: number | undefined',
+            'let x: number | undefined'
           ],
-          invalid: [],
+          invalid: []
         })
       })
 
@@ -44,9 +44,9 @@ describe('prefer-void-zero', () => {
             'function fn(): string | undefined { return "test" }',
             'const fn = (): undefined => void 0',
             'const fn = (): string | undefined => "test"',
-            'async function fn(): Promise<undefined> { return void 0 }',
+            'async function fn(): Promise<undefined> { return void 0 }'
           ],
-          invalid: [],
+          invalid: []
         })
       })
 
@@ -56,9 +56,9 @@ describe('prefer-void-zero', () => {
             'function fn(x: undefined): void {}', // 函数参数类型
             'function fn(x: string | undefined): void {}',
             'const fn = (x: undefined) => {}',
-            'const fn = (x: number | undefined) => {}',
+            'const fn = (x: number | undefined) => {}'
           ],
-          invalid: [],
+          invalid: []
         })
       })
     })
@@ -70,9 +70,9 @@ describe('prefer-void-zero', () => {
             'type T = undefined', // 类型别名
             'type T = string | undefined',
             'type T = undefined | null',
-            'type MaybeString = string | undefined',
+            'type MaybeString = string | undefined'
           ],
-          invalid: [],
+          invalid: []
         })
       })
 
@@ -82,9 +82,9 @@ describe('prefer-void-zero', () => {
             'interface I { x: undefined }', // 接口成员
             'interface I { x: string | undefined }',
             'interface I { x?: undefined }',
-            'interface I { fn(): undefined }',
+            'interface I { fn(): undefined }'
           ],
-          invalid: [],
+          invalid: []
         })
       })
 
@@ -95,9 +95,9 @@ describe('prefer-void-zero', () => {
             'function fn<T = undefined>(): T { return void 0 as T }',
             'const x: Array<undefined> = []',
             'const x: Map<string, undefined> = new Map()',
-            'const x: Promise<undefined> = Promise.resolve(void 0)',
+            'const x: Promise<undefined> = Promise.resolve(void 0)'
           ],
-          invalid: [],
+          invalid: []
         })
       })
 
@@ -107,9 +107,9 @@ describe('prefer-void-zero', () => {
             'type T = string | undefined | null', // 联合类型和交叉类型
             'type T = (string | undefined) & object',
             'let x: string | number | undefined',
-            'function fn(x: string | undefined | null): void {}',
+            'function fn(x: string | undefined | null): void {}'
           ],
-          invalid: [],
+          invalid: []
         })
       })
 
@@ -117,9 +117,9 @@ describe('prefer-void-zero', () => {
         ruleTester.run('prefer-void-zero', rule, {
           valid: [
             'type T = string extends undefined ? true : false', // 条件类型
-            'type T<U> = U extends undefined ? never : U',
+            'type T<U> = U extends undefined ? never : U'
           ],
-          invalid: [],
+          invalid: []
         })
       })
 
@@ -127,9 +127,9 @@ describe('prefer-void-zero', () => {
         ruleTester.run('prefer-void-zero', rule, {
           valid: [
             'type T = { [K in string]: undefined }', // 映射类型
-            'type T = { [K in keyof object]: string | undefined }',
+            'type T = { [K in keyof object]: string | undefined }'
           ],
-          invalid: [],
+          invalid: []
         })
       })
 
@@ -138,9 +138,9 @@ describe('prefer-void-zero', () => {
           valid: [
             'type T = { x: undefined }', // 类型字面量
             'type T = { x: string | undefined, y: number }',
-            'const fn = (x: { value: undefined }) => {}',
+            'const fn = (x: { value: undefined }) => {}'
           ],
-          invalid: [],
+          invalid: []
         })
       })
 
@@ -149,9 +149,9 @@ describe('prefer-void-zero', () => {
           valid: [
             'const x = value as undefined', // as 表达式的类型部分
             'const x = value as string | undefined',
-            'const x = (value as undefined)',
+            'const x = (value as undefined)'
           ],
-          invalid: [],
+          invalid: []
         })
       })
 
@@ -159,9 +159,9 @@ describe('prefer-void-zero', () => {
         ruleTester.run('prefer-void-zero', rule, {
           valid: [
             'const x = value satisfies undefined', // satisfies 表达式的类型部分
-            'const x = value satisfies string | undefined',
+            'const x = value satisfies string | undefined'
           ],
-          invalid: [],
+          invalid: []
         })
       })
 
@@ -172,18 +172,18 @@ describe('prefer-void-zero', () => {
             'type T = (x: string) => undefined',
             'type T = (x: undefined) => void',
             'let fn: () => undefined',
-            'let fn: (x: undefined) => string',
+            'let fn: (x: undefined) => string'
           ],
-          invalid: [],
+          invalid: []
         })
       })
 
       it('should skip type predicates', () => {
         ruleTester.run('prefer-void-zero', rule, {
           valid: [
-            'function isUndefined(x: unknown): x is undefined { return x === void 0 }', // 类型谓词
+            'function isUndefined(x: unknown): x is undefined { return x === void 0 }' // 类型谓词
           ],
-          invalid: [],
+          invalid: []
         })
       })
     })
@@ -193,9 +193,9 @@ describe('prefer-void-zero', () => {
         ruleTester.run('prefer-void-zero', rule, {
           valid: [
             'const obj = { undefined: 1 }', // 属性键（非简写）
-            'obj.undefined = 1',
+            'obj.undefined = 1'
           ],
-          invalid: [],
+          invalid: []
         })
       })
 
@@ -204,9 +204,9 @@ describe('prefer-void-zero', () => {
           valid: [
             'obj.undefined', // 成员表达式属性访问
             'this.undefined',
-            'window.undefined',
+            'window.undefined'
           ],
-          invalid: [],
+          invalid: []
         })
       })
 
@@ -214,7 +214,7 @@ describe('prefer-void-zero', () => {
         ruleTester.run('prefer-void-zero', rule, {
           valid: [
           ], // 注意：这里 undefined 作为变量名被声明 // 变量声明（左侧）- 虽然不常见，但语法上允许
-          invalid: [],
+          invalid: []
         })
       })
 
@@ -222,7 +222,7 @@ describe('prefer-void-zero', () => {
         ruleTester.run('prefer-void-zero', rule, {
           valid: [
           ], // 注意：undefined 通常不会被 import/export，但规则应该处理这种情况 // import/export 说明符
-          invalid: [],
+          invalid: []
         })
       })
     })
@@ -237,19 +237,19 @@ describe('prefer-void-zero', () => {
             {
               code: 'const x = undefined',
               output: 'const x = void 0',
-              errors: [{messageId: 'preferVoidZero'}],
+              errors: [{messageId: 'preferVoidZero'}]
             },
             {
               code: 'let x = undefined',
               output: 'let x = void 0',
-              errors: [{messageId: 'preferVoidZero'}],
+              errors: [{messageId: 'preferVoidZero'}]
             },
             {
               code: 'var x = undefined',
               output: 'var x = void 0',
-              errors: [{messageId: 'preferVoidZero'}],
-            },
-          ],
+              errors: [{messageId: 'preferVoidZero'}]
+            }
+          ]
         })
       })
 
@@ -260,19 +260,19 @@ describe('prefer-void-zero', () => {
             {
               code: 'x = undefined',
               output: 'x = void 0',
-              errors: [{messageId: 'preferVoidZero'}],
+              errors: [{messageId: 'preferVoidZero'}]
             },
             {
               code: 'obj.prop = undefined',
               output: 'obj.prop = void 0',
-              errors: [{messageId: 'preferVoidZero'}],
+              errors: [{messageId: 'preferVoidZero'}]
             },
             {
               code: 'arr[0] = undefined',
               output: 'arr[0] = void 0',
-              errors: [{messageId: 'preferVoidZero'}],
-            },
-          ],
+              errors: [{messageId: 'preferVoidZero'}]
+            }
+          ]
         })
       })
     })
@@ -285,19 +285,19 @@ describe('prefer-void-zero', () => {
             {
               code: 'function fn() { return undefined }',
               output: 'function fn() { return void 0 }',
-              errors: [{messageId: 'preferVoidZero'}],
+              errors: [{messageId: 'preferVoidZero'}]
             },
             {
               code: 'const fn = () => { return undefined }',
               output: 'const fn = () => { return void 0 }',
-              errors: [{messageId: 'preferVoidZero'}],
+              errors: [{messageId: 'preferVoidZero'}]
             },
             {
               code: 'const fn = () => undefined',
               output: 'const fn = () => void 0',
-              errors: [{messageId: 'preferVoidZero'}],
-            },
-          ],
+              errors: [{messageId: 'preferVoidZero'}]
+            }
+          ]
         })
       })
     })
@@ -310,29 +310,29 @@ describe('prefer-void-zero', () => {
             {
               code: 'if (x === undefined) {}',
               output: 'if (x === void 0) {}',
-              errors: [{messageId: 'preferVoidZero'}],
+              errors: [{messageId: 'preferVoidZero'}]
             },
             {
               code: 'if (x !== undefined) {}',
               output: 'if (x !== void 0) {}',
-              errors: [{messageId: 'preferVoidZero'}],
+              errors: [{messageId: 'preferVoidZero'}]
             },
             {
               code: 'if (x == undefined) {}',
               output: 'if (x == void 0) {}',
-              errors: [{messageId: 'preferVoidZero'}],
+              errors: [{messageId: 'preferVoidZero'}]
             },
             {
               code: 'if (x != undefined) {}',
               output: 'if (x != void 0) {}',
-              errors: [{messageId: 'preferVoidZero'}],
+              errors: [{messageId: 'preferVoidZero'}]
             },
             {
               code: 'x === undefined ? "yes" : "no"',
               output: 'x === void 0 ? "yes" : "no"',
-              errors: [{messageId: 'preferVoidZero'}],
-            },
-          ],
+              errors: [{messageId: 'preferVoidZero'}]
+            }
+          ]
         })
       })
     })
@@ -345,24 +345,24 @@ describe('prefer-void-zero', () => {
             {
               code: 'fn(undefined)',
               output: 'fn(void 0)',
-              errors: [{messageId: 'preferVoidZero'}],
+              errors: [{messageId: 'preferVoidZero'}]
             },
             {
               code: 'fn(a, undefined, b)',
               output: 'fn(a, void 0, b)',
-              errors: [{messageId: 'preferVoidZero'}],
+              errors: [{messageId: 'preferVoidZero'}]
             },
             {
               code: 'fn(undefined, undefined)',
               output: 'fn(void 0, void 0)',
-              errors: [{messageId: 'preferVoidZero'}, {messageId: 'preferVoidZero'}],
+              errors: [{messageId: 'preferVoidZero'}, {messageId: 'preferVoidZero'}]
             },
             {
               code: 'new MyClass(undefined)',
               output: 'new MyClass(void 0)',
-              errors: [{messageId: 'preferVoidZero'}],
-            },
-          ],
+              errors: [{messageId: 'preferVoidZero'}]
+            }
+          ]
         })
       })
     })
@@ -375,19 +375,19 @@ describe('prefer-void-zero', () => {
             {
               code: 'const arr = [undefined]',
               output: 'const arr = [void 0]',
-              errors: [{messageId: 'preferVoidZero'}],
+              errors: [{messageId: 'preferVoidZero'}]
             },
             {
               code: 'const arr = [1, undefined, 3]',
               output: 'const arr = [1, void 0, 3]',
-              errors: [{messageId: 'preferVoidZero'}],
+              errors: [{messageId: 'preferVoidZero'}]
             },
             {
               code: 'const arr = [undefined, undefined]',
               output: 'const arr = [void 0, void 0]',
-              errors: [{messageId: 'preferVoidZero'}, {messageId: 'preferVoidZero'}],
-            },
-          ],
+              errors: [{messageId: 'preferVoidZero'}, {messageId: 'preferVoidZero'}]
+            }
+          ]
         })
       })
 
@@ -398,14 +398,14 @@ describe('prefer-void-zero', () => {
             {
               code: 'const obj = { x: undefined }',
               output: 'const obj = { x: void 0 }',
-              errors: [{messageId: 'preferVoidZero'}],
+              errors: [{messageId: 'preferVoidZero'}]
             },
             {
               code: 'const obj = { a: 1, b: undefined }',
               output: 'const obj = { a: 1, b: void 0 }',
-              errors: [{messageId: 'preferVoidZero'}],
-            },
-          ],
+              errors: [{messageId: 'preferVoidZero'}]
+            }
+          ]
         })
       })
 
@@ -413,7 +413,7 @@ describe('prefer-void-zero', () => {
         ruleTester.run('prefer-void-zero', rule, {
           valid: [],
           invalid: [
-          ], // 注意：这会改变语义，但规则的目的就是替换 undefined 值 // 简写属性中的 undefined 既是键也是值，应该修复
+          ] // 注意：这会改变语义，但规则的目的就是替换 undefined 值 // 简写属性中的 undefined 既是键也是值，应该修复
         })
       })
     })
@@ -426,19 +426,19 @@ describe('prefer-void-zero', () => {
             {
               code: 'const x = a || undefined',
               output: 'const x = a || void 0',
-              errors: [{messageId: 'preferVoidZero'}],
+              errors: [{messageId: 'preferVoidZero'}]
             },
             {
               code: 'const x = a && undefined',
               output: 'const x = a && void 0',
-              errors: [{messageId: 'preferVoidZero'}],
+              errors: [{messageId: 'preferVoidZero'}]
             },
             {
               code: 'const x = a ?? undefined',
               output: 'const x = a ?? void 0',
-              errors: [{messageId: 'preferVoidZero'}],
-            },
-          ],
+              errors: [{messageId: 'preferVoidZero'}]
+            }
+          ]
         })
       })
 
@@ -449,19 +449,19 @@ describe('prefer-void-zero', () => {
             {
               code: 'const x = condition ? undefined : value',
               output: 'const x = condition ? void 0 : value',
-              errors: [{messageId: 'preferVoidZero'}],
+              errors: [{messageId: 'preferVoidZero'}]
             },
             {
               code: 'const x = condition ? value : undefined',
               output: 'const x = condition ? value : void 0',
-              errors: [{messageId: 'preferVoidZero'}],
+              errors: [{messageId: 'preferVoidZero'}]
             },
             {
               code: 'const x = condition ? undefined : undefined',
               output: 'const x = condition ? void 0 : void 0',
-              errors: [{messageId: 'preferVoidZero'}, {messageId: 'preferVoidZero'}],
-            },
-          ],
+              errors: [{messageId: 'preferVoidZero'}, {messageId: 'preferVoidZero'}]
+            }
+          ]
         })
       })
     })
@@ -474,19 +474,19 @@ describe('prefer-void-zero', () => {
             {
               code: 'function fn(x = undefined) {}',
               output: 'function fn(x = void 0) {}',
-              errors: [{messageId: 'preferVoidZero'}],
+              errors: [{messageId: 'preferVoidZero'}]
             },
             {
               code: 'const fn = (x = undefined) => {}',
               output: 'const fn = (x = void 0) => {}',
-              errors: [{messageId: 'preferVoidZero'}],
+              errors: [{messageId: 'preferVoidZero'}]
             },
             {
               code: 'function fn(a, b = undefined, c) {}',
               output: 'function fn(a, b = void 0, c) {}',
-              errors: [{messageId: 'preferVoidZero'}],
-            },
-          ],
+              errors: [{messageId: 'preferVoidZero'}]
+            }
+          ]
         })
       })
     })
@@ -499,19 +499,19 @@ describe('prefer-void-zero', () => {
             {
               code: 'const { x = undefined } = obj',
               output: 'const { x = void 0 } = obj',
-              errors: [{messageId: 'preferVoidZero'}],
+              errors: [{messageId: 'preferVoidZero'}]
             },
             {
               code: 'const [x = undefined] = arr',
               output: 'const [x = void 0] = arr',
-              errors: [{messageId: 'preferVoidZero'}],
+              errors: [{messageId: 'preferVoidZero'}]
             },
             {
               code: 'const { a, b = undefined } = obj',
               output: 'const { a, b = void 0 } = obj',
-              errors: [{messageId: 'preferVoidZero'}],
-            },
-          ],
+              errors: [{messageId: 'preferVoidZero'}]
+            }
+          ]
         })
       })
     })
@@ -524,14 +524,14 @@ describe('prefer-void-zero', () => {
             {
               code: 'class C { x = undefined }',
               output: 'class C { x = void 0 }',
-              errors: [{messageId: 'preferVoidZero'}],
+              errors: [{messageId: 'preferVoidZero'}]
             },
             {
               code: 'class C { static x = undefined }',
               output: 'class C { static x = void 0 }',
-              errors: [{messageId: 'preferVoidZero'}],
-            },
-          ],
+              errors: [{messageId: 'preferVoidZero'}]
+            }
+          ]
         })
       })
     })
@@ -544,9 +544,9 @@ describe('prefer-void-zero', () => {
             {
               code: 'export default undefined',
               output: 'export default void 0',
-              errors: [{messageId: 'preferVoidZero'}],
-            },
-          ],
+              errors: [{messageId: 'preferVoidZero'}]
+            }
+          ]
         })
       })
     })
@@ -559,9 +559,9 @@ describe('prefer-void-zero', () => {
             {
               code: 'obj[undefined]',
               output: 'obj[void 0]',
-              errors: [{messageId: 'preferVoidZero'}],
-            },
-          ],
+              errors: [{messageId: 'preferVoidZero'}]
+            }
+          ]
         })
       })
     })
@@ -572,20 +572,20 @@ describe('prefer-void-zero', () => {
       ruleTester.run('prefer-void-zero', rule, {
         valid: [
           'let x: undefined', // 类型注解中的 undefined 不应被修改
-          'let x: string | undefined',
+          'let x: string | undefined'
         ],
         invalid: [
           { // 值位置的 undefined 应该被修改
             code: 'let x: string | undefined = undefined',
             output: 'let x: string | undefined = void 0',
-            errors: [{messageId: 'preferVoidZero'}],
+            errors: [{messageId: 'preferVoidZero'}]
           },
           {
             code: 'const fn = (x: undefined): undefined => undefined',
             output: 'const fn = (x: undefined): undefined => void 0',
-            errors: [{messageId: 'preferVoidZero'}],
-          },
-        ],
+            errors: [{messageId: 'preferVoidZero'}]
+          }
+        ]
       })
     })
 
@@ -593,15 +593,15 @@ describe('prefer-void-zero', () => {
       ruleTester.run('prefer-void-zero', rule, {
         valid: [
           'function fn<T = undefined>(): T { return void 0 as T }', // 泛型类型参数中的 undefined
-          'const fn = <T extends undefined>() => {}',
+          'const fn = <T extends undefined>() => {}'
         ],
         invalid: [
           { // 泛型函数调用中的值参数
             code: 'fn<string>(undefined)',
             output: 'fn<string>(void 0)',
-            errors: [{messageId: 'preferVoidZero'}],
-          },
-        ],
+            errors: [{messageId: 'preferVoidZero'}]
+          }
+        ]
       })
     })
 
@@ -609,15 +609,15 @@ describe('prefer-void-zero', () => {
       ruleTester.run('prefer-void-zero', rule, {
         valid: [
           'const x = value as undefined', // as 表达式的类型部分
-          'const x = value as string | undefined',
+          'const x = value as string | undefined'
         ],
         invalid: [
           { // as 表达式的值部分
             code: 'const x = undefined as unknown',
             output: 'const x = void 0 as unknown',
-            errors: [{messageId: 'preferVoidZero'}],
-          },
-        ],
+            errors: [{messageId: 'preferVoidZero'}]
+          }
+        ]
       })
     })
 
@@ -628,14 +628,14 @@ describe('prefer-void-zero', () => {
           { // 复杂嵌套场景
             code: 'const result = arr.map(x => x === undefined ? undefined : x)',
             output: 'const result = arr.map(x => x === void 0 ? void 0 : x)',
-            errors: [{messageId: 'preferVoidZero'}, {messageId: 'preferVoidZero'}],
+            errors: [{messageId: 'preferVoidZero'}, {messageId: 'preferVoidZero'}]
           },
           {
             code: 'const obj = { fn: () => undefined, value: undefined }',
             output: 'const obj = { fn: () => void 0, value: void 0 }',
-            errors: [{messageId: 'preferVoidZero'}, {messageId: 'preferVoidZero'}],
-          },
-        ],
+            errors: [{messageId: 'preferVoidZero'}, {messageId: 'preferVoidZero'}]
+          }
+        ]
       })
     })
   })

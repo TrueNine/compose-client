@@ -12,7 +12,7 @@ import {createPerformancePreset} from './performance/presets'
 import {createDtsPlugin} from './vite-plugin-dts'
 
 export type {
-  VitePerformanceOptions,
+  VitePerformanceOptions
 } from './performance' // 导出性能优化相关功能
 export {
   createChunkOptimization,
@@ -20,19 +20,19 @@ export {
   createDevelopmentPerformanceConfig,
   createEsbuildOptimization,
   createProductionPerformanceConfig,
-  createVitePerformanceConfig,
+  createVitePerformanceConfig
 } from './performance'
 export type {
-  CacheOptimizationOptions,
+  CacheOptimizationOptions
 } from './performance/cache'
 export {
   createBuildCacheOptimization,
   createCacheOptimization,
-  createTypeScriptCacheOptimization,
+  createTypeScriptCacheOptimization
 } from './performance/cache'
 
 export type {
-  DevelopmentOptimizationOptions,
+  DevelopmentOptimizationOptions
 } from './performance/development'
 
 export {
@@ -44,11 +44,11 @@ export {
   createFastDevelopmentOptimization,
   createHMROptimization,
   createMonorepoDevelopmentOptimization,
-  createSmartDevelopmentOptimization,
+  createSmartDevelopmentOptimization
 } from './performance/development'
 
 export type {
-  ParallelOptimizationOptions,
+  ParallelOptimizationOptions
 } from './performance/parallel'
 
 export {
@@ -56,12 +56,12 @@ export {
   createMonorepoParallelOptimization,
   createParallelOptimization,
   createProdParallelOptimization,
-  getOptimalConcurrency,
+  getOptimalConcurrency
 } from './performance/parallel'
 
 export type {
   FullPerformanceOptions,
-  PerformancePreset,
+  PerformancePreset
 } from './performance/presets'
 export {
   createAggressivePreset,
@@ -72,16 +72,12 @@ export {
   createMonorepoPreset,
   createPerformancePreset,
   createProductionPreset,
-  createSmartPreset,
+  createSmartPreset
 } from './performance/presets'
 
 export interface ViteFragmentOptions {
   lib?: BuildLibraryConfigOptions
   dts?: boolean | Omit<SimpleDtsOptions, 'entry'>
-  /**
-   * @deprecated 不再自动处理 package.json
-   * @see https://pnpm.io/catalogs
-   */
   packageJson?: Omit<PackageJsonOptions, 'entry' | 'formats'>
   additionalExternals?: (string | RegExp)[]
   additionalPlugins?: PluginOption[]
@@ -107,7 +103,7 @@ export function configureViteFragment(options: ViteFragmentOptions = {}, baseCon
     sourcemap: false,
     name: 'index',
     fileNameMap: {es: '.js', cjs: '.cjs', umd: '.umd.js', iife: '.iife.js'},
-    excludes: ['**/__tests__/**', '**/__test__/**', '**/__build-src__/**', '**/*.spec.ts', '**/*.test.ts'],
+    excludes: ['**/__tests__/**', '**/__test__/**', '**/__build-src__/**', '**/*.spec.ts', '**/*.test.ts']
   }
 
   const userOrDefaultEntry = options.lib?.entry ?? libDefaults.entry
@@ -126,7 +122,7 @@ export function configureViteFragment(options: ViteFragmentOptions = {}, baseCon
     ...options.lib,
     entry: resolvedEntryArray,
     entryRoot,
-    externals: options?.lib?.externals ?? externals,
+    externals: options?.lib?.externals ?? externals
   }
   const generatedBuildOptions = BuildConfigLib(mergedLibOptions)
 
@@ -137,7 +133,7 @@ export function configureViteFragment(options: ViteFragmentOptions = {}, baseCon
       entryRoot: mergedLibOptions.entryRoot,
       sourcemap: mergedLibOptions.sourcemap,
       outDir: mergedLibOptions.outDir ?? 'dist',
-      excludes: mergedLibOptions.excludes,
+      excludes: mergedLibOptions.excludes
     }
 
     const finalDtsOptions: SimpleDtsOptions = {...dtsDefaults, ...options.dts === true ? dtsDefaults : options.dts}
@@ -146,7 +142,7 @@ export function configureViteFragment(options: ViteFragmentOptions = {}, baseCon
       outDir: finalDtsOptions.outDir ?? 'dist',
       sourcemap: finalDtsOptions.sourcemap ?? false,
       logLevel: 'error',
-      strict: true,
+      strict: true
     })
   }
 
@@ -161,7 +157,7 @@ export function configureViteFragment(options: ViteFragmentOptions = {}, baseCon
   const mergedPlugins: PluginOption[] = [
     ...basePluginsNormalized,
     ...generatedPlugins,
-    ...options.additionalPlugins ?? [],
+    ...options.additionalPlugins ?? []
   ]
 
   let finalConfig: UserConfig = {...baseConfig, build: mergedBuildOptions, plugins: mergedPlugins}

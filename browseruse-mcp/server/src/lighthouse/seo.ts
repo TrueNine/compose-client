@@ -10,7 +10,7 @@ function isObjectWithItems(value: unknown): value is {items: unknown[]} { // Typ
     && 'items' in value
     && Array.isArray((value as {items: unknown}).items)
   )
-} // === SEO Report Types ===
+}
 
 /**
  * SEO-specific report content structure
@@ -59,7 +59,7 @@ const DETAIL_LIMITS = { // This ensures we always include critical issues while 
   critical: Number.MAX_SAFE_INTEGER, // No limit for critical issues
   serious: 15, // Up to 15 items for serious issues
   moderate: 10, // Up to 10 items for moderate issues
-  minor: 3, // Up to 3 items for minor issues
+  minor: 3 // Up to 3 items for minor issues
 }
 
 /**
@@ -75,7 +75,7 @@ export async function runSEOAudit(url: string): Promise<AIOptimizedSEOReport> {
   catch (error: unknown) {
     throw new Error(
       `SEO audit failed: ${error instanceof Error ? error.message : String(error)
-      }`,
+      }`
     )
   }
 }
@@ -208,7 +208,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
         impact,
         category,
         details: details.length > 0 ? details : void 0,
-        score: audit.score,
+        score: audit.score
       }
 
       issues.push(issue)
@@ -251,14 +251,14 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
       passed: passedCount,
       manual: manualCount,
       informative: informativeCount,
-      not_applicable: notApplicableCount,
+      not_applicable: notApplicableCount
     },
     issues,
     categories,
     prioritized_recommendations:
       prioritized_recommendations.length > 0
         ? prioritized_recommendations
-        : void 0,
+        : void 0
   }
 
   return {metadata, report: reportContent} // Return the full report following the LighthouseReport interface

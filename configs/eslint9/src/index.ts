@@ -8,11 +8,11 @@ import {baseRulesPreset, dtsRulesPreset, typescriptRulesPreset} from './presets'
 import {mergeWithDefaults} from './utils'
 
 export {
-  plugin,
+  plugin
 } from './plugin'
 export * from './rules'
 export type {
-  ConfigOptions,
+  ConfigOptions
 } from './types'
 
 /**
@@ -71,11 +71,11 @@ export async function defineConfig(options: ConfigOptions = {}): Promise<ReturnT
       typescript: _typescript,
       javascript: _javascript,
       stylistic: _stylistic,
-      formatters: _formatters,
+      formatters: _formatters
     },
     {name: '@truenine/eslint-plugin', plugins: {'@truenine': plugin}, rules: baseRulesPreset} as Linter.Config,
     {name: '@truenine/dts-rules', files: ['**/*.d.ts'], rules: dtsRulesPreset} as Linter.Config,
-    {name: '@truenine/typescript-rules', files: ['**/*.ts', '**/*.tsx', '**/*.mts', '**/*.cts'], ignores: ['**/*.md/**'], rules: typescriptRulesPreset} as Linter.Config,
+    {name: '@truenine/typescript-rules', files: ['**/*.ts', '**/*.tsx', '**/*.mts', '**/*.cts'], ignores: ['**/*.md/**'], rules: typescriptRulesPreset} as Linter.Config
   )
 }
 

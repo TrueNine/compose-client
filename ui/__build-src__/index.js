@@ -25,7 +25,7 @@ export async function buildUnocss(fName = 'unocss.css') {
 export function buildStyle() {
   return src(`${basePath}/src/**/**.scss`)
     .pipe(
-      gulpSass(sass)({includePaths: [nodeModulesPath]}),
+      gulpSass(sass)({includePaths: [nodeModulesPath]})
     )
     .pipe(gulpPostcss([unocssPostcss(), autoprefixer(), cssnano()]))
     .pipe(dest(distPath))
@@ -34,8 +34,8 @@ export function buildStyle() {
 export default series(
   parallel(
     async () => buildStyle(),
-    async () => buildUnocss(),
-  ),
+    async () => buildUnocss()
+  )
 )
 
 export function joinPath(pattern) {

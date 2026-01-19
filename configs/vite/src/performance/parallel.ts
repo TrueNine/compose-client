@@ -39,9 +39,9 @@ export function createParallelOptimization(options: ParallelOptimizationOptions 
     rollupOptions: { // 启用并行构建
       maxParallelFileOps: concurrency, // 配置并行处理
       output: {
-        compact: true, // 启用并行写入
-      },
-    },
+        compact: true // 启用并行写入
+      }
+    }
   }}
 
   if (enableWorkerThreads) {
@@ -56,7 +56,7 @@ export function createParallelOptimization(options: ParallelOptimizationOptions 
     config.css = { // 配置并行 CSS 处理
       devSourcemap: true, // 启用 CSS 代码分割
       postcss: { // 配置 PostCSS 并行处理
-      }, // PostCSS 插件会自动利用多核心
+      } // PostCSS 插件会自动利用多核心
     }
   }
 
@@ -71,18 +71,18 @@ export function createDevParallelOptimization(options: ParallelOptimizationOptio
 
   return {...baseConfig, server: {
     hmr: { // 开发服务器并行优化
-      overlay: false, // 启用并行 HMR 处理
+      overlay: false // 启用并行 HMR 处理
     },
     warmup: {clientFiles: [ // 预热文件并行处理
       'src/**/*.vue',
       'src/**/*.ts',
-      'src/**/*.js',
-    ]},
+      'src/**/*.js'
+    ]}
   }, optimizeDeps: {
     esbuildOptions: { // 依赖预构建并行处理
       target: 'es2020', // esbuild 并行处理配置
-      keepNames: false, // 启用并行转换
-    },
+      keepNames: false // 启用并行转换
+    }
   }}
 }
 

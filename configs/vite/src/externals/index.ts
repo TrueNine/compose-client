@@ -53,5 +53,5 @@ export const Externals: (string | RegExp)[] = [
   ...EslintExternals,
 
   /^data:/, // other
-  /^(unocss|@unocss)/, // unocss
+  /^(unocss|@unocss)/ // unocss
 ]

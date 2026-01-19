@@ -1,6 +1,6 @@
 export * from './ElementPlusCommon'
 export {
-  componentInstallToPlugin,
+  componentInstallToPlugin
 } from './install'
 export * from './VuePropsCommon'
 export * from './VuetifyCommon'

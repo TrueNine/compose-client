@@ -19,7 +19,7 @@ const props = withDefaults(defineProps<YVAddressSelectProps>(), {
   findProvinces: void 0,
   findDistricts: void 0,
   findVillages: void 0,
-  findByCode: void 0,
+  findByCode: void 0
 })
 
 const emits = defineEmits<YAddressSelectEmits>()
@@ -48,7 +48,7 @@ const addressCacheData = reactive<Record<string, IComponentAddr[]>>({
   city: [],
   district: [],
   town: [],
-  village: [],
+  village: []
 })
 
 const defaultSelected = des(YVAddressSelectDefaultSelects)
@@ -119,35 +119,35 @@ watch(
   () => selected.value.province,
   async v => {
     if (v && v.code !== '') await cacheAndUpdate(v.code)
-  },
+  }
 )
 
 watch(
   () => selected.value.city,
   async v => {
     if (v && v.code !== '') await cacheAndUpdate(v.code)
-  },
+  }
 )
 
 watch(
   () => selected.value.district,
   async v => {
     if (v && v.code !== '' && !loading.value) await cacheAndUpdate(v.code)
-  },
+  }
 )
 
 watch(
   () => selected.value.town,
   async v => {
     if (v && v.code !== '') await cacheAndUpdate(v.code)
-  },
+  }
 )
 
 watch(
   () => selected.value.village,
   async v => {
     if (v && v.code !== '') await cacheAndUpdate(v.code)
-  },
+  }
 )
 const codingLoad = ref(false)
 

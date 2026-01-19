@@ -5,5 +5,5 @@ export default eslint9({
   pnpm: true,
   test: true,
   ignores: ['**/dist', '**/node_modules', '**/.turbo', '**/coverage', 'README.md'],
-  typescript: {strictTypescriptEslint: true, tsconfigPath: './tsconfig.json'},
+  typescript: {strictTypescriptEslint: true, tsconfigPath: './tsconfig.json'}
 })

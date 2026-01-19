@@ -6,7 +6,7 @@ export enum AuditCategory {
   PERFORMANCE = 'performance',
   SEO = 'seo',
   BEST_PRACTICES = 'best-practices', // Not yet implemented
-  PWA = 'pwa', // Not yet implemented
+  PWA = 'pwa' // Not yet implemented
 }
 
 /**

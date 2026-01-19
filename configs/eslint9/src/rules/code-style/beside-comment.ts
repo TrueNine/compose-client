@@ -6,13 +6,13 @@ const rule: Rule.RuleModule = {
     type: 'layout',
     docs: {
       description: 'Enforce all comments (except JSDoc and tooling) to be beside code to save lines',
-      recommended: false,
+      recommended: false
     },
     fixable: 'whitespace',
     messages: {
-      besideComment: 'Comment must be on the same line as code (inline/beside) to save vertical space',
+      besideComment: 'Comment must be on the same line as code (inline/beside) to save vertical space'
     },
-    schema: [],
+    schema: []
   },
   create(context) {
     const {sourceCode} = context
@@ -28,7 +28,7 @@ const rule: Rule.RuleModule = {
           if (comment.type === 'Block' && comment.value.startsWith('*')) continue /* Ignore JSDoc comments (Block comments starting with *) */
 
           const trimmedValue = comment.value.trim()
-          if (comment.type === 'Line' && (trimmedValue.startsWith('/') || trimmedValue.startsWith('!'))) continue /* Ignore /// <reference ... /> tags, shebangs */
+          if (comment.type === 'Line' && (trimmedValue.startsWith('/') || trimmedValue.startsWith('!'))) continue
           if (trimmedValue.startsWith('ts-') || trimmedValue.startsWith('eslint-') || trimmedValue.startsWith('#')) continue
 
           const {loc, range} = comment
@@ -49,7 +49,7 @@ const rule: Rule.RuleModule = {
               context.report({
                 loc: {
                   start: {line: i, column: 0},
-                  end: {line: i, column: lineText.length},
+                  end: {line: i, column: lineText.length}
                 },
                 messageId: 'besideComment',
                 fix(fixer) {
@@ -58,7 +58,6 @@ const rule: Rule.RuleModule = {
                     const commentText = sourceCode.getText(comment as any).trim()
                     /* Then append the comment to the end of the next line */ /* Replace the original comment and following newline with nothing */
                     /* For now, just a simple replacement of the comment with empty space */ /* This is a bit complex due to potential multiple standalone comments */
-                    /* Better: replace [comment.range[0]...nextLineEnd] with [nextLineLines...comment] */ /* and appending it to the next line might cause issues with ranges */
                     const nextLineEnd = sourceCode.getIndexFromLoc({line: i + 1, column: nextLineText.length})
                     return fixer.replaceTextRange([range[0], nextLineEnd], `${nextLineText} ${commentText}`)
                   }
@@ -69,15 +68,15 @@ const rule: Rule.RuleModule = {
                   const commentText = sourceCode.getText(comment as any).trim()
                   const prevLineStart = sourceCode.getIndexFromLoc({line: i - 1, column: 0})
                   return fixer.replaceTextRange([prevLineStart, range[1]], `${prevLineText} ${commentText}`)
-                },
+                }
               })
               break
             }
           }
         }
-      },
+      }
     }
-  },
+  }
 }
 
 export default rule

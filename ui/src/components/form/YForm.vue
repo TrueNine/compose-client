@@ -14,7 +14,7 @@ const props = withDefaults(defineProps<YFormProps>(), {
   everyStep: false,
   modelValue: void 0,
   schema: void 0,
-  initValue: void 0,
+  initValue: void 0
 })
 
 const emit = defineEmits<YFormEmits>()
@@ -65,7 +65,7 @@ const form = useForm(formConfig.value)
 
 const handleFormSubmit = form.handleSubmit( // 表单提交处理
   values => emit('submit', values, props.step),
-  ctx => emit('error', ctx),
+  ctx => emit('error', ctx)
 )
 
 function handleSubmit(e?: Event) {

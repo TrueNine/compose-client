@@ -21,33 +21,33 @@ export * from './common'
 export * from './components/config-pre-authorize'
 export * from './components/config-provider'
 export {
-  default as YConfigProvider,
+  default as YConfigProvider
 } from './components/config-provider'
 export * from './components/debug-code'
 export {
-  default as YDebugCode,
+  default as YDebugCode
 } from './components/debug-code'
 export * from './components/el-sider-menu'
 export {
-  default as YElSiderMenu,
+  default as YElSiderMenu
 } from './components/el-sider-menu'
 export * from './components/el-sider-menu-item'
 export {
-  default as YElSiderMenuItem,
+  default as YElSiderMenuItem
 } from './components/el-sider-menu-item/index'
 
 export * from './components/field'
 export {
-  default as YField,
+  default as YField
 } from './components/field'
 export * from './components/field-message'
 export {
-  default as YFieldMessage,
+  default as YFieldMessage
 } from './components/field-message'
 
 export * from './components/form'
 export {
-  default as YForm,
+  default as YForm
 } from './components/form'
 export * from './components/ico'
 
@@ -66,7 +66,7 @@ const components = {
   YForm,
   YField,
   YFieldMessage,
-  YPager,
+  YPager
 } as Record<string, unknown>
 
 const plugin = {install: (app: App) => Object.entries(components).forEach(([_name, component]) => { app.use(component as Plugin<[]>) })}
@@ -74,34 +74,34 @@ const plugin = {install: (app: App) => Object.entries(components).forEach(([_nam
 export default plugin
 
 export {
-  default as YIco,
+  default as YIco
 } from './components/ico'
 export * from './components/pager'
 export {
-  default as YPager,
+  default as YPager
 } from './components/pager'
 export * from './components/pre-authorize'
 export * from './components/v-address-select'
 export {
-  default as YVAddressSelect,
+  default as YVAddressSelect
 } from './components/v-address-select'
 export * from './components/v-menu'
 export {
-  default as YVMenu,
+  default as YVMenu
 } from './components/v-menu'
 export * from './components/v-menu-item'
 export {
-  default as YVMenuItem,
+  default as YVMenuItem
 } from './components/v-menu-item'
 export * from './components/v-system-bar'
 export {
-  default as YVSystemBar,
+  default as YVSystemBar
 } from './components/v-system-bar'
 export * from './unplugin'
 
 export {
-  default as YConfigPreAuthorize,
+  default as YConfigPreAuthorize
 } from '@/components/config-pre-authorize'
 export {
-  default as YPreAuthorize,
+  default as YPreAuthorize
 } from '@/components/pre-authorize'

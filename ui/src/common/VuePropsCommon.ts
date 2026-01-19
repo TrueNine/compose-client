@@ -29,36 +29,12 @@ export interface ModelValueEmits<T = unknown> {
 }
 
 export interface FormFieldStyleProps {
-  /**
-   * ## 组件 的默认校验逻辑
-   * 一般 无需设置此值 ，仅当你自定义组件时
-   *
-   * 此  prop 会在 prop 内被调用，当当前字段无 校验 schema 时
-   */
   defaultValidateSchema?: () => Schema
-  /**
-   * 组件标签
-   */
   label?: string
-  /**
-   * 占位符提示
-   */
   placeholder?: string
-  /**
-   * 错误信息
-   */
   errorMessages?: string[]
-  /**
-   * 是否一直显示提示信息
-   */
   persistentHint?: boolean
-  /**
-   * 当前 字段的提示信息
-   */
   hint?: string
-  /**
-   * 该字段是否必须
-   */
   required?: boolean
 }
 

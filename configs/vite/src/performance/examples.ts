@@ -18,7 +18,7 @@ export function createLibraryPerformanceExample(): UserConfig {
  */
 export function createVueAppPerformanceExample(): UserConfig {
   const baseConfig: UserConfig = {
-    resolve: {alias: {'@': '/src'}}, // Vue 应用基础配置
+    resolve: {alias: {'@': '/src'}} // Vue 应用基础配置
   }
 
   const performanceConfig = createPerformancePreset('aggressive', {
@@ -27,7 +27,7 @@ export function createVueAppPerformanceExample(): UserConfig {
     enableDepsOptimization: true,
     chunkSizeWarningLimit: 800,
     cache: {enableFsCache: true, enableDepsCache: true},
-    parallel: {enableWorkerThreads: true, enableParallelCss: true},
+    parallel: {enableWorkerThreads: true, enableParallelCss: true}
   })
 
   return mergeConfig(baseConfig, performanceConfig)
@@ -41,13 +41,13 @@ export function createMonorepoPackagePerformanceExample(): UserConfig {
     /^@truenine\//, // monorepo 内部包作为外部依赖
     'vue', // 常见的外部依赖
     'react',
-    'lodash-es',
+    'lodash-es'
   ]}, dts: true, performance: {enabled: true, preset: 'monorepo', options: {
     enableEsbuildOptimization: true,
     enableChunkOptimization: false, // 库项目通常不需要复杂的代码分割
     enableDepsOptimization: true,
     cache: {enableFsCache: true, enableDepsCache: true, cacheDir: '../../node_modules/.vite'}, // 使用 monorepo 根目录的缓存
-    parallel: {enableWorkerThreads: true, maxConcurrency: 4},
+    parallel: {enableWorkerThreads: true, maxConcurrency: 4}
   }}})
 }
 
@@ -61,7 +61,7 @@ export function createDevelopmentPerformanceExample(): UserConfig {
     enableDepsOptimization: true,
     reportCompressedSize: false,
     cache: {enableFsCache: true, enableDepsCache: true, forceClearCache: false},
-    parallel: {enableWorkerThreads: true, enableParallelCss: false, enableParallelTypeCheck: false},
+    parallel: {enableWorkerThreads: true, enableParallelCss: false, enableParallelTypeCheck: false}
   })
 }
 
@@ -76,7 +76,7 @@ export function createFastDevelopmentPerformanceExample(): UserConfig {
     enableDepsOptimization: true,
     reportCompressedSize: false,
     cache: {enableFsCache: true, enableDepsCache: true, forceClearCache: false},
-    parallel: {enableWorkerThreads: true, enableParallelCss: false, enableParallelTypeCheck: false, maxConcurrency: 2}, // 减少并发以提升启动速度
+    parallel: {enableWorkerThreads: true, enableParallelCss: false, enableParallelTypeCheck: false, maxConcurrency: 2} // 减少并发以提升启动速度
   })
 }
 
@@ -85,7 +85,7 @@ export function createFastDevelopmentPerformanceExample(): UserConfig {
  */
 export function createAdvancedDevelopmentExample(): UserConfig {
   const baseConfig: UserConfig = {
-    resolve: {alias: {'@': '/src', '~': '/src'}}, // 项目特定配置
+    resolve: {alias: {'@': '/src', '~': '/src'}} // 项目特定配置
   }
 
   const devConfig = createSmartDevelopmentOptimization({
@@ -96,7 +96,7 @@ export function createAdvancedDevelopmentExample(): UserConfig {
     port: 3000,
     open: true,
     https: false,
-    proxy: {'/api': {target: 'http://localhost:8080', changeOrigin: true, rewrite: (path: string) => path.replace(/^\/api/, '')}},
+    proxy: {'/api': {target: 'http://localhost:8080', changeOrigin: true, rewrite: (path: string) => path.replace(/^\/api/, '')}}
   })
 
   return mergeConfig(baseConfig, devConfig)
@@ -113,7 +113,7 @@ export function createProductionPerformanceExample(): UserConfig {
     chunkSizeWarningLimit: 500,
     reportCompressedSize: true,
     cache: {enableFsCache: true, enableDepsCache: true},
-    parallel: {enableWorkerThreads: true, enableParallelCss: true, enableParallelTypeCheck: true},
+    parallel: {enableWorkerThreads: true, enableParallelCss: true, enableParallelTypeCheck: true}
   })
 }
 
@@ -123,7 +123,7 @@ export function createProductionPerformanceExample(): UserConfig {
 export function createSmartPerformanceExample(): UserConfig {
   return createSmartPreset({ // 根据环境自动选择最佳配置
     enableEsbuildOptimization: true, // 可以覆盖自动检测的配置
-    cache: {enableFsCache: true, enableDepsCache: true},
+    cache: {enableFsCache: true, enableDepsCache: true}
   })
 }
 
@@ -132,7 +132,7 @@ export function createSmartPerformanceExample(): UserConfig {
  */
 export function createCustomPerformanceExample(): UserConfig {
   const baseConfig: UserConfig = {
-    define: {__DEV__: JSON.stringify(process.env.NODE_ENV === 'development')}, // 项目特定配置
+    define: {__DEV__: JSON.stringify(process.env.NODE_ENV === 'development')} // 项目特定配置
   }
 
   const performanceConfig = createPerformancePreset('aggressive', { // 组合多个性能优化配置
@@ -142,7 +142,7 @@ export function createCustomPerformanceExample(): UserConfig {
     chunkSizeWarningLimit: 600,
     buildConcurrency: 6,
     cache: {enableFsCache: true, enableDepsCache: true, cacheDir: 'node_modules/.custom-cache'},
-    parallel: {enableWorkerThreads: true, enableParallelCss: true, enableParallelTypeCheck: true, maxConcurrency: 8},
+    parallel: {enableWorkerThreads: true, enableParallelCss: true, enableParallelTypeCheck: true, maxConcurrency: 8}
   })
 
   return mergeConfig(baseConfig, performanceConfig)

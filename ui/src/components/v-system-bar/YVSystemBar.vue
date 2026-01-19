@@ -9,7 +9,7 @@ const props = withDefaults(defineProps<YSystemBarProps>(), {
   progressLoading: false,
   progressColor: 'default',
   menuOpened: false,
-  settingsMenuOpened: false,
+  settingsMenuOpened: false
 })
 const emits = defineEmits<YVSystemBarEmits>()
 const slots = defineSlots<YVSystemBarSlots>()

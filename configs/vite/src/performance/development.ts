@@ -34,7 +34,7 @@ export function createDevServerOptimization(options: DevelopmentOptimizationOpti
     port = 3000,
     open = false,
     https = false,
-    proxy = {},
+    proxy = {}
   } = options
 
   return {server: {
@@ -53,22 +53,22 @@ export function createDevServerOptimization(options: DevelopmentOptimizationOpti
         '**/coverage/**',
         '**/.nyc_output/**',
         '**/tmp/**',
-        '**/temp/**',
+        '**/temp/**'
       ],
       usePolling: false, // 使用原生文件监听以提升性能
       interval: 100, // 设置合理的延迟以减少频繁触发
-      depth: 99, // 设置深度限制以避免监听过深的目录
+      depth: 99 // 设置深度限制以避免监听过深的目录
     },
     hmr: enableSmartHMR // 优化 HMR 配置
       ? {
           port: port + 1, // 启用 HMR 端口
-          overlay: false, // 禁用错误覆盖层以提升性能
+          overlay: false // 禁用错误覆盖层以提升性能
         }
       : false,
     fs: enableFsCache // 启用文件系统缓存
       ? {
           allow: ['..'], // 允许访问工作区根目录
-          strict: true, // 严格模式，提升安全性
+          strict: true // 严格模式，提升安全性
         }
       : {},
     warmup: {clientFiles: [ // 预热常用文件以提升启动速度
@@ -83,11 +83,11 @@ export function createDevServerOptimization(options: DevelopmentOptimizationOpti
       'src/components/**/*.tsx',
       'src/components/**/*.jsx',
       'src/pages/**/*.vue',
-      'src/views/**/*.vue',
+      'src/views/**/*.vue'
     ], ssrFiles: [ // 预热 SSR 文件
       'src/entry-server.ts',
-      'src/entry-server.js',
-    ]},
+      'src/entry-server.js'
+    ]}
   }}
 }
 
@@ -115,12 +115,12 @@ export function createDevDepsOptimization(options: DevelopmentOptimizationOption
       'vuetify',
       '@iconify/vue', // 图标库
       '@vueuse/core',
-      '@vueuse/shared',
+      '@vueuse/shared'
     ],
     exclude: [ // 排除预构建的依赖（已经是 ESM 格式或有特殊要求）
       '@truenine/*', // 本地开发的包
       'vue-demi', // 已经是 ESM 格式的包
-      'electron', // 有特殊要求的包
+      'electron' // 有特殊要求的包
     ],
     entries: [ // 依赖扫描入口
       'src/main.ts',
@@ -128,14 +128,14 @@ export function createDevDepsOptimization(options: DevelopmentOptimizationOption
       'src/index.ts',
       'src/index.js',
       'index.html',
-      '*.html',
+      '*.html'
     ],
     force: false, // 开发模式不强制重新优化依赖
     esbuildOptions: {target: 'es2020', // esbuild 优化选项
       supported: {'top-level-await': true}, // 启用 top-level await 支持
       keepNames: true, // 保持函数名以便调试
       sourcemap: true}, // 开发模式启用源码映射
-    holdUntilCrawlEnd: true, // 启用依赖发现优化
+    holdUntilCrawlEnd: true // 启用依赖发现优化
   }}
 }
 
@@ -151,7 +151,7 @@ export function createDevBuildOptimization(): UserConfig {
     cssCodeSplit: false, // 禁用 CSS 代码分割以简化开发
     cssMinify: false, // 开发模式使用更快的 CSS 处理
     assetsInlineLimit: 0, // 开发模式不内联资源 // 优化资源内联限制
-    watch: null, // 启用监听模式支持
+    watch: null // 启用监听模式支持
   }}
 }
 
@@ -162,17 +162,17 @@ export function createDevCssOptimization(): UserConfig {
   return {css: {
     devSourcemap: true, // 开发模式启用源码映射
     preprocessorOptions: {scss: { // CSS 预处理器选项
-      charset: false, // 开发模式优化配置
+      charset: false // 开发模式优化配置
     }, sass: {charset: false}, less: {
       javascriptEnabled: true, // 启用 JavaScript
-      math: 'always', // 开发模式使用更快的数学运算
+      math: 'always' // 开发模式使用更快的数学运算
     }, stylus: {
-      sourceMap: true, // 启用源码映射
+      sourceMap: true // 启用源码映射
     }},
     postcss: { // PostCSS 配置
       plugins: [ // 开发模式使用更少的插件以提升速度
-      ], // 只保留必要的插件
-    },
+      ] // 只保留必要的插件
+    }
   }}
 }
 
@@ -187,7 +187,7 @@ export function createDevEnvOptimization(): UserConfig {
     '__VUE_OPTIONS_API__': JSON.stringify(true), // 启用开发工具
     '__VUE_PROD_DEVTOOLS__': JSON.stringify(true),
     '__VUE_PROD_HYDRATION_MISMATCH_DETAILS__': JSON.stringify(true),
-    'process.env.NODE_ENV': JSON.stringify('development'), // 性能监控
+    'process.env.NODE_ENV': JSON.stringify('development') // 性能监控
   }, logLevel: 'info', // 开发模式日志级别
   clearScreen: false} // 清除控制台
 }
@@ -218,24 +218,24 @@ export function createMonorepoDevelopmentOptimization(options: DevelopmentOptimi
         '../../node_modules/**',
         '../*/node_modules/**',
         '../*/dist/**',
-        '../*/.turbo/**',
-      ],
+        '../*/.turbo/**'
+      ]
     },
     fs: { // 启用跨包的文件服务
-      allow: ['../..'], // 允许访问 monorepo 根目录
-    },
+      allow: ['../..'] // 允许访问 monorepo 根目录
+    }
   }, optimizeDeps: {
     include: [ // Monorepo 中的依赖优化
-      ...baseConfig.optimizeDeps?.include ?? [],
+      ...baseConfig.optimizeDeps?.include ?? []
     ], // 包含 workspace 依赖
     exclude: [
       ...baseConfig.optimizeDeps?.exclude ?? [],
       '@truenine/*', // 排除本地 workspace 包
-      'workspace:*',
-    ],
+      'workspace:*'
+    ]
   }, resolve: {
     alias: { // Monorepo 别名配置
-    }, // 可以在这里配置 workspace 包的别名
+    } // 可以在这里配置 workspace 包的别名
   }}
 
   return mergeConfig(baseConfig, monorepoConfig)
@@ -248,7 +248,7 @@ export function createHMROptimization(options: {enableVueHMR?: boolean, enableRe
   const {enableVueHMR = true, enableReactHMR = false} = options
 
   const config: UserConfig = {server: {hmr: {
-    overlay: false, // 禁用错误覆盖层 // 优化 HMR 性能
+    overlay: false // 禁用错误覆盖层 // 优化 HMR 性能
   }}}
 
   if (enableVueHMR) config.define = {...config.define, __VUE_HMR_RUNTIME__: JSON.stringify(true)} // Vue HMR 优化
@@ -268,14 +268,14 @@ export function createFastDevelopmentOptimization(options: DevelopmentOptimizati
     enableFastRefresh: true,
     enableSmartHMR: true,
     enableDepsPreBundling: true,
-    enableFsCache: true,
+    enableFsCache: true
   })
 
   const fastConfig: UserConfig = {server: { // 添加快速开发专用的优化
     warmup: {clientFiles: [ // 启用预热以加快首次访问
       'src/**/*.{vue,ts,js,tsx,jsx}',
-      'index.html',
-    ]},
+      'index.html'
+    ]}
   }, optimizeDeps: {
     force: false, // 开发模式不强制重新构建 // 强制预构建常用依赖 // 强制预构建常用依赖
     include: [ // 更激进的依赖包含策略
@@ -285,14 +285,14 @@ export function createFastDevelopmentOptimization(options: DevelopmentOptimizati
       'axios',
       'lodash-es',
       '@vueuse/core',
-      '@vueuse/shared',
-    ],
+      '@vueuse/shared'
+    ]
   }, build: {
     minify: false, // 开发模式使用最快的构建选项
     sourcemap: true,
     reportCompressedSize: false,
     cssCodeSplit: false, // 禁用不必要的优化
-    cssMinify: false,
+    cssMinify: false
   }}
 
   return mergeConfig(baseConfig, fastConfig)

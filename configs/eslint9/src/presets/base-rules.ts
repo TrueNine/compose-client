@@ -1,22 +1,5 @@
 import type {Linter} from 'eslint'
 
-/**
- * @truenine 插件基础规则配置
- *
- * 包含自定义规则和常用的代码风格规则，适用于所有 JavaScript/TypeScript 项目。
- * 这些规则旨在提高代码可读性和一致性。
- *
- * @example
- * ```typescript
- * import {baseRulesPreset} from '@truenine/eslint9-config/presets'
- *
- * export default [
- *   {
- *     rules: baseRulesPreset
- *   }
- * ]
- * ```
- */
 export const baseRulesPreset: Linter.RulesRecord = {
   '@truenine/prefer-single-line-if': 'warn', /* @truenine 自定义规则 */
   '@truenine/prefer-single-line-control': 'warn',
@@ -92,5 +75,5 @@ export const baseRulesPreset: Linter.RulesRecord = {
   'unicorn/prefer-array-index-of': 'error',
   'unicorn/prefer-reflect-apply': 'error',
   'unicorn/prefer-set-size': 'error',
-  'unicorn/text-encoding-identifier-case': 'error',
+  'unicorn/text-encoding-identifier-case': 'error'
 }

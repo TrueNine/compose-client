@@ -4,24 +4,25 @@ const rule: Rule.RuleModule = {
   meta: {
     type: 'layout',
     docs: {
-      description: 'Remove comments containing ==== or ---- used as separators',
-      recommended: false,
+      description: 'Remove comments containing repeated characters (===, ---, +++, ###, etc.) used as separators',
+      recommended: false
     },
     fixable: 'code',
     messages: {
-      noSeparatorComment: 'Separator comments (==== or ----) are not allowed and will be removed.',
+      noSeparatorComment: 'Separator comments with repeated characters are not allowed and will be removed.'
     },
-    schema: [],
+    schema: []
   },
   create(context) {
     const {sourceCode} = context
+    const separatorPattern = /(.)\1{2,}/ // Match 3+ consecutive identical characters (common separator patterns)
 
     return {
       Program() {
         const comments = sourceCode.getAllComments()
 
         for (const comment of comments) {
-          if (comment.value.includes('====') || comment.value.includes('----')) {
+          if (separatorPattern.test(comment.value)) {
             context.report({
               loc: comment.loc!,
               messageId: 'noSeparatorComment',
@@ -43,13 +44,13 @@ const rule: Rule.RuleModule = {
 
                 const nextLineStart = sourceCode.getIndexFromLoc({line: endLine + 1, column: 0})
                 return fixer.removeRange([lineStart, nextLineStart])
-              },
+              }
             })
           }
         }
-      },
+      }
     }
-  },
+  }
 }
 
 export default rule

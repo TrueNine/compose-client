@@ -701,7 +701,7 @@ export function registerCompositeTools(server: McpServer): void {
       Do not actually make the code changes yet, just return a comprehensive plan that you will ask for approval for.
       If feedback is provided, adjust the plan accordingly and ask for approval again.
       If the user approves of the plan, go ahead and proceed to implement all the necessary code changes to completely optimize our application.
-    `},
+    `}
   ]}))
 
   server.tool('runDebuggerMode', 'Run debugger mode to debug an issue in our application', {}, async (): Promise<McpToolResponse> => ({content: [
@@ -718,7 +718,7 @@ export function registerCompositeTools(server: McpServer): void {
   8. Once a fix is implemented, ask for approval to remove the previously added logs
 
   Note: DO NOT run any of our audits (runAccessibilityAudit, runPerformanceAudit, runBestPracticesAudit, runSEOAudit, runNextJSAudit) when in debugging mode unless explicitly asked to do so or unless you switch to audit mode.
-`},
+`}
   ]}))
 
   server.tool('runAuditMode', 'Run audit mode to optimize our application for SEO, accessibility and performance', {}, async (): Promise<McpToolResponse> => ({content: [
@@ -745,6 +745,6 @@ export function registerCompositeTools(server: McpServer): void {
 
       Keep repeating / iterating through this process with the four tools until our application is as optimized as possible for SEO, accessibility and performance.
 
-`},
+`}
   ]}))
 }

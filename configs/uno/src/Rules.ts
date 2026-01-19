@@ -12,6 +12,6 @@ export function unoRules(cfg: ThemeConfig): StaticRule[] {
     ['w-fit', {width: 'fit-content'}],
     ['h-fit', {height: 'fit-content'}],
     ['c-e', {color: cfg.errorColor ?? `var(--error-color)`}],
-    ['bg-e', {'background-color': cfg.errorColor ?? `var(--error-color)`}],
+    ['bg-e', {'background-color': cfg.errorColor ?? `var(--error-color)`}]
   ]
 }

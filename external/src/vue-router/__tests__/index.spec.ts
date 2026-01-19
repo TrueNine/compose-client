@@ -56,8 +56,8 @@ describe('generateMenu - path为空的子路由特殊处理', () => {
   it('children 只有 path "" 时不生成 sub', () => {
     const routes: RouteRecordRaw[] = [
       {path: 'only-index', component: DummyComponent, children: [
-        {path: '', meta: {title: '首页'}, component: DummyComponent},
-      ], meta: {title: '父级'}},
+        {path: '', meta: {title: '首页'}, component: DummyComponent}
+      ], meta: {title: '父级'}}
     ]
     const menu = generateMenu(routes)
     expect(menu[0].name).toBe('首页')
@@ -68,8 +68,8 @@ describe('generateMenu - path为空的子路由特殊处理', () => {
     const routes: RouteRecordRaw[] = [
       {path: 'mix', component: DummyComponent, children: [
         {path: '', meta: {title: '首页', extra: 'index'}, component: DummyComponent},
-        {path: 'other', meta: {title: '其他'}, component: DummyComponent},
-      ], meta: {title: '父级'}},
+        {path: 'other', meta: {title: '其他'}, component: DummyComponent}
+      ], meta: {title: '父级'}}
     ]
     const menu = generateMenu(routes)
     expect(menu[0].name).toBe('首页')
@@ -83,10 +83,10 @@ describe('generateMenu - path为空的子路由特殊处理', () => {
       {path: 'with-index-children', component: DummyComponent, children: [
         {path: '', meta: {title: '首页'}, component: DummyComponent, children: [
           {path: 'sub1', meta: {title: '子1'}, component: DummyComponent},
-          {path: 'sub2', meta: {title: '子2'}, component: DummyComponent},
+          {path: 'sub2', meta: {title: '子2'}, component: DummyComponent}
         ]},
-        {path: 'other', meta: {title: '其他'}, component: DummyComponent},
-      ], meta: {title: '父级'}},
+        {path: 'other', meta: {title: '其他'}, component: DummyComponent}
+      ], meta: {title: '父级'}}
     ]
     const menu = generateMenu(routes)
     expect(menu[0].name).toBe('首页')
@@ -103,7 +103,7 @@ describe('generateMenu - meta.hidden 处理', () => {
   it('路由的 meta.hidden 为 true 时不应出现在菜单中', () => {
     const routes: RouteRecordRaw[] = [
       {path: 'visible', component: DummyComponent, meta: {title: '可见路由'}},
-      {path: 'hidden', component: DummyComponent, meta: {title: '隐藏路由', hidden: true}},
+      {path: 'hidden', component: DummyComponent, meta: {title: '隐藏路由', hidden: true}}
     ]
     const menu = generateMenu(routes)
     expect(menu).toHaveLength(1)
@@ -115,8 +115,8 @@ describe('generateMenu - meta.hidden 处理', () => {
     const routes: RouteRecordRaw[] = [
       {path: 'parent', component: DummyComponent, meta: {title: '父路由', hidden: true}, children: [
         {path: 'child1', component: DummyComponent, meta: {title: '子路由1'}},
-        {path: 'child2', component: DummyComponent, meta: {title: '子路由2'}},
-      ]},
+        {path: 'child2', component: DummyComponent, meta: {title: '子路由2'}}
+      ]}
     ]
     const menu = generateMenu(routes)
     expect(menu).toHaveLength(0)
@@ -126,8 +126,8 @@ describe('generateMenu - meta.hidden 处理', () => {
     const routes: RouteRecordRaw[] = [
       {path: 'parent', component: DummyComponent, meta: {title: '父路由'}, children: [
         {path: 'visible', component: DummyComponent, meta: {title: '可见子路由'}},
-        {path: 'hidden', component: DummyComponent, meta: {title: '隐藏子路由', hidden: true}},
-      ]},
+        {path: 'hidden', component: DummyComponent, meta: {title: '隐藏子路由', hidden: true}}
+      ]}
     ]
     const menu = generateMenu(routes)
     expect(menu).toHaveLength(1)
@@ -139,7 +139,7 @@ describe('generateMenu - meta.hidden 处理', () => {
     const routes: RouteRecordRaw[] = [
       {path: 'test1', component: DummyComponent, meta: {title: '测试1', hidden: false}},
       {path: 'test2', component: DummyComponent, meta: {title: '测试2'}},
-      {path: 'test3', component: DummyComponent, meta: {title: '测试3', hidden: null}},
+      {path: 'test3', component: DummyComponent, meta: {title: '测试3', hidden: null}}
     ]
     const menu = generateMenu(routes)
     expect(menu).toHaveLength(3)

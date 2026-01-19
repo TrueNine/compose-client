@@ -5,37 +5,13 @@ import dtsPluginImport from 'vite-plugin-dts'
 const dtsPlugin = (dtsPluginImport as unknown as {default: typeof dtsPluginImport}).default ?? dtsPluginImport
 
 export interface SimpleDtsOptions {
-  /**
-   * 入口文件路径,默认为 ['src/index.ts']
-   */
   entry?: string[]
-  /**
-   * tsconfig 路径,默认为 'tsconfig.json'
-   */
   tsconfigPath?: string
-  /**
-   * 源码根目录,默认为 'src'
-   */
   entryRoot?: string
-  /**
-   * 输出目录,默认为 'dist'
-   */
   outDir?: string
-  /**
-   * 排除的文件模式
-   */
   excludes?: string[]
-  /**
-   * 是否生成 sourcemap,默认 false
-   */
   sourcemap?: boolean
-  /**
-   * 是否启用严格模式,默认 true
-   */
   strict?: boolean
-  /**
-   * 日志级别,默认 'error'
-   */
   logLevel?: 'info' | 'warn' | 'error'
 }
 
@@ -47,7 +23,7 @@ const DEFAULT_OPTIONS: Required<SimpleDtsOptions> = {
   excludes: [],
   sourcemap: false,
   strict: true,
-  logLevel: 'error',
+  logLevel: 'error'
 }
 
 /**
@@ -60,7 +36,7 @@ export function createDtsPlugin(options: SimpleDtsOptions = {}): Plugin {
     finalOptions.entry.map(entry => {
       const match = /\.([^.]+)$/.exec(entry)
       return match ? match[1] : 'ts'
-    }),
+    })
   )
 
   const includes = [...extensions].map(ext => // 生成包含所有后缀的 glob 模式
@@ -72,7 +48,7 @@ export function createDtsPlugin(options: SimpleDtsOptions = {}): Plugin {
     include: includes,
     exclude: [
       `${finalOptions.outDir}/**`,
-      ...finalOptions.excludes,
+      ...finalOptions.excludes
     ],
 
     compilerOptions: { // 编译器选项
@@ -80,7 +56,7 @@ export function createDtsPlugin(options: SimpleDtsOptions = {}): Plugin {
       emitDeclarationOnly: true,
       declarationDir: finalOptions.outDir,
       declarationMap: finalOptions.sourcemap,
-      emitDecoratorMetadata: finalOptions.sourcemap,
+      emitDecoratorMetadata: finalOptions.sourcemap
     },
 
     clearPureImport: false, // 插件行为
@@ -93,7 +69,7 @@ export function createDtsPlugin(options: SimpleDtsOptions = {}): Plugin {
     beforeWriteFile: (filePath: string, content: string) => { // 使用 beforeWriteFile 钩子来验证生成的文件
       if (!content || content.trim().length === 0) throw new Error(`DTS generation failed: Empty declaration file generated for ${filePath}`)
       return {filePath, content}
-    },
+    }
   }
 
   const plugin = dtsPlugin(dtsPluginConfig)
@@ -102,13 +78,7 @@ export function createDtsPlugin(options: SimpleDtsOptions = {}): Plugin {
 }
 
 export const dtsPresets = { // 导出一些常用的预设配置
-  /**
-   * 库模式预设
-   */
   lib: (customOptions: SimpleDtsOptions = {}): Plugin => createDtsPlugin({entry: ['index.ts'], sourcemap: true, strict: true, ...customOptions}),
 
-  /**
-   * 应用模式预设
-   */
-  app: (customOptions: SimpleDtsOptions = {}): Plugin => createDtsPlugin({entry: ['main.ts', 'index.ts'], sourcemap: false, strict: false, ...customOptions}),
+  app: (customOptions: SimpleDtsOptions = {}): Plugin => createDtsPlugin({entry: ['main.ts', 'index.ts'], sourcemap: false, strict: false, ...customOptions})
 }

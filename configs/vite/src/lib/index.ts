@@ -13,7 +13,7 @@ export function BuildConfigLib(options: BuildLibraryConfigOptions = {}): BuildOp
     sourcemap = false,
     name = 'index',
     externals = Externals,
-    fileNameMap = {es: '.mjs', cjs: '.cjs', umd: '.umd.js', iife: '.iife.js'},
+    fileNameMap = {es: '.mjs', cjs: '.cjs', umd: '.umd.js', iife: '.iife.js'}
   } = options
 
   return {
@@ -24,6 +24,6 @@ export function BuildConfigLib(options: BuildLibraryConfigOptions = {}): BuildOp
     minify,
     lib: {entry, formats, name, fileName: (format: string) => `[name]${fileNameMap[format as keyof typeof fileNameMap]}`},
     assetsInlineLimit: 0,
-    rollupOptions: {external: externals, output: {preserveModulesRoot: entryRoot, preserveModules: true, compact: minify, minifyInternalExports: minify}},
+    rollupOptions: {external: externals, output: {preserveModulesRoot: entryRoot, preserveModules: true, compact: minify, minifyInternalExports: minify}}
   }
 }

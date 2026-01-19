@@ -24,33 +24,33 @@ export const codeStyleRules: Record<string, Rule.RuleModule> = {
   'beside-comment': besideComment,
   'prefer-separate-try-catch': preferSeparateTryCatch,
   'brace-style': braceStyle,
-  'no-separator-comment': noSeparatorComment,
+  'no-separator-comment': noSeparatorComment
 }
 
 export {
-  default as besideComment,
+  default as besideComment
 } from './beside-comment'
 export {
-  default as braceStyle,
+  default as braceStyle
 } from './brace-style'
 export {
-  default as compactTryCatch,
+  default as compactTryCatch
 } from './compact-try-catch'
 export {
-  default as preferConciseArrow,
+  default as preferConciseArrow
 } from './concise-arrow'
 export {
-  default as preferGuardClause,
+  default as preferGuardClause
 } from './guard-clause'
 export {
-  default as noSeparatorComment,
+  default as noSeparatorComment
 } from './no-separator-comment'
 export {
-  default as preferLookupTable,
+  default as preferLookupTable
 } from './prefer-lookup-table'
 export {
-  default as preferSeparateTryCatch,
+  default as preferSeparateTryCatch
 } from './prefer-separate-try-catch'
 export {
-  default as preferVoidZero,
+  default as preferVoidZero
 } from './prefer-void-zero'

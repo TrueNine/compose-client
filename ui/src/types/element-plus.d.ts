@@ -4,6 +4,6 @@ declare module 'element-plus/dist/locale/*.mjs' {
     el: Record<string, string>
   }
   export {
-    locale as default,
+    locale as default
   }
 }

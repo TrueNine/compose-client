@@ -27,5 +27,5 @@ declare class InfoWindow {
 }
 
 export {
-  InfoWindow,
+  InfoWindow
 }

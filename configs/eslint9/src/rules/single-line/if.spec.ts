@@ -19,8 +19,8 @@ const ruleTester = new RuleTester({
   languageOptions: {
     ecmaVersion: 2022,
     sourceType: 'module',
-    parser: tseslint.parser,
-  },
+    parser: tseslint.parser
+  }
 })
 
 describe('prefer-single-line-if', () => {
@@ -35,16 +35,16 @@ describe('prefer-single-line-if', () => {
   return value
 }`,
               output: 'if (condition) return value',
-              errors: [{messageId: 'preferSingleLine'}],
+              errors: [{messageId: 'preferSingleLine'}]
             },
             { // 单 if 语句 - 表达式语句
               code: `if (condition) {
   doSomething()
 }`,
               output: 'if (condition) doSomething()',
-              errors: [{messageId: 'preferSingleLine'}],
-            },
-          ],
+              errors: [{messageId: 'preferSingleLine'}]
+            }
+          ]
         })
       })
 
@@ -60,9 +60,9 @@ describe('prefer-single-line-if', () => {
 }`,
               output: `if (condition) return 'yes'
 else return 'no'`,
-              errors: [{messageId: 'preferSingleLine'}],
-            },
-          ],
+              errors: [{messageId: 'preferSingleLine'}]
+            }
+          ]
         })
       })
 
@@ -81,9 +81,9 @@ else return 'no'`,
               output: `if (a) return 1
 else if (b) return 2
 else return 3`,
-              errors: [{messageId: 'preferSingleLine'}],
-            },
-          ],
+              errors: [{messageId: 'preferSingleLine'}]
+            }
+          ]
         })
       })
     })
@@ -99,7 +99,7 @@ else return 3`,
   return value
 }`,
               output: 'if (condition1 || condition2) return value',
-              errors: [{messageId: 'preferSingleLine'}],
+              errors: [{messageId: 'preferSingleLine'}]
             },
             { // 多行条件 - && 分隔
               code: `if (condition1
@@ -107,9 +107,9 @@ else return 3`,
   return value
 }`,
               output: 'if (condition1 && condition2) return value',
-              errors: [{messageId: 'preferSingleLine'}],
-            },
-          ],
+              errors: [{messageId: 'preferSingleLine'}]
+            }
+          ]
         })
       })
 
@@ -129,9 +129,9 @@ else {
   const x = 2
   return x
 }`,
-              errors: [{messageId: 'preferSingleLineBranch'}],
-            },
-          ],
+              errors: [{messageId: 'preferSingleLineBranch'}]
+            }
+          ]
         })
       })
     })
@@ -154,9 +154,9 @@ else {
   for (const item of items) {
     process(item)
   }
-}`,
+}`
           ],
-          invalid: [],
+          invalid: []
         })
       })
 
@@ -173,9 +173,9 @@ else {
 }`,
             `if (condition) { // 行尾注释
   return value // trailing comment
-}`,
+}`
           ],
-          invalid: [],
+          invalid: []
         })
       })
 
@@ -184,9 +184,9 @@ else {
           valid: [
             'if (condition) return value', // 已经是单行的 - 不应报告 (Requirement 5.7)
             'if (a) return 1; else return 2',
-            'if (a) doSomething()',
+            'if (a) doSomething()'
           ],
-          invalid: [],
+          invalid: []
         })
       })
 
@@ -195,9 +195,9 @@ else {
           valid: [
             `if (veryLongConditionNameThatExceedsTheMaximumLineLengthWhenCombinedWithTheRestOfTheExpressionAndMoreTextToMakeItLonger) { // 超长度 - 不应简化 (Requirement 5.8)
   return veryLongReturnValueThatAlsoExceedsTheMaximumLineLengthWhenCombinedWithTheCondition
-}`,
+}`
           ],
-          invalid: [],
+          invalid: []
         })
       })
     })
@@ -210,9 +210,9 @@ else {
 else if (b) {
   const x = 2
   return x
-}`,
+}`
           ],
-          invalid: [],
+          invalid: []
         })
       })
     })
@@ -228,9 +228,9 @@ else if (b) {
   return value
 }`,
             output: 'if (condition) return value',
-            errors: [{messageId: 'preferSingleLine'}],
-          },
-        ],
+            errors: [{messageId: 'preferSingleLine'}]
+          }
+        ]
       })
     })
 
@@ -243,9 +243,9 @@ else if (b) {
   throw new Error('error')
 }`,
             output: `if (condition) throw new Error('error')`,
-            errors: [{messageId: 'preferSingleLine'}],
-          },
-        ],
+            errors: [{messageId: 'preferSingleLine'}]
+          }
+        ]
       })
     })
 
@@ -262,9 +262,9 @@ else if (b) {
             output: `for (const item of items) {
   if (condition) break
 }`,
-            errors: [{messageId: 'preferSingleLine'}],
-          },
-        ],
+            errors: [{messageId: 'preferSingleLine'}]
+          }
+        ]
       })
     })
 
@@ -281,9 +281,9 @@ else if (b) {
             output: `for (const item of items) {
   if (condition) continue
 }`,
-            errors: [{messageId: 'preferSingleLine'}],
-          },
-        ],
+            errors: [{messageId: 'preferSingleLine'}]
+          }
+        ]
       })
     })
 
@@ -296,9 +296,9 @@ else if (b) {
   doSomething()
 }`,
             output: 'if (condition) doSomething()',
-            errors: [{messageId: 'preferSingleLine'}],
-          },
-        ],
+            errors: [{messageId: 'preferSingleLine'}]
+          }
+        ]
       })
     })
   })

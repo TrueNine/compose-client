@@ -3,7 +3,7 @@ export enum AuditCategory {
   PERFORMANCE = 'performance',
   SEO = 'seo',
   BEST_PRACTICES = 'best-practices',
-  PWA = 'pwa',
+  PWA = 'pwa'
 }
 
 export const DEFAULT_PORT = 3025

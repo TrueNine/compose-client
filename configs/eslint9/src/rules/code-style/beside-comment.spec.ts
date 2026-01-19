@@ -7,8 +7,8 @@ const ruleTester = new RuleTester({
   languageOptions: {
     ecmaVersion: 2022,
     sourceType: 'module',
-    parser: tseslint.parser,
-  },
+    parser: tseslint.parser
+  }
 })
 
 describe('beside-comment', () => {
@@ -16,21 +16,21 @@ describe('beside-comment', () => {
     ruleTester.run('beside-comment', rule, {
       valid: [
         {
-          code: 'const a = 1; // comment',
+          code: 'const a = 1; // comment'
         },
         {
           code: `
             // #if DEBUG
             const a = 1;
             // #endif
-          `,
+          `
         },
         {
           code: `
             // #if
             code();
             // #endif
-          `,
+          `
         },
         {
           code: `
@@ -38,19 +38,19 @@ describe('beside-comment', () => {
              * JSDoc
              */
             const b = 2;
-          `,
-        },
+          `
+        }
       ],
       invalid: [
         {
           code: [
             '// standalone',
-            'const c = 3;',
+            'const c = 3;'
           ].join('\n'),
           output: 'const c = 3; // standalone',
-          errors: [{messageId: 'besideComment'}],
-        },
-      ],
+          errors: [{messageId: 'besideComment'}]
+        }
+      ]
     })
   })
 })
