@@ -4,6 +4,7 @@ import braceStyle from './brace-style'
 import compactTryCatch from './compact-try-catch'
 import preferConciseArrow from './concise-arrow'
 import preferGuardClause from './guard-clause'
+import noSeparatorComment from './no-separator-comment'
 import preferLookupTable from './prefer-lookup-table'
 import preferSeparateTryCatch from './prefer-separate-try-catch'
 import preferVoidZero from './prefer-void-zero'
@@ -23,6 +24,7 @@ export const codeStyleRules: Record<string, Rule.RuleModule> = {
   'beside-comment': besideComment,
   'prefer-separate-try-catch': preferSeparateTryCatch,
   'brace-style': braceStyle,
+  'no-separator-comment': noSeparatorComment,
 }
 
 export {
@@ -40,6 +42,9 @@ export {
 export {
   default as preferGuardClause,
 } from './guard-clause'
+export {
+  default as noSeparatorComment,
+} from './no-separator-comment'
 export {
   default as preferLookupTable,
 } from './prefer-lookup-table'

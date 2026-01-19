@@ -336,7 +336,7 @@ describe('prefer-single-line-call', () => {
     })
   })
 
-  describe('schema options', () => { // ==================== Schema Options Tests (Requirement 7.3) ====================
+  describe('schema options', () => {
     describe('maxLineLength option', () => {
       it('should respect custom maxLineLength value', () => {
         ruleTester.run('prefer-single-line-call', rule, {

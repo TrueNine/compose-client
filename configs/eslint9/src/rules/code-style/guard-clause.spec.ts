@@ -448,7 +448,7 @@ if (x > 0) {
     })
   })
 
-  describe('schema options', () => { // ==================== Schema Options Tests (Requirement 7.3) ====================
+  describe('schema options', () => {
     describe('minStatements option', () => {
       it('should respect custom minStatements value', () => {
         ruleTester.run('prefer-guard-clause', rule, {

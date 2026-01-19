@@ -1,4 +1,4 @@
-import type { Rule } from 'eslint'
+import type {Rule} from 'eslint'
 
 const rule: Rule.RuleModule = {
   meta: {
@@ -15,13 +15,13 @@ const rule: Rule.RuleModule = {
     schema: [],
   },
   create(context) {
-    const { sourceCode } = context
+    const {sourceCode} = context
 
     return {
       TryStatement(node) {
         const tryBlock = node.block
-        const { handler } = node
-        const { finalizer } = node
+        const {handler} = node
+        const {finalizer} = node
 
         if (handler) {
           const tryCloseBrace = sourceCode.getLastToken(tryBlock)
@@ -33,7 +33,7 @@ const rule: Rule.RuleModule = {
 
             if (!isTryMultiLine || !isCatchMultiLine) {
               if (tryCloseBrace.loc.end.line === catchToken.loc.start.line) { // Handled by compact-try-catch
-                context.report({ node: handler, messageId: 'separateCatch', fix(fixer) { return fixer.replaceTextRange([tryCloseBrace.range[1], catchToken.range[0]], '\n') } })
+                context.report({node: handler, messageId: 'separateCatch', fix(fixer) { return fixer.replaceTextRange([tryCloseBrace.range[1], catchToken.range[0]], '\n') }})
               }
             }
           }

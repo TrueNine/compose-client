@@ -29,7 +29,7 @@ const ruleTester = new RuleTester({
 })
 
 describe('prefer-single-line-control', () => {
-  describe('switch case', () => { // ==================== Switch Case Tests ====================
+  describe('switch case', () => {
     describe('invalid cases - basic transformations (Requirements 4.1, 4.2, 4.3, 4.19)', () => {
       it('should simplify case with single simple statement', () => {
         ruleTester.run('prefer-single-line-control', rule, {
@@ -189,7 +189,7 @@ describe('prefer-single-line-control', () => {
     })
   })
 
-  describe('loops', () => { // ==================== Loop Tests ====================
+  describe('loops', () => {
     describe('invalid cases - basic transformations (Requirements 4.7, 4.8, 4.9, 4.10)', () => {
       it('should simplify for loop with single statement', () => {
         ruleTester.run('prefer-single-line-control', rule, {

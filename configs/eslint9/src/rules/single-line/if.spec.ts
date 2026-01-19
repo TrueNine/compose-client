@@ -24,7 +24,7 @@ const ruleTester = new RuleTester({
 })
 
 describe('prefer-single-line-if', () => {
-  describe('invalid cases', () => { // ==================== Invalid Cases ====================
+  describe('invalid cases', () => {
     describe('basic transformations (Requirements 5.1, 5.2, 5.3)', () => {
       it('should simplify single if statement', () => {
         ruleTester.run('prefer-single-line-if', rule, {
@@ -137,7 +137,7 @@ else {
     })
   })
 
-  describe('valid cases', () => { // ==================== Valid Cases ====================
+  describe('valid cases', () => {
     describe('skip scenarios (Requirements 5.5, 5.6, 5.7, 5.8)', () => {
       it('should skip if branch with complex statement', () => {
         ruleTester.run('prefer-single-line-if', rule, {
@@ -218,7 +218,7 @@ else if (b) {
     })
   })
 
-  describe('simple statement recognition (Requirement 5.11)', () => { // ==================== Simple Statement Recognition ====================
+  describe('simple statement recognition (Requirement 5.11)', () => {
     it('should recognize return as simple statement', () => {
       ruleTester.run('prefer-single-line-if', rule, {
         valid: [],

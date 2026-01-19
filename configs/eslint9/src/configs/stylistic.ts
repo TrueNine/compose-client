@@ -17,7 +17,7 @@ export const stylisticConfig: AntFuStylisticConfig = {
     'curly': ['error', 'multi-line'],
     'antfu/if-newline': 'off',
     'antfu/curly': 'off',
-    'style/object-curly-spacing': ['error', 'never'], /* ===== 紧凑风格：移除不必要的空格 ===== */
+    'style/object-curly-spacing': ['error', 'never'],
     'style/array-bracket-spacing': ['error', 'never'], /* 对象花括号内不加空格 { a } → {a} */
     'style/computed-property-spacing': ['error', 'never'], /* 数组括号内不加空格 [ a ] → [a] */
     'style/template-curly-spacing': ['error', 'never'], /* 计算属性括号内不加空格 obj[ key ] → obj[key] */
