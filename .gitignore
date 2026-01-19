@@ -62,5 +62,3 @@ test_*.ts
 
 # Exclude everything
 *
-# But keep LICENSE
-!LICENSE
