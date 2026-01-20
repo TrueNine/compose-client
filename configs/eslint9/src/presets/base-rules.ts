@@ -11,6 +11,8 @@ export const baseRulesPreset: Linter.RulesRecord = {
   '@truenine/prefer-lookup-table': 'warn',
   '@truenine/beside-comment': 'error',
   '@truenine/no-separator-comment': 'error',
+  '@truenine/no-document-requirements': 'error',
+  '@truenine/no-task-comment': 'warn',
   '@truenine/brace-style': ['error', '1tbs', {allowSingleLine: true}],
   'style/brace-style': 'off',
 
