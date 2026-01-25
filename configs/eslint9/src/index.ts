@@ -1,11 +1,11 @@
-import type {OptionsTypeScriptParserOptions} from '@antfu/eslint-config'
-import type {Linter} from 'eslint'
-import type {AntFuStrictTsConfig, AntFuTsConfig, ConfigOptions} from './types'
-import {antfu} from '@antfu/eslint-config'
-import {formatterConfig, javascriptConfig, strictTypescriptConfig, stylisticConfig, testConfig, typescriptConfig, unocssConfig, vueConfig} from './configs'
-import {plugin} from './plugin'
-import {baseRulesPreset, dtsRulesPreset, typescriptRulesPreset} from './presets'
-import {mergeWithDefaults} from './utils'
+import type { OptionsTypeScriptParserOptions } from '@antfu/eslint-config'
+import type { Linter } from 'eslint'
+import type { AntFuStrictTsConfig, AntFuTsConfig, ConfigOptions } from './types'
+import { antfu } from '@antfu/eslint-config'
+import { formatterConfig, javascriptConfig, strictTypescriptConfig, stylisticConfig, testConfig, typescriptConfig, unocssConfig, vueConfig } from './configs'
+import { plugin } from './plugin'
+import { baseRulesPreset, dtsRulesPreset, typescriptRulesPreset } from './presets'
+import { mergeWithDefaults } from './utils'
 
 export {
   plugin
@@ -21,7 +21,7 @@ export type {
  * @param options - 配置选项
  * @returns ESLint 配置数组
  */
-export async function defineConfig(options: ConfigOptions = {}): ReturnType<typeof antfu> {
+export function defineConfig(options: ConfigOptions = {}): ReturnType<typeof antfu> {
   const {
     type = 'lib',
     ignores = [],
@@ -81,9 +81,9 @@ export async function defineConfig(options: ConfigOptions = {}): ReturnType<type
       stylistic: _stylistic,
       formatters: _formatters
     },
-    {name: '@truenine/eslint-plugin', plugins: {'@truenine': plugin}, rules: baseRulesPreset} as Linter.Config,
-    {name: '@truenine/dts-rules', files: ['**/*.d.ts'], rules: dtsRulesPreset} as Linter.Config,
-    {name: '@truenine/typescript-rules', files: ['**/*.ts', '**/*.tsx', '**/*.mts', '**/*.cts'], ignores: ['**/*.md/**'], rules: typescriptRulesPreset} as Linter.Config
+    { name: '@truenine/eslint-plugin', plugins: { '@truenine': plugin }, rules: baseRulesPreset } as Linter.Config,
+    { name: '@truenine/dts-rules', files: ['**/*.d.ts'], rules: dtsRulesPreset } as Linter.Config,
+    { name: '@truenine/typescript-rules', files: ['**/*.ts', '**/*.tsx', '**/*.mts', '**/*.cts'], ignores: ['**/*.md/**'], rules: typescriptRulesPreset } as Linter.Config
   )
 }
 
