@@ -21,7 +21,7 @@ export type {
  * @param options - 配置选项
  * @returns ESLint 配置数组
  */
-export async function defineConfig(options: ConfigOptions = {}): Promise<ReturnType<typeof antfu>> {
+export async function defineConfig(options: ConfigOptions = {}): ReturnType<typeof antfu> {
   const {
     type = 'lib',
     ignores = [],
@@ -51,7 +51,15 @@ export async function defineConfig(options: ConfigOptions = {}): Promise<ReturnT
 
   if (isStrictTsConfig(_typescript)) {
     const merged = mergeWithDefaults(_typescript as AntFuTsConfig, strictTypescriptConfig)
-    if (typeof merged === 'object' && 'tsconfigPath' in merged) (merged as OptionsTypeScriptParserOptions).parserOptions = {projectService: true}
+    if (typeof merged === 'object' && 'tsconfigPath' in merged) {
+      const opts = merged as OptionsTypeScriptParserOptions
+      if (opts.parserOptions?.projectService === void 0) {
+        opts.parserOptions = {
+          ...opts.parserOptions,
+          projectService: true
+        }
+      }
+    }
     _typescript = merged
   }
 
