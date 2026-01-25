@@ -1,30 +1,30 @@
 # @truenine/eslint9-config
 
-This is an ESLint 9 configuration package optimized for the Compose Client project, providing cache optimization, performance tuning, and rule optimization capabilities.
+ESLint 9 configuration package optimized for Compose Client projects, providing cache optimization, performance tuning and rule optimization.
 
 ## Features
 
 ### Performance Optimization
 
-- **Smart Caching**: Supports efficient caching strategies
-- **Parallel Processing**: Automatically utilizes multi-core CPUs for parallel checks
-- **Rule Optimization**: Option to skip rules with high performance impact
-- **Progressive Checking**: Prioritizes checking critical files
+- **Smart Cache**: Efficient caching strategy
+- **Parallel Processing**: Auto-utilize multi-core CPU for parallel checks
+- **Rule Optimization**: Optional skip of performance-heavy rules
+- **Progressive Check**: Prioritize critical files
 
-### Preset Configurations
+### Presets
 
-- **performance**: Performance priority, suitable for large projects or CI environments
-- **quality**: Quality priority, suitable for small projects or development environments
-- **balanced**: Balanced configuration, default recommendation
-- **ci**: Dedicated configuration for CI environments
-- **dev**: Development environment friendly configuration
-- **library**: Strict configuration for library projects
+- **performance**: Performance-first, for large projects or CI
+- **quality**: Quality-first, for small projects or dev
+- **balanced**: Balanced config, default recommended
+- **ci**: CI environment dedicated config
+- **dev**: Dev environment friendly config
+- **library**: Library project strict config
 
 ### Smart Ignore
 
-- Automatically ignores build artifacts, cache directories, compressed files, etc.
-- Configurable priority checking for critical files
-- Supports custom ignore patterns
+- Auto-ignore build artifacts, cache dirs, compressed files
+- Configurable critical file priority check
+- Custom ignore pattern support
 
 ## Usage
 
@@ -64,31 +64,31 @@ export default eslint9({
 
 ### Performance Preset
 
-Suitable for large projects or CI environments, prioritizes checking speed.
+For large projects or CI, prioritizes check speed.
 
 ### Quality Preset
 
-Suitable for small projects or development environments, prioritizes code quality.
+For small projects or dev, prioritizes code quality.
 
 ### Balanced Preset
 
-Default recommended configuration, balances performance and quality.
+Default recommended, balances performance and quality.
 
 ### CI Preset
 
-Optimized for Continuous Integration environments.
+Optimized for continuous integration.
 
 ### Dev Preset
 
-Development environment friendly configuration.
+Dev environment friendly.
 
 ### Library Preset
 
-Suitable for open source libraries or component libraries.
+For open-source libraries or component libraries.
 
-## Performance Optimization Suggestions
+## Performance Tips
 
-1. **Enable Caching**: Add cache parameters in package.json scripts.
-2. **Use Appropriate Presets**: Choose the most suitable preset according to different environments.
-3. **Configure Ignore Patterns**: Ensure files that do not need checking (such as dist, build, node_modules) are ignored.
-4. **Progressive Checking**: For large projects, it is recommended to enable the progressive checking function.
+1. **Enable Cache**: Add cache params in package.json scripts.
+2. **Use Appropriate Preset**: Choose best preset for different environments.
+3. **Configure Ignore Patterns**: Ensure unnecessary files (dist, build, node_modules) are ignored.
+4. **Progressive Check**: For large projects, enable progressive check.
