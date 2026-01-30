@@ -2,7 +2,7 @@ import { defineConfig } from 'tsdown'
 
 export default defineConfig({
   entry: ['./src/**/*', '!**/*.{spec,test}.*', '!**/*.md'],
-  platform: 'neutral',
+  platform: 'node',
   sourcemap: true,
   unbundle: true,
   format: ['esm', 'cjs'],

@@ -35,29 +35,26 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "import": "./dist/index.js",
+      "types": "./dist/index.d.mts",
+      "types:require": "./dist/index.d.cts",
+      "import": "./dist/index.mjs",
       "require": "./dist/index.cjs"
     },
+    "./LICENSE": "./LICENSE",
+    "./README.md": "./README.md",
     "./package.json": "./package.json"
   },
   "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.cts",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
+  "types:require": "./dist/index.d.cts",
   "files": [
     "LICENSE",
     "README.md",
     "dist"
   ],
   "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org/",
-    "exports": {
-      ".": {
-        "import": "./dist/index.js",
-        "require": "./dist/index.cjs"
-      },
-      "./*": "./*"
-    }
+    "access": "public"
   },
   "scripts": {
     "build": "tsdown",

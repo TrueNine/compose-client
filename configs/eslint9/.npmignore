@@ -1,9 +1,6 @@
-.turbo
-node_modules
-
-env.d.ts
-eslint.config.*
-tsconfig.*
-vite.config.*
-vitest.config.*
-tsdown.config.*
+*
+!dist
+!dist/**
+!README.md
+!LICENSE
+!package.json
