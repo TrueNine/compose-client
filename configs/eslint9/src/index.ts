@@ -7,6 +7,23 @@ import { plugin } from './plugin'
 import { baseRulesPreset, dtsRulesPreset, typescriptRulesPreset } from './presets'
 import { mergeWithDefaults } from './utils'
 
+const defaultIgnores = [
+  '**/dist/**',
+  '**/node_modules/**',
+
+  '**/.agent/**',
+  '**/.claude/**',
+  '**/.factory/**',
+  '**/.qoder/**',
+  '**/.trae/**',
+  '**/.kiro/**',
+  'AGENTS.md',
+  'README.md',
+  'GEMINI.md',
+  'CLAUDE.md',
+  'WARP.md'
+]
+
 export {
   plugin
 } from './plugin'
@@ -40,6 +57,9 @@ export function defineConfig(options: ConfigOptions = {}): ReturnType<typeof ant
     ...restOptions
   } = options
 
+  const resolvedIgnores = typeof ignores === 'function'
+    ? (originals: string[]) => Array.from(new Set([...defaultIgnores, ...ignores(originals)]))
+    : Array.from(new Set([...defaultIgnores, ...ignores]))
   const _test = mergeWithDefaults(test, testConfig)
   const _unocss = mergeWithDefaults(unocss, unocssConfig)
   let _vue = mergeWithDefaults(vue, vueConfig) as boolean | AntFuVueConfig
@@ -74,7 +94,7 @@ export function defineConfig(options: ConfigOptions = {}): ReturnType<typeof ant
       ...restOptions,
       markdown: true,
       type,
-      ignores,
+      ignores: resolvedIgnores,
       pnpm: _pnpm,
       test: _test,
       unocss: _unocss,
