@@ -23,6 +23,7 @@ export {
   typescriptConfig
 } from './typescript'
 export {
+  applyUniappVueConfig,
   defaultVueConfig,
   vueConfig
 } from './vue'

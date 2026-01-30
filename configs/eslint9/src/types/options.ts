@@ -6,4 +6,6 @@ import type {AntFuConfig, AntFuStrictTsConfig, AntFuTsConfig} from './antfu'
  */
 export interface ConfigOptions extends Omit<AntFuConfig, 'typescript'> {
   typescript?: boolean | AntFuStrictTsConfig | AntFuTsConfig
+  /** Enable uniapp-specific Vue casing rules. */
+  uniapp?: boolean
 }

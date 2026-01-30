@@ -1,7 +1,30 @@
+import type {Linter} from 'eslint'
 import {describe, expect, it} from 'vitest'
 import defineConfig, {plugin, rules} from './index'
 import {codeStyleRules} from './rules/code-style'
 import {singleLineRules} from './rules/single-line'
+
+type RuleEntry = Linter.RuleEntry
+type RulesRecord = Record<string, RuleEntry>
+type ConfigResult = Awaited<ReturnType<typeof defineConfig>>
+
+function findRuleEntry(configs: ConfigResult, ruleName: string): RuleEntry | undefined {
+  if (!Array.isArray(configs)) return undefined
+  for (const config of configs) {
+    if (!config || typeof config !== 'object') continue
+    const rules = (config as Linter.Config).rules
+    if (!rules || typeof rules !== 'object') continue
+    const record = rules as RulesRecord
+    if (ruleName in record) return record[ruleName]
+  }
+  return undefined
+}
+
+function extractRuleSetting(rule: RuleEntry | undefined): string | undefined {
+  if (!Array.isArray(rule)) return undefined
+  const setting = rule[1]
+  return typeof setting === 'string' ? setting : undefined
+}
 
 describe('eslint9-config', () => {
   it('should export defineConfig as default function', () => expect(typeof defineConfig).toBe('function'))
@@ -25,6 +48,28 @@ describe('eslint9-config', () => {
     const ruleNames = Object.keys(rules)
     const pluginRuleNames = Object.keys(plugin.rules ?? {})
     expect(pluginRuleNames).toEqual(expect.arrayContaining(ruleNames))
+  })
+})
+
+describe('uniapp options', () => {
+  it('should enforce kebab-case component names in templates', async () => {
+    const config = await defineConfig({vue: true, uniapp: true})
+    const rule = findRuleEntry(config, 'vue/component-name-in-template-casing')
+    expect(extractRuleSetting(rule)).toBe('kebab-case')
+  })
+
+  it('should enforce kebab-case attribute hyphenation', async () => {
+    const config = await defineConfig({vue: true, uniapp: true})
+    const rule = findRuleEntry(config, 'vue/attribute-hyphenation')
+    expect(extractRuleSetting(rule)).toBe('always')
+  })
+
+  it('should keep default casing when uniapp is disabled', async () => {
+    const config = await defineConfig({vue: true})
+    const componentCasing = findRuleEntry(config, 'vue/component-name-in-template-casing')
+    const attributeHyphenation = findRuleEntry(config, 'vue/attribute-hyphenation')
+    expect(extractRuleSetting(componentCasing)).toBe('PascalCase')
+    expect(extractRuleSetting(attributeHyphenation)).toBe('never')
   })
 })
 

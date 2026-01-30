@@ -1,8 +1,8 @@
 import type { OptionsTypeScriptParserOptions } from '@antfu/eslint-config'
 import type { Linter } from 'eslint'
-import type { AntFuStrictTsConfig, AntFuTsConfig, ConfigOptions } from './types'
+import type { AntFuStrictTsConfig, AntFuTsConfig, AntFuVueConfig, ConfigOptions } from './types'
 import { antfu } from '@antfu/eslint-config'
-import { formatterConfig, javascriptConfig, strictTypescriptConfig, stylisticConfig, testConfig, typescriptConfig, unocssConfig, vueConfig } from './configs'
+import { applyUniappVueConfig, formatterConfig, javascriptConfig, strictTypescriptConfig, stylisticConfig, testConfig, typescriptConfig, unocssConfig, vueConfig } from './configs'
 import { plugin } from './plugin'
 import { baseRulesPreset, dtsRulesPreset, typescriptRulesPreset } from './presets'
 import { mergeWithDefaults } from './utils'
@@ -30,6 +30,7 @@ export function defineConfig(options: ConfigOptions = {}): ReturnType<typeof ant
     react = false,
     unocss = false,
     vue = false,
+    uniapp = false,
     jsx = false,
     pnpm = false,
     stylistic = true,
@@ -41,10 +42,15 @@ export function defineConfig(options: ConfigOptions = {}): ReturnType<typeof ant
 
   const _test = mergeWithDefaults(test, testConfig)
   const _unocss = mergeWithDefaults(unocss, unocssConfig)
-  const _vue = mergeWithDefaults(vue, vueConfig)
+  let _vue = mergeWithDefaults(vue, vueConfig) as boolean | AntFuVueConfig
   const _javascript = mergeWithDefaults(javascript, javascriptConfig)
   const _stylistic = mergeWithDefaults(stylistic, stylisticConfig)
   const _formatters = mergeWithDefaults(formatters, formatterConfig)
+
+  if (uniapp) {
+    const resolvedVue = _vue === false || _vue === true ? vueConfig : _vue
+    _vue = applyUniappVueConfig(resolvedVue)
+  }
 
   let _typescript = typescript
   const _pnpm = type === 'app' ? false : pnpm

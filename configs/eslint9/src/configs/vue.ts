@@ -1,5 +1,17 @@
 import type {AntFuVueConfig} from '../types'
 
+type VueOverrides = NonNullable<AntFuVueConfig['overrides']>
+
+const attributeHyphenationIgnoreTags = ['i-', 'v-', 'v-bind']
+const componentNameInTemplateCasingOptions = {
+  ignores: ['router-view', 'router-link', 'scroll-view', 'custom-tabbar', 'custom-navbar'],
+  registeredComponentsOnly: false
+}
+const uniappVueOverrides: VueOverrides = {
+  'vue/attribute-hyphenation': ['error', 'always', {ignoreTags: attributeHyphenationIgnoreTags}],
+  'vue/component-name-in-template-casing': ['error', 'kebab-case', componentNameInTemplateCasingOptions]
+}
+
 /** Vue 默认配置 */
 export const vueConfig: AntFuVueConfig = {
   vueVersion: 3,
@@ -37,13 +49,24 @@ export const vueConfig: AntFuVueConfig = {
       }
     ],
     'vue/v-on-event-hyphenation': ['error', 'never', {autofix: true}],
-    'vue/attribute-hyphenation': ['error', 'never', {ignoreTags: ['i-', 'v-', 'v-bind']}],
+    'vue/attribute-hyphenation': ['error', 'never', {ignoreTags: attributeHyphenationIgnoreTags}],
     'vue/prop-name-casing': ['error', 'camelCase'],
     'vue/component-name-in-template-casing': [
       'error',
       'PascalCase',
-      {ignores: ['router-view', 'router-link', 'scroll-view', 'custom-tabbar', 'custom-navbar'], registeredComponentsOnly: false}
+      componentNameInTemplateCasingOptions
     ]
+  }
+}
+
+export function applyUniappVueConfig(config: AntFuVueConfig): AntFuVueConfig {
+  const overrides = config.overrides ?? {}
+  return {
+    ...config,
+    overrides: {
+      ...overrides,
+      ...uniappVueOverrides
+    }
   }
 }
 
