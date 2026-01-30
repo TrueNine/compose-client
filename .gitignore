@@ -41,3 +41,5 @@ test_*.ts
 *.log
 LICENSE
 !/LICENSE
+README.md
+!/README.md
