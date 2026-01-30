@@ -39,6 +39,30 @@ describe('beside-comment', () => {
              */
             const b = 2;
           `
+        },
+        {
+          code: `
+            // TODO: optimize
+            const d = 4;
+          `
+        },
+        {
+          code: `
+            // FIXME: handle edge case
+            const e = 5;
+          `
+        },
+        {
+          code: `
+            // @ts-ignore
+            const f = 6;
+          `
+        },
+        {
+          code: `
+            // eslint-disable-next-line no-console
+            console.log('ok');
+          `
         }
       ],
       invalid: [
