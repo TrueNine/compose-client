@@ -9,21 +9,21 @@ type RulesRecord = Record<string, RuleEntry>
 type ConfigResult = Awaited<ReturnType<typeof defineConfig>>
 
 function findRuleEntry(configs: ConfigResult, ruleName: string): RuleEntry | undefined {
-  if (!Array.isArray(configs)) return undefined
+  if (!Array.isArray(configs)) return void 0
   for (const config of configs) {
-    if (!config || typeof config !== 'object') continue
-    const rules = (config as Linter.Config).rules
+    if (typeof config !== 'object' || config === null) continue
+    const {rules} = config
     if (!rules || typeof rules !== 'object') continue
     const record = rules as RulesRecord
     if (ruleName in record) return record[ruleName]
   }
-  return undefined
+  return void 0
 }
 
 function extractRuleSetting(rule: RuleEntry | undefined): string | undefined {
-  if (!Array.isArray(rule)) return undefined
+  if (!Array.isArray(rule)) return void 0
   const setting = rule[1]
-  return typeof setting === 'string' ? setting : undefined
+  return typeof setting === 'string' ? setting : void 0
 }
 
 describe('eslint9-config', () => {
@@ -149,7 +149,7 @@ describe('property-Based Tests', () => {
         expect(typeof ruleModule).toBe('object')
         expect(ruleModule).toHaveProperty('create')
         expect(typeof ruleModule.create).toBe('function')
-        expect(ruleName).toMatch(/^(prefer|beside|compact|brace)-[a-z-]+$/) /* Rule name should follow expected naming convention */
+        expect(ruleName).toMatch(/^(prefer|beside|compact|brace|no)-[a-z-]+$/) /* Rule name should follow expected naming convention */
       }
     })
   })

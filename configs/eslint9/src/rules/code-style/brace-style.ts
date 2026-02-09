@@ -1,7 +1,5 @@
 import type {Rule} from 'eslint' // @ts-nocheck
-import {createRequire} from 'node:module'
-
-/* eslint-disable ts/no-unsafe-member-access, ts/no-unsafe-assignment, ts/no-unsafe-argument, ts/strict-boolean-expressions */
+import {createRequire} from 'node:module' /* eslint-disable ts/no-unsafe-member-access, ts/no-unsafe-assignment, ts/no-unsafe-argument, ts/strict-boolean-expressions */
 
 const require = createRequire(import.meta.url)
 

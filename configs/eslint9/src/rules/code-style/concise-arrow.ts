@@ -1,5 +1,4 @@
-/* eslint-disable ts/no-unsafe-member-access, ts/no-unsafe-argument, ts/no-unsafe-assignment, ts/strict-boolean-expressions */
-import type {Rule} from 'eslint'
+import type {Rule} from 'eslint' /* eslint-disable ts/no-unsafe-member-access, ts/no-unsafe-argument, ts/no-unsafe-assignment, ts/strict-boolean-expressions */
 
 const MAX_LINE_LENGTH = 160
 

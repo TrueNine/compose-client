@@ -13,7 +13,7 @@ function resolveComponent(name: string): {
   if (!/^Y[A-Z]/.test(name)) return
 
   const _kebabName = camelTo(name.slice(1))
-  return {name, from: '@truenine/ui', satisfies: []}
+  return {name: 'default', from: `@truenine/ui/components/${_kebabName}/index`, satisfies: [`@truenine/ui/dist/components/${_kebabName}/index.css`]}
 }
 
 export function MetaUiWebResolver(): {

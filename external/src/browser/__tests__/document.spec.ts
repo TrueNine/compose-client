@@ -85,7 +85,7 @@ describe('document.ts 文件函数测试', () => {
     })
 
     it('创建新的script标签并添加到指定位置', () => {
-      const parentElement = {appendChild: vi.fn()} // 模拟不存在相同src的script标签，但存在父元素
+      const parentElement = {append: vi.fn(), appendChild: vi.fn()} // 模拟不存在相同src的script标签，但存在父元素
       documentMock.querySelector.mockReturnValueOnce(null).mockReturnValueOnce(parentElement)
 
       const loadFn = vi.fn() // 创建回调函数
@@ -100,7 +100,7 @@ describe('document.ts 文件函数测试', () => {
       expect(mockScript.addEventListener).toHaveBeenCalledWith('load', loadFn)
       expect(documentMock.querySelector).toHaveBeenCalledWith('head')
       expect(beforeEachFn).toHaveBeenCalledWith(mockScript)
-      expect(parentElement.appendChild).toHaveBeenCalled()
+      expect(parentElement.append).toHaveBeenCalled()
     })
 
     it('父元素不存在时返回null', () => {
@@ -193,7 +193,11 @@ describe('document.ts 文件函数测试', () => {
     beforeEach(() => {
       originalImage = globalThis.Image // 保存原始 Image 构造函数
 
-      globalThis.Image = vi.fn().mockImplementation(() => ({onload: null, onerror: null, src: ''} as MockImage)) as unknown as typeof Image // 模拟 Image 构造函数
+      globalThis.Image = class MockImageClass {
+        onload: (() => void) | null = null
+        onerror: (() => void) | null = null
+        src = ''
+      } as unknown as typeof Image // 模拟 Image 构造函数
     })
 
     afterEach(() => {
@@ -209,17 +213,24 @@ describe('document.ts 文件函数测试', () => {
       globalThis.URL.createObjectURL = createObjectURLFn
       globalThis.URL.revokeObjectURL = revokeObjectURLFn
 
+      let capturedImg: MockImage | null = null
+      globalThis.Image = class {
+        onload: (() => void) | null = null
+        onerror: (() => void) | null = null
+        src = ''
+        constructor() { capturedImg = this as unknown as MockImage }
+      } as unknown as typeof Image
+
       const imagePromise = getImageData(imageBlob) // 执行函数
 
-      const mockImage = (globalThis.Image as unknown as ReturnType<typeof vi.fn>).mock.results[0].value as MockImage // 模拟图片加载完成
-      if (mockImage.onload) mockImage.onload()
+      if (capturedImg !== null && (capturedImg as MockImage).onload !== null) (capturedImg as MockImage).onload!() // 模拟图片加载完成
 
       const result = await imagePromise // 等待Promise解析
 
       expect(createObjectURLFn).toHaveBeenCalledWith(imageBlob) // 验证结果
       expect(revokeObjectURLFn).toHaveBeenCalledWith('blob:image-url')
-      expect(result).toBe(mockImage)
-      expect(mockImage.src).toBe('blob:image-url')
+      expect(result).toBe(capturedImg)
+      expect((capturedImg as MockImage).src).toBe('blob:image-url')
     })
 
     it('图片加载失败时返回新的空图片元素', async () => {
@@ -228,15 +239,32 @@ describe('document.ts 文件函数测试', () => {
       const revokeObjectURLSpy = vi.fn() // 设置spy以便验证调用
       globalThis.URL.revokeObjectURL = revokeObjectURLSpy
 
+      let imageCount = 0
+      globalThis.Image = class {
+        onload: (() => void) | null = null
+        onerror: (() => void) | null = null
+        src = ''
+        constructor() { imageCount++ }
+      } as unknown as typeof Image
+
+      let capturedImg: MockImage | null = null
+      const OrigImage = globalThis.Image
+      globalThis.Image = class extends (OrigImage as unknown as new () => MockImage) {
+        constructor() {
+          super()
+          capturedImg = this as unknown as MockImage
+        }
+      } as unknown as typeof Image
+      imageCount = 0
+
       const imagePromise = getImageData(imageBlob) // 执行函数
 
-      const mockImage = (globalThis.Image as unknown as ReturnType<typeof vi.fn>).mock.results[0].value as MockImage // 模拟图片加载失败
-      if (mockImage.onerror) mockImage.onerror()
+      if (capturedImg !== null && (capturedImg as MockImage).onerror !== null) (capturedImg as MockImage).onerror!() // 模拟图片加载失败
 
       await imagePromise // 等待Promise解析，并在之后验证调用
 
       expect(revokeObjectURLSpy).toHaveBeenCalledWith('blob:mock-url') // 验证revokeObjectURL被调用
-      expect(globalThis.Image).toHaveBeenCalledTimes(2) // 验证Image被调用了两次（一次是初始创建，一次是onerror中的new Image()）
+      expect(imageCount).toBe(2) // 验证Image被调用了两次（一次是初始创建，一次是onerror中的new Image()）
     })
   })
 })

@@ -17,7 +17,7 @@
     "TURBO_TEAM"
   ],
   "ui": "stream",
-  "daemon": true,
+  "daemon": false,
   "boundaries": {
     "implicitDependencies": [
       "@truenine/eslint9-config"

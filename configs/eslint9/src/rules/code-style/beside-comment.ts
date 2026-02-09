@@ -1,5 +1,4 @@
-/* eslint-disable ts/no-unsafe-argument */
-import type {Rule} from 'eslint'
+import type {Rule} from 'eslint' /* eslint-disable ts/no-unsafe-argument */
 
 const rule: Rule.RuleModule = {
   meta: {

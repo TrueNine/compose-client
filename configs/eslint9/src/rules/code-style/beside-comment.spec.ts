@@ -67,10 +67,7 @@ describe('beside-comment', () => {
       ],
       invalid: [
         {
-          code: [
-            '// standalone',
-            'const c = 3;'
-          ].join('\n'),
+          code: ['// standalone', 'const c = 3;'].join('\n'),
           output: 'const c = 3; // standalone',
           errors: [{messageId: 'besideComment'}]
         }

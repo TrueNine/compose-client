@@ -25,9 +25,9 @@ export function componentInstallToPlugin<T extends VueComponentInstanceMapping>(
   let primaryComponent = component as unknown as SFCWithInstall<T>
   const otherSecondaryComponentInstallers: Record<string, SFCWithInstall<T>> = {}
 
-  if (!otherComponent) return primaryComponent
-
-  for (const [key, comp] of Object.entries(otherComponent)) otherSecondaryComponentInstallers[key] = comp as SFCWithInstall<T>
+  if (otherComponent) {
+    for (const [key, comp] of Object.entries(otherComponent)) otherSecondaryComponentInstallers[key] = comp as SFCWithInstall<T>
+  }
 
   if (primaryComponent.name == null) primaryComponent = {...primaryComponent, name: primaryComponent.__name}
 
