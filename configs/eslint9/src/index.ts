@@ -38,7 +38,7 @@ export type {
  * @param options - 配置选项
  * @returns ESLint 配置数组
  */
-export async function defineConfig(options: ConfigOptions = {}): ReturnType<typeof antfu> {
+export async function defineConfig(options: ConfigOptions = {}): Promise<Awaited<ReturnType<typeof antfu>>> {
   const {
     type = 'lib',
     ignores = [],
