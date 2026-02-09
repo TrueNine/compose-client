@@ -1,0 +1,10 @@
+{
+  "extends": [
+    "@truenine/tsconfig/tsconfig.lib.json",
+    "@truenine/tsconfig/tsconfig.json"
+  ],
+  "compilerOptions": {
+    "lib": [],
+    "types": ["node", "vitest/globals"]
+  }
+}

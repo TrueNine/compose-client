@@ -1,0 +1,9 @@
+{
+  "extends": ["@truenine/tsconfig/tsconfig.json"],
+  "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "types": ["node"],
+    "noEmit": false
+  }
+}

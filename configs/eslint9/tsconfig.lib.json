@@ -1,22 +1,11 @@
 {
-  "extends": ["@truenine/tsconfig/tsconfig.json"],
+  "extends": ["@truenine/tsconfig/tsconfig.lib.json"],
   "compilerOptions": {
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.lib.tsbuildinfo",
     "baseUrl": ".",
-    "module": "ESNext",
-    "moduleResolution": "bundler",
-    "paths": {
-      "@/*": ["./src/*"]
-    },
-    "types": ["node"],
-    "noEmit": false,
+    "paths": { "@/*": ["./src/*"] },
     "isolatedDeclarations": true
   },
-  "include": [
-    "src/**/*",
-    "env.d.ts"
-  ],
-  "exclude": [
-    "src/**/*.spec.*"
-  ]
+  "include": ["src/**/*", "env.d.ts"],
+  "exclude": ["src/**/*.spec.*"]
 }

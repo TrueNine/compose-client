@@ -1,20 +1,11 @@
 {
-  "extends": ["@truenine/tsconfig/tsconfig.json"],
+  "extends": ["@truenine/tsconfig/tsconfig.lib.json"],
   "compilerOptions": {
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.lib.tsbuildinfo",
-    "jsx": "react",
     "baseUrl": ".",
-    "module": "ESNext",
-    "moduleResolution": "bundler",
-    "paths": {
-      "@/*": ["./src/*"]
-    }
+    "paths": { "@/*": ["./src/*"] },
+    "jsx": "react"
   },
-  "include": [
-    "src/**/*",
-    "env.d.ts"
-  ],
-  "exclude": [
-    "src/**/*.spec.*"
-  ]
+  "include": ["src/**/*", "env.d.ts"],
+  "exclude": ["src/**/*.spec.*"]
 }
