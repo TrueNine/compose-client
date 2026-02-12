@@ -24,7 +24,7 @@ catalog:
   npm: ^11.6.2
   npm-run-all2: ^8.0.4
   pdfjs-dist: ^5.4.624
-  pnpm: ^10.28.2
+  pnpm: ^10.29.3
   prettier: ^3.8.1
   sass: ^1.97.3
   turbo: ^2.8.3
