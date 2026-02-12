@@ -1,6 +1,6 @@
-import eslint9 from '@truenine/eslint9-config'
+import eslint10 from '@truenine/eslint10-config'
 
-export default eslint9({
+export default eslint10({
   type: 'lib',
   unocss: true,
   vue: true,

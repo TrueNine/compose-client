@@ -1,0 +1,96 @@
+{
+  "name": "@truenine/eslint10-config",
+  "type": "module",
+  "version": "2026.10209.11105",
+  "description": "ESLint 10 configuration package for Compose Client projects with TypeScript, Vue, and modern JavaScript support",
+  "author": {
+    "name": "TrueNine",
+    "email": "truenine304520@gmail.com"
+  },
+  "license": "LGPL-2.1-or-later",
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/TrueNine"
+  },
+  "homepage": "https://github.com/TrueNine/compose-client#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TrueNine/compose-client.git",
+    "directory": "configs/eslint10"
+  },
+  "bugs": {
+    "url": "https://github.com/TrueNine/compose-client/issues"
+  },
+  "keywords": [
+    "eslint",
+    "eslint-config",
+    "typescript",
+    "vue",
+    "javascript",
+    "linting",
+    "code-quality",
+    "antfu",
+    "truenine"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.mts",
+      "types:require": "./dist/index.d.cts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    },
+    "./LICENSE": "./LICENSE",
+    "./README.md": "./README.md",
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
+  "types:require": "./dist/index.d.cts",
+  "files": [
+    "LICENSE",
+    "README.md",
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsdown",
+    "lintfix": "eslint --fix --cache --cache-location node_modules/.cache/.eslintcache",
+    "typecheck": "tsc --noEmit -p tsconfig.lib.json",
+    "test": "vitest run",
+    "copylicense": "node -e \"require('fs').copyFileSync('../../LICENSE', './LICENSE')\"",
+    "prepublishOnly": "run-s copylicense build"
+  },
+  "peerDependencies": {
+    "@antfu/eslint-config": "catalog:eslint",
+    "@eslint/js": "catalog:eslint",
+    "@next/eslint-plugin-next": "catalog:eslint",
+    "@unocss/eslint-config": "catalog:unocss",
+    "@vue/eslint-config-prettier": "catalog:eslint",
+    "@vue/eslint-config-typescript": "catalog:eslint",
+    "eslint": "catalog:eslint",
+    "eslint-plugin-format": "catalog:eslint",
+    "eslint-plugin-prettier": "catalog:eslint",
+    "eslint-plugin-vue": "catalog:eslint",
+    "prettier": "catalog:",
+    "typescript-eslint": "catalog:eslint"
+  },
+  "dependencies": {
+    "@antfu/eslint-config": "catalog:eslint",
+    "@eslint/js": "catalog:eslint",
+    "@next/eslint-plugin-next": "catalog:eslint",
+    "@unocss/eslint-config": "catalog:unocss",
+    "@vue/eslint-config-prettier": "catalog:eslint",
+    "@vue/eslint-config-typescript": "catalog:eslint",
+    "eslint": "catalog:eslint",
+    "eslint-plugin-format": "catalog:eslint",
+    "eslint-plugin-prettier": "catalog:eslint",
+    "eslint-plugin-vue": "catalog:eslint",
+    "prettier": "catalog:",
+    "typescript": "catalog:",
+    "typescript-eslint": "catalog:eslint"
+  }
+}

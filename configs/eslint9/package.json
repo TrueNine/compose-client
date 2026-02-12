@@ -2,7 +2,7 @@
   "name": "@truenine/eslint9-config",
   "type": "module",
   "version": "2026.10209.11105",
-  "description": "ESLint 9 configuration package for Compose Client projects with TypeScript, Vue, and modern JavaScript support",
+  "description": "[DEPRECATED] ESLint 9 configuration package - use @truenine/eslint10-config instead",
   "author": {
     "name": "TrueNine",
     "email": "truenine304520@gmail.com"

@@ -20,7 +20,7 @@
   "daemon": false,
   "boundaries": {
     "implicitDependencies": [
-      "@truenine/eslint9-config"
+      "@truenine/eslint10-config"
     ]
   },
   "tasks": {
