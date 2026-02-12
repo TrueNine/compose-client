@@ -27,7 +27,7 @@ catalog:
   pnpm: ^10.29.3
   prettier: ^3.8.1
   sass: ^1.97.3
-  turbo: ^2.8.3
+  turbo: ^2.8.7
   typescript: ^5.9.3
   unplugin-auto-import: ^21.0.0
   unplugin-fonts: ^1.4.0
@@ -39,12 +39,12 @@ catalogs:
   chrome:
     '@types/chrome': ^0.1.36
     chrome-launcher: ^1.2.1
-    lighthouse: ^13.0.1
+    lighthouse: ^13.0.3
   cssnano:
     cssnano: ^7.1.2
     cssnano-preset-advanced: ^7.0.10
   eslint:
-    '@antfu/eslint-config': ^7.3.0
+    '@antfu/eslint-config': ^7.4.3
     '@eslint/js': ^10.0.1
     '@next/eslint-plugin-next': ^16.1.6
     '@vue/eslint-config-prettier': ^10.2.0
@@ -53,7 +53,7 @@ catalogs:
     eslint-plugin-format: ^1.4.0
     eslint-plugin-prettier: ^5.5.5
     eslint-plugin-vue: ^10.7.0
-    typescript-eslint: ^8.54.0
+    typescript-eslint: ^8.55.0
   gulp:
     '@types/gulp': ^4.0.18
     '@types/gulp-autoprefixer': ^0.0.37
@@ -77,12 +77,12 @@ catalogs:
     '@types/body-parser': ^1.19.6
     '@types/cors': ^2.8.19
     '@types/express': ^5.0.6
-    '@types/node': ^25.2.2
+    '@types/node': ^25.2.3
     '@types/ws': ^8.18.1
     body-parser: ^2.2.2
     cors: ^2.8.6
     express: ^5.2.1
-    pino: ^10.3.0
+    pino: ^10.3.1
     ws: ^8.19.0
   rollup:
     rollup: ^4.57.1
@@ -113,13 +113,13 @@ catalogs:
     vite-plugin-vue-devtools: ^8.0.6
   vitest:
     '@types/jsdom': ^27.0.0
-    happy-dom: ^20.5.3
+    happy-dom: ^20.6.1
     jsdom: ^28.0.0
     vitest: ^4.0.18
   vue:
     '@vue/test-utils': ^2.4.6
     '@vue/tsconfig': ^0.8.1
-    vue: ^3.5.27
+    vue: ^3.5.28
     vue-router: ^5.0.2
     vue-tsc: ^3.2.4
   vuetify:
@@ -127,4 +127,4 @@ catalogs:
     vite-plugin-vuetify: ^2.1.3
     vuetify: ^3.11.8
   vueuse:
-    '@vueuse/core': ^14.2.0
+    '@vueuse/core': ^14.2.1
