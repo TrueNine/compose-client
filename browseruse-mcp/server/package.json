@@ -2,6 +2,8 @@
   "name": "@truenine/browseruse-mcp-server",
   "type": "module",
   "version": "2026.10107.100",
+  "private": true,
+  "deprecated": "Deprecated. This package is no longer maintained and must not be published.",
   "description": "A browseruse mcp server",
   "author": {
     "name": "TrueNine",
