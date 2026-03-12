@@ -30,9 +30,10 @@
   "scripts": {
     "test": "vitest run",
     "dev": "vite",
-    "lintfix": "eslint --fix",
+    "lint:fix": "eslint --fix",
     "typecheck": "vue-tsc --noEmit -p tsconfig.lib.json",
-    "build": "tsdown"
+    "build": "tsdown",
+    "lint": "eslint --cache --cache-location node_modules/.cache/.eslintcache"
   },
   "peerDependencies": {
     "@date-io/dayjs": "catalog:",
@@ -91,6 +92,8 @@
   },
   "devDependencies": {
     "@truenine/config-uno": "workspace:^",
+    "@truenine/config-vite": "workspace:^",
+    "@truenine/eslint10-config": "workspace:^",
     "@types/gulp": "catalog:gulp",
     "@types/gulp-autoprefixer": "catalog:gulp",
     "@types/gulp-postcss": "catalog:gulp",
@@ -115,7 +118,6 @@
     "unplugin-fonts": "catalog:",
     "unplugin-vue": "catalog:tsdown",
     "unplugin-vue-components": "catalog:",
-    "unplugin-vue-router": "catalog:",
     "vite-plugin-vue-devtools": "catalog:vite",
     "vite-plugin-vuetify": "catalog:vuetify",
     "vue-router": "catalog:vue",

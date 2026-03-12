@@ -52,6 +52,10 @@ interface NetworkInterface {
   cidr: string | null
 }
 
+const WINDOWS_DRIVE_PATH_PATTERN = /^[A-Z]:\\/i
+const SCREENSHOT_DATA_URL_PREFIX_PATTERN = /^data:image\/png;base64,/
+const SCREENSHOT_TIMESTAMP_SANITIZE_PATTERN = /[:.]/g
+
 /**
  * Converts a file path to the appropriate format for the current platform
  * Handles Windows, WSL, macOS and Linux path formats
@@ -114,10 +118,10 @@ function convertPathForCurrentPlatform(inputPath: string): string {
     logger.info(`Converted Windows UNC path "${inputPath}" to "${normalizedPath}"`)
     return normalizedPath
   }
-  if (!/^[A-Z]:\\/i.test(inputPath)) return inputPath
+  if (!WINDOWS_DRIVE_PATH_PATTERN.test(inputPath)) return inputPath
 
   const normalizedPath = inputPath
-    .replace(/^[A-Z]:\\/i, '/')
+    .replace(WINDOWS_DRIVE_PATH_PATTERN, '/')
     .replaceAll('\\', '/')
   logger.info(`Converted Windows drive path "${inputPath}" to "${normalizedPath}"`)
   return normalizedPath
@@ -581,12 +585,12 @@ export class BrowserConnector {
           const targetPath = outputPath ?? getDefaultDownloadsFolder() // Use provided path or default to downloads folder
           logger.info(`Using screenshot path: ${targetPath}`)
 
-          const base64Data = String(data).replace(/^data:image\/png;base64,/, '') // Remove the data:image/png;base64, prefix
+          const base64Data = String(data).replace(SCREENSHOT_DATA_URL_PREFIX_PATTERN, '') // Remove the data:image/png;base64, prefix
 
           fs.mkdirSync(targetPath, {recursive: true}) // Create the full directory path if it doesn't exist
           logger.info(`Created/verified directory: ${targetPath}`)
 
-          const timestamp = new Date().toISOString().replaceAll(/[:.]/g, '-') // Generate a unique filename using timestamp
+          const timestamp = new Date().toISOString().replaceAll(SCREENSHOT_TIMESTAMP_SANITIZE_PATTERN, '-') // Generate a unique filename using timestamp
           const filename = `screenshot-${timestamp}.png`
           const fullPath = path.join(targetPath, filename)
           logger.info(`Saving screenshot to: ${fullPath}`)
@@ -707,12 +711,12 @@ export class BrowserConnector {
         )
       }
 
-      const timestamp = new Date().toISOString().replaceAll(/[:.]/g, '-')
+      const timestamp = new Date().toISOString().replaceAll(SCREENSHOT_TIMESTAMP_SANITIZE_PATTERN, '-')
       const filename = `screenshot-${timestamp}.png`
       const fullPath = path.join(targetPath, filename)
       logger.info(`Browser Connector: Full screenshot path: ${fullPath}`)
 
-      const cleanBase64 = base64Data.replace(/^data:image\/png;base64,/, '') // Remove the data:image/png;base64, prefix if present
+      const cleanBase64 = base64Data.replace(SCREENSHOT_DATA_URL_PREFIX_PATTERN, '') // Remove the data:image/png;base64, prefix if present
 
       try { // Save the file
         fs.writeFileSync(fullPath, cleanBase64, 'base64')

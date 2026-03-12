@@ -48,9 +48,10 @@
     "registry": "https://registry.npmjs.org/"
   },
   "scripts": {
-    "lintfix": "eslint --fix",
+    "lint:fix": "eslint --fix",
     "typecheck": "tsc --noEmit -p tsconfig.lib.json",
-    "build": "tsdown"
+    "build": "tsdown",
+    "lint": "eslint --cache --cache-location node_modules/.cache/.eslintcache"
   },
   "peerDependencies": {
     "chrome-launcher": "catalog:chrome"
@@ -68,6 +69,9 @@
     "ws": "catalog:node"
   },
   "devDependencies": {
+    "@truenine/config-vite": "workspace:^",
+    "@truenine/eslint10-config": "workspace:^",
+    "@truenine/tsconfig": "workspace:^",
     "@types/body-parser": "catalog:node",
     "@types/chrome": "catalog:chrome",
     "@types/cors": "catalog:node",

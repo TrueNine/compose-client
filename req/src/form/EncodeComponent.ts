@@ -45,12 +45,11 @@ export class SearchParam {
   toString(): string {
     if (this._cachedString !== null) return this._cachedString // 使用缓存提升性能
 
-    this._cachedString = [...this._root]
-      .map(([k, v]) => {
-        const key = encodeURIComponent(k.toString())
-        const value = v != null ? encodeURIComponent(v.toString()) : ''
-        return `${key}=${value}`
-      })
+    this._cachedString = Array.from(this._root, ([k, v]) => {
+      const key = encodeURIComponent(k.toString())
+      const value = v != null ? encodeURIComponent(v.toString()) : ''
+      return `${key}=${value}`
+    })
       .join('&')
 
     return this._cachedString

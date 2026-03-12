@@ -6,6 +6,10 @@ import type {Rule} from 'eslint'
  */
 interface RuleOptions {minStatements?: number}
 
+const LENGTH_GREATER_THAN_ZERO_PATTERN = /\.length\s*>\s*0/
+const LENGTH_EQUALS_ZERO_PATTERN = /\.length\s*===\s*0/
+const VOID_RETURN_TYPE_PATTERN = /^\s*:\s*(?:void|undefined)\s*$/
+
 const rule: Rule.RuleModule = {
   meta: {
     type: 'suggestion',
@@ -39,8 +43,8 @@ const rule: Rule.RuleModule = {
       if (trimmed.includes('>') && !trimmed.includes('>=')) return trimmed.replace('>', '<=')
       if (trimmed.includes('<') && !trimmed.includes('<=')) return trimmed.replace('<', '>=')
 
-      if (/\.length\s*>\s*0/.test(trimmed)) return trimmed.replace(/\.length\s*>\s*0/, '.length === 0')
-      if (/\.length\s*===\s*0/.test(trimmed)) return trimmed.replace(/\.length\s*===\s*0/, '.length > 0')
+      if (LENGTH_GREATER_THAN_ZERO_PATTERN.test(trimmed)) return trimmed.replace(LENGTH_GREATER_THAN_ZERO_PATTERN, '.length === 0')
+      if (LENGTH_EQUALS_ZERO_PATTERN.test(trimmed)) return trimmed.replace(LENGTH_EQUALS_ZERO_PATTERN, '.length > 0')
 
       return trimmed.includes('&&') || trimmed.includes('||') ? `!(${trimmed})` : `!${trimmed}`
     }
@@ -96,7 +100,7 @@ const rule: Rule.RuleModule = {
         const funcParent = parent.parent
         if (funcParent?.returnType != null) {
           const returnTypeText = sourceCode.getText(funcParent.returnType)
-          if (!/^\s*:\s*(?:void|undefined)\s*$/.test(returnTypeText)) {
+          if (!VOID_RETURN_TYPE_PATTERN.test(returnTypeText)) {
             if (endsWithReturn && (lastStmt as any).argument != null) defaultReturnText = `return ${sourceCode.getText((lastStmt as any).argument)}`
             else return /* Can't safely transform - we don't know what to return */
           }

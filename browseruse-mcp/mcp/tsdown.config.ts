@@ -1,15 +1,10 @@
-import {defineConfig} from 'tsdown'
+import {createLibraryTsdownConfig} from '@truenine/config-vite/workspace-config'
 
-export default defineConfig({
-  entry: ['./src/**/*', '!**/*.{spec,test}.*'],
+export default createLibraryTsdownConfig({
   platform: 'node',
-  sourcemap: true,
   unbundle: false,
   minify: true,
   format: ['cjs'],
-  dts: {sourcemap: true, tsconfig: './tsconfig.lib.json', build: true},
-  external: [
-    'chrome-launcher', // Only externalize Node.js built-ins and large optional dependencies
-    'puppeteer-core'
-  ]
+  dts: {build: true},
+  external: ['chrome-launcher', 'puppeteer-core']
 })

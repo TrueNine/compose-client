@@ -1,10 +1,3 @@
-import {defineConfig} from 'tsdown'
+import {createLibraryTsdownConfig} from '@truenine/config-vite/workspace-config'
 
-export default defineConfig({
-  entry: ['./src/**/*', '!**/*.{spec,test}.*'],
-  platform: 'neutral',
-  sourcemap: true,
-  unbundle: true,
-  format: ['esm'],
-  dts: {sourcemap: true, tsconfig: './tsconfig.lib.json'}
-})
+export default createLibraryTsdownConfig()

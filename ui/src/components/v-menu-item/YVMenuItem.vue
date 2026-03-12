@@ -8,12 +8,13 @@ import {useRouter} from 'vue-router'
 const props = withDefaults(defineProps<YVMenuItemProps>(), {pathPrefix: '', routeMode: false})
 
 defineSlots<YVMenuItemSlots>()
+const MULTIPLE_SLASH_PATTERN = /\/+/g
 const _route = computed(() => props.route)
 const _value = computed(() => {
   const parentPath = props.parentPath ?? ``
   const prefix = props.pathPrefix || ``
   const value = props.route.uri ?? ``
-  return `/${prefix}/${parentPath}/${value}`.replaceAll(/\/+/g, '/')
+  return `/${prefix}/${parentPath}/${value}`.replaceAll(MULTIPLE_SLASH_PATTERN, '/')
 })
 
 const _menuIconClass = computed(() => _route.value.iconName ?? 'i-mdi:menu-open')
@@ -31,7 +32,7 @@ async function routeTo() {
 }
 
 function urlJoin(...args: late<string>[]) {
-  return args.filter(Boolean).join('/').replaceAll(/\/+/g, '/')
+  return args.filter(Boolean).join('/').replaceAll(MULTIPLE_SLASH_PATTERN, '/')
 }
 </script>
 

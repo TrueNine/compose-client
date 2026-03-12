@@ -2,42 +2,38 @@
 /// <reference types="vue/jsx" />
 /// <reference types="vitest" />
 /// <reference types="@vueuse/core" />
-/// <reference types="unplugin-vue-router/client" />
 
 declare module '*.vue' { // Vue SFC 类型声明
   import type {DefineComponent} from 'vue'
 
-  const component: DefineComponent<object, object, any>
+  const component: DefineComponent<Record<string, never>, Record<string, never>, unknown>
   export default component
 }
 
 declare module 'element-plus/dist/locale/en.mjs' { // Element Plus 模块声明
-  const locale: any
+  const locale: Record<string, unknown>
   export default locale
 }
 
 declare module 'element-plus/dist/locale/zh-cn.mjs' {
-  const locale: any
+  const locale: Record<string, unknown>
   export default locale
 }
 
-declare global { // Vue 组合式 API 全局导入
-  const computed: typeof import('vue')['computed'],
-    ref: typeof import('vue')['ref'],
-    reactive: typeof import('vue')['reactive'],
-    watch: typeof import('vue')['watch'],
-    watchEffect: typeof import('vue')['watchEffect'],
-    provide: typeof import('vue')['provide'],
-    inject: typeof import('vue')['inject'],
-    nextTick: typeof import('vue')['nextTick'],
-    onMounted: typeof import('vue')['onMounted'],
-    onUnmounted: typeof import('vue')['onUnmounted'],
-    defineProps: typeof import('vue')['defineProps'],
-    defineEmits: typeof import('vue')['defineEmits'],
-    defineExpose: typeof import('vue')['defineExpose'],
-    withDefaults: typeof import('vue')['withDefaults'],
-
-    useVModel: typeof import('@vueuse/core')['useVModel'], // VueUse 函数
-    useRouter: typeof import('vue-router')['useRouter'],
-    useRoute: typeof import('vue-router')['useRoute']
-}
+declare const computed: typeof import('vue')['computed']
+declare const ref: typeof import('vue')['ref']
+declare const reactive: typeof import('vue')['reactive']
+declare const watch: typeof import('vue')['watch']
+declare const watchEffect: typeof import('vue')['watchEffect']
+declare const provide: typeof import('vue')['provide']
+declare const inject: typeof import('vue')['inject']
+declare const nextTick: typeof import('vue')['nextTick']
+declare const onMounted: typeof import('vue')['onMounted']
+declare const onUnmounted: typeof import('vue')['onUnmounted']
+declare const defineProps: typeof import('vue')['defineProps']
+declare const defineEmits: typeof import('vue')['defineEmits']
+declare const defineExpose: typeof import('vue')['defineExpose']
+declare const withDefaults: typeof import('vue')['withDefaults']
+declare const useVModel: typeof import('@vueuse/core')['useVModel']
+declare const useRouter: typeof import('vue-router')['useRouter']
+declare const useRoute: typeof import('vue-router')['useRoute']

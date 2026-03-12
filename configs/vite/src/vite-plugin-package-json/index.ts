@@ -5,6 +5,10 @@ import fs from 'node:fs'
 import path from 'node:path'
 import process from 'node:process'
 
+const ENTRY_EXTENSION_PATTERN = /\.[jt]sx?$/
+const SRC_PREFIX_PATTERN = /^src\/?/
+const TS_ENTRY_PATTERN = /\.tsx?$/
+
 export interface PackageJsonOptions {
   entry: string[]
   dts?: boolean
@@ -41,26 +45,26 @@ function packageJsonContentReplace(content: string, options: Omit<PackageJsonOpt
   const newExports: Record<string, any> = {}
 
   entry.forEach(entryPath => {
-    const baseName = path.basename(entryPath).replace(/\.[jt]sx?$/, '') // Normalize entry path, remove src/ prefix if present, remove extension
+    const baseName = path.basename(entryPath).replace(ENTRY_EXTENSION_PATTERN, '') // Normalize entry path, remove src/ prefix if present, remove extension
     const dirName = path.dirname(entryPath)
     let exportKey = '.' // Construct the export key, handle index files mapping to '.' or subpaths
     let baseOutputPath = ''
 
     if (baseName === 'index') {
       if (dirName !== '.' && dirName !== 'src') { // If index is not in the root (e.g., src/components/index.ts), use the dir name
-        exportKey = `./${dirName.replace(/^src\/?/, '')}`
-        baseOutputPath = `${dirName.replace(/^src\/?/, '')}/index`
+        exportKey = `./${dirName.replace(SRC_PREFIX_PATTERN, '')}`
+        baseOutputPath = `${dirName.replace(SRC_PREFIX_PATTERN, '')}/index`
       } else {
         exportKey = '.' // Root index file (index.ts or src/index.ts)
         baseOutputPath = 'index'
       }
     } else {
-      const relativeDir = dirName === '.' || dirName === 'src' ? '' : `${dirName.replace(/^src\/?/, '')}/` // Non-index files
+      const relativeDir = dirName === '.' || dirName === 'src' ? '' : `${dirName.replace(SRC_PREFIX_PATTERN, '')}/` // Non-index files
       exportKey = `./${relativeDir}${baseName}`
       baseOutputPath = `${relativeDir}${baseName}`
     }
 
-    const isTypeScriptEntry = /\.tsx?$/.exec(entryPath)
+    const isTypeScriptEntry = TS_ENTRY_PATTERN.exec(entryPath)
 
     if (exportKey.startsWith('./.')) exportKey = exportKey.slice(2)
     if (exportKey === './') exportKey = '.'

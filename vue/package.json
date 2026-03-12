@@ -2,7 +2,6 @@
   "name": "@truenine/vue",
   "type": "module",
   "version": "2026.10107.100",
-  "packageManager": "pnpm@10.11.0",
   "description": "vue 开发工具包",
   "author": "TrueNine",
   "license": "LGPL-2.1-or-later",
@@ -27,9 +26,10 @@
   },
   "scripts": {
     "test": "vitest run",
-    "lintfix": "eslint --fix",
+    "lint:fix": "eslint --fix",
     "typecheck": "tsc --noEmit -p tsconfig.lib.json",
-    "build": "tsdown"
+    "build": "tsdown",
+    "lint": "eslint --cache --cache-location node_modules/.cache/.eslintcache"
   },
   "peerDependencies": {
     "@truenine/types": "workspace:^",
@@ -39,5 +39,10 @@
     "@truenine/types": "workspace:^",
     "typescript": "catalog:",
     "vue": "catalog:vue"
+  },
+  "devDependencies": {
+    "@truenine/config-vite": "workspace:^",
+    "@truenine/eslint10-config": "workspace:^",
+    "@truenine/tsconfig": "workspace:^"
   }
 }

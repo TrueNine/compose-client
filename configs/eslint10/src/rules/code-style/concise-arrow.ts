@@ -1,6 +1,7 @@
 import type {Rule} from 'eslint' /* eslint-disable ts/no-unsafe-member-access, ts/no-unsafe-argument, ts/no-unsafe-assignment, ts/strict-boolean-expressions */
 
 const MAX_LINE_LENGTH = 160
+const MULTI_WHITESPACE_PATTERN = /\s+/g
 
 /**
  * ESLint rule: prefer-concise-arrow
@@ -18,7 +19,7 @@ const rule: Rule.RuleModule = {
     const {sourceCode} = context
     function hasComments(node: Rule.Node): boolean { return sourceCode.getCommentsInside(node).length > 0 }
     function isNodeSingleLine(n: Rule.Node): boolean { return n.loc!.start.line === n.loc!.end.line }
-    function normalizeText(t: string): string { return t.split('\n').map(l => l.trim()).join(' ').replaceAll(/\s+/g, ' ').trim() }
+    function normalizeText(t: string): string { return t.split('\n').map(l => l.trim()).join(' ').replaceAll(MULTI_WHITESPACE_PATTERN, ' ').trim() }
     function getIndent(node: Rule.Node): string { return ' '.repeat(node.loc?.start.column ?? 0) }
 
     function containsNestedComplexity(node: Rule.Node): boolean { /* 检查表达式是否包含嵌套的箭头函数或复杂结构 */

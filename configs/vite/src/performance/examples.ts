@@ -6,6 +6,9 @@ import {configureViteFragment} from '../index'
 import {createSmartDevelopmentOptimization} from './development'
 import {createPerformancePreset, createSmartPreset} from './presets'
 
+const MONOREPO_PACKAGE_PATTERN = /^@truenine\//
+const API_PREFIX_PATTERN = /^\/api/
+
 /**
  * 基础库项目的性能优化配置示例
  */
@@ -38,7 +41,7 @@ export function createVueAppPerformanceExample(): UserConfig {
  */
 export function createMonorepoPackagePerformanceExample(): UserConfig {
   return configureViteFragment({lib: {entry: ['./src/index.ts'], formats: ['es'], sourcemap: false, externals: [
-    /^@truenine\//, // monorepo 内部包作为外部依赖
+    MONOREPO_PACKAGE_PATTERN, // monorepo 内部包作为外部依赖
     'vue', // 常见的外部依赖
     'react',
     'lodash-es'
@@ -96,7 +99,7 @@ export function createAdvancedDevelopmentExample(): UserConfig {
     port: 3000,
     open: true,
     https: false,
-    proxy: {'/api': {target: 'http://localhost:8080', changeOrigin: true, rewrite: (path: string) => path.replace(/^\/api/, '')}}
+    proxy: {'/api': {target: 'http://localhost:8080', changeOrigin: true, rewrite: (path: string) => path.replace(API_PREFIX_PATTERN, '')}}
   })
 
   return mergeConfig(baseConfig, devConfig)

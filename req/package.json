@@ -17,9 +17,10 @@
   },
   "scripts": {
     "test": "vitest run",
-    "lintfix": "eslint --fix",
+    "lint:fix": "eslint --fix",
     "typecheck": "tsc --noEmit -p tsconfig.lib.json",
-    "build": "tsdown"
+    "build": "tsdown",
+    "lint": "eslint --cache --cache-location node_modules/.cache/.eslintcache"
   },
   "peerDependencies": {
     "@truenine/shared": "workspace:^",
@@ -31,6 +32,9 @@
     "typescript": "catalog:"
   },
   "devDependencies": {
+    "@truenine/config-vite": "workspace:^",
+    "@truenine/eslint10-config": "workspace:^",
+    "@truenine/tsconfig": "workspace:^",
     "@types/jsdom": "catalog:vitest",
     "jsdom": "catalog:vitest"
   }

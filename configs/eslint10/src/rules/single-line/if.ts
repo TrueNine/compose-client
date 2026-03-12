@@ -1,6 +1,7 @@
 import type {Rule} from 'eslint'
 
 const MAX_LINE_LENGTH = 160
+const MULTI_WHITESPACE_PATTERN = /\s+/g
 
 const rule: Rule.RuleModule = {
   meta: {
@@ -41,7 +42,7 @@ const rule: Rule.RuleModule = {
         .split('\n')
         .map(line => line.trim())
         .join(' ')
-        .replaceAll(/\s+/g, ' ')
+        .replaceAll(MULTI_WHITESPACE_PATTERN, ' ')
         .trim()
     }
 

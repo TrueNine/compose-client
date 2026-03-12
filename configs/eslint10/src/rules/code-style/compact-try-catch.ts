@@ -16,6 +16,7 @@ type TryStatement = Rule.Node & {
 }
 
 const MAX_SINGLE_LINE_LENGTH = 120
+const TRAILING_SEMICOLON_PATTERN = /;$/
 
 const rule: Rule.RuleModule = {
   meta: {
@@ -73,7 +74,7 @@ const rule: Rule.RuleModule = {
 
       if (body.length === 0) return '{}' // 空块
 
-      const stmtText = sourceCode.getText(body[0]).trim().replace(/;$/, '') // 获取语句文本，移除尾部分号后重新添加
+      const stmtText = sourceCode.getText(body[0]).trim().replace(TRAILING_SEMICOLON_PATTERN, '') // 获取语句文本，移除尾部分号后重新添加
       return `{ ${stmtText}; }`
     }
 

@@ -1,5 +1,7 @@
 import type {Rule} from 'eslint' /* eslint-disable ts/no-unsafe-argument */
 
+const TASK_COMMENT_PATTERN = /^(?:TODO|FIXME)\b/i
+
 const rule: Rule.RuleModule = {
   meta: {
     type: 'layout',
@@ -29,7 +31,7 @@ const rule: Rule.RuleModule = {
           const trimmedValue = comment.value.trim()
           if (comment.type === 'Line' && (trimmedValue.startsWith('/') || trimmedValue.startsWith('!'))) continue
           if (trimmedValue.startsWith('#')) continue
-          if (comment.type === 'Line' && (/^(?:TODO|FIXME)\b/i.test(trimmedValue) || trimmedValue.startsWith('@ts-') || trimmedValue.startsWith('ts-') || trimmedValue.startsWith('eslint'))) continue
+          if (comment.type === 'Line' && (TASK_COMMENT_PATTERN.test(trimmedValue) || trimmedValue.startsWith('@ts-') || trimmedValue.startsWith('ts-') || trimmedValue.startsWith('eslint'))) continue
 
           const {loc, range} = comment
           if (!loc || !range) continue

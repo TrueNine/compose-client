@@ -132,7 +132,7 @@ describe('yFormTest', () => {
       const handleSubmit = vi.fn()
       const userSchema = z.object({username: z.string().min(1, '用户名不能为空')})
 
-      const wrapper = mount(YForm, {props: {modelValue: {username: 'test'}, onSubmit: handleSubmit, validationSchema: userSchema}, slots: {default: () => [], submit: ({submit }: {submit: () => void}) => <button onClick={submit}>提交</button>}, global: globalComponents})
+      const wrapper = mount(YForm, {props: {modelValue: {username: 'test'}, onSubmit: handleSubmit, validationSchema: userSchema}, slots: {default: () => [], submit: ({submit}: {submit: () => void}) => <button onClick={submit}>提交</button>}, global: globalComponents})
 
       await wrapper.find('button').trigger('click')
       expect(wrapper.emitted('submit')).toBeTruthy()
@@ -143,7 +143,7 @@ describe('yFormTest', () => {
       const initialData = {username: 'test'}
       const userSchema = z.object({username: z.string().min(1, '用户名不能为空')})
 
-      const wrapper = mount(YForm, {props: {modelValue: {...initialData}, initialValues: {...initialData}, validationSchema: userSchema}, slots: {default: () => [], submit: ({reset }: {reset: () => void}) => <button class="reset-btn" onClick={reset}>重置</button>}, global: globalComponents})
+      const wrapper = mount(YForm, {props: {modelValue: {...initialData}, initialValues: {...initialData}, validationSchema: userSchema}, slots: {default: () => [], submit: ({reset}: {reset: () => void}) => <button class="reset-btn" onClick={reset}>重置</button>}, global: globalComponents})
 
       await wrapper.setProps({modelValue: {username: 'changed'}})
       await nextTick()

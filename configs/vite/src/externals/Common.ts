@@ -3,8 +3,7 @@ export function getNodeExternal(moduleName: string): (RegExp | string)[] {
 }
 
 export function getNodeExternals(moduleNames: string[]): (RegExp | string)[] {
-  return [...new Set(moduleNames)]
-    .map(m => m.trim())
+  return Array.from(new Set(moduleNames), m => m.trim())
     .flatMap(getNodeExternal)
 }
 
@@ -13,7 +12,6 @@ export function getExternal(moduleName: string): (RegExp | string)[] {
 }
 
 export function getExternals(moduleNames: string[]): (RegExp | string)[] {
-  return [...new Set(moduleNames)]
-    .map(m => m.trim())
+  return Array.from(new Set(moduleNames), m => m.trim())
     .flatMap(getExternal)
 }

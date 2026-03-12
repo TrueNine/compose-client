@@ -7,34 +7,45 @@
   "license": "LGPL-2.1-or-later",
   "exports": {
     ".": {
-      "import": "./dist/index.js",
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs",
       "require": "./dist/index.cjs"
     },
-    "./excludes\\index": {
-      "import": "./dist/excludes\\index.js",
-      "require": "./dist/excludes\\index.cjs"
+    "./excludes/index": {
+      "types": "./dist/excludes/index.d.mts",
+      "import": "./dist/excludes/index.mjs",
+      "require": "./dist/excludes/index.cjs"
     },
-    "./externals\\index": {
-      "import": "./dist/externals\\index.js",
-      "require": "./dist/externals\\index.cjs"
+    "./externals/index": {
+      "types": "./dist/externals/index.d.mts",
+      "import": "./dist/externals/index.mjs",
+      "require": "./dist/externals/index.cjs"
     },
-    "./lib\\index": {
-      "import": "./dist/lib\\index.js",
-      "require": "./dist/lib\\index.cjs"
+    "./lib/index": {
+      "types": "./dist/lib/index.d.mts",
+      "import": "./dist/lib/index.mjs",
+      "require": "./dist/lib/index.cjs"
     },
-    "./vite-plugin-dts\\index": {
-      "import": "./dist/vite-plugin-dts\\index.js",
-      "require": "./dist/vite-plugin-dts\\index.cjs"
+    "./vite-plugin-dts/index": {
+      "types": "./dist/vite-plugin-dts/index.d.mts",
+      "import": "./dist/vite-plugin-dts/index.mjs",
+      "require": "./dist/vite-plugin-dts/index.cjs"
     },
-    "./vite-plugin-package-json\\index": {
-      "import": "./dist/vite-plugin-package-json\\index.js",
-      "require": "./dist/vite-plugin-package-json\\index.cjs"
+    "./vite-plugin-package-json/index": {
+      "types": "./dist/vite-plugin-package-json/index.d.mts",
+      "import": "./dist/vite-plugin-package-json/index.mjs",
+      "require": "./dist/vite-plugin-package-json/index.cjs"
+    },
+    "./workspace-config": {
+      "types": "./dist/workspace-config.d.mts",
+      "import": "./dist/workspace-config.mjs",
+      "require": "./dist/workspace-config.cjs"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.cts",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
   "files": [
     "dist/**"
   ],
@@ -42,49 +53,70 @@
     "access": "public",
     "exports": {
       ".": {
-        "import": "./dist/index.js",
+        "types": "./dist/index.d.mts",
+        "import": "./dist/index.mjs",
         "require": "./dist/index.cjs"
       },
       "./excludes/index": {
-        "import": "./dist/excludes/index.js",
+        "types": "./dist/excludes/index.d.mts",
+        "import": "./dist/excludes/index.mjs",
         "require": "./dist/excludes/index.cjs"
       },
       "./externals/index": {
-        "import": "./dist/externals/index.js",
+        "types": "./dist/externals/index.d.mts",
+        "import": "./dist/externals/index.mjs",
         "require": "./dist/externals/index.cjs"
       },
       "./lib/index": {
-        "import": "./dist/lib/index.js",
+        "types": "./dist/lib/index.d.mts",
+        "import": "./dist/lib/index.mjs",
         "require": "./dist/lib/index.cjs"
       },
       "./vite-plugin-dts/index": {
-        "import": "./dist/vite-plugin-dts/index.js",
+        "types": "./dist/vite-plugin-dts/index.d.mts",
+        "import": "./dist/vite-plugin-dts/index.mjs",
         "require": "./dist/vite-plugin-dts/index.cjs"
       },
       "./vite-plugin-package-json/index": {
-        "import": "./dist/vite-plugin-package-json/index.js",
+        "types": "./dist/vite-plugin-package-json/index.d.mts",
+        "import": "./dist/vite-plugin-package-json/index.mjs",
         "require": "./dist/vite-plugin-package-json/index.cjs"
+      },
+      "./workspace-config": {
+        "types": "./dist/workspace-config.d.mts",
+        "import": "./dist/workspace-config.mjs",
+        "require": "./dist/workspace-config.cjs"
       },
       "./*": "./*"
     }
   },
   "scripts": {
-    "lintfix": "eslint --fix",
+    "lint:fix": "eslint --fix",
     "build-c": "vite build",
     "typecheck": "tsc --noEmit -p tsconfig.lib.json",
-    "check": "run-p typecheck lintfix",
-    "build": "tsdown"
+    "check": "run-p typecheck lint:fix",
+    "build": "tsdown",
+    "lint": "eslint --cache --cache-location node_modules/.cache/.eslintcache"
   },
   "peerDependencies": {
     "rollup": "catalog:rollup",
+    "tsdown": "catalog:tsdown",
     "typescript": "catalog:",
     "vite": "catalog:vite",
-    "vite-plugin-dts": "catalog:vite"
+    "vite-plugin-dts": "catalog:vite",
+    "vitest": "catalog:vitest"
   },
   "dependencies": {
     "rollup": "catalog:rollup",
+    "semver": "catalog:",
+    "tsdown": "catalog:tsdown",
     "typescript": "catalog:",
     "vite": "catalog:vite",
-    "vite-plugin-dts": "catalog:vite"
+    "vite-plugin-dts": "catalog:vite",
+    "vitest": "catalog:vitest"
+  },
+  "devDependencies": {
+    "@truenine/eslint10-config": "workspace:^",
+    "@truenine/tsconfig": "workspace:^"
   }
 }

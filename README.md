@@ -44,7 +44,7 @@ pnpm dev
 pnpm typecheck
 
 # Lint checks
-pnpm lintfix
+pnpm lint:fix
 ```
 
 ## 📁 Project Structure
@@ -114,9 +114,9 @@ pnpm test                     # Run all tests
 pnpm test:legacy              # Concurrent testing (10 tasks)
 
 # Code quality
-pnpm lintfix                     # Lint checks
+pnpm lint:fix                    # Lint checks
 pnpm typecheck              # Type checking
-pnpm lintfix:root               # Root directory lint check
+pnpm lint:fix:root              # Root directory lint check
 
 # Development servers
 pnpm dev                      # Start all development servers
@@ -152,11 +152,11 @@ turbo run dev --filter=@truenine/design
 - **Turbo**: Task orchestration and caching
 
 ### Build Dependencies
-- **build**: depends on typecheck, lintfix, ^build
+- **build**: depends on typecheck, lint:fix, ^build
 - **build-c**: compilation step, depends on ^build
 - **build-g**: post-processing step, depends on build-c
-- **test**: depends on ^build, typecheck, lintfix
-- **lintfix**: depends on ^build
+- **test**: depends on ^build, typecheck, lint:fix
+- **lint:fix**: depends on ^build
 - **typecheck**: no dependencies, can run in parallel
 
 ### Output Formats

@@ -1,5 +1,7 @@
 import type {BuildOptions, UserConfig} from 'vite'
 
+const FILE_EXTENSION_PATTERN = /\.[^.]*$/
+
 /**
  * Vite 性能优化配置选项
  */
@@ -54,7 +56,7 @@ export function createChunkOptimization(): BuildOptions['rollupOptions'] {
       const {facadeModuleId} = chunkInfo
       if (facadeModuleId == null) return 'chunks/[name]-[hash].js'
 
-      const name = facadeModuleId.split('/').pop()?.replace(/\.[^.]*$/, '') ?? 'chunk'
+      const name = facadeModuleId.split('/').pop()?.replace(FILE_EXTENSION_PATTERN, '') ?? 'chunk'
       return `chunks/${name}-[hash].js`
     },
     entryFileNames: 'entries/[name]-[hash].js',

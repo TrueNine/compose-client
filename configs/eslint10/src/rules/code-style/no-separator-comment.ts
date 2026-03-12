@@ -1,5 +1,7 @@
 import type {Rule} from 'eslint'
 
+const SEPARATOR_PATTERN = /(.)\1{2,}/
+
 const rule: Rule.RuleModule = {
   meta: {
     type: 'layout',
@@ -15,14 +17,13 @@ const rule: Rule.RuleModule = {
   },
   create(context) {
     const {sourceCode} = context
-    const separatorPattern = /(.)\1{2,}/ // Match 3+ consecutive identical characters (common separator patterns)
 
     return {
       Program() {
         const comments = sourceCode.getAllComments()
 
         for (const comment of comments) {
-          if (separatorPattern.test(comment.value)) {
+          if (SEPARATOR_PATTERN.test(comment.value)) {
             context.report({
               loc: comment.loc!,
               messageId: 'noSeparatorComment',

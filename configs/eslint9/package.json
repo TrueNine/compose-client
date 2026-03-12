@@ -58,11 +58,12 @@
   },
   "scripts": {
     "build": "tsdown",
-    "lintfix": "eslint --fix --cache --cache-location node_modules/.cache/.eslintcache",
+    "lint:fix": "eslint --fix --cache --cache-location node_modules/.cache/.eslintcache",
     "typecheck": "tsc --noEmit -p tsconfig.lib.json",
     "test": "vitest run",
     "copylicense": "node -e \"require('fs').copyFileSync('../../LICENSE', './LICENSE')\"",
-    "prepublishOnly": "run-s copylicense build"
+    "prepublishOnly": "run-s copylicense build",
+    "lint": "eslint --cache --cache-location node_modules/.cache/.eslintcache"
   },
   "peerDependencies": {
     "@antfu/eslint-config": "catalog:eslint",
@@ -82,6 +83,7 @@
     "@antfu/eslint-config": "catalog:eslint",
     "@eslint/js": "catalog:eslint",
     "@next/eslint-plugin-next": "catalog:eslint",
+    "@truenine/eslint10-config": "workspace:^",
     "@unocss/eslint-config": "catalog:unocss",
     "@vue/eslint-config-prettier": "catalog:eslint",
     "@vue/eslint-config-typescript": "catalog:eslint",
@@ -92,5 +94,8 @@
     "prettier": "catalog:",
     "typescript": "catalog:",
     "typescript-eslint": "catalog:eslint"
+  },
+  "devDependencies": {
+    "@truenine/tsconfig": "workspace:^"
   }
 }

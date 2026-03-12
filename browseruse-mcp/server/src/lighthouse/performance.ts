@@ -3,6 +3,11 @@ import type {LighthouseReport} from './types.js'
 import {runLighthouseAudit} from './core.js'
 import {AuditCategory} from './types.js'
 
+const IMAGE_SELECTOR_PATTERN = /img\.[^> ]+/
+const IMAGE_SRC_PATTERN = /src="([^"]+)"/
+const IMAGE_FILE_EXTENSION_PATTERN = /\.(?:jpg|jpeg|png|gif|webp|svg)$/i
+const FONT_FILE_EXTENSION_PATTERN = /\.(?:woff|woff2|ttf|otf|eot)$/i
+
 function isObjectWithItems(value: unknown): value is {items: unknown[]} { // Type guard function
   return (
     value != null
@@ -178,7 +183,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
               if (selector.includes(' > img') || selector.includes(' img') || selector.endsWith('img') || String(path).includes(',IMG')) {
                 metric.element_type = 'image'
 
-                const imgMatch = /img\.[^> ]+/.exec(selector) // Try to extract image name from selector
+                const imgMatch = IMAGE_SELECTOR_PATTERN.exec(selector) // Try to extract image name from selector
                 if (imgMatch != null && metric.element_url == null) metric.element_url = imgMatch[0]
               } else if (String(path).includes(',SPAN') || String(path).includes(',P') || String(path).includes(',H')) metric.element_type = 'text'
             }
@@ -198,7 +203,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
               metric.element_type = 'image'
               const {snippet} = node // Try to extract image URL from the node snippet
               if (snippet != null) {
-                const match = /src="([^"]+)"/.exec(String(snippet))
+                const match = IMAGE_SRC_PATTERN.exec(String(snippet))
                 if (match?.[1] != null) metric.element_url = match[1]
               }
             } else if (String(node.nodeLabel).startsWith('<video')) metric.element_type = 'video'
@@ -237,7 +242,7 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
           if (itemObj.url != null || (itemObj.node != null && typeof itemObj.node === 'object' && (itemObj.node as Record<string, unknown>).path != null)) {
             if (itemObj.url != null) {
               metric.element_url = String(itemObj.url)
-              metric.element_type = /\.(?:jpg|jpeg|png|gif|webp|svg)$/i.exec(String(itemObj.url)) != null
+              metric.element_type = IMAGE_FILE_EXTENSION_PATTERN.exec(String(itemObj.url)) != null
                 ? 'image'
                 : 'resource'
             }
@@ -428,8 +433,8 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
         const url = resourceObj.url != null ? String(resourceObj.url) : ''
         if (mimeType.includes('javascript') || url.endsWith('.js')) jsCount++
         else if (mimeType.includes('css') || url.endsWith('.css')) cssCount++
-        else if (mimeType.includes('image') || /\.(?:jpg|jpeg|png|gif|webp|svg)$/i.test(url)) imgCount++
-        else if (mimeType.includes('font') || /\.(?:woff|woff2|ttf|otf|eot)$/i.test(url)) fontCount++
+        else if (mimeType.includes('image') || IMAGE_FILE_EXTENSION_PATTERN.test(url)) imgCount++
+        else if (mimeType.includes('font') || FONT_FILE_EXTENSION_PATTERN.test(url)) fontCount++
         else otherCount++
       })
 

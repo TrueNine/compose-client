@@ -2,8 +2,12 @@ import type {late} from '@truenine/types'
 
 import {__LOWERS_CHINESE_NUMBER_HEXS, __LOWVERS_CHINESE_NUMBERS, __UPPERS_CHINESE_NUMBER_HEXS, __UPPERS_CHINESE_NUMBERS} from '@/consts'
 
+const CAMEL_CASE_BOUNDARY_PATTERN = /([a-z0-9])([A-Z])/g
+const DECIMAL_NUMBER_PATTERN = /^\d*(?:\.\d*)?$/
+const LEADING_ZERO_PATTERN = /^0*/g
+
 export function camelTo(str: string, sep = '-'): string {
-  return str.replaceAll(/([a-z0-9])([A-Z])/g, `$1${sep}$2`).toLowerCase()
+  return str.replaceAll(CAMEL_CASE_BOUNDARY_PATTERN, `$1${sep}$2`).toLowerCase()
 }
 
 export function numberToChinese(num?: number, upperCase = false): late<string> {
@@ -11,9 +15,9 @@ export function numberToChinese(num?: number, upperCase = false): late<string> {
   const BB = upperCase ? __UPPERS_CHINESE_NUMBER_HEXS : __LOWERS_CHINESE_NUMBER_HEXS
 
   if (num == null) return void 0
-  if (!/^\d*(?:\.\d*)?$/.test(num.toString())) return void 0
+  if (!DECIMAL_NUMBER_PATTERN.test(num.toString())) return void 0
 
-  const a: string[] = num.toString().replaceAll(/^0*/g, '').split('.')
+  const a: string[] = num.toString().replaceAll(LEADING_ZERO_PATTERN, '').split('.')
   let k = 0
   let re = ''
 
