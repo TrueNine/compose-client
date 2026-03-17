@@ -29,11 +29,17 @@ async function main(): Promise<void> {
 
     const originalStdoutWrite = process.stdout.write.bind(process.stdout)
 
-    process.stdout.write = (chunk: any, encoding?: any, callback?: any): boolean => {
+    process.stdout.write = ((
+      chunk: string | Uint8Array,
+      encoding?: BufferEncoding | ((error?: Error | null) => void),
+      callback?: (error?: Error | null) => void
+    ): boolean => {
       if (typeof chunk === 'string' && !chunk.startsWith('{')) return true
-      // eslint-disable-next-line ts/no-unsafe-argument
-      return originalStdoutWrite(chunk, encoding, callback)
-    }
+
+      if (typeof encoding === 'function') return originalStdoutWrite(chunk, encoding)
+      if (callback != null) return originalStdoutWrite(chunk, encoding, callback)
+      return originalStdoutWrite(chunk, encoding)
+    }) as typeof process.stdout.write
 
     await server.connect(transport)
   }

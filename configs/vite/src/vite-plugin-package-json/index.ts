@@ -16,6 +16,8 @@ export interface PackageJsonOptions {
   buildTool?: 'npm' | 'pnpm' | 'yarn'
 }
 
+type PackageJsonExports = Record<string, string | Record<string, string>>
+
 function packageJsonContentReplace(content: string, options: Omit<PackageJsonOptions, 'content'>): string | undefined {
   const {entry, formats = ['es'], buildTool = 'npm', dts = true} = options
 
@@ -42,7 +44,7 @@ function packageJsonContentReplace(content: string, options: Omit<PackageJsonOpt
   if (hasEsm) packageJson.type = 'module'
   else if (hasCjs) packageJson.type = 'commonjs'
 
-  const newExports: Record<string, any> = {}
+  const newExports: PackageJsonExports = {}
 
   entry.forEach(entryPath => {
     const baseName = path.basename(entryPath).replace(ENTRY_EXTENSION_PATTERN, '') // Normalize entry path, remove src/ prefix if present, remove extension

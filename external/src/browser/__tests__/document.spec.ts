@@ -223,7 +223,8 @@ describe('document.ts 文件函数测试', () => {
 
       const imagePromise = getImageData(imageBlob) // 执行函数
 
-      if (capturedImg !== null && (capturedImg as MockImage).onload !== null) (capturedImg as MockImage).onload!() // 模拟图片加载完成
+      const onload = capturedImg?.onload
+      if (onload != null) onload() // 模拟图片加载完成
 
       const result = await imagePromise // 等待Promise解析
 
@@ -259,7 +260,8 @@ describe('document.ts 文件函数测试', () => {
 
       const imagePromise = getImageData(imageBlob) // 执行函数
 
-      if (capturedImg !== null && (capturedImg as MockImage).onerror !== null) (capturedImg as MockImage).onerror!() // 模拟图片加载失败
+      const onerror = capturedImg?.onerror
+      if (onerror != null) onerror() // 模拟图片加载失败
 
       await imagePromise // 等待Promise解析，并在之后验证调用
 

@@ -7,7 +7,11 @@
  */
 
 export {
+  aiRulesPreset,
   baseRulesPreset
+} from './base-rules'
+export {
+  compactRulesPreset
 } from './base-rules'
 export {
   dtsRulesPreset

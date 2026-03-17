@@ -1,9 +1,9 @@
 export interface McpToolResponse { // MCP Tool Response Types
   [x: string]: unknown
   content: {
+    [key: string]: unknown
     type: 'text'
     text: string
-    [key: string]: unknown
   }[]
   isError?: boolean
 }
@@ -15,11 +15,11 @@ export interface ServerConnection { // Server Discovery Types
 }
 
 export interface ApiResponse { // API Response Types
+  [key: string]: unknown
   error?: string
   message?: string
-  report?: unknown
   metadata?: unknown
-  [key: string]: unknown
+  report?: unknown
 }
 
 export interface AuditRequest { // Audit Types
@@ -29,8 +29,8 @@ export interface AuditRequest { // Audit Types
 }
 
 export interface LogEntry { // Logger Types
+  [key: string]: unknown
   level: string
   message: string
   timestamp: number
-  [key: string]: unknown
 } // We don't need this type anymore - removed due to complexity

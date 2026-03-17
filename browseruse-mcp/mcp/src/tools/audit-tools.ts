@@ -4,6 +4,23 @@ import {AuditCategory} from '@/config/constants'
 import {logger} from '@/logger'
 import {getDiscoveredConnection, withServerConnection} from '@/utils/server-discovery'
 
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null
+}
+
+function formatAuditResponse(json: ApiResponse): string {
+  if (json.report == null) return JSON.stringify(json, null, 2)
+
+  const metadata = isRecord(json.metadata) ? json.metadata : {}
+  const report = isRecord(json.report) ? json.report : {report: json.report}
+  const flattened = {
+    ...metadata,
+    ...report
+  }
+
+  return JSON.stringify(flattened, null, 2)
+}
+
 export function registerAuditTools(server: McpServer): void {
   server.tool('runAccessibilityAudit', 'Run an accessibility audit on the current page', {}, async () => withServerConnection(async (): Promise<McpToolResponse> => {
     try {
@@ -27,21 +44,8 @@ export function registerAuditTools(server: McpServer): void {
 
       const json = await response.json() as ApiResponse
 
-      // eslint-disable-next-line ts/strict-boolean-expressions
-      if (json.report) {
-        // eslint-disable-next-line ts/no-unsafe-assignment
-        const {metadata} = json as any
-        // eslint-disable-next-line ts/no-unsafe-assignment
-        const {report} = json as any
-        // eslint-disable-next-line ts/no-unsafe-assignment
-        const flattened = {...metadata, ...report}
-
-        return {content: [
-          {type: 'text', text: JSON.stringify(flattened, null, 2)}
-        ]}
-      }
       return {content: [
-        {type: 'text', text: JSON.stringify(json, null, 2)}
+        {type: 'text', text: formatAuditResponse(json)}
       ]}
     }
     catch (error) {
@@ -75,21 +79,8 @@ export function registerAuditTools(server: McpServer): void {
 
       const json = await response.json() as ApiResponse
 
-      // eslint-disable-next-line ts/strict-boolean-expressions
-      if (json.report) {
-        // eslint-disable-next-line ts/no-unsafe-assignment
-        const {metadata} = json as any
-        // eslint-disable-next-line ts/no-unsafe-assignment
-        const {report} = json as any
-        // eslint-disable-next-line ts/no-unsafe-assignment
-        const flattened = {...metadata, ...report}
-
-        return {content: [
-          {type: 'text', text: JSON.stringify(flattened, null, 2)}
-        ]}
-      }
       return {content: [
-        {type: 'text', text: JSON.stringify(json, null, 2)}
+        {type: 'text', text: formatAuditResponse(json)}
       ]}
     }
     catch (error) {
@@ -124,7 +115,7 @@ export function registerAuditTools(server: McpServer): void {
       const json = await response.json() as ApiResponse
 
       return {content: [
-        {type: 'text', text: JSON.stringify(json, null, 2)}
+        {type: 'text', text: formatAuditResponse(json)}
       ]}
     }
     catch (error) {
@@ -155,21 +146,8 @@ export function registerAuditTools(server: McpServer): void {
 
       const json = await response.json() as ApiResponse
 
-      // eslint-disable-next-line ts/strict-boolean-expressions
-      if (json.report) {
-        // eslint-disable-next-line ts/no-unsafe-assignment
-        const {metadata} = json as any
-        // eslint-disable-next-line ts/no-unsafe-assignment
-        const {report} = json as any
-        // eslint-disable-next-line ts/no-unsafe-assignment
-        const flattened = {...metadata, ...report}
-
-        return {content: [
-          {type: 'text', text: JSON.stringify(flattened, null, 2)}
-        ]}
-      }
       return {content: [
-        {type: 'text', text: JSON.stringify(json, null, 2)}
+        {type: 'text', text: formatAuditResponse(json)}
       ]}
     }
     catch (error) {

@@ -48,8 +48,14 @@ export function createParallelOptimization(options: ParallelOptimizationOptions 
     config.esbuild = {...config.esbuild, // 配置 esbuild 使用多线程
       target: 'es2020'} // esbuild 会自动使用多核心
 
-    config.build!.rollupOptions = {...config.build!.rollupOptions, // 配置 Rollup 使用 Worker 线程
-      experimentalCacheExpiry: 10} // 启用并行插件处理
+    const build = config.build ?? {}
+    config.build = {
+      ...build,
+      rollupOptions: {
+        ...build.rollupOptions,
+        experimentalCacheExpiry: 10 // 启用并行插件处理
+      }
+    }
   }
 
   if (enableParallelCss) {

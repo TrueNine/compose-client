@@ -93,7 +93,7 @@ describe('yFormTest', () => {
       const TestComponent = defineComponent({setup() {
         const formData = ref({username: 'initial'})
 
-        const handleUpdate = (newVal: any) => formData.value = newVal // 添加监听函数以便验证值是否更新
+        const handleUpdate = (newVal: unknown) => formData.value = newVal // 添加监听函数以便验证值是否更新
 
         return () => (
           <YForm
@@ -147,7 +147,7 @@ describe('yFormTest', () => {
 
       await wrapper.setProps({modelValue: {username: 'changed'}})
       await nextTick()
-      expect((wrapper.props() as any).modelValue).toEqual({username: 'changed'})
+      expect((wrapper.props() as unknown).modelValue).toEqual({username: 'changed'})
 
       await wrapper.find('.reset-btn').trigger('click')
       await nextTick()
@@ -167,7 +167,7 @@ describe('yFormTest', () => {
 
       await wrapper.setProps({modelValue: {username: 'changed'}})
       await nextTick()
-      expect((wrapper.props() as any).modelValue).toEqual({username: 'changed'})
+      expect((wrapper.props() as unknown).modelValue).toEqual({username: 'changed'})
 
       await wrapper.find('form').trigger('reset') // 直接触发表单的reset事件，而不是点击按钮
       await nextTick()

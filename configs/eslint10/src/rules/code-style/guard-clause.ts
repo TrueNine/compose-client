@@ -57,7 +57,7 @@ const rule: Rule.RuleModule = {
     }
 
     return {
-      IfStatement(node: any) { /* eslint-disable ts/no-unsafe-member-access, ts/no-unsafe-assignment, ts/no-unsafe-argument */
+      IfStatement(node: any) { /* eslint-disable ts/no-unsafe-member-access, ts/no-unsafe-argument */
         if (node.alternate != null || node.parent?.type !== 'BlockStatement' || !isFunctionBody(node.parent) || node.consequent?.type !== 'BlockStatement') return
         const {parent} = node
         if (parent.parent?.type === 'IfStatement' && parent.parent.alternate === node) return /* Skip if already processed */

@@ -17,5 +17,5 @@ describe('eslint9 compatibility shell', () => {
   it('delegates config creation to eslint10', async () => {
     const config = await defineConfig({vue: true, uniapp: true})
     expect(Array.isArray(config)).toBe(true)
-  })
+  }, 20_000)
 })

@@ -130,7 +130,10 @@ export function createVitePerformanceConfig(options: VitePerformanceOptions = {}
     esbuild: enableEsbuildOptimization ? createEsbuildOptimization() : {} // esbuild 配置
   }
 
-  if (enableChunkOptimization) config.build!.rollupOptions = createChunkOptimization() // 添加代码分割优化
+  if (enableChunkOptimization) {
+    const build = config.build ?? {}
+    config.build = {...build, rollupOptions: createChunkOptimization()} // 添加代码分割优化
+  }
 
   if (enableDepsOptimization) config.optimizeDeps = createDepsOptimization() // 添加依赖预构建优化
 

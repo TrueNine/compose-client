@@ -2,9 +2,9 @@ import type {dynamic} from '@truenine/types'
 import type {App} from 'vue'
 
 export interface VueComponentInstanceMapping {
+  [key: string]: unknown
   name?: string
   __name?: string
-  [key: string]: unknown
 }
 
 export type SFCWithInstall<T = dynamic> = T & VueComponentInstanceMapping & {

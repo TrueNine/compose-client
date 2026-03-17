@@ -609,39 +609,6 @@ export class BrowserConnector {
     )
   }
 
-  private async getUrlForAudit(): Promise<string | null> { // Updated method to get URL for audits with improved connection tracking and waiting
-    try {
-      logger.info('getUrlForAudit called')
-
-      if (currentUrl != null && currentUrl !== '' && currentUrl !== 'about:blank') { // Use the stored URL if available immediately
-        logger.info(`Using existing URL immediately: ${currentUrl}`)
-        return currentUrl
-      }
-
-      logger.info('No valid URL available yet, waiting for navigation...') // Wait for a URL to become available (retry loop)
-
-      const maxAttempts = 50 // Wait up to 10 seconds for a URL to be set (20 attempts x 500ms)
-      const waitTime = 500 // ms
-
-      for (let attempt = 0; attempt < maxAttempts; attempt++) {
-        if (currentUrl != null && currentUrl !== '' && currentUrl !== 'about:blank') { // Check if URL is available now
-          logger.info(`URL became available after waiting:`, currentUrl)
-          return currentUrl
-        }
-
-        logger.info(`Waiting for URL (attempt ${attempt + 1}/${maxAttempts})...`) // Wait before checking again
-        await new Promise(resolve => setTimeout(resolve, waitTime))
-      }
-
-      logger.info('Timed out waiting for URL, returning null') // If we reach here, no URL became available after waiting
-      return null
-    }
-    catch (error: unknown) {
-      logger.error('Error in getUrlForAudit:', error)
-      return null // Return null to trigger an error
-    }
-  }
-
   public hasActiveConnection(): boolean { // Public method to check if there's an active connection
     return this.activeConnection != null
   }
@@ -923,6 +890,39 @@ export class BrowserConnector {
         resolve()
       })
     })
+  }
+
+  private async getUrlForAudit(): Promise<string | null> { // Updated method to get URL for audits with improved connection tracking and waiting
+    try {
+      logger.info('getUrlForAudit called')
+
+      if (currentUrl != null && currentUrl !== '' && currentUrl !== 'about:blank') { // Use the stored URL if available immediately
+        logger.info(`Using existing URL immediately: ${currentUrl}`)
+        return currentUrl
+      }
+
+      logger.info('No valid URL available yet, waiting for navigation...') // Wait for a URL to become available (retry loop)
+
+      const maxAttempts = 50 // Wait up to 10 seconds for a URL to be set (20 attempts x 500ms)
+      const waitTime = 500 // ms
+
+      for (let attempt = 0; attempt < maxAttempts; attempt++) {
+        if (currentUrl != null && currentUrl !== '' && currentUrl !== 'about:blank') { // Check if URL is available now
+          logger.info(`URL became available after waiting:`, currentUrl)
+          return currentUrl
+        }
+
+        logger.info(`Waiting for URL (attempt ${attempt + 1}/${maxAttempts})...`) // Wait before checking again
+        await new Promise(resolve => setTimeout(resolve, waitTime))
+      }
+
+      logger.info('Timed out waiting for URL, returning null') // If we reach here, no URL became available after waiting
+      return null
+    }
+    catch (error: unknown) {
+      logger.error('Error in getUrlForAudit:', error)
+      return null // Return null to trigger an error
+    }
   }
 
   private setupAccessibilityAudit(): void { // Sets up the accessibility audit endpoint

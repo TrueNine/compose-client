@@ -14,7 +14,7 @@ const rule: Rule.RuleModule = {
   create(context) {
     const {sourceCode} = context
 
-    function getSingleStatement(node: Rule.Node | null | undefined): Rule.Node | null { /* eslint-disable ts/no-unsafe-assignment */
+    function getSingleStatement(node: Rule.Node | null | undefined): Rule.Node | null {
       if (!node) return null
       if (node.type !== 'BlockStatement') return node
 
@@ -26,7 +26,7 @@ const rule: Rule.RuleModule = {
     function hasComments(node: Rule.Node): boolean {
       const comments = sourceCode.getCommentsInside(node)
       return comments.length > 0
-    } /* eslint-enable ts/no-unsafe-assignment */
+    }
 
     function isSimpleStatement(stmt: Rule.Node | null): boolean {
       if (!stmt) return false

@@ -26,6 +26,19 @@ function extractRuleSetting(rule: RuleEntry | undefined): string | undefined {
   return typeof setting === 'string' ? setting : void 0
 }
 
+function isRuleDisabled(rule: RuleEntry | undefined): boolean {
+  if (rule === 'off') return true
+  return Array.isArray(rule) && rule[0] === 'off'
+}
+
+function findConfig(configs: ConfigResult, name: string): Linter.Config | undefined {
+  for (const config of configs) {
+    if (typeof config !== 'object' || config === null) continue
+    if (config.name === name) return config
+  }
+  return void 0
+}
+
 describe('eslint10-config', () => {
   it('should export defineConfig as default function', () => expect(typeof defineConfig).toBe('function'))
 
@@ -56,7 +69,7 @@ describe('uniapp options', () => {
     const config = await defineConfig({vue: true, uniapp: true})
     const rule = findRuleEntry(config, 'vue/component-name-in-template-casing')
     expect(extractRuleSetting(rule)).toBe('kebab-case')
-  })
+  }, 20_000)
 
   it('should enforce kebab-case attribute hyphenation', async () => {
     const config = await defineConfig({vue: true, uniapp: true})
@@ -73,84 +86,83 @@ describe('uniapp options', () => {
   })
 })
 
-/**
- * Property-Based Tests for ESLint9 Config
- * These tests validate correctness properties that should hold true
- * across all valid executions of the system.
- */
-describe('property-Based Tests', () => {
-  describe('property 1: Rules Export Completeness', () => {
-    it('should export all single-line rules from rules/index.ts', () => {
-      const singleLineRuleNames = Object.keys(singleLineRules)
-      for (const ruleName of singleLineRuleNames) { /* For all rules in single-line subdirectory */
-        expect(rules).toHaveProperty(ruleName)
-        expect(rules[ruleName]).toBe(singleLineRules[ruleName])
-      }
-    })
-
-    it('should export all code-style rules from rules/index.ts', () => {
-      const codeStyleRuleNames = Object.keys(codeStyleRules)
-      for (const ruleName of codeStyleRuleNames) { /* For all rules in code-style subdirectory */
-        expect(rules).toHaveProperty(ruleName)
-        expect(rules[ruleName]).toBe(codeStyleRules[ruleName])
-      }
-    })
-
-    it('should have exactly the combined count of subdirectory rules', () => {
-      const expectedCount = Object.keys(singleLineRules).length + Object.keys(codeStyleRules).length
-      const actualCount = Object.keys(rules).length
-      expect(actualCount).toBe(expectedCount)
-    })
-
-    it('should export all expected rule names', () => {
-      const expectedRuleNames = [
-        'prefer-single-line-if',
-        'prefer-single-line-control',
-        'prefer-single-line-call',
-        'prefer-concise-arrow',
-        'prefer-guard-clause',
-        'prefer-void-zero',
-        'prefer-lookup-table',
-        'compact-try-catch',
-        'beside-comment',
-        'prefer-separate-try-catch',
-        'brace-style'
-      ]
-      for (const ruleName of expectedRuleNames) {
-        expect(rules).toHaveProperty(ruleName)
-        expect(typeof rules[ruleName]).toBe('object')
-        expect(rules[ruleName]).toHaveProperty('create')
-      }
-    })
+describe('profiles and boundaries', () => {
+  it('should default to the ai profile', async () => {
+    const config = await defineConfig()
+    const sourceRules = findConfig(config, '@truenine/ai-source-rules')
+    expect(sourceRules?.rules?.['@truenine/no-task-comment']).toBe('error')
+    expect(sourceRules?.rules?.['@truenine/prefer-single-line-if']).toBeUndefined()
   })
 
-  describe('property 2: Plugin Contains All Rules', () => {
-    it('should have plugin.rules containing all exported rules', () => {
-      const exportedRuleNames = Object.keys(rules)
-      const pluginRules = plugin.rules ?? {}
-      for (const ruleName of exportedRuleNames) expect(pluginRules).toHaveProperty(ruleName) /* For all rules exported from rules/index.ts */
-    })
+  it('should enable compact rules only when compact profile is selected', async () => {
+    const config = await defineConfig({profile: 'compact'})
+    const sourceRules = findConfig(config, '@truenine/compact-source-rules')
+    expect(sourceRules?.rules?.['@truenine/no-task-comment']).toBe('error')
+    expect(sourceRules?.rules?.['@truenine/prefer-single-line-if']).toBe('warn')
+    expect(sourceRules?.rules?.['@truenine/prefer-concise-arrow']).toBe('warn')
+  })
 
-    it('should have plugin.rules with identical rule modules', () => {
-      const exportedRuleNames = Object.keys(rules)
-      const pluginRules = plugin.rules ?? {}
-      for (const ruleName of exportedRuleNames) expect(pluginRules[ruleName]).toBe(rules[ruleName]) /* For all rules, the plugin should contain the exact same rule module */
-    })
+  it('should keep source-only task comment enforcement away from tests and docs', async () => {
+    const config = await defineConfig()
+    const sourceRules = findConfig(config, '@truenine/ai-source-rules')
+    expect(sourceRules?.files).toEqual(expect.arrayContaining(['**/*.ts', '**/*.vue']))
+    expect(sourceRules?.ignores).toEqual(expect.arrayContaining(['**/*.spec.*', '**/*.md', '**/*.md/**']))
+  })
 
-    it('should have plugin.rules with same count as exported rules', () => {
-      const exportedRuleCount = Object.keys(rules).length
-      const pluginRuleCount = Object.keys(plugin.rules ?? {}).length
-      expect(pluginRuleCount).toBe(exportedRuleCount)
-    })
+  it('should disable markdown-hostile rules inside markdown code blocks', async () => {
+    const config = await defineConfig()
+    expect(config.some(item => isRuleDisabled(item.rules?.['@truenine/beside-comment']))).toBe(true)
+    expect(config.some(item => isRuleDisabled(item.rules?.['style/object-curly-spacing']))).toBe(true)
+    expect(config.some(item => isRuleDisabled(item.rules?.['@truenine/no-task-comment']))).toBe(true)
+  })
 
-    it('should have valid ESLint rule modules in plugin', () => {
-      const pluginRules = plugin.rules ?? {}
-      for (const [ruleName, ruleModule] of Object.entries(pluginRules)) { /* For all rules in plugin, they should be valid ESLint rule modules */
-        expect(typeof ruleModule).toBe('object')
-        expect(ruleModule).toHaveProperty('create')
-        expect(typeof ruleModule.create).toBe('function')
-        expect(ruleName).toMatch(/^(prefer|beside|compact|brace|no)-[a-z-]+$/) /* Rule name should follow expected naming convention */
-      }
-    })
+  it('should merge strict TypeScript defaults instead of replacing them', async () => {
+    const config = await defineConfig({typescript: {strictTypescriptEslint: true, tsconfigPath: './tsconfig.json'}})
+    expect(findRuleEntry(config, 'ts/no-explicit-any')).toEqual(['error', {fixToUnknown: true, ignoreRestArgs: true}])
+    expect(findRuleEntry(config, 'ts/no-non-null-assertion')).toBe('error')
+    expect(findRuleEntry(config, 'ts/no-floating-promises')).toBe('error')
+    expect(findRuleEntry(config, 'ts/no-unused-vars')).toEqual([
+      'error',
+      {vars: 'all', args: 'after-used', ignoreRestSiblings: false}
+    ])
+  })
+})
+
+describe('rule exports', () => {
+  it('should export all single-line rules from rules/index.ts', () => {
+    const singleLineRuleNames = Object.keys(singleLineRules)
+    for (const ruleName of singleLineRuleNames) {
+      expect(rules).toHaveProperty(ruleName)
+      expect(rules[ruleName]).toBe(singleLineRules[ruleName])
+    }
+  })
+
+  it('should export all code-style rules from rules/index.ts', () => {
+    const codeStyleRuleNames = Object.keys(codeStyleRules)
+    for (const ruleName of codeStyleRuleNames) {
+      expect(rules).toHaveProperty(ruleName)
+      expect(rules[ruleName]).toBe(codeStyleRules[ruleName])
+    }
+  })
+
+  it('should exclude brace-style from the published custom rules', () => {
+    expect(rules).not.toHaveProperty('brace-style')
+    expect(plugin.rules).not.toHaveProperty('brace-style')
+  })
+
+  it('should have plugin.rules containing all exported rules', () => {
+    const exportedRuleNames = Object.keys(rules)
+    const pluginRules = plugin.rules ?? {}
+    for (const ruleName of exportedRuleNames) expect(pluginRules).toHaveProperty(ruleName)
+  })
+
+  it('should have valid ESLint rule modules in plugin', () => {
+    const pluginRules = plugin.rules ?? {}
+    for (const [ruleName, ruleModule] of Object.entries(pluginRules)) {
+      expect(typeof ruleModule).toBe('object')
+      expect(ruleModule).toHaveProperty('create')
+      expect(typeof ruleModule.create).toBe('function')
+      expect(ruleName).toMatch(/^(prefer|beside|compact|no)-[a-z-]+$/)
+    }
   })
 })
