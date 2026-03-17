@@ -1,6 +1,7 @@
 {
   "name": "@truenine/toolchain-versions-catalogs-versions",
   "version": "2026.10318.10138",
+  "private": true,
   "description": "toolchain-versions-catalogs-versions",
   "author": "TrueNine",
   "license": "LGPL-2.1-or-later",
