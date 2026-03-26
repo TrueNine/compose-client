@@ -3,6 +3,7 @@ import type {PluginOptions} from 'vite-plugin-dts'
 import dtsPluginImport from 'vite-plugin-dts'
 
 const dtsPlugin = (dtsPluginImport as unknown as {default: typeof dtsPluginImport}).default ?? dtsPluginImport
+const ENTRY_EXTENSION_PATTERN = /\.([^.]+)$/
 
 const FILE_EXTENSION_PATTERN = /\.([^.]+)$/ // Static regex pattern for file extension extraction
 

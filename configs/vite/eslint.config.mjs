@@ -1,3 +1,9 @@
 import eslint10 from '@truenine/eslint10-config'
 
-export default eslint10({type: 'lib', typescript: {strictTypescriptEslint: true, tsconfigPath: './tsconfig.lib.json'}})
+export default eslint10({
+  type: 'lib',
+  typescript: {
+    strictTypescriptEslint: true,
+    tsconfigPath: './tsconfig.json'
+  }
+})

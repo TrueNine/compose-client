@@ -12,6 +12,24 @@ export class SearchParam {
   private _root = new Map<string, BasicType>()
   private _cachedString: string | null = null
 
+  get size(): number {
+    return this._root.size
+  }
+
+  static fromString(queryString: string): SearchParam {
+    const params = new SearchParam()
+    if (!queryString) return params
+
+    const cleanQuery = queryString.startsWith('?') ? queryString.slice(1) : queryString
+
+    cleanQuery.split('&').forEach(pair => {
+      const [key, value] = pair.split('=').map(decodeURIComponent)
+      if (key) params.append(key, value)
+    })
+
+    return params
+  }
+
   get(name: string): BasicType | undefined {
     return this._root.get(name)
   }
@@ -38,19 +56,14 @@ export class SearchParam {
     return this._root.values()
   }
 
-  get size(): number {
-    return this._root.size
-  }
-
   toString(): string {
     if (this._cachedString !== null) return this._cachedString // 使用缓存提升性能
 
-    this._cachedString = [...this._root]
-      .map(([k, v]) => {
-        const key = encodeURIComponent(k.toString())
-        const value = v != null ? encodeURIComponent(v.toString()) : ''
-        return `${key}=${value}`
-      })
+    this._cachedString = Array.from(this._root, ([k, v]) => {
+      const key = encodeURIComponent(k.toString())
+      const value = v != null ? encodeURIComponent(v.toString()) : ''
+      return `${key}=${value}`
+    })
       .join('&')
 
     return this._cachedString
@@ -67,20 +80,6 @@ export class SearchParam {
   appendAll(params: Record<string, BasicType>): this {
     Object.entries(params).forEach(([key, value]) => this.append(key, value))
     return this
-  }
-
-  static fromString(queryString: string): SearchParam {
-    const params = new SearchParam()
-    if (!queryString) return params
-
-    const cleanQuery = queryString.startsWith('?') ? queryString.slice(1) : queryString
-
-    cleanQuery.split('&').forEach(pair => {
-      const [key, value] = pair.split('=').map(decodeURIComponent)
-      if (key) params.append(key, value)
-    })
-
-    return params
   }
 
   clone(): SearchParam {

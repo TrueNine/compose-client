@@ -1,6 +1,7 @@
 import type {Rule} from 'eslint'
 
 const MAX_LINE_LENGTH = 160
+const MULTI_WHITESPACE_PATTERN = /\s+/g
 
 /**
  * ESLint rule: prefer-single-line-control
@@ -39,7 +40,7 @@ const rule: Rule.RuleModule = {
     }
 
     function isNodeSingleLine(node: Rule.Node): boolean { return node.loc?.start.line === node.loc?.end.line }
-    function normalizeText(text: string): string { return text.split('\n').map(l => l.trim()).join(' ').replaceAll(/\s+/g, ' ').trim() }
+    function normalizeText(text: string): string { return text.split('\n').map(l => l.trim()).join(' ').replaceAll(MULTI_WHITESPACE_PATTERN, ' ').trim() }
     function ensureSemicolon(text: string): string { return text.trimEnd().endsWith(';') ? text.trimEnd() : `${text.trimEnd()};` }
 
     type CaseNode = Rule.Node & {test: Rule.Node | null, consequent: Rule.Node[]}

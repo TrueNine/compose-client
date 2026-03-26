@@ -8,6 +8,8 @@ import * as ChromeLauncher from 'chrome-launcher'
 import puppeteer from 'puppeteer-core'
 import {logger} from '@/logger'
 
+const WINDOWS_REGISTRY_PATH_PATTERN = /REG_(?:SZ|EXPAND_SZ)\s+(\S+)/i
+
 /**
  * Configuration interface for the Puppeteer service
  */
@@ -307,7 +309,7 @@ async function findBrowserExecutablePath(): Promise<string> {
         logger.info('Checking Windows registry for Chrome...')
         const regOutput = execSync('reg query "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\chrome.exe" /ve', {encoding: 'utf8'}) // Try HKLM first
 
-        const match = /REG_(?:SZ|EXPAND_SZ)\s+(\S+)/i.exec(regOutput) // Extract path from registry output
+        const match = WINDOWS_REGISTRY_PATH_PATTERN.exec(regOutput) // Extract path from registry output
         if (match?.[1] != null && match[1] !== '') {
           registryPath = match[1].replaceAll('\\"', '')
           if (fs.existsSync(registryPath)) { // Verify the path exists
@@ -321,7 +323,7 @@ async function findBrowserExecutablePath(): Promise<string> {
           logger.info('Checking user registry for Chrome...')
           const regOutput = execSync('reg query "HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\chrome.exe" /ve', {encoding: 'utf8'})
 
-          const match = /REG_(?:SZ|EXPAND_SZ)\s+(\S+)/i.exec(regOutput) // Extract path from registry output
+          const match = WINDOWS_REGISTRY_PATH_PATTERN.exec(regOutput) // Extract path from registry output
           if (match?.[1] != null && match[1] !== '') {
             registryPath = match[1].replaceAll('\\"', '')
             if (fs.existsSync(registryPath)) { // Verify the path exists

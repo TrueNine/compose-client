@@ -219,8 +219,8 @@ function extractAIOptimizedData(lhr: LighthouseResult, url: string): AIOptimized
   const prioritized_recommendations: string[] = [] // Generate prioritized recommendations
 
   Object.entries(categories) // Add category-specific recommendations
-    .filter(([_, data]) => data.issues_count > 0)
-    .sort(([_, a], [__, b]) => b.issues_count - a.issues_count)
+    .filter(([, data]) => data.issues_count > 0)
+    .sort(([, a], [, b]) => b.issues_count - a.issues_count)
     .forEach(([category, data]) => {
       if (data.issues_count === 0) return
 

@@ -4,7 +4,6 @@ yarn.lock*
 package-lock.json*
 yarn-debug.log*
 yarn-error.log*
-pnpm-lock.yaml*
 
 # ide
 *.suo
@@ -43,3 +42,4 @@ LICENSE
 !/LICENSE
 README.md
 !/README.md
+!pnpm-lock.yaml

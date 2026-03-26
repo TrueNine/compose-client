@@ -5,6 +5,8 @@ import type {Rule} from 'eslint'
  *
  * Detects long chains of `||` checks against the same variable and suggests using a Set lookup or Array.includes.
  */
+const MULTI_WHITESPACE_PATTERN = /\s+/g
+
 const rule: Rule.RuleModule = {
   meta: {
     type: 'suggestion',
@@ -32,7 +34,7 @@ const rule: Rule.RuleModule = {
     const threshold = options.threshold ?? 4
 
     function getNormalizedText(node: Rule.Node): string { /* 辅助函数：标准化节点文本，去除空格干扰 */
-      return sourceCode.getText(node).replaceAll(/\s+/g, '')
+      return sourceCode.getText(node).replaceAll(MULTI_WHITESPACE_PATTERN, '')
     }
 
     function isEqualityCheck(node: Rule.Node): boolean { /* 辅助函数：判断是否是简单的相等比较节点 */

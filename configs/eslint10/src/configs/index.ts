@@ -7,8 +7,10 @@ export {
   javascriptConfig
 } from './javascript'
 export {
+  defaultMarkdownConfig,
   defaultTestConfig,
   defaultUnocssConfig,
+  markdownConfig,
   testConfig,
   unocssConfig
 } from './misc'

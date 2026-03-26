@@ -140,7 +140,7 @@ describe('yFieldProxyComponentTest', () => {
 
       await nextTick()
 
-      const vm = wrapper.vm as any // 获取组件实例
+      const vm = wrapper.vm as unknown // 获取组件实例
 
       expect(vm._modelNames).toEqual({addressCode: 'adCode'}) // 断言 _modelNames 保持与传入的 modelNames 一致
     })

@@ -5,6 +5,12 @@ export class SseReceiver {
   private readonly _url: HttpUrl
   private readonly _init?: EventSourceInit
 
+  constructor(url: HttpUrl, init?: EventSourceInit) {
+    this._url = url
+    this._init = init
+    this._e = new EventSource(url, init)
+  }
+
   get initParam(): EventSourceInit | undefined {
     return this._init
   }
@@ -27,11 +33,5 @@ export class SseReceiver {
 
   onError(a: (this: EventSource, event: Event) => dynamic): void {
     this.handle.onerror = a
-  }
-
-  constructor(url: HttpUrl, init?: EventSourceInit) {
-    this._url = url
-    this._init = init
-    this._e = new EventSource(url, init)
   }
 }

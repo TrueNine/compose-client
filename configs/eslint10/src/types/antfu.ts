@@ -43,6 +43,12 @@ export type AntFuStylisticConfig = Exclude<AntFuConfig['stylistic'], boolean | u
 export type AntFuFormatterConfig = Exclude<AntFuConfig['formatters'], boolean | undefined>
 
 /**
+ * Markdown 配置选项
+ * @description 用于配置 Markdown 及其代码块的 ESLint 规则
+ */
+export type AntFuMarkdownConfig = Exclude<AntFuConfig['markdown'], boolean | undefined>
+
+/**
  * Test 配置选项
  * @description 用于配置测试环境相关的 ESLint 规则
  */

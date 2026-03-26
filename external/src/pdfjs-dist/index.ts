@@ -1,6 +1,6 @@
 import type {dynamic, task} from '@truenine/types'
 import type {PDFDocumentProxy, PDFPageProxy} from 'pdfjs-dist'
-import * as pdfjs from 'pdfjs-dist' // FIXME 当前文件所有文件需要进行去除副作用优化
+import * as pdfjs from 'pdfjs-dist'
 
 /**
  * PDF 图像数据的接口定义

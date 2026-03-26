@@ -1,10 +1,6 @@
-import {defineConfig} from 'tsdown'
+import {createLibraryTsdownConfig} from './src/workspace-config.ts'
 
-export default defineConfig({
-  entry: ['./src/**/*', '!**/*.{spec,test}.*'],
+export default createLibraryTsdownConfig({
   platform: 'node',
-  sourcemap: true,
-  unbundle: true,
-  format: ['esm'],
-  dts: {sourcemap: true, tsconfig: './tsconfig.lib.json'}
+  format: ['esm', 'cjs']
 })

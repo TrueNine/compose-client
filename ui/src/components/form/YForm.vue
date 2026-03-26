@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type {dynamic} from '@truenine/types'
+import type {FormOptions, GenericObject, TypedSchema, TypedSchemaError} from 'vee-validate'
 import type {YFormEmits, YFormInjection, YFormProps, YFormSlots} from './index'
 import {toTypedSchema as yupToTypedSchema} from '@vee-validate/yup'
 import {toTypedSchema as zodToTypedSchema} from '@vee-validate/zod'
@@ -20,48 +21,79 @@ const props = withDefaults(defineProps<YFormProps>(), {
 const emit = defineEmits<YFormEmits>()
 defineSlots<YFormSlots>()
 
+interface ZodSchemaLike {
+  _def: unknown
+  parse: (values: unknown) => unknown
+}
+
+interface ZodErrorLike {
+  errors: Array<{
+    path: Array<string | number>
+    message: string
+  }>
+}
+
+function isZodSchemaLike(schema: unknown): schema is ZodSchemaLike {
+  return typeof schema === 'object' && schema !== null && '_def' in schema && 'parse' in schema && typeof schema.parse === 'function'
+}
+
+function isZodErrorLike(error: unknown): error is ZodErrorLike {
+  return typeof error === 'object' && error !== null && 'errors' in error && Array.isArray(error.errors)
+}
+
 const schemaModel = useVModel(props, 'schema', emit, {passive: true}) // 处理表单验证模式
-const validationSchema = computed(() => {
+const validationSchema = computed<TypedSchema<GenericObject, GenericObject> | undefined>(() => {
   const schema = schemaModel.value
-  if (schema && typeof schema === 'object' && '_def' in schema && 'parse' in schema) { // Use duck typing to detect Zod schemas instead of instanceof to avoid proxy issues in tests
-    try { return zodToTypedSchema(schema) }
-    catch (error) {
-      if (import.meta.env.NODE_ENV === 'test' || import.meta.env.VITEST) { // create a simple validation function that uses the schema directly // In test environment, if zodToTypedSchema fails due to proxy issues,
-        return {__type: 'VeeTypedSchema', async: false, parse(values: any) {
+  if (schema == null) return void 0
+
+  if (isZodSchemaLike(schema)) { // Use duck typing to detect Zod schemas instead of instanceof to avoid proxy issues in tests
+    if (import.meta.env.NODE_ENV === 'test' || import.meta.env.VITEST) {
+      return {
+        __type: 'VVTypedSchema',
+        async parse(values: GenericObject) {
+          const errors: TypedSchemaError[] = []
           try {
-            const result = schema.parse(values)
-            return {output: result, errors: []}
+            const result = schema.parse(values) as GenericObject
+            return {value: result, errors}
           }
-          catch (err: any) {
-            const errors: any[] = []
-            if (err.errors) err.errors.forEach((zodError: any) => errors.push({path: zodError.path.join('.'), message: zodError.message}))
+          catch (err: unknown) {
+            if (isZodErrorLike(err)) {
+              err.errors.forEach(zodError => {
+                errors.push({
+                  path: zodError.path.join('.'),
+                  errors: [zodError.message]
+                })
+              })
+            }
+
             return {errors}
           }
-        }}
-      }
-      throw error
+        }
+      } satisfies TypedSchema<GenericObject, GenericObject>
     }
+
+    return zodToTypedSchema(schema) as TypedSchema<GenericObject, GenericObject>
   }
-  if (schema instanceof ObjectSchema) return yupToTypedSchema(schema)
-  return schema
+  if (schema instanceof ObjectSchema) return yupToTypedSchema(schema) as TypedSchema<GenericObject, GenericObject>
+  return schema as TypedSchema<GenericObject, GenericObject>
 })
 
 const formValues = useVModel(props, 'modelValue', emit, {passive: true}) // 处理表单数据
 
-const formConfig = computed(() => { // In test environment, avoid passing Zod schemas to useForm to prevent proxy issues
-  const config: any = {name: props.name, initialValues: formValues}
+const formConfig = computed<FormOptions<GenericObject>>(() => {
+  const config: FormOptions<GenericObject> = {
+    name: props.name,
+    initialValues: (formValues.value as GenericObject | undefined) ?? void 0
+  }
 
-  const schema = validationSchema.value // Only add validationSchema if it's not a problematic Zod schema in test environment
-  if (schema) {
-    if (import.meta.env.NODE_ENV === 'test' || import.meta.env.VITEST) {
-      if (!(schema as any).__type || (schema as any).__type === 'VeeTypedSchema') config.validationSchema = schema // In test environment, only add schema if it's not a Zod schema or if it's our custom wrapper
-    } else config.validationSchema = schema // For Zod schemas in tests, we'll handle validation manually
+  if (validationSchema.value != null) {
+    config.validationSchema = validationSchema.value
   }
 
   return config
 })
 
-const form = useForm(formConfig.value)
+const form = useForm<GenericObject>(formConfig.value)
 
 const handleFormSubmit = form.handleSubmit( // 表单提交处理
   values => emit('submit', values, props.step),

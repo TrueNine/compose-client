@@ -1,4 +1,3 @@
-import {fileURLToPath, URL} from 'node:url'
-import {defineConfig} from 'vite'
+import {createLibraryViteConfig} from '../vite/src/workspace-config.ts'
 
-export default defineConfig({resolve: {alias: {'@': fileURLToPath(new URL('./src', import.meta.url))}}})
+export default createLibraryViteConfig(import.meta)

@@ -19,7 +19,13 @@ export default eslint9({
     'README.md',
     'GEMINI.md',
     'CLAUDE.md',
-    'WARP.md'
+    'WARP.md',
+    'src/configs/**',
+    'src/plugin.ts',
+    'src/presets/**',
+    'src/rules/**',
+    'src/types/**',
+    'src/utils/**'
   ],
   typescript: {
     strictTypescriptEslint: true,

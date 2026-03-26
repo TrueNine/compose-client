@@ -1,5 +1,5 @@
 import type {dynamic, Maybe} from '@truenine/types'
-import type {FormContext, InvalidSubmissionContext, TypedSchema} from 'vee-validate'
+import type {FormContext, GenericObject, InvalidSubmissionContext, TypedSchema} from 'vee-validate'
 import type {InjectionKey, VNode} from 'vue'
 import type {Schema as YupSchema} from 'yup'
 import type {ZodSchema} from 'zod'
@@ -47,7 +47,7 @@ export interface YFormSlots {
   submit?: (props: YFormSlotsSubMitProps) => VNode[]
 }
 export interface YFormInjection {
-  getForm: () => FormContext<any, any>
+  getForm: () => FormContext<GenericObject, GenericObject>
   validate: () => Promise<boolean>
   setFieldValidate: (key: string, schema: YFormPropsSchema) => void
 }

@@ -32,7 +32,7 @@ const effectVModels = computed(() => {
 
   const baseProps = {...props.component.props ?? {}, errorMessages: _allErrors.value, label: props.label, placeholder: props.placeholder} // 首先收集所有基础属性
 
-  const fieldProps: Record<string, any> = {} // 然后收集所有事件和值属性，但不覆盖它们
+  const fieldProps: Record<string, unknown> = {} // 然后收集所有事件和值属性，但不覆盖它们
 
   _allFields.forEach(f => {
     const label = toRef(f.label).value

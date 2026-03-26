@@ -16,29 +16,6 @@ export class AddressUtils implements IChinaAddressDistrict {
   addrLevel: AddrLevel
   private readonly _formatError: boolean
 
-  static ofCounty(): AddressUtils {
-    return new AddressUtils(AddressUtils.GLOBAL_CODE)
-  }
-
-  get serialArray(): string[] {
-    if (this._formatError) return []
-    return [this.addrLevel.province, this.addrLevel.city, this.addrLevel.district, this.addrLevel.town, this.addrLevel.village].filter(
-      e => e !== AddressUtils.TWO_ZERO && e !== AddressUtils.THREE_ZERO && e !== STR_EMPTY
-    )
-  }
-
-  get pad(): string {
-    if (this._formatError) return STR_EMPTY
-    return this.code.padEnd(12, '0')
-  }
-
-  get clipCode(): string {
-    if (this._formatError) return STR_EMPTY
-    const codeLengths = [2, 4, 6, 9]
-    const length = codeLengths[this.level - 1] || 12
-    return this.code.slice(0, length)
-  }
-
   constructor(code: string) {
     this._formatError = false
     if (code.length > 12 || code.length < 2 || AddressUtils.ERROR_DIG.includes(code.length as 0 | 1 | 3 | 5 | 7 | 8 | 10 | 11)) {
@@ -61,5 +38,28 @@ export class AddressUtils implements IChinaAddressDistrict {
     if (this.addrLevel.town !== AddressUtils.THREE_ZERO) l += 1
     if (this.addrLevel.village !== AddressUtils.THREE_ZERO) l += 1
     this.level = l
+  }
+
+  get serialArray(): string[] {
+    if (this._formatError) return []
+    return [this.addrLevel.province, this.addrLevel.city, this.addrLevel.district, this.addrLevel.town, this.addrLevel.village].filter(
+      e => e !== AddressUtils.TWO_ZERO && e !== AddressUtils.THREE_ZERO && e !== STR_EMPTY
+    )
+  }
+
+  get pad(): string {
+    if (this._formatError) return STR_EMPTY
+    return this.code.padEnd(12, '0')
+  }
+
+  get clipCode(): string {
+    if (this._formatError) return STR_EMPTY
+    const codeLengths = [2, 4, 6, 9]
+    const length = codeLengths[this.level - 1] || 12
+    return this.code.slice(0, length)
+  }
+
+  static ofCounty(): AddressUtils {
+    return new AddressUtils(AddressUtils.GLOBAL_CODE)
   }
 }

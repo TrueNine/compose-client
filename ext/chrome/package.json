@@ -1,7 +1,7 @@
 {
   "name": "@truenine/ext-chrome",
   "type": "module",
-  "version": "2026.10107.100",
+  "version": "2026.10318.10138",
   "description": "chrome 扩展程序 开发库",
   "author": "TrueNine",
   "license": "LGPL-2.1-or-later",
@@ -16,9 +16,10 @@
     "access": "public"
   },
   "scripts": {
-    "lintfix": "eslint --fix",
+    "lint:fix": "eslint --fix",
     "typecheck": "tsc --noEmit -p tsconfig.lib.json",
-    "build": "tsdown"
+    "build": "tsdown",
+    "lint": "eslint --cache --cache-location node_modules/.cache/.eslintcache"
   },
   "peerDependencies": {
     "@truenine/types": "workspace:^",
@@ -28,6 +29,9 @@
     "typescript": "catalog:"
   },
   "devDependencies": {
+    "@truenine/config-vite": "workspace:^",
+    "@truenine/eslint10-config": "workspace:^",
+    "@truenine/tsconfig": "workspace:^",
     "@truenine/types": "workspace:^",
     "@types/chrome": "catalog:chrome"
   }

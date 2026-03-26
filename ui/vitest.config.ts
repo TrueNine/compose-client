@@ -1,11 +1,10 @@
-import type {InlineConfig} from 'vitest'
-import {resolve} from 'node:path'
-import {mergeConfig} from 'vite'
+import {createLibraryVitestConfig} from '@truenine/config-vite/workspace-config'
 import {defineConfig} from 'vitest/config'
 import {e as viteConfig} from './vite.config'
 
-const vitestConfig = defineConfig({resolve: {alias: {'@': resolve(__dirname, './src')}}, test: {environment: 'happy-dom', globals: false, setupFiles: []}})
-
-const mergedConfig: InlineConfig = mergeConfig(viteConfig, vitestConfig)
+const mergedConfig = createLibraryVitestConfig(import.meta, viteConfig, {
+  environment: 'happy-dom',
+  overrides: defineConfig({test: {globals: false, setupFiles: []}})
+})
 
 export default mergedConfig

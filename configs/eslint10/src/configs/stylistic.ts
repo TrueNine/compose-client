@@ -11,8 +11,6 @@ export const stylisticConfig: AntFuStylisticConfig = {
   overrides: {
     'style/no-multiple-empty-lines': ['error', {max: 1, maxBOF: 0, maxEOF: 0}],
     'style/brace-style': 'off',
-    '@truenine/brace-style': ['error', '1tbs', {allowSingleLine: true}],
-    '@truenine/prefer-separate-try-catch': 'error', /* 强制 try/catch/finally 分开写 */
     'style/arrow-parens': ['error', 'as-needed'],
     'curly': ['error', 'multi-line'],
     'antfu/if-newline': 'off',
@@ -41,9 +39,7 @@ export const stylisticConfig: AntFuStylisticConfig = {
     'style/object-curly-newline': ['error', {ExportDeclaration: 'always'}], /* 强制 export 导出折行 */
     'style/object-property-newline': 'off', /* 关闭 object-curly-newline，由 antfu/consistent-list-newline 统一处理 */
     'antfu/consistent-list-newline': 'error', /* 关闭 object-property-newline，由 antfu/consistent-list-newline 统一处理 */
-    'no-inline-comments': 'off', /* 允许行内注释 */
-    'style/line-comment-position': 'off', /* 由 truenine/beside-comment 接管 */
-    '@truenine/beside-comment': 'error' /* 强制普通注释在代码行尾 */
+    'no-inline-comments': 'off'
   }
 }
 

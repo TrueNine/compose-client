@@ -1,6 +1,6 @@
-import eslint9 from './src/index'
+import eslint10 from './src/index'
 
-export default eslint9({
+export default eslint10({
   type: 'lib',
   pnpm: true,
   test: true,
@@ -30,4 +30,16 @@ export default eslint9({
       }
     }
   }
-})
+}).then(configs => [
+  ...configs,
+  {
+    name: '@truenine/eslint10-config/internal-rule-sources',
+    files: ['src/rules/**/*.ts'],
+    rules: {
+      'ts/no-explicit-any': 'off',
+      'ts/no-non-null-assertion': 'off',
+      'ts/no-unsafe-assignment': 'off',
+      'ts/no-unused-vars': 'off'
+    }
+  }
+])

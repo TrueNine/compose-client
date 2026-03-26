@@ -1,6 +1,7 @@
 import type {Rule} from 'eslint'
 
 const MAX_LINE_LENGTH = 160
+const MULTI_WHITESPACE_PATTERN = /\s+/g
 
 const rule: Rule.RuleModule = {
   meta: {
@@ -13,7 +14,7 @@ const rule: Rule.RuleModule = {
   create(context) {
     const {sourceCode} = context
 
-    function getSingleStatement(node: Rule.Node | null | undefined): Rule.Node | null { /* eslint-disable ts/no-unsafe-assignment */
+    function getSingleStatement(node: Rule.Node | null | undefined): Rule.Node | null {
       if (!node) return null
       if (node.type !== 'BlockStatement') return node
 
@@ -25,7 +26,7 @@ const rule: Rule.RuleModule = {
     function hasComments(node: Rule.Node): boolean {
       const comments = sourceCode.getCommentsInside(node)
       return comments.length > 0
-    } /* eslint-enable ts/no-unsafe-assignment */
+    }
 
     function isSimpleStatement(stmt: Rule.Node | null): boolean {
       if (!stmt) return false
@@ -41,7 +42,7 @@ const rule: Rule.RuleModule = {
         .split('\n')
         .map(line => line.trim())
         .join(' ')
-        .replaceAll(/\s+/g, ' ')
+        .replaceAll(MULTI_WHITESPACE_PATTERN, ' ')
         .trim()
     }
 

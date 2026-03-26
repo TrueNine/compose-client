@@ -93,7 +93,7 @@ describe('yFormTest', () => {
       const TestComponent = defineComponent({setup() {
         const formData = ref({username: 'initial'})
 
-        const handleUpdate = (newVal: any) => formData.value = newVal // 添加监听函数以便验证值是否更新
+        const handleUpdate = (newVal: unknown) => formData.value = newVal // 添加监听函数以便验证值是否更新
 
         return () => (
           <YForm
@@ -132,7 +132,7 @@ describe('yFormTest', () => {
       const handleSubmit = vi.fn()
       const userSchema = z.object({username: z.string().min(1, '用户名不能为空')})
 
-      const wrapper = mount(YForm, {props: {modelValue: {username: 'test'}, onSubmit: handleSubmit, validationSchema: userSchema}, slots: {default: () => [], submit: ({submit }: {submit: () => void}) => <button onClick={submit}>提交</button>}, global: globalComponents})
+      const wrapper = mount(YForm, {props: {modelValue: {username: 'test'}, onSubmit: handleSubmit, validationSchema: userSchema}, slots: {default: () => [], submit: ({submit}: {submit: () => void}) => <button onClick={submit}>提交</button>}, global: globalComponents})
 
       await wrapper.find('button').trigger('click')
       expect(wrapper.emitted('submit')).toBeTruthy()
@@ -143,11 +143,11 @@ describe('yFormTest', () => {
       const initialData = {username: 'test'}
       const userSchema = z.object({username: z.string().min(1, '用户名不能为空')})
 
-      const wrapper = mount(YForm, {props: {modelValue: {...initialData}, initialValues: {...initialData}, validationSchema: userSchema}, slots: {default: () => [], submit: ({reset }: {reset: () => void}) => <button class="reset-btn" onClick={reset}>重置</button>}, global: globalComponents})
+      const wrapper = mount(YForm, {props: {modelValue: {...initialData}, initialValues: {...initialData}, validationSchema: userSchema}, slots: {default: () => [], submit: ({reset}: {reset: () => void}) => <button class="reset-btn" onClick={reset}>重置</button>}, global: globalComponents})
 
       await wrapper.setProps({modelValue: {username: 'changed'}})
       await nextTick()
-      expect((wrapper.props() as any).modelValue).toEqual({username: 'changed'})
+      expect((wrapper.props() as unknown).modelValue).toEqual({username: 'changed'})
 
       await wrapper.find('.reset-btn').trigger('click')
       await nextTick()
@@ -167,7 +167,7 @@ describe('yFormTest', () => {
 
       await wrapper.setProps({modelValue: {username: 'changed'}})
       await nextTick()
-      expect((wrapper.props() as any).modelValue).toEqual({username: 'changed'})
+      expect((wrapper.props() as unknown).modelValue).toEqual({username: 'changed'})
 
       await wrapper.find('form').trigger('reset') // 直接触发表单的reset事件，而不是点击按钮
       await nextTick()

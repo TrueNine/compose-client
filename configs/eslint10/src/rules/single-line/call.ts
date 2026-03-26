@@ -1,6 +1,8 @@
 import type {Rule} from 'eslint'
 
 const MAX_LINE_LENGTH = 160
+const MULTI_WHITESPACE_PATTERN = /\s+/g
+const LEADING_INDENT_PATTERN = /^(\s*)/
 
 /**
  * ESLint rule: prefer-single-line-call
@@ -23,11 +25,11 @@ const rule: Rule.RuleModule = {
 
     function hasComments(node: Rule.Node): boolean { return sourceCode.getCommentsInside(node).length > 0 }
     function isNodeMultiLine(node: Rule.Node): boolean { return node.loc!.start.line !== node.loc!.end.line }
-    function normalizeText(text: string): string { return text.split('\n').map(l => l.trim()).join(' ').replaceAll(/\s+/g, ' ').trim() }
+    function normalizeText(text: string): string { return text.split('\n').map(l => l.trim()).join(' ').replaceAll(MULTI_WHITESPACE_PATTERN, ' ').trim() }
 
     function getIndent(node: Rule.Node): string { /* 获取调用表达式的缩进 */
       const line = sourceCode.lines[node.loc!.start.line - 1]
-      return /^(\s*)/.exec(line)?.[1] ?? ''
+      return LEADING_INDENT_PATTERN.exec(line)?.[1] ?? ''
     }
 
     function hasNestedObjectLiteral(node: Rule.Node): boolean { /* 检查节点是否包含嵌套的对象字面量 */

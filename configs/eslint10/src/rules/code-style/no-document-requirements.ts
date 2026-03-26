@@ -1,5 +1,8 @@
 import type {Rule} from 'eslint' /* eslint-disable ts/no-unsafe-argument */
 
+const REQUIREMENTS_PATTERN = /^\s*\* Requirements/m
+const REQUIREMENTS_LINE_PATTERN = /^\s*\* Requirements/
+
 const rule: Rule.RuleModule = {
   meta: {
     type: 'layout',
@@ -15,7 +18,6 @@ const rule: Rule.RuleModule = {
   },
   create(context) {
     const {sourceCode} = context
-    const requirementsPattern = /^\s*\* Requirements/m
 
     return {
       Program() {
@@ -23,7 +25,7 @@ const rule: Rule.RuleModule = {
 
         for (const comment of comments) {
           const content = comment.value
-          if (comment.type === 'Block' && requirementsPattern.test(content)) {
+          if (comment.type === 'Block' && REQUIREMENTS_PATTERN.test(content)) {
             context.report({
               loc: comment.loc!,
               messageId: 'noDocumentRequirements',
@@ -32,7 +34,7 @@ const rule: Rule.RuleModule = {
 
                 const commentText = sourceCode.getText(comment as any)
                 const lines = commentText.split('\n')
-                const filteredLines = lines.filter(line => !/^\s*\* Requirements/.test(line))
+                const filteredLines = lines.filter(line => !REQUIREMENTS_LINE_PATTERN.test(line))
 
                 const hasContent = filteredLines.some(line => { // Check if the comment still has meaningful content
                   const l = line.trim()

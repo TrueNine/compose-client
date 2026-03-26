@@ -24,7 +24,20 @@
     ]
   },
   "tasks": {
-    "lintfix": {
+    "lint": {
+      "dependsOn": [
+        "^build"
+      ],
+      "inputs": [
+        "src/**/*.{ts,js,vue,tsx,jsx}",
+        "eslint.config.*",
+        "package.json"
+      ],
+      "outputs": [],
+      "cache": true,
+      "persistent": false
+    },
+    "lint:fix": {
       "dependsOn": [
         "^build"
       ],

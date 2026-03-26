@@ -1,4 +1,5 @@
 import type {UserConfig} from 'vite'
+import {createLibraryViteConfig} from '@truenine/config-vite/workspace-config'
 import Vue from '@vitejs/plugin-vue'
 import VueJsx from '@vitejs/plugin-vue-jsx'
 import unocss from 'unocss/vite'
@@ -8,7 +9,6 @@ import {ElementPlusResolver, VarletUIResolver, Vuetify3Resolver} from 'unplugin-
 import Components from 'unplugin-vue-components/vite'
 import VueRouter from 'vue-router/vite'
 
-import {defineConfig} from 'vite'
 import devTools from 'vite-plugin-vue-devtools'
 import vuetify, {transformAssetUrls} from 'vite-plugin-vuetify'
 import {fileURLToPath, URL} from 'node:url'

@@ -74,6 +74,15 @@ export {
   createProductionPreset,
   createSmartPreset
 } from './performance/presets'
+export {
+  createLibraryTsdownConfig,
+  createLibraryViteConfig,
+  createLibraryVitestConfig
+} from './workspace-config'
+export type {
+  LibraryVitestOptions,
+  WorkspaceImportMetaLike
+} from './workspace-config'
 
 export interface ViteFragmentOptions {
   lib?: BuildLibraryConfigOptions

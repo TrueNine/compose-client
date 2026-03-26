@@ -1,3 +1,6 @@
+shellEmulator: true
+trustPolicy: no-downgrade
+
 packages:
   - browseruse-mcp/*
   - configs/*
@@ -10,10 +13,12 @@ packages:
   - ui
   - vue
 
+overrides:
+  semver: 'catalog:'
+
 catalog:
   '@changesets/cli': ^2.30.0
   '@date-io/dayjs': ^3.2.0
-  '@next/eslint-plugin-next': ^16.0.3
   '@tsconfig/node22': ^22.0.5
   '@varlet/ui': ^3.14.1
   autoprefixer: ^10.4.27
@@ -21,7 +26,7 @@ catalog:
   element-plus: ^2.13.6
   libarchive.js: ^2.0.2
   lodash-es: ^4.17.23
-  npm: ^11.6.2
+  npm: ^11.11.1
   npm-run-all2: ^8.0.4
   pdfjs-dist: ^5.5.207
   pnpm: ^10.29.3

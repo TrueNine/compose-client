@@ -1,7 +1,7 @@
 {
   "name": "@truenine/ui",
   "type": "module",
-  "version": "2026.10107.100",
+  "version": "2026.10318.10138",
   "license": "LGPL-2.1-or-later",
   "homepage": "https://github.com/TrueNine",
   "repository": {
@@ -30,9 +30,10 @@
   "scripts": {
     "test": "vitest run",
     "dev": "vite",
-    "lintfix": "eslint --fix",
+    "lint:fix": "eslint --fix",
     "typecheck": "vue-tsc --noEmit -p tsconfig.lib.json",
-    "build": "tsdown"
+    "build": "tsdown",
+    "lint": "eslint --cache --cache-location node_modules/.cache/.eslintcache"
   },
   "peerDependencies": {
     "@date-io/dayjs": "catalog:",
@@ -91,6 +92,8 @@
   },
   "devDependencies": {
     "@truenine/config-uno": "workspace:^",
+    "@truenine/config-vite": "workspace:^",
+    "@truenine/eslint10-config": "workspace:^",
     "@types/gulp": "catalog:gulp",
     "@types/gulp-autoprefixer": "catalog:gulp",
     "@types/gulp-postcss": "catalog:gulp",

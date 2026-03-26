@@ -1,10 +1,8 @@
-import {defineConfig} from 'tsdown'
+import {createLibraryTsdownConfig} from '../vite/src/workspace-config.ts'
 
-export default defineConfig({
+export default createLibraryTsdownConfig({
+  cjsDefault: false,
   entry: ['./src/**/*', '!**/*.{spec,test}.*', '!**/*.md'],
   platform: 'node',
-  sourcemap: true,
-  unbundle: true,
-  format: ['esm', 'cjs'],
-  dts: {sourcemap: true, tsconfig: './tsconfig.lib.json'}
+  format: ['esm', 'cjs']
 })

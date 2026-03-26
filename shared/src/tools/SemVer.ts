@@ -15,18 +15,6 @@ export class SemVer {
     this._patch = mmp[2]
   }
 
-  addPatch(): string {
-    return `${this._major.toString()}.${this._minor.toString()}.${(this._patch + 1).toString()}`
-  }
-
-  addMinor(): string {
-    return `${this._major.toString()}.${(this._minor + 1).toString()}.${this._patch.toString()}`
-  }
-
-  addMajor(): string {
-    return `${(this._major + 1).toString()}.${this._minor.toString()}.${this._patch.toString()}`
-  }
-
   get major(): number {
     return this._major
   }
@@ -41,5 +29,17 @@ export class SemVer {
 
   get metaVersion(): string {
     return this._version
+  }
+
+  addPatch(): string {
+    return `${this._major.toString()}.${this._minor.toString()}.${(this._patch + 1).toString()}`
+  }
+
+  addMinor(): string {
+    return `${this._major.toString()}.${(this._minor + 1).toString()}.${this._patch.toString()}`
+  }
+
+  addMajor(): string {
+    return `${(this._major + 1).toString()}.${this._minor.toString()}.${this._patch.toString()}`
   }
 }
