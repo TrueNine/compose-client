@@ -81,12 +81,11 @@ export function createVitePerformanceConfig(options: VitePerformanceOptions = {}
       minify: 'esbuild',
       assetsInlineLimit: 4096,
       cssCodeSplit: true,
-      cssMinify: true
+      cssMinify: true,
+      ...enableChunkOptimization && {rollupOptions: createChunkOptimization()}
     },
     esbuild: enableEsbuildOptimization ? createEsbuildOptimization() : {}
   }
-
-  if (enableChunkOptimization) config.build!.rollupOptions = createChunkOptimization()
   if (enableDepsOptimization) config.optimizeDeps = createDepsOptimization()
   config.server = createDevServerOptimization()
 

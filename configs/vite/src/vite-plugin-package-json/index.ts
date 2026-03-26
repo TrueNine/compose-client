@@ -4,10 +4,6 @@ import fs from 'node:fs'
 import path from 'node:path'
 import process from 'node:process'
 
-const ENTRY_EXTENSION_PATTERN = /\.[jt]sx?$/
-const SRC_PREFIX_PATTERN = /^src\/?/
-const TS_ENTRY_PATTERN = /\.tsx?$/
-
 export interface PackageJsonOptions {
   entry: string[]
   dts?: boolean
