@@ -3,6 +3,13 @@ import type {BuildLibraryConfigOptions} from '../types'
 
 import {Externals} from '../externals'
 
+interface RollupOutputOptions {
+  preserveModulesRoot: string
+  preserveModules: boolean
+  compact: boolean
+  minifyInternalExports: boolean
+}
+
 export function BuildConfigLib(options: BuildLibraryConfigOptions = {}): BuildOptions {
   const {
     minify = false,
@@ -24,6 +31,6 @@ export function BuildConfigLib(options: BuildLibraryConfigOptions = {}): BuildOp
     minify,
     lib: {entry, formats, name, fileName: (format: string) => `[name]${fileNameMap[format as keyof typeof fileNameMap]}`},
     assetsInlineLimit: 0,
-    rollupOptions: {external: externals, output: {preserveModulesRoot: entryRoot, preserveModules: true, compact: minify, minifyInternalExports: minify}}
+    rollupOptions: {external: externals, output: {preserveModulesRoot: entryRoot, preserveModules: true, compact: minify, minifyInternalExports: minify} as RollupOutputOptions}
   }
 }

@@ -2,7 +2,6 @@
 /// <reference types="vue/jsx" />
 /// <reference types="vitest" />
 /// <reference types="@vueuse/core" />
-/// <reference types="unplugin-vue-router/client" />
 
 declare module '*.vue' { // Vue SFC 类型声明
   import type {DefineComponent} from 'vue'

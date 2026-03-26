@@ -32,7 +32,6 @@ catalog:
   unplugin-auto-import: ^21.0.0
   unplugin-fonts: ^1.4.0
   unplugin-vue-components: ^32.0.0
-  unplugin-vue-router: ^0.19.2
   yarn: ^1.22.22
 
 catalogs:

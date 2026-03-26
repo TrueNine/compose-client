@@ -1,4 +1,3 @@
-import type {OutputAsset} from 'rollup'
 import type {LibraryFormats, Plugin} from 'vite'
 import type {PackageJson} from '@/types'
 import fs from 'node:fs'
@@ -11,6 +10,9 @@ export interface PackageJsonOptions {
   formats?: LibraryFormats[]
   buildTool?: 'npm' | 'pnpm' | 'yarn'
 }
+
+const JS_TS_EXTENSION_PATTERN = /\.[jt]sx?$/
+const SRC_PREFIX_PATTERN = /^src\/?/
 
 function packageJsonContentReplace(content: string, options: Omit<PackageJsonOptions, 'content'>): string | undefined {
   const {entry, formats = ['es'], buildTool = 'npm', dts = true} = options
@@ -38,29 +40,29 @@ function packageJsonContentReplace(content: string, options: Omit<PackageJsonOpt
   if (hasEsm) packageJson.type = 'module'
   else if (hasCjs) packageJson.type = 'commonjs'
 
-  const newExports: Record<string, any> = {}
+  const newExports: Record<string, unknown> = {}
 
   entry.forEach(entryPath => {
-    const baseName = path.basename(entryPath).replace(/\.[jt]sx?$/, '') // Normalize entry path, remove src/ prefix if present, remove extension
+    const baseName = path.basename(entryPath).replace(JS_TS_EXTENSION_PATTERN, '')
     const dirName = path.dirname(entryPath)
-    let exportKey = '.' // Construct the export key, handle index files mapping to '.' or subpaths
+    let exportKey = '.'
     let baseOutputPath = ''
 
     if (baseName === 'index') {
-      if (dirName !== '.' && dirName !== 'src') { // If index is not in the root (e.g., src/components/index.ts), use the dir name
-        exportKey = `./${dirName.replace(/^src\/?/, '')}`
-        baseOutputPath = `${dirName.replace(/^src\/?/, '')}/index`
+      if (dirName !== '.' && dirName !== 'src') {
+        exportKey = `./${dirName.replace(SRC_PREFIX_PATTERN, '')}`
+        baseOutputPath = `${dirName.replace(SRC_PREFIX_PATTERN, '')}/index`
       } else {
-        exportKey = '.' // Root index file (index.ts or src/index.ts)
+        exportKey = '.'
         baseOutputPath = 'index'
       }
     } else {
-      const relativeDir = dirName === '.' || dirName === 'src' ? '' : `${dirName.replace(/^src\/?/, '')}/` // Non-index files
+      const relativeDir = dirName === '.' || dirName === 'src' ? '' : `${dirName.replace(SRC_PREFIX_PATTERN, '')}/`
       exportKey = `./${relativeDir}${baseName}`
       baseOutputPath = `${relativeDir}${baseName}`
     }
 
-    const isTypeScriptEntry = /\.tsx?$/.exec(entryPath)
+    const isTypeScriptEntry = JS_TS_EXTENSION_PATTERN.test(entryPath)
 
     if (exportKey.startsWith('./.')) exportKey = exportKey.slice(2)
     if (exportKey === './') exportKey = '.'
@@ -70,12 +72,12 @@ function packageJsonContentReplace(content: string, options: Omit<PackageJsonOpt
     if (hasCjs) exportValue.require = `./${baseOutputPath}.cjs`
     if (dts && isTypeScriptEntry) exportValue.types = `./${baseOutputPath}.d.ts`
 
-    if (Object.keys(exportValue).length <= 0) return // Only add if there are any valid export types
+    if (Object.keys(exportValue).length <= 0) return
 
     if (exportKey === '.') {
       if (hasEsm) packageJson.module = exportValue.import.slice(2)
       if (hasCjs) packageJson.main = exportValue.require.slice(2)
-      if (dts && isTypeScriptEntry) { // Set top-level types directly if main entry is TS and dts is not false
+      if (dts && isTypeScriptEntry) {
         packageJson.types = exportValue.types.slice(2)
         packageJson.typings = exportValue.types.slice(2)
       } else if (!dts) {
@@ -88,7 +90,7 @@ function packageJsonContentReplace(content: string, options: Omit<PackageJsonOpt
 
   newExports['./package.json'] = './package.json'
   newExports['./*'] = './*'
-  packageJson.exports = newExports
+  packageJson.exports = newExports as Record<string, Record<string, string>>
 
   return JSON.stringify(packageJson, null, 2)
 }
@@ -105,13 +107,17 @@ export function PackageJsonGeneratorPlugin(options: Omit<PackageJsonOptions, 'co
 
   if (packageJsonContent === void 0) throw new Error('Failed to parse or process package.json content')
 
-  return {name: 'vite-plugin-package-json-generator', apply: 'build', generateBundle: (_, bundle) => {
-    bundle['package.json'] = {
-      type: 'asset',
-      fileName: 'package.json',
-      source: packageJsonContent,
-      name: 'package.json',
-      needsCodeReference: false
-    } as OutputAsset
-  }}
+  return {
+    name: 'vite-plugin-package-json-generator',
+    apply: 'build',
+    generateBundle(_, bundle) {
+      bundle['package.json'] = {
+        type: 'asset',
+        fileName: 'package.json',
+        source: packageJsonContent,
+        name: 'package.json',
+        needsCodeReference: false
+      } as unknown as typeof bundle[string]
+    }
+  }
 }

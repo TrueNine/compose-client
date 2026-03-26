@@ -4,6 +4,8 @@ import dtsPluginImport from 'vite-plugin-dts'
 
 const dtsPlugin = (dtsPluginImport as unknown as {default: typeof dtsPluginImport}).default ?? dtsPluginImport
 
+const FILE_EXTENSION_PATTERN = /\.([^.]+)$/ // Static regex pattern for file extension extraction
+
 export interface SimpleDtsOptions {
   entry?: string[]
   tsconfigPath?: string
@@ -34,12 +36,12 @@ export function createDtsPlugin(options: SimpleDtsOptions = {}): Plugin {
 
   const extensions = new Set( // 收集所有入口文件的后缀
     finalOptions.entry.map(entry => {
-      const match = /\.([^.]+)$/.exec(entry)
+      const match = FILE_EXTENSION_PATTERN.exec(entry)
       return match ? match[1] : 'ts'
     })
   )
 
-  const includes = [...extensions].map(ext => // 生成包含所有后缀的 glob 模式
+  const includes = Array.from(extensions, ext => // 生成包含所有后缀的 glob 模式
     `${finalOptions.entryRoot}/**/*.${ext}`)
 
   const dtsPluginConfig: PluginOptions = {
