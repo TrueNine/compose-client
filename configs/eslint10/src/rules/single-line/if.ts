@@ -55,7 +55,7 @@ const rule: Rule.RuleModule = {
       const conditions: Rule.Node[] = []
       let current: Rule.Node | null = node
 
-      while (current && current.type === 'IfStatement') {
+      while (current?.type === 'IfStatement') {
         conditions.push(current)
         current = ('alternate' in current ? current.alternate : null) as Rule.Node | null
       }
@@ -129,7 +129,7 @@ const rule: Rule.RuleModule = {
         if (consequent.type === 'BlockStatement') return false
       }
 
-      if (finalElse && finalElse.type === 'BlockStatement') return false
+      if (finalElse?.type === 'BlockStatement') return false
 
       for (const cond of conditions) {
         if (!('consequent' in cond)) return false
@@ -201,7 +201,7 @@ const rule: Rule.RuleModule = {
         }
 
         let finalElseSimplifiable = false
-        if (finalElse && finalElse.type === 'BlockStatement' && !hasComments(finalElse)) {
+        if (finalElse?.type === 'BlockStatement' && !hasComments(finalElse)) {
           const stmt = getSingleStatement(finalElse)
           if (stmt && isSimpleStatement(stmt) && isNodeSingleLine(stmt)) {
             const stmtText = sourceCode.getText(stmt)
