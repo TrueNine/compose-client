@@ -102,6 +102,18 @@ describe('profiles and boundaries', () => {
     expect(sourceRules?.rules?.['@truenine/prefer-concise-arrow']).toBe('warn')
   })
 
+  it('should enable agent rules when agent profile is selected', async () => {
+    const config = await defineConfig({profile: 'agent'})
+    const sourceRules = findConfig(config, '@truenine/agent-source-rules')
+    expect(sourceRules?.rules?.['@truenine/no-task-comment']).toBe('error')
+    expect(sourceRules?.rules?.['no-console']).toBe('warn')
+    expect(sourceRules?.rules?.['no-debugger']).toBe('error')
+    expect(sourceRules?.rules?.['no-eval']).toBe('error')
+    expect(sourceRules?.rules?.['no-implied-eval']).toBe('error')
+    expect(sourceRules?.rules?.['no-with']).toBe('error')
+    expect(sourceRules?.rules?.['@truenine/prefer-single-line-if']).toBeUndefined()
+  })
+
   it('should keep source-only task comment enforcement away from tests and docs', async () => {
     const config = await defineConfig()
     const sourceRules = findConfig(config, '@truenine/ai-source-rules')

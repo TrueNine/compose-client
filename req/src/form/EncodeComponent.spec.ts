@@ -1,5 +1,5 @@
 import {describe, expect, it} from 'vitest'
-import {decodeHash, encodeQueryParam, queryHash, queryParam, SearchParam} from '../EncodeComponent'
+import {decodeHash, encodeQueryParam, queryHash, queryParam, SearchParam} from './EncodeComponent'
 
 describe('searchParam', () => {
   it('append/get/has/size/values/keys', () => {

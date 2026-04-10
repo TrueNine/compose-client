@@ -4,7 +4,7 @@ import type {AntFuMarkdownConfig, AntFuStrictTsConfig, AntFuTsConfig, AntFuVueCo
 import {antfu} from '@antfu/eslint-config'
 import {applyUniappVueConfig, formatterConfig, javascriptConfig, markdownConfig, strictTypescriptConfig, stylisticConfig, testConfig, typescriptConfig, unocssConfig, vueConfig} from './configs'
 import {plugin} from './plugin'
-import {aiRulesPreset, compactRulesPreset, dtsRulesPreset, typescriptRulesPreset} from './presets'
+import {agentRulesPreset, aiRulesPreset, compactRulesPreset, dtsRulesPreset, typescriptRulesPreset} from './presets'
 import {mergeWithDefaults} from './utils'
 
 const defaultIgnores = [
@@ -27,7 +27,7 @@ const defaultIgnores = [
 
 const docsFiles = ['**/*.md', '**/*.md/**']
 const sourceFiles = ['**/*.ts', '**/*.tsx', '**/*.mts', '**/*.cts', '**/*.js', '**/*.jsx', '**/*.mjs', '**/*.cjs', '**/*.vue']
-const testAndExampleFiles = ['**/*.spec.*', '**/*.test.*', '**/__tests__/**', '**/playground/**']
+const testAndExampleFiles = ['**/*.spec.*', '**/*.test.*', '**/__tests__/**', '**/fixture/**', '**/playground/**']
 const typeDefinitionFiles = ['**/*.d.ts']
 
 export {
@@ -152,7 +152,9 @@ function isStrictTsConfig(config: unknown): config is AntFuStrictTsConfig {
 }
 
 function resolveProfileRules(profile: ConfigProfile): Linter.RulesRecord {
-  return profile === 'compact' ? compactRulesPreset : aiRulesPreset
+  if (profile === 'compact') return compactRulesPreset
+  if (profile === 'agent') return agentRulesPreset
+  return aiRulesPreset
 }
 
 type TsConfigWithInternals = AntFuTsConfig & {

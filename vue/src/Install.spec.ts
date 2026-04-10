@@ -1,6 +1,6 @@
 import type {App} from 'vue'
 import {describe, expect, it, vi} from 'vitest'
-import {componentInstallToPlugin} from '../Install'
+import {componentInstallToPlugin} from './Install'
 
 describe('componentInstallToPlugin', () => {
   function createMockApp() {

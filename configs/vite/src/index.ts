@@ -112,7 +112,7 @@ export function configureViteFragment(options: ViteFragmentOptions = {}, baseCon
     sourcemap: false,
     name: 'index',
     fileNameMap: {es: '.js', cjs: '.cjs', umd: '.umd.js', iife: '.iife.js'},
-    excludes: ['**/__tests__/**', '**/__test__/**', '**/__build-src__/**', '**/*.spec.ts', '**/*.test.ts']
+    excludes: ['**/__tests__/**', '**/__test__/**', '**/__build-src__/**', '**/*.spec.ts', '**/*.test.ts', '**/fixture/**']
   }
 
   const userOrDefaultEntry = options.lib?.entry ?? libDefaults.entry

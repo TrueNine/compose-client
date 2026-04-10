@@ -2,10 +2,10 @@ import {mount} from '@vue/test-utils'
 import {afterEach, describe, expect, it} from 'vitest'
 import {defineComponent, markRaw, nextTick, ref} from 'vue'
 import {z} from 'zod'
-import YForm from '../../form'
-import YField from '../index'
-import YFieldProxyComponent from '../YFieldProxyComponent.vue'
-import {ChildInputComponent} from './components/TestComponents'
+import YForm from '../form'
+import YField from './index'
+import YFieldProxyComponent from './YFieldProxyComponent.vue'
+import {ChildInputComponent} from './fixture/TestComponents'
 
 const globalComponents = {components: {YField, YFieldProxyComponent}}
 

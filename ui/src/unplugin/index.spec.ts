@@ -1,5 +1,5 @@
 import {describe, expect, it} from 'vitest'
-import {MetaUiWebResolver} from '../index'
+import {MetaUiWebResolver} from './index'
 
 describe('metaUiWebResolver', () => {
   const resolvers = MetaUiWebResolver()

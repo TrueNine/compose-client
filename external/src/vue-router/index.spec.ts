@@ -1,7 +1,7 @@
 import type {RouteRecordRaw} from 'vue-router'
 import {describe, expect, it} from 'vitest'
-import {generateMenu} from '../index'
-import routers from './routers.json'
+import {generateMenu} from './index'
+import routers from './fixture/routers.json'
 
 const rootRoutes: RouteRecordRaw[] = routers as RouteRecordRaw[] // 选取部分典型路由用于测试
 const aRoutes: RouteRecordRaw[] = rootRoutes.find((r: RouteRecordRaw) => r.path === '/a')?.children ?? []

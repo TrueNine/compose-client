@@ -13,6 +13,9 @@ export const javascriptConfig: AntFuJsConfig = {overrides: {
     {selector: 'Identifier[name="undefined"]', message: 'Use `void 0` instead of `undefined`.'}
   ],
   'no-global-assign': 'error',
+  'no-eval': 'error',
+  'no-implied-eval': 'error',
+  'no-with': 'error',
   'no-unused-vars': 'error',
   'no-var': 'error',
   'prefer-const': [

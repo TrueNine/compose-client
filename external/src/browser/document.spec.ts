@@ -1,6 +1,6 @@
 import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest'
 
-import {download, downloadBlob, getImageData, loadRemoteScriptTag} from '../document' // 导入需要测试的模块
+import {download, downloadBlob, getImageData, loadRemoteScriptTag} from './document' // 导入需要测试的模块
 
 interface MockAnchor { // 定义类型
   href: string
@@ -31,8 +31,8 @@ const documentMock = {createElement: vi.fn((tag: string) => { // 模拟 document
   return {}
 }), body: {appendChild: vi.fn()}, querySelector: vi.fn()}
 
-vi.mock('../document', async () => { // 使用 vi.mock 进行全局模拟
-  const originalModule = await vi.importActual<typeof import('../document')>('../document') // 导入原始模块以获取默认导出
+vi.mock('./document', async () => { // 使用 vi.mock 进行全局模拟
+  const originalModule = await vi.importActual<typeof import('./document')>('./document') // 导入原始模块以获取默认导出
 
   return {...originalModule, downloadBlob: vi.fn((_: Blob, fileName: string = 'noneFile') => { // 重写 downloadBlob 函数的实现
     try {

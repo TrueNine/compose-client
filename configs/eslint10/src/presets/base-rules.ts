@@ -77,5 +77,15 @@ export const compactRulesPreset: Linter.RulesRecord = {
   '@truenine/prefer-void-zero': 'warn'
 }
 
+export const agentRulesPreset: Linter.RulesRecord = {
+  ...aiRulesPreset,
+  'no-console': 'warn',
+  'no-debugger': 'error',
+  'no-eval': 'error',
+  'no-implied-eval': 'error',
+  'no-with': 'error',
+  'no-restricted-globals': ['error', 'event']
+}
+
 /** @deprecated 使用 aiRulesPreset 代替 */
 export const baseRulesPreset: Linter.RulesRecord = aiRulesPreset

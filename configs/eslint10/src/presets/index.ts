@@ -7,6 +7,7 @@
  */
 
 export {
+  agentRulesPreset,
   aiRulesPreset,
   baseRulesPreset
 } from './base-rules'

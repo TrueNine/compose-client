@@ -1,6 +1,6 @@
 import type {AntFuConfig, AntFuStrictTsConfig, AntFuTsConfig} from './antfu'
 
-export type ConfigProfile = 'ai' | 'compact'
+export type ConfigProfile = 'ai' | 'compact' | 'agent'
 
 /**
  * defineConfig 函数的配置选项

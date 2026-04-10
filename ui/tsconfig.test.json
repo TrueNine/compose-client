@@ -24,7 +24,6 @@
     "skipLibCheck": true
   },
   "include": [
-    "src/**/__tests__/**/*.{spec,test}.{ts,tsx}",
     "src/**/*.{spec,test}.{ts,tsx}",
     "src/**/*",
     ".types/**/*",

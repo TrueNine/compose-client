@@ -1,12 +1,12 @@
 import type {dynamic} from '@truenine/types'
-import type {YFormSlotsSubMitProps} from '../types'
+import type {YFormSlotsSubMitProps} from './types'
 import {mount} from '@vue/test-utils'
 import {describe, expect, it, vi} from 'vitest'
 import {defineComponent, nextTick, ref} from 'vue'
 import {z} from 'zod'
-import YField from '../../field/index'
-import YFieldProxyComponent from '../../field/YFieldProxyComponent.vue'
-import YForm from '../index'
+import YField from '../field/index'
+import YFieldProxyComponent from '../field/YFieldProxyComponent.vue'
+import YForm from './index'
 
 const globalComponents = {components: {YField, YFieldProxyComponent}}
 

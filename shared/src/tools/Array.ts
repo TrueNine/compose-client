@@ -16,7 +16,7 @@ export function arrayDistinct<T>(arr: T[]): T[] {
  * @param currentCombination 当前穷举组合
  */
 export function cartesianProduct<T = unknown>(spec: Record<string, T[]>, currentIndex = 0, currentCombination: Record<string, T> = {}): Record<string, T>[] {
-  if (currentIndex === Object.keys(spec).length) return [currentCombination]
+  if (currentIndex === Object.keys(spec).length) return Object.keys(currentCombination).length ? [currentCombination] : []
 
   const currentKey = Object.keys(spec)[currentIndex]
   const currentValues = spec[currentKey]
@@ -37,9 +37,7 @@ export function cartesianProduct<T = unknown>(spec: Record<string, T[]>, current
 export function arrayDiff<T>(a: T[], b: T[]): T[] {
   const setA = new Set(a)
   const setB = new Set(b)
-  const first = setA.size >= setB.size ? setA : setB
-  const last = setA.size < setB.size ? setA : setB
-  return [...first].filter(i => !last.has(i))
+  return [...[...setA].filter(i => !setB.has(i)), ...[...setB].filter(i => !setA.has(i))]
 }
 
 export function combineToMap<T, K, V>(arr: T[], keyHandle: (t: T) => K, valueHandle: (t: T) => V): Map<K, V[]> {

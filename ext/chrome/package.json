@@ -16,6 +16,7 @@
     "access": "public"
   },
   "scripts": {
+    "test": "vitest run",
     "lint:fix": "eslint --fix",
     "typecheck": "tsc --noEmit -p tsconfig.lib.json",
     "build": "tsdown",

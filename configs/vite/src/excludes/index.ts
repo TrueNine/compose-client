@@ -16,6 +16,10 @@ export const Excludes: string[] = [
   '__test__/**',
   '**/__test__/**',
 
+  'fixture',
+  'fixture/**',
+  '**/fixture/**',
+
   '__build-src__',
   '__build-src__/**',
   '**/__build-src__/**'

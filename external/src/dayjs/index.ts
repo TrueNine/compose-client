@@ -45,7 +45,7 @@ export function dateMillis(date: DayJSNewInstanceOptions, p?: Params): timestamp
 }
 
 export function getOffsetMillis(timezone: string = DEFAULT_TZ): number {
-  return DayJs.tz(timezone).utcOffset() * 60 * 1000
+  return DayJs().tz(timezone).utcOffset() * 60 * 1000
 }
 
 export function timeMillis(date: DayJSNewInstanceOptions, p?: Params): number {

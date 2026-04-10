@@ -21,7 +21,8 @@ const defaultTsdownEntry = [
   './src/**/*',
   '!**/*.{spec,test}.*',
   '!**/__test__/**',
-  '!**/__tests__/**'
+  '!**/__tests__/**',
+  '!**/fixture/**'
 ]
 const defaultTsdownDts = {sourcemap: true, tsconfig: './tsconfig.lib.json'}
 const VITEST_TEMP_ROOT_SEGMENT = '/node_modules/.vite-temp/'

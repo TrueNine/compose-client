@@ -33,7 +33,7 @@
     "dist",
     "**/*.test.*",
     "**/*.spec.*",
-    "**/__tests__/**/*"
+    "**/fixture/**/*"
   ],
   "vueCompilerOptions": {
     "target": 3.3
